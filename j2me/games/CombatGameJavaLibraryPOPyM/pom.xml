@@ -1,0 +1,143 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.allbinary</groupId>
+  <artifactId>CombatGameJavaLibraryPOMPy</artifactId>
+  <packaging>pom</packaging>
+  <!-- AllBinary Platform Version Start -->
+  <version>1.0.0-SNAPSHOT</version>
+  <!-- AllBinary Platform Version End -->
+
+  <name>CombatGameJavaLibraryPOMPy</name>
+  <url>http://www.allbinary.com/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>AllBinary Snapshots Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <name>AllBinary Releases Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <buildLabel>${project.version}</buildLabel>
+        <assemblyPluginVersion>2.2-beta-1</assemblyPluginVersion>
+    </properties>
+
+    <modules>
+
+        <!--
+
+        -->
+
+        <module>../../games/TickableJavaLibraryPyM</module>
+
+        <module>../../games/CommonHeadsUpDisplayLibraryPyM</module>
+
+        <module>../../../physics/MovementJavaLibraryPyM</module>
+        <!--        -->
+        <module>../../games/PartsJavaLibraryPyM</module>
+        <module>../../games/PickupGameJavaLibraryPyM</module>
+
+        <module>../../../allbinary_src/licensing/HardCodedLicenseInitInfoJavaLibraryPyM</module>
+        <module>../../../allbinary_src/licensing/FileLicenseInitInfoJavaLibraryPyM</module>
+        <module>../../../allbinary_src/licensing/ClientInfoLicensingJavaLibraryPyM</module>
+
+        <module>../../games/licensing/PartnerJ2MEJavaLibraryPyM</module>
+        <module>../../games/licensing/PartnerHTMLJavaLibraryPyM</module>
+        <module>../../games/licensing/PartnerAndroidJavaLibraryPyM</module>
+        <module>../../games/licensing/NoGameLicensingJavaLibraryPyM</module>
+        <module>../../games/licensing/GameLicensingOnlyDemoJavaLibraryPyM</module>
+        <module>../../games/licensing/GameLicensingOnlyNormalJavaLibraryPyM</module>
+        <module>../../games/licensing/GameLicensingBaseJavaLibraryPyM</module>
+
+        <!--
+        <module>../../games/GameScoresBaseLibraryPyM</module>
+        <module>../../games/GameScoresBaseHTMLLibraryPyM</module>
+        <module>../../games/GameScoresBaseJ2MELibraryPyM</module>
+        -->
+        <module>../../games/GameScoresLocalJavaLibraryPyM</module>
+        <module>../../games/GameScoresRemoteAndLocalJavaLibraryPyM</module>
+
+        <module>../../../store/ThirdPartyStoreJavaLibraryPyM</module>
+        <module>../../../store/NoThirdPartyStoreJavaLibraryPyM</module>
+
+        <module>../../media/graphics/layer/CollisionLayerJavaLibraryPyM</module>
+        <module>../../games/CollisionLibraryPyM</module>
+
+        <module>../../games/multiplayer/AllBinaryGameClientBaseNullJavaLibraryPyM</module>
+
+        <module>../../games/PickupLayerJavaLibraryPyM</module>
+
+        <module>../../games/DamageGameJavaLibraryPyM</module>
+        <module>../../games/DropJavaLibraryPyM</module>
+        <module>../../games/WeaponLayerJavaLibraryPyM</module>
+
+        <module>../../games/CombatGameJavaLibraryPyM</module>
+        <module>../../games/LifeJavaLibraryPyM</module>
+
+        <module>../../games/CommonHeadsUpDisplayCombatGameLibraryPyM</module>
+        <module>../../games/LifeOrDeathDataJavaLibraryPyM</module>
+
+        <module>../../games/BasicWeaponPartsJavaLibraryPyM</module>
+        <module>../../games/weapon/WeaponPropertiesJavaLibraryPyM</module>
+
+        <module>../../games/weapon/WeaponMineJavaLibraryPyM</module>
+
+        <!--
+        <module>../../media/graphics/effects/fireworks/FireworksJavaLibraryPyM</module>
+        -->
+
+        <module>../../media/graphics/geography/map/TerrainEventJavaLibraryPyM</module>
+
+<!--
+        <module>../../media/graphics/geography/map/BasicPlatformGeographicMapJavaLibraryPyM</module>
+        -->
+
+        <!--
+        <module>../../media/graphics/geography/map/RaceTrackP</module>
+        -->
+
+        <!--
+        XmlRpcJavaLibrary
+        RemoteXmlRpcJavaLibrary
+
+        Since POMs are built before the other libs is it best to handle this differently
+        ../../
+        <module>../../../../work/j2me/games/strategy/rts/RTSGameJavaLibraryP</module>
+        -->
+
+        <module>../../media/graphics/OtherGraphicsMediaLibraryP</module>
+
+        <module>../../input/NoTouchButtonResourceAnimationJavaLibraryPyM</module>
+        <module>../../input/TouchButtonResourceAnimationJavaLibraryPyM</module>
+        <module>../../input/TouchButtonResourceOpenGLESAnimationJavaLibraryPyM</module>
+
+        <module>../../input/TrackingEventJavaLibraryPyM</module>
+        <module>../../../game/behavior/BehaviorLibraryP</module>
+
+        <module>../../media/sound/OtherSoundMediaLibraryP</module>
+
+        <module>../../../allbinary_src/licensing/ApplicationConfigurationJavaLibraryPyM</module>
+        <module>../../../allbinary_src/licensing/ApplicationConfigurationNoFSJavaLibraryPyM</module>
+        <module>../../input/AllBinaryMagneticFieldSensorJavaLibraryPyM</module>
+        <module>../../android/VirtualKeyboardJavaLibraryPyM</module>
+
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+
+</dependencies>
+</project>
+

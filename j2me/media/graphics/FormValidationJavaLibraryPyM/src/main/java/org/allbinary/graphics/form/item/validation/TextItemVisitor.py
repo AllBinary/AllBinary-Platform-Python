@@ -1,0 +1,36 @@
+#
+# AllBinary Open License Version 1
+# Copyright (c) 2011 AllBinary
+# 
+# By agreeing to this license you and any business entity you represent are
+# legally bound to the AllBinary Open License Version 1 legal agreement.
+# 
+# You may obtain the AllBinary Open License Version 1 legal agreement from
+# AllBinary or the root directory of AllBinary's AllBinary Platform repository.
+# 
+# Created By: Travis Berthelot
+#  
+# Generated Code Do Not Modify
+# package org.allbinary.graphics.form.item.validation
+
+from __future__ import annotations
+
+from org.allbinary.logic.util.visitor.Visitor import Visitor
+
+
+class TextItemVisitor(Visitor):
+    
+
+    def __init__(self) -> None:
+        super().__init__()
+    
+
+    def visit(self, anyType: object) -> object:
+        value: str = anyType
+        if len(value) < 2:
+            return BooleanFactory.getInstance().TRUE
+        else:
+            return BooleanFactory.getInstance().FALSE
+from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+
+

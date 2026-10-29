@@ -1,0 +1,82 @@
+#
+# AllBinary Open License Version 1
+# Copyright (c) 2011 AllBinary
+# 
+# By agreeing to this license you and any business entity you represent are
+# legally bound to the AllBinary Open License Version 1 legal agreement.
+# 
+# You may obtain the AllBinary Open License Version 1 legal agreement from
+# AllBinary or the root directory of AllBinary's AllBinary Platform repository.
+# 
+# Created By: Travis Berthelot
+#  
+# Generated Code Do Not Modify
+# package views.admin.workflow
+
+from __future__ import annotations
+
+from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
+from views.admin.workflow.WorkFlowView import WorkFlowView
+
+
+class EditValidationView(WorkFlowView, ValidationComponentInterface):
+
+    def _init_fields(self) -> None:
+        self.logUtil: LogUtil = LogUtil.getInstance()
+        self.workFlowName: str = None
+    
+
+    def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        super().__init__(transformInfoInterface)
+        self._init_fields()
+        httpTransformInfoInterface: TransformInfoHttpInterface = self.getTransformInfoInterface()
+        self.workFlowName = httpTransformInfoInterface.getPageContext().getRequest().getParameter(WorkFlowData.getInstance().NAME)
+    
+
+    def isValid(self) -> bool:
+        try:
+            if self.workFlowName is None:
+                return False
+            if WorkFlowEntityFactory.getInstance().create2().get(self.workFlowName, self.getTransformInfoInterface().getStoreName()) is None:
+                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    self.logUtil.putF("WorkFlow does not exist.", self, self.commonStrings.IS_VALID)
+                return False
+            return True
+        except Exception as e:
+            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
+            return False
+    
+
+    def validationInfo(self) -> str:
+        try:
+            stringBuffer: StringMaker = StringMaker()
+            if self.workFlowName is None:
+                stringBuffer.append("WorkFlow name is invalid<br />")
+            if WorkFlowEntityFactory.getInstance().create2().get(self.workFlowName, self.getTransformInfoInterface().getStoreName()) is None:
+                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    self.logUtil.putF("WorkFlow does not exist.", self, "validationInfo()")
+                stringBuffer.append("WorkFlow does not exist<br />")
+            return str(stringBuffer)
+        except Exception as e:
+            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
+            return "Error Validating Form"
+    
+
+    def toValidationInfoDoc(self) -> Document:
+        return None
+    
+
+    def toValidationInfoNode(self, document: Document) -> Node:
+        return None
+from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
+from org.allbinary.logic.communication.log.LogUtil import LogUtil
+from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
+from org.allbinary.logic.string.StringMaker import StringMaker
+from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+from org.w3c.dom.Document import Document
+from org.w3c.dom.Node import Node
+
+

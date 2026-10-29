@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.allbinary</groupId>
+    <artifactId>AllBinaryPlatformAndroidLibraryPOMPy</artifactId>
+    <packaging>pom</packaging>
+    <!-- AllBinary Platform Version Start -->
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- AllBinary Platform Version End -->
+
+    <name>AllBinaryPlatformAndroidLibraryPOMPy</name>
+    <url>http://www.allbinary.com/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>AllBinary Snapshots Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <name>AllBinary Releases Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+
+
+
+    <modules>
+
+        <module>../../../j2me/AndroidBaseJavaLibraryPyM</module>
+        <module>../../../j2me/input/platform/android/GameInputAndroidBaseJavaLibraryPyM</module>
+        <module>../../../j2me/android/AndroidThroughAPI4JavaLibraryPyM</module>
+        <module>../../../j2me/android/AndroidAPI5AndUpJavaLibraryPyM</module>
+        <module>../../../j2me/android/AndroidAPI16UpTo19JavaLibraryPyM</module>        
+        <module>../../../j2me/android/AndroidAPI19UpTo29JavaLibraryPyM</module>
+        
+        <module>../../../j2me/input/android/MotionInputAndroidJavaLibraryPyM</module>
+        <module>../../../j2me/input/android/MotionInputAPI5AndUpAndroidJavaLibraryPyM</module>
+        <module>../../../j2me/input/android/MotionInputThroughAPI4AndroidJavaLibraryPyM</module>
+        
+<!--        <module>../j2me/input/android/MotionInputAndroidxAPI21OnUpDynamicJavaLibraryPyM</module>-->
+        <module>../../../j2me/input/android/MotionInputAndroidDynamicJavaLibraryPyM</module>
+
+        <module>../../../j2me/android/AndroidAPI3AndUpJavaLibraryPyM</module>
+        <module>../../../j2me/FullScreenAndroidJavaLibraryPyM</module>
+        
+                
+        <module>../../../j2me/AndroidToJ2MELibraryPyM</module>
+                
+    </modules>
+
+</project>
+

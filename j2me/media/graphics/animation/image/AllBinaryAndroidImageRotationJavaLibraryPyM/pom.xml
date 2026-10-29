@@ -1,0 +1,284 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.allbinary.animation</groupId>
+  <artifactId>AllBinaryAndroidImageRotationJavaLibraryPy</artifactId>
+  <packaging>jar</packaging>
+  <!-- AllBinary Platform Version Start -->
+  <version>1.0.0-SNAPSHOT</version>
+  <!-- AllBinary Platform Version End -->
+
+  <name>AllBinaryAndroidImageRotationJavaLibraryPy</name>
+  <url>http://www.allbinary.com/</url>
+  <distributionManagement>
+      <snapshotRepository>
+          <id>nexus-snapshots</id>
+          <name>AllBinary Snapshots Nexus</name>
+          <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+      </snapshotRepository>
+      <repository>
+          <id>nexus-releases</id>
+          <name>AllBinary Releases Nexus</name>
+          <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+      </repository>
+  </distributionManagement>
+
+  <properties>
+      <buildLabel>${project.version}</buildLabel>
+      <assemblyPluginVersion>2.2-beta-1</assemblyPluginVersion>
+        <python.executable>python</python.executable>
+        <python.jsinterop.source.path>G:/mnt/bc/mydev/workingpython/replace_these_stub_projects/allbinary_src/J2MEJsInteropCompatibilityJavaLibraryPyM/src/main/java</python.jsinterop.source.path>
+        <python.import.check>true</python.import.check>
+        <python.fail.on.error>true</python.fail.on.error>
+  </properties>
+
+  <dependencies>
+      <dependency>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+          <version>3.8.1</version>
+          <scope>test</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.allbinary</groupId>
+          <artifactId>LoggingJ2MEAllPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+          <optional>true</optional>
+      </dependency>
+
+      <dependency>
+          <groupId>org.allbinary</groupId>
+          <artifactId>OpenGLNoneOtherJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+          <optional>true</optional>
+      </dependency>
+
+      <dependency>
+          <groupId>org.allbinary.media.image</groupId>
+          <artifactId>ImageAndroidJavaLibraryPy</artifactId>
+<!--          <artifactId>ImageJ2SEJavaLibraryPy</artifactId>          -->
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+          <optional>true</optional>
+      </dependency>
+
+      <dependency>
+          <groupId>org.allbinary</groupId>
+          <artifactId>ImageCacheJ2MEJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+          <optional>true</optional>
+      </dependency>
+
+      <dependency>
+          <groupId>org.allbinary</groupId>
+          <artifactId>RotationAnimationJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+      </dependency>
+        
+      <dependency>
+          <groupId>org.allbinary.animation</groupId>
+          <artifactId>AllBinaryImageAnimationJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+      </dependency>        
+
+      <dependency>
+          <groupId>org.allbinary.animation</groupId>
+          <artifactId>AllBinaryImageAnimationRotationJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+      </dependency>        
+
+      <dependency>
+          <groupId>org.allbinary</groupId>
+          <artifactId>ProgressAndroidJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+      </dependency>        
+      
+      <dependency>
+          <groupId>org.allbinary</groupId>
+          <artifactId>VectorJavaLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+      </dependency>
+    
+      <dependency>
+          <groupId>org.allbinary.cache</groupId>
+          <artifactId>AllBinaryCacheLibraryPy</artifactId>
+          <!-- AllBinary Platform Version Start -->
+          <version>1.0.0-SNAPSHOT</version>
+          <!-- AllBinary Platform Version End -->
+
+      </dependency>
+
+        <dependency>
+            <groupId>org.allbinary</groupId>
+            <artifactId>GameJ2MELibraryPy</artifactId>
+            <!-- AllBinary Platform Version Start -->
+            <version>1.0.0-SNAPSHOT</version>
+            <!-- AllBinary Platform Version End -->
+
+        </dependency>
+        <dependency>
+            <groupId>org.allbinary.animation</groupId>
+            <artifactId>AllBinarySpriteAnimationJavaLibraryPy</artifactId>
+            <!-- AllBinary Platform Version Start -->
+            <version>1.0.0-SNAPSHOT</version>
+            <!-- AllBinary Platform Version End -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.allbinary</groupId>
+            <artifactId>AndroidToJ2MELibraryPy</artifactId>
+            <!-- AllBinary Platform Version Start -->
+            <version>1.0.0-SNAPSHOT</version>
+            <!-- AllBinary Platform Version End -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.microemu</groupId>
+            <artifactId>microemu-midpPy</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.microemu</groupId>
+            <artifactId>microemu-androidPy</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+            <optional>true</optional>
+        </dependency>
+            
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>androidPy</artifactId>
+            <version>1.5_r4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>androidPy</artifactId>
+            <version>1.5_r4</version>
+            <scope>provided</scope>
+            <classifier>sources</classifier>
+        </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>compile-python-sources</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${python.executable}</executable>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <arguments>
+                                <argument>-u</argument>
+                                <argument>${project.basedir}/build.py</argument>
+                                <argument>${project.basedir}/src/main/java</argument>
+                                <argument>${project.build.outputDirectory}/META-INF/python</argument>
+                                <argument>${python.import.check}</argument>
+                                <argument>${python.fail.on.error}</argument>
+                                <argument>${python.jsinterop.source.path}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-pluginPy</artifactId>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Version>${pom.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+
+                    <assembly>
+                        <inclusions>
+                            <inclusion>
+                                <groupId>org.allbinary</groupId>
+                                <artifactId>J2MEExceptionModulePy</artifactId>
+                                <library>true</library>
+                            </inclusion>
+                            <inclusion>
+                                <groupId>org.allbinary</groupId>
+                                <artifactId>LogModulePy</artifactId>
+                                <library>true</library>
+                            </inclusion>
+                        </inclusions>
+
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.microemu</groupId><artifactId>microemu-midpPy</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.microemu</groupId><artifactId>microemu-jsr-135Py</artifactId>
+                        </exclusion>
+                    </exclusions>
+
+                    </assembly>
+
+                            </configuration>
+                        </plugin>
+            -->
+
+        </plugins>
+
+    </build>
+
+</project>
+

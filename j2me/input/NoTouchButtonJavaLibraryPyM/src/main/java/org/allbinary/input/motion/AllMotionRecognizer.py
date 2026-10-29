@@ -1,0 +1,60 @@
+#
+# AllBinary Open License Version 1
+# Copyright (c) 2011 AllBinary
+# 
+# By agreeing to this license you and any business entity you represent are
+# legally bound to the AllBinary Open License Version 1 legal agreement.
+# 
+# You may obtain the AllBinary Open License Version 1 legal agreement from
+# AllBinary or the root directory of AllBinary's AllBinary Platform repository.
+# 
+# Created By: Travis Berthelot
+#  
+# Generated Code Do Not Modify
+# package org.allbinary.input.motion
+
+from __future__ import annotations
+
+
+
+class AllMotionRecognizer:
+    index: int = 0
+
+    def _init_fields(self) -> None:
+        self.id: int = None
+    
+
+    def __init__(self) -> None:
+        self._init_fields()
+        self.id = ((setattr(AllMotionRecognizer, "index", AllMotionRecognizer.index + 1) or AllMotionRecognizer.index) - 1)
+    
+
+    # throws Exception
+    def processStartMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        pass
+    
+
+    # throws Exception
+    def processEndMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        pass
+    
+
+    # throws Exception
+    def processDraggedMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        pass
+    
+
+    # throws Exception
+    def processMovedMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        pass
+    
+
+    # throws Exception
+    def processScrolledMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        pass
+    
+
+    def getId(self) -> int:
+        return self.id
+
+

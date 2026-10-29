@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.allbinary</groupId>
+    <artifactId>OtherGraphicsMediaLibraryPPy</artifactId>
+    <packaging>pom</packaging>
+    <!-- AllBinary Platform Version Start -->
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- AllBinary Platform Version End -->
+
+    <name>OtherGraphicsMediaLibraryPPy</name>
+    <url>http://www.allbinary.com/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>AllBinary Snapshots Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <name>AllBinary Releases Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+
+
+    <properties>
+        <buildLabel>${project.version}</buildLabel>
+        <assemblyPluginVersion>2.2-beta-1</assemblyPluginVersion>
+    </properties>
+
+    <modules>
+
+        <!--
+        -->
+        <module>../../graphics/animation/vector/VectorAnimationBaseJavaLibraryPyM</module>
+
+        <module>../../graphics/animation/vector/VectorAnimationJ2MEJavaLibraryPyM</module>
+        <module>../../graphics/animation/vector/VectorAnimationJavaLibraryPyM</module>
+
+        <module>../../graphics/VectorJavaLibraryPyM</module>
+
+        <module>../../graphics/BoundsJavaLibraryPyM</module>
+
+        <module>../../../../graphics/opengl/OpenGLESNullImageJavaLibraryPyM</module>
+        <module>../../../../graphics/opengl/OpenGLESNullImageJ2MEJavaLibraryPyM</module>
+
+        <module>../../graphics/animation/image/AllBinaryImageAnimationJavaLibraryPyM</module>
+        <module>../../graphics/animation/sprite/AllBinarySpriteAnimationJavaLibraryPyM</module>
+
+        <!--
+        ../../
+        <module>../../../../../work/j2me/media/graphics/animation/sprite/AllBinaryQuarterSpriteAnimationJavaLibraryPyM</module>
+        -->
+        <!--
+        ../../
+        <module>../../../../../work/j2me/media/graphics/animation/sprite/AllBinaryQuarterSpriteAnimation2JavaLibraryPyM</module>
+        -->
+
+        <module>../../graphics/animation/image/ImageJ2MEJavaLibraryPyM</module>
+        <!--
+        <module>../../graphics/animation/image/ImageHTMLJavaLibraryPyM</module>
+        -->
+        <module>../../graphics/animation/image/ImageJ2SEJavaLibraryPyM</module>
+        <!--
+        <module>../../graphics/animation/image/ImageAndroidJavaLibraryPyM</module>
+        -->
+        <!--
+        <module>../../graphics/animation/image/ImageSwtJ2SEJavaLibraryPyM</module>
+        -->
+        
+        <!--
+        ../../
+        <module>../../../../../work/j2me/media/graphics/layer/AllBinaryTiledLayerJavaLibraryPyM</module>
+        <module>../../graphics/layer/AllBinaryTiledLayerJavaLibraryPyM</module>
+        -->
+
+        <!-- Not used in Platform Libraries -->
+        <module>../../graphics/GraphicsBasicImageJavaLibraryPyM</module>
+        <!--
+        -->
+        <module>../../graphics/animation/image/AllBinaryImageAnimationRotationJavaLibraryPyM</module>
+
+    </modules>
+
+</project>
+

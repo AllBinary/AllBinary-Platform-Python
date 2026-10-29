@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.allbinary</groupId>
+    <artifactId>AllBinaryPersistenceLibraryPPy</artifactId>
+    <packaging>pom</packaging>
+    <!-- AllBinary Platform Version Start -->
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- AllBinary Platform Version End -->
+
+    <name>AllBinaryPersistenceLibraryPPy</name>
+    <url>http://www.allbinary.com/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>AllBinary Snapshots Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <name>AllBinary Releases Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+    
+    <properties>
+        <buildLabel>${project.version}</buildLabel>
+        <assemblyPluginVersion>2.2-beta-1</assemblyPluginVersion>
+    </properties>
+
+    <modules>
+        
+        <!--
+        -->
+        <module>../allbinary_src/cache/AllBinaryCacheLibraryPyM</module>
+        <module>../allbinary_src/PermutationsJavaLibraryPyM</module>
+        <module>../allbinary_src/logic/BasePreloaderFileJavaLibraryPyM</module>
+        <module>../allbinary_src/logic/data/file/FileJavaLibraryPyM</module>
+        <module>../allbinary_src/logic/data/file/FileJ2SEJavaLibraryPyM</module>
+        <module>../allbinary_src/data/DataJavaLibraryPyM</module>
+        <module>../allbinary_src/logic/data/file/FileUnamedJavaLibraryPyM</module>
+        <module>../allbinary_src/logic/data/file/FileAdvancedJavaLibraryPyM</module>
+        <module>../allbinary_src/PreLoaderJavaLibraryPyM</module>
+        <module>../allbinary_src/FileInitInfoJavaLibraryPyM</module>
+        <module>../allbinary_src/PreLoaderFileJavaLibraryPyM</module>
+        <module>../allbinary_src/PreLoaderLicenseJavaLibraryPyM</module>
+        <module>../j2me/PCResourceLibraryPyM</module>
+        <module>../j2me/ProgressJ2MEJavaLibraryPyM</module>
+        <module>../allbinary_src/licensing/ClientInfoBaseJavaLibraryPyM</module>
+        <module>../allbinary_src/licensing/RemoteXmlRpcJavaLibraryPyM</module>
+        <module>../allbinary_src/licensing/LicenseClientJavaLibraryPyM</module>
+
+        <!--
+        <module>../allbinary_src/PreLoaderLicenseJavaLibraryPyM</module>
+        -->
+    </modules>
+
+</project>
+

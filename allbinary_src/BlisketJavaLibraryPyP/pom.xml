@@ -1,0 +1,148 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.allbinary.business</groupId>
+    <artifactId>BlisketJavaLibraryPPy</artifactId>
+    <packaging>pom</packaging>
+    <!-- AllBinary Platform Version Start -->
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- AllBinary Platform Version End -->
+
+    <name>BlisketJavaLibraryPPy</name>
+    <url>http://www.allbinary.com/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>AllBinary Snapshots Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <name>AllBinary Releases Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+    
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+    
+    </dependencies>
+    <modules>
+
+        <!--
+        <module>../../j2me/AllBinaryJ2MELibraryP</module>
+        -->
+        <!--
+        <module>../data/DataJavaLibraryPyM</module>
+        -->
+
+        <module>../licensing/TestServiceClientInfoJavaLibraryPyM</module>        
+
+        <module>../data/DataTableInterfacesPyM</module>
+        
+        <module>../QueueJavaLibraryPyM</module>
+        
+        <!--
+        <module>../TokenizerJavaLibraryPyM</module>
+        -->
+
+        <module>../logging/LogConfigTypeFreeblisketJavaLibraryPyM</module>
+
+        <module>../JavaUtilLibraryPyM</module>
+        <module>../NullInitInfoJavaLibraryPyM</module>        
+        <module>../InitInfoJavaLibraryPyM</module>
+        <module>../PreLoaderHttpJavaLibraryPyM</module>
+        
+        <module>../TagsBaseJavaLibraryPyM</module>
+        <module>../CustomLoaderJavaLibraryPyM</module>
+        
+        <!--
+        <module>../logic/data/file/FileJ2SEJavaLibraryPyM</module>
+        <module>../logic/data/file/FileJavaLibraryPyM</module>
+        -->
+
+        <module>../data/SQLAllBinaryJavaLibraryPyM</module>
+
+        <!--
+        <module>../licensing/FileLicenseInitInfoJavaLibraryPyM</module>
+        -->
+
+        <module>../DocumentObjectModelJavaLibraryPyM</module>
+
+        <module>../VisualStyleJavaLibraryPyM</module>
+
+        <module>../ConfigurationJavaLibraryPyM</module>
+
+        <module>../VisualTransformBaseJavaLibraryPyM</module>
+
+        <module>../CategoryBaseJavaLibraryPyM</module>
+        <module>../CategoryJavaLibraryPyM</module>
+
+        <module>../UserJavaLibraryPyM</module>
+
+        <module>../PaymentGatewayBaseJavaLibraryPyM</module>
+
+        <module>../data/vo/EntitiesBlisketVOJavaLibraryPyM</module>
+        <module>../PaymentGatewayJavaLibraryPyM</module>
+        <module>../data/vo/EntitiesOrderHistoryVOJavaLibraryPyM</module>
+        <module>../data/vo/EntityPaymentGatewayVOJavaLibraryPyM</module>
+        <module>../data/vo/EntityStoreFrontVOJavaLibraryPyM</module>
+
+        <module>../data/EntitiesBlisketBaseInterfacesJavaLibraryPyM</module>
+        <module>../data/EntitiesBlisketBaseJavaLibraryPyM</module>
+        
+        <module>../data/EntitiesAdvertisementBaseJavaLibraryPyM</module>
+        <module>../data/EntityOrderHistoryJavaLibraryPyM</module>
+        <module>../data/EntityPaymentGatewayJavaLibraryPyM</module>
+        <module>../data/EntityVisualTransformJavaLibraryPyM</module>
+        <module>../data/EntityUserJavaLibraryPyM</module>
+        <module>../data/EntityWorkflowJavaLibraryPyM</module>
+
+        <module>../SMTPConfigurationJavaLibraryPyM</module>
+        <module>../SMTPBaseJavaLibraryPyM</module>
+
+        <module>../VisualTransformJavaLibraryPyM</module>
+
+        <module>../../replace_these_stub_projects/allbinary_src/YourRuntimeEnvironmentJavaLibraryPyM</module>
+        <module>../GatewayJavaLibraryPyM</module>
+        
+        <module>../WorkflowBaseJavaLibraryPyM</module>
+        <module>../WorkflowJavaLibraryPyM</module>
+
+        <module>../IdGeneratorUsingFilesJavaLibraryPyM</module>
+        <module>../BlisketPreVOJavaLibraryPyM</module>
+
+        <!-- 
+        EntitiesOrderHistoryVOJavaLibrary
+        UserJavaLibrary
+        -->
+        
+        <module>../BlisketVOJavaLibraryPyM</module>
+
+        <module>../UserCommerceJavaLibraryPyM</module>
+
+        <module>../CustomizerValidatorsJavaLibraryPyM</module>
+
+        <!-- 
+        AllBinaryCacheForShiftOneJavaLibrary
+        AllBinaryJSECacheJavaLibrary
+        ColorJavaLibrary
+        ImageJavaLibrary
+        -->
+        
+        <module>../logic/data/file/FileMediaJ2SEJavaLibraryPyM</module>
+        <module>../BlisketBaseJavaLibraryPyM</module>
+
+        <module>../logging/LoggingGAEAllPyM</module>
+        <module>../BlisketJavaLibraryPyM</module>
+        
+    </modules>
+
+</project>
+

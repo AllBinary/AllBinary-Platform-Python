@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.allbinary</groupId>
+  <artifactId>GameJ2MELibraryPOMPy</artifactId>
+  <packaging>pom</packaging>
+  <!-- AllBinary Platform Version Start -->
+  <version>1.0.0-SNAPSHOT</version>
+  <!-- AllBinary Platform Version End -->
+
+  <name>GameJ2MELibraryPOMPy</name>
+  <url>http://www.allbinary.com/</url>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>AllBinary Snapshots Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <name>AllBinary Releases Nexus</name>
+            <url>https://nexus-allbinary.rhcloud.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
+
+
+
+    <modules>
+
+        <!--
+        NoGyroSensorLibrary
+
+        -->
+        <module>../../android/AndroidUtilJavaLibraryPyM</module>
+
+        <module>../../../allbinary_src/security/SimpleCryptLibraryPyM</module>
+        <!--
+        <module>../../../../working_thirdparty/security/BouncyCastleDESJavaLibraryPyM</module>
+        <module>../../../../working_thirdparty/communication/XmlRpc/XmlRpcJavaLibraryPyM</module>
+        -->
+        <module>../../../allbinary_src/TokenizerJavaLibraryPyM</module>
+        <module>../../../allbinary_src/security/BasicSecurityJavaLibraryPyM</module>
+        <module>../../../replace_these_stub_projects/security/YourCryptFileJavaLibraryPyM</module>
+        <module>../../../replace_these_stub_projects/security/YourSecurityJavaLibraryPyM</module>
+        <module>../../../replace_these_stub_projects/communication/YourXmlRpcJavaLibraryPyM</module>
+        <module>../../../replace_these_stub_projects/allbinary_src/J2MEOnlyJavaLibraryPyM</module>
+        <module>../../../replace_these_stub_projects/allbinary_src/J2MECompatibilityJavaLibraryPyM</module>
+        <module>../../../replace_these_stub_projects/allbinary_src/J2MEJsInteropCompatibilityJavaLibraryPyM</module>
+
+        <module>../../DebugJavaLibraryPyM</module>             
+        <module>../../ResourceLibraryPyM</module>
+        <module>../../ResourceJ2MEJavaLibraryPyM</module>
+        <module>../../AndroidResourceLibraryPyM</module>
+        <module>../../../allbinary_src/hardware/AndroidSystemJavaLibraryPyM</module>
+
+        <module>../../../game/behavior/ArtificialIntelligenceLibraryPyM</module>
+
+        <module>../../media/graphics/PlatformNullImageJavaLibraryPyM</module>
+        <module>../../media/graphics/ImageCacheBaseJ2MEJavaLibraryPyM</module>
+        <module>../../media/graphics/ImageCacheJ2MEJavaLibraryPyM</module>
+        <module>../../../graphics/opengl/OpenGLJ2MENoneJavaLibraryPyM</module>
+        <module>../../../graphics/opengl/OpenGLNoneJavaLibraryPyM</module>
+        <module>../../../graphics/opengl/OpenGLNoneOtherJavaLibraryPyM</module>
+        <module>../../../graphics/opengl/OpenGLNoneOther2JavaLibraryPyM</module>
+        <module>../../../graphics/opengl/OpenGLESBaseJ2MEJavaLibraryPyM</module>
+
+        <module>../../media/graphics/animation/AnimationLibraryPyM</module>
+        <module>../../media/graphics/animation/RotationAnimationJavaLibraryPyM</module>
+
+        <module>../../games/GameInputLibraryPyM</module>
+
+        <module>../../games/GameScoresBaseJavaLibraryPyM</module>
+        <module>../../games/GameScoresBaseJ2MELibraryPyM</module>
+
+        <module>../../statistics/ApplicationStatisticsHTMLLibraryPyM</module>
+        <!--
+        <module>../../games/GameConfigurationHTMLJavaLibraryPyM</module>
+        -->
+        <module>../../games/GameConfigurationJ2MEJavaLibraryPyM</module>   
+        <module>../../games/GameConfigurationJavaLibraryPyM</module>
+
+        <module>../../games/GameIntermissionLibraryPyM</module>
+
+        <module>../../GroupLibraryPyM</module>
+
+        <module>../../input/NoSensorJavaLibraryPyM</module>
+
+        <module>../../input/AllBinarySensorJavaLibraryPyM</module>
+
+        <module>../../input/platform/me/GameInputMEJavaLibraryPyM</module>
+        <module>../../input/platform/me/GameInputMEKeyOnlyJavaLibraryPyM</module>
+        <module>../../input/platform/me/GameInputMEMotionJavaLibraryPyM</module>
+        <module>../../input/platform/pc/GameInputPCBaseJavaLibraryPyM</module>
+        <module>../../input/platform/pc/GameInputPCJavaLibraryPyM</module>
+        <module>../../input/platform/pc/GameInputPCKeyOnlyJavaLibraryPyM</module>
+        <module>../../input/platform/pc/GameInputPCMotionJavaLibraryPyM</module>
+        <module>../../input/platform/pc/GameInputSwtJavaLibraryPyM</module>
+
+        <module>../../input/AllBinaryGyroSensorJavaLibraryPyM</module>
+        <module>../../input/MotionGestureJavaLibraryPyM</module>
+        
+        <module>../../input/MotionGestureBaseJavaLibraryPyM</module>
+
+        <module>../../games/GameInputPersistanceLibraryPyM</module>
+        <module>../../games/GameInputNoPersistanceLibraryPyM</module>
+        
+        <module>../../lib/VectorThreeDimensionalLibraryPyM</module>
+        <module>../../input/AllBinaryAccelerometerSensorJavaLibraryPyM</module>
+        <module>../../input/NoGyroSensorJavaLibraryPyM</module>
+        <module>../../input/JSEGyroSensorJavaLibraryPyM</module>
+        <!--
+        <module>../../input/android/</module>
+        <module>../../input/platform/android/GameInputAndroidBaseJavaLibraryPyM</module>
+        -->
+
+        <module>../../media/sound/BasicPlayerJavaLibraryPyM</module>
+        <module>../../media/sound/BasicPlayerMIDP2JavaLibraryPyM</module>
+        <module>../../media/sound/NoPlayerJavaLibraryPyM</module>
+        <module>../../media/sound/SoundJ2MELibraryPyM</module>
+
+        <module>../../media/motion/AllBinaryVibrationJavaLibraryPyM</module>
+        <module>../../media/motion/NoVibrateJavaLibraryPyM</module>
+        <module>../../media/motion/VibrateAndroidJavaLibraryPyM</module>
+
+        <module>../../media/graphics/NullCustomUIJavaLibraryPyM</module>
+        <module>../../media/graphics/NullCustomUIBaseJavaLibraryPyM</module>
+
+        <module>../../media/graphics/FormValidationJavaLibraryPyM</module>
+        
+        <module>../../media/graphics/FormJavaLibraryPyM</module>
+        <module>../../media/graphics/FormBaseJavaLibraryPyM</module>
+        <!--
+        <module>../../media/graphics/FormJMEJavaLibraryPyM</module>
+        -->
+        <module>../../../j2me/media/graphics/FormJMEJavaLibraryPyM</module>
+
+        <module>../../media/graphics/animation/AnimationResourceJavaLibraryPyM</module>
+        <module>../../media/graphics/animation/TransitionAnimationJavaLibraryPyM</module>
+        <module>../../media/graphics/animation/NoTransitionAnimationJavaLibraryPyM</module>
+        <!--
+        AndroidTransitionAnimationJavaLibraryM
+        -->
+        <module>../../media/graphics/animation/GameAnimationJavaLibraryPyM</module>
+        <module>../../games/GameResourceJavaLibraryPyM</module>
+        <module>../../games/GameSoundsJavaLibraryPyM</module>
+
+        <module>../../input/TouchInputLibraryP</module>
+
+        <module>../../media/MediaDataPyM</module>
+        <module>../../media/sound/NotDeviceSpecificNoMediaMIDP1LibraryPyM</module>
+
+        <module>../../../allbinary_src/content/ContentNoneJavaLibraryPyM</module>
+        <module>../../../allbinary_src/content/ContentAndroidJavaLibraryPyM</module>
+
+        <module>../../games/GameConfigurationFormJavaLibraryPyM</module>
+
+        <module>../../FullScreenNoneJavaLibraryPyM</module>
+        <!--
+        <module>../../FullScreenJavaLibraryPyM</module>
+        -->
+
+        <module>../../../physics/VelocityLibraryPyM</module>
+
+        <module>../../games/weapon/SoundsBasicWeaponsJavaLibraryPyM</module>
+
+        <module>../../lib/TrigJ2MELibraryPyM</module>
+
+        <module>../../media/graphics/geography/map/LayerPlacementLibraryPyM</module>
+        <module>../../media/graphics/layer/AllBinaryLayerJavaLibraryPyM</module>
+
+        <module>../../ScreenCaptureNoneJavaLibraryPyM</module>
+        
+        <module>../licensing/GameLicensingNullJavaLibraryPyM</module>
+        
+        <module>../../business/advertisement/AllBinaryAdvertisementClientJavaLibraryPyM</module>
+        <module>../../business/advertisement/AdvertisementClientNoneJavaLibraryPyM</module>
+
+        <module>../GameNotificationJavaLibraryPyM</module>
+
+        <module>../../../graphics/opengl/NoSWTJavaLibraryPyM</module>
+        <module>../../../graphics/opengl/SWTWithoutJOGLJavaLibraryPyM</module>
+        <module>../SWTJavaLibraryPyM</module>
+        <module>../GameJ2MELibraryPyM</module>
+        
+        <!--
+        <module>../GameJ2MEOptionalLibraryPOPyM</module>
+        -->
+    
+    </modules>
+
+</project>
+
