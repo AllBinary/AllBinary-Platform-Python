@@ -42,18 +42,18 @@
         
         <!-- Several Move to PostPlatforms -->
         
-        <module>../../media/sound/MusicJ2MEJavaLibraryPyM</module>
-        <module>../../media/sound/NullMusicAndroidJavaLibraryPyM</module>
-        <module>../../media/sound/MusicAndroidJavaLibraryPyM</module>
+        <!--<module>../../media/sound/MusicJ2MEJavaLibraryPyM</module>-->
+        <!--<module>../../media/sound/NullMusicAndroidJavaLibraryPyM</module>-->
+        <!--<module>../../media/sound/MusicAndroidJavaLibraryPyM</module>-->
 
         <!--
         <module>../../media/graphics/ImageCacheAndroidJavaLibraryPyM</module>
         -->
                 
         <!-- ../../../../working/allbinary_src/logic/data/file/FileAndroidJavaLibraryM -->
-        <module>../../../allbinary_src/logic/data/file/FileAndroidJavaLibraryPyM</module>
+        <!--<module>../../../allbinary_src/logic/data/file/FileAndroidJavaLibraryPyM</module>-->
         
-        <module>../../input/platform/android/MotionInputAndroidResourcesJavaLibraryPyM</module>
+        <!--<module>../../input/platform/android/MotionInputAndroidResourcesJavaLibraryPyM</module>-->
                 
     </modules>
 

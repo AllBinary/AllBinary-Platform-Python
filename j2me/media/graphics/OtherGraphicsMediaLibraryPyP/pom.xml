@@ -61,7 +61,7 @@
         <!--
         <module>../../graphics/animation/image/ImageHTMLJavaLibraryPyM</module>
         -->
-        <module>../../graphics/animation/image/ImageJ2SEJavaLibraryPyM</module>
+        <!--<module>../../graphics/animation/image/ImageJ2SEJavaLibraryPyM</module>-->
         <!--
         <module>../../graphics/animation/image/ImageAndroidJavaLibraryPyM</module>
         -->

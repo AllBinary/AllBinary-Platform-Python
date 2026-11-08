@@ -32,6 +32,10 @@
 
         <!--
         -->
+        <module>../working_thirdpartypython/embedded/j2me/microemulator/2_0_4/microemu-cldcPy</module>
+        <module>../working_thirdpartypython/embedded/j2me/microemulator/2_0_4/microemu-midpPy</module>
+        <module>../working_thirdpartypython/embedded/j2me/microemulator/2_0_4/microemu-extensions/microemu-jsr-135Py</module>
+        
         <module>./j2me/AllBinaryBaseLibraryPOPyM</module>
         <module>./j2me/AllBinaryJ2MELibraryP</module>
         <module>./AllBinaryPersistenceLibraryP</module>
@@ -45,9 +49,9 @@
         <module>./j2me/media/graphics/animation/image/AllBinaryHTMLImageAnimationRotationJavaLibraryPyM</module>
         <module>./j2me/media/graphics/animation/image/AllBinaryHTML2ImageAnimationRotationJavaLibraryPyM</module>
         -->
-        <module>./j2me/media/graphics/animation/image/AllBinaryJ2SEImageAnimationRotationJavaLibraryPyM</module>
-        <module>./j2me/games/Resources/sounds/release/GameSoundsJ2SEOggResourcesJavaLibraryPyM</module>
-        <module>./graphics/opengl/AllBinaryJOGLResourcesJavaLibraryPyM</module>
+        <!--<module>./j2me/media/graphics/animation/image/AllBinaryJ2SEImageAnimationRotationJavaLibraryPyM</module>-->
+        <!--<module>./j2me/games/Resources/sounds/release/GameSoundsJ2SEOggResourcesJavaLibraryPyM</module>-->
+        <!--<module>./graphics/opengl/AllBinaryJOGLResourcesJavaLibraryPyM</module>-->
 
     </modules>
 

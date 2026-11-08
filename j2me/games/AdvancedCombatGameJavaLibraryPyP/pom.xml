@@ -53,7 +53,7 @@
         <!--
         <module>../../../graphics/opengl/OpenGLESJavaLibraryPyM</module>
         -->
-        <module>../../../graphics/opengl/OpenGLJOGLJavaLibraryPyM</module>
+        <!--<module>../../../graphics/opengl/OpenGLJOGLJavaLibraryPyM</module>-->
         <module>../../../graphics/opengl/OpenGLESBaseJavaLibraryPyM</module>
 
         <!-- Not used in Platform Libraries -->

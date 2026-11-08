@@ -38,16 +38,16 @@
 <!--        <module>../j2me/games/platform/j2se/AllBinaryOnJ2SEBasePlatformJavaLibraryPyM</module>-->
         <module>../j2me/games/platform/j2se/AllBinaryOnJ2SEPlatformJavaLibraryPyM</module>
         
-        <module>../j2me/FullScreenJavaLibraryPyM</module>
+        <!--<module>../j2me/FullScreenJavaLibraryPyM</module>-->
 
-        <module>../j2me/SWTToJ2MELibraryPyM</module>
+        <!--<module>../j2me/SWTToJ2MELibraryPyM</module>-->
         
         <module>../j2me/media/graphics/ImageCacheOpenGLESJavaLibraryPyM</module>
         <module>../graphics/opengl/Min3dForNullJavaLibraryPyM</module>
         <module>../graphics/opengl/OpenGLESFileConfigurationJavaLibraryPyM</module>
         <module>../graphics/opengl/OpenGLESJavaLibraryPyM</module>
         <module>../j2me/media/graphics/animation/vector/SVGToAllBinaryJavaLibraryPyM</module>
-        <module>../j2me/media/graphics/animation/image/ImageSwtJ2SEJavaLibraryPyM</module>
+        <!--<module>../j2me/media/graphics/animation/image/ImageSwtJ2SEJavaLibraryPyM</module>-->
 
         <module>../j2me/media/graphics/layer/AllBinaryTiledLayerJavaLibraryPyM</module>        
         <module>../j2me/media/graphics/geography/map/GeographicMapLibraryPyM</module>

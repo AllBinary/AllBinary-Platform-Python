@@ -37,18 +37,18 @@
         <module>../allbinary_src/logic/BasePreloaderFileJavaLibraryPyM</module>
         <module>../allbinary_src/logic/data/file/FileJavaLibraryPyM</module>
         <module>../allbinary_src/logic/data/file/FileJ2SEJavaLibraryPyM</module>
-        <module>../allbinary_src/data/DataJavaLibraryPyM</module>
-        <module>../allbinary_src/logic/data/file/FileUnamedJavaLibraryPyM</module>
-        <module>../allbinary_src/logic/data/file/FileAdvancedJavaLibraryPyM</module>
-        <module>../allbinary_src/PreLoaderJavaLibraryPyM</module>
-        <module>../allbinary_src/FileInitInfoJavaLibraryPyM</module>
-        <module>../allbinary_src/PreLoaderFileJavaLibraryPyM</module>
-        <module>../allbinary_src/PreLoaderLicenseJavaLibraryPyM</module>
+        <!--<module>../allbinary_src/data/DataJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/logic/data/file/FileUnamedJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/logic/data/file/FileAdvancedJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/PreLoaderJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/FileInitInfoJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/PreLoaderFileJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/PreLoaderLicenseJavaLibraryPyM</module>-->
         <module>../j2me/PCResourceLibraryPyM</module>
         <module>../j2me/ProgressJ2MEJavaLibraryPyM</module>
         <module>../allbinary_src/licensing/ClientInfoBaseJavaLibraryPyM</module>
-        <module>../allbinary_src/licensing/RemoteXmlRpcJavaLibraryPyM</module>
-        <module>../allbinary_src/licensing/LicenseClientJavaLibraryPyM</module>
+        <!--<module>../allbinary_src/licensing/RemoteXmlRpcJavaLibraryPyM</module>-->
+        <!--<module>../allbinary_src/licensing/LicenseClientJavaLibraryPyM</module>-->
 
         <!--
         <module>../allbinary_src/PreLoaderLicenseJavaLibraryPyM</module>

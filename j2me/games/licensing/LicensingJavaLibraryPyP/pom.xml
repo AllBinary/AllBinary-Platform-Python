@@ -14,8 +14,8 @@
 
     <modules>
 
-        <module>../../platform/android/AndroidResourcesTempJavaLibraryPyM</module>
-        <module>../../../../allbinary_src/licensing/ClientInformationMobileLicensingRegistrationJavaLibraryPyM</module>
+        <!--<module>../../platform/android/AndroidResourcesTempJavaLibraryPyM</module>-->
+        <!--<module>../../../../allbinary_src/licensing/ClientInformationMobileLicensingRegistrationJavaLibraryPyM</module>-->
 
         <!--
         <module>../../../../../working/allbinary_src/licensing/LicenseRegistrationJavaLibraryPyM</module>

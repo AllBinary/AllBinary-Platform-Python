@@ -31,7 +31,7 @@
         NoGyroSensorLibrary
 
         -->
-        <module>../../android/AndroidUtilJavaLibraryPyM</module>
+        <!--<module>../../android/AndroidUtilJavaLibraryPyM</module>-->
 
         <module>../../../allbinary_src/security/SimpleCryptLibraryPyM</module>
         <!--
@@ -40,7 +40,7 @@
         -->
         <module>../../../allbinary_src/TokenizerJavaLibraryPyM</module>
         <module>../../../allbinary_src/security/BasicSecurityJavaLibraryPyM</module>
-        <module>../../../replace_these_stub_projects/security/YourCryptFileJavaLibraryPyM</module>
+        <!--<module>../../../replace_these_stub_projects/security/YourCryptFileJavaLibraryPyM</module>-->
         <module>../../../replace_these_stub_projects/security/YourSecurityJavaLibraryPyM</module>
         <module>../../../replace_these_stub_projects/communication/YourXmlRpcJavaLibraryPyM</module>
         <module>../../../replace_these_stub_projects/allbinary_src/J2MEOnlyJavaLibraryPyM</module>
@@ -50,8 +50,8 @@
         <module>../../DebugJavaLibraryPyM</module>             
         <module>../../ResourceLibraryPyM</module>
         <module>../../ResourceJ2MEJavaLibraryPyM</module>
-        <module>../../AndroidResourceLibraryPyM</module>
-        <module>../../../allbinary_src/hardware/AndroidSystemJavaLibraryPyM</module>
+        <!--<module>../../AndroidResourceLibraryPyM</module>-->
+        <!--<module>../../../allbinary_src/hardware/AndroidSystemJavaLibraryPyM</module>-->
 
         <module>../../../game/behavior/ArtificialIntelligenceLibraryPyM</module>
 

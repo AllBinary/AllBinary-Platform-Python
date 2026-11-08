@@ -33,14 +33,14 @@
         -->
         
         
-        <module>../AllBinaryGraphicsUserInterfaceJavaLibraryPyM</module>
+        <!--<module>../AllBinaryGraphicsUserInterfaceJavaLibraryPyM</module>-->
         
         <module>../../allbinary_src/logging/LogConfigTypeThickClientJavaLibraryPyM</module>
-        <module>../../allbinary_src/logging/GUILoggingPyM</module>
+        <!--<module>../../allbinary_src/logging/GUILoggingPyM</module>-->
                 
-        <module>../AllBinaryGraphicsJavaApplicationPyM</module>
+        <!--<module>../AllBinaryGraphicsJavaApplicationPyM</module>-->
         
-        <module>../ImageToolJavaApplicationPyM</module>
+        <!--<module>../ImageToolJavaApplicationPyM</module>-->
     </modules>
 
 </project>
