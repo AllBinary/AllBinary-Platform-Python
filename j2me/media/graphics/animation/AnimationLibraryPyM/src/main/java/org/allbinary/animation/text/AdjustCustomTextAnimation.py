@@ -26,6 +26,7 @@ class AdjustCustomTextAnimation(CustomTextAnimation):
     
 
     def __init__(self, text: str, fontSize: int, dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(text, fontSize, animationBehavior)
         self._init_fields()
         self.dx = dx
@@ -49,8 +50,9 @@ class AdjustCustomTextAnimation(CustomTextAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, x + self.dx, y + self.dy)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
 
 

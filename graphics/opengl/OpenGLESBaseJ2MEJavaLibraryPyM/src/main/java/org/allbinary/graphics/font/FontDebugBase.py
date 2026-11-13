@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #OpenGLESBaseJ2MEJavaLibrary
@@ -22,18 +23,26 @@ class FontDebugBase:
     
 
     def debugMetrics(self, currentFont: Font, convertedTextSize: float, displayMetrics: object, stringBuffer: StringMaker) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.logic.string.StringMaker import StringMaker
         pass
     
 
     def debugDpi(self, densityDpi: int, stringBuffer: StringMaker) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         pass
     
 
     def debugDimension(self, currentFont: Font, convertedTextSize: float, longestDimensionTotalPixels: int, stringBuffer: StringMaker) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.logic.string.StringMaker import StringMaker
         pass
 # from javax.microedition.lcdui.Font import Font
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-FontDebugBase.instanceBase = FontDebugBase()
+def _FontDebugBase_instanceBase() -> object:
+    return FontDebugBase()
+
+lazy_static(FontDebugBase, "instanceBase", _FontDebugBase_instanceBase)
 

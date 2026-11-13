@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MotionGestureConfigurationFactory:
-    config: MotionGestureConfiguration = MotionGestureConfiguration()
+    config: MotionGestureConfiguration = None
     
 
     def __init__(self) -> None:
@@ -30,4 +30,10 @@ class MotionGestureConfigurationFactory:
     def getInstance() -> MotionGestureConfiguration:
         return MotionGestureConfigurationFactory.config
 
+
+def _MotionGestureConfigurationFactory_config() -> object:
+    from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+    return MotionGestureConfiguration()
+
+lazy_static(MotionGestureConfigurationFactory, "config", _MotionGestureConfigurationFactory_config)
 

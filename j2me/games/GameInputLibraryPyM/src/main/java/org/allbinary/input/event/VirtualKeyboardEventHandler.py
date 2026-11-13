@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -24,6 +25,7 @@ class VirtualKeyboardEventHandler(BasicEventHandler):
     gameKeyEventHandler: VirtualKeyboardEventHandler = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         self.SHOW_EVENT: VirtualKeyboardEvent = VirtualKeyboardEvent(BooleanFactory.getInstance().TRUE)
         self.HIDE_EVENT: VirtualKeyboardEvent = VirtualKeyboardEvent(BooleanFactory.getInstance().FALSE)
     
@@ -40,6 +42,8 @@ class VirtualKeyboardEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         virtualKeyboardEventListenerInterface: VirtualKeyboardEventListenerInterface = eventListenerInterface
         virtualKeyboardEventListenerInterface.onVirtualKeyboardEvent(eventObject)
     
@@ -59,11 +63,14 @@ class VirtualKeyboardEventHandler(BasicEventHandler):
             self.fireEvent(self.HIDE_EVENT)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.CLOSE, e)
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
 
 
-VirtualKeyboardEventHandler.gameKeyEventHandler = VirtualKeyboardEventHandler()
+def _VirtualKeyboardEventHandler_gameKeyEventHandler() -> object:
+    return VirtualKeyboardEventHandler()
+
+lazy_static(VirtualKeyboardEventHandler, "gameKeyEventHandler", _VirtualKeyboardEventHandler_gameKeyEventHandler)
 

@@ -26,7 +26,8 @@ class NormalJ2MEGameInputMapping(J2MEGameInputMapping):
 
     def getDefault(self) -> InputToGameKeyMapping:
         from org.allbinary.game.input.NormalJ2MEDefaultGameInputMapping import NormalJ2MEDefaultGameInputMapping
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         return NormalJ2MEDefaultGameInputMapping().getInputMapping()
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StringValidationUtil:
     instance: StringValidationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
     
@@ -60,7 +62,7 @@ class StringValidationUtil:
     
 
     def isValidRequired(self, value: str, min: int, max: int) -> bool:
-        if value is None or len(value) < min or len(value) > max:
+        if len(value) < min or len(value) > max:
             return False
         return True
     
@@ -74,14 +76,14 @@ class StringValidationUtil:
     
 
     def isValidNotRequired(self, value: str, min: int, max: int) -> bool:
-        if value is not None:
+        if len(value) > 0:
             if len(value) < min or len(value) > max:
                 return False
         return True
     
 
     def isValidNotRequiredNumber(self, value: str, min: int, max: int) -> bool:
-        if value is not None:
+        if len(value) > 0:
             if ((value > self.stringUtil.NULL_STRING) - (value < self.stringUtil.NULL_STRING)) == 0 or len(value) < min or len(value) > max:
                 return False
             if not self.isNumber(value):
@@ -90,13 +92,16 @@ class StringValidationUtil:
     
 
     def isEmpty(self, string: str) -> bool:
-        if string is not None and ((string > self.stringUtil.NULL_STRING) - (string < self.stringUtil.NULL_STRING)) != 0 and ((string > self.stringUtil.EMPTY_STRING) - (string < self.stringUtil.EMPTY_STRING)) != 0:
+        if ((string > self.stringUtil.NULL_STRING) - (string < self.stringUtil.NULL_STRING)) != 0 and ((string > self.stringUtil.EMPTY_STRING) - (string < self.stringUtil.EMPTY_STRING)) != 0:
             return False
         else:
             return True
-from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.TsUtil import TsUtil
 from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-StringValidationUtil.instance = StringValidationUtil()
+def _StringValidationUtil_instance() -> object:
+    return StringValidationUtil()
+
+lazy_static(StringValidationUtil, "instance", _StringValidationUtil_instance)
 

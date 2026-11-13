@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
 from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
 
@@ -136,5 +137,8 @@ class VelocityProperties(BasicVelocityProperties, VelocityInterface):
         self.limitXYToForwardAndReverseMaxVelocity()
 
 
-VelocityProperties.NULL_VELOCITY_PROPERTIES = VelocityProperties(0, 0)
+def _VelocityProperties_NULL_VELOCITY_PROPERTIES() -> object:
+    return VelocityProperties(0, 0)
+
+lazy_static(VelocityProperties, "NULL_VELOCITY_PROPERTIES", _VelocityProperties_NULL_VELOCITY_PROPERTIES)
 

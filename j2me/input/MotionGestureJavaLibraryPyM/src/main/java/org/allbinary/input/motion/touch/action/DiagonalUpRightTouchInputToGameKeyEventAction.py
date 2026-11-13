@@ -15,24 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class DiagonalUpRightTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     
 
     @staticmethod
     def getInstance() -> GameKeyCompleteMotionGestureInputEvent:
+        from org.allbinary.logic.NullUtil import NullUtil
         if DiagonalUpRightTouchInputToGameKeyEventAction.instance == NullUtil.getInstance().NULL_OBJECT:
             DiagonalUpRightTouchInputToGameKeyEventAction.instance = DiagonalUpRightTouchInputToGameKeyEventAction()
         return DiagonalUpRightTouchInputToGameKeyEventAction.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         super().__init__("Diagonal Up Right Action", TouchMotionGestureFactory.getInstance().DIAGONAL_UP_RIGHT, PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping())
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _DiagonalUpRightTouchInputToGameKeyEventAction_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(DiagonalUpRightTouchInputToGameKeyEventAction, "instance", _DiagonalUpRightTouchInputToGameKeyEventAction_instance)
 

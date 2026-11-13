@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseInitInfoUtil:
@@ -77,5 +78,8 @@ class LicenseInitInfoUtil:
         return licenseInitInfo
 
 
-LicenseInitInfoUtil.instance = LicenseInitInfoUtil()
+def _LicenseInitInfoUtil_instance() -> object:
+    return LicenseInitInfoUtil()
+
+lazy_static(LicenseInitInfoUtil, "instance", _LicenseInitInfoUtil_instance)
 

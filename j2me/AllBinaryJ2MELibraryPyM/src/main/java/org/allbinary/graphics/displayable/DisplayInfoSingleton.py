@@ -15,12 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DisplayInfoSingleton:
     SINGLETON: DisplayInfoSingleton = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonLabels: CommonLabels = CommonLabels.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -67,6 +75,7 @@ class DisplayInfoSingleton:
     
 
     def __init__(self) -> None:
+        from org.allbinary.AndroidUtil import AndroidUtil
         self._init_fields()
         size: int = len(self.last)
         for index in range(0, size):
@@ -105,6 +114,11 @@ class DisplayInfoSingleton:
     
 
     def setLastSizeForce(self, aLastWidth: int, aLastHeight: int, reason: str) -> None:
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+        from org.allbinary.string.CommonLabels import CommonLabels
         stringMaker: StringMaker = StringMaker()
         self.logUtil.putF(str(stringMaker.append(CommonLabels.getInstance().START_LABEL).append(reason)), self, self.SET_LAST_SIZE_METHOD_NAME)
         aFullWidth: int = aLastWidth
@@ -168,6 +182,7 @@ class DisplayInfoSingleton:
     
 
     def add(self, reason: str) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringMaker: StringMaker = StringMaker()
         self.logUtil.putF(str(stringMaker.append(self.REASON).append(reason)), self, self.FIRE_METHOD_NAME)
         stringMaker.delete(0, stringMaker.length())
@@ -176,6 +191,7 @@ class DisplayInfoSingleton:
     
 
     def process(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             if self.list_.size() > 0:
                 self.processForced()
@@ -185,6 +201,10 @@ class DisplayInfoSingleton:
     
 
     def processForced(self) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+        from org.allbinary.graphics.displayable.event.LastDisplayChangeEventHandler import LastDisplayChangeEventHandler
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             swtJOGLProcessor: SWTJOGLProcessor = SWTJOGLProcessor.getInstance()
             swtJOGLProcessor.clear()
@@ -196,6 +216,14 @@ class DisplayInfoSingleton:
     
 
     def update(self, displayable: Displayable, reason: str) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+        from org.allbinary.string.CommonLabels import CommonLabels
         aLastWidth: int = displayable.getWidth()
         aLastHeight: int = displayable.getHeight()
         aFullWidth: int = aLastWidth
@@ -254,6 +282,7 @@ class DisplayInfoSingleton:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         return self.toStringAppend(stringBuffer)
 
@@ -262,6 +291,7 @@ class DisplayInfoSingleton:
     
 
     def toStringAppend(self, stringBuffer: StringMaker) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer.append(self.DISPLAY_INFO)
         stringBuffer.append(self.FULL)
         stringBuffer.append(self.commonLabels.WIDTH_LABEL)
@@ -365,25 +395,28 @@ class DisplayInfoSingleton:
     def getyOffset(self) -> int:
         return self.yOffset
 # from javax.microedition.lcdui.Displayable import Displayable
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
-from org.allbinary.graphics.displayable.event.LastDisplayChangeEventHandler import LastDisplayChangeEventHandler
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+# from org.allbinary.graphics.displayable.event.LastDisplayChangeEventHandler import LastDisplayChangeEventHandler
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.graphics.displayable.BaseScalable import BaseScalable
 
 
-DisplayInfoSingleton.SINGLETON = DisplayInfoSingleton()
+def _DisplayInfoSingleton_SINGLETON() -> object:
+    return DisplayInfoSingleton()
+
+lazy_static(DisplayInfoSingleton, "SINGLETON", _DisplayInfoSingleton_SINGLETON)
 

@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicColorFactory:
     instance: BasicColorFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from jsinterop.annotations.JsProperty import JsProperty
         self.NULL_COLOR: BasicColor = self.createInstanceARGB(255, 255, 255, 255, "null color")
         self.TAN: BasicColor = self.createInstance(0xE9D8B5)
         self.SKIN_PINK: BasicColor = self.createInstance(0xFDCECE)
@@ -57,35 +60,46 @@ class BasicColorFactory:
 
     @staticmethod
     def getInstance() -> BasicColorFactory:
+        from jsinterop.annotations.JsMethod import JsMethod
         return BasicColorFactory.instance
     
 
     def createInstance(self, value: int) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from jsinterop.annotations.JsMethod import JsMethod
         return BasicColor(BasicColorUtil.getInstance().ALPHA, value, StringUtil.getInstance().EMPTY_STRING)
     
 
     def createInstanceA(self, alphaValue: int, value: int) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from jsinterop.annotations.JsMethod import JsMethod
         return BasicColor(alphaValue, value, StringUtil.getInstance().EMPTY_STRING)
     
 
     def createInstanceAN(self, alphaValue: int, value: int, name: str) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
+        from jsinterop.annotations.JsMethod import JsMethod
         return BasicColor(alphaValue, value, name)
     
 
     def createInstanceARGB(self, alphaValue: int, r: int, g: int, b: int, name: str) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from jsinterop.annotations.JsMethod import JsMethod
         ALPHA_MASK: int = 0xFF000000
         return BasicColor(alphaValue, ((alphaValue << 24) & ALPHA_MASK) + ((r << 16) & 0x00FF0000) + ((g << 8) & 0x0000FF00) + (b & 0x000000FF), StringUtil.getInstance().EMPTY_STRING)
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.string.StringUtil import StringUtil
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
 
 
-BasicColorFactory.instance = BasicColorFactory()
+def _BasicColorFactory_instance() -> object:
+    return BasicColorFactory()
+
+lazy_static(BasicColorFactory, "instance", _BasicColorFactory_instance)
 

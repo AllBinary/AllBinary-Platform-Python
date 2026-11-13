@@ -21,11 +21,13 @@ from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeCl
 class XmlRpcRemoteHighScoresClient(XmlRpcAbeClient):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.page: str = None
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface, page: str, remoteMethod: str) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(clientInfo, remoteMethod)
         self._init_fields()
         self.page = page
@@ -34,6 +36,15 @@ class XmlRpcRemoteHighScoresClient(XmlRpcAbeClient):
 
     # throws Exception
     def get(self, anyType: object, cryptInterface: CryptInterface) -> object:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
+        from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
+        from org.apache.xmlrpc.XmlRpcException import XmlRpcException
         try:
             param: BasicArrayList = BasicArrayListD()
             serverUrl: str = self.getClientInfo().getLicenseServer(self.getServer())
@@ -47,11 +58,11 @@ class XmlRpcRemoteHighScoresClient(XmlRpcAbeClient):
             self.logUtil.putF(str(stringBuffer), self, self.commonStrings.GET)
             xmlRpcClient: XmlRpcClient = XmlRpcClient(serverUrl)
             self.setClient(xmlRpcClient)
-            xmlRpcClient.setBasicAuthentication(None, None)
+            xmlRpcClient.setBasicAuthentication(StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING)
             hashtable: ABHashtable[object, object] = anyType
             self.logUtil.putF(str(self.CLIENT_INFO) + str(hashtable), self, self.commonStrings.GET)
             param.add(hashtable)
-            result: object = xmlRpcClient.execute(self.getRemoteMethod(), param, cryptInterface)
+            result: object = xmlRpcClient.executeWithCrypt(self.getRemoteMethod(), param, cryptInterface)
             self.logUtil.putF(str(self.RESULT) + str(result), self, self.commonStrings.GET)
             self.isOnline = True
             return result
@@ -67,16 +78,17 @@ class XmlRpcRemoteHighScoresClient(XmlRpcAbeClient):
         except Exception as e:
             self.logUtil.put(self.UNKNOWN_ERROR, self, self.commonStrings.GET, e)
             return self.tryAnother(anyType)
+# from org.allbinary.logic.string.StringUtil import StringUtil
 # from java.io.IOException import IOException
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
-from org.apache.xmlrpc.XmlRpcException import XmlRpcException
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
+# from org.apache.xmlrpc.XmlRpcException import XmlRpcException
 
 

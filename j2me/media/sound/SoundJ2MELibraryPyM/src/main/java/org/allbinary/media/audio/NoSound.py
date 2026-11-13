@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.Sound import Sound
 
 
@@ -29,10 +30,14 @@ class NoSound(Sound):
 
     def __init__(self) -> None:
         from org.allbinary.media.audio.NoPlayer import NoPlayer
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(StringUtil.getInstance().EMPTY_STRING)
         self.setPlayerP(NoPlayer.NO_PLAYER)
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-NoSound.instance = NoSound()
+def _NoSound_instance() -> object:
+    return NoSound()
+
+lazy_static(NoSound, "instance", _NoSound_instance)
 

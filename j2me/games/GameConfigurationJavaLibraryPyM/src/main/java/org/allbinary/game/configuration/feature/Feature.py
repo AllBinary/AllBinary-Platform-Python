@@ -15,17 +15,18 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Feature:
-    hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
+    hashtable: ABHashtable[object, object] = None
 
     def _init_fields(self) -> None:
         self.name: str = None
     
 
     def __init__(self, name: str) -> None:
+        from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
         self._init_fields()
         self.name = name
         Feature.add(name, self)
@@ -51,7 +52,15 @@ class Feature:
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
+
+def _Feature_hashtable() -> object:
+    from org.allbinary.logic.StdUtil import StdUtil
+    from org.allbinary.util.ABHashtable import ABHashtable
+    return StdUtil.getInstance().createHashtable()
+
+lazy_static(Feature, "hashtable", _Feature_hashtable)
 

@@ -26,6 +26,7 @@ class AbeClientInformationInterface:
     
 
     def getOperatingSystemInterface(self) -> GenericOperatingSystem:
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         raise NotImplementedError()
     
 
@@ -46,6 +47,7 @@ class AbeClientInformationInterface:
     
 
     def getLicenseServers(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -58,6 +60,7 @@ class AbeClientInformationInterface:
     
 
     def toHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
     
 
@@ -66,6 +69,7 @@ class AbeClientInformationInterface:
     
 
     def isLargerOrDifferentServerList(self, vector: BasicArrayList) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -75,8 +79,8 @@ class AbeClientInformationInterface:
 
     def toShortString(self) -> str:
         raise NotImplementedError()
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

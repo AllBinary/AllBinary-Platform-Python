@@ -25,17 +25,23 @@ class RandomPatrolAI(BasePatrolAI):
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(hashtable, ownerLayerInterface, gameInput)
         self._init_fields()
         self.updateRandomDistance()
     
 
     def updateRandomDistance(self) -> None:
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
         self.currentDistance = MyRandomFactory.getInstance().getAbsoluteNextInt(int(self.maxDistance))
     
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         super().update()
         super().processKeyAI(self.keyDirection)
         if self.changedDirection:
@@ -48,10 +54,10 @@ class RandomPatrolAI(BasePatrolAI):
         super().nextDirection()
         self.changedDirection = True
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

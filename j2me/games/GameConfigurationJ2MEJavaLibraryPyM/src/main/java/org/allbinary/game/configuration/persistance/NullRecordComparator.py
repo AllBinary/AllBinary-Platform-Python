@@ -15,7 +15,8 @@
 
 from __future__ import annotations
 
-# from javax.microedition.rms.RecordComparator import RecordComparator
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.rms.RecordComparator import RecordComparator
 
 
 class NullRecordComparator(RecordComparator):
@@ -26,5 +27,8 @@ class NullRecordComparator(RecordComparator):
         return 0
 
 
-NullRecordComparator.NULL_RECORD_COMPARATOR = NullRecordComparator()
+def _NullRecordComparator_NULL_RECORD_COMPARATOR() -> object:
+    return NullRecordComparator()
+
+lazy_static(NullRecordComparator, "NULL_RECORD_COMPARATOR", _NullRecordComparator_NULL_RECORD_COMPARATOR)
 

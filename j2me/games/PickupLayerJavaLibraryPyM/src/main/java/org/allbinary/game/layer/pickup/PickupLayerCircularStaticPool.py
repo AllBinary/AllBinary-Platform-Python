@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.AllBinaryLayerCircularPool import AllBinaryLayerCircularPool
 
 
@@ -39,5 +40,8 @@ class PickupLayerCircularStaticPool(AllBinaryLayerCircularPool):
         return pickupLayer
 
 
-PickupLayerCircularStaticPool.SINGLETON = PickupLayerCircularStaticPool()
+def _PickupLayerCircularStaticPool_SINGLETON() -> object:
+    return PickupLayerCircularStaticPool()
+
+lazy_static(PickupLayerCircularStaticPool, "SINGLETON", _PickupLayerCircularStaticPool_SINGLETON)
 

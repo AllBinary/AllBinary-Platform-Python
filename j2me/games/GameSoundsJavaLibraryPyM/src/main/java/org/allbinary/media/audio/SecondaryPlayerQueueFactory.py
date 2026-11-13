@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.media.audio.PlayerQueue import PlayerQueue
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SecondaryPlayerQueueFactory:
-    SINGLETON: PlayerQueue = PlayerQueue(4)
+    SINGLETON: PlayerQueue = None
     
 
     @staticmethod
     def getInstance() -> PlayerQueue:
         return SecondaryPlayerQueueFactory.SINGLETON
 
+
+def _SecondaryPlayerQueueFactory_SINGLETON() -> object:
+    from org.allbinary.media.audio.PlayerQueue import PlayerQueue
+    return PlayerQueue(4)
+
+lazy_static(SecondaryPlayerQueueFactory, "SINGLETON", _SecondaryPlayerQueueFactory_SINGLETON)
 

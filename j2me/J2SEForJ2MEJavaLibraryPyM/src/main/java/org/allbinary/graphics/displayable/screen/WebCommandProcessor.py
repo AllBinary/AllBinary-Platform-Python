@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WebCommandProcessor:
     instance: WebCommandProcessor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.aboutCommandProcessor: AboutCommandProcessor = AboutCommandProcessor.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
@@ -35,6 +39,10 @@ class WebCommandProcessor:
     
 
     def process(self, midletCommandListener: CommandListener, command: Command, canvas: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.Command import Command
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             if Desktop.isDesktopSupported() and Desktop.getDesktop().isSupported(Desktop.Action.BROWSE):
                 Desktop.getDesktop().browse(URI(self.list_.removeAt(0)))
@@ -46,12 +54,15 @@ class WebCommandProcessor:
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.graphics.displayable.screen.AboutCommandProcessor import AboutCommandProcessor
 
 
-WebCommandProcessor.instance = WebCommandProcessor()
+def _WebCommandProcessor_instance() -> object:
+    return WebCommandProcessor()
+
+lazy_static(WebCommandProcessor, "instance", _WebCommandProcessor_instance)
 

@@ -24,14 +24,16 @@ class Angle:
     
 
     def __init__(self, angle: int) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.value = angle
     
 
     def getValue(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.value
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 

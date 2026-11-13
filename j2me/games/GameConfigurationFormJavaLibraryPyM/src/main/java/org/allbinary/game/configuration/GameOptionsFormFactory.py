@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameOptionsFormFactory:
     instance: GameOptionsFormFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,6 +37,10 @@ class GameOptionsFormFactory:
 
     def init(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> CommandForm:
         from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             return GameOptionsForm(commandListener, title, backgrounBasicColor, foregroundBasicColor)
         except Exception as e:
@@ -42,11 +48,14 @@ class GameOptionsFormFactory:
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.INIT, e)
             return CommandForm.getNullCommandForm()
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-GameOptionsFormFactory.instance = GameOptionsFormFactory()
+def _GameOptionsFormFactory_instance() -> object:
+    return GameOptionsFormFactory()
+
+lazy_static(GameOptionsFormFactory, "instance", _GameOptionsFormFactory_instance)
 

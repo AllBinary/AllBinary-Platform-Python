@@ -52,10 +52,12 @@ class TestInputExample(TestInputInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
 

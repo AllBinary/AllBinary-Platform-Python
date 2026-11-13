@@ -21,6 +21,7 @@ class AngleIncrementInfo:
     INCREMENT: str = "Inc: "
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.angleIncrement: int = None
         self.DOWN_FRAME: int = None
         self.UP_FRAME: int = None
@@ -31,6 +32,8 @@ class AngleIncrementInfo:
 
     def __init__(self, angleIncrement: int) -> None:
         from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.angleIncrement = angleIncrement
         angleFactory: AngleFactory = AngleFactory.getInstance()
@@ -42,14 +45,18 @@ class AngleIncrementInfo:
     
 
     def getFrameAngle(self, frame: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.frameUtil.getFrameAngle(frame, self.angleIncrement)
     
 
     def getAngleIncrement(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.angleIncrement
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from jsinterop.annotations.JsMethod import JsMethod
         return str(StringMaker().append(AngleIncrementInfo.INCREMENT).appendshort(self.angleIncrement))
 
     def __str__(self) -> str:
@@ -57,6 +64,8 @@ class AngleIncrementInfo:
     
 
     def getClosestGeneralDirection(self, angle: int) -> int:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from jsinterop.annotations.JsMethod import JsMethod
         closestDirection: int = SmallIntegerSingletonFactory.getInstance().getAt(360)
         if int(self.UP_FRAME) - angle < int(closestDirection) - angle:
             closestDirection = self.UP_FRAME
@@ -67,12 +76,12 @@ class AngleIncrementInfo:
         if int(self.RIGHT_FRAME) - angle < int(closestDirection) - angle:
             closestDirection = self.RIGHT_FRAME
         return int(closestDirection)
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from jsinterop.annotations.JsProperty import JsProperty
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 from org.allbinary.math.FrameUtil import FrameUtil
 
 

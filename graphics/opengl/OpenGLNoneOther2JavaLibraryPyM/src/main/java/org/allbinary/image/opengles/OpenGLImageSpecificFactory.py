@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLImageSpecificFactory:
@@ -30,10 +31,13 @@ class OpenGLImageSpecificFactory:
     @staticmethod
     def getInstance() -> OpenGLImageSpecificFactory:
         return OpenGLImageSpecificFactory.instance
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-OpenGLImageSpecificFactory.instance = OpenGLImageSpecificFactory()
+def _OpenGLImageSpecificFactory_instance() -> object:
+    return OpenGLImageSpecificFactory()
+
+lazy_static(OpenGLImageSpecificFactory, "instance", _OpenGLImageSpecificFactory_instance)
 

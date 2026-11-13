@@ -13,10 +13,11 @@ class CollisionThreedProcessor(CollisionProcessor):
     
 
     def isCollision(self, myLayer: AllBinaryLayer, myLayer2: AllBinaryLayer) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if myLayer2.getXP() >= myLayer.getX2() or myLayer2.getYP() >= myLayer.getY2() or myLayer2.getX2() <= myLayer.getXP() or myLayer2.getY2() <= myLayer.getYP() or myLayer2.getZP() < myLayer.getZ2() or myLayer2.getZ2() > myLayer.getZP():
             return False
         else:
             return True
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

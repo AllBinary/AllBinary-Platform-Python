@@ -21,6 +21,7 @@ class ItemPaintable:
     
 
     def paint(self, graphics: Graphics, currentIndex: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
 

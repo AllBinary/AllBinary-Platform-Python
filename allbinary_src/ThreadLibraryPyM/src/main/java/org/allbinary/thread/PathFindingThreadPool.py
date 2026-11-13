@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
@@ -49,5 +50,8 @@ class PathFindingThreadPool(ThreadPool):
         pass
 
 
-PathFindingThreadPool.instance = PathFindingThreadPool("PathFinding", 1, 1)
+def _PathFindingThreadPool_instance() -> object:
+    return PathFindingThreadPool("PathFinding", 1, 1)
+
+lazy_static(PathFindingThreadPool, "instance", _PathFindingThreadPool_instance)
 

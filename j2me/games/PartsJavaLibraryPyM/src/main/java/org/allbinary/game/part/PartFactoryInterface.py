@@ -23,8 +23,10 @@ class PartFactoryInterface:
 
     # throws Exception
     def getInstance(self, sourceLayerInterface: AllBinaryLayer, relativeRelationship: RelativeRelationship) -> PartInterface:
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         raise NotImplementedError()
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

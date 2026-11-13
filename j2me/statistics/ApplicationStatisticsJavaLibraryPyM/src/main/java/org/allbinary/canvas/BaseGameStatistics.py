@@ -20,6 +20,12 @@ from __future__ import annotations
 class BaseGameStatistics:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+        from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(2147483647)
         self.updateDelayHelper: TimeDelayHelper = TimeDelayHelper(2000)
         self.totalRefreshes: int = 0
@@ -72,6 +78,7 @@ class BaseGameStatistics:
     
 
     def getTimeDelayHelper(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         return self.timeDelayHelper
     
 
@@ -126,6 +133,8 @@ class BaseGameStatistics:
     
 
     def toStringAt(self, totalTime: int) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.STRING_ARRAY[0])
         stringBuffer.appendlong(totalTime)
@@ -152,13 +161,13 @@ class BaseGameStatistics:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
-from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+# from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

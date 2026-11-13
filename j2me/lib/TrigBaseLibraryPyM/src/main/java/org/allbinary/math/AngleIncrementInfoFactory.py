@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AngleIncrementInfoFactory:
@@ -47,5 +48,8 @@ class AngleIncrementInfoFactory:
 from org.allbinary.math.AngleFactory import AngleFactory
 
 
-AngleIncrementInfoFactory.instance = AngleIncrementInfoFactory()
+def _AngleIncrementInfoFactory_instance() -> object:
+    return AngleIncrementInfoFactory()
+
+lazy_static(AngleIncrementInfoFactory, "instance", _AngleIncrementInfoFactory_instance)
 

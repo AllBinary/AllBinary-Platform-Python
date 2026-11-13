@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLESImageTranslate:
@@ -27,13 +28,18 @@ class OpenGLESImageTranslate:
     
 
     def translate(self, gl: GL10, openGLESImage: OpenGLESImage, x: float, y: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def translate2(self, gl: GL10, openGLESImage: OpenGLESImage) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-OpenGLESImageTranslate.instance = OpenGLESImageTranslate()
+def _OpenGLESImageTranslate_instance() -> object:
+    return OpenGLESImageTranslate()
+
+lazy_static(OpenGLESImageTranslate, "instance", _OpenGLESImageTranslate_instance)
 

@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinaryEventObject:
@@ -26,21 +26,29 @@ class AllBinaryEventObject:
     
 
     def __init__(self, anyType: object) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.source = anyType
     
 
     def getSource(self) -> object:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.source
     
 
     def setSource(self, source: object) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.source = source
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.NullUtil import NullUtil
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsProperty import JsProperty
 
 
-AllBinaryEventObject.NULL_EVENT = AllBinaryEventObject(NullUtil.getInstance().NULL_OBJECT)
+def _AllBinaryEventObject_NULL_EVENT() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return AllBinaryEventObject(NullUtil.getInstance().NULL_OBJECT)
+
+lazy_static(AllBinaryEventObject, "NULL_EVENT", _AllBinaryEventObject_NULL_EVENT)
 

@@ -32,12 +32,13 @@ class GameRunnable(object):
     
 
     def run(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         DisplayInfoSingleton.getInstance().process()
     
 
     # throws Exception
     def processLoopSleep(self) -> None:
         time.sleep((self.waitInMillis) / 1000)
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseLoadingTypeFactory:
@@ -36,5 +37,8 @@ class LicenseLoadingTypeFactory:
 from org.allbinary.game.midlet.LicenseLoadingType import LicenseLoadingType
 
 
-LicenseLoadingTypeFactory.instance = LicenseLoadingTypeFactory()
+def _LicenseLoadingTypeFactory_instance() -> object:
+    return LicenseLoadingTypeFactory()
+
+lazy_static(LicenseLoadingTypeFactory, "instance", _LicenseLoadingTypeFactory_instance)
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnimationFactoryImageScaleUtil:
     instance: AnimationFactoryImageScaleUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.image.ImageJ2MEScaleUtil import ImageJ2MEScaleUtil
         self.imageScaleUtil: ImageJ2MEScaleUtil = ImageJ2MEScaleUtil.getInstance()
 
     def __init__(self) -> None:
@@ -34,6 +36,7 @@ class AnimationFactoryImageScaleUtil:
 
     # throws Exception
     def createImage(self, image: Image, width: int, height: int, scaleWidth: int, scaleHeight: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         scaledImage: Image = None
         if scaleWidth != 0 and scaleHeight != 0:
             scaleX: float = (float(scaleWidth)) / (float(width))
@@ -51,6 +54,9 @@ class AnimationFactoryImageScaleUtil:
 
     # throws Exception
     def processAdjust(self, baseImageAnimationFactory: BaseImageAnimationFactory) -> None:
+        from org.allbinary.animation.image.AnimationFactoryInitializationVisitor import AnimationFactoryInitializationVisitor
+        from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         scaleProperties: ScaleProperties = baseImageAnimationFactory.getScalePropertiesP()
         if scaleProperties.scaleWidth != 0 and scaleProperties.scaleHeight != 0:
             animationFactoryInitializationVisitor: AnimationFactoryInitializationVisitor = baseImageAnimationFactory.getAnimationFactoryInitializationVisitorP()
@@ -64,15 +70,18 @@ class AnimationFactoryImageScaleUtil:
         else:
             pass
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.image.AnimationFactoryInitializationVisitor import AnimationFactoryInitializationVisitor
-from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.ScaleProperties import ScaleProperties
-from org.allbinary.media.image.ImageJ2MEScaleUtil import ImageJ2MEScaleUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.animation.image.AnimationFactoryInitializationVisitor import AnimationFactoryInitializationVisitor
+# from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.media.image.ImageJ2MEScaleUtil import ImageJ2MEScaleUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AnimationFactoryImageScaleUtil.instance = AnimationFactoryImageScaleUtil()
+def _AnimationFactoryImageScaleUtil_instance() -> object:
+    return AnimationFactoryImageScaleUtil()
+
+lazy_static(AnimationFactoryImageScaleUtil, "instance", _AnimationFactoryImageScaleUtil_instance)
 

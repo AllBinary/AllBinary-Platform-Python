@@ -20,6 +20,10 @@ from __future__ import annotations
 class FeaturedResourceFactory:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -41,6 +45,11 @@ class FeaturedResourceFactory:
     # throws Exception
     def init(self, level: int) -> None:
         from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
+        from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         size: int = self.list_.size()
         for index in range(0, size):
             featureInterface: GameFeatureControlledInterface = self.list_.objectArray[index]
@@ -75,22 +84,27 @@ class FeaturedResourceFactory:
     
 
     def add(self, featureInterface: GameFeatureControlledInterface) -> None:
+        from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(StringUtil.getInstance().toString(featureInterface))), self, self.commonStrings.ADD)
         self.list_.add(featureInterface)
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
-from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
+# from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

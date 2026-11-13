@@ -23,7 +23,8 @@ class CompleteMotionGestureListenerInterface:
 
     # throws Exception
     def onMotionGestureCompleted(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

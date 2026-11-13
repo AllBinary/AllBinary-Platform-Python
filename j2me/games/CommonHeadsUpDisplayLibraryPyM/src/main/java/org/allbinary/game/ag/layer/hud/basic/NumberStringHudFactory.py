@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NumberStringHudFactory:
-    instance: object = NullUtil.getInstance()
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.NULL_NUMBER_STRING_HUD: NumberStringHud = self.createHud()
@@ -30,6 +30,7 @@ class NumberStringHudFactory:
 
     @staticmethod
     def getInstance() -> NumberStringHudFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if NumberStringHudFactory.instance == NullUtil.getInstance():
             NumberStringHudFactory.instance = NumberStringHudFactory()
         return NumberStringHudFactory.instance
@@ -37,6 +38,11 @@ class NumberStringHudFactory:
 
     def createHud(self) -> NumberStringHud:
         from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             return NumberStringHud(StringUtil.getInstance().EMPTY_STRING, 9, BasicHudFactory.getInstance().ABSOLUTE, 1, 0, BasicColorFactory.getInstance().NULL_COLOR)
         except Exception as e:
@@ -44,10 +50,17 @@ class NumberStringHudFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             logUtil.put(commonStrings.EXCEPTION, self, commonStrings.CONSTRUCTOR, e)
             raise RuntimeError()
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _NumberStringHudFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance()
+
+lazy_static(NumberStringHudFactory, "instance", _NumberStringHudFactory_instance)
 

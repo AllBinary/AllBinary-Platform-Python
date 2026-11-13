@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.AllBinarySensorListener import AllBinarySensorListener
 
 
@@ -23,6 +24,8 @@ class AllBinarySensor(AllBinarySensorListener):
     max: int = 100
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
@@ -59,11 +62,15 @@ class AllBinarySensor(AllBinarySensorListener):
     
 
     def onSensorChange(self) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log(self.commonStrings.NOT_IMPLEMENTED, self)
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AllBinarySensor.NULL_ALLBINARY_SENSOR = AllBinarySensor()
+def _AllBinarySensor_NULL_ALLBINARY_SENSOR() -> object:
+    return AllBinarySensor()
+
+lazy_static(AllBinarySensor, "NULL_ALLBINARY_SENSOR", _AllBinarySensor_NULL_ALLBINARY_SENSOR)
 

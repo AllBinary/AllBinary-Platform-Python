@@ -27,6 +27,7 @@ class SimpleDateFormat:
             pattern = pattern.replace("%f", f"{value.microsecond:06d}"[:3])
         return value.strftime(pattern)
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -55,5 +56,8 @@ class TimeStampUtil:
 # from java.util.Date import Date
 
 
-TimeStampUtil.instance = TimeStampUtil()
+def _TimeStampUtil_instance() -> object:
+    return TimeStampUtil()
+
+lazy_static(TimeStampUtil, "instance", _TimeStampUtil_instance)
 

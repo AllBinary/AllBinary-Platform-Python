@@ -23,9 +23,12 @@ class ImageAnimationSingletonInterfaceFactory(SingletonAnimationInterfaceFactory
 
     def __init__(self, animationInterface: Animation, width: int, height: int) -> None:
         from org.allbinary.animation.image.ImageAnimation import ImageAnimation
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.image.AnimationFrameToImageUtil import AnimationFrameToImageUtil
         super().__init__(ImageAnimation(AnimationFrameToImageUtil.getInstance().getInstanceWH(width, height, animationInterface), AnimationBehavior.getInstance()))
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.image.AnimationFrameToImageUtil import AnimationFrameToImageUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.image.AnimationFrameToImageUtil import AnimationFrameToImageUtil
 
 

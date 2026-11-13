@@ -21,6 +21,7 @@ from org.allbinary.logic.util.visitor.Visitor import Visitor
 class TextItemNumberVisitor(Visitor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,6 +31,10 @@ class TextItemNumberVisitor(Visitor):
     
 
     def visit(self, anyType: object) -> object:
+        from org.allbinary.game.input.TextNotificationUtil import TextNotificationUtil
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         value: str = anyType
         if len(value) < 2:
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
@@ -44,10 +49,10 @@ class TextItemNumberVisitor(Visitor):
                 return BooleanFactory.getInstance().FALSE
         else:
             return BooleanFactory.getInstance().FALSE
-from org.allbinary.game.input.TextNotificationUtil import TextNotificationUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.TextNotificationUtil import TextNotificationUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

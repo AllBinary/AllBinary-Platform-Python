@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchFeatureFactory:
@@ -37,5 +38,8 @@ class TouchFeatureFactory:
 from org.allbinary.game.configuration.feature.TouchFeature import TouchFeature
 
 
-TouchFeatureFactory.instance = TouchFeatureFactory()
+def _TouchFeatureFactory_instance() -> object:
+    return TouchFeatureFactory()
+
+lazy_static(TouchFeatureFactory, "instance", _TouchFeatureFactory_instance)
 

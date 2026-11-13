@@ -27,12 +27,15 @@ class WeaponLayerCircularPool(AllBinaryLayerCircularPool):
 
     # throws Exception
     def getInstanceWeaponLayer(self, sourceLayerInterface: AllBinaryLayer, x: int, y: int, z: int, angle: int, otherAngle: int, weaponProperties: WeaponProperties, scoreable: ScoreableInterface) -> WeaponLayer:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         weaponLayer: WeaponLayer = super().getNextInstance()
         weaponLayer.initXYZ(x, y, z)
         weaponLayer.init(sourceLayerInterface, angle, otherAngle, weaponProperties, scoreable)
         return weaponLayer
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

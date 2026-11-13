@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameKeyEventFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.TOUCH_BUTTON_SOURCE_ID: int = 2
         self.MOTION_GESTURE_SOURCE_ID: int = 3
@@ -31,6 +33,7 @@ class GameKeyEventFactory:
 
     @staticmethod
     def getInstance() -> GameKeyEventFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameKeyEventFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             GameKeyEventFactory.instance = GameKeyEventFactory()
         return GameKeyEventFactory.instance
@@ -42,6 +45,8 @@ class GameKeyEventFactory:
 
     def init(self) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.logic.NullUtil import NullUtil
         nullUtil: NullUtil = NullUtil.getInstance()
         size: int = InputFactory.getInstance().MAX
         index = self.MAX_SOURCES
@@ -53,17 +58,27 @@ class GameKeyEventFactory:
 
     # throws Exception
     def getInstanceForKey(self, anyType: GameKeyEventSourceInterface, key: int) -> GameKeyEvent:
+        from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
         gameKeyEvent: GameKeyEvent = self.ARRAY[anyType.getSourceId()][key]
         return gameKeyEvent
     
 
     # throws Exception
     def getInstanceForInput(self, anyType: GameKeyEventSourceInterface, input: Input) -> GameKeyEvent:
+        from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
+        from org.allbinary.game.input.Input import Input
         gameKeyEvent: GameKeyEvent = self.ARRAY[anyType.getSourceId()][input.getId()]
         return gameKeyEvent
-from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
+
+def _GameKeyEventFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameKeyEventFactory, "instance", _GameKeyEventFactory_instance)
 

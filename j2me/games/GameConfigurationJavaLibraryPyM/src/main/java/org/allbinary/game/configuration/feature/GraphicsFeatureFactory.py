@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GraphicsFeatureFactory:
     instance: GraphicsFeatureFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.NONE: GraphicsFeature = GraphicsFeature(StringUtil.getInstance().NULL_STRING)
         self.TRANSPARENT_IMAGE_CREATION: GraphicsFeature = GraphicsFeature("Transparent Image Creation")
         self.IMAGE_GRAPHICS: GraphicsFeature = GraphicsFeature("Image Graphics")
@@ -39,9 +41,12 @@ class GraphicsFeatureFactory:
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.game.configuration.feature.GraphicsFeature import GraphicsFeature
 
 
-GraphicsFeatureFactory.instance = GraphicsFeatureFactory()
+def _GraphicsFeatureFactory_instance() -> object:
+    return GraphicsFeatureFactory()
+
+lazy_static(GraphicsFeatureFactory, "instance", _GraphicsFeatureFactory_instance)
 

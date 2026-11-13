@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import random
 import time
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #Do not use in client code for money related things.
@@ -24,34 +25,41 @@ class MyRandomFactory:
     instance: MyRandomFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
         self.rand: random.Random = None
     
 
     @staticmethod
     def getInstance() -> MyRandomFactory:
+        from jsinterop.annotations.JsMethod import JsMethod
         return MyRandomFactory.instance
     
 
     def __init__(self) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.rand = random.Random(int(time.time() * 1000))
     
 
     def setSeed(self, seed: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.rand = random.Random(seed)
     
 
     def getNextInt(self, range: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         div: int = (2147483647 / range) + 1
         return int((self.rand.randint(-2147483648, 2147483647) / div))
     
 
     def getAbsoluteNextInt(self, range: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.mathUtil.abs(self.getNextInt(range))
     
 
     def getAbsoluteNextIntAllowZero(self, range: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         if range == 0:
             return 0
         else:
@@ -59,10 +67,12 @@ class MyRandomFactory:
     
 
     def shuffle(self, intArray: list[int]) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.shuffleTotal(intArray, len(intArray) * 7)
     
 
     def shuffleTotal(self, intArray: list[int], shuffleTotal: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         size: int = len(intArray)
         randomIndex: int = 0
         randomIndex2: int = 0
@@ -76,10 +86,12 @@ class MyRandomFactory:
     
 
     def shuffle2(self, intArray: list[int], intArray2: list[int]) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.shuffle2Total(intArray, intArray2, len(intArray) * 7)
     
 
     def shuffle2Total(self, intArray: list[int], intArray2: list[int], shuffleTotal: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         size: int = len(intArray)
         randomIndex: int = 0
         randomIndex2: int = 0
@@ -98,6 +110,9 @@ class MyRandomFactory:
 
     @staticmethod
     def main(args: list[str]) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         randomFactory: MyRandomFactory = MyRandomFactory.getInstance()
         stringBuilder: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -129,13 +144,16 @@ class MyRandomFactory:
             if not found:
                 raise RuntimeError()
 # from java.util.Random import Random
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-MyRandomFactory.instance = MyRandomFactory()
+def _MyRandomFactory_instance() -> object:
+    return MyRandomFactory()
+
+lazy_static(MyRandomFactory, "instance", _MyRandomFactory_instance)
 

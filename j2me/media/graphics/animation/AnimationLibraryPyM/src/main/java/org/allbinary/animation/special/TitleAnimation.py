@@ -22,6 +22,11 @@ from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
 class TitleAnimation(SpecialAnimation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
         self.deltaX: float = 0.0
         self.deltaY: float = 0.0
@@ -40,10 +45,16 @@ class TitleAnimation(SpecialAnimation):
 
     @staticmethod
     def createAnimation(animationInterfaceArray: list[IndexedAnimation], basicColorArray: list[BasicColor], dxArray: list[int], dyArray: list[int], y: int, width: int) -> TitleAnimation:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return TitleAnimation(animationInterfaceArray, basicColorArray, dxArray, dyArray, y, width, IndexedAnimationBehavior(1, 250))
     
 
     def __init__(self, animationInterfaceArray: list[IndexedAnimation], basicColorArray: list[BasicColor], dxArray: list[int], dyArray: list[int], y: int, width: int, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(animationBehavior)
         self._init_fields()
         self.lastFrameStartTime = self.systemWrapper.currentTimeMillis()
@@ -58,6 +69,7 @@ class TitleAnimation(SpecialAnimation):
     
 
     def nextFrame(self) -> None:
+        from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
         currentTime: int = self.systemWrapper.currentTimeMillis()
         totalTimeElapsed: int = currentTime - self.lastFrameStartTime
         indexedAnimationBehavior: IndexedAnimationBehavior = self.getAnimationBehavior()
@@ -69,6 +81,7 @@ class TitleAnimation(SpecialAnimation):
     
 
     def isComplete(self) -> bool:
+        from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
         indexedAnimationBehavior: IndexedAnimationBehavior = self.getAnimationBehavior()
         if indexedAnimationBehavior.loopTotal == -1 or indexedAnimationBehavior.loopIndex < indexedAnimationBehavior.loopTotal or self.getFrame() != 0:
             return False
@@ -81,6 +94,7 @@ class TitleAnimation(SpecialAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
@@ -102,6 +116,7 @@ class TitleAnimation(SpecialAnimation):
     
 
     def reset(self) -> None:
+        from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
         self.setLastFrame()
         indexedAnimationBehavior: IndexedAnimationBehavior = (self.getAnimationBehavior())
         indexedAnimationBehavior.reset()
@@ -113,11 +128,13 @@ class TitleAnimation(SpecialAnimation):
     
 
     def paintFrameXY(self, graphics: Graphics, frame: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.setFrame(frame)
         self.paintXY(graphics, x, y)
     
 
     def paintXY(self, graphics: Graphics, ax: int, ay: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         x: int = 0
         if self.widthP != -2147483648:
             x = ((self.displayInfoSingleton.getLastWidth() - self.widthP) / 2)
@@ -130,13 +147,13 @@ class TitleAnimation(SpecialAnimation):
                 self.basicSetColorUtil.setBasicColorP(graphics, self.basicColorArray[index])
             self.animationInterfaceArray[index].paintXY(graphics, deltaX, deltaY)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
 
 

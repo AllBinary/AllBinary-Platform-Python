@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderInitializer import ShaderInitializer
 
 
@@ -30,5 +31,8 @@ class SimpleShaderInitializer(ShaderInitializer):
         return SimpleShaderInitializer.instanceC
 
 
-SimpleShaderInitializer.instanceC = SimpleShaderInitializer()
+def _SimpleShaderInitializer_instanceC() -> object:
+    return SimpleShaderInitializer()
+
+lazy_static(SimpleShaderInitializer, "instanceC", _SimpleShaderInitializer_instanceC)
 

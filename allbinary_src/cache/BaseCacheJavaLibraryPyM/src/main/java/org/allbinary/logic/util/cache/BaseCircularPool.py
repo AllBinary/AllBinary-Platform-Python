@@ -22,6 +22,9 @@ class BaseCircularPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+        from jsinterop.annotations.JsProperty import JsProperty
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.NULL_CIRCULAR_INDEX_UTIL
         self.OBJECT_ARRAY: list[object] = NullUtil.getInstance().NULL_OBJECT_ARRAY
 
@@ -35,12 +38,14 @@ class BaseCircularPool:
             return self._getNextInstance_unlocked()
 
     def _getNextInstance_unlocked(self) -> object:
+        from jsinterop.annotations.JsMethod import JsMethod
         anyType: object = self.OBJECT_ARRAY[self.circularIndexUtil.getIndex()]
         self.circularIndexUtil.next()
         return anyType
     
 
     def init(self, allBinaryObjectFactoryInterface: AllBinaryObjectFactoryInterface) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.circularIndexUtil.setIndex(0)
         size: int = self.circularIndexUtil.getSize()
         for index in range(0, size):
@@ -49,11 +54,12 @@ class BaseCircularPool:
 
     # throws Exception
     def getInstance(self, index: int) -> object:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.OBJECT_ARRAY[index]
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 
 

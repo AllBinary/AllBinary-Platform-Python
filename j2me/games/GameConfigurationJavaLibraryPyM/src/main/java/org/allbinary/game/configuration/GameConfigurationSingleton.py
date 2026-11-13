@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameConfigurationSingleton:
     SINGLETON: GameConfigurationSingleton = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.list_: BasicArrayList = None
         self.hashtable: ABHashtable[object, object] = None
     
@@ -31,6 +34,8 @@ class GameConfigurationSingleton:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.list_ = BasicArrayListD()
         self.hashtable = StdUtil.getInstance().createHashtable()
@@ -41,6 +46,7 @@ class GameConfigurationSingleton:
     
 
     def getOptionsBasicArrayList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
     
 
@@ -49,12 +55,16 @@ class GameConfigurationSingleton:
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.hashtable
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-GameConfigurationSingleton.SINGLETON = GameConfigurationSingleton()
+def _GameConfigurationSingleton_SINGLETON() -> object:
+    return GameConfigurationSingleton()
+
+lazy_static(GameConfigurationSingleton, "SINGLETON", _GameConfigurationSingleton_SINGLETON)
 

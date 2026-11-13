@@ -23,6 +23,7 @@ class FillAnimation(IndexedAnimation):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
@@ -32,6 +33,7 @@ class FillAnimation(IndexedAnimation):
     
 
     def changeBasicColor(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getChangeBasicColor() is None or int(self.getChangeBasicColor()) != int(basicColor):
             changed = True
@@ -62,8 +64,9 @@ class FillAnimation(IndexedAnimation):
     
 
     def paint(self, g: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         g.drawRGB(self.pixelBuffer, 0, self.width, 0, 0, self.width, self.height, True)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

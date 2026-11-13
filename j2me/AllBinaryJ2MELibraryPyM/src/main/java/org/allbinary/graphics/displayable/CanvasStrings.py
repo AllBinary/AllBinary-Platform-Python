@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CanvasStrings:
     instance: CanvasStrings = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.CONSTRUCTOR: str = "MyCanvas::MyCanvas"
         self.PAUSE: str = "MyCanvas::pause"
         self.UN_PAUSE: str = "MyCanvas::unPause"
@@ -47,9 +50,12 @@ class CanvasStrings:
     @staticmethod
     def getInstance() -> CanvasStrings:
         return CanvasStrings.instance
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-CanvasStrings.instance = CanvasStrings()
+def _CanvasStrings_instance() -> object:
+    return CanvasStrings()
+
+lazy_static(CanvasStrings, "instance", _CanvasStrings_instance)
 

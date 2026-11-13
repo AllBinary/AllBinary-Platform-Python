@@ -22,9 +22,12 @@ class NumberLayersSequenceAIFactory:
 
     def getInstance(self, numberOfEnemiesLeft: int, artificialIntelligenceInterface: list[ArtificialIntelligenceInterface], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.game.ag.ai.sequence.NumberLayersSequenceAI import NumberLayersSequenceAI
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return NumberLayersSequenceAI(numberOfEnemiesLeft, artificialIntelligenceInterface, ownerLayerInterface, gameInput)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
 
 
@@ -23,6 +24,7 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
     NULL_GAME_CANVAS_RUNNABLE: NullGameCanvasRunnable = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.state.GameStateFactory import GameStateFactory
         self.gameStateFactory: GameStateFactory = GameStateFactory.getInstance()
 
     def __init__(self) -> None:
@@ -30,6 +32,7 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
     
 
     def getTitle(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
@@ -68,21 +71,27 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         pass
     
 
     # throws Exception
     def getCurrentStateHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
     
 
     # throws Exception
     def getLoadStateHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
     
 
     # throws Exception
     def setLoadStateHashtable(self, hashtable: ABHashtable[object, object]) -> None:
+        from org.allbinary.util.ABHashtable import ABHashtable
         pass
     
 
@@ -92,22 +101,27 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
 
     # throws Exception
     def setGameState(self, gameState: GameState) -> None:
+        from org.allbinary.game.state.GameState import GameState
         pass
     
 
     def getGameState(self) -> GameState:
+        from org.allbinary.game.state.GameState import GameState
         return self.gameStateFactory.NO_GAME_STATE
     
 
     def itemStateChanged(self, item: Item) -> None:
+        from javax.microedition.lcdui.Item import Item
         pass
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -129,12 +143,15 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Item import Item
-from org.allbinary.game.state.GameState import GameState
-from org.allbinary.game.state.GameStateFactory import GameStateFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.state.GameState import GameState
+# from org.allbinary.game.state.GameStateFactory import GameStateFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-NullGameCanvasRunnable.NULL_GAME_CANVAS_RUNNABLE = NullGameCanvasRunnable()
+def _NullGameCanvasRunnable_NULL_GAME_CANVAS_RUNNABLE() -> object:
+    return NullGameCanvasRunnable()
+
+lazy_static(NullGameCanvasRunnable, "NULL_GAME_CANVAS_RUNNABLE", _NullGameCanvasRunnable_NULL_GAME_CANVAS_RUNNABLE)
 

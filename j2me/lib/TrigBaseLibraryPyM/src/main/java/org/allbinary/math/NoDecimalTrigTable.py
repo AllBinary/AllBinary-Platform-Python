@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NoDecimalTrigTable:
     instance: NoDecimalTrigTable = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
+        from jsinterop.annotations.JsProperty import JsProperty
         self.mathUtil: MathUtil = MathUtil.getInstance()
         self.noDecimalSin: list[int] = None
         self.noDecimalCos: list[int] = None
@@ -30,11 +33,13 @@ class NoDecimalTrigTable:
 
     @staticmethod
     def getInstance() -> NoDecimalTrigTable:
+        from jsinterop.annotations.JsMethod import JsMethod
         return NoDecimalTrigTable.instance
     
 
     def __init__(self) -> None:
         from org.allbinary.math.AngleFactory import AngleFactory
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         TOTAL_ANGLE: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         MAX_VALUE: int = (int(2147483647))
@@ -1125,14 +1130,17 @@ class NoDecimalTrigTable:
     
 
     def sin(self, angle: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.noDecimalSin[angle]
     
 
     def cos(self, angle: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.noDecimalCos[angle]
     
 
     def tan(self, angle: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.noDecimalTan[angle]
     
 
@@ -1140,6 +1148,9 @@ class NoDecimalTrigTable:
     def antiTan(self, dx: int, dy: int) -> int:
         from org.allbinary.math.PositionStrings import PositionStrings
         from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         MAX_VALUE: int = (int(2147483647))
         MIN_VALUE: int = (int(-2147483648))
         ratio: int = (MAX_VALUE - 1)
@@ -1187,6 +1198,11 @@ class NoDecimalTrigTable:
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.PositionStrings import PositionStrings
         from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         METHOD_NAME: str = "antiTanDebug"
         TARGET_ANGLE: str = " Targeting angle: "
         stringMaker: StringMaker = StringMaker()
@@ -1216,16 +1232,19 @@ class NoDecimalTrigTable:
                 PreLogUtil.put(str(stringMaker.append(CommonLabels.getInstance().INDEX_LABEL).appendint(index).append(" index2: ").appendint(index2).append(PositionStrings.getInstance().DX_LABEL).appendint(dx[index]).append(PositionStrings.getInstance().DY_LABEL).appendint(dy[index2]).append(TARGET_ANGLE).appendshort(angleOfTarget).append(CommonSeps.getInstance().EQUALS).appendshort(((int(angle.getValue()) + 32768) % 65536 - 32768))), self, METHOD_NAME)
         angleOfTarget = self.antiTan(dx[0], dy[0])
         return angleOfTarget
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsProperty import JsProperty
 
 
-NoDecimalTrigTable.instance = NoDecimalTrigTable()
+def _NoDecimalTrigTable_instance() -> object:
+    return NoDecimalTrigTable()
+
+lazy_static(NoDecimalTrigTable, "instance", _NoDecimalTrigTable_instance)
 

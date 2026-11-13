@@ -22,6 +22,7 @@ class TopULayerBounds(LayerBounds):
     
 
     def __init__(self, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         super().__init__(rectangle)
     
 
@@ -32,6 +33,6 @@ class TopULayerBounds(LayerBounds):
             boundsVisitorInterface.minX()
         if boundsVisitorInterface.getY() < self.rectangle.getPoint().getY():
             boundsVisitorInterface.minY()
-from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.Rectangle import Rectangle
 
 

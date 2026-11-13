@@ -26,6 +26,8 @@ class SoftwareInformation:
     
 
     def __init__(self, name: str, version: str, shortName: str) -> None:
+        from org.allbinary.KotlinUtil import KotlinUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self._init_fields()
         self.name = name
         self.version = version
@@ -45,6 +47,8 @@ class SoftwareInformation:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         NAME: str = "Name: "
         VERSION: str = "Version: "
         stringBuffer: StringMaker = StringMaker()
@@ -57,8 +61,8 @@ class SoftwareInformation:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.KotlinUtil import KotlinUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.KotlinUtil import KotlinUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

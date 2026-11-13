@@ -27,8 +27,10 @@ class Special5GameInputInterfaceProcessor(SpecialGameInputInterfaceProcessor):
 
     # throws Exception
     def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.specialGameInputInterface.special5(allbinaryLayerManager, gameKeyEvent)
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

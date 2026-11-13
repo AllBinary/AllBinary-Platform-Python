@@ -22,11 +22,13 @@ class ForcedLogUtil:
 
     @staticmethod
     def log(message: str, anyType: object) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             raise Exception(message)
         except Exception as e:
             PreLogUtil.putOE(CommonStrings.getInstance().EXCEPTION, anyType, "log", e)
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 
 

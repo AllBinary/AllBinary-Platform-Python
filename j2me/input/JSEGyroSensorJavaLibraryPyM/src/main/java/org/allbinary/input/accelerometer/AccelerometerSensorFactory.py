@@ -25,6 +25,8 @@ class AccelerometerSensorFactory:
     @staticmethod
     def init() -> None:
         from org.allbinary.input.accelerometer.NoAccelerometerSensor import NoAccelerometerSensor
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
         features: Features = Features.getInstance()
         sensorFeatureFactory: SensorFeatureFactory = SensorFeatureFactory.getInstance()
         if features.isFeature(sensorFeatureFactory.ORIENTATION_SENSORS):
@@ -39,9 +41,10 @@ class AccelerometerSensorFactory:
 
     @staticmethod
     def getInstance() -> AllBinaryOrientationSensor:
+        from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
         return AccelerometerSensorFactory.allBinaryAccelerometerSensor
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
-from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+# from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
 
 

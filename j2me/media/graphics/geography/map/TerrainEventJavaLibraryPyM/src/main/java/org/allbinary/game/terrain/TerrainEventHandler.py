@@ -15,19 +15,22 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
 class TerrainEventHandler(BasicEventHandler):
-    hashtable: ABHashtable[object, object] = StdUtil.getInstance().NULL_TABLE
+    hashtable: ABHashtable[object, object] = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
     @staticmethod
     def init() -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
         TerrainEventHandler.hashtable = StdUtil.getInstance().createHashtable()
     
 
@@ -56,12 +59,15 @@ class TerrainEventHandler(BasicEventHandler):
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     # throws Exception
     def fireEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -74,13 +80,23 @@ class TerrainEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         terrainEventListenerInterface: TerrainEventListenerInterface = eventListenerInterface
         terrainEventListenerInterface.onTerrainEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _TerrainEventHandler_hashtable() -> object:
+    from org.allbinary.logic.StdUtil import StdUtil
+    from org.allbinary.util.ABHashtable import ABHashtable
+    return StdUtil.getInstance().NULL_TABLE
+
+lazy_static(TerrainEventHandler, "hashtable", _TerrainEventHandler_hashtable)
 

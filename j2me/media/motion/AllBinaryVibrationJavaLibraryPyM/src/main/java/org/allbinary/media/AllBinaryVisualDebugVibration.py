@@ -22,6 +22,11 @@ from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
 class AllBinaryVisualDebugVibration(AllBinaryVibrationME, UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(2147483647)
         self.VIBRATING: str = "Vibrating"
@@ -35,6 +40,9 @@ class AllBinaryVisualDebugVibration(AllBinaryVibrationME, UpdateMyFontInterface)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.width = font.stringWidth(self.VIBRATING)
         self.myFontProcessor = MyFontProcessor.getInstance()
@@ -45,16 +53,17 @@ class AllBinaryVisualDebugVibration(AllBinaryVibrationME, UpdateMyFontInterface)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         if self.timeDelayHelper.isTimeTNT():
             self.timeDelayHelper.delay = 2147483647
             self.myFontProcessor.process(graphics)
             graphics.drawString(self.VIBRATING, self.displayInfoSingleton.getLastHalfWidth() - (self.width >> 1), 0, self.anchor)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

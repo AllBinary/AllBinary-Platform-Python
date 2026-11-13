@@ -24,6 +24,8 @@ class LaptopDefaultGameInputMapping(PersistentInputMapping):
     def __init__(self) -> None:
         from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         super().__init__(GamePersistanceStrings.getInstance().DEFAULT_INPUT_MAPPING_RECORD_ID)
         inputToGameKeyMapping: InputToGameKeyMapping = self.getInputMapping()
         pcKeyFactory: PCKeyFactory = PCKeyFactory.getInstance()
@@ -75,7 +77,7 @@ class LaptopDefaultGameInputMapping(PersistentInputMapping):
         inputToGameKeyMapping.add(gameKeyFactory.KEY_STAR, pcKeyFactory.STAR)
         inputToGameKeyMapping.add(gameKeyFactory.LEVEL_DOWN, pcKeyFactory.COMMA)
         inputToGameKeyMapping.add(gameKeyFactory.LEVEL_UP, pcKeyFactory.PERIOD)
-from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
 

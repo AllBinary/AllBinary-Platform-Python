@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.Canvas import Canvas
 
 
@@ -22,7 +23,8 @@ class NullCanvas(Canvas):
         pass
     
 
-    def getCommandStack(self) -> list:
+    def getCommandStack(self) -> Stack[object]:
+        from java.util.Stack import Stack
         raise RuntimeError()
     
 
@@ -96,5 +98,8 @@ class NullCanvas(Canvas):
 # from java.util.Stack import Stack
 
 
-NullCanvas.NULL_CANVAS = NullCanvas()
+def _NullCanvas_NULL_CANVAS() -> object:
+    return NullCanvas()
+
+lazy_static(NullCanvas, "NULL_CANVAS", _NullCanvas_NULL_CANVAS)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class DemoGameMidletEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         demoGameMidletEventListener: DemoGameMidletEventListener = eventListenerInterface
         demoGameMidletEventListener.onDemoGameMidletEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-DemoGameMidletEventHandler.gameKeyEventHandler = DemoGameMidletEventHandler()
+def _DemoGameMidletEventHandler_gameKeyEventHandler() -> object:
+    return DemoGameMidletEventHandler()
+
+lazy_static(DemoGameMidletEventHandler, "gameKeyEventHandler", _DemoGameMidletEventHandler_gameKeyEventHandler)
 

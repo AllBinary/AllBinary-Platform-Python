@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -24,6 +25,8 @@ class LayerManagerEventHandler(BasicEventHandler):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
         self.CREATE: str = "Create"
         self.DELETE: str = "Delete"
@@ -50,12 +53,15 @@ class LayerManagerEventHandler(BasicEventHandler):
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     # throws Exception
     def fireEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -72,6 +78,10 @@ class LayerManagerEventHandler(BasicEventHandler):
             return self._fireDeleteEvent_unlocked(eventObject)
 
     def _fireDeleteEvent_unlocked(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -82,27 +92,32 @@ class LayerManagerEventHandler(BasicEventHandler):
         eventListenerInterfaceList: BasicArrayList = self.eventListenerInterfaceList
         eventListenerInterface: EventListenerInterface = None
         layerManagerEventListenerInterface: LayerManagerEventListenerInterface = None
-        index: int = 0
-        while index < eventListenerInterfaceList.size():
+        listenerIndex: int = 0
+        while listenerIndex < eventListenerInterfaceList.size():
             try:
-                eventListenerInterface = eventListenerInterfaceList.objectArray[index]
+                eventListenerInterface = eventListenerInterfaceList.objectArray[listenerIndex]
                 layerManagerEventListenerInterface = (eventListenerInterface)
                 layerManagerEventListenerInterface.onDeleteLayerManagerEvent(eventObject)
             except Exception as e:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, EventStrings.getInstance().FIRE_EVENT, e)
-            index += 1
+            listenerIndex += 1
     
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         layerManagerEventListenerInterface: LayerManagerEventListenerInterface = (eventListenerInterface)
         layerManagerEventListenerInterface.onCreateLayerManagerEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-LayerManagerEventHandler.instance = LayerManagerEventHandler()
+def _LayerManagerEventHandler_instance() -> object:
+    return LayerManagerEventHandler()
+
+lazy_static(LayerManagerEventHandler, "instance", _LayerManagerEventHandler_instance)
 

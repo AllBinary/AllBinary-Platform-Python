@@ -22,6 +22,7 @@ class UpdateMyFontInterface:
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         raise NotImplementedError()
 # from javax.microedition.lcdui.Graphics import Graphics
 

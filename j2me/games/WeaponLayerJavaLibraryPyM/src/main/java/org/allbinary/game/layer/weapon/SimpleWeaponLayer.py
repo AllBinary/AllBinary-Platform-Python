@@ -24,20 +24,29 @@ class SimpleWeaponLayer(WeaponLayer):
     # throws Exception
     @staticmethod
     def createDestroyed() -> Animation:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
+        from org.allbinary.game.combat.damage.ExplosionResources import ExplosionResources
         return FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().getProcedural(ExplosionResources.getInstance().THIRD_EXPLOSION_RESOURCE).getInstanceAnimation(NullIndexedAnimationFactory.getFactoryInstance().getInstance(0))
     
 
     def __init__(self, name: str, remoteInfo: RemoteInfo, multiPlayerType: int, movement: Movement, animationInterface: Animation, destroyedAnimationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
         from org.allbinary.game.layer.weapon.CollidableWeaponBehavior import CollidableWeaponBehavior
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.physics.movement.Movement import Movement
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, remoteInfo, multiPlayerType, movement, animationInterface, destroyedAnimationInterface, rectangle, viewPosition)
         self.setCollidableInferface(CollidableWeaponBehavior(True))
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
-from org.allbinary.game.combat.damage.ExplosionResources import ExplosionResources
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.physics.movement.Movement import Movement
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
+# from org.allbinary.game.combat.damage.ExplosionResources import ExplosionResources
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.physics.movement.Movement import Movement
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

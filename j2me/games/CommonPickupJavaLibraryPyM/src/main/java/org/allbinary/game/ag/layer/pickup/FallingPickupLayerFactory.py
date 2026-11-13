@@ -24,8 +24,10 @@ class FallingPickupLayerFactory(AllBinaryLayerFactoryInterface):
     # throws Exception
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.game.ag.layer.pickup.FallingPickupLayer import FallingPickupLayer
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return FallingPickupLayer(RemoteInfo.REMOTE_INFO)
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

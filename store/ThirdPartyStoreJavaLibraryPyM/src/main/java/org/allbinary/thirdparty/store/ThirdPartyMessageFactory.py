@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThirdPartyMessageFactory:
@@ -34,5 +35,8 @@ class ThirdPartyMessageFactory:
         return ThirdPartyMessageFactory.instance
 
 
-ThirdPartyMessageFactory.instance = ThirdPartyMessageFactory()
+def _ThirdPartyMessageFactory_instance() -> object:
+    return ThirdPartyMessageFactory()
+
+lazy_static(ThirdPartyMessageFactory, "instance", _ThirdPartyMessageFactory_instance)
 

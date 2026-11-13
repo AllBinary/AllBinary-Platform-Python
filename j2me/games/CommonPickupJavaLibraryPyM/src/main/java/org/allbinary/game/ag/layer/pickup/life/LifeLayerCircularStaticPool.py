@@ -22,19 +22,23 @@ class LifeLayerCircularStaticPool(AllBinaryLayerCircularPool):
     
 
     def __init__(self, allbinaryLayerFactoryInterface: AllBinaryLayerFactoryInterface, total: int) -> None:
+        from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
         super().__init__()
         super().initAllBinaryLayerCircularPool(allbinaryLayerFactoryInterface, total)
     
 
     # throws Exception
     def visit(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.game.ag.life.Life import Life
+        from org.allbinary.game.ag.life.LifeInterfaceCompositeInterface import LifeInterfaceCompositeInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         lifeLayer: LifeLayer = self.getNextInstance()
         lifeInterfaceCompositeInterface: LifeInterfaceCompositeInterface = sourceLayerInterface
         lifeInterface: Life = lifeInterfaceCompositeInterface.getLifeInterface()
         lifeLayer.visit(lifeInterface)
-from org.allbinary.game.ag.life.Life import Life
-from org.allbinary.game.ag.life.LifeInterfaceCompositeInterface import LifeInterfaceCompositeInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
+# from org.allbinary.game.ag.life.Life import Life
+# from org.allbinary.game.ag.life.LifeInterfaceCompositeInterface import LifeInterfaceCompositeInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
 
 

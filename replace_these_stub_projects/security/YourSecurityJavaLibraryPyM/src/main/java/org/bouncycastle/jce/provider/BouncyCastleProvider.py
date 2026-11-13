@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-# from java.security.Provider import Provider
+from java.security.Provider import Provider
 
 
 class BouncyCastleProvider(Provider):

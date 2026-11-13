@@ -22,6 +22,7 @@ class MyCommandInterface:
     
 
     def addCommand(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         raise NotImplementedError()
     
 

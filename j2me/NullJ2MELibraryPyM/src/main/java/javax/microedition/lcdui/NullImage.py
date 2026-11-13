@@ -15,11 +15,17 @@
 
 from __future__ import annotations
 
-from javax.microedition.lcdui.Image import Image
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullImage:
     NULL_IMAGE_ARRAY: list[Image] = [None] * (0)
-    NULL_IMAGE: Image = Image()
+    NULL_IMAGE: Image = None
 
+
+def _NullImage_NULL_IMAGE() -> object:
+    from javax.microedition.lcdui.Image import Image
+    return Image()
+
+lazy_static(NullImage, "NULL_IMAGE", _NullImage_NULL_IMAGE)
 

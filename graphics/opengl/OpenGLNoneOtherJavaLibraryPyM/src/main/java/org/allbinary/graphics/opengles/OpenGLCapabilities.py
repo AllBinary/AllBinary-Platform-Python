@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLCapabilities:
     instance: OpenGLCapabilities = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        self.CUSTOM_GL_SURFACE_VIEW: bool = True
         self.VERSION_1_0: str = "1.0"
         self.VERSION_1_1: str = "1.1"
         self.VERSION_2_0: str = "2.0"
@@ -43,6 +46,10 @@ class OpenGLCapabilities:
         self._init_fields()
     
 
+    def isInitialized(self) -> bool:
+        return True
+    
+
     def initCapabilities(self, gl: object) -> None:
         pass
     
@@ -61,8 +68,11 @@ class OpenGLCapabilities:
 
     def isTextureSizeValid(self, widthAndHeight: int) -> bool:
         return True
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-OpenGLCapabilities.instance = OpenGLCapabilities()
+def _OpenGLCapabilities_instance() -> object:
+    return OpenGLCapabilities()
+
+lazy_static(OpenGLCapabilities, "instance", _OpenGLCapabilities_instance)
 

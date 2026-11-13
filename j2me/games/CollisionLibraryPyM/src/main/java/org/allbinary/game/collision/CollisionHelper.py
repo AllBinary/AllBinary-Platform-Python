@@ -20,25 +20,30 @@ from __future__ import annotations
 class CollisionHelper:
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.sourceLayerInterface: AllBinaryLayer = None
     
 
     def __init__(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self._init_fields()
         self.sourceLayerInterface = sourceLayerInterface
     
 
     def isCollidable(self, layerInterface: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         return True
     
 
     def getOwnerLayerInterface(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.sourceLayerInterface
     
 
     def setOwnerLayerInterface(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.sourceLayerInterface = sourceLayerInterface
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

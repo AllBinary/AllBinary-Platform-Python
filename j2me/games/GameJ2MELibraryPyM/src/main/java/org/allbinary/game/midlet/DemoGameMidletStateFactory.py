@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DemoGameMidletStateFactory:
@@ -37,5 +38,8 @@ class DemoGameMidletStateFactory:
 from org.allbinary.game.midlet.DemoGameMidletState import DemoGameMidletState
 
 
-DemoGameMidletStateFactory.STATE = DemoGameMidletStateFactory()
+def _DemoGameMidletStateFactory_STATE() -> object:
+    return DemoGameMidletStateFactory()
+
+lazy_static(DemoGameMidletStateFactory, "STATE", _DemoGameMidletStateFactory_STATE)
 

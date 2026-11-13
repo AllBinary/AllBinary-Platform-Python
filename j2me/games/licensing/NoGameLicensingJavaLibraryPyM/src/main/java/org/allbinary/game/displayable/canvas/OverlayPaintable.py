@@ -21,6 +21,7 @@ from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 class OverlayPaintable(InitUpdatePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,6 +31,7 @@ class OverlayPaintable(InitUpdatePaintable):
     
 
     def update(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             pass
         except Exception as e:
@@ -38,9 +40,10 @@ class OverlayPaintable(InitUpdatePaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

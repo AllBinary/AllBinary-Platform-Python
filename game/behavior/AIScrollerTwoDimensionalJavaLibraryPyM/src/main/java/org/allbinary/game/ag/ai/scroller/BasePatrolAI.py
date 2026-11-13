@@ -15,17 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ai.BasicAI import BasicAI
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 
 class BasePatrolAI(BasicAI):
-    MAX_DISTANCE: int = SmallIntegerSingletonFactory.getInstance().getAt(2)
-    DIRECTION_ARRAY: int = SmallIntegerSingletonFactory.getInstance().getAt(3)
-    FIRING_DISTANCE: int = SmallIntegerSingletonFactory.getInstance().getAt(4)
-    SPEED: int = SmallIntegerSingletonFactory.getInstance().getAt(5)
+    MAX_DISTANCE: int = None
+    DIRECTION_ARRAY: int = None
+    FIRING_DISTANCE: int = None
+    SPEED: int = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         self.maxDistance: int = None
         self.currentDistance: int = None
         self.xTotalDistance: int = 0
@@ -34,6 +35,9 @@ class BasePatrolAI(BasicAI):
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.maxDistance = hashtable.get(BasePatrolAI.MAX_DISTANCE)
@@ -46,12 +50,15 @@ class BasePatrolAI(BasicAI):
     
 
     def updateTotalDistance(self) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
         velocityInterfaceCompositeInterface: VelocityInterfaceCompositeInterface = self.getOwnerLayerInterface()
         velocityProperties: BasicVelocityProperties = velocityInterfaceCompositeInterface.getVelocityProperties()
         self.xTotalDistance += velocityProperties.getVelocityXBasicDecimalP().getScaled()
     
 
     def changeDirectionIfReachedPacingAreaMax(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
         mathUtil: MathUtil = MathUtil.getInstance()
         totalDistance: int = mathUtil.abs(self.xTotalDistance)
         if totalDistance > self.currentDistance:
@@ -59,6 +66,7 @@ class BasePatrolAI(BasicAI):
     
 
     def nextDirection(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         if self.lastKeyDirection == Canvas.LEFT:
             self.keyDirection = Canvas.RIGHT
             self.lastKeyDirection = self.keyDirection
@@ -72,11 +80,36 @@ class BasePatrolAI(BasicAI):
     def disable(self) -> None:
         pass
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.util.ABHashtable import ABHashtable
 
+
+def _BasePatrolAI_MAX_DISTANCE() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(2)
+
+lazy_static(BasePatrolAI, "MAX_DISTANCE", _BasePatrolAI_MAX_DISTANCE)
+
+def _BasePatrolAI_DIRECTION_ARRAY() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(3)
+
+lazy_static(BasePatrolAI, "DIRECTION_ARRAY", _BasePatrolAI_DIRECTION_ARRAY)
+
+def _BasePatrolAI_FIRING_DISTANCE() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(4)
+
+lazy_static(BasePatrolAI, "FIRING_DISTANCE", _BasePatrolAI_FIRING_DISTANCE)
+
+def _BasePatrolAI_SPEED() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(5)
+
+lazy_static(BasePatrolAI, "SPEED", _BasePatrolAI_SPEED)
 

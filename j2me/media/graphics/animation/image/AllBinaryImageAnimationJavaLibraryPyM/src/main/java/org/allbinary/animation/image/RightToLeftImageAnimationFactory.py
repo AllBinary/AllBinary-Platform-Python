@@ -22,6 +22,9 @@ class RightToLeftImageAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), image.getWidth(), image.getHeight(), dx, dy, animationBehaviorFactory)
     
 
@@ -29,6 +32,8 @@ class RightToLeftImageAnimationFactory(BaseImageAnimationFactory):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.RightToLeftImageAnimation import RightToLeftImageAnimation
         from org.allbinary.animation.image.AdjustedRightToLeftImageAnimation import AdjustedRightToLeftImageAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
         scaledImage: Image = self.animationFactoryImageScaleUtil.createImage(self.getImage(), self.animationFactoryInitializationVisitor.width, self.animationFactoryInitializationVisitor.height, self.scaleProperties.scaleWidth, self.scaleProperties.scaleHeight)
         if self.animationFactoryInitializationVisitor.dx != 0 or self.animationFactoryInitializationVisitor.dy != 0:
             self.animationFactoryImageScaleUtil.processAdjust(self)
@@ -36,8 +41,8 @@ class RightToLeftImageAnimationFactory(BaseImageAnimationFactory):
         else:
             return RightToLeftImageAnimation(scaledImage, self.animationBehaviorFactory.getOrCreateInstance())
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
 
 

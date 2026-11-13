@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.device.TrueTypeFontUtilBase import TrueTypeFontUtilBase
 
 
@@ -22,6 +23,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     instance: TrueTypeFontUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         self.fontImage: OpenGLESImage = OpenGLESImage.NULL_OPENGL_IMAGE
     
 
@@ -44,6 +46,8 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def getFontBitmap(self, filename: str, fontSize: int, cellSize: int, basicColor: BasicColor) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise RuntimeError()
     
 
@@ -52,6 +56,9 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def getFontBitmapGL(self, gl: GL10, filename: str, cellSize: int, basicColor: BasicColor) -> Image:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise RuntimeError()
     
 
@@ -59,9 +66,12 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
         raise RuntimeError()
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
 
 
-TrueTypeFontUtil.instance = TrueTypeFontUtil()
+def _TrueTypeFontUtil_instance() -> object:
+    return TrueTypeFontUtil()
+
+lazy_static(TrueTypeFontUtil, "instance", _TrueTypeFontUtil_instance)
 

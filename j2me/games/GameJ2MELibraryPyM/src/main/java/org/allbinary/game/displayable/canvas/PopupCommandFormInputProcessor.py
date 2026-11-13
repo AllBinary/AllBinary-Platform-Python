@@ -22,6 +22,9 @@ class PopupCommandFormInputProcessor(CommandFormInputProcessor):
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCanvas: MyCanvas, form: ScrollSelectionForm, popupMenuInputProcessor: PopupMenuInputProcessor) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCanvas, form)
     
 
@@ -32,10 +35,11 @@ class PopupCommandFormInputProcessor(CommandFormInputProcessor):
 
     # throws Exception
     def processMotionInput(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         super().processMotionInput(motionGestureEvent)
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

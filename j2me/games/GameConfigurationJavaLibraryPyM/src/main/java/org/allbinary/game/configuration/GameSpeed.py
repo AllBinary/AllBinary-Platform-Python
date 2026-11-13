@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameSpeed:
@@ -38,5 +39,8 @@ class GameSpeed:
         return GameSpeed.instance
 
 
-GameSpeed.instance = GameSpeed()
+def _GameSpeed_instance() -> object:
+    return GameSpeed()
+
+lazy_static(GameSpeed, "instance", _GameSpeed_instance)
 

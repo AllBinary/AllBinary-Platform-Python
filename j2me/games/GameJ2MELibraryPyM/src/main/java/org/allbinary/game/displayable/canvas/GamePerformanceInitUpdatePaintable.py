@@ -22,6 +22,10 @@ from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 class GamePerformanceInitUpdatePaintable(InitUpdatePaintable, UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.halfHeight: int = DisplayInfoSingleton.getInstance().getLastHalfHeight()
         self.yArray: list[int] = [self.halfHeight + 30, self.halfHeight + 30, self.halfHeight + 30 + 15, self.halfHeight + 30 + 15, self.halfHeight + 30 + 30, self.halfHeight + 30 + 30, self.halfHeight + 30 + 45, self.halfHeight + 30 + 45]
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
@@ -35,6 +39,9 @@ class GamePerformanceInitUpdatePaintable(InitUpdatePaintable, UpdateMyFontInterf
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.defaultStringWidth = MyFontProcessor.defaultStringWidth(font, 2)
         self.myFontProcessor = MyFontProcessor.getInstance()
@@ -45,10 +52,12 @@ class GamePerformanceInitUpdatePaintable(InitUpdatePaintable, UpdateMyFontInterf
     
 
     def update(self) -> None:
+        from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
         self.baseRefreshHelperCharArray = GameStatisticsFactory.getInstance().to2DCharArray()
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         graphics.setColor(self.RED)
         charArray: list[str] = None
@@ -65,10 +74,10 @@ class GamePerformanceInitUpdatePaintable(InitUpdatePaintable, UpdateMyFontInterf
             graphics.drawChars(charArray2, 0, size3, size2 * self.defaultStringWidth, self.yArray[index + 1], 0)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
 
 

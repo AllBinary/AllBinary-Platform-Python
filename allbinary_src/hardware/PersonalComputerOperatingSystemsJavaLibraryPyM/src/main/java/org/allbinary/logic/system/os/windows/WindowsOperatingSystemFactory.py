@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WindowsOperatingSystemFactory:
     instance: WindowsOperatingSystemFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -41,6 +43,13 @@ class WindowsOperatingSystemFactory:
         from org.allbinary.logic.system.os.windows.WindowsOS import WindowsOS
         from org.allbinary.logic.system.os.windows.WindowsOS import WindowsOS
         from org.allbinary.logic.system.os.windows.WindowsOS import WindowsOS
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             operatingSystems: OperatingSystems = OperatingSystems.getInstance()
             osName: str = SystemProperties.getInstance().getName()
@@ -68,15 +77,18 @@ class WindowsOperatingSystemFactory:
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return NoOperatingSystem.NO_OPERATING_SYSTEM
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
-from org.allbinary.logic.system.os.SystemProperties import SystemProperties
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+# from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-WindowsOperatingSystemFactory.instance = WindowsOperatingSystemFactory()
+def _WindowsOperatingSystemFactory_instance() -> object:
+    return WindowsOperatingSystemFactory()
+
+lazy_static(WindowsOperatingSystemFactory, "instance", _WindowsOperatingSystemFactory_instance)
 

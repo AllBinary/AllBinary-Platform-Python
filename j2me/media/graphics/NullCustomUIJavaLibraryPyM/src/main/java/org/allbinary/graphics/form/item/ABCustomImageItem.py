@@ -13,14 +13,18 @@ class ABCustomImageItem(ABCustomItem):
     
 
     def __init__(self, label: str, image: Image, layout: int, altText: str, basicColor: BasicColor, yOffset: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(label, basicColor, basicColor)
         self._init_fields()
     
 
     def getImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         return NullImage.NULL_IMAGE
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

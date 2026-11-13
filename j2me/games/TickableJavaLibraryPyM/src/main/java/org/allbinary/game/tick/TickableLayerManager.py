@@ -22,7 +22,8 @@ class TickableLayerManager(LayerManager):
     
 
     def __init__(self) -> None:
+        from org.allbinary.layer.LayerManagerNoDebug import LayerManagerNoDebug
         super().__init__(LayerManagerNoDebug.getInstance())
-from org.allbinary.layer.LayerManagerNoDebug import LayerManagerNoDebug
+# from org.allbinary.layer.LayerManagerNoDebug import LayerManagerNoDebug
 
 

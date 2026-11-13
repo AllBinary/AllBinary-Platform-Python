@@ -20,6 +20,8 @@ from __future__ import annotations
 class ShaderComposite:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
         self.disableProgramShaderOpenGLProcessor: OpenGLProcessor = None
         self.requiresOpenGLVersion: str = None
         self.shaderArray: list[Shader] = None
@@ -46,6 +48,7 @@ class ShaderComposite:
     
 
     def __init__(self, requiresOpenGLVersion: str, shaderArray: list[Shader], compositeShaderUpdater: CompositeShaderUpdater, shaderInitializer: ShaderInitializer, modelViewProjection: ModelViewProjection, colorOpenGLProcessor: OpenGLProcessor, vertexOpenGLProcessor: OpenGLProcessor, disableProgramShaderOpenGLProcessor: OpenGLProcessor) -> None:
+        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
         self._init_fields()
         self.requiresOpenGLVersion = requiresOpenGLVersion
         self.shaderArray = shaderArray
@@ -58,11 +61,13 @@ class ShaderComposite:
     
 
     def init(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.programHandle = self.shaderInitializer.init(gl, self.shaderArray, StringUtil.getInstance().getArrayInstance())
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
-from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+# from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.graphics.opengles.shader.NullOpenGLTextureProcessor import NullOpenGLTextureProcessor
 
 

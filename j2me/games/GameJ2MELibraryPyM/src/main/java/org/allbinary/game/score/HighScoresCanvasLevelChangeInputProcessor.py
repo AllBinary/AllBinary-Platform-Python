@@ -24,6 +24,10 @@ class HighScoresCanvasLevelChangeInputProcessor(HighScoresCanvasInputProcessor, 
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.INSTRUCTIONS: str = "(Right = Next Track, Left = Previous Track)"
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
@@ -32,21 +36,27 @@ class HighScoresCanvasLevelChangeInputProcessor(HighScoresCanvasInputProcessor, 
     
 
     def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         super().__init__(highScoresCanvas)
         self._init_fields()
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
     def open(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
         GameKeyEventHandler.getInstance().addListener(self)
     
 
     def close(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
         GameKeyEventHandler.getInstance().removeListener(self)
     
 
@@ -55,6 +65,9 @@ class HighScoresCanvasLevelChangeInputProcessor(HighScoresCanvasInputProcessor, 
             return self._update_unlocked()
 
     def _update_unlocked(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getGameKeyEventList()
         size: int = list_.size()
         for index in range(0, size):
@@ -69,6 +82,7 @@ class HighScoresCanvasLevelChangeInputProcessor(HighScoresCanvasInputProcessor, 
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         width: int = self.displayInfoSingleton.getLastWidth()
         topScoresWidth: int = (graphics.getFont().stringWidth(self.INSTRUCTIONS) >> 1)
@@ -76,13 +90,13 @@ class HighScoresCanvasLevelChangeInputProcessor(HighScoresCanvasInputProcessor, 
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
-from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
-from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
+# from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
+# from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

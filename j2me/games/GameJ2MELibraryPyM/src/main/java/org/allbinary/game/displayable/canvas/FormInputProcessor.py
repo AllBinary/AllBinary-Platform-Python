@@ -21,6 +21,13 @@ from org.allbinary.game.input.InputProcessor import InputProcessor
 class FormInputProcessor(InputProcessor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.game.input.PlatformKeyFactory import PlatformKeyFactory
+        from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
@@ -38,6 +45,11 @@ class FormInputProcessor(InputProcessor):
     
 
     def keyPressedByDevice(self, keyCode: int, deviceId: int) -> None:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         try:
             PreLogUtil.put(str(StringMaker().append(self.inputFactory.KEY_CODE_LABEL).appendint(keyCode).append(CommonSeps.getInstance().SPACE).append(self.inputFactory.DEVICE_ID_LABEL).appendint(deviceId)), self, self.gameInputStrings.KEY_PRESSED)
             input: Input = self.inputFactory.getInstanceById(keyCode)
@@ -48,6 +60,15 @@ class FormInputProcessor(InputProcessor):
     
 
     def keyReleasedByDevice(self, canvas: Canvas, keyCode: int, deviceId: int) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         try:
             input: Input = self.inputFactory.getInstanceById(keyCode)
             if self.platformKeyFactory.isEnter(input):
@@ -60,20 +81,20 @@ class FormInputProcessor(InputProcessor):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.gameInputStrings.ADD_KEY_EVENT, e)
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.game.input.PlatformKeyFactory import PlatformKeyFactory
-from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.PlatformKeyFactory import PlatformKeyFactory
+# from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

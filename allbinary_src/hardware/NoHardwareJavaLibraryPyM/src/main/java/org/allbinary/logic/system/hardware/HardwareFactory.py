@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HardwareFactory:
@@ -36,13 +37,17 @@ class HardwareFactory:
     # throws Exception
     # Java overloaded method: Python keeps the last definition
     def getInstance(self, os: OperatingSystemInterface) -> HardwareInterface:
+        from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
         try:
             return self.SINGLETON
         except Exception as e:
             raise e
-from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
+# from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
 from org.allbinary.logic.system.hardware.NoHardware import NoHardware
 
 
-HardwareFactory.instance = HardwareFactory()
+def _HardwareFactory_instance() -> object:
+    return HardwareFactory()
+
+lazy_static(HardwareFactory, "instance", _HardwareFactory_instance)
 

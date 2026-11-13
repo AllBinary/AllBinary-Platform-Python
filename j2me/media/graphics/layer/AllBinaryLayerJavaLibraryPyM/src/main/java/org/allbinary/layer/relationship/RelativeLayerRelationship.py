@@ -21,10 +21,14 @@ from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
 class RelativeLayerRelationship(RelativeRelationship):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.layer: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
     
 
     def __init__(self, layer: AllBinaryLayer, point: GPoint, typesAllowedList: BasicArrayList) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(point, typesAllowedList)
         self._init_fields()
         self.layer = layer
@@ -40,8 +44,8 @@ class RelativeLayerRelationship(RelativeRelationship):
 
     def getZ(self) -> int:
         return self.layer.getZP() + super().getZ()
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

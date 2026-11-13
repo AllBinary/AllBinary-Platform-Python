@@ -29,6 +29,7 @@ class GameInputProcessorComposite(PlayerGameInput):
     
 
     def __init__(self, name: str, gameInputProcessorInterface: GameInputProcessorInterface) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(BasicArrayListD(), BasicArrayListD(), -1)
         self._init_fields()
         self.name = name
@@ -40,6 +41,7 @@ class GameInputProcessorComposite(PlayerGameInput):
             return self._update_unlocked()
 
     def _update_unlocked(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             list_: BasicArrayList = self.getGameKeyEventList()
             self.gameInputProcessorInterface.onInput(list_)
@@ -48,13 +50,14 @@ class GameInputProcessorComposite(PlayerGameInput):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(str(super())).append(self.NAME_LABEL).append(self.name))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

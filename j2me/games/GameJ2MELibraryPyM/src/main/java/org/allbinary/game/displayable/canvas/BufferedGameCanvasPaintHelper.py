@@ -22,6 +22,12 @@ class BufferedGameCanvasPaintHelper(ProcessPaintable):
     MAX_IMAGES: int = 4
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.gameCanvas: Canvas = NullCanvas.NULL_CANVAS
         self.offScreenImage: list[Image] = [None] * (BufferedGameCanvasPaintHelper.MAX_IMAGES)
         self.previousImage: Image = NullImage.NULL_IMAGE
@@ -37,6 +43,7 @@ class BufferedGameCanvasPaintHelper(ProcessPaintable):
     
 
     def process(self) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         myCanvas: MyCanvas = (self.gameCanvas)
         myCanvas.draw(self.offScreenImage[self.circularIndexUtil.getIndex()].getGraphics())
         self.circularIndexUtil.next()
@@ -44,6 +51,7 @@ class BufferedGameCanvasPaintHelper(ProcessPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.previousImage = self.offScreenImage[self.drawCircularIndexUtil.getIndex()]
         graphics.drawImage(self.previousImage, 0, 0, self.anchor)
 # from javax.microedition.lcdui.Canvas import Canvas
@@ -51,8 +59,8 @@ class BufferedGameCanvasPaintHelper(ProcessPaintable):
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

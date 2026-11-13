@@ -21,18 +21,24 @@ from __future__ import annotations
 class TouchJ2ME:
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.DEVICE_ID: int = 0
         self.motionRecognizer: AllMotionRecognizer = AllMotionRecognizer()
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+        from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
+        from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
         self._init_fields()
         motionGesturesHandler: BasicMotionGesturesHandler = self.motionRecognizer.getMotionGestureRecognizer().getMotionGesturesHandler()
         motionGesturesHandler.addListenerInterface(GameMotionGestureListener(MotionGestureReceiveInterfaceFactory.getInstance()))
     
 
     def pointerDragged(self, x: int, y: int) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.motionRecognizer.processDraggedMotionEvent(x, y, self.DEVICE_ID, 0)
         except Exception as e:
@@ -41,6 +47,7 @@ class TouchJ2ME:
     
 
     def pointerPressed(self, x: int, y: int) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.motionRecognizer.processStartMotionEvent(x, y, self.DEVICE_ID, 0)
         except Exception as e:
@@ -49,16 +56,17 @@ class TouchJ2ME:
     
 
     def pointerReleased(self, x: int, y: int) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.motionRecognizer.processEndMotionEvent(x, y, self.DEVICE_ID, 0)
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, "pointerReleased", e)
-from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
-from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
-from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
-from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
+# from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+# from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
+# from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

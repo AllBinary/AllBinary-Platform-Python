@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.init.GameInitializationInterface import GameInitializationInterface
 
 
@@ -23,6 +23,7 @@ class BaseGameInitialization(GameInitializationInterface):
     NULL_BASE_GAME_INITIALIZATION: BaseGameInitialization = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
         self.resourceInitializationArray: list[ResourceInitialization] = None
         self.portion: int = None
         self.initialized: bool = False
@@ -35,6 +36,7 @@ class BaseGameInitialization(GameInitializationInterface):
     
 
     def __init__(self, resourceInitializationArray: list[ResourceInitialization], portion: int) -> None:
+        from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
         self._init_fields()
         self.resourceInitializationArray = resourceInitializationArray
         self.portion = portion
@@ -47,6 +49,11 @@ class BaseGameInitialization(GameInitializationInterface):
 
     # throws Exception
     def initKeyMapping(self, abeClientInformation: AbeClientInformationInterface, portion: int) -> None:
+        from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+        from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         if ChangedGameFeatureListener.getInstance().isChangedFeature(InputFeatureFactory.getInstance().INPUT_MAPPING):
             PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().init(abeClientInformation)
             ProgressCanvasFactory.getInstance().addNormalPortion(50, "Game Keys")
@@ -55,6 +62,17 @@ class BaseGameInitialization(GameInitializationInterface):
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, level: int) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.input.motion.CompleteMotionGestureInputToGameMotionGestureInput import CompleteMotionGestureInputToGameMotionGestureInput
+        from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
+        from org.allbinary.input.motion.button.CancelTouchButtonInputFactory import CancelTouchButtonInputFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if not self.isInitialized() and (level == resourceLoadingLevelFactory.LOAD_ALL.getLevel() or level == resourceLoadingLevelFactory.LOAD_EARLY.getLevel()):
             localPortion: int = 40
@@ -78,6 +96,8 @@ class BaseGameInitialization(GameInitializationInterface):
 
     # throws Exception
     def resourceInitialization(self, level: int) -> None:
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if self.resourceAnimationChange() and level == resourceLoadingLevelFactory.LOAD_EARLY.getLevel():
             self.clearResources()
@@ -92,6 +112,9 @@ class BaseGameInitialization(GameInitializationInterface):
     
 
     def resourceAnimationChange(self) -> bool:
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         changedGameFeatureListener: ChangedGameFeatureListener = ChangedGameFeatureListener.getInstance()
         gameConfigurationCentral: GameConfigurationCentral = GameConfigurationCentral.getInstance()
         if changedGameFeatureListener.isChangedGameConfiguration(gameConfigurationCentral.SCALE):
@@ -102,6 +125,9 @@ class BaseGameInitialization(GameInitializationInterface):
     
 
     def clearResources(self) -> None:
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.game.resource.FeaturedResourceRelativeRelationshipFactory import FeaturedResourceRelativeRelationshipFactory
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         self.allLoaded = False
         GameFeatureImageCacheFactory.releaseAll()
         featuredAnimationInterfaceFactoryInterfaceFactory: FeaturedAnimationInterfaceFactoryInterfaceFactory = FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance()
@@ -128,23 +154,28 @@ class BaseGameInitialization(GameInitializationInterface):
     def isInitialized(self) -> bool:
         return self.initialized
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
-from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.resource.FeaturedResourceRelativeRelationshipFactory import FeaturedResourceRelativeRelationshipFactory
-from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-from org.allbinary.input.motion.CompleteMotionGestureInputToGameMotionGestureInput import CompleteMotionGestureInputToGameMotionGestureInput
-from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-from org.allbinary.input.motion.button.CancelTouchButtonInputFactory import CancelTouchButtonInputFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+# from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.resource.FeaturedResourceRelativeRelationshipFactory import FeaturedResourceRelativeRelationshipFactory
+# from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
+# from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.input.motion.CompleteMotionGestureInputToGameMotionGestureInput import CompleteMotionGestureInputToGameMotionGestureInput
+# from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
+# from org.allbinary.input.motion.button.CancelTouchButtonInputFactory import CancelTouchButtonInputFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 
-BaseGameInitialization.NULL_BASE_GAME_INITIALIZATION = BaseGameInitialization([None] * (0), 0)
+def _BaseGameInitialization_NULL_BASE_GAME_INITIALIZATION() -> object:
+    from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
+    return BaseGameInitialization([None] * (0), 0)
+
+lazy_static(BaseGameInitialization, "NULL_BASE_GAME_INITIALIZATION", _BaseGameInitialization_NULL_BASE_GAME_INITIALIZATION)
 

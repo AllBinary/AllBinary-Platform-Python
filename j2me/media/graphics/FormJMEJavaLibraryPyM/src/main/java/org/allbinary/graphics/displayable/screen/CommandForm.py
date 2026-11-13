@@ -15,16 +15,20 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Form import Form
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.lcdui.Form import Form
 from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 from org.allbinary.graphics.displayable.command.MyCommandInterface import MyCommandInterface
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class CommandForm(Form, MyCommandInterface, MenuListener):
-    NULL_COMMAND_FORM: object = NullUtil.getInstance().NULL_OBJECT
+    NULL_COMMAND_FORM: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABStack import ABStack
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.repaintProcessor: Processor = ScreenRepaintProcessorFactory.getInstance().create(self)
@@ -33,12 +37,19 @@ class CommandForm(Form, MyCommandInterface, MenuListener):
 
     @staticmethod
     def getNullCommandForm() -> CommandForm:
+        from javax.microedition.lcdui.NullCommandListener import NullCommandListener
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         if CommandForm.NULL_COMMAND_FORM == NullUtil.getInstance().NULL_OBJECT:
             CommandForm.NULL_COMMAND_FORM = CommandForm(NullCommandListener.NULL_COMMAND_LISTENER, StringUtil.getInstance().EMPTY_STRING, BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE)
         return CommandForm.NULL_COMMAND_FORM
     
 
     def __init__(self, commandListener: CommandListener, formTitle: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.StdUtil import StdUtil
         super().__init__(formTitle)
         self._init_fields()
         self.commandStack = StdUtil.getInstance().createStack()
@@ -49,6 +60,7 @@ class CommandForm(Form, MyCommandInterface, MenuListener):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         pass
     
 
@@ -71,25 +83,34 @@ class CommandForm(Form, MyCommandInterface, MenuListener):
     
 
     def addCommand(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         self.commandStack.push(command)
         super().addCommand(command)
     
 
     def removeAllCommands(self) -> None:
+        from javax.microedition.lcdui.Command import Command
         size: int = self.commandStack.size()
         for index in range(0, size):
             super().removeCommand(self.commandStack.pop())
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.NullCommandListener import NullCommandListener
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABStack import ABStack
+# from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABStack import ABStack
 from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
 
+
+def _CommandForm_NULL_COMMAND_FORM() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(CommandForm, "NULL_COMMAND_FORM", _CommandForm_NULL_COMMAND_FORM)
 

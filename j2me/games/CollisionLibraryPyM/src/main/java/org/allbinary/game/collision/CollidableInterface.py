@@ -24,22 +24,26 @@ class CollidableInterface(NamedInterface):
 
     # throws Exception
     def isCollidable(self, ownerLayer: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         raise NotImplementedError()
     
 
     # throws Exception
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         raise NotImplementedError()
     
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         raise NotImplementedError()
     
 
     def getCollisionTypeWith(self, layerInterface: AllBinaryLayer) -> CollisionType:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         raise NotImplementedError()
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

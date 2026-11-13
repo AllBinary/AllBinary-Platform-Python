@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameConfigurationCentral:
-    SINGLETON: object = NullUtil.getInstance().NULL_OBJECT
+    SINGLETON: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.SCALE: GameConfiguration = None
         self.ORIENTATION: GameConfiguration = None
@@ -43,6 +44,7 @@ class GameConfigurationCentral:
 
     @staticmethod
     def getInstance() -> GameConfigurationCentral:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameConfigurationCentral.SINGLETON == NullUtil.getInstance().NULL_OBJECT:
             GameConfigurationCentral.SINGLETON = GameConfigurationCentral()
         return GameConfigurationCentral.SINGLETON
@@ -64,6 +66,7 @@ class GameConfigurationCentral:
         from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
         from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
         from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self._init_fields()
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         self.SCALE = GameConfiguration("Scale", smallIntegerSingletonFactory.getAt(2), smallIntegerSingletonFactory.getAt(2), smallIntegerSingletonFactory.getAt(3))
@@ -84,6 +87,13 @@ class GameConfigurationCentral:
     
 
     def load(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
+        from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
@@ -111,6 +121,8 @@ class GameConfigurationCentral:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         commonStrings: CommonSeps = CommonSeps.getInstance()
         stringBuffer.append(commonStrings.COMMA_SEP)
@@ -169,15 +181,22 @@ class GameConfigurationCentral:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
-from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
+# from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
+
+def _GameConfigurationCentral_SINGLETON() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameConfigurationCentral, "SINGLETON", _GameConfigurationCentral_SINGLETON)
 

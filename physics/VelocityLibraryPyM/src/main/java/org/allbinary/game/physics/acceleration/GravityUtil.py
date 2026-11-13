@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GravityUtil:
@@ -34,9 +35,13 @@ class GravityUtil:
     
 
     def process(self, velocityProperties: BasicVelocityProperties, customGravity: int) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         velocityProperties.getVelocityYBasicDecimalP().addint(customGravity)
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
 
 
-GravityUtil.instance = GravityUtil()
+def _GravityUtil_instance() -> object:
+    return GravityUtil()
+
+lazy_static(GravityUtil, "instance", _GravityUtil_instance)
 

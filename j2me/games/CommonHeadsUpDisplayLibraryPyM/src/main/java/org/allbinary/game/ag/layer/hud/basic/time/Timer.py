@@ -20,6 +20,10 @@ from __future__ import annotations
 class Timer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         self.startTime: int = -1
         self.hundredthTime: int = 0
         self.maxTime: int = None
@@ -32,6 +36,7 @@ class Timer:
     
 
     def __init__(self, maxTime: int) -> None:
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self._init_fields()
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(maxTime)
         self.maxTime = maxTime
@@ -74,9 +79,9 @@ class Timer:
 
     def getCurrentTotalDigits(self) -> int:
         return self.totalDigits
-from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 
 

@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.time.StupidTimer import StupidTimer
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseStupidTimerFactory:
-    instance: StupidTimer = StupidTimer()
+    instance: StupidTimer = None
     
 
     @staticmethod
     def getInstance() -> StupidTimer:
         return LicenseStupidTimerFactory.instance
 
+
+def _LicenseStupidTimerFactory_instance() -> object:
+    from org.allbinary.time.StupidTimer import StupidTimer
+    return StupidTimer()
+
+lazy_static(LicenseStupidTimerFactory, "instance", _LicenseStupidTimerFactory_instance)
 

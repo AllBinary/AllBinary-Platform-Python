@@ -22,6 +22,9 @@ from org.allbinary.animation.AnimationInterface import AnimationInterface
 class Animation(AnimationInterface, OpenGLSurfaceChangedInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.colorP: int = 0
@@ -44,10 +47,12 @@ class Animation(AnimationInterface, OpenGLSurfaceChangedInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -56,23 +61,28 @@ class Animation(AnimationInterface, OpenGLSurfaceChangedInterface):
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
         self.colorP = int(self.basicColor)
     
 
     def setBackgroundBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
     
 
     def getChangeBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.changeBasicColorP
     
 
     def changeBasicColor(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.changeBasicColorP = basicColor
         self.changeColorP = int(self.changeBasicColorP)
     
@@ -95,6 +105,7 @@ class Animation(AnimationInterface, OpenGLSurfaceChangedInterface):
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
         pass
     
 
@@ -114,8 +125,8 @@ class Animation(AnimationInterface, OpenGLSurfaceChangedInterface):
         return 0
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
 
 

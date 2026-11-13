@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameKeyMappingFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.intKeyToGameKey: list[GameKey] = [None] * (InputFactory.getInstance().MAX)
@@ -27,6 +27,7 @@ class GameKeyMappingFactory:
 
     @staticmethod
     def getInstance() -> GameKeyMappingFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameKeyMappingFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             GameKeyMappingFactory.instance = GameKeyMappingFactory()
         return GameKeyMappingFactory.instance
@@ -68,6 +69,13 @@ class GameKeyMappingFactory:
 
     def setGameKey(self, gameKey: GameKey) -> None:
         self.intKeyToGameKey[gameKey.getId()] = gameKey
+# from org.allbinary.logic.NullUtil import NullUtil
 from org.allbinary.game.input.InputFactory import InputFactory
 
+
+def _GameKeyMappingFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameKeyMappingFactory, "instance", _GameKeyMappingFactory_instance)
 

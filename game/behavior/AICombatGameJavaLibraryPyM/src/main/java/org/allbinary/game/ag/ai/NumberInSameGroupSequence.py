@@ -39,6 +39,7 @@ class NumberInSameGroupSequence:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self._init_fields()
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         self.NUMBER_ON_SAME_TEAM_SEQUENCE_ZERO = smallIntegerSingletonFactory.getAt(100)
@@ -52,6 +53,6 @@ class NumberInSameGroupSequence:
         self.NUMBER_ON_SAME_TEAM_SEQUENCE_EIGHT = smallIntegerSingletonFactory.getAt(108)
         self.NUMBER_ON_SAME_TEAM_SEQUENCE_NINE = smallIntegerSingletonFactory.getAt(109)
         self.NUMBER_ON_SAME_TEAM_SEQUENCE = [self.NUMBER_ON_SAME_TEAM_SEQUENCE_ZERO, self.NUMBER_ON_SAME_TEAM_SEQUENCE_ONE, self.NUMBER_ON_SAME_TEAM_SEQUENCE_THREE, self.NUMBER_ON_SAME_TEAM_SEQUENCE_FOUR, self.NUMBER_ON_SAME_TEAM_SEQUENCE_FIVE, self.NUMBER_ON_SAME_TEAM_SEQUENCE_SIX, self.NUMBER_ON_SAME_TEAM_SEQUENCE_SEVEN, self.NUMBER_ON_SAME_TEAM_SEQUENCE_EIGHT, self.NUMBER_ON_SAME_TEAM_SEQUENCE_NINE]
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 

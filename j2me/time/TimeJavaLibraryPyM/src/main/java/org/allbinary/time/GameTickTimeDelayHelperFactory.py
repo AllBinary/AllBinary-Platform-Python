@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameTickTimeDelayHelperFactory:
-    instance: GameTickTimeDelayHelper = GameTickTimeDelayHelper(-1)
+    instance: GameTickTimeDelayHelper = None
     
 
     @staticmethod
@@ -30,4 +30,10 @@ class GameTickTimeDelayHelperFactory:
     def __init__(self) -> None:
         pass
 
+
+def _GameTickTimeDelayHelperFactory_instance() -> object:
+    from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+    return GameTickTimeDelayHelper(-1)
+
+lazy_static(GameTickTimeDelayHelperFactory, "instance", _GameTickTimeDelayHelperFactory_instance)
 

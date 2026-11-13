@@ -10,17 +10,22 @@ class BasicArrayList:
     SIZE: str = ", Size: "
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.arrayUtil: ArrayUtil = ArrayUtil.getInstance()
         self.objectArray: list[object] = None
         self.currentIndex: int = 0
     
 
     def __init__(self, objectArray: list[object]) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.objectArray = objectArray
     
 
     def addAt(self, index: int, element: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from jsinterop.annotations.JsMethod import JsMethod
         if index > self.currentIndex or index < 0:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(CommonLabels.getInstance().INDEX_LABEL)
@@ -35,12 +40,16 @@ class BasicArrayList:
     
 
     def add(self, anyType: object) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.ensureCapacity(self.currentIndex + 1)
         self.objectArray[((setattr(self, "currentIndex", self.currentIndex + 1) or self.currentIndex) - 1)] = anyType
         return True
     
 
     def removeAt(self, index: int) -> object:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from jsinterop.annotations.JsMethod import JsMethod
         if index >= self.currentIndex:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(CommonLabels.getInstance().INDEX_LABEL)
@@ -57,6 +66,7 @@ class BasicArrayList:
     
 
     def remove(self, anyType: object) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         if anyType is None:
             for index in range(0, self.currentIndex):
                 if self.objectArray[index] is None:
@@ -77,6 +87,7 @@ class BasicArrayList:
     
 
     def removeAll2(self, list_: BasicArrayList) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         result: bool = True
         size: int = list_.size()
         for index in range(0, size):
@@ -88,6 +99,7 @@ class BasicArrayList:
     
 
     def addAll2(self, list_: BasicArrayList) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.ensureCapacity(self.currentIndex + list_.currentIndex)
         listSize: int = list_.currentIndex
         for index in range(0, listSize):
@@ -96,11 +108,13 @@ class BasicArrayList:
     
 
     def addAllList(self, list_: BasicArrayList) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         newObjectArray: list[object] = list_.toArray()
         return self.addAll(newObjectArray)
     
 
     def addAll(self, newObjectArray: list[object]) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         numSize: int = len(newObjectArray)
         self.ensureCapacity(self.currentIndex + numSize)
         self.objectArray[self.currentIndex:self.currentIndex + numSize] = newObjectArray[0:0 + numSize]
@@ -109,6 +123,7 @@ class BasicArrayList:
     
 
     def ensureCapacity(self, minSize: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         oldCapacity: int = len(self.objectArray)
         if minSize > oldCapacity:
             newCapacity: int = ((oldCapacity * 3) >> 1) + 1
@@ -118,12 +133,14 @@ class BasicArrayList:
     
 
     def trimToSize(self) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         oldCapacity: int = len(self.objectArray)
         if self.currentIndex < oldCapacity:
             self.objectArray = self.arrayUtil.copyOf(self.objectArray, self.currentIndex)
     
 
     def indexOf(self, anyType: object) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         if anyType is None:
             for i in range(0, self.currentIndex):
                 if self.objectArray[i] is None:
@@ -136,6 +153,7 @@ class BasicArrayList:
     
 
     def lastIndexOf(self, anyType: object) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         if anyType is None:
             for i in range(self.currentIndex - 1, 0 - 1, -1):
                 if self.objectArray[i] is None:
@@ -148,6 +166,9 @@ class BasicArrayList:
     
 
     def get(self, index: int) -> object:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from jsinterop.annotations.JsMethod import JsMethod
         if index >= self.currentIndex:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(CommonLabels.getInstance().INDEX_LABEL)
@@ -159,6 +180,9 @@ class BasicArrayList:
     
 
     def set(self, index: int, element: object) -> object:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from jsinterop.annotations.JsMethod import JsMethod
         if index >= self.currentIndex:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(CommonLabels.getInstance().INDEX_LABEL)
@@ -172,28 +196,34 @@ class BasicArrayList:
     
 
     def clear(self) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         for i in range(0, self.currentIndex):
             self.objectArray[i] = None
         self.currentIndex = 0
     
 
     def size(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.currentIndex
     
 
     def isEmpty(self) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.currentIndex == 0
     
 
     def contains(self, anyType: object) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.indexOf(anyType) >= 0
     
 
     def toArray(self) -> list[object]:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.arrayUtil.copyOf(self.objectArray, self.currentIndex)
     
 
     def toArrayType(self, objectArray: list[object]) -> list[object]:
+        from jsinterop.annotations.JsMethod import JsMethod
         if len(objectArray) < self.currentIndex:
             return self.arrayUtil.copyOfType(self.objectArray, self.currentIndex, type(objectArray))
         objectArray[0:0 + self.currentIndex] = self.objectArray[0:0 + self.currentIndex]
@@ -204,6 +234,7 @@ class BasicArrayList:
 
     def clone(self) -> object:
         from org.allbinary.util.BasicArrayListS import BasicArrayListS
+        from jsinterop.annotations.JsMethod import JsMethod
         size: int = self.size()
         list_: BasicArrayList = BasicArrayListS(size)
         anyType: object = None
@@ -214,6 +245,9 @@ class BasicArrayList:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         COMMA_SEP: str = CommonSeps.getInstance().COMMA_SEP
         stringBuffer: StringMaker = StringMaker()
         for index in range(0, self.currentIndex):
@@ -223,13 +257,13 @@ class BasicArrayList:
 
     def __str__(self) -> str:
         return self.toString()
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsProperty import JsProperty
 from org.allbinary.util.ArrayUtil import ArrayUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreedResources:
@@ -30,5 +31,8 @@ class ThreedResources:
         pass
 
 
-ThreedResources.threedResources = ThreedResources()
+def _ThreedResources_threedResources() -> object:
+    return ThreedResources()
+
+lazy_static(ThreedResources, "threedResources", _ThreedResources_threedResources)
 

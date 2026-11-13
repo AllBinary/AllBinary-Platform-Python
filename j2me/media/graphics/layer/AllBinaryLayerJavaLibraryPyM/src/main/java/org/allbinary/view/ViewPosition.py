@@ -21,6 +21,7 @@ from org.allbinary.view.ViewPositionBase import ViewPositionBase
 class ViewPosition(ViewPositionBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.allbinaryLayer: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
     
 
@@ -59,7 +60,8 @@ class ViewPosition(ViewPositionBase):
     
 
     def setAllbinaryLayer(self, allbinaryLayer: object) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.allbinaryLayer = allbinaryLayer
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

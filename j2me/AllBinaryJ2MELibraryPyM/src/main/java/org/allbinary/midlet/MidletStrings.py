@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MidletStrings:
@@ -32,5 +33,8 @@ class MidletStrings:
         return MidletStrings.instance
 
 
-MidletStrings.instance = MidletStrings()
+def _MidletStrings_instance() -> object:
+    return MidletStrings()
+
+lazy_static(MidletStrings, "instance", _MidletStrings_instance)
 

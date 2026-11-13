@@ -21,6 +21,6 @@ from org.allbinary.logic.util.event.EventListenerInterface import EventListenerI
 # Java interface
 class ColorChangeListener(EventListenerInterface):
     pass
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

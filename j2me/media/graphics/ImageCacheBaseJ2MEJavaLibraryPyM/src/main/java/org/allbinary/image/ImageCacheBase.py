@@ -20,6 +20,10 @@ from __future__ import annotations
 class ImageCacheBase:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageFactory: ImageFactory = ImageFactory.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
@@ -33,6 +37,7 @@ class ImageCacheBase:
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         for index in range(len(self.listOfList) - 1, 0 - 1, -1):
             self.listOfList[index] = BasicArrayListD()
@@ -41,6 +46,8 @@ class ImageCacheBase:
     
 
     def getImage(self, resourceId: object) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         imageCanBeNull: object = self.hashtable.get(resourceId)
         if imageCanBeNull is None:
             return NullImage.NULL_IMAGE
@@ -48,6 +55,7 @@ class ImageCacheBase:
     
 
     def releaseAll(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         for index in range(len(self.listOfList) - 1, 0 - 1, -1):
             self.availableListOfList[index].clear()
             self.availableListOfList[index].addAllList(self.listOfList[index])
@@ -65,6 +73,9 @@ class ImageCacheBase:
     
 
     def getFromAvailable(self, foundIndex: int, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if foundIndex != -1:
             if self.availableListOfList[foundIndex].size() > 0:
                 list_: BasicArrayList = self.availableListOfList[foundIndex]
@@ -74,25 +85,33 @@ class ImageCacheBase:
 
     # throws Exception
     def get(self, caller: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         raise RuntimeError()
     
 
     # throws Exception
     def getWithKey(self, key: object) -> Image:
+        from javax.microedition.lcdui.Image import Image
         raise RuntimeError()
     
 
     # throws Exception
     def createImage(self, caller: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.imageFactory.createImage(caller, width, height)
     
 
     # throws Exception
     def createImageFromInputStream(self, key: object, inputStream: InputStream) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
         return self.imageFactory.createImageFromInputStream(key, inputStream)
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         for index in range(self.nextIndex - 1, 0 - 1, -1):
             width: int = self.widths[index]
@@ -115,10 +134,12 @@ class ImageCacheBase:
     
 
     def getHashtableP(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.hashtable
     
 
     def init(self, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         pass
     
 
@@ -127,14 +148,14 @@ class ImageCacheBase:
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.image.ImageFactory import ImageFactory
 
 

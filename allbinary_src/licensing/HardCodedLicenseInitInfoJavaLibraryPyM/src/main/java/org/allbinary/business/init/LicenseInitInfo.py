@@ -20,6 +20,9 @@ from __future__ import annotations
 class LicenseInitInfo:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.id: str = StringUtil.getInstance().EMPTY_STRING
         self.serverList: BasicArrayList = BasicArrayListD()
     
@@ -57,16 +60,20 @@ class LicenseInitInfo:
     
 
     def getServerList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.serverList
     
 
     def setServerList(self, servers: BasicArrayList) -> None:
+        from org.allbinary.debug.DebugFactory import DebugFactory
+        from org.allbinary.debug.NoDebug import NoDebug
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if DebugFactory.getInstance() == NoDebug.getInstance():
             self.serverList = servers
-from org.allbinary.debug.DebugFactory import DebugFactory
-from org.allbinary.debug.NoDebug import NoDebug
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.debug.DebugFactory import DebugFactory
+# from org.allbinary.debug.NoDebug import NoDebug
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

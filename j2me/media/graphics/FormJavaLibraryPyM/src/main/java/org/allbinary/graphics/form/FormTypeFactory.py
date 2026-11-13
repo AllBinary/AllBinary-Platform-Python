@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FormTypeFactory:
     instance: FormTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.UNK: str = "Unknown FormType"
         self.NULL_FORM_TYPE: FormType = FormType(StringUtil.getInstance().NULL_STRING)
         self.TEMP_HORIZONTAL_FORM: FormType = FormType("TempHorizontal")
@@ -37,6 +39,7 @@ class FormTypeFactory:
     
 
     def getFormType(self) -> FormType:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         formType: FormType = None
         if displayInfo.isPortrait():
@@ -44,10 +47,13 @@ class FormTypeFactory:
         else:
             formType = self.HORIZONTAL_FORM
         return formType
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.graphics.form.FormType import FormType
 
 
-FormTypeFactory.instance = FormTypeFactory()
+def _FormTypeFactory_instance() -> object:
+    return FormTypeFactory()
+
+lazy_static(FormTypeFactory, "instance", _FormTypeFactory_instance)
 

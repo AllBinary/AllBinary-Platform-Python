@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MyFontProcessor:
@@ -23,11 +24,13 @@ class MyFontProcessor:
 
     @staticmethod
     def defaultCharWidth(font: Font) -> int:
+        from javax.microedition.lcdui.Font import Font
         return font.charWidth('C')
     
 
     @staticmethod
     def defaultStringWidth(font: Font, size: int) -> int:
+        from javax.microedition.lcdui.Font import Font
         return MyFontProcessor.defaultCharWidth(font) * size
     
 
@@ -37,10 +40,14 @@ class MyFontProcessor:
     
 
     def process(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 
 
-MyFontProcessor.instance = MyFontProcessor()
+def _MyFontProcessor_instance() -> object:
+    return MyFontProcessor()
+
+lazy_static(MyFontProcessor, "instance", _MyFontProcessor_instance)
 

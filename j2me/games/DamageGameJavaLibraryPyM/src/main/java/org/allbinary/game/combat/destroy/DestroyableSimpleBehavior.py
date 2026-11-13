@@ -21,11 +21,13 @@ from org.allbinary.game.combat.destroy.DestroyableBaseBehavior import Destroyabl
 class DestroyableSimpleBehavior(DestroyableBaseBehavior):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         self.ownerLayer: CollidableCompositeLayer = None
         self.destroyed: bool = False
     
 
     def __init__(self, ownerLayer: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         super().__init__()
         self._init_fields()
         self.ownerLayer = ownerLayer
@@ -40,6 +42,6 @@ class DestroyableSimpleBehavior(DestroyableBaseBehavior):
         self.destroyed = destroyed
         if self.isDestroyed():
             DestroyedLayerProcessor.getInstance().add(self.ownerLayer)
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
 
 

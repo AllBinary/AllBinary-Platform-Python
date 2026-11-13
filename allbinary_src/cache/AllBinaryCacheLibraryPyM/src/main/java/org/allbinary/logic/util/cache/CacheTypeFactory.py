@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CacheTypeFactory:
     instance: CacheTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.NO_CACHE: CacheType = CacheType(StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING)
         self.CACHE: CacheType = CacheType(StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING)
         self.SET: CacheType = CacheType(StringUtil.getInstance().EMPTY_STRING, "Set")
@@ -21,9 +23,12 @@ class CacheTypeFactory:
     @staticmethod
     def getInstance() -> CacheTypeFactory:
         return CacheTypeFactory.instance
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.logic.util.cache.CacheType import CacheType
 
 
-CacheTypeFactory.instance = CacheTypeFactory()
+def _CacheTypeFactory_instance() -> object:
+    return CacheTypeFactory()
+
+lazy_static(CacheTypeFactory, "instance", _CacheTypeFactory_instance)
 

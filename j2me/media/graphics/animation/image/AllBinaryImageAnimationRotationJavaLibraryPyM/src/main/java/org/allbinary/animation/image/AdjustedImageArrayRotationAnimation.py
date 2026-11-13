@@ -29,6 +29,7 @@ class AdjustedImageArrayRotationAnimation(ImageArrayRotationAnimation):
     # throws Exception
     @staticmethod
     def createAdjustedImageArrayRotationAnimationInfo(anyType: object, animationBehavior: AnimationBehavior) -> AdjustedImageArrayRotationAnimation:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         imageRotationAnimationInfo: ImageArrayRotationAnimationInfo = anyType
         return AdjustedImageArrayRotationAnimation(imageRotationAnimationInfo.getImageArray(), imageRotationAnimationInfo.getAngleInfoP(), imageRotationAnimationInfo.getTotalAngle(), imageRotationAnimationInfo.getDx(), imageRotationAnimationInfo.getDy(), animationBehavior)
     
@@ -36,10 +37,16 @@ class AdjustedImageArrayRotationAnimation(ImageArrayRotationAnimation):
     # throws Exception
     @staticmethod
     def createAnimation(imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> AdjustedImageArrayRotationAnimation:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
         return AdjustedImageArrayRotationAnimation(imageArray, angleInfo, totalAngle, -(imageArray[0].getWidth() >> 2), -(imageArray[0].getHeight() >> 2), animationBehavior)
     
 
     def __init__(self, imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int, dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(imageArray, angleInfo, totalAngle, animationBehavior)
         self._init_fields()
         self.init(dx, dy)
@@ -52,6 +59,7 @@ class AdjustedImageArrayRotationAnimation(ImageArrayRotationAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, x + self.dx, y + self.dy)
     
 
@@ -71,7 +79,7 @@ class AdjustedImageArrayRotationAnimation(ImageArrayRotationAnimation):
         return self.dy
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

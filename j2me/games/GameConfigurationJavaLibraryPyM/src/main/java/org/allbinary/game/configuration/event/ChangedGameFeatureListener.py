@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.configuration.event.BaseChangedGameFeatureListener import BaseChangedGameFeatureListener
 
 
@@ -31,9 +32,13 @@ class ChangedGameFeatureListener(BaseChangedGameFeatureListener):
     
 
     def isChangedGameConfiguration(self, gameConfiguration: GameConfiguration) -> bool:
+        from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
         return self.list_.contains(gameConfiguration)
-from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
+# from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
 
 
-ChangedGameFeatureListener.gameFeatureListener = ChangedGameFeatureListener()
+def _ChangedGameFeatureListener_gameFeatureListener() -> object:
+    return ChangedGameFeatureListener()
+
+lazy_static(ChangedGameFeatureListener, "gameFeatureListener", _ChangedGameFeatureListener_gameFeatureListener)
 

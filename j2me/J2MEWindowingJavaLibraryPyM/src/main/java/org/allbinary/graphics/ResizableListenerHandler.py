@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ResizableListenerHandler:
@@ -45,5 +46,8 @@ class ResizableListenerHandler:
         pass
 
 
-ResizableListenerHandler.instance = ResizableListenerHandler()
+def _ResizableListenerHandler_instance() -> object:
+    return ResizableListenerHandler()
+
+lazy_static(ResizableListenerHandler, "instance", _ResizableListenerHandler_instance)
 

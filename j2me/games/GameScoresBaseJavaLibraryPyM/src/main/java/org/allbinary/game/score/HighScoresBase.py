@@ -21,6 +21,7 @@ from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactor
 class HighScoresBase(HighScoresFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
 
@@ -29,16 +30,18 @@ class HighScoresBase(HighScoresFactoryInterface):
     
 
     def fetchHighScores(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         raise RuntimeError()
     
 
     def fetchHighScoresPreload(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener, preload: bool) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         raise RuntimeError()
     
 
     def createHighScoresHelper(self) -> HighScoresHelperBaseInterface:
         raise RuntimeError()
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

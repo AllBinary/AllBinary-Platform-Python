@@ -21,6 +21,10 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.image.AnimationFactoryImageScaleUtil import AnimationFactoryImageScaleUtil
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.animationFactoryImageScaleUtil: AnimationFactoryImageScaleUtil = AnimationFactoryImageScaleUtil.getInstance()
         self.image: Image = None
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
@@ -32,11 +36,15 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
     # throws Exception
     @staticmethod
     def createFactoryBase(image: Image, sequenceArray: list[int], width: int, height: int, animationBehaviorFactory: AnimationBehaviorFactory) -> BaseImageAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         return BaseImageAnimationFactory(image, sequenceArray, width, height, 0, 0, animationBehaviorFactory)
     
 
     def __init__(self, image: Image, sequenceArray: list[int], width: int, height: int, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from org.allbinary.animation.image.AnimationFactoryInitializationVisitor import AnimationFactoryInitializationVisitor
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self._init_fields()
         self.animationFactoryInitializationVisitor = AnimationFactoryInitializationVisitor()
         self.image = image
@@ -50,10 +58,13 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         return NullAnimationFactory.getFactoryInstance().getInstance(instanceId)
     
 
     def getImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.image
     
 
@@ -62,6 +73,7 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.scaleProperties = scaleProperties
         if self.scaleProperties.shouldScale:
             self.scaleProperties.scaleWidth = int((self.animationFactoryInitializationVisitor.width * self.scaleProperties.scaleX))
@@ -75,10 +87,14 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def getScalePropertiesP(self) -> ScaleProperties:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         return self.scaleProperties
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         commonLabels: CommonLabels = CommonLabels.getInstance()
         stringBuffer: StringMaker = StringMaker()
@@ -92,14 +108,14 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
     def __str__(self) -> str:
         return self.toString()
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.image.AnimationFactoryImageScaleUtil import AnimationFactoryImageScaleUtil
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.ScaleProperties import ScaleProperties
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.image.AnimationFactoryImageScaleUtil import AnimationFactoryImageScaleUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

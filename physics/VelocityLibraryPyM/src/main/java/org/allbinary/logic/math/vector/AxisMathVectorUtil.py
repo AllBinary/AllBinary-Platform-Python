@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AxisMathVectorUtil:
     instance: AxisMathVectorUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
         self.noDecimalTrigTable: NoDecimalTrigTable = NoDecimalTrigTable.getInstance()
 
     def __init__(self) -> None:
@@ -42,8 +44,11 @@ class AxisMathVectorUtil:
 
     def calculateZ(self, magnitude: int, otherAngle: int) -> int:
         return magnitude * self.noDecimalTrigTable.sin(otherAngle) / 10
-from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
+# from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
 
 
-AxisMathVectorUtil.instance = AxisMathVectorUtil()
+def _AxisMathVectorUtil_instance() -> object:
+    return AxisMathVectorUtil()
+
+lazy_static(AxisMathVectorUtil, "instance", _AxisMathVectorUtil_instance)
 

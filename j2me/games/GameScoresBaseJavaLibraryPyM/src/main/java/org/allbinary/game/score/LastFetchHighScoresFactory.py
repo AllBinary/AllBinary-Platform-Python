@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LastFetchHighScoresFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.highScoresArray: list[HighScores] = NoHighScoresFactory.getInstance().NO_HIGH_SCORES
@@ -30,9 +30,17 @@ class LastFetchHighScoresFactory:
 
     @staticmethod
     def getInstance() -> LastFetchHighScoresFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if LastFetchHighScoresFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             LastFetchHighScoresFactory.instance = LastFetchHighScoresFactory()
         return LastFetchHighScoresFactory.instance
+# from org.allbinary.logic.NullUtil import NullUtil
 from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
 
+
+def _LastFetchHighScoresFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(LastFetchHighScoresFactory, "instance", _LastFetchHighScoresFactory_instance)
 

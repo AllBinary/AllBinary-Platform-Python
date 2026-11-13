@@ -21,6 +21,8 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class TouchButtonsPaintable(Paintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         self.foregroundBasicColor: BasicColor = None
         self.foregroundColor: int = None
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
@@ -28,6 +30,7 @@ class TouchButtonsPaintable(Paintable):
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.foregroundBasicColor = basicColor
@@ -35,6 +38,8 @@ class TouchButtonsPaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.touchButtonFactory.getList()
         self.basicSetColorUtil.setBasicColorP3(graphics, self.foregroundBasicColor, self.foregroundColor)
         touchButton: TouchButton = None
@@ -47,9 +52,9 @@ class TouchButtonsPaintable(Paintable):
             touchButton = list_.objectArray[index]
             touchButton.paintHint(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 from org.allbinary.input.motion.button.TouchButtonFactory import TouchButtonFactory
 
 

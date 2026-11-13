@@ -21,6 +21,10 @@ from org.allbinary.input.motion.gesture.observer.MotionGestureEventListener impo
 class GameMotionGestureListener(MotionGestureEventListener):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.motionGestureCollection: BasicArrayList = BasicArrayListD()
@@ -35,6 +39,8 @@ class GameMotionGestureListener(MotionGestureEventListener):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         ForcedLogUtil.log(self.commonStrings.NOT_IMPLEMENTED, self)
     
 
@@ -75,6 +81,8 @@ class GameMotionGestureListener(MotionGestureEventListener):
     
 
     def released(self, ev: MotionGestureEvent) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             self.touchGestureCollection.add(ev.getMotionGesture())
             self.signed.onMotionGestureCompleted(self.touchGestureCollection)
@@ -91,6 +99,10 @@ class GameMotionGestureListener(MotionGestureEventListener):
     
 
     def onMotionGestureEvent(self, ev: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             motionGestureInput: MotionGestureInput = ev.getMotionGesture()
             if motionGestureInput == TouchMotionGestureFactory.getInstance().PRESSED:
@@ -107,15 +119,15 @@ class GameMotionGestureListener(MotionGestureEventListener):
             stringBuffer.append(self.commonStrings.EXCEPTION_LABEL)
             stringBuffer.append(StringUtil.getInstance().toString(ev.getMotionGesture()))
             self.logUtil.put(str(stringBuffer), self, "onMotionGestureEvent", e)
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

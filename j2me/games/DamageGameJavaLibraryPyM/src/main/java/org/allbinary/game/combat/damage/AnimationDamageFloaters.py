@@ -21,6 +21,10 @@ from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
 class AnimationDamageFloaters(DamageFloaters):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.layerInterface: AllBinaryLayer = None
         self.animationInterfaceArray: list[IndexedAnimation] = None
@@ -30,6 +34,9 @@ class AnimationDamageFloaters(DamageFloaters):
     
 
     def __init__(self, layerInterface: AllBinaryLayer, animationInterfaceArray: list[IndexedAnimation], dx: int, dy: int) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__()
         self._init_fields()
         self.animationInterfaceArray = animationInterfaceArray
@@ -48,6 +55,11 @@ class AnimationDamageFloaters(DamageFloaters):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         try:
             viewPosition: ViewPositionBase = self.layerInterface.getViewPosition()
             x: int = viewPosition.getX()
@@ -63,13 +75,13 @@ class AnimationDamageFloaters(DamageFloaters):
             canvasStrings: CanvasStrings = CanvasStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, canvasStrings.PAINT, e)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from org.allbinary.view.ViewPosition import ViewPosition
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.view.ViewPosition import ViewPosition
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

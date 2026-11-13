@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.motion.button.BaseTouchInput import BaseTouchInput
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NoButtonsTouchInputFactory:
-    instance: BaseTouchInput = BaseTouchInput()
+    instance: BaseTouchInput = None
     
 
     @staticmethod
     def getInstance() -> BaseTouchInput:
         return NoButtonsTouchInputFactory.instance
 
+
+def _NoButtonsTouchInputFactory_instance() -> object:
+    from org.allbinary.input.motion.button.BaseTouchInput import BaseTouchInput
+    return BaseTouchInput()
+
+lazy_static(NoButtonsTouchInputFactory, "instance", _NoButtonsTouchInputFactory_instance)
 

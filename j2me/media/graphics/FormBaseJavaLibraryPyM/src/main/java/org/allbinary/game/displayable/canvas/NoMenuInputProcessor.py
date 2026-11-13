@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.BasicMenuInputProcessor import BasicMenuInputProcessor
 
 
@@ -30,6 +31,8 @@ class NoMenuInputProcessor(BasicMenuInputProcessor):
     
 
     def __init__(self) -> None:
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         super().__init__(BasicArrayListUtil.getInstance().getImmutableInstance(), -1, NullCanvas.NULL_CANVAS)
     
 
@@ -38,6 +41,7 @@ class NoMenuInputProcessor(BasicMenuInputProcessor):
             return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         pass
     
 
@@ -46,16 +50,21 @@ class NoMenuInputProcessor(BasicMenuInputProcessor):
             return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         pass
     
 
     def onMotionGestureEvent(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         pass
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-NoMenuInputProcessor.SINGLETON = NoMenuInputProcessor()
+def _NoMenuInputProcessor_SINGLETON() -> object:
+    return NoMenuInputProcessor()
+
+lazy_static(NoMenuInputProcessor, "SINGLETON", _NoMenuInputProcessor_SINGLETON)
 

@@ -31,6 +31,7 @@ class GameCanvasNonBotPaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.gameCanvas.nonBotPaint(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
 

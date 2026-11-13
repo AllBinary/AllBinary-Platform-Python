@@ -15,33 +15,31 @@
 
 from __future__ import annotations
 
-# from java.io.FileInputStream import FileInputStream
+from java.io.FileInputStream import FileInputStream
 
 
 class AbFileInputStream(FileInputStream):
-
-    def __init__(self, *args) -> None:
-        if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
     
 
-    def _constructor1(self, name: str) -> None:
+    def __init__(self, name: str) -> None:
         super().__init__(name)
     
 
-    def _constructor1(self, file: AbFile) -> None:
-        super().__init__(AbFileNativeUtil.get(file))
+    # throws FileNotFoundException
+    @staticmethod
+    def createFromAbFile(file: AbFile) -> AbFileInputStream:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+        return AbFileInputStream(AbFileNativeUtil.get(file).getPath())
     
 
-    def _constructor1(self, file: File) -> None:
-        super().__init__(file)
+    # throws FileNotFoundException
+    @staticmethod
+    def createFromFile(file: File) -> AbFileInputStream:
+        return AbFileInputStream(file.getPath())
 # from java.io.File import File
 # from java.io.FileNotFoundException import FileNotFoundException
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
 
 

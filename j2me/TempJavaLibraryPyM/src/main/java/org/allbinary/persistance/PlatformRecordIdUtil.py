@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformRecordIdUtil:
@@ -33,11 +34,17 @@ class PlatformRecordIdUtil:
     
 
     def getRecordId(self, abeClientInformation: AbeClientInformationInterface, baseRecordId: str) -> str:
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         return str(StringMaker().append(abeClientInformation.toShortString()).append(CommonSeps.getInstance().UNDERSCORE).append(self.PLATFORM_SHORT_NAME).append(baseRecordId))
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 
-PlatformRecordIdUtil.instance = PlatformRecordIdUtil()
+def _PlatformRecordIdUtil_instance() -> object:
+    return PlatformRecordIdUtil()
+
+lazy_static(PlatformRecordIdUtil, "instance", _PlatformRecordIdUtil_instance)
 

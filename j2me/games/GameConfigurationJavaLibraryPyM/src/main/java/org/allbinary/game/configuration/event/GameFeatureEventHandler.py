@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class GameFeatureEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         gameFeatureListenerInterface: GameFeatureListenerInterface = (eventListenerInterface)
         gameFeatureListenerInterface.onGameFeatureChange(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-GameFeatureEventHandler.gameKeyEventHandler = GameFeatureEventHandler()
+def _GameFeatureEventHandler_gameKeyEventHandler() -> object:
+    return GameFeatureEventHandler()
+
+lazy_static(GameFeatureEventHandler, "gameKeyEventHandler", _GameFeatureEventHandler_gameKeyEventHandler)
 

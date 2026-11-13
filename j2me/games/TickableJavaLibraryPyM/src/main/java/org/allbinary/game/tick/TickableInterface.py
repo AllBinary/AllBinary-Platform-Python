@@ -24,7 +24,8 @@ class TickableInterface(NamedInterface):
 
     # throws Exception
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise NotImplementedError()
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

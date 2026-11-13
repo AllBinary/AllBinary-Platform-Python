@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageRotationUtil:
     instance: ImageRotationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
         self.anchor: int = Anchor.TOP_LEFT
     
 
@@ -35,10 +37,14 @@ class ImageRotationUtil:
 
     # throws Exception
     def createRotatedImage(self, originalImage: Image, rotationInDegrees: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return originalImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.Anchor import Anchor
 
 
-ImageRotationUtil.instance = ImageRotationUtil()
+def _ImageRotationUtil_instance() -> object:
+    return ImageRotationUtil()
+
+lazy_static(ImageRotationUtil, "instance", _ImageRotationUtil_instance)
 

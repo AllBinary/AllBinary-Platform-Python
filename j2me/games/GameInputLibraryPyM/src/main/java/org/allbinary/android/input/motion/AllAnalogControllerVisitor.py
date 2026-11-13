@@ -25,14 +25,18 @@ class AllAnalogControllerVisitor(AnalogControllerVisitor):
     
 
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, analogLocationInputProcessor: AnalogLocationInputProcessor) -> None:
+        from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+        from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         analogLocationInputList: BasicArrayList = AnalogLocationInputFactory.getInstance().getList()
         analogLocationInput: AnalogLocationInput = None
         for index in range(analogLocationInputList.size() - 1, 0 - 1, -1):
             analogLocationInput = analogLocationInputList.get(index)
             analogLocationInputProcessor.process(allbinaryLayerManager, analogLocationInput)
-from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
-from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+# from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

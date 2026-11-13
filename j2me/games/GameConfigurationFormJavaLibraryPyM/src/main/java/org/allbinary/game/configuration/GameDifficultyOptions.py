@@ -21,11 +21,17 @@ from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 class GameDifficultyOptions(CommandForm):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.MEUtil import MEUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.meUtil: MEUtil = MEUtil.getInstance()
         self.list_: BasicArrayList = None
     
 
     def __init__(self, commandListener: CommandListener, title: str, list_: BasicArrayList, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.configuration.persistance.GameDifficultyFactory import GameDifficultyFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -48,11 +54,14 @@ class GameDifficultyOptions(CommandForm):
 
     # throws Exception
     def save(self) -> None:
+        from org.allbinary.game.configuration.persistance.GameDifficultyFactory import GameDifficultyFactory
         gameDifficultyFactory: GameDifficultyFactory = GameDifficultyFactory.getInstance()
         gameDifficultyFactory.setLevel(self.getSelectedId())
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         self.removeAllCommands()
         self.addCommand(gameCommandsFactory.CLOSE_AND_SHOW_GAME_CANVAS)
@@ -61,12 +70,15 @@ class GameDifficultyOptions(CommandForm):
 
     # throws Exception
     def update(self) -> None:
+        from javax.microedition.lcdui.Choice import Choice
         self.deleteAll()
         self.add(self.list_, "Difficulty", Choice.EXCLUSIVE)
         super().update()
     
 
     def add(self, list_: BasicArrayList, name: str, option: int) -> None:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         choiceGroup: ChoiceGroup = self.getChoiceGroup(list_, name, option)
         if list_.size() > 0:
             choiceGroup.setSelectedIndex(0, True)
@@ -74,6 +86,11 @@ class GameDifficultyOptions(CommandForm):
     
 
     def getChoiceGroup(self, list_: BasicArrayList, name: str, option: int) -> ChoiceGroup:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         METHOD_NAME: str = "addChoiceGroup"
         NAME: str = "Adding Choice: "
         choiceGroup: ChoiceGroup = ChoiceGroup(name, option, StringUtil.getInstance().getArrayInstance(), NullImage.NULL_IMAGE_ARRAY)
@@ -87,16 +104,19 @@ class GameDifficultyOptions(CommandForm):
     
 
     def setSelectedId(self, id: int) -> None:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         choiceGroup: ChoiceGroup = self.get(0)
         choiceGroup.setSelectedIndex(id, True)
     
 
     def getSelectedId(self) -> int:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         choiceGroup: ChoiceGroup = self.get(0)
         return choiceGroup.getSelectedIndex()
     
 
     def getSelectedText(self) -> int:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         choiceGroup: ChoiceGroup = self.get(0)
         value: int = int(str(choiceGroup.getString(choiceGroup.getSelectedIndex())))
         return value
@@ -104,12 +124,12 @@ class GameDifficultyOptions(CommandForm):
 # from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.configuration.persistance.GameDifficultyFactory import GameDifficultyFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.MEUtil import MEUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.configuration.persistance.GameDifficultyFactory import GameDifficultyFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.MEUtil import MEUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchMotionGestureFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.LEFT: MotionGestureInput = None
@@ -40,6 +40,7 @@ class TouchMotionGestureFactory:
 
     @staticmethod
     def getInstance() -> TouchMotionGestureFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if TouchMotionGestureFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             TouchMotionGestureFactory.instance = TouchMotionGestureFactory()
         return TouchMotionGestureFactory.instance
@@ -60,6 +61,7 @@ class TouchMotionGestureFactory:
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.game.input.InputFactory import InputFactory
         self._init_fields()
         MAX: int = InputFactory.getInstance().MAX
         self.LEFT = MotionGestureInput(MAX - 3, "Left Touch")
@@ -76,6 +78,13 @@ class TouchMotionGestureFactory:
         self.SCROLL_DOWN = MotionGestureInput(MAX - 14, "Scroll Down")
         self.NO_MOTION = MotionGestureInput(MAX - 2, "No Motion")
         self.LAST_MOTION = MotionGestureInput(MAX - 19, "Last Motion")
-from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _TouchMotionGestureFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(TouchMotionGestureFactory, "instance", _TouchMotionGestureFactory_instance)
 

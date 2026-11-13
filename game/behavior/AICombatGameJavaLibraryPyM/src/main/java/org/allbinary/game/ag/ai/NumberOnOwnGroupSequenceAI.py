@@ -25,6 +25,9 @@ class NumberOnOwnGroupSequenceAI(SequenceAI):
     
 
     def __init__(self, numberOnSameTeam: list[int], artificialIntelligenceInterface: list[ArtificialIntelligenceInterface], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(artificialIntelligenceInterface, ownerLayerInterface, gameInput)
         self._init_fields()
         self.numberOnSameTeam = numberOnSameTeam
@@ -32,6 +35,9 @@ class NumberOnOwnGroupSequenceAI(SequenceAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         layerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         index: int = self.getIndex()
         if len(self.numberOnSameTeam) > index:
@@ -39,10 +45,10 @@ class NumberOnOwnGroupSequenceAI(SequenceAI):
             if int(self.numberOnSameTeam[index]) > size:
                 self.next()
         super().processAI(allBinaryLayerManager)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

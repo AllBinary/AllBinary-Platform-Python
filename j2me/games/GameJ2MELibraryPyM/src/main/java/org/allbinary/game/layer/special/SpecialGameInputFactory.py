@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.layer.special.SpecialGameInput import SpecialGameInput
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SpecialGameInputFactory:
-    NO_SPECIAL_GAME_INPUT: SpecialGameInput = SpecialGameInput()
+    NO_SPECIAL_GAME_INPUT: SpecialGameInput = None
 
+
+def _SpecialGameInputFactory_NO_SPECIAL_GAME_INPUT() -> object:
+    from org.allbinary.game.layer.special.SpecialGameInput import SpecialGameInput
+    return SpecialGameInput()
+
+lazy_static(SpecialGameInputFactory, "NO_SPECIAL_GAME_INPUT", _SpecialGameInputFactory_NO_SPECIAL_GAME_INPUT)
 

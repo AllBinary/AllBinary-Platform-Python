@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.AllBinaryGameCanvasInterface import AllBinaryGameCanvasInterface
 
 
@@ -23,10 +24,12 @@ class NullAllBinaryGameCanvas(AllBinaryGameCanvasInterface):
     
 
     def getLayerManager(self) -> AllBinaryGameLayerManager:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         raise RuntimeError()
     
 
     def addCommand(self, cmd: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         raise RuntimeError()
     
 
@@ -39,15 +42,20 @@ class NullAllBinaryGameCanvas(AllBinaryGameCanvasInterface):
     
 
     def removeCommand(self, cmd: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         raise RuntimeError()
     
 
     def setCommandListener(self, l: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         raise RuntimeError()
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
 
 
-NullAllBinaryGameCanvas.NULL_ALLBINARY_GAME_CANVAS = NullAllBinaryGameCanvas()
+def _NullAllBinaryGameCanvas_NULL_ALLBINARY_GAME_CANVAS() -> object:
+    return NullAllBinaryGameCanvas()
+
+lazy_static(NullAllBinaryGameCanvas, "NULL_ALLBINARY_GAME_CANVAS", _NullAllBinaryGameCanvas_NULL_ALLBINARY_GAME_CANVAS)
 

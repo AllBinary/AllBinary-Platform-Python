@@ -27,6 +27,7 @@ class AdjustedCircleAnimation(CircleAnimation):
 
     @staticmethod
     def createAnimation(width: int, height: int, xAdjustment: int, yAdjustment: int, basicColor: BasicColor) -> AdjustedCircleAnimation:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         adjustedCircleAnimation: AdjustedCircleAnimation = AdjustedCircleAnimation(width, height, basicColor)
         adjustedCircleAnimation.initXY(xAdjustment, yAdjustment)
         return adjustedCircleAnimation
@@ -34,12 +35,14 @@ class AdjustedCircleAnimation(CircleAnimation):
 
     @staticmethod
     def createW(width: int, height: int, innerWidth: int, basicColor: BasicColor) -> AdjustedCircleAnimation:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         adjustedCircleAnimation: AdjustedCircleAnimation = AdjustedCircleAnimation(width, height, basicColor)
         adjustedCircleAnimation.init(innerWidth)
         return adjustedCircleAnimation
     
 
     def __init__(self, width: int, height: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(width, height, basicColor)
         self._init_fields()
     
@@ -50,6 +53,7 @@ class AdjustedCircleAnimation(CircleAnimation):
     
 
     def init(self, innerWidth: int) -> None:
+        from org.allbinary.AndroidUtil import AndroidUtil
         if AndroidUtil.isAndroid():
             widthPortion: int = (int(((int(innerWidth / 3)) * 10) / 7))
             self.xAdjustment = -((self.width >> 1) - widthPortion)
@@ -60,10 +64,11 @@ class AdjustedCircleAnimation(CircleAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
         graphics.drawArc(x + self.xAdjustment, y + self.yAdjustment, self.width, self.height, 0, self.TOTAL_ANGLE)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

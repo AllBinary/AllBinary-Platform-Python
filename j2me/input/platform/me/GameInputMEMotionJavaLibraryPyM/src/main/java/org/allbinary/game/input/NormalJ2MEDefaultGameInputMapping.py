@@ -23,6 +23,8 @@ class NormalJ2MEDefaultGameInputMapping(PersistentInputMapping):
 
     def __init__(self) -> None:
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         super().__init__(GamePersistanceStrings.getInstance().DEFAULT_INPUT_MAPPING_RECORD_ID)
         inputToGameKeyMapping: InputToGameKeyMapping = self.getInputMapping()
         gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
@@ -49,7 +51,7 @@ class NormalJ2MEDefaultGameInputMapping(PersistentInputMapping):
         inputToGameKeyMapping.add(gameKeyFactory.KEY_NUM9, gameKeyFactory.KEY_NUM9)
         inputToGameKeyMapping.add(gameKeyFactory.KEY_NUM0, gameKeyFactory.KEY_NUM0)
         inputToGameKeyMapping.add(gameKeyFactory.KEY_NUM1, gameKeyFactory.FIRE)
-from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
 

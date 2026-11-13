@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
 
 
@@ -29,5 +30,8 @@ class AllBinaryNoVibration(AllBinaryVibrationME):
         pass
 
 
-AllBinaryNoVibration.NO_VIBRATION = AllBinaryNoVibration()
+def _AllBinaryNoVibration_NO_VIBRATION() -> object:
+    return AllBinaryNoVibration()
+
+lazy_static(AllBinaryNoVibration, "NO_VIBRATION", _AllBinaryNoVibration_NO_VIBRATION)
 

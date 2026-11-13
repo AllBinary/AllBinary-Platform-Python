@@ -21,6 +21,9 @@ from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventOb
 class GameNotificationEvent(AllBinaryEventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.string: str = StringUtil.getInstance().EMPTY_STRING
         self.seconds: int = None
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
@@ -28,6 +31,7 @@ class GameNotificationEvent(AllBinaryEventObject):
     
 
     def __init__(self, anyType: object, string: str, seconds: int, basicColor: BasicColor, permanent: bool) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(anyType)
         self._init_fields()
         self.setString(string)
@@ -45,6 +49,7 @@ class GameNotificationEvent(AllBinaryEventObject):
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
@@ -57,9 +62,10 @@ class GameNotificationEvent(AllBinaryEventObject):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

@@ -16,12 +16,14 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreadFactoryUtil:
     instance: ThreadFactoryUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -34,6 +36,7 @@ class ThreadFactoryUtil:
     
 
     def getInstanceGameCanvasRunnable(self, runnable: GameCanvasRunnableInterface) -> threading.Thread:
+        from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
         return self.getInstanceType(runnable, runnable.getType())
     
 
@@ -44,6 +47,15 @@ class ThreadFactoryUtil:
     def getInstanceType(self, runnable: object, type_: int) -> threading.Thread:
         from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.game.displayable.canvas.DemoCanvas import DemoCanvas
+        from org.allbinary.game.displayable.canvas.RunnableCanvasSingleThreadStartRunnable import RunnableCanvasSingleThreadStartRunnable
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         if J2MEUtil.isHTML():
             if type_ == DemoCanvas.TYPE or type_ == AllBinaryGameCanvas.TYPE:
@@ -62,18 +74,21 @@ class ThreadFactoryUtil:
 
     def start(self, thread: threading.Thread) -> None:
         thread.start()
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.game.displayable.canvas.DemoCanvas import DemoCanvas
-from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
-from org.allbinary.game.displayable.canvas.RunnableCanvasSingleThreadStartRunnable import RunnableCanvasSingleThreadStartRunnable
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.game.displayable.canvas.DemoCanvas import DemoCanvas
+# from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
+# from org.allbinary.game.displayable.canvas.RunnableCanvasSingleThreadStartRunnable import RunnableCanvasSingleThreadStartRunnable
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ThreadFactoryUtil.instance = ThreadFactoryUtil()
+def _ThreadFactoryUtil_instance() -> object:
+    return ThreadFactoryUtil()
+
+lazy_static(ThreadFactoryUtil, "instance", _ThreadFactoryUtil_instance)
 

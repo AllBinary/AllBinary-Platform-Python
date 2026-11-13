@@ -20,6 +20,7 @@ from __future__ import annotations
 class SensorGameUpdateProcessor:
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.AllBinarySensor import AllBinarySensor
         self.inputSensor: AllBinarySensor = None
 
     def __init__(self) -> None:
@@ -27,10 +28,12 @@ class SensorGameUpdateProcessor:
     
 
     def setInputSensor(self, inputSensor: AllBinarySensor) -> None:
+        from org.allbinary.input.AllBinarySensor import AllBinarySensor
         self.inputSensor = inputSensor
     
 
     def getInputSensor(self) -> AllBinarySensor:
+        from org.allbinary.input.AllBinarySensor import AllBinarySensor
         return self.inputSensor
     
 
@@ -45,6 +48,7 @@ class SensorGameUpdateProcessor:
     
 
     def isAnySensor(self) -> bool:
+        from org.allbinary.input.NoAllBinarySensor import NoAllBinarySensor
         if self.inputSensor == NoAllBinarySensor.getInstance():
             return False
         else:
@@ -53,12 +57,15 @@ class SensorGameUpdateProcessor:
 
     def setNoSensors(self) -> None:
         from org.allbinary.input.gyro.GyroSensorFactory import GyroSensorFactory
+        from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
+        from org.allbinary.input.NoAllBinarySensor import NoAllBinarySensor
+        from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
         GyroSensorFactory.getInstance().setCompleteMotionGestureInputEventListener(NoCompleteMotionGestureInputEventListener.getInstance())
         AccelerometerSensorFactory.getInstance().setCompleteMotionGestureInputEventListener(NoCompleteMotionGestureInputEventListener.getInstance())
         self.setInputSensor(NoAllBinarySensor.getInstance())
-from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
-from org.allbinary.input.AllBinarySensor import AllBinarySensor
-from org.allbinary.input.NoAllBinarySensor import NoAllBinarySensor
-from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
+# from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
+# from org.allbinary.input.AllBinarySensor import AllBinarySensor
+# from org.allbinary.input.NoAllBinarySensor import NoAllBinarySensor
+# from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
 
 

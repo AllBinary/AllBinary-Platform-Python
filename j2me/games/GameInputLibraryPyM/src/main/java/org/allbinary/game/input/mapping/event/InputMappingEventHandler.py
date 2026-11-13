@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class InputMappingEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         inputMappingEventListenerInterface: InputMappingEventListenerInterface = eventListenerInterface
         inputMappingEventListenerInterface.onInputMappingEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-InputMappingEventHandler.gameKeyEventHandler = InputMappingEventHandler()
+def _InputMappingEventHandler_gameKeyEventHandler() -> object:
+    return InputMappingEventHandler()
+
+lazy_static(InputMappingEventHandler, "gameKeyEventHandler", _InputMappingEventHandler_gameKeyEventHandler)
 

@@ -21,29 +21,34 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class PaintableLayerComposite(Paintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.Layer import Layer
         self.paintableArray: list[Layer] = None
     
 
     def __init__(self, paintableArray: list[Layer]) -> None:
+        from org.allbinary.layer.Layer import Layer
         super().__init__()
         self._init_fields()
         self.paintableArray = paintableArray
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         index = len(self.paintableArray)
         while (index := index - 1) >= 0:
             self.paintableArray[index].paint(graphics)
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
         paintableInterface: PaintableInterface = None
         index = len(self.paintableArray)
         while (index := index - 1) >= 0:
             paintableInterface = self.paintableArray[index]
             paintableInterface.paintThreed(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
-from org.allbinary.layer.Layer import Layer
+# from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
+# from org.allbinary.layer.Layer import Layer
 
 

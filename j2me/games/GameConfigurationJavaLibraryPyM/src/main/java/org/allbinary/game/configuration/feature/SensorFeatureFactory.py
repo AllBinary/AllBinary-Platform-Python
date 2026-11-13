@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SensorFeatureFactory:
@@ -41,5 +42,8 @@ class SensorFeatureFactory:
 from org.allbinary.game.configuration.feature.SensorFeature import SensorFeature
 
 
-SensorFeatureFactory.instance = SensorFeatureFactory()
+def _SensorFeatureFactory_instance() -> object:
+    return SensorFeatureFactory()
+
+lazy_static(SensorFeatureFactory, "instance", _SensorFeatureFactory_instance)
 

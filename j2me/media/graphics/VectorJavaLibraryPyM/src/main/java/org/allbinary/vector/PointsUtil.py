@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PointsUtil:
@@ -59,5 +60,8 @@ class PointsUtil:
         return newPoints
 
 
-PointsUtil.instance = PointsUtil()
+def _PointsUtil_instance() -> object:
+    return PointsUtil()
+
+lazy_static(PointsUtil, "instance", _PointsUtil_instance)
 

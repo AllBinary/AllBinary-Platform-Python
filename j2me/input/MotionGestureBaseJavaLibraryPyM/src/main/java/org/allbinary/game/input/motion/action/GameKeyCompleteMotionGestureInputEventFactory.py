@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameKeyCompleteMotionGestureInputEventFactory:
     SINGLETON: GameKeyCompleteMotionGestureInputEventFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.eventList: BasicArrayList = BasicArrayListD()
 
@@ -38,16 +42,21 @@ class GameKeyCompleteMotionGestureInputEventFactory:
     
 
     def updateAll(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).appendint(self.eventList.size())), self, "updateAll")
         for index in range(self.eventList.size() - 1, 0 - 1, -1):
             gameKeyCompleteMotionGestureInputEvent: GameKeyCompleteMotionGestureInputEvent = self.eventList.objectArray[index]
             gameKeyCompleteMotionGestureInputEvent.update()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-GameKeyCompleteMotionGestureInputEventFactory.SINGLETON = GameKeyCompleteMotionGestureInputEventFactory()
+def _GameKeyCompleteMotionGestureInputEventFactory_SINGLETON() -> object:
+    return GameKeyCompleteMotionGestureInputEventFactory()
+
+lazy_static(GameKeyCompleteMotionGestureInputEventFactory, "SINGLETON", _GameKeyCompleteMotionGestureInputEventFactory_SINGLETON)
 

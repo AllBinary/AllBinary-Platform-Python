@@ -21,10 +21,17 @@ from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 class GameOptionsForm(CommandForm):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.MEUtil import MEUtil
         self.meUtil: MEUtil = MEUtil.getInstance()
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Choice import Choice
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+        from org.allbinary.game.configuration.feature.GameFeatureFormUtil import GameFeatureFormUtil
+        from org.allbinary.game.configuration.feature.GameFeatureItemStateListener import GameFeatureItemStateListener
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -39,11 +46,17 @@ class GameOptionsForm(CommandForm):
 
     # throws Exception
     def closeClientInformation(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().close()
         self.save(abeClientInformation)
     
 
     def addTextFieldsIfSimulated(self) -> None:
+        from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+        from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+        from org.allbinary.input.gyro.OrientationData import OrientationData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.ABHashtable import ABHashtable
         key: str = OrientationData.getInstance().ORIENTATION_SENSOR_INPUT
         hashtable: ABHashtable[object, object] = GameFeatureChoiceGroups.getExclusiveInstance().get()
         if hashtable is not None:
@@ -56,6 +69,9 @@ class GameOptionsForm(CommandForm):
 
     def addTextFields(self) -> None:
         from org.allbinary.game.configuration.GameConfigurationTextInput import GameConfigurationTextInput
+        from javax.microedition.lcdui.TextField import TextField
+        from org.allbinary.util.HashtableUtil import HashtableUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = GameConfigurationTextInput.getHashtable()
         size: int = hashtable.size()
         objectArray: list[object] = HashtableUtil.getInstance().getKeysAsArray(hashtable)
@@ -70,6 +86,11 @@ class GameOptionsForm(CommandForm):
     def addConfiguration(self) -> None:
         from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
         from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.game.configuration.feature.GameFeatureItemCommandListener import GameFeatureItemCommandListener
+        from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         METHOD_NAME: str = "addConfiguration"
         NAME: str = "Name: "
         list_: BasicArrayList = GameConfigurationSingleton.getInstance().getOptionsBasicArrayList()
@@ -89,6 +110,8 @@ class GameOptionsForm(CommandForm):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         self.removeAllCommands()
         self.addCommand(gameCommandsFactory.CLOSE_OPTIONS)
@@ -104,6 +127,14 @@ class GameOptionsForm(CommandForm):
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.game.configuration.SCALE import SCALE
         from org.allbinary.game.configuration.SCALE import SCALE
+        from javax.microedition.lcdui.Item import Item
+        from javax.microedition.lcdui.TextField import TextField
+        from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
+        from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         size: int = self.size()
         item: Item = None
         for index in range(0, size):
@@ -115,7 +146,7 @@ class GameOptionsForm(CommandForm):
         GameConfigurationUtil.getInstance().updateCompetitionValue()
         hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         SCALE: GameConfiguration = GameConfigurationCentral.getInstance().SCALE
-        hashtable.put(SCALE.getName(), str(SCALE.getValue()))
+        hashtable.put(SCALE.getName(), str(int(SCALE.getValue())))
         keyValuePersistance: KeyValuePersistance = GameConfigurationPersistanceSingleton.getInstance()
         keyValuePersistance.clear()
         keyValuePersistance.loadAll(abeClientInformation)
@@ -131,23 +162,23 @@ class GameOptionsForm(CommandForm):
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Item import Item
 # from javax.microedition.lcdui.TextField import TextField
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
-from org.allbinary.game.configuration.feature.GameFeatureFormUtil import GameFeatureFormUtil
-from org.allbinary.game.configuration.feature.GameFeatureItemCommandListener import GameFeatureItemCommandListener
-from org.allbinary.game.configuration.feature.GameFeatureItemStateListener import GameFeatureItemStateListener
-from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
-from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
-from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
-from org.allbinary.input.gyro.OrientationData import OrientationData
-from org.allbinary.logic.MEUtil import MEUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.HashtableUtil import HashtableUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+# from org.allbinary.game.configuration.feature.GameFeatureFormUtil import GameFeatureFormUtil
+# from org.allbinary.game.configuration.feature.GameFeatureItemCommandListener import GameFeatureItemCommandListener
+# from org.allbinary.game.configuration.feature.GameFeatureItemStateListener import GameFeatureItemStateListener
+# from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+# from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
+# from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
+# from org.allbinary.input.gyro.OrientationData import OrientationData
+# from org.allbinary.logic.MEUtil import MEUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

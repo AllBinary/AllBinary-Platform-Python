@@ -27,22 +27,26 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
     
 
     def __init__(self, name: str) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
         super().__init__(name, StdUtil.getInstance().createHashtable(), StdUtil.getInstance().createHashtable(), StdUtil.getInstance().createHashtable())
     
 
     # throws Exception
     def init(self, level: int) -> None:
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         self.initImageCache(ImageCacheFactory.getInstance(), level)
     
 
     # throws Exception
     def initImageCache(self, imageCache: ImageCache, level: int) -> None:
+        from org.allbinary.image.ImageCache import ImageCache
         if self.isInitialized():
             return
         super().init(level)
     
 
     def isLoadingLevel(self, level: int) -> bool:
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if level == resourceLoadingLevelFactory.LOAD_TOUCH.getLevel():
             return True
@@ -51,15 +55,17 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
     
 
     def isFeature(self) -> bool:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         if not Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
             return True
         else:
             return False
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

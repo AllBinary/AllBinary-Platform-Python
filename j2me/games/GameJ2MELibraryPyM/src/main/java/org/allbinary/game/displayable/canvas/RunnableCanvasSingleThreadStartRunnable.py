@@ -21,17 +21,21 @@ from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 class RunnableCanvasSingleThreadStartRunnable(GameRunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.runnableCanvas: RunnableCanvas = None
     
 
     def __init__(self, demoCanvas: RunnableCanvas) -> None:
+        from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
         super().__init__()
         self._init_fields()
         self.runnableCanvas = demoCanvas
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.runnableCanvas.run()
         except Exception as e:
@@ -42,8 +46,8 @@ class RunnableCanvasSingleThreadStartRunnable(GameRunnable):
     # throws Exception
     def processLoopSleep(self) -> None:
         self.runnableCanvas.processLoopSleep()
-from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

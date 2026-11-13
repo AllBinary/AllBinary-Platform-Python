@@ -21,6 +21,8 @@ from org.allbinary.animation.Animation import Animation
 class HealthBarAnimation(Animation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.x2: int = 0
         self.thickness: int = 0
@@ -29,6 +31,8 @@ class HealthBarAnimation(Animation):
     
 
     def __init__(self, layerInterface: AllBinaryLayer, location: int) -> None:
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
         self._init_fields()
         self.allbinaryLayer = layerInterface
@@ -62,14 +66,15 @@ class HealthBarAnimation(Animation):
     
 
     def getY(self) -> int:
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
         basicHudFactory: BasicHudFactory = BasicHudFactory.getInstance()
         if self.location == basicHudFactory.TOPLEFT:
             return self.allbinaryLayer.getViewPosition().getY() - 4
         elif self.location == basicHudFactory.BOTTOMLEFT:
             return self.allbinaryLayer.getViewPosition().getY2() + 4
         return -1
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

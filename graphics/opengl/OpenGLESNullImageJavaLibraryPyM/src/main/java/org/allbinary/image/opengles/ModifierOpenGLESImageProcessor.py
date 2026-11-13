@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.opengles.OpenGLESImageProcessor import OpenGLESImageProcessor
 
 
@@ -30,5 +31,8 @@ class ModifierOpenGLESImageProcessor(OpenGLESImageProcessor):
         return ModifierOpenGLESImageProcessor.instanceC
 
 
-ModifierOpenGLESImageProcessor.instanceC = ModifierOpenGLESImageProcessor()
+def _ModifierOpenGLESImageProcessor_instanceC() -> object:
+    return ModifierOpenGLESImageProcessor()
+
+lazy_static(ModifierOpenGLESImageProcessor, "instanceC", _ModifierOpenGLESImageProcessor_instanceC)
 

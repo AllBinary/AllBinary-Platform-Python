@@ -20,16 +20,20 @@ from __future__ import annotations
 class BasicGraphicsPipeline:
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pointBasicArrayList: BasicArrayList = None
         self.noDecimalTrigTable: NoDecimalTrigTable = NoDecimalTrigTable.getInstance()
     
 
     def __init__(self, points: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.pointBasicArrayList = points
     
 
     def setInitMatrix(self, points: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pointBasicArrayList = points
     
 
@@ -39,6 +43,10 @@ class BasicGraphicsPipeline:
 
     # throws Exception
     def translate(self, x: int, y: int) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         newBasicArrayList: BasicArrayList = BasicArrayListD()
         size: int = self.pointBasicArrayList.size()
         pointFactory: PointFactory = PointFactory.getInstance()
@@ -54,11 +62,16 @@ class BasicGraphicsPipeline:
 
     # throws Exception
     def rotateToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.rotate(int(angle.getValue()))
     
 
     # throws Exception
     def rotate(self, angle: int) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         newBasicArrayList: BasicArrayList = BasicArrayListD()
         secondPoint: GPoint = None
         y: int = 0
@@ -86,6 +99,10 @@ class BasicGraphicsPipeline:
 
     # throws Exception
     def mirror(self, width: int) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         pointFactory: PointFactory = PointFactory.getInstance()
         halfWidth: int = (width >> 1)
         newBasicArrayList: BasicArrayList = BasicArrayListD()
@@ -109,12 +126,13 @@ class BasicGraphicsPipeline:
     
 
     def getMatrix(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.pointBasicArrayList
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

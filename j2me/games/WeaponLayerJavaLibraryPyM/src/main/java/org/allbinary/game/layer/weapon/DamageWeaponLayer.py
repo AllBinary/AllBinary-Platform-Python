@@ -23,12 +23,17 @@ class DamageWeaponLayer(WeaponLayer):
 
     def __init__(self, name: str, remoteInfo: RemoteInfo, movement: Movement, animationInterface: Animation, destroyedAnimationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase, username: str, actorSessionId: int, id: int, multiPlayerType: int) -> None:
         from org.allbinary.game.layer.weapon.CollidableDamageWeaponBehavior import CollidableDamageWeaponBehavior
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.physics.movement.Movement import Movement
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, remoteInfo, multiPlayerType, movement, animationInterface, destroyedAnimationInterface, rectangle, viewPosition)
         self.setCollidableInferface(CollidableDamageWeaponBehavior(True))
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.physics.movement.Movement import Movement
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.physics.movement.Movement import Movement
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

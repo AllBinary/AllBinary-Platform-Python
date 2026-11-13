@@ -15,24 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class DiagonalDownRightTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     
 
     @staticmethod
     def getInstance() -> GameKeyCompleteMotionGestureInputEvent:
+        from org.allbinary.logic.NullUtil import NullUtil
         if DiagonalDownRightTouchInputToGameKeyEventAction.instance == NullUtil.getInstance().NULL_OBJECT:
             DiagonalDownRightTouchInputToGameKeyEventAction.instance = DiagonalDownRightTouchInputToGameKeyEventAction()
         return DiagonalDownRightTouchInputToGameKeyEventAction.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         super().__init__("Diagonal Down Right Action", TouchMotionGestureFactory.getInstance().DIAGONAL_DOWN_RIGHT, PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping())
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _DiagonalDownRightTouchInputToGameKeyEventAction_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(DiagonalDownRightTouchInputToGameKeyEventAction, "instance", _DiagonalDownRightTouchInputToGameKeyEventAction_instance)
 

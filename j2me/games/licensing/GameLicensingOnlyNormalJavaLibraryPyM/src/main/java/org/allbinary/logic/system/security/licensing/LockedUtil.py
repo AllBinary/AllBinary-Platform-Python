@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.security.licensing.LockedUtilInterface import LockedUtilInterface
 
 
@@ -35,5 +36,8 @@ class LockedUtil(LockedUtilInterface):
         return False
 
 
-LockedUtil.instance = LockedUtil()
+def _LockedUtil_instance() -> object:
+    return LockedUtil()
+
+lazy_static(LockedUtil, "instance", _LockedUtil_instance)
 

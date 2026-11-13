@@ -16,14 +16,19 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreadPool:
     ROOT_NAME: str = "-PooledThread-"
-    NORMAL_PRIORITY: int = 5
+    NORMAL_PRIORITY: int = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.NULL_RUNNABLE: NullRunnable = NullRunnable.getInstance()
@@ -47,6 +52,7 @@ class ThreadPool:
 
     def init(self) -> None:
         from org.allbinary.thread.PooledThread import PooledThread
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         if not self.isAlive:
             self.isAlive = True
             self.taskQueue = BasicArrayListD()
@@ -152,15 +158,21 @@ class ThreadPool:
     
 
     def createName(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(self.poolName).append(ThreadPool.ROOT_NAME).appendint(((setattr(self, "threadID", self.threadID + 1) or self.threadID) - 1)))
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 from org.allbinary.thread.NullRunnable import NullRunnable
 from org.allbinary.thread.ThreadPoolStrings import ThreadPoolStrings
 from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 
+
+def _ThreadPool_NORMAL_PRIORITY() -> object:
+    return 5
+
+lazy_static(ThreadPool, "NORMAL_PRIORITY", _ThreadPool_NORMAL_PRIORITY)
 

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScreenRelationalUtil:
@@ -15,6 +16,7 @@ class ScreenRelationalUtil:
     
 
     def getScaleImage(self, image: Image) -> float:
+        from javax.microedition.lcdui.Image import Image
         return self.getScaleWH(image.getWidth(), image.getHeight())
     
 
@@ -44,5 +46,8 @@ class ScreenRelationalUtil:
 # from javax.microedition.lcdui.Image import Image
 
 
-ScreenRelationalUtil.instance = ScreenRelationalUtil()
+def _ScreenRelationalUtil_instance() -> object:
+    return ScreenRelationalUtil()
+
+lazy_static(ScreenRelationalUtil, "instance", _ScreenRelationalUtil_instance)
 

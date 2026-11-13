@@ -24,13 +24,15 @@ class ResourceRelativeRelationshipFactoryInterface(GameFeatureControlledInterfac
 
     # throws Exception
     def getResourceRelativeRelationshipList(self, resource: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def addResourceRelativeRelationship(self, resource: str, relativeRelationship: RelativeRelationship) -> None:
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
         raise NotImplementedError()
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

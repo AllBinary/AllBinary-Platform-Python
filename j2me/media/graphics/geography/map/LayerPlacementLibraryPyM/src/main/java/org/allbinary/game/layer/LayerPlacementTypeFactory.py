@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LayerPlacementTypeFactory:
     instance: LayerPlacementTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
         self.MAP: LayerPlacementType = LayerPlacementType(2147483647)
         self.LEFT: LayerPlacementType = LayerPlacementType(DirectionFactory.getInstance().LEFT.getValue())
         self.DOWN: LayerPlacementType = LayerPlacementType(DirectionFactory.getInstance().DOWN.getValue())
@@ -34,9 +36,12 @@ class LayerPlacementTypeFactory:
     @staticmethod
     def getInstance() -> LayerPlacementTypeFactory:
         return LayerPlacementTypeFactory.instance
-from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
 from org.allbinary.game.layer.LayerPlacementType import LayerPlacementType
 
 
-LayerPlacementTypeFactory.instance = LayerPlacementTypeFactory()
+def _LayerPlacementTypeFactory_instance() -> object:
+    return LayerPlacementTypeFactory()
+
+lazy_static(LayerPlacementTypeFactory, "instance", _LayerPlacementTypeFactory_instance)
 

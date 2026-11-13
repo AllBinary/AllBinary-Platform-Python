@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.transition.shake.ShakeAnimationListener import ShakeAnimationListener
 
 
@@ -25,5 +26,8 @@ class NoShakeAnimationListener(ShakeAnimationListener):
         super().__init__()
 
 
-NoShakeAnimationListener.NO_SHAKE_ANIMATION_LISTENER = NoShakeAnimationListener()
+def _NoShakeAnimationListener_NO_SHAKE_ANIMATION_LISTENER() -> object:
+    return NoShakeAnimationListener()
+
+lazy_static(NoShakeAnimationListener, "NO_SHAKE_ANIMATION_LISTENER", _NoShakeAnimationListener_NO_SHAKE_ANIMATION_LISTENER)
 

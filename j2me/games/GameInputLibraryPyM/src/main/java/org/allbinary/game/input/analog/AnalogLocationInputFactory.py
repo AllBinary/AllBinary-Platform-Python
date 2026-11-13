@@ -3,12 +3,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnalogLocationInputFactory:
     instance: AnalogLocationInputFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -38,10 +41,14 @@ class AnalogLocationInputFactory:
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-AnalogLocationInputFactory.instance = AnalogLocationInputFactory()
+def _AnalogLocationInputFactory_instance() -> object:
+    return AnalogLocationInputFactory()
+
+lazy_static(AnalogLocationInputFactory, "instance", _AnalogLocationInputFactory_instance)
 

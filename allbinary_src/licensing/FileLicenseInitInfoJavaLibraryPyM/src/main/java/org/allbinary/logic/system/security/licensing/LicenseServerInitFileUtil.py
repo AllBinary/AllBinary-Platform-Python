@@ -20,6 +20,10 @@ from __future__ import annotations
 class LicenseServerInitFileUtil:
 
     def _init_fields(self) -> None:
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.SimpleFileUtil import SimpleFileUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.NULL_OUTPUT_STREAM: OutputStream = SimpleFileUtil.nullOutputStream()
@@ -29,6 +33,9 @@ class LicenseServerInitFileUtil:
     
 
     def init(self) -> None:
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.logic.io.file.FileFactory import FileFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             filePath: str = LicenseInitInfoUtil.getInstance().INITFILENAME
             LicenseInitInfoUtil.getInstance().setFilePath(StringUtil.getInstance().EMPTY_STRING)
@@ -41,6 +48,13 @@ class LicenseServerInitFileUtil:
     
 
     def write(self) -> None:
+        from java.io.InputStream import InputStream
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         fileOutputStream: OutputStream = self.NULL_OUTPUT_STREAM
         try:
             resourceUtil: ResourceUtil = ResourceUtil.getInstance()
@@ -65,14 +79,14 @@ class LicenseServerInitFileUtil:
             StreamUtil.getInstance().close(fileOutputStream)
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
-from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.FileFactory import FileFactory
-from org.allbinary.logic.io.file.SimpleFileUtil import SimpleFileUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.FileFactory import FileFactory
+# from org.allbinary.logic.io.file.SimpleFileUtil import SimpleFileUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

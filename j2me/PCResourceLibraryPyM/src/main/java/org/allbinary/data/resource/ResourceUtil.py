@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #J2SE - PC
@@ -22,6 +23,8 @@ class ResourceUtil:
     instance: ResourceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.path: str = StringUtil.getInstance().EMPTY_STRING
         self.ext: str = StringUtil.getInstance().EMPTY_STRING
@@ -47,6 +50,8 @@ class ResourceUtil:
 
     # throws Exception
     def getResourceAsStream(self, resource: str) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.string.StringMaker import StringMaker
         inputStream: InputStream = self.getResourceAsStreamAtStart(resource, 2)
         if inputStream is None:
             inputStream = self.getResourceAsStreamAtStart(resource, 1)
@@ -57,6 +62,10 @@ class ResourceUtil:
 
     # throws Exception
     def getResourceAsStreamAtStart(self, resource: str, startIndex: int) -> InputStream:
+        from java.io.FileInputStream import FileInputStream
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         inputStream: InputStream = FileInputStream(str(StringMaker().append(self.path).append(resource).append(self.ext)))
         if inputStream is not None:
             byteArray: list[int] = [0] * (inputStream.available())
@@ -71,11 +80,14 @@ class ResourceUtil:
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.FileInputStream import FileInputStream
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-ResourceUtil.instance = ResourceUtil()
+def _ResourceUtil_instance() -> object:
+    return ResourceUtil()
+
+lazy_static(ResourceUtil, "instance", _ResourceUtil_instance)
 

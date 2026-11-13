@@ -22,9 +22,11 @@ class GameEventHandlerUtil:
 
     @staticmethod
     def removeAllListeners() -> None:
+        from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
+        from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
         UpGameKeyEventHandler.getInstance().removeAllListeners()
         DownGameKeyEventHandler.getInstance().removeAllListeners()
-from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
-from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+# from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
+# from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
 
 

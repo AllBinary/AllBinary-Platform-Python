@@ -25,6 +25,13 @@ class InGameFeatures(Init):
     
 
     def init(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+        from org.allbinary.game.configuration.feature.InGameFeatureChoiceGroups import InGameFeatureChoiceGroups
+        from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
+        from org.allbinary.input.gyro.OrientationData import OrientationData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         LABEL: str = "Screen Buttons"
         orientationData: OrientationData = OrientationData.getInstance()
         exclusiveOrientationSensorVector: BasicArrayList = GameFeatureChoiceGroups.getExclusiveInstance().get().get(orientationData.ORIENTATION_SENSOR_INPUT)
@@ -48,6 +55,11 @@ class InGameFeatures(Init):
     
 
     def addToInGameMenu(self) -> None:
+        from org.allbinary.game.configuration.feature.InGameFeatureChoiceGroups import InGameFeatureChoiceGroups
+        from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+        from org.allbinary.input.gyro.OrientationData import OrientationData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         orientationData: OrientationData = OrientationData.getInstance()
         inGameExclusiveOrientationSensorVector: BasicArrayList = BasicArrayListD()
         inGameExclusiveOrientationSensorVector.add(SensorFeatureFactory.getInstance().ORIENTATION_SENSORS)
@@ -56,6 +68,11 @@ class InGameFeatures(Init):
     
 
     def isAny(self) -> bool:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+        from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
+        from org.allbinary.input.gyro.OrientationData import OrientationData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         features: Features = Features.getInstance()
         touchFeatureFactory: TouchFeatureFactory = TouchFeatureFactory.getInstance()
         if features.isFeature(touchFeatureFactory.SHOW_SCREEN_BUTTONS) or features.isFeature(touchFeatureFactory.AUTO_HIDE_SHOW_SCREEN_BUTTONS) or features.isFeature(touchFeatureFactory.HIDE_SCREEN_BUTTONS):
@@ -64,13 +81,13 @@ class InGameFeatures(Init):
         if exclusiveOrientationSensorVector is not None:
             return True
         return False
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
-from org.allbinary.game.configuration.feature.InGameFeatureChoiceGroups import InGameFeatureChoiceGroups
-from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
-from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
-from org.allbinary.input.gyro.OrientationData import OrientationData
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+# from org.allbinary.game.configuration.feature.InGameFeatureChoiceGroups import InGameFeatureChoiceGroups
+# from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+# from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
+# from org.allbinary.input.gyro.OrientationData import OrientationData
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

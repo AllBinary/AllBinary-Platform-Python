@@ -25,6 +25,8 @@ class UpKeyEventHandlerBase(BasicEventHandler):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -34,6 +36,7 @@ class UpKeyEventHandlerBase(BasicEventHandler):
     
 
     def addListener(self, playerGameInput: PlayerGameInput) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
         if not self.list_.contains(playerGameInput):
             self.list_.add(playerGameInput)
     
@@ -44,6 +47,7 @@ class UpKeyEventHandlerBase(BasicEventHandler):
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListenerSingleThreaded(eventListenerInterface)
     
@@ -53,12 +57,16 @@ class UpKeyEventHandlerBase(BasicEventHandler):
             return self._removeListener_unlocked(eventListenerInterface)
 
     def _removeListener_unlocked(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     # throws Exception
     def fireEventForInteger(self, eventObject: int) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -79,11 +87,14 @@ class UpKeyEventHandlerBase(BasicEventHandler):
 
     # throws Exception
     def processForInteger(self, eventObject: int, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         upKeyEventListenerInterface: UpKeyEventListenerInterface = eventListenerInterface
         upKeyEventListenerInterface.onUpKeyEvent(eventObject)
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(UpKeyEventHandlerBase.TOTAL_LISTENERS)
@@ -99,11 +110,11 @@ class UpKeyEventHandlerBase(BasicEventHandler):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

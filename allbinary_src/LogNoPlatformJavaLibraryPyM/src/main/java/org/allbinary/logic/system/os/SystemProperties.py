@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #NoPlatform
@@ -47,5 +48,8 @@ class SystemProperties:
         raise RuntimeError()
 
 
-SystemProperties.instance = SystemProperties()
+def _SystemProperties_instance() -> object:
+    return SystemProperties()
+
+lazy_static(SystemProperties, "instance", _SystemProperties_instance)
 

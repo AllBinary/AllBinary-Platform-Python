@@ -23,20 +23,23 @@ class ImageArrayRotationAnimationCacheable(AdjustedImageArrayRotationAnimation, 
     
 
     def __init__(self, anyType: object, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__((anyType).getImageArray(), (anyType).getAngleInfoP(), (anyType).getTotalAngle(), (anyType).getDx(), (anyType).getDy(), animationBehavior)
     
 
     def getKey(self) -> object:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_OBJECT
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

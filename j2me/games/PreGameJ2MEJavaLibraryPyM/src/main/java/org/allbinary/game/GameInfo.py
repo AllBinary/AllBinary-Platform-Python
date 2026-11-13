@@ -15,9 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.GameTypeFactory import GameTypeFactory
-from org.allbinary.game.GameMode import GameMode
-from org.allbinary.game.PlayerTypesFactory import PlayerTypesFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameInfo:
@@ -25,6 +23,7 @@ class GameInfo:
     LEVEL_NAME: str = "LEVEL"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameInfoData: GameInfoData = GameInfoData.getInstance()
         self.gameType: GameType = None
@@ -71,11 +70,15 @@ class GameInfo:
     
 
     def setCurrentLevel(self, currentLevel: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.currentLevel = currentLevel
         self.logUtil.putF(str(StringMaker().append(self.NEW_LEVEL).appendint(self.getCurrentLevel())), self, self.SET_CURRENT_LEVEL)
     
 
     def nextGameLevel(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonLabels import CommonLabels
         if self.getCurrentLevel() < self.getHighestLevel():
             self.currentLevel += 1
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().NEXT).append(CommonSeps.getInstance().SPACE).append(self.NEW_LEVEL).appendint(self.getCurrentLevel())), self, self.NEXT_GAME_LEVEL)
@@ -94,6 +97,8 @@ class GameInfo:
     
 
     def toHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         hashtable.put(self.gameInfoData.GAME_TYPE, str(self.getGameType()))
         hashtable.put(self.gameInfoData.GAME_MODE, str(self.gameMode))
@@ -104,6 +109,9 @@ class GameInfo:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer.append(self.gameInfoData.GAME_TYPE)
@@ -129,15 +137,21 @@ class GameInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.ABHashtable import ABHashtable
 from org.allbinary.game.GameInfoData import GameInfoData
 
 
-GameInfo.NONE = GameInfo(GameTypeFactory.getInstance().NONE, GameMode.NONE, PlayerTypesFactory.getInstance().PLAYER_TYPE_ONE, -1, -1)
+def _GameInfo_NONE() -> object:
+    from org.allbinary.game.GameTypeFactory import GameTypeFactory
+    from org.allbinary.game.GameMode import GameMode
+    from org.allbinary.game.PlayerTypesFactory import PlayerTypesFactory
+    return GameInfo(GameTypeFactory.getInstance().NONE, GameMode.NONE, PlayerTypesFactory.getInstance().PLAYER_TYPE_ONE, -1, -1)
+
+lazy_static(GameInfo, "NONE", _GameInfo_NONE)
 

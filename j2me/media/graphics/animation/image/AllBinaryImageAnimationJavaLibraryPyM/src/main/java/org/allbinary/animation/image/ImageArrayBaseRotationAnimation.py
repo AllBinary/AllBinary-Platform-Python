@@ -21,6 +21,10 @@ from org.allbinary.animation.RotationAnimation import RotationAnimation
 class ImageArrayBaseRotationAnimation(RotationAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
         self.originalImageArray: list[Image] = None
         self.imageArray: list[Image] = NullImage.NULL_IMAGE_ARRAY
@@ -30,6 +34,10 @@ class ImageArrayBaseRotationAnimation(RotationAnimation):
     
 
     def __init__(self, originalImageArray: list[Image], angleInfo: AngleInfo, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(angleInfo, CircularIndexUtil.createInstance(360 / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
         self._init_fields()
         self.originalImageArray = originalImageArray
@@ -76,21 +84,26 @@ class ImageArrayBaseRotationAnimation(RotationAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
     def setImageArray(self, imageArray: list[Image]) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.imageArray = imageArray
         self.totalFrames = len(imageArray)
         self.circularIndexUtil = CircularIndexUtil.createInstance(self.totalFrames)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawImage(self.currentImage, x, y, self.anchor)
     
 
     # throws Exception
     def close(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         disposalUtil: DisposalUtil = DisposalUtil.getInstance()
         size2: int = len(self.imageArray)
         for index in range(0, size2):
@@ -103,6 +116,7 @@ class ImageArrayBaseRotationAnimation(RotationAnimation):
 
     # throws Throwable
     def finalize(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         disposalUtil: DisposalUtil = DisposalUtil.getInstance()
         size2: int = len(self.imageArray)
         for index in range(0, size2):
@@ -114,12 +128,12 @@ class ImageArrayBaseRotationAnimation(RotationAnimation):
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.DisposalUtil import DisposalUtil
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.DisposalUtil import DisposalUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

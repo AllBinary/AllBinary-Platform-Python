@@ -22,11 +22,12 @@ class LayerPlacementInterfaceBasicArrayListFactoryInterface:
     
 
     def getInstance(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def getOnDemandResources(self) -> list[int]:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

@@ -21,11 +21,13 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class SimultaneousCompoundIndexAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self.basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface] = None
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self._init_fields()
         self.basicAnimationInterfaceFactoryInterfaceArray = basicAnimationInterfaceFactoryInterfaceArray
         self.animationBehaviorFactory = animationBehaviorFactory
@@ -33,6 +35,8 @@ class SimultaneousCompoundIndexAnimationInterfaceFactory(AnimationInterfaceFacto
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         size: int = len(self.basicAnimationInterfaceFactoryInterfaceArray)
         animationInterfaceArray: list[IndexedAnimation] = [None] * (size)
         for index in range(0, size):
@@ -42,6 +46,8 @@ class SimultaneousCompoundIndexAnimationInterfaceFactory(AnimationInterfaceFacto
 
     def getOrCreate(self, animationInterfaceArray: list[IndexedAnimation]) -> Animation:
         from org.allbinary.animation.compound.SimultaneousCompoundIndexAnimation import SimultaneousCompoundIndexAnimation
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         return SimultaneousCompoundIndexAnimation(animationInterfaceArray, self.animationBehaviorFactory.getOrCreateInstance())
     
 
@@ -50,11 +56,12 @@ class SimultaneousCompoundIndexAnimationInterfaceFactory(AnimationInterfaceFacto
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

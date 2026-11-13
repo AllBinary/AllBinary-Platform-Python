@@ -21,11 +21,14 @@ from org.allbinary.animation.image.ImageSegmentAnimation import ImageSegmentAnim
 class TopToBottomImageAnimation(ImageSegmentAnimation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
         self.currentHeight: int = None
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, image: Image, sequenceArray: list[int], animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(image, sequenceArray, animationBehavior)
         self._init_fields()
         self.currentHeight = 0
@@ -59,11 +62,13 @@ class TopToBottomImageAnimation(ImageSegmentAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.game.Sprite import Sprite
         graphics.drawRegion(self.getImage(), self.getStartX(), self.getStartY(), self.getDrawWidth(), self.currentHeight, Sprite.TRANS_NONE, x, y, self.anchor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.Anchor import Anchor
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.CurrentlyPressedTouchButtonSingleton import CurrentlyPressedTouchButtonSingleton
 
 
@@ -22,9 +23,10 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
     instanceC: CurrentlyPressedTouchButtonSingletonDebug = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.string: str = StringUtil.getInstance().EMPTY_STRING
         self.listString: str = StringUtil.getInstance().EMPTY_STRING
-        self.append: str = StringUtil.getInstance().EMPTY_STRING
+        self.appendText: str = StringUtil.getInstance().EMPTY_STRING
         self.PRESSED_AND_FIRED: str = "pressed & fired"
         self.PRESSED_AND_NOT_FIRED: str = "pressed in button but not fired"
         self.ASSOCIATED_RELEASED_AND_FIRED: str = "assoc. rel & fired"
@@ -43,22 +45,28 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
     
 
     def appendTouchButtonInput(self, append: str, touchButtonInput: TouchButtonInput) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(touchButtonInput))
         stringBuffer.append(CommonSeps.getInstance().SPACE)
         stringBuffer.append(append)
-        self.append = str(stringBuffer)
-        self.string = str(StringMaker().append(self.listString).append(self.append))
+        self.appendText = str(stringBuffer)
+        self.string = str(StringMaker().append(self.listString).append(self.appendText))
     
 
     def append(self, append: str) -> None:
-        self.append = str(StringMaker().append(self.append).append(append))
-        self.string = str(StringMaker().append(self.listString).append(self.append))
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        self.appendText = str(StringMaker().append(self.appendText).append(append))
+        self.string = str(StringMaker().append(self.listString).append(self.appendText))
     
 
     def clearLog(self, x: int, y: int) -> None:
-        self.append = str(StringMaker().append(GPoint.toStringStatic(x, y, 0)).append(CommonSeps.getInstance().SPACE))
-        self.string = str(StringMaker().append(self.listString).append(self.append))
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        self.appendText = str(StringMaker().append(GPoint.toStringStatic(x, y, 0)).append(CommonSeps.getInstance().SPACE))
+        self.string = str(StringMaker().append(self.listString).append(self.appendText))
     
 
     def releaseAndNotFired(self) -> None:
@@ -86,23 +94,26 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
     
 
     def removeAt(self, index: int) -> TouchButtonInput:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         touchButtonInput: TouchButtonInput = super().removeAt(index)
         self.listString = str(self.list_)
-        self.string = str(StringMaker().append(self.listString).append(self.append))
+        self.string = str(StringMaker().append(self.listString).append(self.appendText))
         return touchButtonInput
     
 
     def remove(self, touchButtonInput: TouchButtonInput) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         isRemoved: bool = super().remove(touchButtonInput)
         self.listString = str(self.list_)
-        self.string = str(StringMaker().append(self.listString).append(self.append))
+        self.string = str(StringMaker().append(self.listString).append(self.appendText))
         return isRemoved
     
 
     def add(self, touchButtonInput: TouchButtonInput) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         super().add(touchButtonInput)
         self.listString = str(self.list_)
-        self.string = str(StringMaker().append(self.listString).append(self.append))
+        self.string = str(StringMaker().append(self.listString).append(self.appendText))
     
 
     def toString(self) -> str:
@@ -110,11 +121,14 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-CurrentlyPressedTouchButtonSingletonDebug.instanceC = CurrentlyPressedTouchButtonSingletonDebug()
+def _CurrentlyPressedTouchButtonSingletonDebug_instanceC() -> object:
+    return CurrentlyPressedTouchButtonSingletonDebug()
+
+lazy_static(CurrentlyPressedTouchButtonSingletonDebug, "instanceC", _CurrentlyPressedTouchButtonSingletonDebug_instanceC)
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class Log:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         self.logFormatUtil: LogFormatUtil = LogFormatUtil.getInstance()
         self.specialMessage: str = None
         self.anyType: object = None
@@ -52,6 +53,7 @@ class Log:
     
 
     def toString(self) -> str:
+        from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         clazz: type = type(self.anyType)
         if clazz.getName() is not None:
@@ -60,7 +62,7 @@ class Log:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 

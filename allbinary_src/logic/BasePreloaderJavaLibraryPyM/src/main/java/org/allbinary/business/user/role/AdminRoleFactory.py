@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AdminRoleFactory:
     instance: AdminRoleFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.adminRoles: BasicArrayList = BasicArrayListD()
         self.storeAdminRoles: BasicArrayList = BasicArrayListD()
         self.storeManagementRoles: BasicArrayList = BasicArrayListD()
@@ -81,50 +84,64 @@ class AdminRoleFactory:
     
 
     def getProductManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.productManagementRoles
     
 
     def getAdminRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.adminRoles
     
 
     def getStoreAdminRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.storeAdminRoles
     
 
     def getStoreManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.storeManagementRoles
     
 
     def getReviewManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.reviewManagementRoles
     
 
     def getCustomerManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.customerManagementRoles
     
 
     def getWorkflowManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.workflowManagementRoles
     
 
     def getWebManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.webManagementRoles
     
 
     def getShippingManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.shippingManagementRoles
     
 
     def getAdjusterManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.adjusterManagementRoles
     
 
     def getOrderManagementRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.orderManagementRoles
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-AdminRoleFactory.instance = AdminRoleFactory()
+def _AdminRoleFactory_instance() -> object:
+    return AdminRoleFactory()
+
+lazy_static(AdminRoleFactory, "instance", _AdminRoleFactory_instance)
 

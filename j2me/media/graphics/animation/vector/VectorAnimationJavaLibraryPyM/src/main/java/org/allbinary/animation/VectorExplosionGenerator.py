@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class VectorExplosionGenerator:
     instance: VectorExplosionGenerator = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.pipeline.RandomRotationFactory import RandomRotationFactory
         self.RANDOM: VectorExplosionType = VectorExplosionType()
         self.ROTATION: VectorExplosionType = VectorExplosionType()
         self.vectorAnimationUtil: VectorAnimationUtil = VectorAnimationUtil.getInstance()
@@ -38,6 +40,8 @@ class VectorExplosionGenerator:
 
     # throws Exception
     def createList(self, list_: BasicArrayList, howMuch: int, type_: VectorExplosionType) -> BasicArrayList:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         point: GPoint = None
         size: int = list_.size()
         points: list[list[int]] = [[0] * (2) for _ in range(size)]
@@ -51,6 +55,7 @@ class VectorExplosionGenerator:
     # throws Exception
     # Java overloaded method: Python keeps the last definition
     def getInstance(self, points: list[list[int]], howMuch: int, type_: VectorExplosionType) -> list[list[list[int]]]:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pointsBasicArrayList: BasicArrayList = self.getInstanceStartFrame(points, howMuch, type_, True)
         tempBasicArrayList: BasicArrayList = pointsBasicArrayList.objectArray[0]
         newPoints: list[list[list[int]]] = self.vectorAnimationUtil.toAnimationArrayFromListOfPointListWithPointsPerFrame(pointsBasicArrayList, tempBasicArrayList.size())
@@ -59,6 +64,8 @@ class VectorExplosionGenerator:
 
     # throws Exception
     def getInstanceStartFrame(self, points: list[list[int]], howMuch: int, type_: VectorExplosionType, startFrame: bool) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         try:
             pointsBasicArrayList: BasicArrayList = BasicArrayListS(howMuch)
             pointsBasicArrayList.add(self.createPointsBasicArrayList(points))
@@ -79,6 +86,9 @@ class VectorExplosionGenerator:
 
     # throws Exception
     def createListFromPoints(self, tempBasicArrayList: BasicArrayList, points: list[list[int]], howMuch: int, type_: VectorExplosionType) -> BasicArrayList:
+        from org.allbinary.graphics.pipeline.RandomTranslation import RandomTranslation
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         index: int = 0
         pointBasicArrayList: BasicArrayList = BasicArrayListD()
         sectionBasicArrayList: BasicArrayList = None
@@ -105,6 +115,9 @@ class VectorExplosionGenerator:
 
     # throws Exception
     def createPointsBasicArrayList(self, points: list[list[int]]) -> BasicArrayList:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         if len(points) == 0:
             raise Exception("Not Points Provided")
         firstPointBasicArrayList: BasicArrayList = BasicArrayListS(len(points))
@@ -112,16 +125,19 @@ class VectorExplosionGenerator:
         for index in range(0, len(points)):
             firstPointBasicArrayList.add(pointFactory.createXY(points[index][0], points[index][1]))
         return firstPointBasicArrayList
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.pipeline.RandomRotationFactory import RandomRotationFactory
-from org.allbinary.graphics.pipeline.RandomTranslation import RandomTranslation
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.pipeline.RandomRotationFactory import RandomRotationFactory
+# from org.allbinary.graphics.pipeline.RandomTranslation import RandomTranslation
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 from org.allbinary.animation.VectorExplosionType import VectorExplosionType
 from org.allbinary.animation.VectorAnimationUtil import VectorAnimationUtil
 
 
-VectorExplosionGenerator.instance = VectorExplosionGenerator()
+def _VectorExplosionGenerator_instance() -> object:
+    return VectorExplosionGenerator()
+
+lazy_static(VectorExplosionGenerator, "instance", _VectorExplosionGenerator_instance)
 

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreadObjectUtil:
@@ -32,15 +33,19 @@ class ThreadObjectUtil:
 
     # throws Exception
     def waitObjectFor(self, anyType: object, delay: int) -> None:
+        from org.allbinary.TsUtil import TsUtil
         TsUtil.getInstance().waitFor(anyType, delay)
     
 
     def processThread(self, runnable: object) -> None:
         thread: threading.Thread = threading.Thread(target=runnable.run)
         thread.start()
-from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.TsUtil import TsUtil
 from org.allbinary.thread.NullPriorityRunnable import NullPriorityRunnable
 
 
-ThreadObjectUtil.instance = ThreadObjectUtil()
+def _ThreadObjectUtil_instance() -> object:
+    return ThreadObjectUtil()
+
+lazy_static(ThreadObjectUtil, "instance", _ThreadObjectUtil_instance)
 

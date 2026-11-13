@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.thirdparty.store.NoThirdPartyStore import NoThirdPartyStore
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThirdPartyStoreFactory:
-    instance: NoThirdPartyStore = NoThirdPartyStore()
+    instance: NoThirdPartyStore = None
     
 
     @staticmethod
@@ -30,4 +30,10 @@ class ThirdPartyStoreFactory:
     def __init__(self) -> None:
         pass
 
+
+def _ThirdPartyStoreFactory_instance() -> object:
+    from org.allbinary.thirdparty.store.NoThirdPartyStore import NoThirdPartyStore
+    return NoThirdPartyStore()
+
+lazy_static(ThirdPartyStoreFactory, "instance", _ThirdPartyStoreFactory_instance)
 

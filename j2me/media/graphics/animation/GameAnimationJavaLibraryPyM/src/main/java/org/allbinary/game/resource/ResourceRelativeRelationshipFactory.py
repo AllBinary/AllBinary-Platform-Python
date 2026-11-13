@@ -21,6 +21,9 @@ from org.allbinary.game.resource.ResourceRelativeRelationshipFactoryInterface im
 class ResourceRelativeRelationshipFactory(ResourceRelativeRelationshipFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         self.initialized: bool = False
@@ -36,6 +39,7 @@ class ResourceRelativeRelationshipFactory(ResourceRelativeRelationshipFactoryInt
 
     # throws Exception
     def getResourceRelativeRelationshipList(self, resource: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         listCanBeNull: object = self.hashtable.get(resource)
         if listCanBeNull is None:
             return self.basicArrayListUtil.getImmutableInstance()
@@ -44,6 +48,9 @@ class ResourceRelativeRelationshipFactory(ResourceRelativeRelationshipFactoryInt
 
     # throws Exception
     def addResourceRelativeRelationship(self, resource: str, hardPoint: RelativeRelationship) -> None:
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = self.getResourceRelativeRelationshipList(resource)
         if list_ == self.basicArrayListUtil.getImmutableInstance():
             list_ = BasicArrayListD()
@@ -65,11 +72,11 @@ class ResourceRelativeRelationshipFactory(ResourceRelativeRelationshipFactoryInt
 
     def isInitialized(self) -> bool:
         return self.initialized
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

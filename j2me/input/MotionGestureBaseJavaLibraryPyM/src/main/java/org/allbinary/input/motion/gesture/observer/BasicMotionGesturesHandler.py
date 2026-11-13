@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class BasicMotionGesturesHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         baseMotionGestureEventListener: BaseMotionGestureEventListener = eventListenerInterface
         baseMotionGestureEventListener.onMotionGestureEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-BasicMotionGesturesHandler.SINGLETON = BasicMotionGesturesHandler()
+def _BasicMotionGesturesHandler_SINGLETON() -> object:
+    return BasicMotionGesturesHandler()
+
+lazy_static(BasicMotionGesturesHandler, "SINGLETON", _BasicMotionGesturesHandler_SINGLETON)
 

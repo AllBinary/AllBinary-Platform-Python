@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -38,5 +39,8 @@ class ColorChangeEventHandler(BasicEventHandler):
         return ColorChangeEventHandler.eventHandler
 
 
-ColorChangeEventHandler.eventHandler = ColorChangeEventHandler()
+def _ColorChangeEventHandler_eventHandler() -> object:
+    return ColorChangeEventHandler()
+
+lazy_static(ColorChangeEventHandler, "eventHandler", _ColorChangeEventHandler_eventHandler)
 

@@ -25,14 +25,19 @@ class RandomPatrolFlockingFiringAIFactory(ArtificialIntelligenceInterfaceFactory
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.game.ag.ai.scroller.RandomPatrolAI import RandomPatrolAI
         from org.allbinary.game.ag.ai.scroller.TimedFireAI import TimedFireAI
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.ag.ai.ArrayAI import ArrayAI
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         artificialIntelligenceInterface: list[ArtificialIntelligenceInterface] = [None] * (2)
         artificialIntelligenceInterface[0] = RandomPatrolAI(hashtable, ownerLayerInterface, gameInput)
         artificialIntelligenceInterface[1] = TimedFireAI(1800, ownerLayerInterface, gameInput)
         return ArrayAI(artificialIntelligenceInterface, ownerLayerInterface, gameInput)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.ag.ai.ArrayAI import ArrayAI
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.ag.ai.ArrayAI import ArrayAI
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

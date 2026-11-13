@@ -27,8 +27,10 @@ class SpecialStrafeLeftGameInputProcessor(SpecialGameInputProcessor):
 
     # throws Exception
     def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.collidableDestroyableDamageableLayer.strafeLeft()
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

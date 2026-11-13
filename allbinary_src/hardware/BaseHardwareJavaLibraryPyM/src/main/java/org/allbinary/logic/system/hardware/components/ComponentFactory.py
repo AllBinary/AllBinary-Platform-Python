@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ComponentFactory:
     instance: ComponentFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.VGA: Component = Component("VGA")
         self.IDE: Component = Component("IDE")
         self.SCSI: Component = Component("SCSI")
@@ -42,9 +44,12 @@ class ComponentFactory:
     @staticmethod
     def getInstance() -> ComponentFactory:
         return ComponentFactory.instance
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.system.hardware.components.Component import Component
 
 
-ComponentFactory.instance = ComponentFactory()
+def _ComponentFactory_instance() -> object:
+    return ComponentFactory()
+
+lazy_static(ComponentFactory, "instance", _ComponentFactory_instance)
 

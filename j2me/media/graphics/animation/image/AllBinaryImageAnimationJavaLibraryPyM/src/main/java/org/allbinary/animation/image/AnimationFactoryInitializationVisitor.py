@@ -36,6 +36,10 @@ class AnimationFactoryInitializationVisitor:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         commonLabels: CommonLabels = CommonLabels.getInstance()
         stringBuffer: StringMaker = StringMaker()
@@ -50,9 +54,9 @@ class AnimationFactoryInitializationVisitor:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

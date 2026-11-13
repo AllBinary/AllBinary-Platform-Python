@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ProgressEndListener:
@@ -25,5 +26,8 @@ class ProgressEndListener:
         pass
 
 
-ProgressEndListener.instance = ProgressEndListener()
+def _ProgressEndListener_instance() -> object:
+    return ProgressEndListener()
+
+lazy_static(ProgressEndListener, "instance", _ProgressEndListener_instance)
 

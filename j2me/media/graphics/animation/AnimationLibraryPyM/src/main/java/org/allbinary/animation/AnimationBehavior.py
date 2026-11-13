@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnimationBehavior:
@@ -30,5 +31,8 @@ class AnimationBehavior:
         pass
 
 
-AnimationBehavior.instance = AnimationBehavior()
+def _AnimationBehavior_instance() -> object:
+    return AnimationBehavior()
+
+lazy_static(AnimationBehavior, "instance", _AnimationBehavior_instance)
 

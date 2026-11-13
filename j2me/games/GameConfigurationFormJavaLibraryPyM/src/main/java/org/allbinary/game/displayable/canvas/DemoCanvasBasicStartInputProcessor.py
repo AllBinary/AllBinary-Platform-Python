@@ -22,11 +22,20 @@ class DemoCanvasBasicStartInputProcessor(BasicMenuInputProcessor):
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, gameCanvas: RunnableCanvas) -> None:
+        from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, -1, gameCanvas)
     
 
     # throws Exception
     def processInputList(self) -> int:
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+        from org.allbinary.game.input.GameInputStrings import GameInputStrings
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getGameKeyEventList()
         size: int = list_.size()
         gameKeyEvent: GameKeyEvent = None
@@ -36,12 +45,12 @@ class DemoCanvasBasicStartInputProcessor(BasicMenuInputProcessor):
         self.getCanvas().getCustomCommandListener().commandAction(GameCommandsFactory.getInstance().START_COMMAND, NullCanvas.NULL_CANVAS)
         return size
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
-from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.input.GameInputStrings import GameInputStrings
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.input.GameInputStrings import GameInputStrings
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

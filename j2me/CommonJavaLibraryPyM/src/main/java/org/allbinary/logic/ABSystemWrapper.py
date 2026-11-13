@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ABSystemWrapper:
@@ -33,8 +34,11 @@ class ABSystemWrapper:
 
     def currentTimeMillis(self) -> int:
         return int(time.time() * 1000)
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-ABSystemWrapper.instance = ABSystemWrapper()
+def _ABSystemWrapper_instance() -> object:
+    return ABSystemWrapper()
+
+lazy_static(ABSystemWrapper, "instance", _ABSystemWrapper_instance)
 

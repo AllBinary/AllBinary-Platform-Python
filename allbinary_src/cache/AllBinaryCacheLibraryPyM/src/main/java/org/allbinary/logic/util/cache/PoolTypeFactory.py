@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PoolTypeFactory:
@@ -22,5 +23,8 @@ from org.allbinary.logic.util.cache.PoolType import PoolType
 from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
 
 
-PoolTypeFactory.instance = PoolTypeFactory()
+def _PoolTypeFactory_instance() -> object:
+    return PoolTypeFactory()
+
+lazy_static(PoolTypeFactory, "instance", _PoolTypeFactory_instance)
 

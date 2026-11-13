@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShaderInitializer:
     instance: ShaderInitializer = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -33,10 +35,14 @@ class ShaderInitializer:
     
 
     def init(self, gl: GL10, shader: list[Shader], attributeArray: list[str]) -> int:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         return -1
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ShaderInitializer.instance = ShaderInitializer()
+def _ShaderInitializer_instance() -> object:
+    return ShaderInitializer()
+
+lazy_static(ShaderInitializer, "instance", _ShaderInitializer_instance)
 

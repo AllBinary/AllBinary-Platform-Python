@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import os
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FilePathData:
@@ -38,5 +39,8 @@ class FilePathData:
 # from java.io.File import File
 
 
-FilePathData.instance = FilePathData()
+def _FilePathData_instance() -> object:
+    return FilePathData()
+
+lazy_static(FilePathData, "instance", _FilePathData_instance)
 

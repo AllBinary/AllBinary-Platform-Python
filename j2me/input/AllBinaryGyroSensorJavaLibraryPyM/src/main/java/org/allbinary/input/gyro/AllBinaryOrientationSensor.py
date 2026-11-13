@@ -15,17 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.AllBinarySensor import AllBinarySensor
 
 
 class AllBinaryOrientationSensor(AllBinarySensor):
+    NULL_ALLBINARY_ORIENTATION_SENSOR: AllBinaryOrientationSensor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.CompleteMotionGestureInputEventListenerInterface import CompleteMotionGestureInputEventListenerInterface
+        from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
+        from org.allbinary.logic.math.PrimitiveFloatUtil import PrimitiveFloatUtil
         self.sensorDataFloatArray: list[float] = PrimitiveFloatUtil.getArrayInstance()
         self.listener: CompleteMotionGestureInputEventListenerInterface = NoCompleteMotionGestureInputEventListener.getInstance()
     
 
     def setCompleteMotionGestureInputEventListener(self, completeMotionGestureInputEventListenerInterface: CompleteMotionGestureInputEventListenerInterface) -> None:
+        from org.allbinary.game.input.CompleteMotionGestureInputEventListenerInterface import CompleteMotionGestureInputEventListenerInterface
         self.listener = completeMotionGestureInputEventListenerInterface
     
 
@@ -36,10 +42,16 @@ class AllBinaryOrientationSensor(AllBinarySensor):
 
     # throws Exception
     def getOrientation(self) -> Orientation:
+        from org.allbinary.logic.math.Orientation import Orientation
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
-from org.allbinary.game.input.CompleteMotionGestureInputEventListenerInterface import CompleteMotionGestureInputEventListenerInterface
-from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
-from org.allbinary.logic.math.Orientation import Orientation
-from org.allbinary.logic.math.PrimitiveFloatUtil import PrimitiveFloatUtil
+# from org.allbinary.game.input.CompleteMotionGestureInputEventListenerInterface import CompleteMotionGestureInputEventListenerInterface
+# from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
+# from org.allbinary.logic.math.Orientation import Orientation
+# from org.allbinary.logic.math.PrimitiveFloatUtil import PrimitiveFloatUtil
 
+
+def _AllBinaryOrientationSensor_NULL_ALLBINARY_ORIENTATION_SENSOR() -> object:
+    return AllBinaryOrientationSensor()
+
+lazy_static(AllBinaryOrientationSensor, "NULL_ALLBINARY_ORIENTATION_SENSOR", _AllBinaryOrientationSensor_NULL_ALLBINARY_ORIENTATION_SENSOR)
 

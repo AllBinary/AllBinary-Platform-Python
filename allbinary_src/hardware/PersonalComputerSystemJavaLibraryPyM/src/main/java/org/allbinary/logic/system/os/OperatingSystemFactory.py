@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OperatingSystemFactory:
@@ -23,6 +24,8 @@ class OperatingSystemFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.genericOperatingSystem: GenericOperatingSystem = NoOperatingSystem.NO_OPERATING_SYSTEM
@@ -46,6 +49,15 @@ class OperatingSystemFactory:
         from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
         from org.allbinary.logic.system.os.SystemProperties import SystemProperties
         from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+        from org.allbinary.logic.communication.log.Log import Log
+        from org.allbinary.logic.communication.log.LogFactory import LogFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.os.linux.LinuxOperatingSystemFactory import LinuxOperatingSystemFactory
+        from org.allbinary.logic.system.os.solaris.SolarisOperatingSystemFactory import SolarisOperatingSystemFactory
+        from org.allbinary.logic.system.os.windows.WindowsOperatingSystemFactory import WindowsOperatingSystemFactory
         try:
             operatingSystems: OperatingSystems = OperatingSystems.getInstance()
             systemProperties: SystemProperties = SystemProperties.getInstance()
@@ -77,19 +89,22 @@ class OperatingSystemFactory:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().FACTORYERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_INSTANCE, e)
             return NoOperatingSystem.NO_OPERATING_SYSTEM
-from org.allbinary.logic.communication.log.Log import Log
-from org.allbinary.logic.communication.log.LogFactory import LogFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.os.linux.LinuxOperatingSystemFactory import LinuxOperatingSystemFactory
-from org.allbinary.logic.system.os.solaris.SolarisOperatingSystemFactory import SolarisOperatingSystemFactory
-from org.allbinary.logic.system.os.windows.WindowsOperatingSystemFactory import WindowsOperatingSystemFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.Log import Log
+# from org.allbinary.logic.communication.log.LogFactory import LogFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.os.linux.LinuxOperatingSystemFactory import LinuxOperatingSystemFactory
+# from org.allbinary.logic.system.os.solaris.SolarisOperatingSystemFactory import SolarisOperatingSystemFactory
+# from org.allbinary.logic.system.os.windows.WindowsOperatingSystemFactory import WindowsOperatingSystemFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
 
 
-OperatingSystemFactory.instance = OperatingSystemFactory()
+def _OperatingSystemFactory_instance() -> object:
+    return OperatingSystemFactory()
+
+lazy_static(OperatingSystemFactory, "instance", _OperatingSystemFactory_instance)
 

@@ -15,25 +15,36 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ai.ArtificialIntelligenceInterfaceFactoryInterface import ArtificialIntelligenceInterfaceFactoryInterface
-from org.allbinary.game.ag.ai.NullAI import NullAI
 
 
 class NullAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
-    NULL_AI: NullAI = NullAI()
+    NULL_AI: NullAI = None
     
 
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         return NullAIFactory.NULL_AI
     
 
     # Java overloaded method: Python keeps the last definition
     @staticmethod
     def getInstance() -> ArtificialIntelligenceInterface:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         return NullAIFactory.NULL_AI
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.util.ABHashtable import ABHashtable
 
+
+def _NullAIFactory_NULL_AI() -> object:
+    from org.allbinary.game.ag.ai.NullAI import NullAI
+    return NullAI()
+
+lazy_static(NullAIFactory, "NULL_AI", _NullAIFactory_NULL_AI)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScreenRepaintProcessorFactory:
@@ -32,14 +33,20 @@ class ScreenRepaintProcessorFactory:
 
     def create(self, displayable: Displayable) -> Processor:
         from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessor import ScreenRepaintProcessor
+        from javax.microedition.lcdui.Displayable import Displayable
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.canvas.Processor import Processor
         if not J2MEUtil.isJ2ME():
             return ScreenRepaintProcessor(displayable)
         else:
             return Processor.getInstance()
 # from javax.microedition.lcdui.Displayable import Displayable
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.canvas.Processor import Processor
 
 
-ScreenRepaintProcessorFactory.instance = ScreenRepaintProcessorFactory()
+def _ScreenRepaintProcessorFactory_instance() -> object:
+    return ScreenRepaintProcessorFactory()
+
+lazy_static(ScreenRepaintProcessorFactory, "instance", _ScreenRepaintProcessorFactory_instance)
 

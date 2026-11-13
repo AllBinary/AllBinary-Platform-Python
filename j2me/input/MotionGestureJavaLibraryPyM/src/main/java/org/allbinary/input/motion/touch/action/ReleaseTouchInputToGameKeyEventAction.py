@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class ReleaseTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         self.NONE: GameKey = GameKeyFactory.getInstance().NONE
     
 
     @staticmethod
     def getInstance() -> GameKeyCompleteMotionGestureInputEvent:
+        from org.allbinary.logic.NullUtil import NullUtil
         if ReleaseTouchInputToGameKeyEventAction.instance == NullUtil.getInstance().NULL_OBJECT:
             ReleaseTouchInputToGameKeyEventAction.instance = ReleaseTouchInputToGameKeyEventAction()
         return ReleaseTouchInputToGameKeyEventAction.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__("Release Action", TouchMotionGestureFactory.getInstance().RELEASED, PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping())
         self._init_fields()
         try:
@@ -46,11 +53,18 @@ class ReleaseTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEve
 
     def update(self) -> None:
         pass
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _ReleaseTouchInputToGameKeyEventAction_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(ReleaseTouchInputToGameKeyEventAction, "instance", _ReleaseTouchInputToGameKeyEventAction_instance)
 

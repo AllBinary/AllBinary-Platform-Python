@@ -16,15 +16,22 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScores import HighScores
 
 
 class RecordStoreHighScores(HighScores):
-    hashTable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
+    hashTable: ABHashtable[object, object] = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from javax.microedition.rms.RecordComparator import RecordComparator
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.platformRecordIdUtil: PlatformRecordIdUtil = PlatformRecordIdUtil.getInstance()
@@ -37,6 +44,9 @@ class RecordStoreHighScores(HighScores):
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, name: str, heading: str, columnTwoHeading: str, recordComparatorInterface: RecordComparator) -> None:
+        from javax.microedition.rms.RecordComparator import RecordComparator
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(name, heading, columnTwoHeading)
         self._init_fields()
         self.abeClientInformation = abeClientInformation
@@ -52,6 +62,9 @@ class RecordStoreHighScores(HighScores):
 
     @staticmethod
     def _getInstance_unlocked(abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, highScoreName: str, heading: str, columnTwoHeading: str, recordComparatorInterface: RecordComparator) -> HighScores:
+        from javax.microedition.rms.RecordComparator import RecordComparator
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         highScoresCanBeNull: object = RecordStoreHighScores.hashTable.get(highScoreName)
         if highScoresCanBeNull is None:
             highScores: HighScores = RecordStoreHighScores(abeClientInformation, gameInfo, highScoreName, heading, columnTwoHeading, recordComparatorInterface)
@@ -61,6 +74,9 @@ class RecordStoreHighScores(HighScores):
     
 
     def getRecordId(self, abeClientInformation: AbeClientInformationInterface) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
         return self.platformRecordIdUtil.getRecordId(abeClientInformation, str(StringMaker().append(CommonSeps.getInstance().UNDERSCORE).append(self.getName()).append(self.RECORD_ID)))
     
 
@@ -69,6 +85,11 @@ class RecordStoreHighScores(HighScores):
             return self._addHighScore_unlocked(newHighScore)
 
     def _addHighScore_unlocked(self, newHighScore: HighScore) -> None:
+        from javax.microedition.rms.RecordStore import RecordStore
+        from javax.microedition.rms.RecordStoreException import RecordStoreException
+        from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             self.logUtil.putF(str(StringMaker().append("Adding HighScore: ").appendlong(int(newHighScore.getScore()))), self, self.commonStrings.ADD)
@@ -97,6 +118,17 @@ class RecordStoreHighScores(HighScores):
     def removeLowestHighScore(self) -> None:
         from org.allbinary.game.score.HighScore import HighScore
         from org.allbinary.game.score.HighScore import HighScore
+        from java.io.DataInputStream import DataInputStream
+        from javax.microedition.rms.RecordComparator import RecordComparator
+        from javax.microedition.rms.RecordEnumeration import RecordEnumeration
+        from javax.microedition.rms.RecordStore import RecordStore
+        from javax.microedition.rms.RecordStoreException import RecordStoreException
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+        from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
+        from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             recordStore = RecordStore.openRecordStore(self.getRecordId(self.abeClientInformation), True)
@@ -135,6 +167,19 @@ class RecordStoreHighScores(HighScores):
 
     def load(self) -> None:
         from org.allbinary.game.score.HighScore import HighScore
+        from java.io.DataInputStream import DataInputStream
+        from javax.microedition.rms.RecordComparator import RecordComparator
+        from javax.microedition.rms.RecordEnumeration import RecordEnumeration
+        from javax.microedition.rms.RecordStore import RecordStore
+        from javax.microedition.rms.RecordStoreException import RecordStoreException
+        from javax.microedition.rms.RecordStoreNotFoundException import RecordStoreNotFoundException
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+        from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
+        from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             recordStore = RecordStore.openRecordStore(self.getRecordId(self.abeClientInformation), True)
@@ -183,6 +228,7 @@ class RecordStoreHighScores(HighScores):
     
 
     def isTooManyHighScores(self) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if self.getList() is not None and self.getList().size() < self.MAXHIGHSCORES:
             return False
         else:
@@ -196,6 +242,8 @@ class RecordStoreHighScores(HighScores):
             return self._isBestScore_unlocked(newHighScore)
 
     def _isBestScore_unlocked(self, newHighScore: HighScore) -> bool:
+        from javax.microedition.rms.RecordComparator import RecordComparator
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             if not self.isTooManyHighScores():
                 self.logUtil.putF("Slot Available for a High Score", self, "isBestScore")
@@ -216,6 +264,9 @@ class RecordStoreHighScores(HighScores):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         list_: BasicArrayList = self.getList()
@@ -237,20 +288,28 @@ class RecordStoreHighScores(HighScores):
 # from javax.microedition.rms.RecordStore import RecordStore
 # from javax.microedition.rms.RecordStoreException import RecordStoreException
 # from javax.microedition.rms.RecordStoreNotFoundException import RecordStoreNotFoundException
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
-from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
-from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+# from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
+# from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _RecordStoreHighScores_hashTable() -> object:
+    from org.allbinary.logic.StdUtil import StdUtil
+    from org.allbinary.util.ABHashtable import ABHashtable
+    return StdUtil.getInstance().createHashtable()
+
+lazy_static(RecordStoreHighScores, "hashTable", _RecordStoreHighScores_hashTable)
 

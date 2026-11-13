@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HighScoreCommands:
     instance: HighScoreCommands = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.DISPLAY: Command = Command("Scores", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
         self.PERSONAL: Command = Command("Personal", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
         self.WORLD: Command = Command("World", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
@@ -33,8 +36,11 @@ class HighScoreCommands:
     def getInstance() -> HighScoreCommands:
         return HighScoreCommands.instance
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-HighScoreCommands.instance = HighScoreCommands()
+def _HighScoreCommands_instance() -> object:
+    return HighScoreCommands()
+
+lazy_static(HighScoreCommands, "instance", _HighScoreCommands_instance)
 

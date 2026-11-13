@@ -22,10 +22,12 @@ class BasicVelocityInterface:
     
 
     def getVelocityXBasicDecimalP(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
     def getVelocityYBasicDecimalP(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
@@ -34,41 +36,53 @@ class BasicVelocityInterface:
     
 
     def setVelocityWithBigDecimalAndDirection(self, magnitudeBasicDecimal: BasicDecimal, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
     def addVelocityWithBigDecimalAndDirection(self, magnitudeBasicDecimal: BasicDecimal, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
     def setVelocityWithDirection(self, magnitude: int, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
         raise NotImplementedError()
     
 
     def addVelocityWithDirection(self, magnitude: int, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
         raise NotImplementedError()
     
 
     def setVelocityWithBigDecimal(self, magnitudeBasicDecimal: BasicDecimal, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.Angle import Angle
         raise NotImplementedError()
     
 
     def addVelocityWithBigDecimal(self, magnitudeBasicDecimal: BasicDecimal, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.Angle import Angle
         raise NotImplementedError()
     
 
     def setVelocity(self, magnitude: int, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         raise NotImplementedError()
     
 
     def addVelocity(self, magnitude: int, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         raise NotImplementedError()
     
 
     def addVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
         raise NotImplementedError()
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.math.Angle import Angle
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.math.Angle import Angle
 
 

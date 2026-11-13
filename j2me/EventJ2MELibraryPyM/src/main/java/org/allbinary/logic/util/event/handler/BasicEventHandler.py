@@ -21,6 +21,11 @@ from org.allbinary.logic.util.event.handler.BasicEventHandlerInterface import Ba
 class BasicEventHandler(BasicEventHandlerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from jsinterop.annotations.JsProperty import JsProperty
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.eventStrings: EventStrings = EventStrings.getInstance()
@@ -28,15 +33,22 @@ class BasicEventHandler(BasicEventHandlerInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
     def removeAllListeners(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from jsinterop.annotations.JsMethod import JsMethod
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
     def addListeners(self, vector: BasicArrayList) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from jsinterop.annotations.JsMethod import JsMethod
         eventListenerInterface: EventListenerInterface = None
         size: int = vector.size()
         for index in range(0, size):
@@ -45,6 +57,9 @@ class BasicEventHandler(BasicEventHandlerInterface):
     
 
     def removeListeners(self, vector: BasicArrayList) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from jsinterop.annotations.JsMethod import JsMethod
         eventListenerInterface: EventListenerInterface = None
         size: int = vector.size()
         for index in range(0, size):
@@ -53,25 +68,36 @@ class BasicEventHandler(BasicEventHandlerInterface):
     
 
     def addListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         if not self.eventListenerInterfaceList.contains(eventListenerInterface):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 
     def addListenerInterface(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         if not self.eventListenerInterfaceList.contains(eventListenerInterface):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         self.eventListenerInterfaceList.remove(eventListenerInterface)
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         self.eventListenerInterfaceList.remove(eventListenerInterface)
     
 
     # throws Exception
     def fireEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         eventListenerInterface: EventListenerInterface = None
         index: int = 0
         while index < self.eventListenerInterfaceList.size():
@@ -85,14 +111,22 @@ class BasicEventHandler(BasicEventHandlerInterface):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         eventListenerInterface.onEvent(eventObject)
     
 
     def getEventListenerInterfaceListP(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.eventListenerInterfaceList
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.eventStrings.TOTAL_LISTENERS)
         stringBuffer.appendint(self.eventListenerInterfaceList.size())
@@ -110,17 +144,17 @@ class BasicEventHandler(BasicEventHandlerInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsProperty import JsProperty
 
 

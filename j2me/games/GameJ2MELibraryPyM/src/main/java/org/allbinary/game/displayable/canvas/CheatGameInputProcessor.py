@@ -16,21 +16,23 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-from org.allbinary.game.layer.special.SpecialGameInputFactory import SpecialGameInputFactory
 
 
 class CheatGameInputProcessor(PlayerGameInput):
-    inputProcessor: SpecialGameInputInterface = SpecialGameInputFactory.NO_SPECIAL_GAME_INPUT
+    inputProcessor: SpecialGameInputInterface = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         self.PROCESS_GAME: str = "processGame"
         self.gameCanvas: AllBinaryGameCanvas = None
         self.gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(BasicArrayListD(), BasicArrayListD(), -1)
         self._init_fields()
         self.gameCanvas = gameCanvas
@@ -41,6 +43,10 @@ class CheatGameInputProcessor(PlayerGameInput):
             return self._update_unlocked()
 
     def _update_unlocked(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             gameLayerManager: AllBinaryGameLayerManager = self.gameCanvas.getLayerManager()
             list_: BasicArrayList = self.getGameKeyEventList()
@@ -75,13 +81,21 @@ class CheatGameInputProcessor(PlayerGameInput):
             list_.clear()
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.UPDATE, e)
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.special.SpecialGameInputInterface import SpecialGameInputInterface
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.special.SpecialGameInputFactory import SpecialGameInputFactory
+# from org.allbinary.game.layer.special.SpecialGameInputInterface import SpecialGameInputInterface
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _CheatGameInputProcessor_inputProcessor() -> object:
+    from org.allbinary.game.layer.special.SpecialGameInputFactory import SpecialGameInputFactory
+    from org.allbinary.game.layer.special.SpecialGameInputInterface import SpecialGameInputInterface
+    return SpecialGameInputFactory.NO_SPECIAL_GAME_INPUT
+
+lazy_static(CheatGameInputProcessor, "inputProcessor", _CheatGameInputProcessor_inputProcessor)
 

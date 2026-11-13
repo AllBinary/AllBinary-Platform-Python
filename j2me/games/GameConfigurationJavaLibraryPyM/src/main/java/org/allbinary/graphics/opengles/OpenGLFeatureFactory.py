@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLFeatureFactory:
@@ -55,5 +56,8 @@ class OpenGLFeatureFactory:
 from org.allbinary.graphics.opengles.OpenGLFeature import OpenGLFeature
 
 
-OpenGLFeatureFactory.instance = OpenGLFeatureFactory()
+def _OpenGLFeatureFactory_instance() -> object:
+    return OpenGLFeatureFactory()
+
+lazy_static(OpenGLFeatureFactory, "instance", _OpenGLFeatureFactory_instance)
 

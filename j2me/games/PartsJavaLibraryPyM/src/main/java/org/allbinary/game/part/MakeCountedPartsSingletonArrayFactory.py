@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MakeCountedPartsSingletonArrayFactory:
     instance: MakeCountedPartsSingletonArrayFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
 
@@ -36,6 +40,12 @@ class MakeCountedPartsSingletonArrayFactory:
     # throws Exception
     def getUpdated(self, partInterfaceArray: list[PartInterface]) -> list[PartInterface]:
         from org.allbinary.game.part.CountedLayerInterfaceFactoryPart import CountedLayerInterfaceFactoryPart
+        from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
+        from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryPool import CountedPickedUpLayerInterfaceFactoryPool
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_ = BasicArrayListD()
         for index in range(0, len(partInterfaceArray)):
             self.list_.add(partInterfaceArray[index])
@@ -57,15 +67,18 @@ class MakeCountedPartsSingletonArrayFactory:
         for index in range(0, newSize):
             newPartInterfaceArray[index] = self.list_.get(index)
         return newPartInterfaceArray
-from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
-from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryPool import CountedPickedUpLayerInterfaceFactoryPool
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
+# from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryPool import CountedPickedUpLayerInterfaceFactoryPool
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-MakeCountedPartsSingletonArrayFactory.instance = MakeCountedPartsSingletonArrayFactory()
+def _MakeCountedPartsSingletonArrayFactory_instance() -> object:
+    return MakeCountedPartsSingletonArrayFactory()
+
+lazy_static(MakeCountedPartsSingletonArrayFactory, "instance", _MakeCountedPartsSingletonArrayFactory_instance)
 

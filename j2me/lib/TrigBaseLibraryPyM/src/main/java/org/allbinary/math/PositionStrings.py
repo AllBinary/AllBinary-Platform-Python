@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PositionStrings:
     instance: PositionStrings = None
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.X: str = "x"
         self.Y: str = "y"
         self.X_LABEL: str = "x: "
@@ -36,11 +38,15 @@ class PositionStrings:
 
     @staticmethod
     def getInstance() -> PositionStrings:
+        from jsinterop.annotations.JsMethod import JsMethod
         return PositionStrings.instance
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 
 
-PositionStrings.instance = PositionStrings()
+def _PositionStrings_instance() -> object:
+    return PositionStrings()
+
+lazy_static(PositionStrings, "instance", _PositionStrings_instance)
 

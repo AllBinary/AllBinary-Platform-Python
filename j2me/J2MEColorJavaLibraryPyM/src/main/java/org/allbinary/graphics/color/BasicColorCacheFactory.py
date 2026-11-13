@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicColorCacheFactory:
@@ -23,6 +24,8 @@ class BasicColorCacheFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
     
 
@@ -50,9 +53,12 @@ class BasicColorCacheFactory:
             basicColor = BasicColorFactory.getInstance().createInstance(int(integer))
             self.hashtable.put(integer, basicColor)
         return basicColor
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-BasicColorCacheFactory.instance = BasicColorCacheFactory()
+def _BasicColorCacheFactory_instance() -> object:
+    return BasicColorCacheFactory()
+
+lazy_static(BasicColorCacheFactory, "instance", _BasicColorCacheFactory_instance)
 

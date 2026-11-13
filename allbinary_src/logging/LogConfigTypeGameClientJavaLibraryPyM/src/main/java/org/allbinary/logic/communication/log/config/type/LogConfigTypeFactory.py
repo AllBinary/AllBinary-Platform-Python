@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigTypeFactory:
@@ -40,5 +41,8 @@ class LogConfigTypeFactory:
 from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
 
 
-LogConfigTypeFactory.instance = LogConfigTypeFactory()
+def _LogConfigTypeFactory_instance() -> object:
+    return LogConfigTypeFactory()
+
+lazy_static(LogConfigTypeFactory, "instance", _LogConfigTypeFactory_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbeClientInformationData:
@@ -48,5 +49,8 @@ class AbeClientInformationData:
         self._init_fields()
 
 
-AbeClientInformationData.instance = AbeClientInformationData()
+def _AbeClientInformationData_instance() -> object:
+    return AbeClientInformationData()
+
+lazy_static(AbeClientInformationData, "instance", _AbeClientInformationData_instance)
 

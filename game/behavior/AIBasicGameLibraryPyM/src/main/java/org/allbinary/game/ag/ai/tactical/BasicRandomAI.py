@@ -21,6 +21,10 @@ from org.allbinary.game.ai.BasicAI import BasicAI
 class BasicRandomAI(BasicAI):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.ag.ai.InputProbability import InputProbability
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         self.i_random: int = 0
         self.inputProbability: InputProbability = None
         self.visitor: Visitor = None
@@ -29,6 +33,10 @@ class BasicRandomAI(BasicAI):
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput, inputProbability: InputProbability, visitor: Visitor) -> None:
+        from org.allbinary.game.ag.ai.InputProbability import InputProbability
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.inputProbability = inputProbability
@@ -37,6 +45,8 @@ class BasicRandomAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.inputProbability.getTimeDelayHelper().isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
             self.i_random = self.myRandomFactory.getAbsoluteNextInt(self.inputProbability.getMax())
             repeat: bool = False
@@ -57,12 +67,12 @@ class BasicRandomAI(BasicAI):
                             break
             self.visitor.visit(self)
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.ag.ai.InputProbability import InputProbability
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.util.visitor.Visitor import Visitor
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.game.ag.ai.InputProbability import InputProbability
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 
 

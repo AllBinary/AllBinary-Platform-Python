@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OrientationData:
@@ -34,5 +35,8 @@ class OrientationData:
         return OrientationData.SINGLETON
 
 
-OrientationData.SINGLETON = OrientationData()
+def _OrientationData_SINGLETON() -> object:
+    return OrientationData()
+
+lazy_static(OrientationData, "SINGLETON", _OrientationData_SINGLETON)
 

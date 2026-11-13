@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
@@ -62,6 +62,7 @@ class GameKeyEvent(AllBinaryEventObject):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("\nKey: ")
         stringBuffer.appendint(self.getKey())
@@ -89,8 +90,13 @@ class GameKeyEvent(AllBinaryEventObject):
 
     def getSourceId(self) -> int:
         return self.sourceId
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-GameKeyEvent.NONE = GameKeyEvent(NullUtil.getInstance().NULL_OBJECT, -1, -1, -1, -1, False)
+def _GameKeyEvent_NONE() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return GameKeyEvent(NullUtil.getInstance().NULL_OBJECT, -1, -1, -1, -1, False)
+
+lazy_static(GameKeyEvent, "NONE", _GameKeyEvent_NONE)
 

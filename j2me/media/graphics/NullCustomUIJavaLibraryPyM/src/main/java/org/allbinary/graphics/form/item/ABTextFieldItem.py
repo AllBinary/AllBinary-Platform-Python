@@ -9,16 +9,22 @@ from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
 class ABTextFieldItem(ABTextItem):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Font import Font
         self.font: Font = None
     
 
     def __init__(self, canvas: Canvas, visitor: Visitor, label: str, value: str, maxSize: int, layout: int, altText: str, font: Font, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         super().__init__(label, layout, altText, backgroundBasicColor, foregroundBasicColor)
         self._init_fields()
         self.font = font
     
 
     def getLabel(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
@@ -27,6 +33,7 @@ class ABTextFieldItem(ABTextItem):
     
 
     def getString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
@@ -43,15 +50,17 @@ class ABTextFieldItem(ABTextItem):
     
 
     def setBackgroundBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
     
 
     def setForegroundBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Font import Font
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 

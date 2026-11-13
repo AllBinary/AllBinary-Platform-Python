@@ -22,22 +22,27 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class ColorFillBasePaintable(Paintable, ColorCompositeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.colorP: int = 0
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.setBasicColorP(basicColor)
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
         self.setColor(int(self.getBasicColorP()))
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
@@ -50,9 +55,10 @@ class ColorFillBasePaintable(Paintable, ColorCompositeInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 

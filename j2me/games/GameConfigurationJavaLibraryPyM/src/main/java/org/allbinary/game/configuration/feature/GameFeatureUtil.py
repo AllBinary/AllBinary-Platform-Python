@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameFeatureUtil:
     instance: GameFeatureUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
@@ -40,6 +44,8 @@ class GameFeatureUtil:
     def setDefault(self, choiceGroup: ChoiceGroup) -> None:
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.Feature import Feature
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         METHOD_NAME: str = "setDefault"
         SELECTED_ARRAY_RETURN: str = "selectedArray_return["
@@ -72,6 +78,8 @@ class GameFeatureUtil:
     def updateMultiple(self, choiceGroup: ChoiceGroup) -> None:
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.Feature import Feature
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         METHOD_NAME: str = "updateMultiple"
         SELECTED_ARRAY_RETURN: str = "selectedArray_return["
@@ -100,6 +108,8 @@ class GameFeatureUtil:
 
     # throws Exception
     def updateExclusiveForChoiceGroup(self, choiceGroup: ChoiceGroup) -> None:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         METHOD_NAME: str = "updateExclusive"
         SELECTED_ARRAY_RETURN: str = "selectedArray_return["
@@ -124,6 +134,7 @@ class GameFeatureUtil:
 
     def isExclusive(self, itemLabel: str) -> bool:
         from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+        from java.util.Enumeration import Enumeration
         enumeration: Enumeration = GameFeatureChoiceGroups.getExclusiveInstance().get().keys()
         name: str = None
         while self.enumerationUtil.hasMoreElements(enumeration):
@@ -137,6 +148,11 @@ class GameFeatureUtil:
     def updateExclusive(self, selectedChoiceLabel: str) -> None:
         from org.allbinary.game.configuration.feature.Feature import Feature
         from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().ITEM_LABEL).append(selectedChoiceLabel)), self, "updateExclusive")
         gameFeature: Feature = Feature.getInstance(selectedChoiceLabel)
         hashtable: ABHashtable[object, object] = GameFeatureChoiceGroups.getExclusiveInstance().get()
@@ -153,6 +169,7 @@ class GameFeatureUtil:
     # throws Exception
     def updateExclusiveList(self, gameFeature: Feature, list_: BasicArrayList) -> None:
         from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if list_.contains(gameFeature):
             features: Features = Features.getInstance()
             addIndex: int = list_.indexOf(gameFeature)
@@ -164,15 +181,18 @@ class GameFeatureUtil:
                     features.add(list_.objectArray[index])
 # from java.util.Enumeration import Enumeration
 # from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.EnumerationUtil import EnumerationUtil
-from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.EnumerationUtil import EnumerationUtil
+# from org.allbinary.util.HashtableUtil import HashtableUtil
 
 
-GameFeatureUtil.instance = GameFeatureUtil()
+def _GameFeatureUtil_instance() -> object:
+    return GameFeatureUtil()
+
+lazy_static(GameFeatureUtil, "instance", _GameFeatureUtil_instance)
 

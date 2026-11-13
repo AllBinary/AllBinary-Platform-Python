@@ -22,6 +22,8 @@ from org.allbinary.animation.IndexedAnimationInterface import IndexedAnimationIn
 class IndexedAnimation(Animation, IndexedAnimationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.animationBehaviorP: AnimationBehavior = None
@@ -75,6 +77,7 @@ class IndexedAnimation(Animation, IndexedAnimationInterface):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
@@ -90,8 +93,8 @@ class IndexedAnimation(Animation, IndexedAnimationInterface):
 
     def getHeight(self) -> int:
         return 0
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -22,16 +22,22 @@ class VectorRotationAnimation(VectorBaseRotationAnimation):
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(AngleInfo.getInstance(((int((AngleFactory.getInstance().TOTAL_ANGLE / len(currentPoints))) + 32768) % 65536 - 32768)), currentPoints, basicColor, animationBehavior)
         self.angleInfo.adjustAngle(self.getFrame())
     
 
     def setFrameByDirection(self, direction: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getFrameAngle(direction)
         self.adjustFrameToAngle(angle)
     
 
     def setFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrameToAngle(angle)
     
 
@@ -45,11 +51,12 @@ class VectorRotationAnimation(VectorBaseRotationAnimation):
     
 
     def adjustFrameToAngle(self, newAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrame(newAngle.getValue())
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

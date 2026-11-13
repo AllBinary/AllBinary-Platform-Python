@@ -3,13 +3,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ApplicationConfiguration:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.fullscreen: bool = True
         self.showTitleBar: bool = False
@@ -18,12 +19,14 @@ class ApplicationConfiguration:
 
     @staticmethod
     def getInstance() -> ApplicationConfiguration:
+        from org.allbinary.logic.NullUtil import NullUtil
         if ApplicationConfiguration.instance == NullUtil.getInstance().NULL_OBJECT:
             ApplicationConfiguration.instance = ApplicationConfiguration()
         return ApplicationConfiguration.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             self.read()
@@ -47,6 +50,9 @@ class ApplicationConfiguration:
 
     # throws Exception
     def update(self, gameFeature: Feature) -> None:
+        from org.allbinary.game.configuration.feature.Feature import Feature
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         if gameFeature == MainFeatureFactory.getInstance().FULL_SCREEN:
             features: Features = Features.getInstance()
             if features.isFeature(gameFeature):
@@ -84,6 +90,7 @@ class ApplicationConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("isFullscreen: ")
         stringBuffer.appendboolean(self.isFullscreen())
@@ -95,11 +102,18 @@ class ApplicationConfiguration:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.game.configuration.feature.Feature import Feature
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.feature.Feature import Feature
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _ApplicationConfiguration_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(ApplicationConfiguration, "instance", _ApplicationConfiguration_instance)
 

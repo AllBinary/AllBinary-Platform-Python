@@ -21,6 +21,12 @@ from org.allbinary.input.motion.gesture.observer.MotionGestureEventListener impo
 class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.currentMotionGesture: MotionGestureInput = TouchMotionGestureFactory.getInstance().NO_MOTION
@@ -36,6 +42,8 @@ class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         ForcedLogUtil.log(self.commonStrings.NOT_IMPLEMENTED, self)
     
 
@@ -72,6 +80,7 @@ class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
     
 
     def onPressedMotionGestureEvent(self, ev: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         self.isMouseGestureOccurring = True
         self.currentMotionGesture = TouchMotionGestureFactory.getInstance().NO_MOTION
         self.onMotionGestureEvent(ev)
@@ -82,6 +91,8 @@ class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
     
 
     def released(self, ev: MotionGestureEvent) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             if self.isMouseGestureOccurring == False:
                 return
@@ -93,6 +104,8 @@ class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
     
 
     def onMotionGestureEvent(self, ev: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         if self.isMouseGestureOccurring == False:
             return
         motionGestureInput: MotionGestureInput = ev.getMotionGesture()
@@ -104,15 +117,15 @@ class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
             if self.currentMotionGesture != motionGestureInput:
                 self.currentMotionGesture = motionGestureInput
                 self.motionGestureCollection.add(ev.getMotionGesture())
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

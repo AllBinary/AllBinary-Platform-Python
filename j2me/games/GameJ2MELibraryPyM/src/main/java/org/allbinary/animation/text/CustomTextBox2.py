@@ -22,10 +22,13 @@ class CustomTextBox2(CustomTextBox):
     
 
     def __init__(self, cmdListener: CommandListener, label: str, text: str, maxSize: int, constraints: int, font: Font, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(cmdListener, label, text, maxSize, constraints, font, backgroundBasicColor, foregroundBasicColor)
         self.getTextFieldItem().setFocus(True)
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Font import Font
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

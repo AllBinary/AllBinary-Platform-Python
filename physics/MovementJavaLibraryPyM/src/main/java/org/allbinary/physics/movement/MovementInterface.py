@@ -22,17 +22,19 @@ class MovementInterface:
     
 
     def init(self, speedBasicDecimal: BasicDecimal, angle: int, otherAngle: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         raise NotImplementedError()
     
 
     def stop(self) -> None:
         raise NotImplementedError()
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

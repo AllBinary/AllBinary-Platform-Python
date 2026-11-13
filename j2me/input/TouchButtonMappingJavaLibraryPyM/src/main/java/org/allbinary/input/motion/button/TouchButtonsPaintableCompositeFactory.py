@@ -23,9 +23,12 @@ class TouchButtonsPaintableCompositeFactory:
     @staticmethod
     def getInstance(inputMappingInterface: InputMappingInterface, basicColor: BasicColor) -> ProcessPaintable:
         from org.allbinary.input.motion.button.TouchButtonsPaintableComposite import TouchButtonsPaintableComposite
+        from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
         return TouchButtonsPaintableComposite(inputMappingInterface, basicColor)
-from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
+# from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
 
 

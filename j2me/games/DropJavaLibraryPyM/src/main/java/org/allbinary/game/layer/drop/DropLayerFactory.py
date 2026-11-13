@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DropLayerFactory:
     DROP_LAYER_FACTORY: DropLayerFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.list_: BasicArrayList = BasicArrayListD()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
     
@@ -43,20 +47,26 @@ class DropLayerFactory:
     
 
     def getRandomInstance(self) -> PickedUpLayerInterfaceFactoryInterface:
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
         return self.basicArrayListUtil.getRandom(self.list_)
     
 
     def add(self, layerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface) -> None:
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
         self.list_.add(layerInterfaceFactoryInterface)
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-DropLayerFactory.DROP_LAYER_FACTORY = DropLayerFactory()
+def _DropLayerFactory_DROP_LAYER_FACTORY() -> object:
+    return DropLayerFactory()
+
+lazy_static(DropLayerFactory, "DROP_LAYER_FACTORY", _DropLayerFactory_DROP_LAYER_FACTORY)
 

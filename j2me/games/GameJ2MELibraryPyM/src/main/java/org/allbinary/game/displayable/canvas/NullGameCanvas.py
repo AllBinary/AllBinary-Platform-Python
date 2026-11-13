@@ -16,12 +16,12 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
 
 
 class NullGameCanvas(AllBinaryGameCanvas):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     NO_GAME: str = "No Background Game"
     TYPE: int = 1
     _lock = threading.RLock()
@@ -32,6 +32,9 @@ class NullGameCanvas(AllBinaryGameCanvas):
 
     @staticmethod
     def createNull() -> NullGameCanvas:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             return NullGameCanvas(AllBinaryGameLayerManager.getNullInstance())
         except Exception as e:
@@ -41,6 +44,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
 
     @staticmethod
     def getInstance() -> NullGameCanvas:
+        from org.allbinary.logic.NullUtil import NullUtil
         if NullGameCanvas.instance == NullUtil.getInstance().NULL_OBJECT:
             NullGameCanvas.instance = NullGameCanvas.createNull()
         return NullGameCanvas.instance
@@ -49,6 +53,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
     # throws Exception
     @staticmethod
     def createCanvas(gameLayerManager: AllBinaryGameLayerManager) -> NullGameCanvas:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         nullGameCanvas: NullGameCanvas = NullGameCanvas(gameLayerManager)
         nullGameCanvas.setInitialized(True)
         nullGameCanvas.setTitle(NullGameCanvas.NO_GAME)
@@ -56,6 +61,10 @@ class NullGameCanvas(AllBinaryGameCanvas):
     
 
     def __init__(self, gameLayerManager: AllBinaryGameLayerManager) -> None:
+        from javax.microedition.lcdui.NullCommandListener import NullCommandListener
+        from org.allbinary.game.init.BasicBuildGameInitializerFactory import BasicBuildGameInitializerFactory
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
         super().__init__(NullCommandListener.NULL_COMMAND_LISTENER, gameLayerManager, NoHighScoresFactory.getInstance(), BasicBuildGameInitializerFactory.NULL_BASE_BUILD_GMAE_INITIALIZER_FACTORY, False)
         self._init_fields()
         super().setWait(1200)
@@ -98,6 +107,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         self.removeAllCommands()
         self.setCommandListener(cmdListener)
     
@@ -108,6 +118,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
     
 
     def draw(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -124,10 +135,17 @@ class NullGameCanvas(AllBinaryGameCanvas):
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.NullCommandListener import NullCommandListener
-from org.allbinary.game.init.BasicBuildGameInitializerFactory import BasicBuildGameInitializerFactory
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.init.BasicBuildGameInitializerFactory import BasicBuildGameInitializerFactory
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _NullGameCanvas_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(NullGameCanvas, "instance", _NullGameCanvas_instance)
 

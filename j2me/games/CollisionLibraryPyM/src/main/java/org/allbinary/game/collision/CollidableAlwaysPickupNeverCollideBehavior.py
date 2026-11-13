@@ -27,7 +27,8 @@ class CollidableAlwaysPickupNeverCollideBehavior(CollidableNeverCollideBehavior)
 
     def getCollisionTypeWith(self, layerInterface: AllBinaryLayer) -> CollisionType:
         from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return CollisionTypeFactory.getInstance().PICKUP
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

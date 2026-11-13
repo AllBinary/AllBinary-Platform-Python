@@ -22,11 +22,16 @@ from org.allbinary.animation.compound.CompoundAnimationInterface import Compound
 class CompoundIndexedAnimation(IndexedAnimation, CompoundAnimationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.circularIndexUtil: CircularIndexUtil = None
         self.animationInterfaceArray: list[Animation] = None
     
 
     def __init__(self, animationInterfaceArray: list[Animation], animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(animationBehavior)
         self._init_fields()
         self.animationInterfaceArray = animationInterfaceArray
@@ -58,6 +63,7 @@ class CompoundIndexedAnimation(IndexedAnimation, CompoundAnimationInterface):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
@@ -67,10 +73,12 @@ class CompoundIndexedAnimation(IndexedAnimation, CompoundAnimationInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterfaceArray[self.circularIndexUtil.getIndex()].paintXY(graphics, x, y)
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterfaceArray[self.circularIndexUtil.getIndex()].paintThreedXYZ(graphics, x, y, z)
     
 
@@ -97,23 +105,26 @@ class CompoundIndexedAnimation(IndexedAnimation, CompoundAnimationInterface):
     
 
     def getAnimationInterfaceArray(self) -> list[Animation]:
+        from org.allbinary.animation.Animation import Animation
         return self.animationInterfaceArray
     
 
     def setAnimationInterfaceArray(self, animationInterfaceArray: list[Animation]) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.animationInterfaceArray = animationInterfaceArray
     
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
         index = len(self.animationInterfaceArray)
         while (index := index - 1) >= 0:
             self.animationInterfaceArray[index].set(gl)
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

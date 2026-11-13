@@ -26,12 +26,14 @@ class PrimitiveIntUtil:
 
     @staticmethod
     def getArrayInstance() -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_INT_ARRAY
     
 
     @staticmethod
     def getTwoDimensionalArrayInstance() -> list[list[int]]:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 

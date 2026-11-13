@@ -21,6 +21,8 @@ class PlatformBitmapBase:
     
 
     def getImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         return NullImage.NULL_IMAGE
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage

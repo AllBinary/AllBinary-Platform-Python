@@ -31,11 +31,13 @@ class PaintableComposite(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         for index in range(len(self.paintableArray) - 1, 0 - 1, -1):
             self.paintableArray[index].paint(graphics)
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         for index in range(len(self.paintableArray) - 1, 0 - 1, -1):
             self.paintableArray[index].paintThreed(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics

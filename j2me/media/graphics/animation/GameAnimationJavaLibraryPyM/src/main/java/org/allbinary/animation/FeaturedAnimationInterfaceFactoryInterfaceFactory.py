@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.resource.FeaturedResourceFactory import FeaturedResourceFactory
 
 
@@ -33,11 +34,19 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
 
     # throws Exception
     def getRectangle(self, resource: str) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
         return self.getRectangleXY(resource, 0, 0)
     
 
     # throws Exception
     def getRectangleXY(self, resource: str, x: int, y: int) -> Rectangle:
+        from org.allbinary.animation.resource.FeatureResourceAnimationInterfaceFactoryInterface import FeatureResourceAnimationInterfaceFactoryInterface
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.RectangleFactory import RectangleFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pointFactory: PointFactory = PointFactory.getInstance()
         list_: BasicArrayList = self.getList()
         scale: int = int(GameConfigurationCentral.getInstance().SCALE.getValue())
@@ -64,6 +73,12 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
     # throws Exception
     def getBasicAnimationInterfaceFactoryInstance(self, resource: str) -> BasicAnimationInterfaceFactoryInterface:
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.animation.resource.FeatureResourceAnimationInterfaceFactoryInterface import FeatureResourceAnimationInterfaceFactoryInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = self.getList()
         resourceTypeAvailableList: BasicArrayList = BasicArrayListD()
         size: int = self.getList().size()
@@ -112,17 +127,20 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
             result: str = str(stringBuffer)
             stringBuffer.delete(0, stringBuffer.length())
             raise Exception(str(stringBuffer.append("No feature resource type available for Resource: ").append(resource).append(" Resource Factories Available: ").append(result)))
-from org.allbinary.animation.resource.FeatureResourceAnimationInterfaceFactoryInterface import FeatureResourceAnimationInterfaceFactoryInterface
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.RectangleFactory import RectangleFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.animation.resource.FeatureResourceAnimationInterfaceFactoryInterface import FeatureResourceAnimationInterfaceFactoryInterface
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.RectangleFactory import RectangleFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-FeaturedAnimationInterfaceFactoryInterfaceFactory.INSTANCE = FeaturedAnimationInterfaceFactoryInterfaceFactory()
+def _FeaturedAnimationInterfaceFactoryInterfaceFactory_INSTANCE() -> object:
+    return FeaturedAnimationInterfaceFactoryInterfaceFactory()
+
+lazy_static(FeaturedAnimationInterfaceFactoryInterfaceFactory, "INSTANCE", _FeaturedAnimationInterfaceFactoryInterfaceFactory_INSTANCE)
 

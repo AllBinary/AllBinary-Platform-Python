@@ -24,7 +24,8 @@ class DropLayerInterface(LayerInterface):
 
     # throws Exception
     def getDroppedLayer(self) -> PickedUpLayerInterface:
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
         raise NotImplementedError()
-from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
+# from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
 
 

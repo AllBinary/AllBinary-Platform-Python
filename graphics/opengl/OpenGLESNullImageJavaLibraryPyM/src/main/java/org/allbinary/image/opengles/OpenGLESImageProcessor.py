@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLESImageProcessor:
@@ -27,21 +28,28 @@ class OpenGLESImageProcessor:
     
 
     def translate(self, gl: GL10, translateX: float, translateY: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def rotate(self, gl: GL10, angle: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def scale(self, gl: GL10, scaleX: float, scaleY: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def colorMask(self, gl: GL10, red: float, green: float, blue: float, alpha: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-OpenGLESImageProcessor.instance = OpenGLESImageProcessor()
+def _OpenGLESImageProcessor_instance() -> object:
+    return OpenGLESImageProcessor()
+
+lazy_static(OpenGLESImageProcessor, "instance", _OpenGLESImageProcessor_instance)
 

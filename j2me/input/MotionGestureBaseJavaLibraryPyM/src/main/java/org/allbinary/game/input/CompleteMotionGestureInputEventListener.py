@@ -10,11 +10,12 @@ class CompleteMotionGestureInputEventListener(CompleteMotionGestureInputEventLis
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         pass
     
 
     def onCompleteMotionGestureInputEvent(self, completeMotionGestureInputEvent: CompleteMotionGestureInputEvent) -> None:
         pass
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

@@ -30,12 +30,14 @@ class ValidatorBaseInterface:
     
 
     def toHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
     
 
     def toList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

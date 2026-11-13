@@ -27,6 +27,7 @@ class CircleFilledAnimation(Animation, ColorCompositeInterface):
     
 
     def __init__(self, width: int, height: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.width = width
@@ -39,9 +40,20 @@ class CircleFilledAnimation(Animation, ColorCompositeInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
         graphics.fillRect(x, y, self.width, self.height)
+    
+
+    def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getBasicColorP()
+    
+
+    def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        super().setBasicColorP(basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LayerInterfaceFactory:
     SINGLETON: LayerInterfaceFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.HASHTABLE_LABEL: str = "Hashtable: "
@@ -35,12 +39,17 @@ class LayerInterfaceFactory:
     
 
     def init(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_ = BasicArrayListD()
     
 
     # throws Exception
     def getNexInstance(self, hashtable: ABHashtable[object, object], x: int, y: int, z: int) -> AllBinaryLayer:
         from org.allbinary.layer.Layer import Layer
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(str(StringMaker().append(self.HASHTABLE_LABEL).append(StringUtil.getInstance().toString(hashtable))), self, commonStrings.GET_INSTANCE)
         typeInteger: int = hashtable.get(Layer.ID)
@@ -50,15 +59,18 @@ class LayerInterfaceFactory:
 
     def add(self, layerInterfaceFactoryInterface: LayerInterfaceFactoryInterface) -> None:
         self.list_.add(layerInterfaceFactoryInterface)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-LayerInterfaceFactory.SINGLETON = LayerInterfaceFactory()
+def _LayerInterfaceFactory_SINGLETON() -> object:
+    return LayerInterfaceFactory()
+
+lazy_static(LayerInterfaceFactory, "SINGLETON", _LayerInterfaceFactory_SINGLETON)
 

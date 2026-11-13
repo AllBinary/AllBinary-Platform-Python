@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.globals.UrlGlobalsInterface import UrlGlobalsInterface
 
 
@@ -25,6 +26,7 @@ class AppUrlGlobals(UrlGlobalsInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.path: str = StringUtil.getInstance().EMPTY_STRING
 
     def __init__(self) -> None:
@@ -51,14 +53,18 @@ class AppUrlGlobals(UrlGlobalsInterface):
     
 
     def getTestHtmlPath(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     # throws Exception
     def getMainPath(self) -> str:
         return self.path
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-AppUrlGlobals.NULL_APP_URL_GLOBALS = AppUrlGlobals()
+def _AppUrlGlobals_NULL_APP_URL_GLOBALS() -> object:
+    return AppUrlGlobals()
+
+lazy_static(AppUrlGlobals, "NULL_APP_URL_GLOBALS", _AppUrlGlobals_NULL_APP_URL_GLOBALS)
 

@@ -21,12 +21,17 @@ from org.allbinary.physics.movement.Movement import Movement
 class ConstantVelocityNotifyViewChangeMovement(Movement):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
         self.basicVelocityProperties: BasicVelocityProperties = None
         self.speedBasicDecimal: BasicDecimal = None
         self.axisMathVectorUtil: AxisMathVectorUtil = AxisMathVectorUtil.getInstance()
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__()
         self._init_fields()
         self.speedBasicDecimal = BasicDecimal.ZERO_BIGDECIMAL
@@ -34,12 +39,15 @@ class ConstantVelocityNotifyViewChangeMovement(Movement):
     
 
     def init(self, speedBasicDecimal: BasicDecimal, angle: int, otherAngle: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.speedBasicDecimal = speedBasicDecimal
         angleFactory: AngleFactory = AngleFactory.getInstance()
         self.basicVelocityProperties.setVelocityWithBigDecimal(speedBasicDecimal, angleFactory.getAt(angle), angleFactory.getAt(otherAngle))
     
 
     def moveOutsideRadius(self, layer: AllBinaryLayer, radius: int, angle: int, otherAngle: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         scaleFactorValue: int = self.speedBasicDecimal.getScaledFactorValue()
         xVector: int = int((self.axisMathVectorUtil.calculateX(radius, angle) / scaleFactorValue))
         yVector: int = int((self.axisMathVectorUtil.calculateY(radius, angle) / scaleFactorValue))
@@ -49,6 +57,7 @@ class ConstantVelocityNotifyViewChangeMovement(Movement):
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         x: int = self.basicVelocityProperties.getVelocityXBasicDecimalP().getScaled()
         y: int = self.basicVelocityProperties.getVelocityYBasicDecimalP().getScaled()
         z: int = self.basicVelocityProperties.getVelocityZBasicDecimalP().getScaled()
@@ -59,11 +68,11 @@ class ConstantVelocityNotifyViewChangeMovement(Movement):
 
     def stop(self) -> None:
         self.basicVelocityProperties.zero()
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
-from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
 
 

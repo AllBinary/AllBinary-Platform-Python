@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
 
 
@@ -41,5 +42,8 @@ class DamageableBaseBehavior(DamageableInterface):
         return 6000
 
 
-DamageableBaseBehavior.instance = DamageableBaseBehavior()
+def _DamageableBaseBehavior_instance() -> object:
+    return DamageableBaseBehavior()
+
+lazy_static(DamageableBaseBehavior, "instance", _DamageableBaseBehavior_instance)
 

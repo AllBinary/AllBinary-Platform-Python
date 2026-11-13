@@ -21,6 +21,15 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 class BasicHud(UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
@@ -43,6 +52,8 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         self._init_fields()
         self.setLocation(location)
         self.setDirection(direction)
@@ -53,6 +64,9 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.hudGraphicsPosition = self.getHudGraphicsPositionWH(self.displayInfo.getLastWidth(), self.displayInfo.getLastHeight(), self.updateMaxWidth, self.updateMaxHeight)
             self.x = self.hudGraphicsPosition.getPoint().getX()
@@ -75,6 +89,8 @@ class BasicHud(UpdateMyFontInterface):
     def getHudGraphicsPositionWH(self, width: int, height: int, maxWidth: int, maxHeight: int) -> HudGraphicsPosition:
         from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
         from org.allbinary.game.graphics.hud.HudGraphicsPosition import HudGraphicsPosition
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.Anchor import Anchor
         x: int = 0
         y: int = 0
         anchor: int = 0
@@ -111,14 +127,20 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onDisplayChangeEvent(self, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
         self.myFontProcessor = self.updateMyFontProcessor
     
 
     def getPoint(self, x: int, y: int) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
         return PointFactory.getInstance().createXY(x, y)
     
 
@@ -127,6 +149,7 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def setBufferZone(self, bufferZone: int) -> None:
+        from org.allbinary.J2MEUtil import J2MEUtil
         self.bufferZone = bufferZone
         if J2MEUtil.isHTML():
             self.bufferZoneY = self.bufferZone
@@ -159,10 +182,12 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
@@ -175,6 +200,7 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def paintSSO(self, graphics: Graphics, string: str, string2: str, offset: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.basicSetColorUtil.setBasicColorP(graphics, self.getBasicColorP())
         graphics.drawString(string, self.x, self.getY(), self.hudGraphicsPosition.getAnchor())
@@ -182,6 +208,7 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def paintSSOO(self, graphics: Graphics, string: str, string2: str, offset: int, offset2: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         graphics.setColor(self.getColor())
         graphics.drawString(string, self.x + offset, self.getY(), self.hudGraphicsPosition.getAnchor())
@@ -189,6 +216,7 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def paintDXY(self, graphics: Graphics, charArray: list[str], offset: int, len_: int, charArray2: list[str], offset2: int, len2: int, xOffset: int, xOffset2: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.basicSetColorUtil.setBasicColorP(graphics, self.getBasicColorP())
         y: int = self.getY()
@@ -197,6 +225,7 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def paintDX(self, graphics: Graphics, charArray: list[str], offset: int, len_: int, charArray2: list[str], offset2: int, len2: int, xOffset: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.basicSetColorUtil.setBasicColorP(graphics, self.getBasicColorP())
         y: int = self.getY()
@@ -205,6 +234,7 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def paintOffsetAndLength(self, graphics: Graphics, charArray: list[str], offset: int, len_: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.basicSetColorUtil.setBasicColorP(graphics, self.getBasicColorP())
         y: int = self.getY()
@@ -212,28 +242,29 @@ class BasicHud(UpdateMyFontInterface):
     
 
     def paintString(self, graphics: Graphics, string: str) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.basicSetColorUtil.setBasicColorP(graphics, self.getBasicColorP())
         y: int = self.getY() + self.offsetY
         graphics.drawString(string, self.x, y, self.hudGraphicsPosition.getAnchor())
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.game.graphics.hud.HudGraphicsPosition import HudGraphicsPosition
 
 

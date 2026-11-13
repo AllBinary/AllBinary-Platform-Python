@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicLayerProcessor:
     NULL_LAYER_PROCESSOR: BasicLayerProcessor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -36,16 +40,21 @@ class BasicLayerProcessor:
 
     # throws Exception
     def process(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-BasicLayerProcessor.NULL_LAYER_PROCESSOR = BasicLayerProcessor()
+def _BasicLayerProcessor_NULL_LAYER_PROCESSOR() -> object:
+    return BasicLayerProcessor()
+
+lazy_static(BasicLayerProcessor, "NULL_LAYER_PROCESSOR", _BasicLayerProcessor_NULL_LAYER_PROCESSOR)
 

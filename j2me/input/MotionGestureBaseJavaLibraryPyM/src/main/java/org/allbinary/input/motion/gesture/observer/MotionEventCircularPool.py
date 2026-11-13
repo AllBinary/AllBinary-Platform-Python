@@ -22,6 +22,9 @@ class MotionEventCircularPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
         self.MIN: int = TouchMotionGestureFactory.getInstance().LAST_MOTION.getId()
         self.eventPool: AllBinaryEventCircularPool = AllBinaryEventCircularPool((InputFactory.getInstance().MAX - 1) - self.MIN)
     
@@ -43,10 +46,11 @@ class MotionEventCircularPool:
             return self._getInstance_unlocked(motionGestureInput)
 
     def _getInstance_unlocked(self, motionGestureInput: MotionGestureInput) -> MotionGestureEvent:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         return self.eventPool.getInstance(motionGestureInput.getId() - self.MIN)
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
 
 

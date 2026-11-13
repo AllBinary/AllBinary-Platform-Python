@@ -21,10 +21,14 @@ from org.allbinary.game.ag.ai.tactical.LurchAI import LurchAI
 class LurchRotationAI(LurchAI):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         self.rotationAnimationInterface: IndexedAnimation = None
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         rotationAnimationInterfaceCompositeInterface: RotationAnimationInterfaceCompositeInterface = self.getOwnerLayerInterface()
@@ -38,6 +42,9 @@ class LurchRotationAI(LurchAI):
     
 
     def update(self) -> None:
+        from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+        from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+        from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         if self.currentRelativeAngle == 0:
             rotationAnimationInterface: RotationAnimationInterface = self.rotationAnimationInterface
             angleIncrementInfo: AngleIncrementInfo = rotationAnimationInterface.getAngleInfoP().getAngleIncrementInfo()
@@ -48,11 +55,11 @@ class LurchRotationAI(LurchAI):
             angleIncrementInfo: AngleIncrementInfo = rotationAnimationInterface.getAngleInfoP().getAngleIncrementInfo()
             rotationAnimationInterfaceCompositeInterface: RotationAnimationInterfaceCompositeInterface = self.getOwnerLayerInterface()
             rotationAnimationInterfaceCompositeInterface.setFrame(int(angleIncrementInfo.LEFT_FRAME))
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
-from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+# from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
 
 

@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.PointFactory import PointFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RectangleFactory:
-    SINGLETON: Rectangle = Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0)
+    SINGLETON: Rectangle = None
     ARRAY_OF_ARRAYS: list[list[Rectangle]] = [[None] * (0) for _ in range(0)]
 
+
+def _RectangleFactory_SINGLETON() -> object:
+    from org.allbinary.graphics.Rectangle import Rectangle
+    from org.allbinary.graphics.PointFactory import PointFactory
+    return Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0)
+
+lazy_static(RectangleFactory, "SINGLETON", _RectangleFactory_SINGLETON)
 

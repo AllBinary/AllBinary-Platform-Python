@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RemoteHighScoresData:
@@ -37,5 +38,8 @@ class RemoteHighScoresData:
         return RemoteHighScoresData.SINGLETON
 
 
-RemoteHighScoresData.SINGLETON = RemoteHighScoresData()
+def _RemoteHighScoresData_SINGLETON() -> object:
+    return RemoteHighScoresData()
+
+lazy_static(RemoteHighScoresData, "SINGLETON", _RemoteHighScoresData_SINGLETON)
 

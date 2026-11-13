@@ -21,10 +21,12 @@ from org.allbinary.canvas.Processor import Processor
 class InputProcessor(Processor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
         self.playerGameInputCompositeInterface: PlayerGameInputCompositeInterface = None
     
 
     def __init__(self, playerGameInputCompositeInterface: PlayerGameInputCompositeInterface) -> None:
+        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
         super().__init__()
         self._init_fields()
         self.playerGameInputCompositeInterface = playerGameInputCompositeInterface
@@ -33,6 +35,6 @@ class InputProcessor(Processor):
     # throws Exception
     def process(self) -> None:
         self.playerGameInputCompositeInterface.getPlayerGameInput().update()
-from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
+# from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
 
 

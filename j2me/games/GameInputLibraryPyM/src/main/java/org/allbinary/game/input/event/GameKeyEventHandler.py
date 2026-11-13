@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameKeyEventHandler:
@@ -23,6 +24,8 @@ class GameKeyEventHandler:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.pressGameKeyEventHandler: PressGameKeyEventHandler = PressGameKeyEventHandler.getInstance()
@@ -49,6 +52,7 @@ class GameKeyEventHandler:
     
 
     def addListenerForPlayer(self, eventListenerInterface: EventListenerInterface, playerInputId: int) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.logUtil.putF(str(eventListenerInterface), self, self.commonStrings.ADD_LISTENER)
         self.pressGameKeyEventHandler.addListenerSingleThreaded(eventListenerInterface)
         self.upGameKeyEventHandler.getInstanceForPlayer(playerInputId).addListenerSingleThreaded(eventListenerInterface)
@@ -56,6 +60,7 @@ class GameKeyEventHandler:
     
 
     def addListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.logUtil.putF(str(eventListenerInterface), self, self.commonStrings.ADD_LISTENER)
         self.pressGameKeyEventHandler.addListenerSingleThreaded(eventListenerInterface)
         self.upGameKeyEventHandler.addListenerSingleThreaded(eventListenerInterface)
@@ -63,17 +68,21 @@ class GameKeyEventHandler:
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.logUtil.putF(str(eventListenerInterface), self, self.commonStrings.REMOVE_LISTENER)
         self.pressGameKeyEventHandler.removeListenerSingleThreaded(eventListenerInterface)
         self.upGameKeyEventHandler.removeListenerSingleThreaded(eventListenerInterface)
         self.downGameKeyEventHandler.removeListenerSingleThreaded(eventListenerInterface)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.game.input.event.PressGameKeyEventHandler import PressGameKeyEventHandler
 from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
 from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
 
 
-GameKeyEventHandler.instance = GameKeyEventHandler()
+def _GameKeyEventHandler_instance() -> object:
+    return GameKeyEventHandler()
+
+lazy_static(GameKeyEventHandler, "instance", _GameKeyEventHandler_instance)
 

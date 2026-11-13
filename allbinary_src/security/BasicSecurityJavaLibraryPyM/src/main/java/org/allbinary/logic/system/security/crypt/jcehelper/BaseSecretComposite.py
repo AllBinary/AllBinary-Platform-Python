@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BaseSecretComposite:
@@ -23,14 +24,19 @@ class BaseSecretComposite:
 
     # throws Exception
     def encrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_BYTE_ARRAY
     
 
     # throws Exception
     def decrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_BYTE_ARRAY
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 
-BaseSecretComposite.NULL_SECRET_COMPOSITE = BaseSecretComposite()
+def _BaseSecretComposite_NULL_SECRET_COMPOSITE() -> object:
+    return BaseSecretComposite()
+
+lazy_static(BaseSecretComposite, "NULL_SECRET_COMPOSITE", _BaseSecretComposite_NULL_SECRET_COMPOSITE)
 

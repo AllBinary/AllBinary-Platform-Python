@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MyFormUtil:
     instance: MyFormUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.RectangleFactory import RectangleFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.popupMenuRectangle: Rectangle = RectangleFactory.SINGLETON
@@ -35,6 +40,15 @@ class MyFormUtil:
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
         font: Font = graphics.getFont()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         features: Features = Features.getInstance()
@@ -49,20 +63,24 @@ class MyFormUtil:
     
 
     def getPopupMenuRectangle(self) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
         return self.popupMenuRectangle
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.RectangleFactory import RectangleFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.RectangleFactory import RectangleFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-MyFormUtil.instance = MyFormUtil()
+def _MyFormUtil_instance() -> object:
+    return MyFormUtil()
+
+lazy_static(MyFormUtil, "instance", _MyFormUtil_instance)
 

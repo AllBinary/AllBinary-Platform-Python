@@ -21,22 +21,26 @@ from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 class AnimationCompositePaintable(InitUpdatePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.animationInterface: Animation = None
     
 
     def __init__(self, animationInterface: Animation) -> None:
+        from org.allbinary.animation.Animation import Animation
         super().__init__()
         self._init_fields()
         self.animationInterface = animationInterface
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintXY(graphics, 0, 0)
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintThreedXYZ(graphics, 0, 0, 0)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.Animation import Animation
 
 

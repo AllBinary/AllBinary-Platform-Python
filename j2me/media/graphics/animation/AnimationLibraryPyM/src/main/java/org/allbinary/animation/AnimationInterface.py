@@ -28,6 +28,7 @@ class AnimationInterface(LocationPaintableInterface):
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         raise NotImplementedError()
 # from javax.microedition.lcdui.Graphics import Graphics
 

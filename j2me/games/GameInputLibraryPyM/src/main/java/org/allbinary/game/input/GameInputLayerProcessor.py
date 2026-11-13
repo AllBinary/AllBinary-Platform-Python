@@ -28,16 +28,19 @@ class GameInputLayerProcessor(LayerProcessor):
 
     # throws Exception
     def processAt(self, allBinaryLayerManager: AllBinaryLayerManager, layerInterface: AllBinaryLayer, index: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         gameInputInterface: GameInputInterface = layerInterface
         gameInputInterface.processInput(allBinaryLayerManager)
     
 
     def isProcessorLayer(self, layerInterface: AllBinaryLayer) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if layerInterface.implmentsGameInputInterface():
             return True
         else:
             return False
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

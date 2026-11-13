@@ -24,6 +24,8 @@ class BufferedLineReader:
     
 
     def __init__(self, file: AbFile) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         self._init_fields()
         self.tmpIn = BufferedReader(FileReader(AbFileNativeUtil.get(file)))
     
@@ -37,6 +39,11 @@ class BufferedLineReader:
         return self.tmpIn.readLine()
     
 
+    # throws Exception
+    def ready(self) -> bool:
+        return self.tmpIn.ready()
+    
+
     def getSize(self) -> int:
         return 0
     
@@ -45,7 +52,7 @@ class BufferedLineReader:
         return 0
 # from java.io.BufferedReader import BufferedReader
 # from java.io.FileReader import FileReader
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
 
 

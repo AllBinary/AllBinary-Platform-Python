@@ -16,12 +16,12 @@
 from __future__ import annotations
 
 import time
-from org.allbinary.thread.ThreadPool import ThreadPool
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
 class MusicThreadPool(ThreadPool):
-    THREAD_POOL: ThreadPool = ThreadPool("Music", 2, ThreadPool.NORMAL_PRIORITY)
+    THREAD_POOL: ThreadPool = None
     
 
     @staticmethod
@@ -34,18 +34,31 @@ class MusicThreadPool(ThreadPool):
     
 
     def runTask(self, task: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(StringUtil.getInstance().toString(task)).appendlong(int(int(time.time() * 1000)))), self, self.threadPoolStrings.ADD_TASK)
         super().runTask(task)
     
 
     def startTask(self, task: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(self.threadPoolStrings.START_TASK).append(StringUtil.getInstance().toString(task)).appendlong(int(int(time.time() * 1000)))), self, self.commonStrings.RUN)
     
 
     def completedTask(self, task: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(self.threadPoolStrings.COMPLETE_TASK).append(StringUtil.getInstance().toString(task)).appendlong(int(int(time.time() * 1000)))), self, self.commonStrings.RUN)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
+
+def _MusicThreadPool_THREAD_POOL() -> object:
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    return ThreadPool("Music", 2, ThreadPool.NORMAL_PRIORITY)
+
+lazy_static(MusicThreadPool, "THREAD_POOL", _MusicThreadPool_THREAD_POOL)
 

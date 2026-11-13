@@ -31,6 +31,7 @@ class TerrainEvent(AllBinaryEventObject):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("TerrainEvent: \n")
         stringBuffer.append("LayerInterface: ")
@@ -51,8 +52,8 @@ class TerrainEvent(AllBinaryEventObject):
 
     def setBasicTerrainInfoForCircularStaticPool(self, basicTerrainInfo: BasicTerrainInfo) -> None:
         self.basicTerrainInfo = basicTerrainInfo
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 from org.allbinary.game.terrain.BasicTerrainInfo import BasicTerrainInfo
 
 

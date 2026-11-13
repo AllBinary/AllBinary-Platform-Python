@@ -23,6 +23,13 @@ class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
     NAME: str = "MENU"
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+        from org.allbinary.graphics.draw.DrawVerticalStringUtil import DrawVerticalStringUtil
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
         self.drawStringUtil: DrawVerticalStringUtil = DrawVerticalStringUtil.getInstance()
         self.label: str = None
@@ -36,6 +43,12 @@ class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
     
 
     def __init__(self, rectangle: Rectangle, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__()
         self._init_fields()
         self.foregroundBasicColor = foregroundBasicColor
@@ -49,6 +62,16 @@ class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.layer.SWTUtil import SWTUtil
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
         font: Font = graphics.getFont()
         features: Features = Features.getInstance()
         isOpenGL: bool = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)
@@ -74,6 +97,9 @@ class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
 
     # throws Exception
     def init(self, rectangle: Rectangle) -> None:
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
+        from org.allbinary.graphics.Rectangle import Rectangle
         self.rectangle = rectangle
         width: int = self.rectangle.getWidth()
         height: int = self.rectangle.getHeight()
@@ -86,6 +112,8 @@ class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.GPoint import GPoint
         self.myFontProcessor.process(graphics)
         point: GPoint = self.rectangle.getPoint()
         x: int = point.getX()
@@ -98,23 +126,23 @@ class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
         graphics.drawRect(x, y, width, height)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.layer.SWTUtil import SWTUtil
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-from org.allbinary.graphics.draw.DrawVerticalStringUtil import DrawVerticalStringUtil
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.layer.SWTUtil import SWTUtil
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+# from org.allbinary.graphics.draw.DrawVerticalStringUtil import DrawVerticalStringUtil
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
 
 

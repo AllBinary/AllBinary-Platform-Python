@@ -15,11 +15,9 @@
 
 from __future__ import annotations
 
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactory import PickedUpLayerInterfaceFactory
 from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryInterface import CountedPickedUpLayerInterfaceFactoryInterface
-from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
-from org.allbinary.game.layer.pickup.IconLayer import IconLayer
 
 
 class CountedPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, CountedPickedUpLayerInterfaceFactoryInterface):
@@ -31,6 +29,8 @@ class CountedPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, Counte
 
     def __init__(self, pickeUpLayerType: PickedUpLayerType, iconLayer: IconLayer, animationInterface: Animation) -> None:
         from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryPool import CountedPickedUpLayerInterfaceFactoryPool
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(pickeUpLayerType, iconLayer, animationInterface)
         self._init_fields()
         list_: BasicArrayList = CountedPickedUpLayerInterfaceFactoryPool.getInstance().getList()
@@ -40,6 +40,9 @@ class CountedPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, Counte
 
     # throws Exception
     def getNextInstance(self, hashtable: ABHashtable[object, object], x: int, y: int, z: int) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
     
 
@@ -49,12 +52,19 @@ class CountedPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, Counte
 
     def getId(self) -> int:
         return self.id
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-CountedPickedUpLayerInterfaceFactory.NULL_COUNTED_PICKUP_LAYER_FACTORY = CountedPickedUpLayerInterfaceFactory(PickedUpLayerTypeFactory.getInstance().NONE, IconLayer.NULL_ICON_LAYER, NullAnimationFactory.getFactoryInstance().getInstance(0))
+def _CountedPickedUpLayerInterfaceFactory_NULL_COUNTED_PICKUP_LAYER_FACTORY() -> object:
+    from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
+    from org.allbinary.game.layer.pickup.IconLayer import IconLayer
+    from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+    return CountedPickedUpLayerInterfaceFactory(PickedUpLayerTypeFactory.getInstance().NONE, IconLayer.NULL_ICON_LAYER, NullAnimationFactory.getFactoryInstance().getInstance(0))
+
+lazy_static(CountedPickedUpLayerInterfaceFactory, "NULL_COUNTED_PICKUP_LAYER_FACTORY", _CountedPickedUpLayerInterfaceFactory_NULL_COUNTED_PICKUP_LAYER_FACTORY)
 

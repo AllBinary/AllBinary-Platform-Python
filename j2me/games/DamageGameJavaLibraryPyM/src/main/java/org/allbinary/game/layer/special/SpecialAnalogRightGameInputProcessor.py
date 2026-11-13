@@ -27,8 +27,10 @@ class SpecialAnalogRightGameInputProcessor(SpecialGameInputProcessor):
 
     # throws Exception
     def processAnalog(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent, xAnalogValue: int) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.collidableDestroyableDamageableLayer.rightAnalog(xAnalogValue)
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

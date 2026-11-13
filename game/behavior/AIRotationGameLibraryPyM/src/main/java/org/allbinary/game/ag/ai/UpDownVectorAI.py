@@ -21,11 +21,15 @@ from org.allbinary.game.ai.BasicAI import BasicAI
 class UpDownVectorAI(BasicAI):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         self.velocityInterface: BasicVelocityProperties = None
         self.index: int = 0
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         velocityInterfaceCompositeInterface: VelocityInterfaceCompositeInterface = self.getOwnerLayerInterface()
@@ -35,6 +39,8 @@ class UpDownVectorAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         y: int = self.getOwnerLayerInterface().getHeight() * 270
         if self.index < 5:
             basicDecimal: BasicDecimal = self.velocityInterface.getVelocityYBasicDecimalP()
@@ -49,11 +55,11 @@ class UpDownVectorAI(BasicAI):
         else:
             self.index = 0
             self.processAI(allBinaryLayerManager)
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

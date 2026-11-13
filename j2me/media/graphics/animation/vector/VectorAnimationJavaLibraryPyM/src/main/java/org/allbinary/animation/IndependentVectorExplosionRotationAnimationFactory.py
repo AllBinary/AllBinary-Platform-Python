@@ -21,6 +21,9 @@ from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import
 class IndependentVectorExplosionRotationAnimationFactory(ProceduralAnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.vector.VectorInfo import VectorInfo
         self.framePoints: list[list[list[int]]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY_ARRAY
         self.vectorInfo: VectorInfo = None
         self.basicColor: BasicColor = None
@@ -29,6 +32,8 @@ class IndependentVectorExplosionRotationAnimationFactory(ProceduralAnimationInte
     
 
     def __init__(self, vectorInfo: VectorInfo, basicColor: BasicColor, vectorAnimationFactoryInterface: VectorAnimationFactoryInterface) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.vector.VectorInfo import VectorInfo
         self._init_fields()
         self.vectorInfo = vectorInfo
         self.basicColor = basicColor
@@ -50,9 +55,9 @@ class IndependentVectorExplosionRotationAnimationFactory(ProceduralAnimationInte
             frame = rotationAnimationInterface.getFrame()
         points: list[list[list[int]]] = self.vectorExplosionGenerator.getInstance(self.framePoints[frame], 6, self.vectorExplosionGenerator.ROTATION)
         return self.vectorAnimationFactoryInterface.getInstance(points, self.basicColor)
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.vector.VectorInfo import VectorInfo
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.vector.VectorInfo import VectorInfo
 from org.allbinary.animation.VectorExplosionGenerator import VectorExplosionGenerator
 
 

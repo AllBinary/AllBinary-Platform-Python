@@ -15,8 +15,10 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+from org.allbinary.animation.NullIndexedAnimation import NullIndexedAnimation
 
 
 class NullIndexedAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface):
@@ -31,6 +33,7 @@ class NullIndexedAnimationFactory(AnimationInterfaceFactoryInterface, Procedural
         
 
         def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+            from javax.microedition.lcdui.Graphics import Graphics
             pass
 
     def _init_fields(self) -> None:
@@ -57,11 +60,14 @@ class NullIndexedAnimationFactory(AnimationInterfaceFactoryInterface, Procedural
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.media.ScaleProperties import ScaleProperties
-from org.allbinary.animation.NullIndexedAnimationInner import NullIndexedAnimationInner
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 
-NullIndexedAnimationFactory.NULL_INDEXED_ANIMATION_FACTORY = NullIndexedAnimationFactory()
+def _NullIndexedAnimationFactory_NULL_INDEXED_ANIMATION_FACTORY() -> object:
+    return NullIndexedAnimationFactory()
+
+lazy_static(NullIndexedAnimationFactory, "NULL_INDEXED_ANIMATION_FACTORY", _NullIndexedAnimationFactory_NULL_INDEXED_ANIMATION_FACTORY)
 

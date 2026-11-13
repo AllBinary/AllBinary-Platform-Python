@@ -15,15 +15,22 @@
 
 from __future__ import annotations
 
-from org.allbinary.thread.ThreadPool import ThreadPool
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SoundThreadPool:
-    instance: ThreadPool = ThreadPool("Sound", 1, ThreadPool.NORMAL_PRIORITY)
+    instance: ThreadPool = None
     
 
     @staticmethod
     def getInstance() -> ThreadPool:
         return SoundThreadPool.instance
 
+
+def _SoundThreadPool_instance() -> object:
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    return ThreadPool("Sound", 1, ThreadPool.NORMAL_PRIORITY)
+
+lazy_static(SoundThreadPool, "instance", _SoundThreadPool_instance)
 

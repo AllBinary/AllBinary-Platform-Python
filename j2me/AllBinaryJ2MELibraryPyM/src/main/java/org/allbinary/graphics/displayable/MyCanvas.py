@@ -16,7 +16,7 @@
 from __future__ import annotations
 
 import threading
-# from javax.microedition.lcdui.Canvas import Canvas
+from javax.microedition.lcdui.Canvas import Canvas
 from org.allbinary.graphics.displayable.command.MyCommandInterface import MyCommandInterface
 from org.allbinary.graphics.displayable.DisplayableInterface import DisplayableInterface
 
@@ -25,6 +25,14 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from javax.microedition.lcdui.NullCommandListener import NullCommandListener
+        from org.allbinary.input.TouchJ2ME import TouchJ2ME
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.ABStack import ABStack
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
@@ -39,6 +47,8 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
     
 
     def __init__(self, name: str, childNameList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.StdUtil import StdUtil
         super().__init__()
         self._init_fields()
         self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, self.commonStrings.CONSTRUCTOR)
@@ -46,6 +56,14 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
         self.name = name
         self.childNameList = childNameList
         self.commandStack = StdUtil.getInstance().createStack()
+    
+
+    def getWidth(self) -> int:
+        return super().getWidth()
+    
+
+    def getHeight(self) -> int:
+        return super().getHeight()
     
 
     def setFullScreenMode(self, mode: bool) -> None:
@@ -58,6 +76,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
     
 
     def getCommandStack(self) -> ABStack[object]:
+        from org.allbinary.util.ABStack import ABStack
         return self.commandStack
     
 
@@ -66,6 +85,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
             return self._isCommand_unlocked(command)
 
     def _isCommand_unlocked(self, command: Command) -> bool:
+        from javax.microedition.lcdui.Command import Command
         return self.commandStack.contains(command)
     
 
@@ -74,6 +94,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
             return self._addCommand_unlocked(command)
 
     def _addCommand_unlocked(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         if not self.commandStack.contains(command):
             self.commandStack.push(command)
             super().addCommand(command)
@@ -84,6 +105,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
             return self._removeCommand_unlocked(command)
 
     def _removeCommand_unlocked(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         self.commandStack.removeElement(command)
         super().removeCommand(command)
     
@@ -93,17 +115,20 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
             return self._removeAllCommands_unlocked()
 
     def _removeAllCommands_unlocked(self) -> None:
+        from javax.microedition.lcdui.Command import Command
         size: int = self.commandStack.size()
         for index in range(0, size):
             super().removeCommand(self.commandStack.pop())
     
 
     def setCommandListener(self, l: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         super().setCommandListener(l)
         self.commandListener = l
     
 
     def getCustomCommandListener(self) -> CommandListener:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         return self.commandListener
     
 
@@ -116,6 +141,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
     
 
     def removePauseCommand(self) -> None:
+        from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
         self.removeCommand(MyCommandsFactory.getInstance().PAUSE_COMMAND)
     
 
@@ -124,6 +150,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
             return self._pause_unlocked()
 
     def _pause_unlocked(self) -> None:
+        from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
         self.logUtil.putF(self.commonStrings.START, self, self.canvasStrings.PAUSE)
         self.removePauseCommand()
         self.addCommand(MyCommandsFactory.getInstance().RESUME_COMMAND)
@@ -135,6 +162,7 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
             return self._unPause_unlocked()
 
     def _unPause_unlocked(self) -> None:
+        from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
         self.logUtil.putF(self.commonStrings.START, self, self.canvasStrings.UN_PAUSE)
         self.removeCommand(MyCommandsFactory.getInstance().RESUME_COMMAND)
         self.addCommand(MyCommandsFactory.getInstance().PAUSE_COMMAND)
@@ -147,10 +175,12 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def draw(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -191,20 +221,21 @@ class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
     
 
     def nextSong(self, nextSongSound: Sound, leftVolume: int, rightVolume: int) -> None:
+        from org.allbinary.media.audio.Sound import Sound
         pass
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.NullCommandListener import NullCommandListener
-from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
-from org.allbinary.input.TouchJ2ME import TouchJ2ME
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.audio.Sound import Sound
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABStack import ABStack
+# from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
+# from org.allbinary.input.TouchJ2ME import TouchJ2ME
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABStack import ABStack
 from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
 from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 

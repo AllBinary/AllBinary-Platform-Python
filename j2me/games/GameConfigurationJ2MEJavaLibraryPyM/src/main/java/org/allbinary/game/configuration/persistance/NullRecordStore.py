@@ -15,7 +15,8 @@
 
 from __future__ import annotations
 
-# from javax.microedition.rms.RecordStore import RecordStore
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.rms.RecordStore import RecordStore
 
 
 class NullRecordStore(RecordStore):
@@ -25,5 +26,8 @@ class NullRecordStore(RecordStore):
         super().__init__()
 
 
-NullRecordStore.NULL_RECORD_STORE = NullRecordStore()
+def _NullRecordStore_NULL_RECORD_STORE() -> object:
+    return NullRecordStore()
+
+lazy_static(NullRecordStore, "NULL_RECORD_STORE", _NullRecordStore_NULL_RECORD_STORE)
 

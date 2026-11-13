@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 
 
@@ -30,5 +31,8 @@ class NullWaitGameRunnable(GameRunnable):
         return NullWaitGameRunnable.instance
 
 
-NullWaitGameRunnable.instance = NullWaitGameRunnable()
+def _NullWaitGameRunnable_instance() -> object:
+    return NullWaitGameRunnable()
+
+lazy_static(NullWaitGameRunnable, "instance", _NullWaitGameRunnable_instance)
 

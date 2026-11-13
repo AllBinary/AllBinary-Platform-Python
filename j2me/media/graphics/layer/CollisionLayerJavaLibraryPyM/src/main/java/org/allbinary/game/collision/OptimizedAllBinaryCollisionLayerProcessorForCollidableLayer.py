@@ -28,6 +28,10 @@ class OptimizedAllBinaryCollisionLayerProcessorForCollidableLayer(LayerProcessor
 
     # throws Exception
     def processAt(self, allBinaryLayerManager: AllBinaryLayerManager, layerInterface: AllBinaryLayer, startIndex: int) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.layer.LayerManager import LayerManager
         collidableInterfaceCompositeInterface: CollidableCompositeLayer = layerInterface
         collidableBase: CollidableBaseBehavior = collidableInterfaceCompositeInterface.getCollidableInferface()
         if collidableBase.isCollidable(collidableInterfaceCompositeInterface):
@@ -44,13 +48,14 @@ class OptimizedAllBinaryCollisionLayerProcessorForCollidableLayer(LayerProcessor
     
 
     def isProcessorLayer(self, layerInterface: AllBinaryLayer) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if layerInterface.implmentsCollidableInterface():
             return True
         else:
             return False
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.LayerManager import LayerManager
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.LayerManager import LayerManager
 
 

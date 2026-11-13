@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameKeyUtil:
@@ -22,6 +23,7 @@ class GameKeyUtil:
     
 
     def isDirectionKey(self, key: int) -> bool:
+        from javax.microedition.lcdui.Canvas import Canvas
         if key == Canvas.UP or key == Canvas.DOWN or key == Canvas.LEFT or key == Canvas.RIGHT:
             return True
         else:
@@ -34,5 +36,8 @@ class GameKeyUtil:
 # from javax.microedition.lcdui.Canvas import Canvas
 
 
-GameKeyUtil.instance = GameKeyUtil()
+def _GameKeyUtil_instance() -> object:
+    return GameKeyUtil()
+
+lazy_static(GameKeyUtil, "instance", _GameKeyUtil_instance)
 

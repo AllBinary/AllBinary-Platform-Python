@@ -47,6 +47,9 @@ class AllBinaryMediaManager:
     @staticmethod
     def init(soundsFactoryInterface: SoundsFactoryInterface) -> None:
         from org.allbinary.media.audio.Sounds import Sounds
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonString: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonString.START, AllBinaryMediaManager.THIS, commonString.INIT)
@@ -59,6 +62,7 @@ class AllBinaryMediaManager:
     def shutdown(soundsFactoryInterface: SoundsFactoryInterface) -> None:
         from org.allbinary.media.audio.Sounds import Sounds
         from org.allbinary.media.audio.Sounds import Sounds
+        from org.allbinary.TsUtil import TsUtil
         Sounds(soundsFactoryInterface).stopAll()
         Sounds(soundsFactoryInterface).closeAll()
         TsUtil.getInstance().gc()
@@ -67,6 +71,10 @@ class AllBinaryMediaManager:
     @staticmethod
     def createPlayerFromInputStream(stream: InputStream, type_: str) -> Player:
         from org.allbinary.media.audio.NoPlayer import NoPlayer
+        from java.io.InputStream import InputStream
+        from javax.microedition.media.Player import Player
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonString: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonString.START, AllBinaryMediaManager.THIS, "creatPlayer(InputStream)")
@@ -76,6 +84,9 @@ class AllBinaryMediaManager:
     @staticmethod
     def createPlayer(locator: str) -> Player:
         from org.allbinary.media.audio.NoPlayer import NoPlayer
+        from javax.microedition.media.Player import Player
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonString: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonString.START, AllBinaryMediaManager.THIS, "creatPlayer(locator)")
@@ -94,18 +105,20 @@ class AllBinaryMediaManager:
 
     @staticmethod
     def getSupportedContentTypes(protocol: str) -> list[str]:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().getArrayInstance()
     
 
     @staticmethod
     def getSupportedProtocols(content_type: str) -> list[str]:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().getArrayInstance()
 # from java.io.InputStream import InputStream
 # from javax.microedition.media.Player import Player
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchButtonFactory:
@@ -23,6 +24,8 @@ class TouchButtonFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.LIST: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.list_: BasicArrayList = self.LIST
         self.savedList: BasicArrayList = self.LIST
@@ -48,6 +51,8 @@ class TouchButtonFactory:
             return self._toggle_unlocked(save, list_)
 
     def _toggle_unlocked(self, save: bool, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         if list_ != BasicArrayListUtil.getInstance().getImmutableInstance():
             self.savedList = list_
             if not self.saved:
@@ -67,16 +72,21 @@ class TouchButtonFactory:
 
     # throws Exception
     def setList(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if list_ is None:
             raise Exception("Null List")
         self.list_ = list_
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-TouchButtonFactory.SINGLETON = TouchButtonFactory()
+def _TouchButtonFactory_SINGLETON() -> object:
+    return TouchButtonFactory()
+
+lazy_static(TouchButtonFactory, "SINGLETON", _TouchButtonFactory_SINGLETON)
 

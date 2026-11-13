@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ItemColorFactory:
@@ -34,5 +35,8 @@ class ItemColorFactory:
         return ItemColorFactory.instance
 
 
-ItemColorFactory.instance = ItemColorFactory()
+def _ItemColorFactory_instance() -> object:
+    return ItemColorFactory()
+
+lazy_static(ItemColorFactory, "instance", _ItemColorFactory_instance)
 

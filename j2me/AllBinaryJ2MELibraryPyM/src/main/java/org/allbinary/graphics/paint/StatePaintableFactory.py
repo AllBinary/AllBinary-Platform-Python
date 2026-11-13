@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.paint.StatePaintable import StatePaintable
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StatePaintableFactory:
-    instance: StatePaintable = StatePaintable()
+    instance: StatePaintable = None
     
 
     @staticmethod
     def getInstance() -> StatePaintable:
         return StatePaintableFactory.instance
 
+
+def _StatePaintableFactory_instance() -> object:
+    from org.allbinary.graphics.paint.StatePaintable import StatePaintable
+    return StatePaintable()
+
+lazy_static(StatePaintableFactory, "instance", _StatePaintableFactory_instance)
 

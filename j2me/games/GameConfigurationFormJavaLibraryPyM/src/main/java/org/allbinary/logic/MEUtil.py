@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #Handle the differences in the public platform vs the raw JS build
@@ -28,10 +29,17 @@ class MEUtil:
     
 
     def appendItem(self, form: CommandForm, item: Item) -> None:
-        form.append(item)
+        from javax.microedition.lcdui.Item import Item
+        from org.allbinary.MIDPUtil import MIDPUtil
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+        MIDPUtil.getInstance().appendItem(form, item)
 # from javax.microedition.lcdui.Item import Item
-from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+# from org.allbinary.MIDPUtil import MIDPUtil
+# from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 
 
-MEUtil.instance = MEUtil()
+def _MEUtil_instance() -> object:
+    return MEUtil()
+
+lazy_static(MEUtil, "instance", _MEUtil_instance)
 

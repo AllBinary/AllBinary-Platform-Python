@@ -15,9 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.RectangleFactory import RectangleFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.Layer import Layer
 from org.allbinary.layer.LayerInterface import LayerInterface
 
@@ -27,6 +25,8 @@ class AllBinaryLayer(Layer, LayerInterface):
     TYPE: str = "Type: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
+        from org.allbinary.view.event.ViewPositionEvent import ViewPositionEvent
         self.viewPositionEvent: ViewPositionEvent = ViewPositionEvent(self)
         self.halfWidth: int = 0
         self.halfHeight: int = 0
@@ -35,13 +35,16 @@ class AllBinaryLayer(Layer, LayerInterface):
     
 
     def __init__(self, name: str, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(rectangle.getWidth(), rectangle.getHeight())
         self._init_fields()
         localName: str = None
-        if name is None:
-            localName = type(self).__module__ + "." + type(self).__qualname__
-        else:
-            localName = str(StringMaker().append(name).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(self), "x")))
+        localName = str(StringMaker().append(name).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(self), "x")))
         self.name = localName
         point: GPoint = rectangle.getPoint()
         self.setPosition(point.getX(), point.getY(), point.getZ())
@@ -51,12 +54,55 @@ class AllBinaryLayer(Layer, LayerInterface):
         self.viewPosition.setAllbinaryLayer(self)
     
 
+    def setPosition(self, x: int, y: int, z: int) -> None:
+        super().setPosition(x, y, z)
+    
+
+    def moveDXYZ(self, dx: int, dy: int, dz: int) -> None:
+        super().moveDXYZ(dx, dy, dz)
+    
+
+    def getXP(self) -> int:
+        return super().getXP()
+    
+
+    def getYP(self) -> int:
+        return super().getYP()
+    
+
+    def getZP(self) -> int:
+        return super().getZP()
+    
+
+    def getWidth(self) -> int:
+        return super().getWidth()
+    
+
+    def getHeight(self) -> int:
+        return super().getHeight()
+    
+
+    def setVisible(self, visible: bool) -> None:
+        super().setVisible(visible)
+    
+
+    def isVisible(self) -> bool:
+        return super().isVisible()
+    
+
+    def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        super().paint(graphics)
+    
+
     # throws Exception
     def onChangeEvent(self, layerManagerEvent: ViewPositionEvent) -> None:
+        from org.allbinary.view.event.ViewPositionEvent import ViewPositionEvent
         pass
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -97,14 +143,18 @@ class AllBinaryLayer(Layer, LayerInterface):
     
 
     def getViewPosition(self) -> ViewPositionBase:
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         return self.viewPosition
     
 
     def setViewPosition(self, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         self.viewPosition = viewPosition
     
 
     def getGroupInterface(self) -> list[Group]:
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.game.identification.Group import Group
         return BasicGroupFactory.getInstance().NONE_ARRAY
     
 
@@ -125,6 +175,7 @@ class AllBinaryLayer(Layer, LayerInterface):
     
 
     def implementsThreedInterface(self) -> bool:
+        from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
         return OpenGLFeatureUtil.getInstance().isAnyThreed()
     
 
@@ -137,6 +188,10 @@ class AllBinaryLayer(Layer, LayerInterface):
     
 
     def toStringAppend(self, stringBuffer: StringMaker) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         positionStrings: PositionStrings = PositionStrings.getInstance()
         commonLabels: CommonLabels = CommonLabels.getInstance()
@@ -146,22 +201,23 @@ class AllBinaryLayer(Layer, LayerInterface):
         stringBuffer.appendint(self.getType())
         stringBuffer.append(commonSeps.SPACE)
         stringBuffer.append(positionStrings.X_LABEL)
-        stringBuffer.appendint(int(self.getXP()))
+        stringBuffer.appendint(self.getXP())
         stringBuffer.append(commonSeps.SPACE)
         stringBuffer.append(positionStrings.Y_LABEL)
-        stringBuffer.appendint(int(self.getYP()))
+        stringBuffer.appendint(self.getYP())
         stringBuffer.append(commonSeps.SPACE)
         stringBuffer.append(positionStrings.Z_LABEL)
-        stringBuffer.appendint(int(self.getZP()))
+        stringBuffer.appendint(self.getZP())
         stringBuffer.append(commonSeps.SPACE)
         stringBuffer.append(commonLabels.WIDTH_LABEL)
-        stringBuffer.appendint(int(self.getWidth()))
+        stringBuffer.appendint(self.getWidth())
         stringBuffer.append(commonSeps.SPACE)
         stringBuffer.append(commonLabels.HEIGHT_LABEL)
-        stringBuffer.appendint(int(self.getHeight()))
+        stringBuffer.appendint(self.getHeight())
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         self.toStringAppend(stringBuffer)
         return str(stringBuffer)
@@ -169,18 +225,27 @@ class AllBinaryLayer(Layer, LayerInterface):
     def __str__(self) -> str:
         return self.toString()
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.view.event.ViewPositionEvent import ViewPositionEvent
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.RectangleFactory import RectangleFactory
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.view.event.ViewPositionEvent import ViewPositionEvent
 
 
-AllBinaryLayer.NULL_ALLBINARY_LAYER = AllBinaryLayer(StringUtil.getInstance().EMPTY_STRING, RectangleFactory.SINGLETON, ViewPositionBase.NULL_VIEW_POSITION)
+def _AllBinaryLayer_NULL_ALLBINARY_LAYER() -> object:
+    from org.allbinary.graphics.RectangleFactory import RectangleFactory
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    from org.allbinary.view.ViewPositionBase import ViewPositionBase
+    return AllBinaryLayer(StringUtil.getInstance().EMPTY_STRING, RectangleFactory.SINGLETON, ViewPositionBase.NULL_VIEW_POSITION)
+
+lazy_static(AllBinaryLayer, "NULL_ALLBINARY_LAYER", _AllBinaryLayer_NULL_ALLBINARY_LAYER)
 

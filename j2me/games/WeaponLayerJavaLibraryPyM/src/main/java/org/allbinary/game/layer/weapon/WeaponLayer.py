@@ -22,6 +22,13 @@ from org.allbinary.game.tick.TickableInterface import TickableInterface
 class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.score.NoScoreable import NoScoreable
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.physics.movement.Movement import Movement
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
         self.initAnimationInterface: Animation = None
         self.destroyedAnimationInterface: Animation = None
@@ -37,6 +44,12 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def __init__(self, name: str, remoteInfo: RemoteInfo, multiPlayerType: int, movement: Movement, animationInterface: Animation, destroyedAnimationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.physics.movement.Movement import Movement
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, BasicGroupFactory.getInstance().NONE_ARRAY, name, rectangle, viewPosition)
         self._init_fields()
         self.initAnimationInterface = animationInterface
@@ -47,6 +60,7 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def setCollidableInferface(self, collidableInferface: CollidableBaseBehavior) -> None:
+        from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
         super().setCollidableInferface(collidableInferface)
         self.collidableWeaponBehavior = self.getCollidableInferface()
     
@@ -60,6 +74,9 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
 
     # throws Exception
     def init(self, sourceLayerInterface: AllBinaryLayer, angle: int, otherAngle: int, weaponProperties: WeaponProperties, scoreable: ScoreableInterface) -> None:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.setWeaponPropertiesP(weaponProperties)
         self.setReadyForExplosion(False)
         self.setAnimationInterface(self.getInitAnimationInterfaceP())
@@ -75,6 +92,7 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def setGroupInterfaces(self) -> None:
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
         basicGroupFactory: BasicGroupFactory = BasicGroupFactory.getInstance()
         if self.sourceLayerInterface.getGroupInterface()[0] == basicGroupFactory.ENEMY:
             self.setGroupInterface(basicGroupFactory.ENEMY_ARRAY)
@@ -84,6 +102,8 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
 
     # throws Exception
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.isExhausted() and not self.isDestroyed():
             if self.isReadyForExplosion():
                 indexedAnimationInterface: IndexedAnimation = self.getAnimationInterface()
@@ -113,6 +133,7 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def givePoints(self, total: int) -> None:
+        from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
         self.scoreableInterface.addPoints(GameConfigurationUtil.getInstance().getCompetitionValue() * total)
     
 
@@ -132,6 +153,8 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def setDestroyed(self, destroyed: bool) -> None:
+        from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
+        from org.allbinary.game.score.NoScoreable import NoScoreable
         self.destroyed = destroyed
         if self.isDestroyed():
             self.scoreableInterface = NoScoreable.getInstance()
@@ -143,48 +166,61 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def setAnimationInterface(self, animationInterface: Animation) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.animationInterface = animationInterface
     
 
     def getAnimationInterface(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return self.animationInterface
     
 
     def getInitAnimationInterfaceP(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return self.initAnimationInterface
     
 
     def setInitAnimationInterfaceP(self, initAnimationInterface: Animation) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.initAnimationInterface = initAnimationInterface
     
 
     def getDestroyedAnimationInterface(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return self.destroyedAnimationInterface
     
 
     def getOwnerLayerInterface(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.sourceLayerInterface
     
 
     def setOwnerLayerInterface(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.sourceLayerInterface = sourceLayerInterface
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         viewPosition: ViewPositionBase = self.getViewPosition()
         self.animationInterface.paintXY(graphics, viewPosition.getX() - self.getHalfWidth(), viewPosition.getY() - self.getHalfHeight())
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         viewPosition: ViewPositionBase = self.getViewPosition()
         self.animationInterface.paintThreedXYZ(graphics, viewPosition.getX() - self.getHalfWidth(), viewPosition.getY() - self.getHalfHeight(), viewPosition.getZ() - self.getHalfDepth())
     
 
     def getMovement(self) -> Movement:
+        from org.allbinary.physics.movement.Movement import Movement
         return self.movement
     
 
     def setMovement(self, movement: Movement) -> None:
+        from org.allbinary.physics.movement.Movement import Movement
         self.movement = movement
     
 
@@ -202,10 +238,12 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
     
 
     def setWeaponPropertiesP(self, weaponProperties: WeaponProperties) -> None:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         self.weaponProperties = weaponProperties
     
 
     def getWeaponPropertiesP(self) -> WeaponProperties:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         return self.weaponProperties
     
 
@@ -215,26 +253,27 @@ class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
         self.initAnimationInterface.set(gl)
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
-from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.game.score.NoScoreable import NoScoreable
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.physics.movement.Movement import Movement
-from org.allbinary.view.ViewPosition import ViewPosition
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
+# from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.game.score.NoScoreable import NoScoreable
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.physics.movement.Movement import Movement
+# from org.allbinary.view.ViewPosition import ViewPosition
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 from org.allbinary.game.layer.weapon.CollidableWeaponBehavior import CollidableWeaponBehavior
 
 

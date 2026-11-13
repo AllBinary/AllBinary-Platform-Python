@@ -20,6 +20,9 @@ from __future__ import annotations
 class ExitRunnable(object):
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.midlet: AllBinaryMidlet = None
@@ -28,6 +31,7 @@ class ExitRunnable(object):
     
 
     def __init__(self, midlet: AllBinaryMidlet, processor: Processor, isProgress: bool) -> None:
+        from org.allbinary.canvas.Processor import Processor
         self._init_fields()
         self.midlet = midlet
         self.isProgress = isProgress
@@ -35,6 +39,7 @@ class ExitRunnable(object):
     
 
     def run(self) -> None:
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
         try:
             self.logUtil.putF(self.commonStrings.START_RUNNABLE, self, self.commonStrings.RUN)
             self.midlet.destroyAppInRunnable(False, self.isProgress)
@@ -49,8 +54,8 @@ class ExitRunnable(object):
             except Exception as e2:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

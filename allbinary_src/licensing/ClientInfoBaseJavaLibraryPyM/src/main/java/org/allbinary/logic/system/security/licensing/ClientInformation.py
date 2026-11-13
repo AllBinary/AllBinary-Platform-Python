@@ -22,6 +22,12 @@ from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface
 class ClientInformation(AbeClientInformationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.operatingSystemInterface: GenericOperatingSystem = NoOperatingSystem.NO_OPERATING_SYSTEM
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.name: str = None
@@ -34,6 +40,8 @@ class ClientInformation(AbeClientInformationInterface):
     
 
     def __init__(self, name: str, version: str, specialName: str, shortName: str) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         self._init_fields()
         self.name = name
         self.version = version
@@ -47,6 +55,7 @@ class ClientInformation(AbeClientInformationInterface):
     
 
     def getOperatingSystemInterface(self) -> GenericOperatingSystem:
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         return self.operatingSystemInterface
     
 
@@ -67,6 +76,7 @@ class ClientInformation(AbeClientInformationInterface):
     
 
     def getLicenseServers(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.licenseServers
     
 
@@ -80,6 +90,11 @@ class ClientInformation(AbeClientInformationInterface):
 
     def toHashtable(self) -> ABHashtable[object, object]:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
+        from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterface
+        from org.allbinary.logic.system.hardware.SystemHardwareFactory import SystemHardwareFactory
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         abeClientInformationData: AbeClientInformationData = AbeClientInformationData.getInstance()
         genericOperatingSystem: GenericOperatingSystem = self.getOperatingSystemInterface()
         clientInfoHashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
@@ -105,6 +120,7 @@ class ClientInformation(AbeClientInformationInterface):
     
 
     def isLargerOrDifferentServerList(self, list_: BasicArrayList) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = list_.size() - 1
         currentSize: int = self.licenseServers.size() - 1
         if size > currentSize:
@@ -127,6 +143,7 @@ class ClientInformation(AbeClientInformationInterface):
     
 
     def setOperatingSystemInterface(self, operatingSystemInterface: GenericOperatingSystem) -> None:
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         self.operatingSystemInterface = operatingSystemInterface
     
 
@@ -135,22 +152,23 @@ class ClientInformation(AbeClientInformationInterface):
     
 
     def setLicenseServers(self, licenseServers: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.licenseServers = licenseServers
     
 
     def toShortString(self) -> str:
         return self.shortName
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterface
-from org.allbinary.logic.system.hardware.SystemHardwareFactory import SystemHardwareFactory
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterface
+# from org.allbinary.logic.system.hardware.SystemHardwareFactory import SystemHardwareFactory
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

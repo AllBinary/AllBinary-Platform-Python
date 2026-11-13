@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BottomLimiter:
@@ -43,6 +44,8 @@ class BottomLimiter:
 
     def update(self) -> None:
         from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
+        from org.allbinary.game.GameAdState import GameAdState
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         gameAdState: GameAdState = GameAdStateFactory.getInstance().getCurrentInstance()
         if gameAdState.isShowingAt():
@@ -58,9 +61,12 @@ class BottomLimiter:
 
     def getBottom(self) -> int:
         return self.bottom
-from org.allbinary.game.GameAdState import GameAdState
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.game.GameAdState import GameAdState
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 
-BottomLimiter.instance = BottomLimiter()
+def _BottomLimiter_instance() -> object:
+    return BottomLimiter()
+
+lazy_static(BottomLimiter, "instance", _BottomLimiter_instance)
 

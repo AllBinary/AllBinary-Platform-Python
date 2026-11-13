@@ -21,6 +21,7 @@ from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSyst
 class GenericOperatingSystem(OperatingSystemInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.character.CharacterSet import CharacterSet
         self.osName: str = None
         self.osArch: str = None
         self.osVersion: str = None
@@ -30,6 +31,8 @@ class GenericOperatingSystem(OperatingSystemInterface):
 
     def __init__(self) -> None:
         from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self._init_fields()
         systemProperties: SystemProperties = SystemProperties.getInstance()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
@@ -61,6 +64,7 @@ class GenericOperatingSystem(OperatingSystemInterface):
     
 
     def getCharacterSet(self) -> CharacterSet:
+        from org.allbinary.logic.java.character.CharacterSet import CharacterSet
         return self.characterSet
     
 
@@ -85,6 +89,9 @@ class GenericOperatingSystem(OperatingSystemInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
         NEW_LINE: str = CommonSeps.getInstance().NEW_LINE
         osBuffer: StringMaker = StringMaker()
         osBuffer.append("Operating System Info: \n")
@@ -100,10 +107,10 @@ class GenericOperatingSystem(OperatingSystemInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.java.character.CharacterSet import CharacterSet
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.java.character.CharacterSet import CharacterSet
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

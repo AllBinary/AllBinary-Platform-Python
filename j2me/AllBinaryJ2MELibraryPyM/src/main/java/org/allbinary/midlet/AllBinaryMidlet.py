@@ -15,15 +15,19 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.CommandListener import CommandListener
-# from javax.microedition.midlet.MIDlet import MIDlet
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.lcdui.CommandListener import CommandListener
+from javax.microedition.midlet.MIDlet import MIDlet
 
 
 class AllBinaryMidlet(MIDlet, CommandListener):
-    NULL_ALLBINARY_MIDLET: object = NullUtil.getInstance().NULL_OBJECT
+    NULL_ALLBINARY_MIDLET: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.SET_DISPLAY: str = "setDisplay"
@@ -36,6 +40,7 @@ class AllBinaryMidlet(MIDlet, CommandListener):
 
     @staticmethod
     def getNullInstance() -> AllBinaryMidlet:
+        from org.allbinary.logic.NullUtil import NullUtil
         if AllBinaryMidlet.NULL_ALLBINARY_MIDLET == NullUtil.getInstance().NULL_OBJECT:
             AllBinaryMidlet.NULL_ALLBINARY_MIDLET = AllBinaryMidlet()
         return AllBinaryMidlet.NULL_ALLBINARY_MIDLET
@@ -48,22 +53,27 @@ class AllBinaryMidlet(MIDlet, CommandListener):
     
 
     def setDisplay(self, newDisplay: Displayable) -> None:
+        from javax.microedition.lcdui.Display import Display
+        from javax.microedition.lcdui.Displayable import Displayable
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         title: str = StringUtil.getInstance().EMPTY_STRING
         if newDisplay != NullCanvas.NULL_CANVAS:
             title = newDisplay.getTitle()
-            if title is not None:
-                self.logUtil.putF(str(StringMaker().append(self.SETTING_).append(title).append(self._DISPLAY_).append(StringUtil.getInstance().toString(newDisplay))), self, self.SET_DISPLAY)
-            else:
-                self.logUtil.putF(str(StringMaker().append(self.SETTING_NO_TITLE).append(StringUtil.getInstance().toString(newDisplay))), self, self.SET_DISPLAY)
+            self.logUtil.putF(str(StringMaker().append(self.SETTING_).append(title).append(self._DISPLAY_).append(StringUtil.getInstance().toString(newDisplay))), self, self.SET_DISPLAY)
         display: Display = self.getDisplay()
         display.setCurrent(newDisplay)
     
 
     def getDisplay(self) -> Display:
+        from javax.microedition.lcdui.Display import Display
         return Display.getDisplay(self)
     
 
     def getCurrentDisplayable(self) -> Displayable:
+        from javax.microedition.lcdui.Display import Display
+        from javax.microedition.lcdui.Displayable import Displayable
         return Display.getDisplay(self).getCurrent()
     
 
@@ -77,10 +87,15 @@ class AllBinaryMidlet(MIDlet, CommandListener):
 
     # throws MIDletStateChangeException
     def startApp(self) -> None:
+        from javax.microedition.midlet.MIDletStateChangeException import MIDletStateChangeException
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def pauseApp(self) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
@@ -89,6 +104,8 @@ class AllBinaryMidlet(MIDlet, CommandListener):
     
 
     def destroyApp(self, unconditional: bool) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.system.Memory import Memory
         METHOD_NAME: str = "AllBinaryMidlet::destroyApp"
         try:
             self.logUtil.putF(self.commonStrings.START, self, METHOD_NAME)
@@ -100,39 +117,58 @@ class AllBinaryMidlet(MIDlet, CommandListener):
 
     # throws Exception
     def setStartStateHashtable(self, hashtable: ABHashtable[object, object]) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(StringUtil.getInstance().toString(hashtable))), self, "setStartStateHashtable")
         self.hashtable = hashtable
     
 
     # throws Exception
     def getStartStateHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(StringUtil.getInstance().toString(self.hashtable))), self, "getStartStateHashtable")
         return self.hashtable
     
 
     # throws Exception
     def getCurrentStateHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil.putF(self.commonStrings.START, self, "getStateHashtable")
         return StdUtil.getInstance().NULL_TABLE
     
 
     def commandAction(self, command: Command, displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from javax.microedition.lcdui.Displayable import Displayable
         pass
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.Display import Display
 # from javax.microedition.lcdui.Displayable import Displayable
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
 # from javax.microedition.midlet.MIDletStateChangeException import MIDletStateChangeException
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.system.Memory import Memory
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.system.Memory import Memory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
+
+def _AllBinaryMidlet_NULL_ALLBINARY_MIDLET() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(AllBinaryMidlet, "NULL_ALLBINARY_MIDLET", _AllBinaryMidlet_NULL_ALLBINARY_MIDLET)
 

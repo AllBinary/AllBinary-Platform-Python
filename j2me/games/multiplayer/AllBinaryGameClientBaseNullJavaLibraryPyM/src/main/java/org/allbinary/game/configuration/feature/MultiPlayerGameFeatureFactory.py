@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MultiPlayerGameFeatureFactory:
@@ -19,12 +20,17 @@ class MultiPlayerGameFeatureFactory:
     
 
     def addCommands(self, anyType: object) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         canvas: Canvas = anyType
         canvas.addCommand(gameCommandsFactory.QUIT_COMMAND)
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
 
 
-MultiPlayerGameFeatureFactory.instance = MultiPlayerGameFeatureFactory()
+def _MultiPlayerGameFeatureFactory_instance() -> object:
+    return MultiPlayerGameFeatureFactory()
+
+lazy_static(MultiPlayerGameFeatureFactory, "instance", _MultiPlayerGameFeatureFactory_instance)
 

@@ -21,11 +21,13 @@ from org.allbinary.game.layer.special.CollidableDestroyableDamageableBehavior im
 class CollidableDamageWeaponBehavior(CollidableDestroyableDamageableBehavior):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.collision.CollisionHelper import CollisionHelper
         self.collided: bool = False
         self.collisionHelper: CollisionHelper = None
     
 
     def __init__(self, collidable: bool) -> None:
+        from org.allbinary.game.collision.CollidableHelperFactory import CollidableHelperFactory
         super().__init__(collidable)
         self._init_fields()
         self.setCollided(False)
@@ -34,11 +36,13 @@ class CollidableDamageWeaponBehavior(CollidableDestroyableDamageableBehavior):
     
 
     def init(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.setCollided(False)
         self.collisionHelper.setOwnerLayerInterface(sourceLayerInterface)
     
 
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         if self.collisionHelper.isCollidable(collisionLayer):
             if ownerLayer.getGroupInterface()[0] != collisionLayer.getGroupInterface()[0]:
                 return super().isCollision(ownerLayer, collisionLayer)
@@ -47,11 +51,15 @@ class CollidableDamageWeaponBehavior(CollidableDestroyableDamageableBehavior):
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         super().collide(ownerLayer, collisionLayer)
         self.collided = True
     
 
     def isCollisionInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface) -> bool:
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if self.collisionHelper.isCollidable(collidableInterfaceCompositeInterface):
             layerInterface: AllBinaryLayer = collidableInterfaceCompositeInterface
             if ownerLayer.getGroupInterface()[0] != layerInterface.getGroupInterface()[0]:
@@ -62,11 +70,17 @@ class CollidableDamageWeaponBehavior(CollidableDestroyableDamageableBehavior):
 
     # throws Exception
     def collideInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface) -> None:
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         self.damageUtil.process(ownerLayer, collidableInterfaceCompositeInterface)
         self.collided = True
     
 
     def getCollisionTypeWith(self, layerInterface: AllBinaryLayer) -> CollisionType:
+        from org.allbinary.game.collision.CollisionType import CollisionType
+        from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return CollisionTypeFactory.getInstance().COLLISION
     
 
@@ -76,13 +90,13 @@ class CollidableDamageWeaponBehavior(CollidableDestroyableDamageableBehavior):
 
     def setCollided(self, collided: bool) -> None:
         self.collided = collided
-from org.allbinary.game.collision.CollidableHelperFactory import CollidableHelperFactory
-from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
-from org.allbinary.game.collision.CollisionHelper import CollisionHelper
-from org.allbinary.game.collision.CollisionType import CollisionType
-from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
-from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.collision.CollidableHelperFactory import CollidableHelperFactory
+# from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+# from org.allbinary.game.collision.CollisionHelper import CollisionHelper
+# from org.allbinary.game.collision.CollisionType import CollisionType
+# from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+# from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

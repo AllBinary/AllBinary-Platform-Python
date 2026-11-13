@@ -23,11 +23,12 @@ class GPointCircularPool(BaseCircularPool):
 
     def __init__(self, size: int) -> None:
         from org.allbinary.graphics.CustomGPoint import CustomGPoint
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__()
         self.circularIndexUtil = CircularIndexUtil.createInstance(size)
         self.OBJECT_ARRAY = [None] * (size)
         for index in range(size - 1, 0 - 1, -1):
             self.OBJECT_ARRAY[index] = CustomGPoint.getInstance3(0, 0)
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.AllBinarySensor import AllBinarySensor
 
 
@@ -31,5 +32,8 @@ class NoAllBinarySensor(AllBinarySensor):
         super().__init__()
 
 
-NoAllBinarySensor.instance = NoAllBinarySensor()
+def _NoAllBinarySensor_instance() -> object:
+    return NoAllBinarySensor()
+
+lazy_static(NoAllBinarySensor, "instance", _NoAllBinarySensor_instance)
 

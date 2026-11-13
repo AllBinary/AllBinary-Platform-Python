@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ProcessPaintableSingletonFactory:
-    SINGLETON: ProcessPaintable = ProcessPaintable()
+    SINGLETON: ProcessPaintable = None
     
 
     def __init__(self) -> None:
@@ -30,4 +30,10 @@ class ProcessPaintableSingletonFactory:
     def getInstance() -> ProcessPaintable:
         return ProcessPaintableSingletonFactory.SINGLETON
 
+
+def _ProcessPaintableSingletonFactory_SINGLETON() -> object:
+    from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
+    return ProcessPaintable()
+
+lazy_static(ProcessPaintableSingletonFactory, "SINGLETON", _ProcessPaintableSingletonFactory_SINGLETON)
 

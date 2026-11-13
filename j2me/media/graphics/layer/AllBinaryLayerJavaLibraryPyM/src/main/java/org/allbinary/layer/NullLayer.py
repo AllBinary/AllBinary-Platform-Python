@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.Layer import Layer
 
 
@@ -32,9 +33,13 @@ class NullLayer(Layer):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
 
 
-NullLayer.instance = NullLayer()
+def _NullLayer_instance() -> object:
+    return NullLayer()
+
+lazy_static(NullLayer, "instance", _NullLayer_instance)
 

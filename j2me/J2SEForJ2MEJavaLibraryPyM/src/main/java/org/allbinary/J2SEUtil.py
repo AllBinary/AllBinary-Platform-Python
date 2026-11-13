@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #J2SEForJ2ME
@@ -27,17 +28,20 @@ class J2SEUtil:
         return J2SEUtil.instance
     
 
-    def getHashMapAsArray(self, hashMap: dict) -> list[object]:
+    def getHashMapAsArray(self, hashMap: HashMap[object, object]) -> list[object]:
+        from java.util.HashMap import HashMap
         objectArray: list[object] = hashMap.keySet().toArray()
         return objectArray
     
 
     def getMapAsArray(self, map: Map[object, object]) -> list[object]:
+        from java.util.Map import Map
         objectArray: list[object] = map.keySet().toArray()
         return objectArray
     
 
     def getSetAsArray(self, set: Set[str]) -> list[object]:
+        from java.util.Set import Set
         objectArray: list[object] = set.toArray()
         return objectArray
 # from java.util.HashMap import HashMap
@@ -45,5 +49,8 @@ class J2SEUtil:
 # from java.util.Set import Set
 
 
-J2SEUtil.instance = J2SEUtil()
+def _J2SEUtil_instance() -> object:
+    return J2SEUtil()
+
+lazy_static(J2SEUtil, "instance", _J2SEUtil_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.visitor.VisitorInterface import VisitorInterface
 
 
@@ -22,6 +23,7 @@ class Visitor(VisitorInterface):
     instance: Visitor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         self.nullUtil: NullUtil = NullUtil.getInstance()
 
     def __init__(self) -> None:
@@ -35,8 +37,11 @@ class Visitor(VisitorInterface):
     @staticmethod
     def getInstance() -> Visitor:
         return Visitor.instance
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 
-Visitor.instance = Visitor()
+def _Visitor_instance() -> object:
+    return Visitor()
+
+lazy_static(Visitor, "instance", _Visitor_instance)
 

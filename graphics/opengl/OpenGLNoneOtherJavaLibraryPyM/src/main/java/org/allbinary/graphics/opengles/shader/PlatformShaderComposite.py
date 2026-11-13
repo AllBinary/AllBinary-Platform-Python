@@ -22,8 +22,10 @@ class PlatformShaderComposite(ShaderComposite):
     
 
     def __init__(self, requiresOpenGLVersion: str, shaderArray: list[Shader], compositeShaderUpdater: CompositeShaderUpdater, shaderInitializer: ShaderInitializer, modelViewProjection: ModelViewProjection, colorOpenGLProcessor: OpenGLProcessor, vertexOpenGLProcessor: OpenGLProcessor) -> None:
+        from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
         super().__init__(requiresOpenGLVersion, shaderArray, compositeShaderUpdater, shaderInitializer, modelViewProjection, colorOpenGLProcessor, vertexOpenGLProcessor, NullOpenGLProcessorFactory.getInstance())
-from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
-from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
+# from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+# from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
 
 

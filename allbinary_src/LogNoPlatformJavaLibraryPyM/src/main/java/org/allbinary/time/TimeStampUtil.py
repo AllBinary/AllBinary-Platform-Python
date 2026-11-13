@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #NoPlatform
@@ -38,5 +39,8 @@ class TimeStampUtil:
 # from java.util.Date import Date
 
 
-TimeStampUtil.instance = TimeStampUtil()
+def _TimeStampUtil_instance() -> object:
+    return TimeStampUtil()
+
+lazy_static(TimeStampUtil, "instance", _TimeStampUtil_instance)
 

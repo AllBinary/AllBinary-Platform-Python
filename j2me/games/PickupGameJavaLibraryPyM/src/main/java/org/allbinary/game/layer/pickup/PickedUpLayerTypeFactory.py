@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PickedUpLayerTypeFactory:
     instance: PickedUpLayerTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.NONE: PickedUpLayerType = PickedUpLayerType(StringUtil.getInstance().NULL_STRING)
         self.BEAM: PickedUpLayerType = PickedUpLayerType("BEAM")
         self.MINE: PickedUpLayerType = PickedUpLayerType("MINE")
@@ -39,9 +41,12 @@ class PickedUpLayerTypeFactory:
     @staticmethod
     def getInstance() -> PickedUpLayerTypeFactory:
         return PickedUpLayerTypeFactory.instance
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.game.layer.pickup.PickedUpLayerType import PickedUpLayerType
 
 
-PickedUpLayerTypeFactory.instance = PickedUpLayerTypeFactory()
+def _PickedUpLayerTypeFactory_instance() -> object:
+    return PickedUpLayerTypeFactory()
+
+lazy_static(PickedUpLayerTypeFactory, "instance", _PickedUpLayerTypeFactory_instance)
 

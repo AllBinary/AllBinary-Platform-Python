@@ -26,8 +26,9 @@ class CenterStaticViewPositionFactory:
 
     def getInstance(self, z: int) -> ViewPositionBase:
         from org.allbinary.view.StaticViewPosition import StaticViewPosition
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         return StaticViewPosition((displayInfoSingleton.getLastWidth() >> 1), (displayInfoSingleton.getLastHeight() >> 1), z)
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 

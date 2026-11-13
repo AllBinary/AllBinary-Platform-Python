@@ -22,6 +22,10 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
         self.textArrayP: list[str] = StringUtil.getInstance().ONE_EMPTY_STRING_ARRAY
@@ -32,6 +36,7 @@ class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
     
 
     def __init__(self, text: str, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(animationBehavior)
         self._init_fields()
         self.setText(text)
@@ -39,6 +44,10 @@ class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from org.allbinary.animation.text.TextChangeListener import TextChangeListener
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
         adjustedFontHeight: int = int(-(float(self.fontHeight) * 2.00))
@@ -54,11 +63,13 @@ class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.paintXYNoUpdate(graphics, x, y)
     
 
     def paintXYNoUpdate(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
         size: int = len(self.textArrayP)
         for index in range(0, size):
@@ -71,8 +82,11 @@ class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
     
 
     def setText(self, text: str) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = BasicArrayListD()
-        if text is not None and len(text) > 0:
+        if len(text) > 0:
             index: int = 0
             startIndex: int = 0
             endIndex: int = 0
@@ -105,15 +119,15 @@ class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
         return self.fontHeight
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.animation.text.TextChangeListener import TextChangeListener
 
 

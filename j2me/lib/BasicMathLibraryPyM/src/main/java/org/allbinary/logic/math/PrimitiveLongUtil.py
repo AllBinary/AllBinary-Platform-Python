@@ -20,6 +20,7 @@ from __future__ import annotations
 class PrimitiveLongUtil:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.powerOfTen: int = None
         self.maxValue: int = None
@@ -31,6 +32,9 @@ class PrimitiveLongUtil:
 
     @staticmethod
     def createPowerOfTen(powerOfTen: int) -> PrimitiveLongUtil:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         primitiveLongUtil: PrimitiveLongUtil = PrimitiveLongUtil(powerOfTen, NullUtil.getInstance().NULL_OBJECT)
         if powerOfTen % 10 != 0:
             logUtil: LogUtil = LogUtil.getInstance()
@@ -81,9 +85,9 @@ class PrimitiveLongUtil:
 
     def getMaxDigits(self) -> int:
         return self.maxDigits
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
 
 

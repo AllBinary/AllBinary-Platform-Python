@@ -27,6 +27,13 @@ class DiveAndDirectionalTrackingAIFactory(ArtificialIntelligenceInterfaceFactory
         from org.allbinary.game.ag.ai.BasicProbabilityAIDataFactory import BasicProbabilityAIDataFactory
         from org.allbinary.game.ag.ai.LastKeyAIVisitorFactory import LastKeyAIVisitorFactory
         from org.allbinary.game.ag.ai.DiveAndDirectionalTrackingAI import DiveAndDirectionalTrackingAI
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.ag.ai.tactical.BasicRandomAIFactory import BasicRandomAIFactory
+        from org.allbinary.game.ai.BasicAI import BasicAI
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
+        from org.allbinary.util.ABHashtable import ABHashtable
         visitorCanBeNull: object = hashtable.get(BasicAI.AI_VISITOR)
         if visitorCanBeNull is None:
             visitorCanBeNull = ThrustAIVisitorFactory.getInstance()
@@ -34,12 +41,12 @@ class DiveAndDirectionalTrackingAIFactory(ArtificialIntelligenceInterfaceFactory
         hashtable2.put(BasicAI.AI_VISITOR, LastKeyAIVisitorFactory.getInstance())
         artificialIntelligenceInterface: ArtificialIntelligenceInterface = BasicRandomAIFactory().getInstance(hashtable2, ownerLayerInterface, gameInput)
         return DiveAndDirectionalTrackingAI(ownerLayerInterface, artificialIntelligenceInterface, gameInput, visitorCanBeNull)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.ag.ai.tactical.BasicRandomAIFactory import BasicRandomAIFactory
-from org.allbinary.game.ai.BasicAI import BasicAI
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.util.visitor.Visitor import Visitor
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.ag.ai.tactical.BasicRandomAIFactory import BasicRandomAIFactory
+# from org.allbinary.game.ai.BasicAI import BasicAI
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

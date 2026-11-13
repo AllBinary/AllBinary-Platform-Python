@@ -27,6 +27,7 @@ class RectangleFilledAdjustedAnimation(RectangleFilledAnimation, ColorCompositeI
     
 
     def __init__(self, width: int, height: int, offsetX: int, offsetY: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(width, height, basicColor)
         self._init_fields()
         self.offsetX = offsetX
@@ -39,6 +40,7 @@ class RectangleFilledAdjustedAnimation(RectangleFilledAnimation, ColorCompositeI
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
         super().paintXY(graphics, x + self.offsetX, y + self.offsetY)
     
@@ -49,7 +51,17 @@ class RectangleFilledAdjustedAnimation(RectangleFilledAnimation, ColorCompositeI
 
     def setOffsetY(self, offsetY: int) -> None:
         self.offsetY = offsetY
+    
+
+    def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getBasicColorP()
+    
+
+    def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        super().setBasicColorP(basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

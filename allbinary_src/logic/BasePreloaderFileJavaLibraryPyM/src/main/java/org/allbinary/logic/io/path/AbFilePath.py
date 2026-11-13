@@ -24,12 +24,13 @@ class AbFilePath(AbPath):
     def __init__(self, aPath: str) -> None:
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.io.path.PathUtil import PathUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING)
         pathData: AbPathData = AbPathData.getInstance()
         abPathUtil: PathUtil = PathUtil.getInstance()
         self.schema = self.getSchema(aPath)
         self.setName(pathData.getNameFromPath(aPath))
         self.setPath(abPathUtil.adjust(self.getPathFromPath(str(abPathUtil.removeNameFromPath(aPath)))))
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

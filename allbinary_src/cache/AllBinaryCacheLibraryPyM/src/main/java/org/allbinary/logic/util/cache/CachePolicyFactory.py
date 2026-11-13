@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CachePolicyFactory:
@@ -39,5 +40,8 @@ class CachePolicyFactory:
 from org.allbinary.logic.util.cache.CachePolicy import CachePolicy
 
 
-CachePolicyFactory.instance = CachePolicyFactory()
+def _CachePolicyFactory_instance() -> object:
+    return CachePolicyFactory()
+
+lazy_static(CachePolicyFactory, "instance", _CachePolicyFactory_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputProcessorFactory:
@@ -37,5 +38,8 @@ class InputProcessorFactory:
 from org.allbinary.game.input.InputProcessor import InputProcessor
 
 
-InputProcessorFactory.instance = InputProcessorFactory()
+def _InputProcessorFactory_instance() -> object:
+    return InputProcessorFactory()
+
+lazy_static(InputProcessorFactory, "instance", _InputProcessorFactory_instance)
 

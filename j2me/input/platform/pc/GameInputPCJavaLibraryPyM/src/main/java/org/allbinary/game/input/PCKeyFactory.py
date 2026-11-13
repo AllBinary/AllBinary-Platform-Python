@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PCKeyFactory:
     SINGLETON: PCKeyFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.keyEventWrapper: ABKeyEventWrapper = ABKeyEventWrapper.getInstance()
         self.UNKNOWN: PCGameKey = PCGameKey(self.keyEventWrapper.VK_UNDEFINED, "UNKNOWN")
         self.ENTER: PCGameKey = PCGameKey(5, "Enter")
@@ -158,12 +162,15 @@ class PCKeyFactory:
         if input == self.ENTER:
             return True
         return False
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 from org.allbinary.game.input.ABKeyEventWrapper import ABKeyEventWrapper
 from org.allbinary.game.input.PCGameKey import PCGameKey
 
 
-PCKeyFactory.SINGLETON = PCKeyFactory()
+def _PCKeyFactory_SINGLETON() -> object:
+    return PCKeyFactory()
+
+lazy_static(PCKeyFactory, "SINGLETON", _PCKeyFactory_SINGLETON)
 

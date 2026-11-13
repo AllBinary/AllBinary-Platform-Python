@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SimpleFileUtil:
     instance: SimpleFileUtil = None
 
     def _init_fields(self) -> None:
+        from java.io.Reader import Reader
+        from java.io.Writer import Writer
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NULL_WRITER: Writer = SimpleFileUtil.nullWriter()
         self.NULL_READER: Reader = SimpleFileUtil.nullReader()
@@ -39,116 +46,35 @@ class SimpleFileUtil:
 
     @staticmethod
     def nullOutputStream() -> OutputStream:
-        return (OutputStream()  # Java anonymous class body:
-#             
-# 
-#             # throws IOException
-#             def write(self, b: int) -> None:
-#                 pass
-#             
-# 
-#             # throws IOException
-#             def write(self, b: list[int], off: int, len_: int) -> None:
-#                 pass
-#             
-# 
-#             def close(self) -> None:
-#                 pass
-)
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.io.NullOutputStream import NullOutputStream
+        return NullOutputStream.NULL_OUTPUT_STREAM
     
 
     @staticmethod
     def nullWriter() -> Writer:
-        return (Writer()  # Java anonymous class body:
-#             self.closed: bool = False
-#             
-# 
-#             # throws IOException
-#             def append(self, c: str) -> Writer:
-#                 return self
-#             
-# 
-#             # throws IOException
-#             def append(self, csq: CharSequence) -> Writer:
-#                 return self
-#             
-# 
-#             # throws IOException
-#             def append(self, csq: CharSequence, start: int, end: int) -> Writer:
-#                 return self
-#             
-# 
-#             # throws IOException
-#             def write(self, c: int) -> None:
-#                 pass
-#             
-# 
-#             # throws IOException
-#             def write(self, cbuf: list[str], off: int, len_: int) -> None:
-#                 pass
-#             
-# 
-#             # throws IOException
-#             def write(self, str_: str) -> None:
-#                 pass
-#             
-# 
-#             # throws IOException
-#             def write(self, str_: str, off: int, len_: int) -> None:
-#                 pass
-#             
-# 
-#             # throws IOException
-#             def flush(self) -> None:
-#                 pass
-#             
-# 
-#             # throws IOException
-#             def close(self) -> None:
-#                 pass
-)
+        from java.io.Writer import Writer
+        from org.allbinary.logic.io.NullWriter import NullWriter
+        return NullWriter.NULL_WRITER
     
 
     @staticmethod
     def nullReader() -> Reader:
-        return (Reader()  # Java anonymous class body:
-#             
-# 
-#             # throws IOException
-#             def read(self) -> int:
-#                 return -1
-#             
-# 
-#             # throws IOException
-#             def read(self, cbuf: list[str], off: int, len_: int) -> int:
-#                 return -1
-#             
-# 
-#             # throws IOException
-#             def read(self, target: CharBuffer) -> int:
-#                 return -1
-#             
-# 
-#             # throws IOException
-#             def ready(self) -> bool:
-#                 return False
-#             
-# 
-#             # throws IOException
-#             def skip(self, n: int) -> int:
-#                 return 0
-#             
-# 
-#             def close(self) -> None:
-#                 pass
-)
+        from java.io.Reader import Reader
+        from org.allbinary.logic.io.NullReader import NullReader
+        return NullReader.NULL_READER
     
 
     def loadFileAsList(self, inputStream: InputStream, max: int, byteArray1: list[int]) -> BasicArrayList:
+        from java.io.InputStream import InputStream
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.loadFileAsListReturnLine(inputStream, max, byteArray1, 0)
     
 
     def loadFileAsListReturnLine(self, inputStream: InputStream, max: int, byteArray1: list[int], includeReturnLine: int) -> BasicArrayList:
+        from java.io.InputStream import InputStream
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         stringList: BasicArrayList = BasicArrayListD()
         if inputStream is None:
             return stringList
@@ -182,26 +108,31 @@ class SimpleFileUtil:
     
 
     def createStringFromArrayOfStrings(self, stringArray: list[str]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringMaker: StringMaker = StringMaker()
         size: int = len(stringArray)
         for index in range(0, size):
             stringMaker.append(stringArray[index])
         return str(stringMaker)
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
-# from java.io.IOException import IOException
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
 # from java.io.Reader import Reader
 # from java.io.Writer import Writer
-# from java.nio.CharBuffer import CharBuffer
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.NullOutputStream import NullOutputStream
+# from org.allbinary.logic.io.NullReader import NullReader
+# from org.allbinary.logic.io.NullWriter import NullWriter
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-SimpleFileUtil.instance = SimpleFileUtil()
+def _SimpleFileUtil_instance() -> object:
+    return SimpleFileUtil()
+
+lazy_static(SimpleFileUtil, "instance", _SimpleFileUtil_instance)
 

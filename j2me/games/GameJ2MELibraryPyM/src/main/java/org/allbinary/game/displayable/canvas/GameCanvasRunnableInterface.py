@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.ItemStateListener import ItemStateListener
+from javax.microedition.lcdui.ItemStateListener import ItemStateListener
 from org.allbinary.game.state.GameStateCompositeInterface import GameStateCompositeInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 from org.allbinary.thread.RunnableInterface import RunnableInterface
@@ -64,27 +64,31 @@ class GameCanvasRunnableInterface(RunnableInterface, PaintableInterface, ItemSta
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         raise NotImplementedError()
     
 
     # throws Exception
     def getCurrentStateHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
     
 
     # throws Exception
     def getLoadStateHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
     
 
     # throws Exception
     def setLoadStateHashtable(self, hashtable: ABHashtable[object, object]) -> None:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
     
 
     def getType(self) -> int:
         raise NotImplementedError()
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

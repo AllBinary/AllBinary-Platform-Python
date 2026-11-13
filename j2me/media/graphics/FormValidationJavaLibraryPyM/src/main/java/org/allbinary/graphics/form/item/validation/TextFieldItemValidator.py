@@ -21,6 +21,7 @@ from org.allbinary.logic.control.validate.ValidatorBase import ValidatorBase
 class TextFieldItemValidator(ValidatorBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         self.textFieldItem: ABTextFieldItem = None
         self.min: int = None
         self.max: int = None
@@ -28,6 +29,7 @@ class TextFieldItemValidator(ValidatorBase):
     
 
     def __init__(self, textFieldItem: ABTextFieldItem, min: int, max: int, allowOnEmpty: bool) -> None:
+        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         super().__init__()
         self._init_fields()
         self.textFieldItem = textFieldItem
@@ -37,6 +39,7 @@ class TextFieldItemValidator(ValidatorBase):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         booleanFactory: BooleanFactory = BooleanFactory.getInstance()
         result: bool = booleanFactory.TRUE
         string: str = self.textFieldItem.getString()
@@ -52,6 +55,9 @@ class TextFieldItemValidator(ValidatorBase):
     
 
     def toList(self) -> BasicArrayList:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = BasicArrayListD()
         string: str = self.textFieldItem.getString()
         textLength: int = len(string)
@@ -65,10 +71,10 @@ class TextFieldItemValidator(ValidatorBase):
             elif textLength > self.max:
                 list_.add(str(StringMaker().append(name).append(" is to long")))
         return list_
-from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

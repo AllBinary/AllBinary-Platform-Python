@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.destroy.DestroyableInterface import DestroyableInterface
 
 
@@ -33,13 +34,17 @@ class DestroyableBaseBehavior(DestroyableInterface):
 
     # throws Exception
     def isDestroyed(self) -> bool:
+        from org.allbinary.string.CommonStrings import CommonStrings
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
     
 
     def setDestroyed(self, destroyed: bool) -> None:
         pass
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-DestroyableBaseBehavior.instance = DestroyableBaseBehavior()
+def _DestroyableBaseBehavior_instance() -> object:
+    return DestroyableBaseBehavior()
+
+lazy_static(DestroyableBaseBehavior, "instance", _DestroyableBaseBehavior_instance)
 

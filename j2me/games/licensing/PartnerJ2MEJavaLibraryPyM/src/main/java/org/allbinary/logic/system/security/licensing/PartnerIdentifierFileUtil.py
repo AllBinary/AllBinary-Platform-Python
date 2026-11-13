@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PartnerIdentifierFileUtil:
     instance: PartnerIdentifierFileUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.FILE_NAME: str = "partner.txt"
 
@@ -34,6 +36,10 @@ class PartnerIdentifierFileUtil:
     
 
     def get(self) -> str:
+        from java.io.InputStream import InputStream
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             resourceUtil: ResourceUtil = ResourceUtil.getInstance()
             inputStream: InputStream = resourceUtil.getResourceAsStream(self.FILE_NAME)
@@ -51,11 +57,14 @@ class PartnerIdentifierFileUtil:
             return StringUtil.getInstance().NULL_STRING
 # from java.io.InputStream import InputStream
 # from java.io.InputStreamReader import InputStreamReader
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-PartnerIdentifierFileUtil.instance = PartnerIdentifierFileUtil()
+def _PartnerIdentifierFileUtil_instance() -> object:
+    return PartnerIdentifierFileUtil()
+
+lazy_static(PartnerIdentifierFileUtil, "instance", _PartnerIdentifierFileUtil_instance)
 

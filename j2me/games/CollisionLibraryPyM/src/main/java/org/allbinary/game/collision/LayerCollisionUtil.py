@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LayerCollisionUtil:
@@ -32,6 +33,9 @@ class LayerCollisionUtil:
     def __init__(self) -> None:
         from org.allbinary.game.collision.Collision2DProcessor import Collision2DProcessor
         from org.allbinary.game.collision.CollisionThreedProcessor import CollisionThreedProcessor
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
         self._init_fields()
         features: Features = Features.getInstance()
         gameFeatureFactory: GameFeatureFactory = GameFeatureFactory.getInstance()
@@ -42,12 +46,16 @@ class LayerCollisionUtil:
     
 
     def isCollision(self, myLayer: AllBinaryLayer, myLayer2: AllBinaryLayer) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.collisionProcessor.isCollision(myLayer, myLayer2)
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 
-LayerCollisionUtil.instance = LayerCollisionUtil()
+def _LayerCollisionUtil_instance() -> object:
+    return LayerCollisionUtil()
+
+lazy_static(LayerCollisionUtil, "instance", _LayerCollisionUtil_instance)
 

@@ -16,11 +16,11 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WebappClassLoaderInfo:
-    classLoader: object = NullUtil.getInstance().NULL_OBJECT
+    classLoader: object = None
     _lock = threading.RLock()
     
 
@@ -46,5 +46,12 @@ class WebappClassLoaderInfo:
     @staticmethod
     def _getLoader_unlocked() -> ClassLoader:
         return WebappClassLoaderInfo.classLoader
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _WebappClassLoaderInfo_classLoader() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(WebappClassLoaderInfo, "classLoader", _WebappClassLoaderInfo_classLoader)
 

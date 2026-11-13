@@ -15,29 +15,38 @@
 
 from __future__ import annotations
 
-from org.allbinary.math.AngleFactory import AngleFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicTerrainInfo:
     NULL_BASIC_TERRAIN_INFO: BasicTerrainInfo = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.Angle import Angle
         self.angle: Angle = None
     
 
     def __init__(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self._init_fields()
         self.angle = angle
     
 
     def getAngle(self) -> Angle:
+        from org.allbinary.math.Angle import Angle
         return self.angle
     
 
     def setAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.angle = angle
-from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleFactory import AngleFactory
 
 
-BasicTerrainInfo.NULL_BASIC_TERRAIN_INFO = BasicTerrainInfo(AngleFactory.getInstance().NOT_ANGLE)
+def _BasicTerrainInfo_NULL_BASIC_TERRAIN_INFO() -> object:
+    from org.allbinary.math.AngleFactory import AngleFactory
+    return BasicTerrainInfo(AngleFactory.getInstance().NOT_ANGLE)
+
+lazy_static(BasicTerrainInfo, "NULL_BASIC_TERRAIN_INFO", _BasicTerrainInfo_NULL_BASIC_TERRAIN_INFO)
 

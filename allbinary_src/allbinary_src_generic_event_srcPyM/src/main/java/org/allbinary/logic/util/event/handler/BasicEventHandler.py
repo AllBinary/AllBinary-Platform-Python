@@ -24,16 +24,23 @@ class BasicEventHandler(BasicEventHandlerInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.eventListenerInterfaceList: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         stringBuffer: StringMaker = StringMaker()
         LISTENER: str = " Listener: "
         stringBuffer.append("Total Listeners: ")
@@ -60,10 +67,12 @@ class BasicEventHandler(BasicEventHandlerInterface):
             return self._removeAllListeners_unlocked()
 
     def _removeAllListeners_unlocked(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
     def addListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         if not self.eventListenerInterfaceList.contains(eventListenerInterface):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
@@ -73,11 +82,13 @@ class BasicEventHandler(BasicEventHandlerInterface):
             return self._addListenerInterface_unlocked(eventListenerInterface)
 
     def _addListenerInterface_unlocked(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         if not self.eventListenerInterfaceList.contains(eventListenerInterface):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.eventListenerInterfaceList.remove(eventListenerInterface)
     
 
@@ -86,6 +97,7 @@ class BasicEventHandler(BasicEventHandlerInterface):
             return self._removeListener_unlocked(eventListenerInterface)
 
     def _removeListener_unlocked(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.eventListenerInterfaceList.remove(eventListenerInterface)
     
 
@@ -95,6 +107,10 @@ class BasicEventHandler(BasicEventHandlerInterface):
             return self._fireEvent_unlocked(eventObject)
 
     def _fireEvent_unlocked(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         index: int = 0
         eventListenerInterface: EventListenerInterface = None
         while index < self.eventListenerInterfaceList.size():
@@ -109,19 +125,22 @@ class BasicEventHandler(BasicEventHandlerInterface):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         eventListenerInterface.onEvent(eventObject)
     
 
     def getEventListenerInterfaceListP(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.eventListenerInterfaceList
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

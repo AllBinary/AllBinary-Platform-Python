@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaintableToImageUtil:
@@ -25,14 +26,20 @@ class PaintableToImageUtil:
     @staticmethod
     def getImage(paintableInterface: PaintableInterface, width: int, height: int) -> Image:
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
         image: Image = GameFeatureImageCacheFactory.getInstance().get(type(PaintableToImageUtil.instance).__module__ + "." + type(PaintableToImageUtil.instance).__qualname__, width, height)
         graphics: Graphics = image.getGraphics()
         paintableInterface.paint(graphics)
         return image
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
+# from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
-PaintableToImageUtil.instance = PaintableToImageUtil()
+def _PaintableToImageUtil_instance() -> object:
+    return PaintableToImageUtil()
+
+lazy_static(PaintableToImageUtil, "instance", _PaintableToImageUtil_instance)
 

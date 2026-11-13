@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CustomItemUtil:
@@ -32,5 +33,8 @@ class CustomItemUtil:
         return CustomItemUtil.instance
 
 
-CustomItemUtil.instance = CustomItemUtil()
+def _CustomItemUtil_instance() -> object:
+    return CustomItemUtil()
+
+lazy_static(CustomItemUtil, "instance", _CustomItemUtil_instance)
 

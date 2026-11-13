@@ -23,8 +23,10 @@ class RemoteHighScoresProcessorInterface:
 
     # throws Exception
     def process(self, remoteHighScores: RemoteHighScores, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         raise NotImplementedError()
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

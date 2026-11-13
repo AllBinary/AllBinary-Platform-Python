@@ -117,6 +117,9 @@ class TimeDelayHelper:
     
 
     def toStringAt(self, currentTime: int) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
         elapsed: int = self.getElapsed(currentTime)
         if elapsed > 0:
             commonLabels: CommonLabels = CommonLabels.getInstance()
@@ -127,6 +130,9 @@ class TimeDelayHelper:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
         currentTime: int = int(time.time() * 1000)
         elapsed: int = self.getElapsed(currentTime)
         if elapsed > 0:
@@ -138,8 +144,8 @@ class TimeDelayHelper:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

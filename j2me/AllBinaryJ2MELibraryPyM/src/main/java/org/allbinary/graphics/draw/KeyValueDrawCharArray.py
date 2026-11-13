@@ -21,6 +21,9 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 class KeyValueDrawCharArray(UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.LABEL: str = None
         self.labelX: int = None
@@ -36,12 +39,15 @@ class KeyValueDrawCharArray(UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         labelWidth: int = graphics.getFont().stringWidth(self.LABEL) - len(self.LABEL)
         self.valueX = labelWidth + self.labelX
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
     def paint(self, graphics: Graphics, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         graphics.drawString(self.LABEL, self.labelX, y, 0)
         graphics.drawChars(self.value, 0, self.len_, self.valueX, y, 0)
@@ -51,8 +57,8 @@ class KeyValueDrawCharArray(UpdateMyFontInterface):
         self.value = value
         self.len_ = len_
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
 
 

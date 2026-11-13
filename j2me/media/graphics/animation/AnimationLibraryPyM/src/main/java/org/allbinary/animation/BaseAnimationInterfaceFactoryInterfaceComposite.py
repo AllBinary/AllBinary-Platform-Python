@@ -44,7 +44,8 @@ class BaseAnimationInterfaceFactoryInterfaceComposite(AnimationInterfaceFactoryI
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

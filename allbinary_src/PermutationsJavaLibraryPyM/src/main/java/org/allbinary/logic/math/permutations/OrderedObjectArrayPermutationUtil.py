@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OrderedObjectArrayPermutationUtil:
@@ -35,6 +36,7 @@ class OrderedObjectArrayPermutationUtil:
     
 
     def getNext(self, data: list[object]) -> None:
+        from org.allbinary.TsUtil import TsUtil
         length: int = len(data)
         i: int = length - 1
         tsUtil: TsUtil = TsUtil.getInstance()
@@ -67,6 +69,7 @@ class OrderedObjectArrayPermutationUtil:
     
 
     def generate(self, data: list[object], visitor: Visitor) -> None:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         iterations: int = self.factorial(len(data))
         print(self.TOTAL_ITERATIONS_TABLE, end="")
         print(iterations)
@@ -91,9 +94,12 @@ class OrderedObjectArrayPermutationUtil:
         permutationVisitor.visit(data)
         OrderedObjectArrayPermutationUtil.getInstance().generate(data, permutationVisitor)
 # from java.util.Arrays import Arrays
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 
-OrderedObjectArrayPermutationUtil.instance = OrderedObjectArrayPermutationUtil()
+def _OrderedObjectArrayPermutationUtil_instance() -> object:
+    return OrderedObjectArrayPermutationUtil()
+
+lazy_static(OrderedObjectArrayPermutationUtil, "instance", _OrderedObjectArrayPermutationUtil_instance)
 

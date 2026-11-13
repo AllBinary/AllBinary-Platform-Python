@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FrameUtil:
@@ -23,24 +24,29 @@ class FrameUtil:
 
     @staticmethod
     def getInstance() -> FrameUtil:
+        from jsinterop.annotations.JsMethod import JsMethod
         return FrameUtil.instance
     
 
     def __init__(self) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         pass
     
 
     def getFrameForAngle(self, angle: int, angleIncrement: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return int(self.adjustAngleToFrameAngle(angle) / angleIncrement)
     
 
     def getFrameAngle(self, frame: int, angleIncrement: int) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         frameAngle: int = angleIncrement * frame - 90
         return self.adjustAngleToFrameAngle(frameAngle)
     
 
     def adjustAngleToFrameAngle(self, currentAngle: int) -> int:
         from org.allbinary.math.AngleFactory import AngleFactory
+        from jsinterop.annotations.JsMethod import JsMethod
         angleFactory: AngleFactory = AngleFactory.getInstance()
         if currentAngle > 359:
             currentAngle = (currentAngle - angleFactory.TOTAL_ANGLE)
@@ -51,10 +57,13 @@ class FrameUtil:
             while currentAngle < 0:
                 currentAngle = (currentAngle + angleFactory.TOTAL_ANGLE)
         return currentAngle
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 
-FrameUtil.instance = FrameUtil()
+def _FrameUtil_instance() -> object:
+    return FrameUtil()
+
+lazy_static(FrameUtil, "instance", _FrameUtil_instance)
 

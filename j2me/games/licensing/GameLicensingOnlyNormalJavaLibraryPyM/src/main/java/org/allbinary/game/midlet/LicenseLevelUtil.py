@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseLevelUtil:
@@ -30,5 +31,8 @@ class LicenseLevelUtil:
         return maxLevel
 
 
-LicenseLevelUtil.instance = LicenseLevelUtil()
+def _LicenseLevelUtil_instance() -> object:
+    return LicenseLevelUtil()
+
+lazy_static(LicenseLevelUtil, "instance", _LicenseLevelUtil_instance)
 

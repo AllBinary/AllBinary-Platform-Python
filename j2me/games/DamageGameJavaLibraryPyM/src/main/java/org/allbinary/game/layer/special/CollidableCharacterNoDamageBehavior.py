@@ -27,6 +27,10 @@ class CollidableCharacterNoDamageBehavior(CollidableDestroyableDamageableBehavio
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.collision.CollisionType import CollisionType
+        from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
         collisionTypeFactory: CollisionTypeFactory = CollisionTypeFactory.getInstance()
         collisionType: CollisionType = collidableInterfaceCompositeInterface.getCollidableInferface().getCollisionTypeWith(ownerLayer)
         if collisionType == collisionTypeFactory.PICKUP:
@@ -38,12 +42,15 @@ class CollidableCharacterNoDamageBehavior(CollidableDestroyableDamageableBehavio
 
     # throws Exception
     def collideInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface) -> None:
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log(self.commonStrings.NOT_IMPLEMENTED, self)
-from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
-from org.allbinary.game.collision.CollisionType import CollisionType
-from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+# from org.allbinary.game.collision.CollisionType import CollisionType
+# from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.collision.CollidableBaseBehaviorFactory import CollidableBaseBehaviorFactory
 
 
@@ -39,5 +40,8 @@ class CollidableAlwaysPickupNeverCollideBehaviorFactory(CollidableBaseBehaviorFa
 from org.allbinary.game.collision.CollidableAlwaysPickupNeverCollideBehavior import CollidableAlwaysPickupNeverCollideBehavior
 
 
-CollidableAlwaysPickupNeverCollideBehaviorFactory.instanceC = CollidableAlwaysPickupNeverCollideBehaviorFactory()
+def _CollidableAlwaysPickupNeverCollideBehaviorFactory_instanceC() -> object:
+    return CollidableAlwaysPickupNeverCollideBehaviorFactory()
+
+lazy_static(CollidableAlwaysPickupNeverCollideBehaviorFactory, "instanceC", _CollidableAlwaysPickupNeverCollideBehaviorFactory_instanceC)
 

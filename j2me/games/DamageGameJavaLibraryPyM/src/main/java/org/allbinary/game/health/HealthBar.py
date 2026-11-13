@@ -22,12 +22,14 @@ from org.allbinary.game.health.HealthListenerInterface import HealthListenerInte
 class HealthBar(Paintable, HealthListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.animationInterface: HealthBarAnimation = None
         self.healthInterface: HealthInterface = None
         self.allbinaryLayer: AllBinaryLayer = None
     
 
     def __init__(self, layerInterface: AllBinaryLayer, healthInterface: Health, animationInterface: HealthBarAnimation, direction: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
         self._init_fields()
         self.allbinaryLayer = layerInterface
@@ -42,12 +44,14 @@ class HealthBar(Paintable, HealthListenerInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintXY(graphics, 0, 0)
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintThreedXYZ(graphics, 0, 0, 0)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

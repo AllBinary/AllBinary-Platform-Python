@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -52,21 +53,24 @@ class LogUtil:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def putF(self, specialMessage: str, className: str, functionName: str) -> None:
+    def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
         pass
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
             className = str(type(anyType).__module__ + "." + type(anyType).__qualname__)
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         print(self.LOG_SUCCESS, end="")
         print(message)
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScoresBase import HighScoresBase
 
 
@@ -22,6 +23,7 @@ class NoHighScoresFactory(HighScoresBase):
     instance: NoHighScoresFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NO_HIGH_SCORES: list[HighScores] = [None] * (0)
     
@@ -37,6 +39,7 @@ class NoHighScoresFactory(HighScoresBase):
     
 
     def fetchHighScores(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         self.logUtil.putF("Getting No HighScores", self, "fetchHighScores")
         highScoresResultsListener.setHighScoresArray(self.NO_HIGH_SCORES)
     
@@ -44,9 +47,12 @@ class NoHighScoresFactory(HighScoresBase):
     def createHighScoresHelper(self) -> HighScoresHelperBaseInterface:
         from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
         return HighScoresHelperBase()
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-NoHighScoresFactory.instance = NoHighScoresFactory()
+def _NoHighScoresFactory_instance() -> object:
+    return NoHighScoresFactory()
+
+lazy_static(NoHighScoresFactory, "instance", _NoHighScoresFactory_instance)
 

@@ -21,11 +21,13 @@ from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventOb
 class TrackingEvent(AllBinaryEventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.layerInterface: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
     
 
     def __init__(self, allBinaryLayerInterface: object) -> None:
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(allBinaryLayerInterface)
         self._init_fields()
         if allBinaryLayerInterface != TrackingEventHandler.getInstance():
@@ -37,18 +39,22 @@ class TrackingEvent(AllBinaryEventObject):
     
 
     def getLayerInterface(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.layerInterface
     
 
     def setLayerInterface(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.layerInterface = layerInterface
     
 
     def setLayerInterfaceForCircularStaticPool(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.layerInterface = layerInterface
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("TrackingEvent: \n")
         stringBuffer.append("LayerInterface: ")
@@ -57,7 +63,7 @@ class TrackingEvent(AllBinaryEventObject):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

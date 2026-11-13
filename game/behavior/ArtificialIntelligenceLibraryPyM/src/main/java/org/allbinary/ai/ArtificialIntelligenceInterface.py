@@ -24,7 +24,8 @@ class ArtificialIntelligenceInterface(IdentifierInterface):
 
     # throws Exception
     def processAI(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise NotImplementedError()
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

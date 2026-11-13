@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TrackingEventCircularStaticPool:
@@ -23,6 +24,7 @@ class TrackingEventCircularStaticPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
         self.EVENT_POOL: AllBinaryEventCircularPool = AllBinaryEventCircularPool(20)
 
     def __init__(self) -> None:
@@ -45,12 +47,16 @@ class TrackingEventCircularStaticPool:
             return self._getNextInstance_unlocked(layerInterface)
 
     def _getNextInstance_unlocked(self, layerInterface: AllBinaryLayer) -> TrackingEvent:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         trackingEvent: TrackingEvent = self.EVENT_POOL.getNextInstance()
         trackingEvent.setLayerInterfaceForCircularStaticPool(layerInterface)
         return trackingEvent
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
 
 
-TrackingEventCircularStaticPool.instance = TrackingEventCircularStaticPool()
+def _TrackingEventCircularStaticPool_instance() -> object:
+    return TrackingEventCircularStaticPool()
+
+lazy_static(TrackingEventCircularStaticPool, "instance", _TrackingEventCircularStaticPool_instance)
 

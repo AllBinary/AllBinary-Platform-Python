@@ -20,6 +20,7 @@ from __future__ import annotations
 class TrueTypeFontUtilBase:
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Font import Font
         self.shortPattern: str = None
         self.patternAsBytes: list[int] = [32, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 32, 32, 32, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 32, 32, 32, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 32, 32, 32, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 32, 32, 32, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 46, 63, 32, 32, 32, 33, 36, 37, 96, ((int(-62) + 128) % 256 - 128), ((int(-84) + 128) % 256 - 128), ((int(-62) + 128) % 256 - 128), ((int(-84) + 128) % 256 - 128), 34, ((int(-62) + 128) % 256 - 128), ((int(-93) + 128) % 256 - 128), ((int(-62) + 128) % 256 - 128), ((int(-93) + 128) % 256 - 128), 94, 38, 42, 40, 32, 32, 32, 41, 95, 43, 45, 61, 91, 93, 123, 125, 59, 39, 35, 58, 32, 32, 32, 64, 126, 44, 47, 60, 62, 92, 124, ((int(-62) + 128) % 256 - 128), ((int(-82) + 128) % 256 - 128), ((int(-62) + 128) % 256 - 128), ((int(-82) + 128) % 256 - 128), ((int(-62) + 128) % 256 - 128), ((int(-87) + 128) % 256 - 128), ((int(-62) + 128) % 256 - 128), ((int(-87) + 128) % 256 - 128)]
         self.pattern: str = bytes(self.patternAsBytes).decode()
@@ -39,6 +40,8 @@ class TrueTypeFontUtilBase:
     
 
     def __init__(self, scale: int) -> None:
+        from org.allbinary.AvianUtil import AvianUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self._init_fields()
         shortPattern: str = StringUtil.getInstance().EMPTY_STRING
         if AvianUtil.isAvian():
@@ -88,7 +91,7 @@ class TrueTypeFontUtilBase:
     def getYOffset(self) -> int:
         return ((self.scale - 1) * self.cellSize)
 # from javax.microedition.lcdui.Font import Font
-from org.allbinary.AvianUtil import AvianUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.AvianUtil import AvianUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

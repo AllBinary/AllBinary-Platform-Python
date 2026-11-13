@@ -21,10 +21,12 @@ from org.allbinary.input.motion.gesture.observer.CompleteMotionGestureListenerIn
 class NullCompleteMotionGestureReceiver(CompleteMotionGestureListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF("Null Gesture Reciever", self, commonStrings.CONSTRUCTOR)
@@ -32,9 +34,10 @@ class NullCompleteMotionGestureReceiver(CompleteMotionGestureListenerInterface):
 
     # throws Exception
     def onMotionGestureCompleted(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

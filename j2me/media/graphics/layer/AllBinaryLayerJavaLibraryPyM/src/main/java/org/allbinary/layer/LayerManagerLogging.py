@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.LayerManagerLoggingBase import LayerManagerLoggingBase
 
 
@@ -23,6 +24,8 @@ class LayerManagerLogging(LayerManagerLoggingBase):
     removeFailed: bool = False
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringBuilder: StringMaker = StringMaker()
         self.APPEND: str = "append"
@@ -46,16 +49,20 @@ class LayerManagerLogging(LayerManagerLoggingBase):
 
     # throws Exception
     def append(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.stringBuilder.delete(0, self.stringBuilder.length())
         self.logUtil.putF(str(self.stringBuilder.appendint(int(TsUtil.getInstance().hashCode(self))).append(self.APPEND_).append(layerInterface.getName())), self, self.APPEND)
     
 
     def appendAt(self, layerInterface: AllBinaryLayer, index: int) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.stringBuilder.delete(0, self.stringBuilder.length())
         self.logUtil.putF(str(self.stringBuilder.appendint(int(TsUtil.getInstance().hashCode(self))).append(self.APPEND_).append(layerInterface.getName()).append(self._AT_).appendint(index)), self, self.APPEND)
     
 
     def remove(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         if layerInterface is None:
             self.stringBuilder.delete(0, self.stringBuilder.length())
             self.logUtil.putF(str(self.stringBuilder.appendint(int(TsUtil.getInstance().hashCode(self))).append(self.ATTEMPT_REMOVE_).append(StringUtil.getInstance().toString(layerInterface))), self, self.REMOVE)
@@ -65,6 +72,8 @@ class LayerManagerLogging(LayerManagerLoggingBase):
     
 
     def removeResult(self, layerManager: LayerManager, layerInterface: AllBinaryLayer, result: bool) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         if layerInterface is None:
             self.stringBuilder.delete(0, self.stringBuilder.length())
             self.logUtil.putF(str(self.stringBuilder.appendint(int(TsUtil.getInstance().hashCode(self))).append(self.REMOVE_).append(StringUtil.getInstance().toString(layerInterface))), self, self.REMOVE)
@@ -79,6 +88,8 @@ class LayerManagerLogging(LayerManagerLoggingBase):
     
 
     def log(self, layerManager: LayerManager) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.stringBuilder.delete(0, self.stringBuilder.length())
         size: int = layerManager.getSize()
         commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -92,14 +103,18 @@ class LayerManagerLogging(LayerManagerLoggingBase):
     
 
     def clear(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.stringBuilder.delete(0, self.stringBuilder.length())
         self.logUtil.putF(str(self.stringBuilder.appendint(int(TsUtil.getInstance().hashCode(self))).append(self.CLEAR)), self, self.CLEAR)
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-LayerManagerLogging.instance = LayerManagerLogging()
+def _LayerManagerLogging_instance() -> object:
+    return LayerManagerLogging()
+
+lazy_static(LayerManagerLogging, "instance", _LayerManagerLogging_instance)
 

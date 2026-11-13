@@ -18,6 +18,9 @@ PROJECT_ROOTS = (
     Path("G:/mnt/bc/mydev/AllBinary-Platform-Integrationpython"),
 )
 
+# Hand written java.util runtime the generated Python imports (like J2SEForGoLibraryGoM for Go)
+RUNTIME_SOURCE = Path("G:/mnt/bc/mydev/workpython/j2me/J2SEForPythonLibraryPyM/src/main/java")
+
 
 def find_sources(source_dir):
     return sorted(path for path in source_dir.rglob("*.py") if "__pycache__" not in path.parts)
@@ -136,6 +139,8 @@ def main(arguments):
         else:
             print(f"Warning: Python dependency source directory does not exist: {dependency_dir}", file=sys.stderr)
     dependency_dirs.extend(local_dependency_dirs(Path(__file__).resolve().parent))
+    if RUNTIME_SOURCE.is_dir() and RUNTIME_SOURCE != source_dir:
+        dependency_dirs.append(RUNTIME_SOURCE)
 
     sources = find_sources(source_dir)
     failures = compile_sources(source_dir, output_dir, sources)

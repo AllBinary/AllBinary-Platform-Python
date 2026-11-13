@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchScreenTypesFactory:
@@ -36,5 +37,8 @@ class TouchScreenTypesFactory:
 from org.allbinary.input.motion.button.TouchScreenType import TouchScreenType
 
 
-TouchScreenTypesFactory.instance = TouchScreenTypesFactory()
+def _TouchScreenTypesFactory_instance() -> object:
+    return TouchScreenTypesFactory()
+
+lazy_static(TouchScreenTypesFactory, "instance", _TouchScreenTypesFactory_instance)
 

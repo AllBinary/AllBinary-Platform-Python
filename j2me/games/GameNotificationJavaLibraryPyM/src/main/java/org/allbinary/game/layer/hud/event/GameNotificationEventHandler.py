@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -37,6 +38,9 @@ class GameNotificationEventHandler(BasicEventHandler):
             return self._removeAllListeners_unlocked()
 
     def _removeAllListeners_unlocked(self) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.NullEventListener import NullEventListener
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         eventListenerInterface: EventListenerInterface = NullEventListener.NULL_EVENT_LISTENER
         list_: BasicArrayList = self.eventListenerInterfaceList
         if list_.size() > 0:
@@ -53,15 +57,20 @@ class GameNotificationEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         if not self.enabled:
             return
         gameNotificationListenerInterface: GameNotificationListenerInterface = eventListenerInterface
         gameNotificationListenerInterface.onGameNotificationEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.NullEventListener import NullEventListener
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.NullEventListener import NullEventListener
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-GameNotificationEventHandler.instance = GameNotificationEventHandler()
+def _GameNotificationEventHandler_instance() -> object:
+    return GameNotificationEventHandler()
+
+lazy_static(GameNotificationEventHandler, "instance", _GameNotificationEventHandler_instance)
 

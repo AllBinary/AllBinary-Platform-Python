@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.BasicLayerProcessor import BasicLayerProcessor
 
 
@@ -33,6 +34,9 @@ class DropLayerProcessor(BasicLayerProcessor):
 
     # throws Exception
     def process(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getList()
         size: int = list_.size()
         layerInterface: AllBinaryLayer = None
@@ -43,10 +47,13 @@ class DropLayerProcessor(BasicLayerProcessor):
             layerInterface = dropLayerInterface.getDroppedLayer()
             allBinaryLayerManager.append(layerInterface)
         list_.clear()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-DropLayerProcessor.LAYER_PROCESSOR = DropLayerProcessor()
+def _DropLayerProcessor_LAYER_PROCESSOR() -> object:
+    return DropLayerProcessor()
+
+lazy_static(DropLayerProcessor, "LAYER_PROCESSOR", _DropLayerProcessor_LAYER_PROCESSOR)
 

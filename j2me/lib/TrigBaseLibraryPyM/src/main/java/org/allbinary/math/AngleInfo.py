@@ -29,32 +29,42 @@ class AngleInfo:
     @staticmethod
     def getInstance(angleIncrement: int) -> AngleInfo:
         from org.allbinary.math.AngleIncrementInfoFactory import AngleIncrementInfoFactory
+        from jsinterop.annotations.JsMethod import JsMethod
         return AngleInfo(AngleIncrementInfoFactory.getInstance().getAt(angleIncrement))
     
 
     def __init__(self, angleIncrementInfo: AngleIncrementInfo) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.angleIncrementInfo = angleIncrementInfo
     
 
     def adjustAngle(self, frame: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         newAngle: int = self.angleIncrementInfo.getAngleIncrement() * frame - 90
         self.setAngle(((int(self.frameUtil.adjustAngleToFrameAngle(newAngle)) + 32768) % 65536 - 32768))
     
 
     def getAngle(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.angle
     
 
     def setAngle(self, angle: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.angle = angle
     
 
     def getAngleIncrementInfo(self) -> AngleIncrementInfo:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.angleIncrementInfo
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(AngleInfo.ANGLE)
         stringBuffer.appendshort(self.angle)
@@ -64,12 +74,12 @@ class AngleInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 from org.allbinary.math.FrameUtil import FrameUtil
 
 

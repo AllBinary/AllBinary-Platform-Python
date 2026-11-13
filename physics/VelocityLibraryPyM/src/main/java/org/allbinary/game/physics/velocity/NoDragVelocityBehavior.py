@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.physics.velocity.VelocityBehaviorBase import VelocityBehaviorBase
 
 
@@ -25,5 +26,8 @@ class NoDragVelocityBehavior(VelocityBehaviorBase):
         super().__init__()
 
 
-NoDragVelocityBehavior.instance = NoDragVelocityBehavior()
+def _NoDragVelocityBehavior_instance() -> object:
+    return NoDragVelocityBehavior()
+
+lazy_static(NoDragVelocityBehavior, "instance", _NoDragVelocityBehavior_instance)
 

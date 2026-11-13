@@ -20,6 +20,7 @@ from __future__ import annotations
 class PlayerType:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.id: int = None
         self.name: str = StringUtil.getInstance().EMPTY_STRING
     
@@ -43,6 +44,6 @@ class PlayerType:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

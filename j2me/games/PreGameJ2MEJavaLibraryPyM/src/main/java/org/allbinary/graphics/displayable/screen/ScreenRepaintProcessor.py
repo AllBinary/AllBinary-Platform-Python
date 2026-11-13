@@ -21,10 +21,12 @@ from org.allbinary.canvas.Processor import Processor
 class ScreenRepaintProcessor(Processor):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         self.displayable: Displayable = None
     
 
     def __init__(self, displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         super().__init__()
         self._init_fields()
         self.displayable = displayable

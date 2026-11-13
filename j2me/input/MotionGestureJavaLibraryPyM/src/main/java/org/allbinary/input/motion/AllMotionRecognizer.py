@@ -15,15 +15,18 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.GPointCircularPool import GPointCircularPool
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
 
 
 class AllMotionRecognizer(MotionRecognizer):
     index: int = 0
-    pointCircularPool: GPointCircularPool = GPointCircularPool(40)
+    pointCircularPool: GPointCircularPool = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
+        from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.motionGestureRecognizer: MotionGestureRecognizer = None
         self.touchButtonProcessing: bool = False
@@ -34,6 +37,8 @@ class AllMotionRecognizer(MotionRecognizer):
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
+        from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
         super().__init__()
         self._init_fields()
         self.id = ((setattr(AllMotionRecognizer, "index", AllMotionRecognizer.index + 1) or AllMotionRecognizer.index) - 1)
@@ -43,6 +48,7 @@ class AllMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processStartMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         if self.touchButtonRecognizer.pressTouchButtonInput(x, y, deviceId):
             self.touchButtonProcessing = True
         if not self.touchButtonProcessing:
@@ -54,6 +60,7 @@ class AllMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processEndMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         if self.touchButtonRecognizer.releaseTouchButtonInput(x, y, deviceId):
             pass
         if not self.touchButtonProcessing:
@@ -67,6 +74,7 @@ class AllMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processDraggedMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         if self.touchButtonProcessing:
             self.touchButtonRecognizer.pressTouchButtonInput(x, y, deviceId)
         if not self.touchButtonProcessing:
@@ -78,6 +86,7 @@ class AllMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processMovedMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         if x != self.lastX or y != self.lastY:
             self.lastX = x
             self.lastY = y
@@ -89,6 +98,7 @@ class AllMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processScrolledMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         point: CustomGPoint = AllMotionRecognizer.pointCircularPool.getNextInstance()
         point.setX(x)
         point.setY(y)
@@ -96,10 +106,18 @@ class AllMotionRecognizer(MotionRecognizer):
     
 
     def getMotionGestureRecognizer(self) -> MotionGestureRecognizer:
+        from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
         return self.motionGestureRecognizer
-from org.allbinary.graphics.CustomGPoint import CustomGPoint
-from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
-from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.graphics.CustomGPoint import CustomGPoint
+# from org.allbinary.graphics.GPointCircularPool import GPointCircularPool
+# from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
+# from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
+
+def _AllMotionRecognizer_pointCircularPool() -> object:
+    from org.allbinary.graphics.GPointCircularPool import GPointCircularPool
+    return GPointCircularPool(40)
+
+lazy_static(AllMotionRecognizer, "pointCircularPool", _AllMotionRecognizer_pointCircularPool)
 

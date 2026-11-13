@@ -47,6 +47,9 @@ class AllBinaryMediaManager:
     @staticmethod
     def init(soundsFactoryInterface: SoundsFactoryInterface) -> None:
         from org.allbinary.media.audio.Sounds import Sounds
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonString: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonString.START, AllBinaryMediaManager.THIS, commonString.INIT)
@@ -59,6 +62,7 @@ class AllBinaryMediaManager:
     def shutdown(soundsFactoryInterface: SoundsFactoryInterface) -> None:
         from org.allbinary.media.audio.Sounds import Sounds
         from org.allbinary.media.audio.Sounds import Sounds
+        from org.allbinary.TsUtil import TsUtil
         Sounds(soundsFactoryInterface).stopAll()
         Sounds(soundsFactoryInterface).closeAll()
         TsUtil.getInstance().gc()
@@ -68,12 +72,21 @@ class AllBinaryMediaManager:
     @staticmethod
     def createPlayer(resource: str) -> Player:
         from org.allbinary.media.audio.NoPlayer import NoPlayer
+        from java.io.InputStream import InputStream
+        from javax.microedition.media.Manager import Manager
+        from javax.microedition.media.Player import Player
+        from org.allbinary.MIDPUtil import MIDPUtil
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.audio.AudioContentTypeDataFactory import AudioContentTypeDataFactory
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         if Features.getInstance().isFeature(GameFeatureFactory.getInstance().SOUND):
             if TsUtil.getInstance().compareTo(resource, Manager.TONE_DEVICE_LOCATOR) == 0:
                 return Manager.createPlayer(resource)
             else:
                 inputStream: InputStream = ResourceUtil.getInstance().getResourceAsStream(resource)
-                return Manager.createPlayer(inputStream, AudioContentTypeDataFactory.getInstance().MIME_AUDIO_WAV.getName())
+                return MIDPUtil.getInstance().createPlayerFromInputStream(inputStream, AudioContentTypeDataFactory.getInstance().MIME_AUDIO_WAV.getName())
         else:
             return NoPlayer.NO_PLAYER
     
@@ -86,19 +99,24 @@ class AllBinaryMediaManager:
 
     @staticmethod
     def _playTone_unlocked(frequency: int, time: int, volume: int) -> None:
+        from javax.microedition.media.Manager import Manager
+        from javax.microedition.media.MediaException import MediaException
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         if Features.getInstance().isFeature(GameFeatureFactory.getInstance().SOUND):
             Manager.playTone(frequency, time, volume)
 # from java.io.InputStream import InputStream
 # from javax.microedition.media.Manager import Manager
 # from javax.microedition.media.MediaException import MediaException
 # from javax.microedition.media.Player import Player
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.audio.AudioContentTypeDataFactory import AudioContentTypeDataFactory
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.MIDPUtil import MIDPUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.audio.AudioContentTypeDataFactory import AudioContentTypeDataFactory
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -21,6 +21,9 @@ from org.allbinary.game.displayable.canvas.BasicMenuInputProcessor import BasicM
 class PopupMenuInputProcessor(BasicMenuInputProcessor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.rectangleCollisionUtil: RectangleCollisionUtil = RectangleCollisionUtil.getInstance()
         self.CLICK_DELAY: int = 120
         self.clickTimeHelper: TimeDelayHelper = TimeDelayHelper(self.CLICK_DELAY)
@@ -28,17 +31,22 @@ class PopupMenuInputProcessor(BasicMenuInputProcessor):
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCanvas: MyCanvas, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCanvas)
         self._init_fields()
         self.rectangle = rectangle
     
 
     def init(self, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self.rectangle = rectangle
     
 
     # throws Exception
     def processInput(self, key: int) -> int:
+        from javax.microedition.lcdui.Canvas import Canvas
         if key == Canvas.KEY_STAR:
             gameCanvas: AllBinaryGameCanvas = self.getCanvas()
             gameCanvas.toggleMenu()
@@ -48,6 +56,9 @@ class PopupMenuInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processInputList(self) -> int:
+        from org.allbinary.game.input.GameInputStrings import GameInputStrings
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             motionInputsIndex: int = self.processMotionInputs()
             list_: BasicArrayList = self.getGameKeyEventList()
@@ -72,6 +83,7 @@ class PopupMenuInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processMotionInputs(self) -> int:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         lastIndex: int = self.motionGestureEventList.size() - 1
         if lastIndex >= 0:
             motionGestureEvent: MotionGestureEvent = self.motionGestureEventList.objectArray[lastIndex]
@@ -82,6 +94,10 @@ class PopupMenuInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processMotionInput(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         if motionGestureEvent is None:
             self.logUtil.putF("Exception: Bug", self, self.gameInputStrings.PROCESS_MOTION_INPUT)
             return
@@ -95,19 +111,19 @@ class PopupMenuInputProcessor(BasicMenuInputProcessor):
                     gameCanvas: AllBinaryGameCanvas = self.getCanvas()
                     gameCanvas.toggleMenu()
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInputStrings import GameInputStrings
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.GameInputStrings import GameInputStrings
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

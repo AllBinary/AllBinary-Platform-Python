@@ -29,6 +29,7 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, removalGameKeyEventList: BasicArrayList, playerInputId: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, removalGameKeyEventList)
         self._init_fields()
         self.playerInputId = playerInputId
@@ -39,6 +40,7 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
             return self._onPressGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onPressGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.add(gameKeyEvent)
         self.addForRemoval(gameKeyEvent)
     
@@ -48,6 +50,7 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
             return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.add(gameKeyEvent)
     
 
@@ -56,6 +59,7 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
             return self._onDownKeyEvent_unlocked(gameKeyEvent)
 
     def _onDownKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.add(gameKeyEvent)
         self.addForRemoval(gameKeyEvent)
     
@@ -65,6 +69,9 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
             return self._onDownKey_unlocked(gameKeyEvent)
 
     def _onDownKey_unlocked(self, gameKeyEvent: int) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         PreLogUtil.put(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(str(gameKeyEvent))), self, self.gameInputStrings.ON_DOWN_GAME_KEY)
     
 
@@ -73,6 +80,7 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
             return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.addForRemoval(gameKeyEvent)
     
 
@@ -85,19 +93,22 @@ class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def getPlayerInputId(self) -> int:
         return self.playerInputId
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 from org.allbinary.game.input.GameInputStrings import GameInputStrings
 
 

@@ -25,6 +25,8 @@ class LimitCommandsVisitor(Visitor):
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
         super().__init__()
         self._init_fields()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
@@ -32,6 +34,9 @@ class LimitCommandsVisitor(Visitor):
     
 
     def visit(self, anyType: object) -> object:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         command: Command = anyType
         booleanFactory: BooleanFactory = BooleanFactory.getInstance()
         if self.isNotSmallDisplay or command.getPriority() == 1 or command == GameCommandsFactory.getInstance().EXIT_COMMAND or command == GameCommandsFactory.getInstance().EXIT_WITHOUT_PROGRESS_COMMAND:
@@ -39,9 +44,9 @@ class LimitCommandsVisitor(Visitor):
         else:
             return booleanFactory.FALSE
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
 
 

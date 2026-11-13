@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #J2ME
@@ -22,6 +23,7 @@ class ResourceUtil:
     instance: ResourceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,11 +37,15 @@ class ResourceUtil:
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil.putF(CommonStrings.getInstance().NOT_IMPLEMENTED, self, "setLoadingPaths")
     
 
     # throws Exception
     def getResourceAsStream(self, resource: str) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         inputStream: InputStream = type(resource).getResourceAsStream(resource)
         if inputStream is None:
             inputStream = self.getResourceAsStreamAtStart(resource, 2)
@@ -87,6 +93,9 @@ class ResourceUtil:
 
     # throws Exception
     def getResourceAsStreamAtStart(self, resource: str, startIndex: int) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringMaker: StringMaker = StringMaker()
         index: int = resource.find(CommonSeps.getInstance().COLON)
         resourcePath: str = resource[index + startIndex:]
@@ -99,11 +108,14 @@ class ResourceUtil:
     def addResource(self, resource: str, value: int) -> None:
         pass
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ResourceUtil.instance = ResourceUtil()
+def _ResourceUtil_instance() -> object:
+    return ResourceUtil()
+
+lazy_static(ResourceUtil, "instance", _ResourceUtil_instance)
 

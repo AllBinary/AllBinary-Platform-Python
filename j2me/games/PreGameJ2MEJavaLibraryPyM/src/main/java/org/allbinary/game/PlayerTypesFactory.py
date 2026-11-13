@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlayerTypesFactory:
@@ -35,5 +36,8 @@ class PlayerTypesFactory:
 from org.allbinary.game.PlayerType import PlayerType
 
 
-PlayerTypesFactory.SINGLETON = PlayerTypesFactory()
+def _PlayerTypesFactory_SINGLETON() -> object:
+    return PlayerTypesFactory()
+
+lazy_static(PlayerTypesFactory, "SINGLETON", _PlayerTypesFactory_SINGLETON)
 

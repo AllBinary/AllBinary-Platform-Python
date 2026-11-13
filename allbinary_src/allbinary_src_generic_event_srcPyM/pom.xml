@@ -41,7 +41,7 @@
         
         <dependency>
             <groupId>org.allbinary</groupId>
-            <artifactId>LoggingAndroidAllPy</artifactId>
+            <artifactId>LoggingJ2MEAllPy</artifactId>
 
             <!--
 <artifactId>LoggingJ2MEAllPy</artifactId>

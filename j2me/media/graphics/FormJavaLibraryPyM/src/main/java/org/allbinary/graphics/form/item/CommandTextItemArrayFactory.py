@@ -20,17 +20,28 @@ from __future__ import annotations
 class CommandTextItemArrayFactory:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
         self.visitorInterface: Visitor = None
     
 
     def __init__(self, visitorInterface: Visitor) -> None:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         self._init_fields()
         self.visitorInterface = visitorInterface
     
 
     def getInstance(self, vector: object, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> list[ABCustomItem]:
         from org.allbinary.graphics.form.item.CommandTextItem import CommandTextItem
+        from javax.microedition.lcdui.Command import Command
+        from javax.microedition.lcdui.ImageItem import ImageItem
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
+        from org.allbinary.logic.VectorUtil import VectorUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         vectorUtil: VectorUtil = VectorUtil.getInstance()
         size: int = vectorUtil.getSize(vector)
         self.list_.clear()
@@ -55,13 +66,13 @@ class CommandTextItemArrayFactory:
         return textItemArray
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.ImageItem import ImageItem
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
-from org.allbinary.logic.VectorUtil import VectorUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.visitor.Visitor import Visitor
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
+# from org.allbinary.logic.VectorUtil import VectorUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

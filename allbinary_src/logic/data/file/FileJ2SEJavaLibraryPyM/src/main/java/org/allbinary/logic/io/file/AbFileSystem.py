@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #FileJ2SE should be the same as J2SEForJ2ME
@@ -22,6 +23,8 @@ class AbFileSystem:
     instance: AbFileSystem = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
@@ -44,6 +47,7 @@ class AbFileSystem:
     
 
     def getFilesAsStringArrayForPath(self, currentDirPath: str) -> list[str]:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         file: File = File(currentDirPath)
         if file.exists():
             return file.list_()
@@ -58,6 +62,10 @@ class AbFileSystem:
 
     # Java overloaded method: Python keeps the last definition
     def readAsString(self, fileName: str, bytes: list[int]) -> str:
+        from java.io.FileInputStream import FileInputStream
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         closeable: object = NullUtil.getInstance().NULL_OBJECT
         try:
             idFile: InputStream = FileInputStream(fileName)
@@ -73,6 +81,7 @@ class AbFileSystem:
     
 
     def close(self, closeable: object) -> bool:
+        from java.io.InputStream import InputStream
         try:
             if closeable is not None:
                 inputStream: InputStream = (closeable)
@@ -84,11 +93,14 @@ class AbFileSystem:
 # from java.io.File import File
 # from java.io.FileInputStream import FileInputStream
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AbFileSystem.instance = AbFileSystem()
+def _AbFileSystem_instance() -> object:
+    return AbFileSystem()
+
+lazy_static(AbFileSystem, "instance", _AbFileSystem_instance)
 

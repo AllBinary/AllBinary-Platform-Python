@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FullScreenUtil:
@@ -28,15 +29,20 @@ class FullScreenUtil:
 
     # throws Exception
     def initOnRun(self, fullScreenInterface: Canvas, commandListener: CommandListener) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.CommandListener import CommandListener
         if commandListener is not None:
             self.init(fullScreenInterface)
     
 
     def init(self, fullScreenInterface: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         pass
     
 
     def isScreenChange(self, isFullScreen: bool) -> bool:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         mainFeatureFactory: MainFeatureFactory = MainFeatureFactory.getInstance()
         features: Features = Features.getInstance()
         if features.isFeature(mainFeatureFactory.FULL_SCREEN) != isFullScreen:
@@ -45,12 +51,16 @@ class FullScreenUtil:
     
 
     def isScreenChangeCanvas(self, fullScreenInterface: Canvas) -> bool:
+        from javax.microedition.lcdui.Canvas import Canvas
         return self.isScreenChange(False)
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
 
 
-FullScreenUtil.instance = FullScreenUtil()
+def _FullScreenUtil_instance() -> object:
+    return FullScreenUtil()
+
+lazy_static(FullScreenUtil, "instance", _FullScreenUtil_instance)
 

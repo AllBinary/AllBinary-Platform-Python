@@ -15,8 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderUpdater import ShaderUpdater
 
 
@@ -24,6 +23,7 @@ class CompositeShaderUpdater(ShaderUpdater):
     instanceC: CompositeShaderUpdater = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
     
 
@@ -38,15 +38,25 @@ class CompositeShaderUpdater(ShaderUpdater):
     
 
     def onSurfaceCreated(self, gl: GL10, eglConfig: EGLConfig, programHandle: int) -> None:
+        from javax.microedition.khronos.egl.EGLConfig import EGLConfig
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def onSurfaceDestroyed(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.egl.EGLConfig import EGLConfig
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-CompositeShaderUpdater.instanceC = CompositeShaderUpdater(StringUtil.getInstance().getArrayInstance(), StringUtil.getInstance().getArrayInstance(), StringUtil.getInstance().getArrayInstance(), NullUtil.getInstance().NULL_INT_ARRAY)
+def _CompositeShaderUpdater_instanceC() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return CompositeShaderUpdater(StringUtil.getInstance().getArrayInstance(), StringUtil.getInstance().getArrayInstance(), StringUtil.getInstance().getArrayInstance(), NullUtil.getInstance().NULL_INT_ARRAY)
+
+lazy_static(CompositeShaderUpdater, "instanceC", _CompositeShaderUpdater_instanceC)
 

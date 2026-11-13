@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.debug.DebugInterface import DebugInterface
 
 
@@ -47,5 +48,8 @@ class NoDebug(DebugInterface):
         return False
 
 
-NoDebug.SINGLETON = NoDebug()
+def _NoDebug_SINGLETON() -> object:
+    return NoDebug()
+
+lazy_static(NoDebug, "SINGLETON", _NoDebug_SINGLETON)
 

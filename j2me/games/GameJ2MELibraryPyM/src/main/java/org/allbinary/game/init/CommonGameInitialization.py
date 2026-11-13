@@ -21,16 +21,26 @@ from org.allbinary.game.init.BaseGameInitialization import BaseGameInitializatio
 class CommonGameInitialization(BaseGameInitialization):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
 
     def __init__(self, resourceInitializationArray: list[ResourceInitialization], portion: int) -> None:
+        from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
         super().__init__(resourceInitializationArray, portion)
         self._init_fields()
     
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, level: int) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.math.AngleFactory import AngleFactory
         super().init(abeClientInformation, commandListener, level)
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if not self.isGameInitialized() and level == resourceLoadingLevelFactory.LOAD_ALL.getLevel():
@@ -51,14 +61,14 @@ class CommonGameInitialization(BaseGameInitialization):
     def initGame(self) -> None:
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
-from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
+# from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

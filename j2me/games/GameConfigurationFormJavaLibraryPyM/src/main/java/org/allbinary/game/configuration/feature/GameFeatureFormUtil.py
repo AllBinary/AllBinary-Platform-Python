@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameFeatureFormUtil:
     instance: GameFeatureFormUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.MEUtil import MEUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.meUtil: MEUtil = MEUtil.getInstance()
 
@@ -35,6 +38,12 @@ class GameFeatureFormUtil:
 
     def getChoiceGroup(self, hashtable: ABHashtable[object, object], name: str, option: int) -> ChoiceGroup:
         from org.allbinary.game.configuration.feature.Features import Features
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringMaker: StringMaker = StringMaker()
         choiceGroup: ChoiceGroup = ChoiceGroup(name, option, StringUtil.getInstance().getArrayInstance(), NullImage.NULL_IMAGE_ARRAY)
         list_: BasicArrayList = hashtable.get(name)
@@ -53,6 +62,10 @@ class GameFeatureFormUtil:
     
 
     def addChoiceGroup(self, form: CommandForm, hashtable: ABHashtable[object, object], option: int) -> None:
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         stringMaker: StringMaker = StringMaker()
         ADDING_CHOICE_GROUP: str = "Adding Choice Group: "
         ADD_CHOICE_GROUP: str = "addChoiceGroup"
@@ -69,6 +82,11 @@ class GameFeatureFormUtil:
     # throws Exception
     def setDefault(self, form: CommandForm) -> None:
         from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from javax.microedition.lcdui.Item import Item
+        from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
+        from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
         size: int = form.size()
         for index in range(0, size):
             item: Item = form.get(index)
@@ -79,17 +97,20 @@ class GameFeatureFormUtil:
 # from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
 # from javax.microedition.lcdui.Item import Item
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
-from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
-from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
-from org.allbinary.logic.MEUtil import MEUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
+# from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
+# from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+# from org.allbinary.logic.MEUtil import MEUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.HashtableUtil import HashtableUtil
 
 
-GameFeatureFormUtil.instance = GameFeatureFormUtil()
+def _GameFeatureFormUtil_instance() -> object:
+    return GameFeatureFormUtil()
+
+lazy_static(GameFeatureFormUtil, "instance", _GameFeatureFormUtil_instance)
 

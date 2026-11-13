@@ -15,16 +15,23 @@
 
 from __future__ import annotations
 
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.game.score.HighScores import HighScores
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RemoteErrorHighScoresSingletonFactory:
-    SINGLETON: HighScores = HighScores(CommonStrings.getInstance().LOADING, "Remote High Scores Did Not Load", CommonStrings.getInstance().PERIODS)
+    SINGLETON: HighScores = None
     
 
     @staticmethod
     def getInstance() -> HighScores:
         return RemoteErrorHighScoresSingletonFactory.SINGLETON
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _RemoteErrorHighScoresSingletonFactory_SINGLETON() -> object:
+    from org.allbinary.game.score.HighScores import HighScores
+    from org.allbinary.string.CommonStrings import CommonStrings
+    return HighScores(CommonStrings.getInstance().LOADING, "Remote High Scores Did Not Load", CommonStrings.getInstance().PERIODS)
+
+lazy_static(RemoteErrorHighScoresSingletonFactory, "SINGLETON", _RemoteErrorHighScoresSingletonFactory_SINGLETON)
 

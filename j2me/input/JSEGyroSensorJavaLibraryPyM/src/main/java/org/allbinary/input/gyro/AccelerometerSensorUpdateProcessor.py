@@ -26,6 +26,11 @@ class AccelerometerSensorUpdateProcessor(Processor):
 
     # throws Exception
     def process(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+        from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
+        from org.allbinary.game.input.motion.action.SingleKeyPressGameKeyFromMotionGestureEventListener import SingleKeyPressGameKeyFromMotionGestureEventListener
+        from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
         sensorFeatureFactory: SensorFeatureFactory = SensorFeatureFactory.getInstance()
         if Features.getInstance().isFeature(sensorFeatureFactory.ORIENTATION_SENSORS):
             AccelerometerSensorFactory.getInstance().setCompleteMotionGestureInputEventListener(SingleKeyPressGameKeyFromMotionGestureEventListener())
@@ -35,10 +40,10 @@ class AccelerometerSensorUpdateProcessor(Processor):
             AccelerometerSensorFactory.getInstance().setCompleteMotionGestureInputEventListener(NoCompleteMotionGestureInputEventListener.getInstance())
         else:
             raise Exception("Sensor Feature Not Set")
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
-from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
-from org.allbinary.game.input.motion.action.SingleKeyPressGameKeyFromMotionGestureEventListener import SingleKeyPressGameKeyFromMotionGestureEventListener
-from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+# from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
+# from org.allbinary.game.input.motion.action.SingleKeyPressGameKeyFromMotionGestureEventListener import SingleKeyPressGameKeyFromMotionGestureEventListener
+# from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
 
 

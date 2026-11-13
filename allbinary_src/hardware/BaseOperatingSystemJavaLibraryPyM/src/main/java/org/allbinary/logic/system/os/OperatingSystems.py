@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OperatingSystems:
@@ -52,5 +53,8 @@ class OperatingSystems:
         return OperatingSystems.instance
 
 
-OperatingSystems.instance = OperatingSystems()
+def _OperatingSystems_instance() -> object:
+    return OperatingSystems()
+
+lazy_static(OperatingSystems, "instance", _OperatingSystems_instance)
 

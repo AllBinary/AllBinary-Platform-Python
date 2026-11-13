@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DirectionFactory:
     instance: DirectionFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.NAME: str = "DIRECTION"
         self.LEFT: Direction = Direction(CommonPhoneStrings.getInstance().LEFT, "WEST", 0, 1)
         self.RIGHT: Direction = Direction(CommonPhoneStrings.getInstance().RIGHT, "EAST", 1, 0)
@@ -47,6 +49,8 @@ class DirectionFactory:
         from org.allbinary.direction.Direction import Direction
         from org.allbinary.direction.Direction import Direction
         from org.allbinary.direction.Direction import Direction
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -57,11 +61,14 @@ class DirectionFactory:
         self.DOWN_LEFT = Direction("DOWN LEFT", str(stringBuffer.append(self.DOWN.getOtherName()).append(commonSeps.SPACE).append(self.LEFT.getOtherName())), 6, 0)
         stringBuffer.delete(0, stringBuffer.length())
         self.DOWN_RIGHT = Direction("DOWN RIGHT", str(stringBuffer.append(self.DOWN.getOtherName()).append(commonSeps.SPACE).append(self.RIGHT.getOtherName())), 7, 0)
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 from org.allbinary.direction.Direction import Direction
 
 
-DirectionFactory.instance = DirectionFactory()
+def _DirectionFactory_instance() -> object:
+    return DirectionFactory()
+
+lazy_static(DirectionFactory, "instance", _DirectionFactory_instance)
 

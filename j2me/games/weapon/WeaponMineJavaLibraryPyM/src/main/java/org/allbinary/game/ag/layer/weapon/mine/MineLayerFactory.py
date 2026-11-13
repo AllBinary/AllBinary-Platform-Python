@@ -21,10 +21,12 @@ from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFac
 class MineLayerFactory(AllBinaryLayerFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
         self.viewPositionFactoryInterface: ViewPositionFactoryInterface = None
     
 
     def __init__(self, viewPositionFactoryInterface: ViewPositionFactoryInterface) -> None:
+        from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
         self._init_fields()
         self.viewPositionFactoryInterface = viewPositionFactoryInterface
     
@@ -32,8 +34,9 @@ class MineLayerFactory(AllBinaryLayerFactoryInterface):
     # throws Exception
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.game.ag.layer.weapon.mine.MineLayer import MineLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return MineLayer(self.viewPositionFactoryInterface.getInstance())
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
 
 

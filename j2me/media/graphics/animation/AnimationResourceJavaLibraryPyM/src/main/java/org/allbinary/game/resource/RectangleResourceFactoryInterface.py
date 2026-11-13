@@ -23,12 +23,14 @@ class RectangleResourceFactoryInterface:
 
     # throws Exception
     def getRectangle(self, resource: str) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
         raise NotImplementedError()
     
 
     # throws Exception
     def getRectangleArrayOfArrays(self, resource: str) -> list[list[Rectangle]]:
+        from org.allbinary.graphics.Rectangle import Rectangle
         raise NotImplementedError()
-from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.Rectangle import Rectangle
 
 

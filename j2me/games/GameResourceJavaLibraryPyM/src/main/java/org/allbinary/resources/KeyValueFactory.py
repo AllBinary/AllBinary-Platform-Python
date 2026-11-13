@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class KeyValueFactory:
     instance: KeyValueFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.MAP: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
 
     def __init__(self) -> None:
@@ -33,13 +36,15 @@ class KeyValueFactory:
     
 
     def get(self, key: str) -> str:
-        value: str = self.MAP.get(key)
-        if value is None:
+        if not self.MAP.containsKey(key):
             return key
-        return value
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+        return self.MAP.get(key)
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-KeyValueFactory.instance = KeyValueFactory()
+def _KeyValueFactory_instance() -> object:
+    return KeyValueFactory()
+
+lazy_static(KeyValueFactory, "instance", _KeyValueFactory_instance)
 

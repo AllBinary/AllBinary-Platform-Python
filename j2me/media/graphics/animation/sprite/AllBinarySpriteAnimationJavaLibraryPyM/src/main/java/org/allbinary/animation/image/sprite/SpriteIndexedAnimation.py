@@ -22,12 +22,21 @@ from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeI
 class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.sprite: Sprite = None
         self.image: Image = None
         self.basicColorArray: list[BasicColor] = None
     
 
     def __init__(self, sprite: Sprite, image: Image, basicColorArray: list[BasicColor], animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         super().__init__(animationBehavior)
         self._init_fields()
         self.sprite = sprite
@@ -43,6 +52,7 @@ class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         for index in range(0, len(self.basicColorArray)):
             if basicColor == self.basicColorArray[index]:
                 self.setFrame(index)
@@ -50,6 +60,8 @@ class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         if len(self.basicColorArray) < self.getFrame():
             return self.basicColorArray[self.getFrame()]
         else:
@@ -57,17 +69,20 @@ class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
     
 
     def paintFrame(self, graphics: Graphics, frame: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.setFrame(frame)
         self.sprite.setPosition(x, y)
         self.sprite.paint(graphics)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.sprite.setPosition(x, y)
         self.sprite.paint(graphics)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.sprite.paint(graphics)
     
 
@@ -107,6 +122,7 @@ class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
@@ -121,11 +137,11 @@ class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

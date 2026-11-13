@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NoMovementFactory:
@@ -37,5 +38,8 @@ class NoMovementFactory:
 from org.allbinary.physics.movement.Movement import Movement
 
 
-NoMovementFactory.instance = NoMovementFactory()
+def _NoMovementFactory_instance() -> object:
+    return NoMovementFactory()
+
+lazy_static(NoMovementFactory, "instance", _NoMovementFactory_instance)
 

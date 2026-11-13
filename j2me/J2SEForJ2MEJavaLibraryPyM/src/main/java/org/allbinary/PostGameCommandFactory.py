@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PostGameCommandFactory:
@@ -27,10 +28,15 @@ class PostGameCommandFactory:
     
 
     def addCommands(self, canvas: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.configuration.feature.MultiPlayerGameFeatureFactory import MultiPlayerGameFeatureFactory
         MultiPlayerGameFeatureFactory.getInstance().addCommands(canvas)
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.configuration.feature.MultiPlayerGameFeatureFactory import MultiPlayerGameFeatureFactory
+# from org.allbinary.game.configuration.feature.MultiPlayerGameFeatureFactory import MultiPlayerGameFeatureFactory
 
 
-PostGameCommandFactory.instance = PostGameCommandFactory()
+def _PostGameCommandFactory_instance() -> object:
+    return PostGameCommandFactory()
+
+lazy_static(PostGameCommandFactory, "instance", _PostGameCommandFactory_instance)
 

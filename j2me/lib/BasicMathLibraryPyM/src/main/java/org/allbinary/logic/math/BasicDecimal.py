@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicDecimal:
@@ -141,5 +142,8 @@ class BasicDecimal:
 from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
 
 
-BasicDecimal.ZERO_BIGDECIMAL = BasicDecimal(0)
+def _BasicDecimal_ZERO_BIGDECIMAL() -> object:
+    return BasicDecimal(0)
+
+lazy_static(BasicDecimal, "ZERO_BIGDECIMAL", _BasicDecimal_ZERO_BIGDECIMAL)
 

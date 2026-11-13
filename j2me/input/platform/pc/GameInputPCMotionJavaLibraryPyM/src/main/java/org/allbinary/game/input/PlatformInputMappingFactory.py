@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformInputMappingFactory:
     instance: PlatformInputMappingFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.inputToGameKeyMapping: PersistentInputMapping = PersistentInputMapping.getNullInstance()
 
@@ -35,6 +38,8 @@ class PlatformInputMappingFactory:
 
     def getPersistentInputMappingInstance(self) -> PersistentInputMapping:
         from org.allbinary.game.input.MotionLaptopGameInputMapping import MotionLaptopGameInputMapping
+        from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             if self.inputToGameKeyMapping == PersistentInputMapping.getNullInstance():
                 self.inputToGameKeyMapping = MotionLaptopGameInputMapping()
@@ -42,10 +47,13 @@ class PlatformInputMappingFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
         return self.inputToGameKeyMapping
-from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-PlatformInputMappingFactory.instance = PlatformInputMappingFactory()
+def _PlatformInputMappingFactory_instance() -> object:
+    return PlatformInputMappingFactory()
+
+lazy_static(PlatformInputMappingFactory, "instance", _PlatformInputMappingFactory_instance)
 

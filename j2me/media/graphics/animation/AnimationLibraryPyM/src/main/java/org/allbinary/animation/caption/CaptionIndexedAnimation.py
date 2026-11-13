@@ -21,6 +21,10 @@ from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 class CaptionIndexedAnimation(IndexedAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.media.Player import Player
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.animationInterface: Animation = None
         self.movieIndexedAnimationInterface: IndexedAnimation = None
         self.captionDx: int = None
@@ -34,6 +38,11 @@ class CaptionIndexedAnimation(IndexedAnimation):
     
 
     def __init__(self, animationInterface: Animation, movieIndexedAnimationInterface: IndexedAnimation, player: Player, captionDx: int, captionDy: int, dx: int, dy: int, time: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.media.Player import Player
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         super().__init__(animationBehavior)
         self._init_fields()
         self.animationInterface = animationInterface
@@ -52,6 +61,8 @@ class CaptionIndexedAnimation(IndexedAnimation):
 
     # throws Exception
     def nextFrame(self) -> None:
+        from org.allbinary.animation.AnimationEventHandler import AnimationEventHandler
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.timeDelayHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
             self.movieIndexedAnimationInterface.nextFrame()
         if self.isLastFrame():
@@ -86,25 +97,28 @@ class CaptionIndexedAnimation(IndexedAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintXY(graphics, x + self.captionDx, y + self.captionDy)
         self.movieIndexedAnimationInterface.paintXY(graphics, x + self.captionDx + self.dx, y + self.captionDy + self.dy)
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintThreedXYZ(graphics, x + self.captionDx, y + self.captionDy, z)
         self.movieIndexedAnimationInterface.paintThreedXYZ(graphics, x + self.captionDx + self.dx, y + self.captionDy + self.dy, z)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.media.Player import Player
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.AnimationEventHandler import AnimationEventHandler
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.AnimationEventHandler import AnimationEventHandler
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

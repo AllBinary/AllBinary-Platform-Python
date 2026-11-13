@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.Stack import Stack
+from java.util.Stack import Stack
 
 
-class ABStack(list):
+class ABStack(Stack):
 
     def __init__(self) -> None:
         super().__init__()

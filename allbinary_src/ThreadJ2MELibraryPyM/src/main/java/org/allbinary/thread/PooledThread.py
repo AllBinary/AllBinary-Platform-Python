@@ -21,6 +21,8 @@ import threading
 class PooledThread(threading.Thread):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.threadObjectUtil: ThreadObjectUtil = ThreadObjectUtil.getInstance()
@@ -36,6 +38,9 @@ class PooledThread(threading.Thread):
     
 
     def run(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.threadPool.threadStarted()
         while True:
             task2: object = self.threadObjectUtil.NULL_PRIORITY_RUNNABLE
@@ -57,10 +62,10 @@ class PooledThread(threading.Thread):
                 logUtil: LogUtil = LogUtil.getInstance()
                 logUtil.put(str(StringMaker().append(self.commonStrings.EXCEPTION_LABEL).append(StringUtil.getInstance().toString(task2))), self, self.commonStrings.RUN, e)
         self.threadPool.threadStopped()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 
 

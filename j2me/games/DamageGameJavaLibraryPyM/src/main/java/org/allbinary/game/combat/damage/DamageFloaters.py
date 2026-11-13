@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
@@ -34,5 +35,8 @@ class DamageFloaters(Paintable):
         pass
 
 
-DamageFloaters.SINGLETON = DamageFloaters()
+def _DamageFloaters_SINGLETON() -> object:
+    return DamageFloaters()
+
+lazy_static(DamageFloaters, "SINGLETON", _DamageFloaters_SINGLETON)
 

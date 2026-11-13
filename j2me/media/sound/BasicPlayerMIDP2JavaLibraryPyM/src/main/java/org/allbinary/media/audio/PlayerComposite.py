@@ -16,15 +16,19 @@
 from __future__ import annotations
 
 import threading
-# from javax.microedition.media.Controllable import Controllable
-# from javax.microedition.media.Player import Player
+from javax.microedition.media.Player import Player
 
 
 #BasicPlayerMIDP2
-class PlayerComposite(Controllable, Player):
+class PlayerComposite(Player):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.player: Player = None
@@ -43,10 +47,12 @@ class PlayerComposite(Controllable, Player):
             return self._addPlayerListener_unlocked(playerListener)
 
     def _addPlayerListener_unlocked(self, playerListener: PlayerListener) -> None:
+        from javax.microedition.media.PlayerListener import PlayerListener
         self.player.addPlayerListener(playerListener)
     
 
     def removePlayerListener(self, playerListener: PlayerListener) -> None:
+        from javax.microedition.media.PlayerListener import PlayerListener
         self.player.removePlayerListener(playerListener)
     
 
@@ -71,6 +77,7 @@ class PlayerComposite(Controllable, Player):
     
 
     def getTimeBase(self) -> TimeBase:
+        from javax.microedition.media.TimeBase import TimeBase
         return (self.player).getTimeBase()
     
 
@@ -80,6 +87,8 @@ class PlayerComposite(Controllable, Player):
             return self._setTimeBase_unlocked(timeBase)
 
     def _setTimeBase_unlocked(self, timeBase: TimeBase) -> None:
+        from javax.microedition.media.MediaException import MediaException
+        from javax.microedition.media.TimeBase import TimeBase
         (self.player).setTimeBase(timeBase)
     
 
@@ -129,10 +138,12 @@ class PlayerComposite(Controllable, Player):
     
 
     def getControl(self, controlType: str) -> Control:
+        from javax.microedition.media.Control import Control
         return self.player.getControl(controlType)
     
 
     def getControls(self) -> list[Control]:
+        from javax.microedition.media.Control import Control
         raise RuntimeError()
     
 
@@ -144,13 +155,14 @@ class PlayerComposite(Controllable, Player):
     def getPlayerP(self) -> Player:
         return self.player
 # from javax.microedition.media.Control import Control
+# from javax.microedition.media.Controllable import Controllable
 # from javax.microedition.media.MediaException import MediaException
 # from javax.microedition.media.PlayerListener import PlayerListener
 # from javax.microedition.media.TimeBase import TimeBase
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

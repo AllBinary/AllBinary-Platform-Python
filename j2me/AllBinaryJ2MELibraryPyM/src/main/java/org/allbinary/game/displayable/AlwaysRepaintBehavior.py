@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
 
 
@@ -36,37 +37,34 @@ class AlwaysRepaintBehavior(RepaintBehavior):
     
 
     def repaint(self, canvas: Canvas) -> None:
+        from org.allbinary.game.displayable.RepaintRunnable import RepaintRunnable
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         features: Features = Features.getInstance()
         openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
         if features.isFeature(openGLFeatureFactory.OPENGL):
             DisplayInfoSingleton.getInstance().process()
         else:
-            thread: threading.Thread = threading.Thread(target=(ARunnable()  # Java anonymous class body:
-#                 
-# 
-#                 def run(self) -> None:
-#                     try:
-#                         canvas.repaint()
-#                         DisplayInfoSingleton.getInstance().process()
-#                     except Exception as e:
-#                         commonStrings: CommonStrings = CommonStrings.getInstance()
-#                         logUtil: LogUtil = LogUtil.getInstance()
-#                         logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-).run, name=self.NAME)
+            thread: threading.Thread = threading.Thread(target=RepaintRunnable(canvas).run, name=self.NAME)
             thread.start()
     
 
     def onChangeRepaint(self, canvas: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         pass
-from org.allbinary.thread.ARunnable import ARunnable
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.NullRunnable import NullRunnable
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.NullRunnable import NullRunnable
 
 
-AlwaysRepaintBehavior.instanceC = AlwaysRepaintBehavior()
+def _AlwaysRepaintBehavior_instanceC() -> object:
+    return AlwaysRepaintBehavior()
+
+lazy_static(AlwaysRepaintBehavior, "instanceC", _AlwaysRepaintBehavior_instanceC)
 

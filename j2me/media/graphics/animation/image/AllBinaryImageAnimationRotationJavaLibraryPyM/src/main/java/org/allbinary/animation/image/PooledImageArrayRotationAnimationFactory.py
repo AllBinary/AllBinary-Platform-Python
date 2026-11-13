@@ -22,6 +22,8 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.logic.NullUtil import NullUtil
         self.allBinaryImageRotationAnimationInfo: object = NullUtil.getInstance().NULL_OBJECT
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
@@ -29,6 +31,10 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
     # throws Exception
     @staticmethod
     def createFactory(image: Image, animationBehaviorFactory: AnimationBehaviorFactory) -> PooledImageArrayRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         angleIncrement: int = (totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())
         return PooledImageArrayRotationAnimationFactory(image, image.getWidth(), image.getHeight(), -(image.getWidth() >> 2), -(image.getHeight() >> 2), angleIncrement, animationBehaviorFactory)
@@ -37,6 +43,10 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
     # throws Exception
     @staticmethod
     def createDXY(image: Image, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> PooledImageArrayRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         angleIncrement: int = (totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())
         return PooledImageArrayRotationAnimationFactory(image, image.getWidth(), image.getHeight(), dx, dy, angleIncrement, animationBehaviorFactory)
@@ -44,6 +54,10 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
 
     def __init__(self, image: Image, width: int, height: int, dx: int, dy: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from org.allbinary.animation.image.ImageArrayRotationAnimationInfo import ImageArrayRotationAnimationInfo
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.media.image.ImageToRotationImageArrayUtil import ImageToRotationImageArrayUtil
         self._init_fields()
         self.animationBehaviorFactory = animationBehaviorFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
@@ -54,18 +68,20 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.AdjustedImageArrayRotationAnimation import AdjustedImageArrayRotationAnimation
+        from org.allbinary.animation.Animation import Animation
         return AdjustedImageArrayRotationAnimation.createAdjustedImageArrayRotationAnimationInfo(self.allBinaryImageRotationAnimationInfo, self.animationBehaviorFactory.getOrCreateInstance())
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.media.ScaleProperties import ScaleProperties
-from org.allbinary.media.image.ImageToRotationImageArrayUtil import ImageToRotationImageArrayUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.media.image.ImageToRotationImageArrayUtil import ImageToRotationImageArrayUtil
 
 

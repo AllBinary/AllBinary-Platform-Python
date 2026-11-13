@@ -22,15 +22,17 @@ class HighScoresFactoryInterface:
     
 
     def fetchHighScores(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         raise NotImplementedError()
     
 
     def fetchHighScoresPreload(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener, preload: bool) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         raise NotImplementedError()
     
 
     def createHighScoresHelper(self) -> HighScoresHelperBaseInterface:
         raise NotImplementedError()
-from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.GameInfo import GameInfo
 
 

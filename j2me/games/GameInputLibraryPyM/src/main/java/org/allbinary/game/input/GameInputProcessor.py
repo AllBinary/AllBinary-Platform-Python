@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameInputProcessor:
@@ -32,30 +33,41 @@ class GameInputProcessor:
 
     # throws Exception
     def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def processReleasedEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def processAnalog(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent, analogValue: int) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, keyAsInteger: int) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def processReleased(self, allbinaryLayerManager: AllBinaryLayerManager, keyAsInteger: int) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 
-GameInputProcessor.instance = GameInputProcessor()
+def _GameInputProcessor_instance() -> object:
+    return GameInputProcessor()
+
+lazy_static(GameInputProcessor, "instance", _GameInputProcessor_instance)
 

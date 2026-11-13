@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class MineWeaponResources(BasicGameResources):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.DROP_TEXT_RESOURCE: str = "/mine_drop_text_20_by_20.png"
@@ -30,6 +30,7 @@ class MineWeaponResources(BasicGameResources):
 
     @staticmethod
     def getInstance() -> MineWeaponResources:
+        from org.allbinary.logic.NullUtil import NullUtil
         if MineWeaponResources.instance == NullUtil.getInstance().NULL_OBJECT:
             MineWeaponResources.instance = MineWeaponResources()
         return MineWeaponResources.instance
@@ -46,5 +47,12 @@ class MineWeaponResources(BasicGameResources):
         SIZE_SIX: str = SMALL
         SIZE: list[str] = [SMALL, MEDIUM, SIZE_FOUR, SIZE_FIVE, SIZE_SIX]
         super().init(ROOT, SIZE)
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _MineWeaponResources_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(MineWeaponResources, "instance", _MineWeaponResources_instance)
 

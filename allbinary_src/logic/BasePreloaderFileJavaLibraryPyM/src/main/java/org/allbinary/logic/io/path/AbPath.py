@@ -21,6 +21,8 @@ class AbPath:
     NETWORK_SEP: str = ":/"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.abPathData: AbPathData = AbPathData.getInstance()
         self.abPathUtil: PathUtil = PathUtil.getInstance()
@@ -34,6 +36,7 @@ class AbPath:
 
     @staticmethod
     def createAbPath() -> AbPath:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
             return AbPath(EMPTY_STRING, EMPTY_STRING)
@@ -42,6 +45,7 @@ class AbPath:
     
 
     def __init__(self, aPath: str, name: str) -> None:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self._init_fields()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if not stringValidationUtil.isEmpty(aPath):
@@ -75,6 +79,7 @@ class AbPath:
 
     # throws Exception
     def getPathFromPath(self, aPath: str) -> str:
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
         filePathData: FilePathData = FilePathData.getInstance()
         tempPath: str = aPath
         if not self.hasSchema():
@@ -101,6 +106,7 @@ class AbPath:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         if self.hasSchema():
             stringBuffer.append(self.schema)
@@ -114,6 +120,9 @@ class AbPath:
     
 
     def toFileSystemString(self) -> str:
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.io.file.FilePathUtil import FilePathUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if self.hasSchema():
             filePathData: FilePathData = FilePathData.getInstance()
             stringBuffer: StringMaker = StringMaker()
@@ -133,12 +142,12 @@ class AbPath:
 
     def setPath(self, path: str) -> None:
         self.path = path
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.io.file.FilePathUtil import FilePathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.io.file.FilePathUtil import FilePathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 from org.allbinary.logic.io.path.AbPathData import AbPathData
 from org.allbinary.logic.io.path.PathUtil import PathUtil
 

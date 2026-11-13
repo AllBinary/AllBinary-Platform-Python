@@ -21,6 +21,7 @@ from org.allbinary.game.IntermissionInterface import IntermissionInterface
 class Intermission(IntermissionInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.enabled: bool = False
         self.timeElapsedHelper: TimeDelayHelper = TimeDelayHelper(0)
         self.intermissionEnableListener: IntermissionEnableListenerInterface = NullIntermissionEnableListener.getInstance()
@@ -35,6 +36,7 @@ class Intermission(IntermissionInterface):
     
 
     def getTimeDelayHelper(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         return self.timeElapsedHelper
     
 
@@ -47,7 +49,7 @@ class Intermission(IntermissionInterface):
 
     def isEnabled(self) -> bool:
         return self.enabled
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 from org.allbinary.game.NullIntermissionEnableListener import NullIntermissionEnableListener
 
 

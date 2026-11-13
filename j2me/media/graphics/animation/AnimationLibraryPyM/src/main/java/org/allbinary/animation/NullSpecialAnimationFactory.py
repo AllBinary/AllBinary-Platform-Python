@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 
@@ -34,19 +35,25 @@ class NullSpecialAnimationFactory(AnimationInterfaceFactoryInterface, Procedural
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
         return SpecialAnimation.getInstance()
     
 
     # throws Exception
     def getInstanceAnimation(self, animationInterface: Animation) -> Animation:
+        from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
         return SpecialAnimation.getInstance()
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 
-NullSpecialAnimationFactory.NULL_SPECIAL_ANIMATION_FACTORY = NullSpecialAnimationFactory()
+def _NullSpecialAnimationFactory_NULL_SPECIAL_ANIMATION_FACTORY() -> object:
+    return NullSpecialAnimationFactory()
+
+lazy_static(NullSpecialAnimationFactory, "NULL_SPECIAL_ANIMATION_FACTORY", _NullSpecialAnimationFactory_NULL_SPECIAL_ANIMATION_FACTORY)
 

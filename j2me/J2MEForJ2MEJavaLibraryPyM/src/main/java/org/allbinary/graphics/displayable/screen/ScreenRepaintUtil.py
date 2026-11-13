@@ -22,6 +22,7 @@ class ScreenRepaintUtil:
 
     @staticmethod
     def repaint(displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         pass
 # from javax.microedition.lcdui.Displayable import Displayable
 

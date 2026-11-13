@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
-# from javax.microedition.rms.RecordComparator import RecordComparator
+from javax.microedition.rms.RecordComparator import RecordComparator
 
 
 class ScoreComparator(RecordComparator):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.isHighestBest: bool = None
     
@@ -35,6 +36,8 @@ class ScoreComparator(RecordComparator):
     
 
     def compare(self, recordOne: list[int], recordTwo: list[int]) -> int:
+        from java.io.DataInputStream import DataInputStream
+        from org.allbinary.string.CommonStrings import CommonStrings
         byteArrayInputStreamOne: ByteArrayInputStream = ByteArrayInputStream(recordOne)
         inputStreamOne: DataInputStream = DataInputStream(byteArrayInputStreamOne)
         byteArrayInputStreamTwo: ByteArrayInputStream = ByteArrayInputStream(recordTwo)
@@ -81,7 +84,7 @@ class ScoreComparator(RecordComparator):
 # from java.io.DataInputStream import DataInputStream
 # from java.io.EOFException import EOFException
 # from java.io.IOException import IOException
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

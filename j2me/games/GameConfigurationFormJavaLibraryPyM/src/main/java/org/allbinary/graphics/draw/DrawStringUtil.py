@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DrawStringUtil:
     instance: DrawStringUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.anchor: int = Anchor.TOP_LEFT
 
@@ -34,6 +37,9 @@ class DrawStringUtil:
     
 
     def drawCenterString(self, graphics: Graphics, string: str, offset: int, length: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         width: int = (graphics.getFont().substringWidth(string, offset, length) >> 1)
         try:
             graphics.drawSubstring(string, offset, length, x - width, y, self.anchor)
@@ -42,6 +48,7 @@ class DrawStringUtil:
     
 
     def drawCenterStrings(self, graphics: Graphics, stringArray: list[str], maxWidth: int, charHeight: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         extraLines: int = 0
         for index in range(0, len(stringArray)):
             string: str = stringArray[index]
@@ -68,15 +75,18 @@ class DrawStringUtil:
                 extraLines -= 1
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-DrawStringUtil.instance = DrawStringUtil()
+def _DrawStringUtil_instance() -> object:
+    return DrawStringUtil()
+
+lazy_static(DrawStringUtil, "instance", _DrawStringUtil_instance)
 

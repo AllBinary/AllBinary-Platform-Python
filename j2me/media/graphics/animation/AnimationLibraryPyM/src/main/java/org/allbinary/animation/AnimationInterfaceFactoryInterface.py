@@ -28,7 +28,8 @@ class AnimationInterfaceFactoryInterface(BasicAnimationInterfaceFactoryInterface
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         raise NotImplementedError()
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HttpData:
@@ -33,13 +34,17 @@ class HttpData:
     
 
     def __init__(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self._init_fields()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         self.EQUALS = commonSeps.EQUALS
         self.PARAM_SEP = commonSeps.AMPERSAND
         self.URL_PARAM_SEP = commonSeps.QUESTION
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-HttpData.instance = HttpData()
+def _HttpData_instance() -> object:
+    return HttpData()
+
+lazy_static(HttpData, "instance", _HttpData_instance)
 

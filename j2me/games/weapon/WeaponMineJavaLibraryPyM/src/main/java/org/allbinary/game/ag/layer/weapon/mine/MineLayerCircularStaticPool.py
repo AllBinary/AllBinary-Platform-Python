@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MineLayerCircularStaticPool:
-    WEAPON_LAYER_CIRCULAR_STATIC_POOL: WeaponLayerCircularPool = WeaponLayerCircularPool()
+    WEAPON_LAYER_CIRCULAR_STATIC_POOL: WeaponLayerCircularPool = None
     
 
     # throws Exception
@@ -27,13 +27,22 @@ class MineLayerCircularStaticPool:
     def init(viewPositionFactoryInterface: ViewPositionFactoryInterface) -> None:
         from org.allbinary.game.ag.layer.weapon.mine.MineCountedPickedUpLayerInterfaceFactory import MineCountedPickedUpLayerInterfaceFactory
         from org.allbinary.game.ag.layer.weapon.mine.MineLayerFactory import MineLayerFactory
+        from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
         MineCountedPickedUpLayerInterfaceFactory.init()
         MineLayerCircularStaticPool.WEAPON_LAYER_CIRCULAR_STATIC_POOL.initAllBinaryLayerCircularPool(MineLayerFactory(viewPositionFactoryInterface), 20)
     
 
     @staticmethod
     def getInstance() -> WeaponLayerCircularPool:
+        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
         return MineLayerCircularStaticPool.WEAPON_LAYER_CIRCULAR_STATIC_POOL
-from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
+# from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+# from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
 
+
+def _MineLayerCircularStaticPool_WEAPON_LAYER_CIRCULAR_STATIC_POOL() -> object:
+    from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+    return WeaponLayerCircularPool()
+
+lazy_static(MineLayerCircularStaticPool, "WEAPON_LAYER_CIRCULAR_STATIC_POOL", _MineLayerCircularStaticPool_WEAPON_LAYER_CIRCULAR_STATIC_POOL)
 

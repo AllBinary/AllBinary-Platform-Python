@@ -26,6 +26,10 @@ class KeyPressesAI(BasicAI):
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.HashtableUtil import HashtableUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.keys = [None] * (hashtable.size())
@@ -37,6 +41,7 @@ class KeyPressesAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.on:
             for index in range(0, len(self.keys)):
                 super().processKeyAI(int(self.keys[index]))
@@ -66,10 +71,10 @@ class KeyPressesAI(BasicAI):
 
     def isOn(self) -> bool:
         return self.on
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.util.HashtableUtil import HashtableUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Layer:
-    ID: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
+    ID: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.x: int = 0
         self.y: int = 0
@@ -87,6 +88,9 @@ class Layer:
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         canvasStrings: CanvasStrings = CanvasStrings.getInstance()
         self.logUtil.putF(commonStrings.NOT_IMPLEMENTED, self, canvasStrings.PAINT)
@@ -105,11 +109,19 @@ class Layer:
     
 
     def toStringAppend(self, stringBuffer: StringMaker) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _Layer_ID() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(0)
+
+lazy_static(Layer, "ID", _Layer_ID)
 

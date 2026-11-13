@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnimationFactorySpriteScaleUtil:
     instance: AnimationFactorySpriteScaleUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
+        from org.allbinary.image.ImageCache import ImageCache
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+        from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
+        from org.allbinary.logic.math.J2SEMath import J2SEMath
+        from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
         self.imageCache: ImageCache = ImageCacheFactory.getInstance()
         self.imageScaleUtil: ImageScaleUtil = ImageScaleUtil.getInstance()
         self.openGLUtil: OpenGLUtil = OpenGLUtil.getInstance()
@@ -38,6 +45,9 @@ class AnimationFactorySpriteScaleUtil:
 
     # throws Exception
     def createImage(self, image: Image, width: int, height: int, scaleWidth: int, scaleHeight: int) -> Sprite:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
+        from org.allbinary.game.layer.SpriteFactory import SpriteFactory
         spriteFactory: SpriteFactory = SpriteFactory.getInstance()
         sprite: Sprite = None
         scaledImage: Image = None
@@ -69,18 +79,21 @@ class AnimationFactorySpriteScaleUtil:
         return sprite
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.game.layer.SpriteFactory import SpriteFactory
-from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.J2SEMath import J2SEMath
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.layer.SpriteFactory import SpriteFactory
+# from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.J2SEMath import J2SEMath
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AnimationFactorySpriteScaleUtil.instance = AnimationFactorySpriteScaleUtil()
+def _AnimationFactorySpriteScaleUtil_instance() -> object:
+    return AnimationFactorySpriteScaleUtil()
+
+lazy_static(AnimationFactorySpriteScaleUtil, "instance", _AnimationFactorySpriteScaleUtil_instance)
 

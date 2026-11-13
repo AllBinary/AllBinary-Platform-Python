@@ -22,6 +22,7 @@ class HardwareInterface:
     
 
     def getComponent(self, index: int) -> HardwareComponentInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
         raise NotImplementedError()
     
 
@@ -37,8 +38,9 @@ class HardwareInterface:
     
 
     def difference(self, hardwareInterface: HardwareInterface) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
-from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

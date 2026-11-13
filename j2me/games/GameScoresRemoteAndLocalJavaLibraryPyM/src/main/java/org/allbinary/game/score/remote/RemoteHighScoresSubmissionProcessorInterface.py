@@ -22,8 +22,10 @@ class RemoteHighScoresSubmissionProcessorInterface:
     
 
     def process(self, remoteHighScores: RemoteHighScores, abeClientInformation: AbeClientInformationInterface, highScore: HighScore) -> None:
+        from org.allbinary.game.score.HighScore import HighScore
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         raise NotImplementedError()
-from org.allbinary.game.score.HighScore import HighScore
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.game.score.HighScore import HighScore
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

@@ -26,7 +26,8 @@ class LaptopGameInputMapping(PCGameInputMapping):
 
     def getDefault(self) -> InputToGameKeyMapping:
         from org.allbinary.game.input.LaptopDefaultGameInputMapping import LaptopDefaultGameInputMapping
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         return LaptopDefaultGameInputMapping().getInputMapping()
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
 

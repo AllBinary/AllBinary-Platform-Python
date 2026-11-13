@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BaseMenuBehavior:
@@ -28,10 +29,12 @@ class BaseMenuBehavior:
 
     # throws Exception
     def onDisplayChangeEvent(self, allBinaryGameCanvas: AllBinaryGameCanvas, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
         pass
     
 
     def initSpecialPaint(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         allBinaryGameCanvas.setNonBotPaintableP(NullPaintable.getInstance())
     
 
@@ -52,9 +55,12 @@ class BaseMenuBehavior:
 
     def closeMenu(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
         pass
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
 
 
-BaseMenuBehavior.instance = BaseMenuBehavior()
+def _BaseMenuBehavior_instance() -> object:
+    return BaseMenuBehavior()
+
+lazy_static(BaseMenuBehavior, "instance", _BaseMenuBehavior_instance)
 

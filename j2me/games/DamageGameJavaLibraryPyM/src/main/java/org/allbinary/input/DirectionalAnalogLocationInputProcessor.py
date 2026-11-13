@@ -22,6 +22,10 @@ from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSou
 class DirectionalAnalogLocationInputProcessor(AnalogLocationInputProcessor, GameKeyEventSourceInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.inputProcessorArray: list[GameInputProcessor] = None
         self.gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
@@ -34,6 +38,9 @@ class DirectionalAnalogLocationInputProcessor(AnalogLocationInputProcessor, Game
     
 
     def __init__(self, inputProcessorArray: list[GameInputProcessor]) -> None:
+        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__()
         self._init_fields()
         self.inputProcessorArray = inputProcessorArray
@@ -50,6 +57,10 @@ class DirectionalAnalogLocationInputProcessor(AnalogLocationInputProcessor, Game
     
 
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, analogLocationInput: AnalogLocationInput) -> None:
+        from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             customGPoint: CustomGPoint = None
             customGPoint = analogLocationInput.getCustomGPoint()
@@ -76,14 +87,14 @@ class DirectionalAnalogLocationInputProcessor(AnalogLocationInputProcessor, Game
 
     def getSourceId(self) -> int:
         return 0
-from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.graphics.CustomGPoint import CustomGPoint
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.graphics.CustomGPoint import CustomGPoint
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

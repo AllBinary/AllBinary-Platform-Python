@@ -15,14 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ai.BasicAI import BasicAI
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 
 class HorizontalScreenPatrolAI(BasicAI):
-    SOUND: int = SmallIntegerSingletonFactory.getInstance().getAt(433)
+    SOUND: int = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.media.audio.PlayerQueue import PlayerQueue
+        from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.keyDirection: int = Canvas.LEFT
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.firingX: int = self.displayInfoSingleton.getLastHalfWidth()
@@ -34,6 +40,10 @@ class HorizontalScreenPatrolAI(BasicAI):
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.sound = hashtable.get(HorizontalScreenPatrolAI.SOUND)
@@ -43,6 +53,11 @@ class HorizontalScreenPatrolAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         super().processKeyAI(self.keyDirection)
         if self.timeDelayHelper.isTimeTNT():
             layerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
@@ -68,16 +83,23 @@ class HorizontalScreenPatrolAI(BasicAI):
     def nextDirection(self) -> None:
         pass
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.media.audio.PlayerQueue import PlayerQueue
-from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-from org.allbinary.media.audio.Sound import Sound
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.audio.PlayerQueue import PlayerQueue
+# from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+# from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
 
+
+def _HorizontalScreenPatrolAI_SOUND() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(433)
+
+lazy_static(HorizontalScreenPatrolAI, "SOUND", _HorizontalScreenPatrolAI_SOUND)
 

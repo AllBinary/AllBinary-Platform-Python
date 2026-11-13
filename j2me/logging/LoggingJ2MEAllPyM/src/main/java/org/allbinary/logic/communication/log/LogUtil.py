@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -44,6 +45,10 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
             className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
@@ -59,6 +64,10 @@ class LogUtil:
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
             hashCodeValue: int = TsUtil.getInstance().hashCode(anyType)
@@ -67,12 +76,15 @@ class LogUtil:
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         print(self.LOG_SUCCESS, end="")
         print(message)
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

@@ -21,6 +21,8 @@ from org.allbinary.canvas.Processor import Processor
 class StartIntermissionProcessor(Processor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameCanvas: AllBinaryGameCanvas = None
@@ -38,7 +40,7 @@ class StartIntermissionProcessor(Processor):
         if self.gameCanvas.getStartIntermissionInterface().getTimeDelayHelper().isElapsedTNT(self.WAIT):
             self.logUtil.putF("Intermission End", self, self.commonStrings.PROCESS)
             self.gameCanvas.getStartIntermissionInterface().setEnabled(False)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

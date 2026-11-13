@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import os
 import platform
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -55,5 +56,8 @@ class SystemProperties:
         return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~")}.get(self.USER_HOME, os.environ.get(str(self.USER_HOME)))
 
 
-SystemProperties.instance = SystemProperties()
+def _SystemProperties_instance() -> object:
+    return SystemProperties()
+
+lazy_static(SystemProperties, "instance", _SystemProperties_instance)
 

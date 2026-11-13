@@ -22,9 +22,11 @@ class AbFileLocalInputStream(AbFileInputStream):
     
 
     def __init__(self, file: AbFile) -> None:
-        super().__init__(AbFileNativeUtil.get(file))
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+        super().__init__(AbFileNativeUtil.get(file).getPath())
 # from java.io.FileNotFoundException import FileNotFoundException
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
 
 

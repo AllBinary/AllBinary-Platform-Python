@@ -21,6 +21,7 @@ from org.allbinary.animation.image.ImageAnimation import ImageAnimation
 class ImageSegmentAnimation(ImageAnimation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.startX: int = None
         self.startY: int = None
         self.drawWidth: int = None
@@ -30,6 +31,9 @@ class ImageSegmentAnimation(ImageAnimation):
     
 
     def __init__(self, image: Image, sequenceArray: list[int], animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(image, animationBehavior)
         self._init_fields()
         self.startX = 0
@@ -69,6 +73,7 @@ class ImageSegmentAnimation(ImageAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -104,7 +109,7 @@ class ImageSegmentAnimation(ImageAnimation):
         self.drawHeight = drawHeight
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

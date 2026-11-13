@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SpecialMessageUtil:
@@ -28,6 +29,11 @@ class SpecialMessageUtil:
 
     def get(self) -> str:
         from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.system.Memory import Memory
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(Memory.getInfo())
         stringBuffer.append(CommonSeps.getInstance().SPACE)
@@ -39,12 +45,15 @@ class SpecialMessageUtil:
         else:
             stringBuffer.append(OpenGLFeatureFactory.getInstance().OPENGL_MINIMUM.getName())
         return str(stringBuffer)
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.system.Memory import Memory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.system.Memory import Memory
 
 
-SpecialMessageUtil.SINGLETON = SpecialMessageUtil()
+def _SpecialMessageUtil_SINGLETON() -> object:
+    return SpecialMessageUtil()
+
+lazy_static(SpecialMessageUtil, "SINGLETON", _SpecialMessageUtil_SINGLETON)
 

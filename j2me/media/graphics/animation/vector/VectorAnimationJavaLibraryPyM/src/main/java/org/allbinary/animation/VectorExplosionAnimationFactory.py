@@ -21,12 +21,15 @@ from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import
 class VectorExplosionAnimationFactory(ProceduralAnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.vectorExplosionGenerator: VectorExplosionGenerator = VectorExplosionGenerator.getInstance()
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, basicColor: BasicColor, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self._init_fields()
         self.animationBehaviorFactory = animationBehaviorFactory
         self.setBasicColorP(basicColor)
@@ -43,13 +46,15 @@ class VectorExplosionAnimationFactory(ProceduralAnimationInterfaceFactoryInterfa
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 from org.allbinary.animation.VectorExplosionGenerator import VectorExplosionGenerator
 
 

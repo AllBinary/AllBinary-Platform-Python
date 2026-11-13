@@ -15,7 +15,8 @@
 
 from __future__ import annotations
 
-# from java.io.Closeable import Closeable
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.io.Closeable import Closeable
 
 
 class NullCloseable(Closeable):
@@ -28,5 +29,8 @@ class NullCloseable(Closeable):
 # from java.io.IOException import IOException
 
 
-NullCloseable.NULL_CLOSEABLE = NullCloseable()
+def _NullCloseable_NULL_CLOSEABLE() -> object:
+    return NullCloseable()
+
+lazy_static(NullCloseable, "NULL_CLOSEABLE", _NullCloseable_NULL_CLOSEABLE)
 

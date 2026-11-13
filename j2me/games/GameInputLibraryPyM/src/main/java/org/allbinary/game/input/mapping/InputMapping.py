@@ -20,6 +20,12 @@ from __future__ import annotations
 class InputMapping:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
@@ -49,6 +55,11 @@ class InputMapping:
     
 
     def remove(self, input: Input, mappedToInput: Input) -> None:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         stringBuffer.append(CommonLabels.getInstance().START_LABEL)
@@ -81,6 +92,8 @@ class InputMapping:
     
 
     def add(self, input: Input, mappedToInput: Input) -> None:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getMappedInput(input)
         if not list_.contains(mappedToInput):
             list_.add(mappedToInput)
@@ -88,10 +101,14 @@ class InputMapping:
     
 
     def isMapped(self, input: Input) -> bool:
+        from org.allbinary.game.input.Input import Input
         return self.mappedList.contains(input)
     
 
     def getMappedInput(self, id: Input) -> BasicArrayList:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         mappingInputCanBeNullList: object = self.hashtable.get(id)
         if mappingInputCanBeNullList is None:
             list_: BasicArrayList = BasicArrayListD()
@@ -101,16 +118,17 @@ class InputMapping:
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.hashtable
-from org.allbinary.game.input.Input import Input
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

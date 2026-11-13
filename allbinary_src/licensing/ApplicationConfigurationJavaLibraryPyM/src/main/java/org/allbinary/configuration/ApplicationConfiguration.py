@@ -3,13 +3,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ApplicationConfiguration:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.fullscreen: bool = True
         self.showTitleBar: bool = False
@@ -19,12 +20,15 @@ class ApplicationConfiguration:
 
     @staticmethod
     def getInstance() -> ApplicationConfiguration:
+        from org.allbinary.logic.NullUtil import NullUtil
         if ApplicationConfiguration.instance == NullUtil.getInstance().NULL_OBJECT:
             ApplicationConfiguration.instance = ApplicationConfiguration()
         return ApplicationConfiguration.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.io.file.FileFactory import FileFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             if FileFactory.getInstance().isFile(self.FILE):
@@ -38,6 +42,10 @@ class ApplicationConfiguration:
 
     # throws Exception
     def read(self) -> None:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         fileInputStreamFactory: FileStreamFactory = FileStreamFactory.getInstance()
         fileInputStream: InputStream = fileInputStreamFactory.getFileInputStreamInstance(StringUtil.getInstance().EMPTY_STRING, self.FILE)
         dataInputStream: AbDataInputStream = AbDataInputStream(fileInputStream)
@@ -67,6 +75,13 @@ class ApplicationConfiguration:
 
     # throws Exception
     def write(self) -> None:
+        from java.io.Closeable import Closeable
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.io.NullCloseable import NullCloseable
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         closeable: Closeable = NullCloseable.NULL_CLOSEABLE
         try:
             self.logUtil.putF("Write Configuration: " + str(self), self, "write")
@@ -95,6 +110,9 @@ class ApplicationConfiguration:
 
     # throws Exception
     def update(self, gameFeature: Feature) -> None:
+        from org.allbinary.game.configuration.feature.Feature import Feature
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         if gameFeature == MainFeatureFactory.getInstance().FULL_SCREEN:
             features: Features = Features.getInstance()
             if features.isFeature(gameFeature):
@@ -132,6 +150,7 @@ class ApplicationConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("isFullscreen: ")
         stringBuffer.appendboolean(self.isFullscreen())
@@ -146,18 +165,25 @@ class ApplicationConfiguration:
 # from java.io.Closeable import Closeable
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
-from org.allbinary.game.configuration.feature.Feature import Feature
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-from org.allbinary.logic.io.NullCloseable import NullCloseable
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.FileFactory import FileFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.feature.Feature import Feature
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+# from org.allbinary.logic.io.NullCloseable import NullCloseable
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.FileFactory import FileFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _ApplicationConfiguration_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(ApplicationConfiguration, "instance", _ApplicationConfiguration_instance)
 

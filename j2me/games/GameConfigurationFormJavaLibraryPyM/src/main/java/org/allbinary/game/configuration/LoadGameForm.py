@@ -21,11 +21,14 @@ from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 class LoadGameForm(CommandForm):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.MEUtil import MEUtil
         self.meUtil: MEUtil = MEUtil.getInstance()
         self.areChoices: bool = False
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -34,6 +37,8 @@ class LoadGameForm(CommandForm):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         self.removeAllCommands()
         self.addCommand(gameCommandsFactory.LOAD_FILE)
@@ -44,6 +49,12 @@ class LoadGameForm(CommandForm):
 
     # throws Exception
     def update(self) -> None:
+        from javax.microedition.lcdui.Choice import Choice
+        from javax.microedition.lcdui.Item import Item
+        from javax.microedition.lcdui.StringItem import StringItem
+        from org.allbinary.game.configuration.persistance.GamePersistanceSingleton import GamePersistanceSingleton
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = GamePersistanceSingleton.getInstance().getIds()
         self.deleteAll()
         if list_.size() > 0:
@@ -56,6 +67,8 @@ class LoadGameForm(CommandForm):
     
 
     def add(self, list_: BasicArrayList, name: str, option: int) -> None:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         choiceGroup: ChoiceGroup = self.getChoiceGroup(list_, name, option)
         if list_.size() > 0:
             choiceGroup.setSelectedIndex(0, True)
@@ -63,6 +76,11 @@ class LoadGameForm(CommandForm):
     
 
     def getChoiceGroup(self, list_: BasicArrayList, name: str, option: int) -> ChoiceGroup:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         METHOD_NAME: str = "getChoiceGroup"
         ADDING_CHOICE: str = "Adding Choice: "
         choiceGroup: ChoiceGroup = ChoiceGroup(name, option, StringUtil.getInstance().getArrayInstance(), NullImage.NULL_IMAGE_ARRAY)
@@ -75,6 +93,7 @@ class LoadGameForm(CommandForm):
     
 
     def getSelectedId(self) -> int:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         if self.areChoices:
             choiceGroup: ChoiceGroup = self.get(0)
             return choiceGroup.getSelectedIndex()
@@ -83,6 +102,7 @@ class LoadGameForm(CommandForm):
     
 
     def getSelectedText(self) -> int:
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         if self.areChoices:
             choiceGroup: ChoiceGroup = self.get(0)
             value: int = int(str(choiceGroup.getString(choiceGroup.getSelectedIndex())))
@@ -95,12 +115,12 @@ class LoadGameForm(CommandForm):
 # from javax.microedition.lcdui.Item import Item
 # from javax.microedition.lcdui.NullImage import NullImage
 # from javax.microedition.lcdui.StringItem import StringItem
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.configuration.persistance.GamePersistanceSingleton import GamePersistanceSingleton
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.MEUtil import MEUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.configuration.persistance.GamePersistanceSingleton import GamePersistanceSingleton
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.MEUtil import MEUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

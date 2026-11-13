@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameTypeFactory:
     instance: GameTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.NULL_GAME_TYPE_ARRAY: list[GameType] = [None] * (0)
         self.NONE: GameType = GameType(StringUtil.getInstance().NULL_STRING)
         self.SINGLE_PLAYER: GameType = GameType("Single Player")
@@ -34,9 +36,12 @@ class GameTypeFactory:
     @staticmethod
     def getInstance() -> GameTypeFactory:
         return GameTypeFactory.instance
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.game.GameType import GameType
 
 
-GameTypeFactory.instance = GameTypeFactory()
+def _GameTypeFactory_instance() -> object:
+    return GameTypeFactory()
+
+lazy_static(GameTypeFactory, "instance", _GameTypeFactory_instance)
 

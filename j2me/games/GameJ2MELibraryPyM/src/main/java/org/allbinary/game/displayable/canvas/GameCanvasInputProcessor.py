@@ -21,6 +21,16 @@ from org.allbinary.game.input.InputProcessor import InputProcessor
 class GameCanvasInputProcessor(InputProcessor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
+        from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.allBinaryGameCanvas: AllBinaryGameCanvas = None
         self.downGameKeyEventHandler: DownGameKeyEventHandler = DownGameKeyEventHandler.getInstance()
@@ -40,6 +50,9 @@ class GameCanvasInputProcessor(InputProcessor):
     
 
     def keyPressedByDevice(self, keyCode: int, deviceId: int) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             gameKey: GameKey = self.inputToGameKeyMapping.getInstanceForCanvas(self.allBinaryGameCanvas, keyCode)
             if gameKey != self.NONE:
@@ -56,10 +69,16 @@ class GameCanvasInputProcessor(InputProcessor):
     
 
     def keyReleasedByDevice(self, canvas: Canvas, keyCode: int, deviceId: int) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         self.removeGameKeyEvent(canvas, keyCode, deviceId, False)
     
 
     def removeGameKeyEvent(self, canvas: Canvas, keyCode: int, deviceId: int, repeated: bool) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             gameKey: GameKey = self.inputToGameKeyMapping.getInstanceForCanvas(canvas, keyCode)
             if gameKey != self.NONE:
@@ -72,18 +91,18 @@ class GameCanvasInputProcessor(InputProcessor):
         except Exception as e:
             self.logUtil.put("Key Event Error", self, self.gameInputStrings.REMOVE_KEY_EVENT, e)
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
-from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
+# from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

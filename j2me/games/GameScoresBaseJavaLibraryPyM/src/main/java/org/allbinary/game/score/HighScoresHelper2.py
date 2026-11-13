@@ -21,6 +21,7 @@ from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
 class HighScoresHelper2(HighScoresHelperBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstanceAt(0, 0)
         self.selectedHighScores: HighScores = NullHighScoresSingletonFactory.getInstance()
 
@@ -55,7 +56,7 @@ class HighScoresHelper2(HighScoresHelperBase):
             highScores = self.highScoresArrayP[self.circularIndexUtil.next()]
             index += 1
         self.setSelectedHighScores(highScores)
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
 
 

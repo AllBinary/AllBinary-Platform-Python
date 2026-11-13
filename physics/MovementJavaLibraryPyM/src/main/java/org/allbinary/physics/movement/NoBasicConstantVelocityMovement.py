@@ -22,14 +22,17 @@ class NoBasicConstantVelocityMovement(BasicConstantVelocityMovement):
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(BasicDecimal.ZERO_BIGDECIMAL, BasicVelocityProperties())
     
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         pass
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

@@ -24,7 +24,8 @@ class TimedVectorAnimationFactory(VectorAnimationFactoryInterface):
     def getInstance(self, points: list[list[list[int]]], basicColor: BasicColor) -> VectorAnimation:
         from org.allbinary.animation.TimedVectorAnimation import TimedVectorAnimation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return TimedVectorAnimation(points, basicColor, AnimationBehavior.getInstance())
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

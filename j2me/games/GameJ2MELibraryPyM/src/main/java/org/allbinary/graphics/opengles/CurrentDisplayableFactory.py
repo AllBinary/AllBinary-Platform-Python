@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CurrentDisplayableFactory:
@@ -23,6 +24,15 @@ class CurrentDisplayableFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
+        from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
+        from org.allbinary.game.displayable.canvas.NullDisplayable import NullDisplayable
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
@@ -45,6 +55,9 @@ class CurrentDisplayableFactory:
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.displayable.canvas.GameInputMappingCanvas import GameInputMappingCanvas
+        from org.allbinary.game.displayable.canvas.GameInputMappingInstructionsCanvas import GameInputMappingInstructionsCanvas
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         self._init_fields()
         self.DEFAULT_CHILD_NAME_LIST.add(self.canvasStrings.ABOUT)
         self.DEFAULT_CHILD_NAME_LIST.add(self.canvasStrings.OPTIONS)
@@ -54,6 +67,9 @@ class CurrentDisplayableFactory:
     
 
     def setMyCanvas(self, displayable: MyCanvas) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if isinstance(self.displayable, MyCanvas):
             if displayable.hasChild(self.displayable):
                 PreLogUtil.put(str(StringMaker().append("Child Displayable is already set for: ").append(self.stringUtil.toString(displayable))), self, self.SET_DISPLAYABLE)
@@ -62,20 +78,26 @@ class CurrentDisplayableFactory:
     
 
     def setDisplayable(self, displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         self.displayable = displayable
         self.setOpenGlReadydisplayable(displayable)
     
 
     def setOpenGlReadydisplayable(self, openGlReadydisplayable: Displayable) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         self.openGlReadydisplayable = openGlReadydisplayable
         self.update()
     
 
     def getOpenGlReadydisplayable(self) -> Displayable:
+        from javax.microedition.lcdui.Displayable import Displayable
         return self.openGlReadydisplayable
     
 
     def setRunnable(self, runnable: GameRunnable) -> None:
+        from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         PreLogUtil.put(str(StringMaker().append(self.RUNNABLE).append(self.stringUtil.toString(runnable))), self, self.SET_RUNNABLE)
         self.runnable = runnable
         if self.usedRunnable != self.runnable:
@@ -85,6 +107,10 @@ class CurrentDisplayableFactory:
     
 
     def clearRunnable(self) -> None:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.thread.NullRunnable import NullRunnable
         PreLogUtil.put(str(StringMaker().append(self.RUNNABLE).append(self.stringUtil.toString(NullRunnable.getInstance()))), self, self.CLEAR_RUNNABLE)
         self.setUsedRunnable(NullWaitGameRunnable.getInstance())
     
@@ -93,6 +119,17 @@ class CurrentDisplayableFactory:
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.game.displayable.canvas.DemoCanvas import DemoCanvas
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
+        from org.allbinary.game.layer.SWTUtil import SWTUtil
+        from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.thread.NullRunnable import NullRunnable
         with self._lock:  # synchronized (self)
             commonSeps: CommonSeps = CommonSeps.getInstance()
             features: Features = Features.getInstance()
@@ -113,40 +150,49 @@ class CurrentDisplayableFactory:
     
 
     def getDisplayable(self) -> Displayable:
+        from javax.microedition.lcdui.Displayable import Displayable
         return self.displayable
     
 
     def getUsedRunnable(self) -> GameRunnable:
+        from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
         return self.usedRunnable
     
 
     def setUsedRunnable(self, usedRunnable: GameRunnable) -> None:
+        from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         PreLogUtil.put(str(StringMaker().append(self.RUNNABLE).append(self.stringUtil.toString(self.runnable)).append(CommonSeps.getInstance().COLON_SEP).append(self.stringUtil.toString(usedRunnable))), self, self.SET_USED_RUNNABLE)
         self.usedRunnable = usedRunnable
 # from javax.microedition.lcdui.Displayable import Displayable
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.game.displayable.canvas.DemoCanvas import DemoCanvas
-from org.allbinary.game.displayable.canvas.GameInputMappingCanvas import GameInputMappingCanvas
-from org.allbinary.game.displayable.canvas.GameInputMappingInstructionsCanvas import GameInputMappingInstructionsCanvas
-from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
-from org.allbinary.game.displayable.canvas.NullDisplayable import NullDisplayable
-from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
-from org.allbinary.game.layer.SWTUtil import SWTUtil
-from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
-from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.NullRunnable import NullRunnable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.game.displayable.canvas.DemoCanvas import DemoCanvas
+# from org.allbinary.game.displayable.canvas.GameInputMappingCanvas import GameInputMappingCanvas
+# from org.allbinary.game.displayable.canvas.GameInputMappingInstructionsCanvas import GameInputMappingInstructionsCanvas
+# from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
+# from org.allbinary.game.displayable.canvas.NullDisplayable import NullDisplayable
+# from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
+# from org.allbinary.game.layer.SWTUtil import SWTUtil
+# from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+# from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.NullRunnable import NullRunnable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-CurrentDisplayableFactory.instance = CurrentDisplayableFactory()
+def _CurrentDisplayableFactory_instance() -> object:
+    return CurrentDisplayableFactory()
+
+lazy_static(CurrentDisplayableFactory, "instance", _CurrentDisplayableFactory_instance)
 

@@ -21,8 +21,10 @@ class LicenseCheckRunnableFactory:
     
 
     def getInstance(self, specialDemoGameMidlet: SpecialDemoGameMidlet) -> ABRunnable:
+        from org.allbinary.thread.ABRunnable import ABRunnable
+        from org.allbinary.thread.NullABRunnable import NullABRunnable
         return NullABRunnable.getInstance()
-from org.allbinary.thread.ABRunnable import ABRunnable
-from org.allbinary.thread.NullABRunnable import NullABRunnable
+# from org.allbinary.thread.ABRunnable import ABRunnable
+# from org.allbinary.thread.NullABRunnable import NullABRunnable
 
 

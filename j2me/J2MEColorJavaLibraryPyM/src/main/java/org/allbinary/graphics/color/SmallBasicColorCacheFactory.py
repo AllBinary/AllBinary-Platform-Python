@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SmallBasicColorCacheFactory:
@@ -44,6 +45,7 @@ class SmallBasicColorCacheFactory:
 
     def getAndOrCreate(self, colorAsInt: int) -> BasicColor:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         basicColor: BasicColor = None
         for index in range(0, self.SIZE):
             if self.INDEX_TO_COLOR[index] == colorAsInt:
@@ -52,8 +54,11 @@ class SmallBasicColorCacheFactory:
         basicColor = BasicColorFactory.getInstance().createInstanceAN(colorAsInt & ALPHA_MASK, colorAsInt & 0x00FFFFFF, StringUtil.getInstance().EMPTY_STRING)
         self.add(basicColor)
         return basicColor
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-SmallBasicColorCacheFactory.instance = SmallBasicColorCacheFactory()
+def _SmallBasicColorCacheFactory_instance() -> object:
+    return SmallBasicColorCacheFactory()
+
+lazy_static(SmallBasicColorCacheFactory, "instance", _SmallBasicColorCacheFactory_instance)
 

@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GyroSensorFactory:
-    allBinaryGyroSensor: AllBinaryOrientationSensor = AllBinaryOrientationSensor.NULL_ALLBINARY_ORIENTATION_SENSOR
+    allBinaryGyroSensor: AllBinaryOrientationSensor = None
     
 
     # throws Exception
@@ -33,4 +33,10 @@ class GyroSensorFactory:
     def getInstance() -> AllBinaryOrientationSensor:
         return GyroSensorFactory.allBinaryGyroSensor
 
+
+def _GyroSensorFactory_allBinaryGyroSensor() -> object:
+    from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
+    return AllBinaryOrientationSensor.NULL_ALLBINARY_ORIENTATION_SENSOR
+
+lazy_static(GyroSensorFactory, "allBinaryGyroSensor", _GyroSensorFactory_allBinaryGyroSensor)
 

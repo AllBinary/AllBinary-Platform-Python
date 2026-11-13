@@ -22,7 +22,8 @@ class AccelerateableInterface:
     
 
     def accelerate(self, accelerate: BasicDecimal) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

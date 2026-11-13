@@ -24,6 +24,7 @@ class RotationAnimationInterface(IndexedAnimationInterface, DirectionalInterface
     
 
     def getAngleInfoP(self) -> AngleInfo:
+        from org.allbinary.math.AngleInfo import AngleInfo
         raise NotImplementedError()
     
 
@@ -33,6 +34,6 @@ class RotationAnimationInterface(IndexedAnimationInterface, DirectionalInterface
 
     def previousRotation(self) -> None:
         raise NotImplementedError()
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

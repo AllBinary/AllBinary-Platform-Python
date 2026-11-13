@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HashtableUtil:
@@ -33,6 +34,7 @@ class HashtableUtil:
     
 
     def putAll(self, fromHashtable: ABHashtable[object, object], hashtable: ABHashtable[object, object]) -> None:
+        from java.util.Enumeration import Enumeration
         enumeration: Enumeration = fromHashtable.keys()
         keyCanBeNull: object = None
         valueCanBeNull: object = None
@@ -46,6 +48,7 @@ class HashtableUtil:
     
 
     def getKeysAsArray(self, hashtable: ABHashtable[object, object]) -> list[object]:
+        from java.util.Enumeration import Enumeration
         objectArray: list[object] = [None] * (hashtable.size())
         index: int = 0
         enumeration: Enumeration = hashtable.keys()
@@ -56,15 +59,19 @@ class HashtableUtil:
 
     def getKeysAsList(self, hashtable: ABHashtable[object, object]) -> BasicArrayList:
         from org.allbinary.util.BasicArrayListS import BasicArrayListS
+        from java.util.Enumeration import Enumeration
         list_: BasicArrayList = BasicArrayListS(hashtable.size())
         enumeration: Enumeration = hashtable.keys()
         while self.enumerationUtil.hasMoreElements(enumeration):
             list_.add(self.enumerationUtil.nextElement(enumeration))
         return list_
 # from java.util.Enumeration import Enumeration
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 from org.allbinary.util.EnumerationUtil import EnumerationUtil
 
 
-HashtableUtil.instance = HashtableUtil()
+def _HashtableUtil_instance() -> object:
+    return HashtableUtil()
+
+lazy_static(HashtableUtil, "instance", _HashtableUtil_instance)
 

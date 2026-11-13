@@ -27,6 +27,10 @@ class DemoCanvasProgressUtil:
 
     @staticmethod
     def showProgressOptionallyInTheBackground(demoCanvas: DemoCanvas, background: bool) -> None:
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.graphics.paint.PaintableComposite import PaintableComposite
+        from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
         progressCanvas.startBackground(background)
         paintableArray: list[PaintableInterface] = [None] * (2)
@@ -34,9 +38,9 @@ class DemoCanvasProgressUtil:
         paintableArray[1] = demoCanvas.getDefaultPaintableInterface()
         demoCanvas.setDefaultPaintableInterface(PaintableComposite(paintableArray))
         demoCanvas.setPaintableInterface(demoCanvas.getDefaultPaintableInterface())
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.graphics.paint.PaintableComposite import PaintableComposite
-from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.graphics.paint.PaintableComposite import PaintableComposite
+# from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 

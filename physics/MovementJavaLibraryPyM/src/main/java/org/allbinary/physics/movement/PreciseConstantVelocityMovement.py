@@ -9,6 +9,7 @@ from org.allbinary.physics.movement.BasicConstantVelocityMovement import BasicCo
 class PreciseConstantVelocityMovement(BasicConstantVelocityMovement):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
         self.accumulatedX: int = 0
         self.accumulatedY: int = 0
         self.accumulatedZ: int = 0
@@ -16,16 +17,22 @@ class PreciseConstantVelocityMovement(BasicConstantVelocityMovement):
     
 
     def __init__(self, basicDecimal: BasicDecimal, velocityProperties: BasicVelocityProperties) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(basicDecimal, velocityProperties)
         self._init_fields()
     
 
     def init(self, speedBasicDecimal: BasicDecimal, angle: int, otherAngle: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         pass
     
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.MathUtil import MathUtil
         mathUtil: MathUtil = MathUtil.getInstance()
         velocityProperties: BasicVelocityProperties = self.getVelocityProperties()
         self.accumulatedX = int((self.accumulatedX + velocityProperties.getVelocityXBasicDecimalP().getUnscaled()))
@@ -38,10 +45,10 @@ class PreciseConstantVelocityMovement(BasicConstantVelocityMovement):
             self.accumulatedY = 0
         if mathUtil.abs(self.accumulatedZ) > self.factorValue:
             self.accumulatedZ = 0
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
 
 

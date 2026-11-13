@@ -22,10 +22,12 @@ class PaintableInterface:
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         raise NotImplementedError()
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         raise NotImplementedError()
 # from javax.microedition.lcdui.Graphics import Graphics
 

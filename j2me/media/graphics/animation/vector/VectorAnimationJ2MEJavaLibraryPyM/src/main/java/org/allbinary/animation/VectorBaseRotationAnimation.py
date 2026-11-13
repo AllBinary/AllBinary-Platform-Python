@@ -22,10 +22,14 @@ from org.allbinary.animation.VectorAnimationInterface import VectorAnimationInte
 class VectorBaseRotationAnimation(RotationAnimation, VectorAnimationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         self.currentPoints: list[list[list[int]]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY_ARRAY
     
 
     def __init__(self, angleInfo: AngleInfo, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(angleInfo, CircularIndexUtil.createInstance(360 / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
         self._init_fields()
         self.setPoints(currentPoints)
@@ -62,10 +66,12 @@ class VectorBaseRotationAnimation(RotationAnimation, VectorAnimationInterface):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP(graphics, self.basicColor)
         try:
             nextPointX: int = 0
@@ -93,13 +99,24 @@ class VectorBaseRotationAnimation(RotationAnimation, VectorAnimationInterface):
     
 
     def setPoints(self, currentPoints: list[list[list[int]]]) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.currentPoints = currentPoints
         self.circularIndexUtil = CircularIndexUtil.createInstance(len(self.currentPoints))
+    
+
+    def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getBasicColorP()
+    
+
+    def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        super().setBasicColorP(basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

@@ -22,12 +22,18 @@ from org.allbinary.game.input.event.RawKeyEventListener import RawKeyEventListen
 class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
         self.textFieldItem: ABTextFieldItem = None
         self.inputFactory: InputFactory = InputFactory.getInstance()
     
 
     def __init__(self, cmdListener: CommandListener, label: str, text: str, maxSize: int, constraints: int, font: Font, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
         from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.form.item.validation.TextItemVisitor import TextItemVisitor
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(cmdListener, label, backgroundBasicColor, foregroundBasicColor)
         self._init_fields()
         stringUtil: StringUtil = StringUtil.getInstance()
@@ -42,6 +48,7 @@ class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
     
 
     def onEventRaw(self, keyCode: int, deviceId: int, repeated: bool) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(self.commonStrings.START).appendint(keyCode)), self, "onEvent")
         self.keyPressedByDevice(keyCode, deviceId)
     
@@ -59,6 +66,10 @@ class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
     
 
     def keyPressedByDevice(self, keyCode: int, deviceId: int) -> None:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.PlatformKeyFactory import PlatformKeyFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         try:
             self.logUtil.putF(str(StringMaker().append(CommonSeps.getInstance().SPACE).appendint(keyCode)), self, self.gameInputStrings.KEY_PRESSED)
             platformKeyFactory: PlatformKeyFactory = PlatformKeyFactory.getInstance()
@@ -76,6 +87,8 @@ class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.J2MEUtil import J2MEUtil
         graphics.setColor(self.backgroundColor)
         graphics.fillRect(0, 0, self.displayInfo.getLastWidth(), self.displayInfo.getLastHeight())
         graphics.setColor(self.foregroundColor)
@@ -86,6 +99,7 @@ class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.textFieldItem.paintXY(graphics, x, y)
     
 
@@ -94,14 +108,14 @@ class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.game.input.PlatformKeyFactory import PlatformKeyFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.form.item.validation.TextItemVisitor import TextItemVisitor
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.PlatformKeyFactory import PlatformKeyFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.form.item.validation.TextItemVisitor import TextItemVisitor
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

@@ -24,7 +24,8 @@ class IconLayerFactory:
     @staticmethod
     def getInstance(animationInterface: Animation, width: int, height: int) -> IconLayer:
         from org.allbinary.game.layer.pickup.IconLayer import IconLayer
+        from org.allbinary.animation.Animation import Animation
         return IconLayer(animationInterface, width, height)
-from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.Animation import Animation
 
 

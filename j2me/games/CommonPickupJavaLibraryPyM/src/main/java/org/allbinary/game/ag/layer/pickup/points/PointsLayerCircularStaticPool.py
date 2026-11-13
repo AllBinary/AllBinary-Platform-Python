@@ -22,17 +22,20 @@ class PointsLayerCircularStaticPool(AllBinaryLayerCircularPool):
     
 
     def __init__(self, allbinaryLayerFactoryInterface: AllBinaryLayerFactoryInterface, total: int) -> None:
+        from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
         super().__init__()
         super().initAllBinaryLayerCircularPool(allbinaryLayerFactoryInterface, total)
     
 
     # throws Exception
     def visit(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         pointsLayer: PointsLayer = self.getNextInstance()
         scoreableInterface: ScoreableInterface = sourceLayerInterface
         pointsLayer.visit(scoreableInterface)
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
 
 

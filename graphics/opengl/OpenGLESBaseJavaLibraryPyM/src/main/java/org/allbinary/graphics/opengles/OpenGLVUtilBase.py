@@ -21,14 +21,17 @@ class OpenGLVUtilBase:
     
 
     def glTexEnvix(self, gl: GL10, target: int, pname: int, param: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def glTexParameterix(self, gl: GL10, target: int, pname: int, param: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def glGenerateMipmap(self, gl: GL10, textureId: int, target: int, generateMipMap: bool) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 

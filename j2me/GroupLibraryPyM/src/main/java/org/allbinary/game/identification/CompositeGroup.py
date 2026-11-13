@@ -20,6 +20,9 @@ from __future__ import annotations
 class CompositeGroup:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.groupInterface: Group = None
         self.list_: BasicArrayList = BasicArrayListD()
@@ -36,6 +39,9 @@ class CompositeGroup:
 
     def add(self, groupInterface: Group) -> None:
         from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         stringBuffer: StringMaker = StringMaker()
@@ -56,11 +62,11 @@ class CompositeGroup:
 
     def getGroup(self) -> Group:
         return self.groupInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

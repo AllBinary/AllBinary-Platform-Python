@@ -22,19 +22,23 @@ class HealLayerCircularStaticPool(AllBinaryLayerCircularPool):
     
 
     def __init__(self, allbinaryLayerFactoryInterface: AllBinaryLayerFactoryInterface, total: int) -> None:
+        from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
         super().__init__()
         super().initAllBinaryLayerCircularPool(allbinaryLayerFactoryInterface, total)
     
 
     # throws Exception
     def visit(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.game.health.HealthInterface import HealthInterface
+        from org.allbinary.game.health.HealthInterfaceCompositeInterface import HealthInterfaceCompositeInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         healLayer: HealLayer = self.getNextInstance()
         healthInterfaceCompositeInterface: HealthInterfaceCompositeInterface = sourceLayerInterface
         healthInterface: HealthInterface = healthInterfaceCompositeInterface.getHealthInterface()
         healLayer.visit(healthInterface)
-from org.allbinary.game.health.HealthInterface import HealthInterface
-from org.allbinary.game.health.HealthInterfaceCompositeInterface import HealthInterfaceCompositeInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
+# from org.allbinary.game.health.HealthInterface import HealthInterface
+# from org.allbinary.game.health.HealthInterfaceCompositeInterface import HealthInterfaceCompositeInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
 
 

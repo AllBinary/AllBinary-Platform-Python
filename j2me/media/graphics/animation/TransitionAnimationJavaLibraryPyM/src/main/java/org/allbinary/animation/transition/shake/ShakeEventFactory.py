@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShakeEventFactory:
@@ -40,5 +41,8 @@ class ShakeEventFactory:
 from org.allbinary.animation.transition.shake.ShakeEvent import ShakeEvent
 
 
-ShakeEventFactory.instance = ShakeEventFactory()
+def _ShakeEventFactory_instance() -> object:
+    return ShakeEventFactory()
+
+lazy_static(ShakeEventFactory, "instance", _ShakeEventFactory_instance)
 

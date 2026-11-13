@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ErrorData:
@@ -34,5 +35,8 @@ class ErrorData:
         self._init_fields()
 
 
-ErrorData.instance = ErrorData()
+def _ErrorData_instance() -> object:
+    return ErrorData()
+
+lazy_static(ErrorData, "instance", _ErrorData_instance)
 

@@ -21,6 +21,7 @@ from org.allbinary.layer.LayerProcessorInterface import LayerProcessorInterface
 class LayerProcessor(LayerProcessorInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.layerManager: LayerManager = None
     
@@ -50,6 +51,6 @@ class LayerProcessor(LayerProcessorInterface):
         size: int = layerManager.getSize()
         for index in range(0, size):
             self.processAt(allBinaryLayerManager, layerManager.getLayerAt(index), index)
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

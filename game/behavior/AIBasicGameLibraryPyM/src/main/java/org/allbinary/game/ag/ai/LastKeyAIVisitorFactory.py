@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.ag.ai.LastKeyAIVisitor import LastKeyAIVisitor
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LastKeyAIVisitorFactory:
-    instance: LastKeyAIVisitor = LastKeyAIVisitor()
+    instance: LastKeyAIVisitor = None
     
 
     @staticmethod
     def getInstance() -> LastKeyAIVisitor:
         return LastKeyAIVisitorFactory.instance
 
+
+def _LastKeyAIVisitorFactory_instance() -> object:
+    from org.allbinary.game.ag.ai.LastKeyAIVisitor import LastKeyAIVisitor
+    return LastKeyAIVisitor()
+
+lazy_static(LastKeyAIVisitorFactory, "instance", _LastKeyAIVisitorFactory_instance)
 

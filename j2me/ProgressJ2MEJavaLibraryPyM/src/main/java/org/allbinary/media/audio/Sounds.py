@@ -20,6 +20,8 @@ from __future__ import annotations
 class Sounds:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.soundStrings: SoundStrings = SoundStrings.getInstance()
@@ -33,6 +35,11 @@ class Sounds:
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         commonLabels: CommonLabels = CommonLabels.getInstance()
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -61,6 +68,9 @@ class Sounds:
 
     # throws Exception
     def stopAll(self) -> None:
+        from javax.microedition.media.Player import Player
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         self.logUtil.putF(self.commonStrings.START, self, self.soundStrings.STOP_ALL)
         soundInterfaceArray: list[Sound] = self.soundsFactoryInterface.getSoundInterfaceArray()
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -75,6 +85,9 @@ class Sounds:
 
     # throws Exception
     def closeAll(self) -> None:
+        from javax.microedition.media.Player import Player
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         self.logUtil.putF(self.commonStrings.START, self, self.soundStrings.CLOSE_ALL)
         soundInterfaceArray: list[Sound] = self.soundsFactoryInterface.getSoundInterfaceArray()
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -86,13 +99,13 @@ class Sounds:
                     player.close()
                     progressCanvas.addPortion(100, self.soundStrings.CLOSING_SOUND, index)
 # from javax.microedition.media.Player import Player
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.audio.SoundStrings import SoundStrings
 
 

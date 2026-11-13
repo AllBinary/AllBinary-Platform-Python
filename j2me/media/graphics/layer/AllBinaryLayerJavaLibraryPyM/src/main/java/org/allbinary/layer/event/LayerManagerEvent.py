@@ -21,25 +21,30 @@ from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventOb
 class LayerManagerEvent(AllBinaryEventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.layerInterface: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
         self.crud: str = None
     
 
     def __init__(self, layerManager: LayerManager, crud: str) -> None:
+        from org.allbinary.layer.LayerManager import LayerManager
         super().__init__(layerManager)
         self._init_fields()
         self.crud = crud
     
 
     def getLayerInterface(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.layerInterface
     
 
     def setLayerInterface(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.layerInterface = layerInterface
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("LayerManagerEvent: \n")
         stringBuffer.append("LayerInterface: ")
@@ -50,8 +55,8 @@ class LayerManagerEvent(AllBinaryEventObject):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.LayerManager import LayerManager
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.LayerManager import LayerManager
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

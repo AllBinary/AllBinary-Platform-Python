@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommonLabels:
     instance: CommonLabels = None
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.WIDTH_LABEL: str = " Width: "
         self.HEIGHT_LABEL: str = " Height: "
         self.END_LABEL: str = "End: "
@@ -43,11 +45,15 @@ class CommonLabels:
 
     @staticmethod
     def getInstance() -> CommonLabels:
+        from jsinterop.annotations.JsMethod import JsMethod
         return CommonLabels.instance
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 
 
-CommonLabels.instance = CommonLabels()
+def _CommonLabels_instance() -> object:
+    return CommonLabels()
+
+lazy_static(CommonLabels, "instance", _CommonLabels_instance)
 

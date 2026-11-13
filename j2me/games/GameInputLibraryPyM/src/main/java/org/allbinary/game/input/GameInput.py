@@ -22,6 +22,9 @@ class GameInput:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameKeyEventList: BasicArrayList = None
@@ -30,6 +33,9 @@ class GameInput:
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, removalGameKeyEventList: BasicArrayList) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.gameKeyEventList = gameKeyEventList
         self.removalGameKeyEventList = removalGameKeyEventList
@@ -41,6 +47,7 @@ class GameInput:
             return self._add_unlocked(gameKeyEvent)
 
     def _add_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         if self.isRemoveDuplicateKeyPresses and self.gameKeyEventList.contains(gameKeyEvent):
             return
         if gameKeyEvent is not None:
@@ -54,6 +61,7 @@ class GameInput:
             return self._addForRemoval_unlocked(gameKeyEvent)
 
     def _addForRemoval_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.removalGameKeyEventList.add(gameKeyEvent)
     
 
@@ -62,6 +70,7 @@ class GameInput:
             return self._isForRemoval_unlocked(gameKeyEvent)
 
     def _isForRemoval_unlocked(self, gameKeyEvent: GameKeyEvent) -> bool:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         return self.removalGameKeyEventList.contains(gameKeyEvent)
     
 
@@ -78,6 +87,8 @@ class GameInput:
             return self._removeNonAIInputGameKeyEvents_unlocked()
 
     def _removeNonAIInputGameKeyEvents_unlocked(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.gameKeyEventList
         gameKeyEvent: GameKeyEvent = None
         index = list_.size()
@@ -92,6 +103,7 @@ class GameInput:
             return self._update_unlocked()
 
     def _update_unlocked(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         removeList: BasicArrayList = self.removalGameKeyEventList
         list_: BasicArrayList = self.gameKeyEventList
         size: int = removeList.size()
@@ -105,16 +117,18 @@ class GameInput:
     
 
     def getRemovalGameKeyEventList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.removalGameKeyEventList
     
 
     def getGameKeyEventList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.gameKeyEventList
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

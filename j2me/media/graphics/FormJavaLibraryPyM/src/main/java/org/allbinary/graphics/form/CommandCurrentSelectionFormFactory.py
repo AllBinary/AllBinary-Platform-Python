@@ -25,16 +25,21 @@ class CommandCurrentSelectionFormFactory:
     def getInstance(title: str, items: list[ABCustomItem], rectangle: Rectangle, formType: FormType, border: int, moveForSmallScreen: bool, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> ScrollSelectionForm:
         from org.allbinary.graphics.form.ScrollSelectionFormNoneFactory import ScrollSelectionFormNoneFactory
         from org.allbinary.graphics.form.CommandCurrentSelectionForm import CommandCurrentSelectionForm
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         if Features.getInstance().isFeature(TouchFeatureFactory.getInstance().TOUCH_ENABLED):
             scrollSelectionForm: ScrollSelectionForm = CommandCurrentSelectionForm(title, items, border, moveForSmallScreen, backgroundBasicColor, foregroundBasicColor)
             scrollSelectionForm.init(rectangle, formType)
             return scrollSelectionForm
         else:
             return ScrollSelectionFormNoneFactory.getInstance()
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 
 

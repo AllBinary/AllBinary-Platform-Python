@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameDifficultyFactory:
@@ -40,5 +41,8 @@ class GameDifficultyFactory:
         return self.level
 
 
-GameDifficultyFactory.instance = GameDifficultyFactory()
+def _GameDifficultyFactory_instance() -> object:
+    return GameDifficultyFactory()
+
+lazy_static(GameDifficultyFactory, "instance", _GameDifficultyFactory_instance)
 

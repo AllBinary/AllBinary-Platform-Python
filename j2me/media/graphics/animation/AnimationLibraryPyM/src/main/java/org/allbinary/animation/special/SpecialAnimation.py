@@ -15,8 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
 from org.allbinary.animation.special.SpecialAnimationInterface import SpecialAnimationInterface
 
 
@@ -30,10 +30,12 @@ class SpecialAnimation(IndexedAnimation, SpecialAnimationInterface):
     
 
     def __init__(self, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(animationBehavior)
     
 
     def nextFrame(self) -> None:
+        from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
         indexedAnimationBehavior: IndexedAnimationBehavior = (self.animationBehaviorP)
         indexedAnimationBehavior.loopIndex += 1
     
@@ -56,8 +58,13 @@ class SpecialAnimation(IndexedAnimation, SpecialAnimationInterface):
 
     def process(self) -> None:
         pass
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
 
 
-SpecialAnimation.NULL_SPECIAL_ANIMATION = SpecialAnimation(IndexedAnimationBehavior(1, 250))
+def _SpecialAnimation_NULL_SPECIAL_ANIMATION() -> object:
+    from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
+    return SpecialAnimation(IndexedAnimationBehavior(1, 250))
+
+lazy_static(SpecialAnimation, "NULL_SPECIAL_ANIMATION", _SpecialAnimation_NULL_SPECIAL_ANIMATION)
 

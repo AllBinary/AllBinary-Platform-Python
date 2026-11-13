@@ -24,10 +24,14 @@ class RandomPatrolAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
     # throws Exception
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.game.ag.ai.scroller.RandomPatrolAI import RandomPatrolAI
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         return RandomPatrolAI(hashtable, ownerLayerInterface, gameInput)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

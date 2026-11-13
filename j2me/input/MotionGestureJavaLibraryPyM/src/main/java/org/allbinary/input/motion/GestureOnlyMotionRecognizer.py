@@ -15,20 +15,22 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.GPointCircularPool import GPointCircularPool
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
 
 
 class GestureOnlyMotionRecognizer(MotionRecognizer):
     index: int = 0
-    pointCircularPool: GPointCircularPool = GPointCircularPool(40)
+    pointCircularPool: GPointCircularPool = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
         self.motionGestureRecognizer: MotionGestureRecognizer = None
         self.id: int = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
         super().__init__()
         self._init_fields()
         self.id = ((setattr(GestureOnlyMotionRecognizer, "index", GestureOnlyMotionRecognizer.index + 1) or GestureOnlyMotionRecognizer.index) - 1)
@@ -37,6 +39,7 @@ class GestureOnlyMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processStartMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         point: CustomGPoint = GestureOnlyMotionRecognizer.pointCircularPool.getNextInstance()
         point.setX(x)
         point.setY(y)
@@ -45,6 +48,7 @@ class GestureOnlyMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processEndMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         point: CustomGPoint = GestureOnlyMotionRecognizer.pointCircularPool.getNextInstance()
         point.setX(x)
         point.setY(y)
@@ -53,11 +57,19 @@ class GestureOnlyMotionRecognizer(MotionRecognizer):
 
     # throws Exception
     def processDraggedMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
         point: CustomGPoint = GestureOnlyMotionRecognizer.pointCircularPool.getNextInstance()
         point.setX(x)
         point.setY(y)
         self.motionGestureRecognizer.processDraggedMotionEvent(point, deviceId, modifiers)
-from org.allbinary.graphics.CustomGPoint import CustomGPoint
-from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
+# from org.allbinary.graphics.CustomGPoint import CustomGPoint
+# from org.allbinary.graphics.GPointCircularPool import GPointCircularPool
+# from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
 
+
+def _GestureOnlyMotionRecognizer_pointCircularPool() -> object:
+    from org.allbinary.graphics.GPointCircularPool import GPointCircularPool
+    return GPointCircularPool(40)
+
+lazy_static(GestureOnlyMotionRecognizer, "pointCircularPool", _GestureOnlyMotionRecognizer_pointCircularPool)
 

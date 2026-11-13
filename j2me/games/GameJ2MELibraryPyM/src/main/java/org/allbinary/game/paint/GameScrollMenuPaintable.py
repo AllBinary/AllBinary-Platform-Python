@@ -23,6 +23,9 @@ class GameScrollMenuPaintable(BasicGameDemoPaintable, ColorChangeListener):
     
 
     def __init__(self, mainDemoStatePaintable: Paintable, ownershipPaintable: Paintable, helpPaintableInterface: Paintable, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.ColorChangeEventHandler import ColorChangeEventHandler
+        from org.allbinary.graphics.paint.Paintable import Paintable
         super().__init__(mainDemoStatePaintable, ownershipPaintable, helpPaintableInterface)
         self.setColor(basicColor)
         ColorChangeEventHandler.getInstance().addListenerInterface(self)
@@ -33,10 +36,16 @@ class GameScrollMenuPaintable(BasicGameDemoPaintable, ColorChangeListener):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         pass
     
 
     def setColor(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.form.FormPaintable import FormPaintable
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.graphics.form.item.ABStringComponent import ABStringComponent
+        from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
         mainGameDemoStatePaintable: MainGameDemoStatePaintable = self.getMainDemoStatePaintable()
         formPaintable: FormPaintable = mainGameDemoStatePaintable.getMenuPaintableInterface()
         scrollSelectionForm: ScrollSelectionForm = formPaintable.getForm()
@@ -49,13 +58,13 @@ class GameScrollMenuPaintable(BasicGameDemoPaintable, ColorChangeListener):
             stringComponent = item.getLabelStringComponent()
             if stringComponent is not None:
                 stringComponent.setForegroundBasicColor(basicColor)
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.ColorChangeEventHandler import ColorChangeEventHandler
-from org.allbinary.graphics.form.FormPaintable import FormPaintable
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.graphics.form.item.ABStringComponent import ABStringComponent
-from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.ColorChangeEventHandler import ColorChangeEventHandler
+# from org.allbinary.graphics.form.FormPaintable import FormPaintable
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.graphics.form.item.ABStringComponent import ABStringComponent
+# from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

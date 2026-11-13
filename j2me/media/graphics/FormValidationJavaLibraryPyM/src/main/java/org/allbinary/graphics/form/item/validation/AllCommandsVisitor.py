@@ -26,7 +26,8 @@ class AllCommandsVisitor(Visitor):
     
 
     def visit(self, anyType: object) -> object:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         return BooleanFactory.getInstance().TRUE
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
 
 

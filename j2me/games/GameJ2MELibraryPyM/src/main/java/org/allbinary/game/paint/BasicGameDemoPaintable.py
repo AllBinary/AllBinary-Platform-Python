@@ -21,6 +21,8 @@ from org.allbinary.graphics.paint.StatePaintable import StatePaintable
 class BasicGameDemoPaintable(StatePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.mainDemoStatePaintable: Paintable = None
         self.ownershipPaintable: Paintable = None
         self.helpPaintableInterface: Paintable = None
@@ -28,6 +30,8 @@ class BasicGameDemoPaintable(StatePaintable):
     
 
     def __init__(self, mainDemoStatePaintable: Paintable, ownershipPaintable: Paintable, helpPaintableInterface: Paintable) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         super().__init__()
         self._init_fields()
         self.mainDemoStatePaintable = mainDemoStatePaintable
@@ -46,25 +50,30 @@ class BasicGameDemoPaintable(StatePaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.getCurrentStatePaintable().paint(graphics)
     
 
     def getHelpPaintableInterface(self) -> Paintable:
+        from org.allbinary.graphics.paint.Paintable import Paintable
         return self.helpPaintableInterface
     
 
     def setCurrentStatePaintable(self, currentStatePaintable: Paintable) -> None:
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.currentStatePaintable = currentStatePaintable
     
 
     def getCurrentStatePaintable(self) -> Paintable:
+        from org.allbinary.graphics.paint.Paintable import Paintable
         return self.currentStatePaintable
     
 
     def getMainDemoStatePaintable(self) -> Paintable:
+        from org.allbinary.graphics.paint.Paintable import Paintable
         return self.mainDemoStatePaintable
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
 
 

@@ -22,6 +22,7 @@ class LoadTextures:
 
     # throws Exception
     def load(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 

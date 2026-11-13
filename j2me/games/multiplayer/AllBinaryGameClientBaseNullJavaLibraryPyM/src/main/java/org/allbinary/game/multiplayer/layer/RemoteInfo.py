@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RemoteInfo:
@@ -17,7 +17,12 @@ class RemoteInfo:
 
     def __init__(self, username: str, actorSessionId: int, playerInputId: int, id: int) -> None:
         pass
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-RemoteInfo.REMOTE_INFO = RemoteInfo(StringUtil.getInstance().EMPTY_STRING, -1, -1, RemoteInfo.NEW_PLAYER_ID)
+def _RemoteInfo_REMOTE_INFO() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return RemoteInfo(StringUtil.getInstance().EMPTY_STRING, -1, -1, RemoteInfo.NEW_PLAYER_ID)
+
+lazy_static(RemoteInfo, "REMOTE_INFO", _RemoteInfo_REMOTE_INFO)
 

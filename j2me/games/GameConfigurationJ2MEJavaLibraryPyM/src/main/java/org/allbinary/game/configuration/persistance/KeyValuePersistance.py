@@ -21,6 +21,7 @@ from org.allbinary.game.configuration.persistance.BasicPersitance import BasicPe
 class KeyValuePersistance(BasicPersitance):
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.tsUtil: TsUtil = TsUtil.getInstance()
     
 
@@ -31,6 +32,7 @@ class KeyValuePersistance(BasicPersitance):
 
     # throws Exception
     def loadAll(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.loadAllSize(abeClientInformation, 1)
     
 
@@ -39,6 +41,14 @@ class KeyValuePersistance(BasicPersitance):
         from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
         from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
         from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+        from java.io.DataInputStream import DataInputStream
+        from javax.microedition.rms.RecordEnumeration import RecordEnumeration
+        from javax.microedition.rms.RecordStore import RecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.util.ABHashtable import ABHashtable
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             recordStore = RecordStore.openRecordStore(self.getRecordId(abeClientInformation), True)
@@ -78,6 +88,16 @@ class KeyValuePersistance(BasicPersitance):
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface, hashtable: ABHashtable[object, object]) -> None:
         from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from java.io.DataOutputStream import DataOutputStream
+        from javax.microedition.rms.RecordStore import RecordStore
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             self.logUtil.putF(str(StringMaker().append(self.persistanceStrings.SAVING).append(StringUtil.getInstance().toString(hashtable))), self, self.commonStrings.SAVE)
@@ -107,6 +127,7 @@ class KeyValuePersistance(BasicPersitance):
     
 
     def get(self, index: int) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = self.valueList.objectArray[index]
         return hashtable
 # from java.io.ByteArrayInputStream import ByteArrayInputStream
@@ -115,14 +136,14 @@ class KeyValuePersistance(BasicPersitance):
 # from java.io.DataOutputStream import DataOutputStream
 # from javax.microedition.rms.RecordEnumeration import RecordEnumeration
 # from javax.microedition.rms.RecordStore import RecordStore
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.HashtableUtil import HashtableUtil
 
 

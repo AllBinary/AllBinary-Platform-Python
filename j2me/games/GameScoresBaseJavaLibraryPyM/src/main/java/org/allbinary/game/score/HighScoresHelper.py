@@ -21,6 +21,7 @@ from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
 class HighScoresHelper(HighScoresHelperBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstanceAt(0, 0)
         self.lastIndex: int = -1
 
@@ -55,6 +56,6 @@ class HighScoresHelper(HighScoresHelperBase):
             if highScores.getTotal() > 0:
                 anyScores = True
         return anyScores
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

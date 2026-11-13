@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AudioContentTypeDataFactory:
@@ -39,5 +40,8 @@ class AudioContentTypeDataFactory:
 from org.allbinary.audio.AudioContentTypeData import AudioContentTypeData
 
 
-AudioContentTypeDataFactory.instance = AudioContentTypeDataFactory()
+def _AudioContentTypeDataFactory_instance() -> object:
+    return AudioContentTypeDataFactory()
+
+lazy_static(AudioContentTypeDataFactory, "instance", _AudioContentTypeDataFactory_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.view.EmulatorViewInterface import EmulatorViewInterface
 
 
@@ -23,6 +24,7 @@ class NullEmulatorView(EmulatorViewInterface):
     
 
     def setMidlet(self, midlet: MIDlet) -> None:
+        from javax.microedition.midlet.MIDlet import MIDlet
         pass
     
 
@@ -31,10 +33,14 @@ class NullEmulatorView(EmulatorViewInterface):
     
 
     def onSetDisplayable(self, displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         pass
 # from javax.microedition.lcdui.Displayable import Displayable
 # from javax.microedition.midlet.MIDlet import MIDlet
 
 
-NullEmulatorView.NULL_EMULATOR_VIEW = NullEmulatorView()
+def _NullEmulatorView_NULL_EMULATOR_VIEW() -> object:
+    return NullEmulatorView()
+
+lazy_static(NullEmulatorView, "NULL_EMULATOR_VIEW", _NullEmulatorView_NULL_EMULATOR_VIEW)
 

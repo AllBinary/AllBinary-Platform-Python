@@ -21,6 +21,7 @@ from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 class GameCanvasPauseRunnable(GameRunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.allBinaryGameCanvas: AllBinaryGameCanvas = None
     
@@ -37,6 +38,9 @@ class GameCanvasPauseRunnable(GameRunnable):
 
     # throws Exception
     def processLoopSleep(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             features: Features = Features.getInstance()
             isOpenGL: bool = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)
@@ -45,10 +49,10 @@ class GameCanvasPauseRunnable(GameRunnable):
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

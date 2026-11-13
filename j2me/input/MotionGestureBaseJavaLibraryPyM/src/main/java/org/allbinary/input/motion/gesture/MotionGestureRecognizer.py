@@ -21,6 +21,14 @@ import math
 class MotionGestureRecognizer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.Line import Line
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+        from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.math.J2SEMath import J2SEMath
+        from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.j2seMath: J2SEMath = J2SEMath.getInstance()
         self.origin: GPoint = PointFactory.getInstance().ZERO_ZERO
@@ -34,6 +42,12 @@ class MotionGestureRecognizer:
     
 
     def __init__(self, id: int) -> None:
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+        from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
+        from org.allbinary.input.motion.gesture.observer.MovedMotionGesturesHandler import MovedMotionGesturesHandler
+        from org.allbinary.input.motion.gesture.observer.ScrolledMotionGesturesHandler import ScrolledMotionGesturesHandler
+        from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         self.motionEventCircularPool = MotionEventCircularPool.createPool(id)
         motionGesturesHandler: BasicEventHandler = BasicEventHandler()
@@ -54,6 +68,8 @@ class MotionGestureRecognizer:
     # throws Exception
     def processPressedMotionEvent(self, current: GPoint, deviceId: int, button: int) -> bool:
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         self.intermediate = self.origin
         self.previous = self.origin
         event: MotionGestureEvent = self.motionEventCircularPool.getInstance(TouchMotionGestureFactory.getInstance().PRESSED)
@@ -66,6 +82,8 @@ class MotionGestureRecognizer:
     # throws Exception
     def processReleasedMotionEvent(self, current: GPoint, deviceId: int, button: int) -> bool:
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         event: MotionGestureEvent = self.motionEventCircularPool.getInstance(TouchMotionGestureFactory.getInstance().RELEASED)
         event.setPreviousPoint(self.previous)
         event.setCurrentPoint(current)
@@ -76,6 +94,10 @@ class MotionGestureRecognizer:
     # throws Exception
     def processDraggedMotionEvent(self, current: GPoint, deviceId: int, buttonMask: int) -> None:
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+        from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         if self.previous == self.origin or self.intermediate == self.origin:
             self.previous = current
             self.intermediate = current
@@ -130,6 +152,8 @@ class MotionGestureRecognizer:
     # throws Exception
     def processMovedMotionEvent(self, current: GPoint, deviceId: int, button: int) -> bool:
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         event: MotionGestureEvent = self.motionEventCircularPool.getInstance(TouchMotionGestureFactory.getInstance().NO_MOTION)
         event.setPreviousPoint(self.previous)
         event.setCurrentPoint(current)
@@ -140,6 +164,8 @@ class MotionGestureRecognizer:
     # throws Exception
     def processScrolledMotionEvent(self, current: GPoint, deviceId: int, button: int) -> bool:
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         touchMotionGestureFactory: TouchMotionGestureFactory = TouchMotionGestureFactory.getInstance()
         newMotionGesture: MotionGestureInput = touchMotionGestureFactory.NO_MOTION
         if button > 0:
@@ -154,20 +180,21 @@ class MotionGestureRecognizer:
     
 
     def getMotionGesturesHandler(self) -> BasicMotionGesturesHandler:
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         return self.motionGesturesHandler
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.Line import Line
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
-from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
-from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.input.motion.gesture.observer.MovedMotionGesturesHandler import MovedMotionGesturesHandler
-from org.allbinary.input.motion.gesture.observer.ScrolledMotionGesturesHandler import ScrolledMotionGesturesHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.J2SEMath import J2SEMath
-from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.Line import Line
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+# from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
+# from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+# from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.input.motion.gesture.observer.MovedMotionGesturesHandler import MovedMotionGesturesHandler
+# from org.allbinary.input.motion.gesture.observer.ScrolledMotionGesturesHandler import ScrolledMotionGesturesHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.J2SEMath import J2SEMath
+# from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

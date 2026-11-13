@@ -15,12 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
+from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 
 
 class NoGameNotificationHudSingleton:
     instance: NoGameNotificationHudSingleton = None
+    class NoGameGameNotificationHud(GameNotificationHud):
+        
+
+        def __init__(self) -> None:
+            from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+            from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+            super().__init__(BasicHudFactory.getInstance().TOPCENTER, BasicHudFactory.getInstance().HORIZONTAL, 2, BasicColorFactory.getInstance().RED)
+            self.updateMaxWidth = 40
+            self.updateMaxHeight = 14
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameNotificationHud: GameNotificationHud = GameNotificationHud.NULL_GAME_NOTIFICATION
     
@@ -31,17 +43,11 @@ class NoGameNotificationHudSingleton:
     
 
     def __init__(self) -> None:
-        from org.allbinary.game.ag.layer.hud.basic.notification.NoGameGameNotificationHud import NoGameGameNotificationHud
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             basicHudFactory: BasicHudFactory = BasicHudFactory.getInstance()
-            class NoGameGameNotificationHud(GameNotificationHud):
-                
-
-                def __init__(self) -> None:
-                    super().__init__(self.basicHudFactory.TOPCENTER, self.basicHudFactory.HORIZONTAL, 2, BasicColorFactory.getInstance().RED)
-                    self.updateMaxWidth = 40
-                    self.updateMaxHeight = 14
             self.gameNotificationHud = NoGameGameNotificationHud()
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -50,12 +56,15 @@ class NoGameNotificationHudSingleton:
 
     def getGameNotificationHud(self) -> GameNotificationHud:
         return self.gameNotificationHud
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 
 
-NoGameNotificationHudSingleton.instance = NoGameNotificationHudSingleton()
+def _NoGameNotificationHudSingleton_instance() -> object:
+    return NoGameNotificationHudSingleton()
+
+lazy_static(NoGameNotificationHudSingleton, "instance", _NoGameNotificationHudSingleton_instance)
 

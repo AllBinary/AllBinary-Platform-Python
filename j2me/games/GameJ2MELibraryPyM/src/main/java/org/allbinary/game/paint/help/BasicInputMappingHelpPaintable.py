@@ -21,11 +21,17 @@ from org.allbinary.game.paint.help.HelpPaintable import HelpPaintable
 class BasicInputMappingHelpPaintable(HelpPaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
         self.gameInputMappingArray: list[GameInputMapping] = None
         self.NONE: GameKey = GameKeyFactory.getInstance().NONE
     
 
     def __init__(self, gameInputMappingArray: list[GameInputMapping], basicColor: BasicColor) -> None:
+        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__("Help Screen", BasicColorFactory.getInstance().BLACK, basicColor)
         self._init_fields()
         self.gameInputMappingArray = gameInputMappingArray
@@ -33,6 +39,13 @@ class BasicInputMappingHelpPaintable(HelpPaintable):
     
 
     def update(self, selectedGameKey: GameKey, selectedInput: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+        from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         gameKeyMapping: PersistentInputMapping = PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance()
         EQUAL: str = " = "
         stringMaker: StringMaker = StringMaker()
@@ -51,6 +64,10 @@ class BasicInputMappingHelpPaintable(HelpPaintable):
     
 
     def get(self, keyList: BasicArrayList) -> str:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer: StringMaker = StringMaker()
         AND: str = "and "
@@ -69,16 +86,16 @@ class BasicInputMappingHelpPaintable(HelpPaintable):
                     else:
                         stringBuffer.append(commonSeps.COMMA_SEP)
         return str(stringBuffer)
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
-from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+# from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

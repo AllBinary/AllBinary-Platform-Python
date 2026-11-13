@@ -25,6 +25,8 @@ class DownKeyEventHandlerBase(BasicEventHandler):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -34,6 +36,7 @@ class DownKeyEventHandlerBase(BasicEventHandler):
     
 
     def addListener(self, playerGameInput: PlayerGameInput) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
         if not self.list_.contains(playerGameInput):
             self.list_.add(playerGameInput)
     
@@ -44,6 +47,7 @@ class DownKeyEventHandlerBase(BasicEventHandler):
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListenerSingleThreaded(eventListenerInterface)
     
@@ -53,12 +57,16 @@ class DownKeyEventHandlerBase(BasicEventHandler):
             return self._removeListener_unlocked(eventListenerInterface)
 
     def _removeListener_unlocked(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     # throws Exception
     def fireEventI(self, eventObject: int) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -79,6 +87,9 @@ class DownKeyEventHandlerBase(BasicEventHandler):
 
     # throws Exception
     def fireEventForGameKeyEvent(self, eventObject: GameKeyEvent) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         size: int = self.list_.size()
         index = size
         while (index := index - 1) >= 0:
@@ -100,17 +111,21 @@ class DownKeyEventHandlerBase(BasicEventHandler):
 
     # throws Exception
     def processI(self, eventObject: int, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         downKeyEventListenerInterface: DownKeyEventListenerInterface = eventListenerInterface
         downKeyEventListenerInterface.onDownKey(eventObject)
     
 
     # throws Exception
     def processEvent(self, eventObject: GameKeyEvent, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         downKeyEventListenerInterface: DownKeyEventListenerInterface = eventListenerInterface
         downKeyEventListenerInterface.onDownKeyEvent(eventObject)
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(DownKeyEventHandlerBase.TOTAL_LISTENERS)
@@ -127,11 +142,11 @@ class DownKeyEventHandlerBase(BasicEventHandler):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

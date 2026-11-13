@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AboutPaintableFactory:
     instance: AboutPaintableFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.paintableArray: list[Paintable] = [NullPaintable.getInstance()]
     
 
@@ -30,15 +33,20 @@ class AboutPaintableFactory:
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.paint.AboutPaintable import AboutPaintable
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self._init_fields()
         INFO: list[str] = ["Built with the", "AllBinary Platform", StringUtil.getInstance().EMPTY_STRING, "Comments or Questions:", "support@allbinary.com"]
         DEVELOPERS: list[str] = ["Developed By:", "Travis Berthelot"]
         self.paintableArray = AboutPaintable.getInstance(INFO, DEVELOPERS).getPaintableArrayInstance()
-from org.allbinary.game.paint.AboutPaintable import AboutPaintable
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.paint.AboutPaintable import AboutPaintable
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-AboutPaintableFactory.instance = AboutPaintableFactory()
+def _AboutPaintableFactory_instance() -> object:
+    return AboutPaintableFactory()
+
+lazy_static(AboutPaintableFactory, "instance", _AboutPaintableFactory_instance)
 

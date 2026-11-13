@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MathUtil:
@@ -66,8 +67,11 @@ class MathUtil:
 
     def max(self, value: int, value2: int) -> int:
         return (value if (value >= value2) else value2)
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-MathUtil.instance = MathUtil()
+def _MathUtil_instance() -> object:
+    return MathUtil()
+
+lazy_static(MathUtil, "instance", _MathUtil_instance)
 

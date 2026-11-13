@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HudResources:
@@ -34,5 +35,8 @@ class HudResources:
         self._init_fields()
 
 
-HudResources.instance = HudResources()
+def _HudResources_instance() -> object:
+    return HudResources()
+
+lazy_static(HudResources, "instance", _HudResources_instance)
 

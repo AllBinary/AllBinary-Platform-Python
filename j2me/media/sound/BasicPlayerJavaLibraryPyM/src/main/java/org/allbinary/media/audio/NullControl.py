@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from javax.microedition.media.Control import Control
+from javax.microedition.media.Control import Control
 
 
 class NullControl(Control):

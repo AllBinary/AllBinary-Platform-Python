@@ -21,21 +21,25 @@ from org.allbinary.physics.movement.BasicConstantVelocityMovement import BasicCo
 class SimpleGravityVelocityMovement(BasicConstantVelocityMovement):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
         self.gravityUtil: GravityUtil = GravityUtil.getInstance()
     
 
     def __init__(self, speedBasicDecimal: BasicDecimal) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(speedBasicDecimal, VelocityProperties(int(speedBasicDecimal.getUnscaled()), int(speedBasicDecimal.getUnscaled())))
         self._init_fields()
     
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         self.gravityUtil.process(self.getVelocityProperties(), self.gravityUtil.GAME_GRAVITY_VELOCITY)
         super().process(layer)
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

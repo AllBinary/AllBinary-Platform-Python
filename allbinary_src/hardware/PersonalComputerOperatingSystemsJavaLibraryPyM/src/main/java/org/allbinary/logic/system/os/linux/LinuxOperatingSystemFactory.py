@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LinuxOperatingSystemFactory:
     instance: LinuxOperatingSystemFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -36,6 +38,13 @@ class LinuxOperatingSystemFactory:
     def getOperatingSystemInstance(self) -> GenericOperatingSystem:
         from org.allbinary.logic.system.os.linux.LinuxOS import LinuxOS
         from org.allbinary.logic.system.os.linux.LinuxOS import LinuxOS
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             operatingSystems: OperatingSystems = OperatingSystems.getInstance()
             osName: str = SystemProperties.getInstance().getName()
@@ -53,15 +62,18 @@ class LinuxOperatingSystemFactory:
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return NoOperatingSystem.NO_OPERATING_SYSTEM
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
-from org.allbinary.logic.system.os.SystemProperties import SystemProperties
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+# from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-LinuxOperatingSystemFactory.instance = LinuxOperatingSystemFactory()
+def _LinuxOperatingSystemFactory_instance() -> object:
+    return LinuxOperatingSystemFactory()
+
+lazy_static(LinuxOperatingSystemFactory, "instance", _LinuxOperatingSystemFactory_instance)
 

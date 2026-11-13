@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TerrainEventCircularStaticPool:
@@ -23,6 +24,7 @@ class TerrainEventCircularStaticPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
         self.EVENT_POOL: AllBinaryEventCircularPool = AllBinaryEventCircularPool(20)
 
     def __init__(self) -> None:
@@ -48,8 +50,11 @@ class TerrainEventCircularStaticPool:
         trackingEvent: TerrainEvent = self.EVENT_POOL.getNextInstance()
         trackingEvent.setBasicTerrainInfoForCircularStaticPool(basicTerrainInfo)
         return trackingEvent
-from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
+# from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
 
 
-TerrainEventCircularStaticPool.instance = TerrainEventCircularStaticPool()
+def _TerrainEventCircularStaticPool_instance() -> object:
+    return TerrainEventCircularStaticPool()
+
+lazy_static(TerrainEventCircularStaticPool, "instance", _TerrainEventCircularStaticPool_instance)
 

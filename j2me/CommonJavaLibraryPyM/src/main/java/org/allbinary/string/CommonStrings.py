@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommonStrings:
     instance: CommonStrings = None
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.EMPTY: str = "Empty"
         self.CREATE_IMAGE: str = "createImage"
         self.PLEASE_WAIT: str = "Please Wait"
@@ -80,11 +82,15 @@ class CommonStrings:
 
     @staticmethod
     def getInstance() -> CommonStrings:
+        from jsinterop.annotations.JsMethod import JsMethod
         return CommonStrings.instance
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 
 
-CommonStrings.instance = CommonStrings()
+def _CommonStrings_instance() -> object:
+    return CommonStrings()
+
+lazy_static(CommonStrings, "instance", _CommonStrings_instance)
 

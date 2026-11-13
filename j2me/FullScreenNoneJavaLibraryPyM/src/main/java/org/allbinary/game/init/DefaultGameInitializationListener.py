@@ -23,12 +23,15 @@ from org.allbinary.game.configuration.event.GameInitializedListenerInterface imp
 class DefaultGameInitializationListener(GameInitializedListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.swtJOGLProcessor: SWTJOGLProcessor = SWTJOGLProcessor.getInstance()
         self.firstTime: bool = True
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.configuration.event.GameInitializedEventHandler import GameInitializedEventHandler
         self._init_fields()
         gameInitializedEventHandler: GameInitializedEventHandler = GameInitializedEventHandler.getInstance()
         gameInitializedEventHandler.removeAllListeners()
@@ -36,10 +39,16 @@ class DefaultGameInitializationListener(GameInitializedListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onGameInitialized(self, gameInitializedEvent: GameInitializedEvent) -> None:
+        from org.allbinary.game.configuration.event.GameInitializedEvent import GameInitializedEvent
+        from org.allbinary.game.resource.FeatureResourceInitializationUtil import FeatureResourceInitializationUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         ON_GAME_INITIALIZED: str = "onGameInitialized"
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
@@ -54,14 +63,14 @@ class DefaultGameInitializationListener(GameInitializedListenerInterface):
                 self.swtJOGLProcessor.onSurfaceChanged()
         except Exception as e:
             self.logUtil.put(commonStrings.EXCEPTION, self, ON_GAME_INITIALIZED, e)
-from org.allbinary.game.configuration.event.GameInitializedEvent import GameInitializedEvent
-from org.allbinary.game.configuration.event.GameInitializedEventHandler import GameInitializedEventHandler
-from org.allbinary.game.resource.FeatureResourceInitializationUtil import FeatureResourceInitializationUtil
-from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.event.GameInitializedEvent import GameInitializedEvent
+# from org.allbinary.game.configuration.event.GameInitializedEventHandler import GameInitializedEventHandler
+# from org.allbinary.game.resource.FeatureResourceInitializationUtil import FeatureResourceInitializationUtil
+# from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

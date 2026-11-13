@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class KeySpecFactory:
@@ -37,6 +38,9 @@ class KeySpecFactory:
 
     # Java overloaded method: Python keeps the last definition
     def getInstance(self, algorithm: str, keyData: list[int]) -> KeySpec:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             tsUtil: TsUtil = TsUtil.getInstance()
             if ((algorithm > self.DES) - (algorithm < self.DES)) == 0:
@@ -52,10 +56,13 @@ class KeySpecFactory:
 # from java.security.spec.KeySpec import KeySpec
 # from javax.crypto.spec.DESKeySpec import DESKeySpec
 # from javax.crypto.spec.DESedeKeySpec import DESedeKeySpec
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-KeySpecFactory.instance = KeySpecFactory()
+def _KeySpecFactory_instance() -> object:
+    return KeySpecFactory()
+
+lazy_static(KeySpecFactory, "instance", _KeySpecFactory_instance)
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LayerDistanceUtil:
     instance: LayerDistanceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
 
     def __init__(self) -> None:
@@ -33,12 +35,14 @@ class LayerDistanceUtil:
     
 
     def getDistance(self, layerInterface: AllBinaryLayer, layerInterface2: AllBinaryLayer) -> int:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         dx: int = (layerInterface.getXP() + layerInterface.getHalfWidth()) - (layerInterface2.getXP() + layerInterface2.getHalfWidth())
         dy: int = (layerInterface.getYP() + layerInterface.getHalfHeight()) - (layerInterface2.getYP() + layerInterface2.getHalfHeight())
         return int(self.mathUtil.sqrt((dx * dx) + (dy * dy)))
     
 
     def getDistance3D(self, layerInterface: AllBinaryLayer, layerInterface2: AllBinaryLayer) -> int:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         dx: int = (layerInterface.getXP() + layerInterface.getHalfWidth()) - (layerInterface2.getXP() + layerInterface2.getHalfWidth())
         dy: int = (layerInterface.getYP() + layerInterface.getHalfHeight()) - (layerInterface2.getYP() + layerInterface2.getHalfHeight())
         dz: int = (layerInterface.getZP() + layerInterface.getHalfDepth()) - (layerInterface2.getZP() + layerInterface2.getHalfDepth())
@@ -46,13 +50,18 @@ class LayerDistanceUtil:
     
 
     def getDistanceAt(self, layerInterface: AllBinaryLayer, point: GPoint) -> int:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         dx: int = layerInterface.getXP() - point.getX()
         dy: int = layerInterface.getYP() - point.getY()
         return int(self.mathUtil.sqrt((dx * dx) + (dy * dy)))
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.math.MathUtil import MathUtil
 
 
-LayerDistanceUtil.instance = LayerDistanceUtil()
+def _LayerDistanceUtil_instance() -> object:
+    return LayerDistanceUtil()
+
+lazy_static(LayerDistanceUtil, "instance", _LayerDistanceUtil_instance)
 

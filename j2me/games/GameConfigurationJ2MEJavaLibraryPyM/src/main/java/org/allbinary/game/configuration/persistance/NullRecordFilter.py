@@ -15,7 +15,8 @@
 
 from __future__ import annotations
 
-# from javax.microedition.rms.RecordFilter import RecordFilter
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.rms.RecordFilter import RecordFilter
 
 
 class NullRecordFilter(RecordFilter):
@@ -26,5 +27,8 @@ class NullRecordFilter(RecordFilter):
         return True
 
 
-NullRecordFilter.NULL_RECORD_FILTER = NullRecordFilter()
+def _NullRecordFilter_NULL_RECORD_FILTER() -> object:
+    return NullRecordFilter()
+
+lazy_static(NullRecordFilter, "NULL_RECORD_FILTER", _NullRecordFilter_NULL_RECORD_FILTER)
 

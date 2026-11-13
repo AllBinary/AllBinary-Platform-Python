@@ -24,6 +24,8 @@ class IndexedAnimationToImageArrayUtil:
     @staticmethod
     def getInstance(width: int, height: int, sequentialAnimationInterface: IndexedAnimation) -> list[Image]:
         from org.allbinary.image.AnimationFrameToImageUtil import AnimationFrameToImageUtil
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         size: int = sequentialAnimationInterface.getAnimationSize()
         imageArray: list[Image] = [None] * (size)
         for index in range(0, size):
@@ -31,6 +33,6 @@ class IndexedAnimationToImageArrayUtil:
             imageArray[index] = AnimationFrameToImageUtil.getInstance().getInstanceWH(width, height, sequentialAnimationInterface)
         return imageArray
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 
 

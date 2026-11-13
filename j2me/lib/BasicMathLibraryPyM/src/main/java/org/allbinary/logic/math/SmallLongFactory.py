@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SmallLongFactory:
@@ -75,5 +76,8 @@ class SmallLongFactory:
         return self.STRING_ARRAY[i]
 
 
-SmallLongFactory.instance = SmallLongFactory()
+def _SmallLongFactory_instance() -> object:
+    return SmallLongFactory()
+
+lazy_static(SmallLongFactory, "instance", _SmallLongFactory_instance)
 

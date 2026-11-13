@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #NoPlatform
@@ -41,14 +42,17 @@ class LogFormatUtil:
 
     def getO(self, exception: object) -> str:
         raise RuntimeError()
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.time.TimeStampUtil import TimeStampUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.time.TimeStampUtil import TimeStampUtil
 
 
-LogFormatUtil.instance = LogFormatUtil()
+def _LogFormatUtil_instance() -> object:
+    return LogFormatUtil()
+
+lazy_static(LogFormatUtil, "instance", _LogFormatUtil_instance)
 

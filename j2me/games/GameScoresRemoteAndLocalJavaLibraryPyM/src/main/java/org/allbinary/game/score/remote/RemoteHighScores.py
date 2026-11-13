@@ -16,15 +16,19 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScores import HighScores
-from org.allbinary.logic.StdUtil import StdUtil
 
 
 class RemoteHighScores(HighScores):
-    hashTable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
+    hashTable: ABHashtable[object, object] = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = None
@@ -35,6 +39,9 @@ class RemoteHighScores(HighScores):
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, softwareInformation: SoftwareInformation, gameInfo: GameInfo, heading: str, columnTwoHeading: str, ascending: bool, preload: bool) -> None:
         from org.allbinary.game.score.remote.RemoteHighScoresProcessorFactory import RemoteHighScoresProcessorFactory
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(str(gameInfo), heading, columnTwoHeading)
         self._init_fields()
         self.abeClientInformation = abeClientInformation
@@ -51,6 +58,9 @@ class RemoteHighScores(HighScores):
 
     @staticmethod
     def _getInstance_unlocked(abeClientInformation: AbeClientInformationInterface, softwareInformation: SoftwareInformation, gameInfo: GameInfo, heading: str, columnTwoHeading: str, isAscending: bool) -> HighScores:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         return RemoteHighScores.getInstancePreload(abeClientInformation, softwareInformation, gameInfo, heading, columnTwoHeading, isAscending, True)
     
 
@@ -61,6 +71,12 @@ class RemoteHighScores(HighScores):
 
     @staticmethod
     def _getInstancePreload_unlocked(abeClientInformation: AbeClientInformationInterface, softwareInformation: SoftwareInformation, gameInfo: GameInfo, heading: str, columnTwoHeading: str, isAscending: bool, preload: bool) -> HighScores:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.score.RemoteErrorHighScoresSingletonFactory import RemoteErrorHighScoresSingletonFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             highScores: HighScores = RemoteHighScores.hashTable.get(gameInfo)
@@ -76,11 +92,19 @@ class RemoteHighScores(HighScores):
 
     def addHighScore(self, newHighScore: HighScore) -> None:
         from org.allbinary.game.score.remote.RemoteHighScoresSubmissionProcessorFactory import RemoteHighScoresSubmissionProcessorFactory
+        from org.allbinary.game.score.HighScore import HighScore
         RemoteHighScoresSubmissionProcessorFactory.getInstance().process(self, self.abeClientInformation, newHighScore)
     
 
     def update(self, hashtable: ABHashtable[object, object]) -> None:
         from org.allbinary.game.score.remote.RemoteHighScoresData import RemoteHighScoresData
+        from java.util.Enumeration import Enumeration
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.score.HighScore import HighScore
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.getList().clear()
         vector: BasicArrayList = hashtable.get(RemoteHighScoresData.getInstance().HIGH_SCORES)
         if vector is not None:
@@ -111,19 +135,28 @@ class RemoteHighScores(HighScores):
     
 
     def getSoftwareInformation(self) -> SoftwareInformation:
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
         return self.softwareInformation
 # from java.util.Enumeration import Enumeration
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.score.HighScore import HighScore
-from org.allbinary.game.score.RemoteErrorHighScoresSingletonFactory import RemoteErrorHighScoresSingletonFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.EnumerationUtil import EnumerationUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.score.HighScore import HighScore
+# from org.allbinary.game.score.RemoteErrorHighScoresSingletonFactory import RemoteErrorHighScoresSingletonFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.EnumerationUtil import EnumerationUtil
 
+
+def _RemoteHighScores_hashTable() -> object:
+    from org.allbinary.logic.StdUtil import StdUtil
+    from org.allbinary.util.ABHashtable import ABHashtable
+    return StdUtil.getInstance().createHashtable()
+
+lazy_static(RemoteHighScores, "hashTable", _RemoteHighScores_hashTable)
 

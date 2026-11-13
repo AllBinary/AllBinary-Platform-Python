@@ -21,6 +21,14 @@ class XmlRpcAbeClient:
     isOnline: bool = True
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.apache.xmlrpc.NullXmlRpcHandler import NullXmlRpcHandler
+        from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.remoteMethod: str = None
@@ -46,6 +54,8 @@ class XmlRpcAbeClient:
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface, remoteMethod: str) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         self.remoteMethod = remoteMethod
         self.clientInfo = clientInfo
@@ -67,6 +77,8 @@ class XmlRpcAbeClient:
 
     # throws Exception
     def get(self, anyType: object) -> object:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log(self.commonStrings.NOT_IMPLEMENTED, self)
         return NullUtil.getInstance().NULL_OBJECT
     
@@ -85,14 +97,17 @@ class XmlRpcAbeClient:
     
 
     def getClientInfo(self) -> AbeClientInformationInterface:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         return self.clientInfo
     
 
     def getClient(self) -> XmlRpcHandler:
+        from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
         return self.client
     
 
     def setClient(self, client: XmlRpcClient) -> None:
+        from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
         self.client = client
     
 
@@ -130,17 +145,17 @@ class XmlRpcAbeClient:
 
     def getRemoteMethod(self) -> str:
         return self.remoteMethod
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.apache.xmlrpc.NullXmlRpcHandler import NullXmlRpcHandler
-from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
-from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.apache.xmlrpc.NullXmlRpcHandler import NullXmlRpcHandler
+# from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
+# from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
 
 

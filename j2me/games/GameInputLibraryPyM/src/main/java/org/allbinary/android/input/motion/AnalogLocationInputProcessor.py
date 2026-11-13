@@ -21,8 +21,10 @@ class AnalogLocationInputProcessor:
     
 
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, analogLocationInput: AnalogLocationInput) -> None:
+        from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
-from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

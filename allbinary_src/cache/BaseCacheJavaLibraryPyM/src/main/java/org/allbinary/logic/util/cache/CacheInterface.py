@@ -23,18 +23,21 @@ class CacheInterface:
 
     # throws Exception
     def add(self, cacheableInterface: CacheableInterface) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
     
 
     # throws Exception
     def addArray(self, cacheableInterfaces: list[CacheableInterface]) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
     
 
     # throws Exception
     def clear(self) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
 
 

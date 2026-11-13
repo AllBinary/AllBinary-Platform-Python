@@ -22,6 +22,9 @@ from org.allbinary.game.input.Input import Input
 class TouchButtonInput(Input, GameKeyEventSourceInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
         self.TOUCH_BUTTON_SOURCE_ID: int = self.gameKeyEventFactory.TOUCH_BUTTON_SOURCE_ID
@@ -29,6 +32,7 @@ class TouchButtonInput(Input, GameKeyEventSourceInterface):
     
 
     def __init__(self, id: int, name: str) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
         super().__init__(id, name)
         self._init_fields()
         inputFactory: InputFactory = InputFactory.getInstance()
@@ -36,6 +40,9 @@ class TouchButtonInput(Input, GameKeyEventSourceInterface):
     
 
     def update(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             gameKey: GameKey = inputToGameKeyMapping.getInstance(self.getId())
             self.gameKeyEvent = self.gameKeyEventFactory.getInstanceForInput(self, gameKey)
@@ -49,13 +56,14 @@ class TouchButtonInput(Input, GameKeyEventSourceInterface):
     
 
     def getGameKeyEvent(self) -> GameKeyEvent:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         return self.gameKeyEvent
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

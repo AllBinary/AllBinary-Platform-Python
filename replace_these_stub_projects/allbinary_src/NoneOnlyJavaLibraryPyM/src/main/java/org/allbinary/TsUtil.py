@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import gc
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #None - Do not use
@@ -29,7 +30,7 @@ class TsUtil:
     
 
     def hashCode(self, anyType: object) -> int:
-        return anyType.hashCode()
+        return hash(anyType)
     
 
     # throws InterruptedException
@@ -78,5 +79,8 @@ class TsUtil:
         gc.collect()
 
 
-TsUtil.instance = TsUtil()
+def _TsUtil_instance() -> object:
+    return TsUtil()
+
+lazy_static(TsUtil, "instance", _TsUtil_instance)
 

@@ -23,6 +23,7 @@ class FileWrapperUtil:
     @staticmethod
     def wrapFiles(files: list[object]) -> list[AbFile]:
         from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             abFileArray: list[AbFile] = [None] * (len(files))
             for index in range(len(files) - 1, 0 - 1, -1):
@@ -37,12 +38,13 @@ class FileWrapperUtil:
     def wrapFile(file: File) -> AbFile:
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             return AbFile(file)
         except Exception as e:
             PreLogUtil.putSE("Exception Wrapping File", "FileWrapperUtil", "wrapFile", e)
             return AbFile.NULL_FILE
 # from java.io.File import File
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 
 

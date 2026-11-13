@@ -24,14 +24,23 @@ class FullTouchButton(TouchButton):
     # throws Exception
     @staticmethod
     def createButton(touchButtonInput: TouchButtonInput, touchButtonResource: TouchButtonResource, rawRectangle: Rectangle, cellPosition: CellPosition, xBorder: int, yBorder: int) -> FullTouchButton:
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.graphics.Rectangle import Rectangle
         return FullTouchButton(touchButtonInput, FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(touchButtonResource.RESOURCE).getInstance(0), FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(touchButtonResource.HINT).getInstance(0), rawRectangle, cellPosition, xBorder, yBorder)
     
 
     def __init__(self, touchButtonInput: TouchButtonInput, animationInterface: Animation, hintAnimationInterface: Animation, rawRectangle: Rectangle, cellPosition: CellPosition, xBorder: int, yBorder: int) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.graphics.Rectangle import Rectangle
         super().__init__(touchButtonInput, animationInterface, hintAnimationInterface, rawRectangle, cellPosition, xBorder, yBorder)
     
 
     def updateRectangle(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
         try:
             pointFactory: PointFactory = PointFactory.getInstance()
             x: int = self.rawRectangle.getWidth() * self.cellPositionP.getColumn()
@@ -43,11 +52,11 @@ class FullTouchButton(TouchButton):
             self.hintAnimationY = self.animationY - self.rectangleP.getHeight() >> 1
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "updateRectangle", e)
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
 
 

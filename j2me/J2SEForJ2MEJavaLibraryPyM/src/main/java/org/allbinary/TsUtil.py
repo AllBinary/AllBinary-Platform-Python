@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import gc
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #J2SE
@@ -30,8 +31,16 @@ class TsUtil:
         return TsUtil.instance
     
 
+    def longBitsToDouble(self, bits: int) -> float:
+        return java.lang.Double.longBitsToDouble(bits)
+    
+
+    def intBitsToFloat(self, bits: int) -> float:
+        return java.lang.Float.intBitsToFloat(bits)
+    
+
     def hashCode(self, anyType: object) -> int:
-        return anyType.hashCode()
+        return hash(anyType)
     
 
     # throws InterruptedException
@@ -42,6 +51,11 @@ class TsUtil:
 
     # throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
     def getRecord(self, anyType: object, recordId: int) -> list[int]:
+        from javax.microedition.rms.InvalidRecordIDException import InvalidRecordIDException
+        from javax.microedition.rms.RecordStore import RecordStore
+        from javax.microedition.rms.RecordStoreException import RecordStoreException
+        from javax.microedition.rms.RecordStoreNotOpenException import RecordStoreNotOpenException
+        from org.allbinary.logic.NullUtil import NullUtil
         recordStore: RecordStore = anyType
         data: list[int] = None
         with self._lock:  # synchronized (self)
@@ -79,6 +93,8 @@ class TsUtil:
     
 
     def isItemListener(self, owner: Displayable) -> bool:
+        from javax.microedition.lcdui.Displayable import Displayable
+        from javax.microedition.lcdui.Form import Form
         if isinstance(owner, Form):
             return True
         else:
@@ -93,8 +109,11 @@ class TsUtil:
 # from javax.microedition.rms.RecordStore import RecordStore
 # from javax.microedition.rms.RecordStoreException import RecordStoreException
 # from javax.microedition.rms.RecordStoreNotOpenException import RecordStoreNotOpenException
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 
-TsUtil.instance = TsUtil()
+def _TsUtil_instance() -> object:
+    return TsUtil()
+
+lazy_static(TsUtil, "instance", _TsUtil_instance)
 

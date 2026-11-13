@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LevelLayersFinder:
     instance: LevelLayersFinder = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
 
     def __init__(self) -> None:
@@ -33,6 +35,12 @@ class LevelLayersFinder:
     
 
     def get(self, hashtable: ABHashtable[object, object]) -> BasicArrayList:
+        from java.util.Enumeration import Enumeration
+        from org.allbinary.layer.Layer import Layer
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         list_: BasicArrayList = BasicArrayListD()
         enumeration: Enumeration = hashtable.keys()
@@ -47,13 +55,16 @@ class LevelLayersFinder:
                 list_.add(cachedIntegerCanBeNull)
         return list_
 # from java.util.Enumeration import Enumeration
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.EnumerationUtil import EnumerationUtil
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.EnumerationUtil import EnumerationUtil
 
 
-LevelLayersFinder.instance = LevelLayersFinder()
+def _LevelLayersFinder_instance() -> object:
+    return LevelLayersFinder()
+
+lazy_static(LevelLayersFinder, "instance", _LevelLayersFinder_instance)
 

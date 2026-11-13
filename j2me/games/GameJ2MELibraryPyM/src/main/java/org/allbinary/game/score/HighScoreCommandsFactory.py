@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScoreCommandsBaseFactory import HighScoreCommandsBaseFactory
 
 
@@ -30,9 +31,13 @@ class HighScoreCommandsFactory(HighScoreCommandsBaseFactory):
     def __init__(self) -> None:
         from org.allbinary.game.score.HighScoreCommands import HighScoreCommands
         from org.allbinary.game.score.HighScoreCommands import HighScoreCommands
+        from javax.microedition.lcdui.Command import Command
         super().__init__([HighScoreCommands.getInstance().PERSONAL, HighScoreCommands.getInstance().WORLD])
 # from javax.microedition.lcdui.Command import Command
 
 
-HighScoreCommandsFactory.instance = HighScoreCommandsFactory()
+def _HighScoreCommandsFactory_instance() -> object:
+    return HighScoreCommandsFactory()
+
+lazy_static(HighScoreCommandsFactory, "instance", _HighScoreCommandsFactory_instance)
 

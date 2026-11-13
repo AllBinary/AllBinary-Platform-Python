@@ -22,6 +22,13 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class HelpPaintable(Paintable, UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
@@ -35,6 +42,7 @@ class HelpPaintable(Paintable, UpdateMyFontInterface):
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.title = title
@@ -42,6 +50,9 @@ class HelpPaintable(Paintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.titleBeginWidth = (font.stringWidth(self.title) >> 1)
         self.charHeight = font.getHeight()
@@ -58,6 +69,7 @@ class HelpPaintable(Paintable, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         halfWidth: int = self.displayInfo.getLastHalfWidth()
         graphics.setColor(int(self.basicColor))
@@ -67,12 +79,12 @@ class HelpPaintable(Paintable, UpdateMyFontInterface):
             graphics.drawString(self.inputInfo[index], halfWidth - self.beginWidthArray[index], (index + 3) * self.charHeight, self.anchor)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

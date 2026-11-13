@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DemoGameBehavior:
     instance: DemoGameBehavior = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -52,6 +54,7 @@ class DemoGameBehavior:
 
     # throws Exception
     def updateScreenButtonPaintable(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         allBinaryGameCanvas.setTouchPaintableP(NullPaintable.getInstance())
     
 
@@ -76,19 +79,25 @@ class DemoGameBehavior:
 
     # throws Exception
     def run(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.game.GameTypeFactory import GameTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(str(GameTypeFactory.getInstance().BOT), self, commonStrings.RUN)
     
 
     # throws Exception
     def setHighScore(self, abeClientInformation: AbeClientInformationInterface, allBinaryGameCanvas: AllBinaryGameCanvas, name: str, score: int, autoSubmit: bool, isLast: bool) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         pass
-from org.allbinary.game.GameTypeFactory import GameTypeFactory
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.GameTypeFactory import GameTypeFactory
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-DemoGameBehavior.instance = DemoGameBehavior()
+def _DemoGameBehavior_instance() -> object:
+    return DemoGameBehavior()
+
+lazy_static(DemoGameBehavior, "instance", _DemoGameBehavior_instance)
 

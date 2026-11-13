@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StreamUtil:
     instance: StreamUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,6 +37,8 @@ class StreamUtil:
 
     # throws Exception
     def get(self, inputStream: InputStream, outputStream: OutputStream, buffer: list[int]) -> OutputStream:
+        from java.io.InputStream import InputStream
+        from java.io.OutputStream import OutputStream
         len_: int = 0
         while True:
             len_ = inputStream.read(buffer, 0, len(buffer))
@@ -48,6 +52,7 @@ class StreamUtil:
 
     # throws Exception
     def getByteArray(self, inputStream: InputStream, outputStream2: ByteArrayOutputStream, byteArray: list[int]) -> list[int]:
+        from java.io.InputStream import InputStream
         outputStream: ByteArrayOutputStream = outputStream2
         try:
             self.get(inputStream, outputStream, byteArray)
@@ -59,6 +64,8 @@ class StreamUtil:
     
 
     def close(self, closeable: Closeable) -> bool:
+        from java.io.Closeable import Closeable
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             if closeable is not None:
                 closeable.close()
@@ -71,9 +78,12 @@ class StreamUtil:
 # from java.io.Closeable import Closeable
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-StreamUtil.instance = StreamUtil()
+def _StreamUtil_instance() -> object:
+    return StreamUtil()
+
+lazy_static(StreamUtil, "instance", _StreamUtil_instance)
 

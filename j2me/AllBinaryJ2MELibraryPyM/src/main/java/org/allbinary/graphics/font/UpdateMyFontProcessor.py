@@ -31,6 +31,7 @@ class UpdateMyFontProcessor(MyFontProcessor):
     
 
     def process(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.updateMeasurementProcessor.updateMeasurement(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
 

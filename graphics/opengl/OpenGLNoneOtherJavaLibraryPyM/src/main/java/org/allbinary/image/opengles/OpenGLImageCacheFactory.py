@@ -15,16 +15,17 @@
 
 from __future__ import annotations
 
-from org.allbinary.image.ImageCache import ImageCache
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #OpenGLNoneOtherJavaLibrary
 class OpenGLImageCacheFactory:
-    IMAGE_CACHE: ImageCache = ImageCache.NULL_IMAGE_CACHE
+    IMAGE_CACHE: ImageCache = None
     
 
     @staticmethod
     def getInstance() -> ImageCache:
+        from org.allbinary.image.ImageCache import ImageCache
         return OpenGLImageCacheFactory.IMAGE_CACHE
     
 
@@ -32,5 +33,12 @@ class OpenGLImageCacheFactory:
     def init() -> None:
         if OpenGLImageCacheFactory.IMAGE_CACHE is None:
             pass
+# from org.allbinary.image.ImageCache import ImageCache
 
+
+def _OpenGLImageCacheFactory_IMAGE_CACHE() -> object:
+    from org.allbinary.image.ImageCache import ImageCache
+    return ImageCache.NULL_IMAGE_CACHE
+
+lazy_static(OpenGLImageCacheFactory, "IMAGE_CACHE", _OpenGLImageCacheFactory_IMAGE_CACHE)
 

@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ArrayUtil:
     instance: ArrayUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
 
     def __init__(self) -> None:
@@ -17,68 +19,80 @@ class ArrayUtil:
 
     @staticmethod
     def getInstance() -> ArrayUtil:
+        from jsinterop.annotations.JsMethod import JsMethod
         return ArrayUtil.instance
     
 
     def copyOf(self, original: list[object], newLength: int) -> list[object]:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.copyOfType(original, newLength, type(original))
     
 
     def copyOfType(self, original: list[object], newLength: int, newType: type) -> list[object]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[object] = [None] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOfbyte(self, original: list[int], newLength: int) -> list[int]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOfshort(self, original: list[int], newLength: int) -> list[int]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOfint(self, original: list[int], newLength: int) -> list[int]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOflong(self, original: list[int], newLength: int) -> list[int]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOfchar(self, original: list[str], newLength: int) -> list[str]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[str] = ['\0'] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOffloat(self, original: list[float], newLength: int) -> list[float]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[float] = [0.0] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOfdouble(self, original: list[float], newLength: int) -> list[float]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[float] = [0.0] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def copyOfboolean(self, original: list[bool], newLength: int) -> list[bool]:
+        from jsinterop.annotations.JsMethod import JsMethod
         copy: list[bool] = [False] * (newLength)
         copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
         return copy
     
 
     def reverse(self, intArray: list[int]) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         length: int = len(intArray) - 1
         temp: int = 0
         size: int = int(length / 2)
@@ -89,6 +103,7 @@ class ArrayUtil:
     
 
     def flip(self, intArray: list[int], width: int, height: int) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         length: int = height - 1
         temp: int = 0
         index: int = 0
@@ -103,6 +118,9 @@ class ArrayUtil:
     
 
     def toStringFromTwoDimensionaArray(self, twoDimensionalIntArray: list[list[int]]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         endIndex: int = len(twoDimensionalIntArray)
@@ -118,6 +136,10 @@ class ArrayUtil:
     
 
     def toStringFromObjectArray(self, objectArray: list[object]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         for index in range(0, len(objectArray)):
@@ -127,19 +149,25 @@ class ArrayUtil:
     
 
     def toStringFromByteArray(self, byteArray: list[int]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         for index in range(0, len(byteArray)):
             stringBuffer.appendbyte(byteArray[index])
             stringBuffer.append(commonSeps.COMMA_SEP)
         return str(stringBuffer)
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from jsinterop.annotations.JsMethod import JsMethod
 
 
-ArrayUtil.instance = ArrayUtil()
+def _ArrayUtil_instance() -> object:
+    return ArrayUtil()
+
+lazy_static(ArrayUtil, "instance", _ArrayUtil_instance)
 

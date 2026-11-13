@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -39,8 +40,7 @@ class LogUtil:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def putF(self, specialMessage: str, className: str, functionName: str) -> None:
+    def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
         pass
     
 
@@ -48,5 +48,8 @@ class LogUtil:
         pass
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

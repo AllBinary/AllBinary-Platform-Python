@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FontDebugFactory:
@@ -27,10 +28,15 @@ class FontDebugFactory:
     
 
     def setFont(self, font: Font, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.setFont(font)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 
 
-FontDebugFactory.instance = FontDebugFactory()
+def _FontDebugFactory_instance() -> object:
+    return FontDebugFactory()
+
+lazy_static(FontDebugFactory, "instance", _FontDebugFactory_instance)
 

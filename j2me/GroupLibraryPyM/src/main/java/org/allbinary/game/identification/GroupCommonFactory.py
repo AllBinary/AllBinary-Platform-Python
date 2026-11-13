@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GroupCommonFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.ID: int = SmallIntegerSingletonFactory.getInstance().getAt(10)
         self.GROUP_NAME_LABEL: str = "Group Name: "
         self.ID_LABEL: str = " Id: "
@@ -34,9 +35,17 @@ class GroupCommonFactory:
 
     @staticmethod
     def getInstance() -> GroupCommonFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GroupCommonFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             GroupCommonFactory.instance = GroupCommonFactory()
         return GroupCommonFactory.instance
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
+
+def _GroupCommonFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GroupCommonFactory, "instance", _GroupCommonFactory_instance)
 

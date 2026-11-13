@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class URLGLOBALS:
-    urlGlobalsInterface: UrlGlobalsInterface = AppUrlGlobals.NULL_APP_URL_GLOBALS
+    urlGlobalsInterface: UrlGlobalsInterface = None
     
 
     @staticmethod
@@ -47,4 +47,10 @@ class URLGLOBALS:
     def getMainPath() -> str:
         return self.URLGLOBALS.urlGlobalsInterface.getMainPath()
 
+
+def _URLGLOBALS_urlGlobalsInterface() -> object:
+    from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+    return AppUrlGlobals.NULL_APP_URL_GLOBALS
+
+lazy_static(URLGLOBALS, "urlGlobalsInterface", _URLGLOBALS_urlGlobalsInterface)
 

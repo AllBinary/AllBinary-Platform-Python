@@ -29,12 +29,13 @@ class NoGyroSensor(AllBinaryOrientationSensor, AllBinarySensorListener):
 
     # throws Exception
     def getOrientation(self) -> Orientation:
+        from org.allbinary.logic.math.Orientation import Orientation
         return Orientation.NONE
     
 
     def onSensorChange(self) -> None:
         pass
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.Orientation import Orientation
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.Orientation import Orientation
 
 

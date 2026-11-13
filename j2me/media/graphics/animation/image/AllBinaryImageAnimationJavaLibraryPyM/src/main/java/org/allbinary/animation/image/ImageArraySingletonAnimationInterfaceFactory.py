@@ -23,11 +23,13 @@ class ImageArraySingletonAnimationInterfaceFactory(SingletonAnimationInterfaceFa
 
     def __init__(self, imageArray: list[Image]) -> None:
         from org.allbinary.animation.image.ImageArrayAnimation import ImageArrayAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(ImageArrayAnimation(imageArray, AnimationBehavior.getInstance()))
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.image.IndexedAnimationToImageArrayUtil import IndexedAnimationToImageArrayUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.image.IndexedAnimationToImageArrayUtil import IndexedAnimationToImageArrayUtil
 
 

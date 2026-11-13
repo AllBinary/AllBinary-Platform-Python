@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLUtil:
@@ -15,6 +16,7 @@ class OpenGLUtil:
     
 
     def addImage(self, image: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return image
     
 
@@ -27,5 +29,8 @@ class OpenGLUtil:
 # from javax.microedition.lcdui.Image import Image
 
 
-OpenGLUtil.instance = OpenGLUtil()
+def _OpenGLUtil_instance() -> object:
+    return OpenGLUtil()
+
+lazy_static(OpenGLUtil, "instance", _OpenGLUtil_instance)
 

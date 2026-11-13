@@ -22,6 +22,10 @@ class CustomGameMenuUtil:
 
     @staticmethod
     def add(canvas: MyCanvas) -> None:
+        from org.allbinary.AppletUtil import AppletUtil
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         if AppletUtil.isAppletLoader(canvas):
             pass
@@ -29,9 +33,9 @@ class CustomGameMenuUtil:
             pass
         else:
             canvas.addCommand(gameCommandsFactory.EXIT_COMMAND)
-from org.allbinary.AppletUtil import AppletUtil
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.AppletUtil import AppletUtil
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CharacterSetData:
@@ -38,5 +39,8 @@ class CharacterSetData:
         self._init_fields()
 
 
-CharacterSetData.instance = CharacterSetData()
+def _CharacterSetData_instance() -> object:
+    return CharacterSetData()
+
+lazy_static(CharacterSetData, "instance", _CharacterSetData_instance)
 

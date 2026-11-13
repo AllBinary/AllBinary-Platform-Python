@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ABToGBUtil:
     instance: ABToGBUtil = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         self.abCanvas: Canvas = NullCanvas.NULL_CANVAS
         self.allBinaryGameLayerManager: AllBinaryGameLayerManager = AllBinaryGameLayerManager.getNullInstance()
 
@@ -33,8 +37,11 @@ class ABToGBUtil:
         return ABToGBUtil.instance
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
 
 
-ABToGBUtil.instance = ABToGBUtil()
+def _ABToGBUtil_instance() -> object:
+    return ABToGBUtil()
+
+lazy_static(ABToGBUtil, "instance", _ABToGBUtil_instance)
 

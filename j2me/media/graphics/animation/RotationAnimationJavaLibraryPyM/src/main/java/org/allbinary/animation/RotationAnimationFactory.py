@@ -28,6 +28,8 @@ class RotationAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAni
 
     @staticmethod
     def createFactory() -> RotationAnimationFactory:
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = AngleFactory.getInstance().TOTAL_ANGLE
         return RotationAnimationFactory(totalAngle, ((int((totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768))
     
@@ -42,6 +44,7 @@ class RotationAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAni
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.NullRotationAnimation import NullRotationAnimation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
         return NullRotationAnimation.createTotalAngle(AngleInfo.getInstance(self.angleIncrement), self.totalAngle, AnimationBehavior.getInstance())
     
 
@@ -49,14 +52,16 @@ class RotationAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAni
     def getInstanceAnimation(self, animationInterface: Animation) -> Animation:
         from org.allbinary.animation.NullRotationAnimation import NullRotationAnimation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
         return NullRotationAnimation.createTotalAngle(AngleInfo.getInstance(self.angleIncrement), self.totalAngle, AnimationBehavior.getInstance())
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

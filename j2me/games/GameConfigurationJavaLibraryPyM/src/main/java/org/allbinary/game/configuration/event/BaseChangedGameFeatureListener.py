@@ -21,6 +21,10 @@ from org.allbinary.game.configuration.event.GameFeatureListenerInterface import 
 class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameFeatureUtil: GameFeatureUtil = GameFeatureUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
@@ -31,20 +35,26 @@ class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.string.CommonStrings import CommonStrings
         ForcedLogUtil.log(CommonStrings.getInstance().NOT_IMPLEMENTED, self)
     
 
     def onGameFeatureChange(self, gameFeatureEvent: GameFeatureEvent) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(self.gameFeatureUtil.GAME_FEATURE_CHANGED).append(gameFeatureEvent.getWhatChanged())), self, self.gameFeatureUtil.ON_GAME_FEATURE_CHANGE)
         self.list_.add(gameFeatureEvent.getGameOption())
         self.setChanged(True)
     
 
     def add(self, gameFeature: Feature) -> None:
+        from org.allbinary.game.configuration.feature.Feature import Feature
         self.list_.add(gameFeature)
     
 
     def remove(self, gameFeature: Feature) -> None:
+        from org.allbinary.game.configuration.feature.Feature import Feature
         self.list_.remove(gameFeature)
     
 
@@ -55,6 +65,10 @@ class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
     
 
     def isChangedFeature(self, gameFeature: Feature) -> bool:
+        from org.allbinary.game.configuration.feature.Feature import Feature
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         isChanged: bool = self.list_.contains(gameFeature)
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("GameFeature: ")
@@ -69,16 +83,16 @@ class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
 
     def isChanged(self) -> bool:
         return self.changed
-from org.allbinary.game.configuration.feature.Feature import Feature
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.configuration.feature.Feature import Feature
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShaderManagerFactory:
@@ -31,5 +32,8 @@ class ShaderManagerFactory:
         return ShaderManager.getInstance()
 
 
-ShaderManagerFactory.instance = ShaderManagerFactory()
+def _ShaderManagerFactory_instance() -> object:
+    return ShaderManagerFactory()
+
+lazy_static(ShaderManagerFactory, "instance", _ShaderManagerFactory_instance)
 

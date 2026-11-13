@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RandomRotationFactory:
     instance: RandomRotationFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.myRandomFactory: MyRandomFactory = MyRandomFactory.getInstance()
         self.angleFactory: AngleFactory = AngleFactory.getInstance()
 
@@ -36,6 +39,7 @@ class RandomRotationFactory:
     # throws Exception
     def getInstanceList(self, vector: BasicArrayList, howMuch: int) -> BasicArrayList:
         from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicsPipe: BasicGraphicsPipeline = BasicGraphicsPipeline(vector)
         graphicsPipe.createMatrix()
         graphicsPipe.rotateToAngle(self.angleFactory.getAt(self.getNextRandomAngle(howMuch)))
@@ -44,10 +48,13 @@ class RandomRotationFactory:
 
     def getNextRandomAngle(self, howMuch: int) -> int:
         return self.myRandomFactory.getNextInt(howMuch * 10)
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-RandomRotationFactory.instance = RandomRotationFactory()
+def _RandomRotationFactory_instance() -> object:
+    return RandomRotationFactory()
+
+lazy_static(RandomRotationFactory, "instance", _RandomRotationFactory_instance)
 

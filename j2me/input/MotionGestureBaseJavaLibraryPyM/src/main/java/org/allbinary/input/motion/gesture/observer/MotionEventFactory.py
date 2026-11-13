@@ -27,6 +27,7 @@ class MotionEventFactory(AllBinaryEventObjectFactoryInterface):
     
 
     def __init__(self, source: object, id: int) -> None:
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         self._init_fields()
         self.source = source
         self.id = id
@@ -36,16 +37,21 @@ class MotionEventFactory(AllBinaryEventObjectFactoryInterface):
     def getInstance(self) -> AllBinaryEventObject:
         from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         inputFactory: InputFactory = InputFactory.getInstance()
         input: Input = inputFactory.getInstanceById(((setattr(MotionEventFactory, "index", MotionEventFactory.index + 1) or MotionEventFactory.index) - 1))
         if input == inputFactory.NO_INPUT:
             return MotionGestureEvent(self.source, self.id, TouchMotionGestureFactory.getInstance().NO_MOTION)
         else:
             return MotionGestureEvent(self.source, self.id, input)
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

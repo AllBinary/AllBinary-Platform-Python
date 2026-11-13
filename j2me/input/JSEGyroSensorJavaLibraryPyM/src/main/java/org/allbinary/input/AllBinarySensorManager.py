@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinarySensorManager:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.ORIENTATION_SENSOR_INPUT: str = "Orientation Sensor Input"
         self.ORIENTATION_TYPE: str = "Orientation Type"
         self.list_: BasicArrayList = BasicArrayListD()
@@ -29,6 +31,7 @@ class AllBinarySensorManager:
 
     @staticmethod
     def getInstance() -> AllBinarySensorManager:
+        from org.allbinary.logic.NullUtil import NullUtil
         if AllBinarySensorManager.instance == NullUtil.getInstance().NULL_OBJECT:
             AllBinarySensorManager.instance = AllBinarySensorManager()
         return AllBinarySensorManager.instance
@@ -43,12 +46,20 @@ class AllBinarySensorManager:
     
 
     def getSensorNamesList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
     
 
     def shutdown(self) -> None:
         pass
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _AllBinarySensorManager_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(AllBinarySensorManager, "instance", _AllBinarySensorManager_instance)
 

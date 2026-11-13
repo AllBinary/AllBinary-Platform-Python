@@ -33,6 +33,7 @@ class MainGameDemoStatePaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.menuPaintableInterface.paint(graphics)
         self.ownershipPaintableInterface.paint(graphics)
     

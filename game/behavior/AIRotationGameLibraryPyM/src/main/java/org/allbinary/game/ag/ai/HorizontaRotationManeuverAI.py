@@ -22,6 +22,10 @@ from org.allbinary.game.ai.BasicAI import BasicAI
 class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstanceAt(10, 2147483647)
         self.currentSpeedDivisor: int = 5
         self.rotationAnimationInterface: IndexedAnimation = None
@@ -30,6 +34,13 @@ class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInter
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+        from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
+        from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         rotationAnimationInterfaceCompositeInterface: RotationAnimationInterfaceCompositeInterface = self.getOwnerLayerInterface()
@@ -43,6 +54,10 @@ class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInter
     
 
     def transition(self) -> None:
+        from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+        from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         rotationAnimationInterface: RotationAnimationInterface = self.rotationAnimationInterface
         angleIncrementInfo: AngleIncrementInfo = rotationAnimationInterface.getAngleInfoP().getAngleIncrementInfo()
         rotationAnimationInterfaceCompositeInterface: RotationAnimationInterfaceCompositeInterface = self.getOwnerLayerInterface()
@@ -53,6 +68,12 @@ class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInter
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         rotationAnimationInterface: RotationAnimationInterface = (self.rotationAnimationInterface)
         angleIncrementInfo: AngleIncrementInfo = rotationAnimationInterface.getAngleInfoP().getAngleIncrementInfo()
         frame: int = self.rotationAnimationInterface.getFrame()
@@ -77,6 +98,9 @@ class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInter
     
 
     def reverse(self) -> None:
+        from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+        from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+        from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         rotationAnimationInterface: RotationAnimationInterface = self.rotationAnimationInterface
         angleIncrementInfo: AngleIncrementInfo = rotationAnimationInterface.getAngleInfoP().getAngleIncrementInfo()
         frame: int = self.rotationAnimationInterface.getFrame()
@@ -96,6 +120,8 @@ class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInter
     
 
     def drop(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         y: int = ownerLayerInterface.getYP()
@@ -107,20 +133,21 @@ class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInter
     
 
     def getId(self) -> int:
+        from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
         return ArtificialIntelligence.AI_ID
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
-from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
-from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
+# from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
+# from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

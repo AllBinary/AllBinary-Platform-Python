@@ -22,12 +22,15 @@ from org.allbinary.animation.VectorAnimationInterface import VectorAnimationInte
 class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.currentPoints: list[list[list[int]]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY_ARRAY
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstance(0)
     
 
     @staticmethod
     def createVectorAnimation(currentPoints2: list[list[int]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> VectorAnimation:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         currentPoints: list[list[list[int]]] = [[[0] * (2) for _ in range(len(currentPoints2))] for _ in range(1)]
         size: int = len(currentPoints2)
         for index in range(0, size):
@@ -37,6 +40,7 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(animationBehavior)
         self._init_fields()
         self.setPoints(currentPoints)
@@ -44,6 +48,7 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
@@ -53,6 +58,7 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def changeBasicColor(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getChangeBasicColor() is None or int(self.getChangeBasicColor()) != int(basicColor):
             changed = True
@@ -96,6 +102,7 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
@@ -108,6 +115,7 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def paintVectors(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         try:
             nextPointX: int = 0
             nextPointY: int = 0
@@ -130,6 +138,7 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP(graphics, self.basicColor)
         self.paintVectors(graphics, x, y)
     
@@ -147,13 +156,19 @@ class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
     
 
     def setPoints(self, currentPoints: list[list[list[int]]]) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.currentPoints = currentPoints
         self.circularIndexUtil = CircularIndexUtil.createInstance(len(currentPoints))
+    
+
+    def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getBasicColorP()
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

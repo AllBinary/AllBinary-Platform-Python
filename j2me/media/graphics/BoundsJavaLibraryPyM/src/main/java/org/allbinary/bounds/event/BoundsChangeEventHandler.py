@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class BoundsChangeEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         boundsChangeEventListener: BoundsChangeEventListener = eventListenerInterface
         boundsChangeEventListener.onBoundsChangeEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-BoundsChangeEventHandler.SINGLETON = BoundsChangeEventHandler()
+def _BoundsChangeEventHandler_SINGLETON() -> object:
+    return BoundsChangeEventHandler()
+
+lazy_static(BoundsChangeEventHandler, "SINGLETON", _BoundsChangeEventHandler_SINGLETON)
 

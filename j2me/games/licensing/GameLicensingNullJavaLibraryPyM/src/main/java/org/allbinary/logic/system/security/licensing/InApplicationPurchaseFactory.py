@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InApplicationPurchaseFactory:
@@ -71,13 +72,17 @@ class InApplicationPurchaseFactory:
     
 
     def getUserName(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     def isEnabled(self) -> bool:
         return False
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-InApplicationPurchaseFactory.instance = InApplicationPurchaseFactory()
+def _InApplicationPurchaseFactory_instance() -> object:
+    return InApplicationPurchaseFactory()
+
+lazy_static(InApplicationPurchaseFactory, "instance", _InApplicationPurchaseFactory_instance)
 

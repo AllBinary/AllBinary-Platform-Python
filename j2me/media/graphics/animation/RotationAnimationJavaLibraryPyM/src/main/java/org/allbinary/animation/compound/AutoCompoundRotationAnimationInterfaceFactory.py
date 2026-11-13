@@ -22,19 +22,25 @@ class AutoCompoundRotationAnimationInterfaceFactory(CompoundAnimationInterfaceFa
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
         super().__init__(basicAnimationInterfaceFactoryInterfaceArray, animationBehaviorFactory)
     
 
     def createArray(self, size: int) -> list[Animation]:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         return [None] * (size)
     
 
     def createAnimation(self, animationInterfaceArray: list[Animation]) -> Animation:
         from org.allbinary.animation.compound.AutoCompoundRotationAnimation import AutoCompoundRotationAnimation
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         return AutoCompoundRotationAnimation(animationInterfaceArray, self.animationBehaviorFactory.getOrCreateInstance())
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
-from org.allbinary.animation.RotationAnimation import RotationAnimation
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+# from org.allbinary.animation.RotationAnimation import RotationAnimation
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.init.GameInitializationInterfaceFactoryInterface import GameInitializationInterfaceFactoryInterface
 
 
@@ -27,5 +28,8 @@ class BasicBuildGameInitializerFactory(GameInitializationInterfaceFactoryInterfa
         return BaseGameInitialization.NULL_BASE_GAME_INITIALIZATION
 
 
-BasicBuildGameInitializerFactory.NULL_BASE_BUILD_GMAE_INITIALIZER_FACTORY = BasicBuildGameInitializerFactory()
+def _BasicBuildGameInitializerFactory_NULL_BASE_BUILD_GMAE_INITIALIZER_FACTORY() -> object:
+    return BasicBuildGameInitializerFactory()
+
+lazy_static(BasicBuildGameInitializerFactory, "NULL_BASE_BUILD_GMAE_INITIALIZER_FACTORY", _BasicBuildGameInitializerFactory_NULL_BASE_BUILD_GMAE_INITIALIZER_FACTORY)
 

@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Gauge import Gauge
+from javax.microedition.lcdui.Gauge import Gauge
 
 
 class GameConfigurationGauge(Gauge):

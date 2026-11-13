@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FeatureResourceInitializationUtil:
     instance: FeatureResourceInitializationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -35,15 +37,20 @@ class FeatureResourceInitializationUtil:
     # throws Exception
     def init(self, level: int) -> None:
         from org.allbinary.game.resource.FeaturedResourceRelativeRelationshipFactory import FeaturedResourceRelativeRelationshipFactory
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(commonStrings.START, self, commonStrings.INIT)
         featuredResourceFactory: FeaturedResourceFactory = FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance()
         featuredResourceFactory.init(level)
         FeaturedResourceRelativeRelationshipFactory.getInstance().init(level)
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-FeatureResourceInitializationUtil.instance = FeatureResourceInitializationUtil()
+def _FeatureResourceInitializationUtil_instance() -> object:
+    return FeatureResourceInitializationUtil()
+
+lazy_static(FeatureResourceInitializationUtil, "instance", _FeatureResourceInitializationUtil_instance)
 

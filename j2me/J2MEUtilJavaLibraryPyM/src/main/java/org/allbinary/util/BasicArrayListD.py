@@ -22,8 +22,9 @@ class BasicArrayListD(BasicArrayListS):
     
 
     def __init__(self) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         super().__init__(7)
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 

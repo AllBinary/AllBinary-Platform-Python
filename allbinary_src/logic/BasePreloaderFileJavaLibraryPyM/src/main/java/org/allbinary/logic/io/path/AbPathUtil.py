@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbPathUtil:
@@ -33,5 +34,8 @@ class AbPathUtil:
 from org.allbinary.logic.io.path.AbPath import AbPath
 
 
-AbPathUtil.instance = AbPathUtil()
+def _AbPathUtil_instance() -> object:
+    return AbPathUtil()
+
+lazy_static(AbPathUtil, "instance", _AbPathUtil_instance)
 

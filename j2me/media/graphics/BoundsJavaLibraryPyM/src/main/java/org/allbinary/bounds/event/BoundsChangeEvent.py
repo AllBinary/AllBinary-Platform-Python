@@ -22,11 +22,13 @@ class BoundsChangeEvent(AllBinaryEventObject):
     
 
     def __init__(self, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         super().__init__(rectangle)
     
 
     def getRectangle(self) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
         return self.getSource()
-from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.Rectangle import Rectangle
 
 

@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
 
@@ -30,6 +31,7 @@ class NoPlayerGameInput(PlayerGameInput):
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(BasicArrayListD(), BasicArrayListD(), -1)
     
 
@@ -38,6 +40,7 @@ class NoPlayerGameInput(PlayerGameInput):
             return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         pass
     
 
@@ -46,10 +49,14 @@ class NoPlayerGameInput(PlayerGameInput):
             return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         pass
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-NoPlayerGameInput.SINGLETON = NoPlayerGameInput()
+def _NoPlayerGameInput_SINGLETON() -> object:
+    return NoPlayerGameInput()
+
+lazy_static(NoPlayerGameInput, "SINGLETON", _NoPlayerGameInput_SINGLETON)
 

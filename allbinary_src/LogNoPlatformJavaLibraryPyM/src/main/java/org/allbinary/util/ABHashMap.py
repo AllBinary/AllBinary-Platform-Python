@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.HashMap import HashMap
+from java.util.HashMap import HashMap
 
 
-class ABHashMap(dict):
+class ABHashMap(HashMap):
 
     def __init__(self) -> None:
         super().__init__()

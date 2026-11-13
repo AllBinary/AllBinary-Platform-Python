@@ -34,6 +34,7 @@ class OperatingSystemInterface:
     
 
     def getCharacterSet(self) -> CharacterSet:
+        from org.allbinary.logic.java.character.CharacterSet import CharacterSet
         raise NotImplementedError()
     
 
@@ -62,6 +63,6 @@ class OperatingSystemInterface:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.java.character.CharacterSet import CharacterSet
+# from org.allbinary.logic.java.character.CharacterSet import CharacterSet
 
 

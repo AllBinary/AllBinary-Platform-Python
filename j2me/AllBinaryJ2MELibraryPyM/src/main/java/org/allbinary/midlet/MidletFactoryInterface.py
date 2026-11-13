@@ -22,6 +22,7 @@ class MidletFactoryInterface:
 
     def getInstance(self) -> MIDlet:
         from org.allbinary.midlet.AllBinaryMidlet import AllBinaryMidlet
+        from javax.microedition.midlet.MIDlet import MIDlet
         return AllBinaryMidlet.getNullInstance()
 # from javax.microedition.midlet.MIDlet import MIDlet
 

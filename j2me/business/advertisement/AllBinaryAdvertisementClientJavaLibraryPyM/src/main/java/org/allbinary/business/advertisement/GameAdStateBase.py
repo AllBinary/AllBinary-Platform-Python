@@ -59,10 +59,15 @@ class GameAdStateBase:
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def processAdState(self, gameState: GameState, gameType: GameType) -> None:
+        from org.allbinary.game.GameType import GameType
+        from org.allbinary.game.state.GameState import GameState
         pass
     
 
@@ -115,11 +120,11 @@ class GameAdStateBase:
 
     def isEnabled(self) -> bool:
         return False
-from org.allbinary.game.GameType import GameType
-from org.allbinary.game.state.GameState import GameState
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.game.GameType import GameType
+# from org.allbinary.game.state.GameState import GameState
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 from org.allbinary.business.advertisement.Advertisements import Advertisements
 
 

@@ -21,19 +21,23 @@ from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFac
 class AllBinaryLayerFactory(AllBinaryLayerFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self.rectangle: Rectangle = None
     
 
     def __init__(self, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self._init_fields()
         self.rectangle = rectangle
     
 
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.view.ViewPosition import ViewPosition
         return AllBinaryLayer(StringUtil.getInstance().EMPTY_STRING, self.rectangle, ViewPosition.getInstanceD())
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.view.ViewPosition import ViewPosition
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.view.ViewPosition import ViewPosition
 
 

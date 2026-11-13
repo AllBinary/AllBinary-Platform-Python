@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScreenInfo:
@@ -23,5 +24,8 @@ class ScreenInfo:
         return ScreenInfo.instance
 
 
-ScreenInfo.instance = ScreenInfo()
+def _ScreenInfo_instance() -> object:
+    return ScreenInfo()
+
+lazy_static(ScreenInfo, "instance", _ScreenInfo_instance)
 

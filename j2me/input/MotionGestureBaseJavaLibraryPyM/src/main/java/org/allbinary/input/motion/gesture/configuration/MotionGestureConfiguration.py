@@ -20,6 +20,11 @@ from __future__ import annotations
 class MotionGestureConfiguration:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.diagonalMotionGestureAllowed: bool = True
         self.diagonalTolerance: int = 7
         self.minimumMotionGesture: int = 9
@@ -35,6 +40,9 @@ class MotionGestureConfiguration:
     
 
     def addMotionGestureAction(self, list_: BasicArrayList, commandAction: CompleteMotionGestureInputEvent) -> None:
+        from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
+        from org.allbinary.input.motion.gesture.MotionGestureToMotionGestureActionAssociation import MotionGestureToMotionGestureActionAssociation
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.activeCommands.add(MotionGestureToMotionGestureActionAssociation(list_, commandAction))
     
 
@@ -43,6 +51,7 @@ class MotionGestureConfiguration:
     
 
     def getAssociateCommandActionsList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.activeCommands
     
 
@@ -87,10 +96,12 @@ class MotionGestureConfiguration:
     
 
     def getColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.color
     
 
     def setColor(self, color: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.color = color
     
 
@@ -100,12 +111,12 @@ class MotionGestureConfiguration:
 
     def setMouseButtonMask(self, mouseButtonMask: int) -> None:
         self.mouseButtonMask = mouseButtonMask
-from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.input.motion.gesture.MotionGestureToMotionGestureActionAssociation import MotionGestureToMotionGestureActionAssociation
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.input.motion.gesture.MotionGestureToMotionGestureActionAssociation import MotionGestureToMotionGestureActionAssociation
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

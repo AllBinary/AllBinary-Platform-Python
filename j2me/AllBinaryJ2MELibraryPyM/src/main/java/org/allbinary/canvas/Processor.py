@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Processor:
@@ -36,5 +37,8 @@ class Processor:
         pass
 
 
-Processor.SINGLETON = Processor()
+def _Processor_SINGLETON() -> object:
+    return Processor()
+
+lazy_static(Processor, "SINGLETON", _Processor_SINGLETON)
 

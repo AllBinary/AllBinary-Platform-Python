@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #Used to correct user input for paths
@@ -22,6 +23,7 @@ class PathUtil:
     instance: PathUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
         self.abPathData: AbPathData = AbPathData.getInstance()
         self.filePathData: FilePathData = FilePathData.getInstance()
     
@@ -77,6 +79,7 @@ class PathUtil:
     
 
     def isValidEnd(self, path: str) -> bool:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if stringValidationUtil.isEmpty(path):
             return False
@@ -99,6 +102,7 @@ class PathUtil:
     
 
     def adjust(self, path: str) -> str:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if stringValidationUtil.isEmpty(path):
             return self.abPathData.SEPARATOR
@@ -111,6 +115,7 @@ class PathUtil:
     def removeNameFromPath(self, path: str) -> AbPath:
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         endIndex: int = path.rfind(self.abPathData.SEPARATOR)
         if endIndex < 0:
             endIndex = path.rfind(self.filePathData.SEPARATORCHAR)
@@ -121,11 +126,14 @@ class PathUtil:
         else:
             pathWithoutName: str = path[0:endIndex]
             return AbPath(pathWithoutName, StringUtil.getInstance().EMPTY_STRING)
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 from org.allbinary.logic.io.path.AbPathData import AbPathData
 
 
-PathUtil.instance = PathUtil()
+def _PathUtil_instance() -> object:
+    return PathUtil()
+
+lazy_static(PathUtil, "instance", _PathUtil_instance)
 

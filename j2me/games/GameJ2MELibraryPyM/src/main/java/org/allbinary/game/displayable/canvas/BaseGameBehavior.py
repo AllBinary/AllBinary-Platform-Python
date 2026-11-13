@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.DemoGameBehavior import DemoGameBehavior
 
 
@@ -32,11 +33,16 @@ class BaseGameBehavior(DemoGameBehavior):
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
+        from org.allbinary.game.GameAdState import GameAdState
         gameAdState: GameAdState = GameAdStateFactory.getInstance().getCurrentInstance()
         gameAdState.playingAdState()
     
 
     def pause(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         features: Features = Features.getInstance()
         if features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL_AS_GAME_THREAD):
             currentDisplayableFactory: CurrentDisplayableFactory = CurrentDisplayableFactory.getInstance()
@@ -44,6 +50,9 @@ class BaseGameBehavior(DemoGameBehavior):
     
 
     def unPause(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         if Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL_AS_GAME_THREAD):
             currentDisplayableFactory: CurrentDisplayableFactory = CurrentDisplayableFactory.getInstance()
             currentDisplayableFactory.setRunnable(allBinaryGameCanvas.gameRunnable)
@@ -86,14 +95,18 @@ class BaseGameBehavior(DemoGameBehavior):
 
     # throws Exception
     def setHighScore(self, abeClientInformation: AbeClientInformationInterface, allBinaryGameCanvas: AllBinaryGameCanvas, name: str, score: int, autoSubmit: bool, isLast: bool) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         allBinaryGameCanvas.setHighScore2(abeClientInformation, name, score, autoSubmit, isLast)
-from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
-from org.allbinary.game.GameAdState import GameAdState
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
+# from org.allbinary.game.GameAdState import GameAdState
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 
-BaseGameBehavior.instanceC = BaseGameBehavior()
+def _BaseGameBehavior_instanceC() -> object:
+    return BaseGameBehavior()
+
+lazy_static(BaseGameBehavior, "instanceC", _BaseGameBehavior_instanceC)
 

@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommonSeps:
     instance: CommonSeps = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from jsinterop.annotations.JsProperty import JsProperty
         self.NEW_LINE: str = "\n"
         self.SEMICOLON: str = ";"
         self.EQUALS: str = "="
@@ -54,12 +57,16 @@ class CommonSeps:
 
     @staticmethod
     def getInstance() -> CommonSeps:
+        from jsinterop.annotations.JsMethod import JsMethod
         return CommonSeps.instance
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.string.StringMaker import StringMaker
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 
 
-CommonSeps.instance = CommonSeps()
+def _CommonSeps_instance() -> object:
+    return CommonSeps()
+
+lazy_static(CommonSeps, "instance", _CommonSeps_instance)
 

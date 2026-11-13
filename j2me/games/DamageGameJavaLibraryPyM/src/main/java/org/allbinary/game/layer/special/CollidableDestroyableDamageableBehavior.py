@@ -21,6 +21,7 @@ from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBe
 class CollidableDestroyableDamageableBehavior(CollidableBaseBehavior):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.combat.damage.DamageUtil import DamageUtil
         self.damageUtil: DamageUtil = DamageUtil.getInstance()
     
 
@@ -30,6 +31,7 @@ class CollidableDestroyableDamageableBehavior(CollidableBaseBehavior):
     
 
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         if ownerLayer.getGroupInterface()[0] != collisionLayer.getGroupInterface()[0]:
             return super().isCollision(ownerLayer, collisionLayer)
         return False
@@ -37,22 +39,29 @@ class CollidableDestroyableDamageableBehavior(CollidableBaseBehavior):
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         ownerCollidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = ownerLayer
         collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = collidableInterfaceCompositeInterface
         ownerCollidableDestroyableDamageableLayer.damage(collidableDestroyableDamageableLayer.getDamage(0), 0)
     
 
     def isCollisionInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface) -> bool:
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log("No Longer Used", self)
         return False
     
 
     # throws Exception
     def collideInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface) -> None:
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log("No Longer Used", self)
-from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
-from org.allbinary.game.combat.damage.DamageUtil import DamageUtil
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+# from org.allbinary.game.combat.damage.DamageUtil import DamageUtil
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
 
 

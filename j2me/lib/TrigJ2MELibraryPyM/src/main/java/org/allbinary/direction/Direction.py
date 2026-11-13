@@ -18,7 +18,7 @@ from __future__ import annotations
 
 
 class Direction:
-    directionArray: list[Direction] = None
+    directionArray: list[Direction] = [None] * (13)
 
     def _init_fields(self) -> None:
         self.name: str = None
@@ -58,6 +58,7 @@ class Direction:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Direction: ")
         stringBuffer.append(self.getName())
@@ -69,8 +70,6 @@ class Direction:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
-
-Direction.directionArray = [None] * (13)
 

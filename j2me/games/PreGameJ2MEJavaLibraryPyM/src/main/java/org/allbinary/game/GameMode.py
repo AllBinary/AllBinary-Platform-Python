@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameMode:
@@ -24,6 +24,7 @@ class GameMode:
     CLIENT: GameMode = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.name: str = StringUtil.getInstance().EMPTY_STRING
     
 
@@ -45,11 +46,22 @@ class GameMode:
 
     def __str__(self) -> str:
         return self.toString()
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-GameMode.NONE = GameMode(StringUtil.getInstance().NULL_STRING)
+def _GameMode_NONE() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return GameMode(StringUtil.getInstance().NULL_STRING)
 
-GameMode.SERVER = GameMode("Server")
+lazy_static(GameMode, "NONE", _GameMode_NONE)
 
-GameMode.CLIENT = GameMode("Client")
+def _GameMode_SERVER() -> object:
+    return GameMode("Server")
+
+lazy_static(GameMode, "SERVER", _GameMode_SERVER)
+
+def _GameMode_CLIENT() -> object:
+    return GameMode("Client")
+
+lazy_static(GameMode, "CLIENT", _GameMode_CLIENT)
 

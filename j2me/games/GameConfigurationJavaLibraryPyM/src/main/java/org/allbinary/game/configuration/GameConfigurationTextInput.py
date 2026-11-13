@@ -15,15 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameConfigurationTextInput:
-    hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
+    hashtable: ABHashtable[object, object] = None
     SIMULATOR_IP: GameConfigurationTextInput = None
     SIMULATOR_PORT: GameConfigurationTextInput = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.label: str = StringUtil.getInstance().EMPTY_STRING
         self.text: str = StringUtil.getInstance().EMPTY_STRING
     
@@ -37,6 +38,7 @@ class GameConfigurationTextInput:
 
     @staticmethod
     def update(textField: TextField) -> None:
+        from javax.microedition.lcdui.TextField import TextField
         anyType: object = textField.getLabel()
         gameConfigurationTextInput: GameConfigurationTextInput = GameConfigurationTextInput.hashtable.get(anyType)
         gameConfigurationTextInput.setText(textField.getString())
@@ -60,13 +62,28 @@ class GameConfigurationTextInput:
 
     @staticmethod
     def getHashtable() -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return GameConfigurationTextInput.hashtable
 # from javax.microedition.lcdui.TextField import TextField
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-GameConfigurationTextInput.SIMULATOR_IP = GameConfigurationTextInput("IP: ", "192.168.1.3")
+def _GameConfigurationTextInput_hashtable() -> object:
+    from org.allbinary.logic.StdUtil import StdUtil
+    from org.allbinary.util.ABHashtable import ABHashtable
+    return StdUtil.getInstance().createHashtable()
 
-GameConfigurationTextInput.SIMULATOR_PORT = GameConfigurationTextInput("Port: ", "8010")
+lazy_static(GameConfigurationTextInput, "hashtable", _GameConfigurationTextInput_hashtable)
+
+def _GameConfigurationTextInput_SIMULATOR_IP() -> object:
+    return GameConfigurationTextInput("IP: ", "192.168.1.3")
+
+lazy_static(GameConfigurationTextInput, "SIMULATOR_IP", _GameConfigurationTextInput_SIMULATOR_IP)
+
+def _GameConfigurationTextInput_SIMULATOR_PORT() -> object:
+    return GameConfigurationTextInput("Port: ", "8010")
+
+lazy_static(GameConfigurationTextInput, "SIMULATOR_PORT", _GameConfigurationTextInput_SIMULATOR_PORT)
 

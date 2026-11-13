@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.form.ItemPaintable import ItemPaintable
 
 
@@ -35,5 +36,8 @@ class ItemPaintableFactory(ItemPaintable):
         return ItemPaintableFactory.instance
 
 
-ItemPaintableFactory.instance = ItemPaintableFactory()
+def _ItemPaintableFactory_instance() -> object:
+    return ItemPaintableFactory()
+
+lazy_static(ItemPaintableFactory, "instance", _ItemPaintableFactory_instance)
 

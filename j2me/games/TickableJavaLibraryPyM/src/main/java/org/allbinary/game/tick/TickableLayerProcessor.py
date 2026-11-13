@@ -28,16 +28,19 @@ class TickableLayerProcessor(LayerProcessor):
 
     # throws Exception
     def processAt(self, allBinaryLayerManager: AllBinaryLayerManager, layerInterface: AllBinaryLayer, index: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         tickableInterface: TickableInterface = layerInterface
         tickableInterface.processTick(allBinaryLayerManager)
     
 
     def isProcessorLayer(self, layerInterface: AllBinaryLayer) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if layerInterface.implmentsTickableInterface():
             return True
         else:
             return False
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

@@ -21,6 +21,10 @@ from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 class GameFrameRunnable(GameRunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.GameTickDisplayInfoSingleton import GameTickDisplayInfoSingleton
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameTickDisplayInfoSingleton: GameTickDisplayInfoSingleton = GameTickDisplayInfoSingleton.getInstance()
         self.allBinaryGameCanvas: AllBinaryGameCanvas = None
@@ -34,6 +38,7 @@ class GameFrameRunnable(GameRunnable):
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             allBinaryGameCanvas: AllBinaryGameCanvas = self.allBinaryGameCanvas
             allBinaryGameCanvas.getLoopTimeHelperP().setStartTime(self.gameTickTimeDelayHelper.setStartTime())
@@ -44,10 +49,10 @@ class GameFrameRunnable(GameRunnable):
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-from org.allbinary.graphics.displayable.GameTickDisplayInfoSingleton import GameTickDisplayInfoSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.graphics.displayable.GameTickDisplayInfoSingleton import GameTickDisplayInfoSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 
 

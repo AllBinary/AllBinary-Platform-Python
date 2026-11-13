@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformBitmapBaseFactory:
@@ -23,9 +24,13 @@ class PlatformBitmapBaseFactory:
 
     def createBitmap(self, image: Image) -> PlatformBitmapBase:
         from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
+        from javax.microedition.lcdui.Image import Image
         return PlatformBitmapBase.NULL_PLATFORM_BITMAP_BASE
 # from javax.microedition.lcdui.Image import Image
 
 
-PlatformBitmapBaseFactory.NULL_PLATFORM_BITMAP_BASE_FACTORY = PlatformBitmapBaseFactory()
+def _PlatformBitmapBaseFactory_NULL_PLATFORM_BITMAP_BASE_FACTORY() -> object:
+    return PlatformBitmapBaseFactory()
+
+lazy_static(PlatformBitmapBaseFactory, "NULL_PLATFORM_BITMAP_BASE_FACTORY", _PlatformBitmapBaseFactory_NULL_PLATFORM_BITMAP_BASE_FACTORY)
 

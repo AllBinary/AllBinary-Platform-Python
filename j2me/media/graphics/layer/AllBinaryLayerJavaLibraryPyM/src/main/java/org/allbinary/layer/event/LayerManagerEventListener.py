@@ -22,6 +22,7 @@ class LayerManagerEventListener(LayerManagerEventListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         pass
     
 
@@ -33,6 +34,6 @@ class LayerManagerEventListener(LayerManagerEventListenerInterface):
     # throws Exception
     def onDeleteLayerManagerEvent(self, layerManagerEvent: LayerManagerEvent) -> None:
         pass
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

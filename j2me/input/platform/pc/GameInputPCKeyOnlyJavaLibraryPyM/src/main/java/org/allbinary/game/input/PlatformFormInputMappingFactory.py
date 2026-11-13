@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformFormInputMappingFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.inputToGameKeyMapping: InputToGameKeyMapping = InputToGameKeyMapping.getNullInstance()
 
@@ -31,6 +33,7 @@ class PlatformFormInputMappingFactory:
 
     @staticmethod
     def getInstance() -> PlatformFormInputMappingFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if PlatformFormInputMappingFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             PlatformFormInputMappingFactory.instance = PlatformFormInputMappingFactory()
         return PlatformFormInputMappingFactory.instance
@@ -39,6 +42,8 @@ class PlatformFormInputMappingFactory:
     def getOrCreate(self) -> InputToGameKeyMapping:
         from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             if self.inputToGameKeyMapping == InputToGameKeyMapping.getNullInstance():
                 pcKeyFactory: PCKeyFactory = PCKeyFactory.getInstance()
@@ -54,8 +59,15 @@ class PlatformFormInputMappingFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
         return self.inputToGameKeyMapping
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _PlatformFormInputMappingFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(PlatformFormInputMappingFactory, "instance", _PlatformFormInputMappingFactory_instance)
 

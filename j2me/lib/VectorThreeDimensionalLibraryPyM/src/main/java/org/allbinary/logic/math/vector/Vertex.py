@@ -20,6 +20,7 @@ from __future__ import annotations
 class Vertex:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self.x: BasicDecimal = BasicDecimal(0)
         self.y: BasicDecimal = BasicDecimal(0)
         self.z: BasicDecimal = BasicDecimal(0)
@@ -30,6 +31,9 @@ class Vertex:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         positionStrings: PositionStrings = PositionStrings.getInstance()
         stringBuffer.append(positionStrings.X_LABEL)
@@ -44,9 +48,9 @@ class Vertex:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

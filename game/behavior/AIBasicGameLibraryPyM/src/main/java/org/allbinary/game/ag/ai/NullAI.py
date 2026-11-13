@@ -27,7 +27,8 @@ class NullAI(ArtificialIntelligence):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

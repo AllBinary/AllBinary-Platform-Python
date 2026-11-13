@@ -20,6 +20,9 @@ from __future__ import annotations
 class BasicTouchButtonCellPositionFactory:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.TOP_RIGHT: CellPosition = None
@@ -47,6 +50,7 @@ class BasicTouchButtonCellPositionFactory:
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
+        from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         touchButtonLocationHelper: TouchButtonLocationHelper = TouchButtonLocationHelper()
@@ -90,9 +94,9 @@ class BasicTouchButtonCellPositionFactory:
             self.BOTTOM_FOURTH_FROM_RIGHT = cellPositionFactory.NONE
             self.TOP_SECOND_FROM_LEFT = cellPositionFactory.NONE
             self.TOP_SECOND_FROM_RIGHT = cellPositionFactory.NONE
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

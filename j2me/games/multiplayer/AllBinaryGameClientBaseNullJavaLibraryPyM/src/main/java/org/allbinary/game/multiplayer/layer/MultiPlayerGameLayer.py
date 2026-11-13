@@ -23,6 +23,9 @@ class MultiPlayerGameLayer(CollidableDestroyableDamageableLayer, MultiPlayerGame
     
 
     def __init__(self, remoteInfo: RemoteInfo, groupInterface: list[Group], name: str, layerInfo: Rectangle, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(groupInterface, name, layerInfo, viewPosition)
     
 
@@ -41,8 +44,8 @@ class MultiPlayerGameLayer(CollidableDestroyableDamageableLayer, MultiPlayerGame
 
     def getFiring(self) -> int:
         return 0
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

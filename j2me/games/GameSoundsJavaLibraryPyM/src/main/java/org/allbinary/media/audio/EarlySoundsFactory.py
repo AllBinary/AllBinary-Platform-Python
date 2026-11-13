@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.BaseSoundsFactory import BaseSoundsFactory
 
 
@@ -41,5 +42,8 @@ class EarlySoundsFactory(BaseSoundsFactory):
         return EarlySoundsFactory.instance
 
 
-EarlySoundsFactory.instance = EarlySoundsFactory()
+def _EarlySoundsFactory_instance() -> object:
+    return EarlySoundsFactory()
+
+lazy_static(EarlySoundsFactory, "instance", _EarlySoundsFactory_instance)
 

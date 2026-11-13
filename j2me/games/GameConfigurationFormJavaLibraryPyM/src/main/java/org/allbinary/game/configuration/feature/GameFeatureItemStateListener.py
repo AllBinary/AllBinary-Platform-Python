@@ -15,20 +15,23 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.ItemStateListener import ItemStateListener
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.lcdui.ItemStateListener import ItemStateListener
 
 
 class GameFeatureItemStateListener(ItemStateListener):
-    toggleList: BasicArrayList = BasicArrayListD()
+    toggleList: BasicArrayList = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameOptionsForm: GameOptionsForm = None
     
 
     def __init__(self, gameOptionsForm: GameOptionsForm) -> None:
         from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
         self._init_fields()
         self.gameOptionsForm = gameOptionsForm
         gameFeatureFactory: GameFeatureFactory = GameFeatureFactory.getInstance()
@@ -50,6 +53,13 @@ class GameFeatureItemStateListener(ItemStateListener):
 
     def itemStateChanged(self, item: Item) -> None:
         from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
+        from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
+        from javax.microedition.lcdui.Item import Item
+        from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
+        from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             itemLabel: str = item.getLabel()
             self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().ITEM_LABEL).append(itemLabel)), self, "itemStateChanged")
@@ -66,13 +76,21 @@ class GameFeatureItemStateListener(ItemStateListener):
             self.logUtil.put(commonStrings.EXCEPTION, self, "itemStateChanged", e)
 # from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
 # from javax.microedition.lcdui.Item import Item
-from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
-from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
-from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
+# from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
+# from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _GameFeatureItemStateListener_toggleList() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(GameFeatureItemStateListener, "toggleList", _GameFeatureItemStateListener_toggleList)
 

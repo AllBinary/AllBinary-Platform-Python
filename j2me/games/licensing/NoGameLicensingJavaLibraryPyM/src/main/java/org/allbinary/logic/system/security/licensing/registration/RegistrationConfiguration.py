@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RegistrationConfiguration:
@@ -45,6 +46,7 @@ class RegistrationConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append("Registration Code: ").append(self.getRegistrationCode()))
 
     def __str__(self) -> str:
@@ -57,8 +59,11 @@ class RegistrationConfiguration:
 
     def getRegistrationCode(self) -> str:
         return self.registrationCode
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-RegistrationConfiguration.SINGLETON = RegistrationConfiguration()
+def _RegistrationConfiguration_SINGLETON() -> object:
+    return RegistrationConfiguration()
+
+lazy_static(RegistrationConfiguration, "SINGLETON", _RegistrationConfiguration_SINGLETON)
 

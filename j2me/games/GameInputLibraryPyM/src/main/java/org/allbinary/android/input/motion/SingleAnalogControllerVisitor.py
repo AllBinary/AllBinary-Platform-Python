@@ -31,10 +31,13 @@ class SingleAnalogControllerVisitor(AnalogControllerVisitor):
     
 
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, analogLocationInputProcessor: AnalogLocationInputProcessor) -> None:
+        from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+        from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         analogLocationInput: AnalogLocationInput = AnalogLocationInputFactory.getInstance().getInstanceForPlayer(self.playerInputId)
         analogLocationInputProcessor.process(allbinaryLayerManager, analogLocationInput)
-from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
-from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.analog.AnalogLocationInput import AnalogLocationInput
+# from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

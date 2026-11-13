@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DataOutputStreamFactory:
@@ -30,6 +31,7 @@ class DataOutputStreamFactory:
     def getInstanceForAbFile(self, file: AbFile) -> AbDataOutputStream:
         from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
         from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
         idFileOutputStream: AbFileOutputStream = AbFileOutputStream.createFromAbFile(file)
         idOutData: AbDataOutputStream = AbDataOutputStream(idFileOutputStream)
         return idOutData
@@ -44,8 +46,11 @@ class DataOutputStreamFactory:
         fileOutputStream: AbFileOutputStream = fileStreamFactory.getFileOutputStreamInstance(filePath, fileName)
         idOutData: AbDataOutputStream = AbDataOutputStream(fileOutputStream)
         return idOutData
-from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFile import AbFile
 
 
-DataOutputStreamFactory.instance = DataOutputStreamFactory()
+def _DataOutputStreamFactory_instance() -> object:
+    return DataOutputStreamFactory()
+
+lazy_static(DataOutputStreamFactory, "instance", _DataOutputStreamFactory_instance)
 

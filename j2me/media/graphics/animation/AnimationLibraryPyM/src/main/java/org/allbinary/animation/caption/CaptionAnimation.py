@@ -46,11 +46,13 @@ class CaptionAnimation(Animation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintXY(graphics, x + self.captionDx, y + self.captionDy)
         self.overlayAnimationInterface.paintXY(graphics, x + self.captionDx + self.dx, y + self.captionDy + self.dy)
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintThreedXYZ(graphics, x + self.captionDx, y + self.captionDy, z)
         self.overlayAnimationInterface.paintThreedXYZ(graphics, x + self.captionDx + self.dx, y + self.captionDy + self.dy, z)
 # from javax.microedition.lcdui.Graphics import Graphics

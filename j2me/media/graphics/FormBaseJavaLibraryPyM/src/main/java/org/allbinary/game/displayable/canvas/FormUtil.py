@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FormUtil:
@@ -27,15 +28,21 @@ class FormUtil:
     
 
     def createFormRectangle(self) -> Rectangle:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         pointFactory: PointFactory = PointFactory.getInstance()
         rectangle: Rectangle = Rectangle(pointFactory.createXY(30, 10), displayInfo.getLastWidth() - 30, displayInfo.getLastHeight() - 35)
         return rectangle
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-FormUtil.instance = FormUtil()
+def _FormUtil_instance() -> object:
+    return FormUtil()
+
+lazy_static(FormUtil, "instance", _FormUtil_instance)
 

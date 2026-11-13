@@ -23,13 +23,14 @@ class BufferedIOUtil:
     # throws Exception
     @staticmethod
     def copy(backupFile: AbFile, backupFileBak: AbFile) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         line: str = StringUtil.getInstance().EMPTY_STRING
         tmpOut: BufferedWriter = BufferedWriter(FileWriter(AbFileNativeUtil.get(backupFileBak)))
         tmpIn: BufferedReader = BufferedReader(FileReader(AbFileNativeUtil.get(backupFile)))
-        while True:
+        while tmpIn.ready():
             line = tmpIn.readLine()
-            if line is None:
-                break
             tmpOut.write(line, 0, len(line))
             tmpOut.newLine()
         tmpOut.flush()
@@ -37,8 +38,8 @@ class BufferedIOUtil:
 # from java.io.BufferedWriter import BufferedWriter
 # from java.io.FileReader import FileReader
 # from java.io.FileWriter import FileWriter
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

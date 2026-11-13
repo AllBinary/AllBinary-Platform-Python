@@ -25,6 +25,10 @@ class SimultaneousCompoundRotationAnimation(RotationAnimation):
     
 
     def __init__(self, animationInterfaceArray: list[RotationAnimation], animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(AngleInfo.getInstance(AngleFactory.getInstance().QUARTER_TOTAL_ANGLE), CircularIndexUtil.createInstance(4), animationBehavior)
         self._init_fields()
         self.animationInterfaceArray = animationInterfaceArray
@@ -79,34 +83,40 @@ class SimultaneousCompoundRotationAnimation(RotationAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         index = len(self.animationInterfaceArray)
         while (index := index - 1) >= 0:
             self.animationInterfaceArray[index].paintXY(graphics, x, y)
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         index = len(self.animationInterfaceArray)
         while (index := index - 1) >= 0:
             self.animationInterfaceArray[index].paintThreedXYZ(graphics, x, y, z)
     
 
     def setFrameByDirection(self, direction: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
         index = len(self.animationInterfaceArray)
         while (index := index - 1) >= 0:
             self.animationInterfaceArray[index].setFrameByDirection(direction)
     
 
     def setFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         index = len(self.animationInterfaceArray)
         while (index := index - 1) >= 0:
             self.animationInterfaceArray[index].setFrameToAngle(angle)
     
 
     def adjustFrameToAngle(self, newAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrame(newAngle.getValue())
     
 
@@ -117,6 +127,7 @@ class SimultaneousCompoundRotationAnimation(RotationAnimation):
     
 
     def getAngleInfoP(self) -> AngleInfo:
+        from org.allbinary.math.AngleInfo import AngleInfo
         return self.animationInterfaceArray[0].getAngleInfoP()
     
 
@@ -130,17 +141,18 @@ class SimultaneousCompoundRotationAnimation(RotationAnimation):
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
         index = len(self.animationInterfaceArray)
         while (index := index - 1) >= 0:
             self.animationInterfaceArray[index].set(gl)
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

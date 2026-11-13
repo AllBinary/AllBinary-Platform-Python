@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from org.allbinary.canvas.Processor import Processor
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
@@ -52,6 +53,14 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
             self.updateMeasurementProcessor.setNextUnremoveableProcess()
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.ag.layer.hud.basic.notification.GameNotification import GameNotification
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
@@ -70,6 +79,9 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
     
 
     def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(location, direction, bufferZone, basicColor)
         self._init_fields()
         self.circularIndexUtil = CircularIndexUtil.createInstance(0)
@@ -79,6 +91,10 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             super().updateMeasurement(graphics)
             font: Font = graphics.getFont()
@@ -92,6 +108,8 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
     
 
     def getPoint(self, x: int, y: int) -> GPoint:
+        from org.allbinary.graphics.CustomGPoint import CustomGPoint
+        from org.allbinary.graphics.GPoint import GPoint
         self.point = CustomGPoint.getInstance3(0, 0)
         self.point.setX(x)
         self.point.setY(y)
@@ -99,6 +117,8 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
     
 
     def add(self, string: str, seconds: int, basicColor: BasicColor, permanent: bool) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if permanent:
             if self.lastString != string:
                 self.lastString = string
@@ -111,6 +131,8 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
 
     # throws Exception
     def processTick(self) -> None:
+        from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
+        from org.allbinary.game.GameAdState import GameAdState
         if self.timeDelayHelper.isTime(self.gameTickTimeDelayHelper.startTime):
             gameAdState: GameAdState = GameAdStateFactory.getInstance().getCurrentInstance()
             if gameAdState.isShowingAtLocation(self.getLocation()):
@@ -133,6 +155,7 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
 
     # throws Exception
     def setAndRemoveProcess(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.setX((self.displayInfo.getLastWidth() - self.width) >> 1)
         self.point.setX(self.getX())
         self.point.setY(self.getY())
@@ -153,6 +176,7 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
 
     # throws Exception
     def setNextUnremoveableProcess(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         index: int = self.circularIndexUtil.getIndex()
         self.setX((self.displayInfo.getLastWidth() - self.width) >> 1)
         self.point.setX(self.getX())
@@ -169,28 +193,26 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         super().paintString(graphics, self.string)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.game.GameAdState import GameAdState
-from org.allbinary.game.ag.layer.hud.basic.notification.GameNotification import GameNotification
-from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
-from org.allbinary.graphics.CustomGPoint import CustomGPoint
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from org.allbinary.game.ag.layer.hud.basic.SetAndRemoveProcessor import SetAndRemoveProcessor
-from org.allbinary.game.ag.layer.hud.basic.NextUnremoveableProcessor import NextUnremoveableProcessor
+# from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
+# from org.allbinary.game.GameAdState import GameAdState
+# from org.allbinary.game.ag.layer.hud.basic.notification.GameNotification import GameNotification
+# from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+# from org.allbinary.graphics.CustomGPoint import CustomGPoint
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

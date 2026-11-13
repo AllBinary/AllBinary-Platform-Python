@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShaderManager:
     instance: ShaderManager = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.LOAD_SHADER: str = "loadShader"
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.GL_VERTEX_SHADER: int = None
@@ -39,15 +41,21 @@ class ShaderManager:
     
 
     def load(self, gl: GL10, resource: str, shaderAsStringArray: list[str], shaderType: int) -> int:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         return -1
     
 
     def loadShader(self, gl: GL10, resource: str, stringList: BasicArrayList, shaderType: int) -> int:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return -1
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-ShaderManager.instance = ShaderManager(-1, -1)
+def _ShaderManager_instance() -> object:
+    return ShaderManager(-1, -1)
+
+lazy_static(ShaderManager, "instance", _ShaderManager_instance)
 

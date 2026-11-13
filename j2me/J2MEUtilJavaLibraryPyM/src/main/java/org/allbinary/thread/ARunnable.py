@@ -21,8 +21,9 @@ class ARunnable(object):
     
 
     def run(self) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         pass
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
 
 

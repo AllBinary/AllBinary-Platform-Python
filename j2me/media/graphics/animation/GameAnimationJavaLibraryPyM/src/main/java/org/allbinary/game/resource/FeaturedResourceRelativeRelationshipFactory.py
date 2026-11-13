@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.resource.FeaturedResourceFactory import FeaturedResourceFactory
 
 
@@ -22,6 +23,7 @@ class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
     INSTANCE: FeaturedResourceRelativeRelationshipFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
     
 
@@ -37,6 +39,9 @@ class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
 
     # throws Exception
     def getRelativeRelationshipList(self, resource: str, layer: AllBinaryLayer) -> BasicArrayList:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         featureReleaseList: BasicArrayList = self.getList()
         size: int = self.getList().size()
         for index in range(0, size):
@@ -50,6 +55,13 @@ class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
 
     # throws Exception
     def duplicate(self, list_: BasicArrayList, layer: AllBinaryLayer) -> BasicArrayList:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.relationship.RelativeLayerRelationship import RelativeLayerRelationship
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         pointFactory: PointFactory = PointFactory.getInstance()
         newList: BasicArrayList = BasicArrayListD()
         size: int = list_.size()
@@ -57,15 +69,18 @@ class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
             relativeRelationship: RelativeRelationship = list_.objectArray[index]
             newList.add(RelativeLayerRelationship(layer, pointFactory.createXY(relativeRelationship.getX(), relativeRelationship.getY()), BasicArrayListUtil.getInstance().getImmutableInstance()))
         return newList
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.relationship.RelativeLayerRelationship import RelativeLayerRelationship
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.relationship.RelativeLayerRelationship import RelativeLayerRelationship
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-FeaturedResourceRelativeRelationshipFactory.INSTANCE = FeaturedResourceRelativeRelationshipFactory()
+def _FeaturedResourceRelativeRelationshipFactory_INSTANCE() -> object:
+    return FeaturedResourceRelativeRelationshipFactory()
+
+lazy_static(FeaturedResourceRelativeRelationshipFactory, "INSTANCE", _FeaturedResourceRelativeRelationshipFactory_INSTANCE)
 

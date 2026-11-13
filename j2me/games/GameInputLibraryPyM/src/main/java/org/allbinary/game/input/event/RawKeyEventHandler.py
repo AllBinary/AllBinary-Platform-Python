@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RawKeyEventHandler:
@@ -23,6 +24,8 @@ class RawKeyEventHandler:
     LISTENER_LABEL: str = " Listener: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.eventListenerInterfaceList: BasicArrayList = None
     
@@ -33,15 +36,18 @@ class RawKeyEventHandler:
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
     def removeAllListeners(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
     def addListeners(self, vector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         eventListenerInterface: RawKeyEventListener = None
         size: int = vector.size()
         for index in range(0, size):
@@ -69,6 +75,8 @@ class RawKeyEventHandler:
 
     # throws Exception
     def fireEvent(self, keyCode: int, deviceId: int, repeated: bool) -> None:
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         eventListenerInterface: RawKeyEventListener = None
         index: int = 0
         while index < self.eventListenerInterfaceList.size():
@@ -87,10 +95,13 @@ class RawKeyEventHandler:
     
 
     def getEventListenerInterfaceListP(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.eventListenerInterfaceList
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(RawKeyEventHandler.TOTAL_LISTENERS)
         stringBuffer.appendint(self.eventListenerInterfaceList.size())
@@ -109,13 +120,16 @@ class RawKeyEventHandler:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-RawKeyEventHandler.instance = RawKeyEventHandler()
+def _RawKeyEventHandler_instance() -> object:
+    return RawKeyEventHandler()
+
+lazy_static(RawKeyEventHandler, "instance", _RawKeyEventHandler_instance)
 

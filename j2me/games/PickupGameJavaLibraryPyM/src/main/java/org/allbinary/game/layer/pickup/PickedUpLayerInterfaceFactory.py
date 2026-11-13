@@ -21,12 +21,14 @@ from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryBase import Pi
 class PickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactoryBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.pickedUpLayerType: PickedUpLayerType = None
         self.iconLayer: IconLayer = None
         self.animationInterface: Animation = None
     
 
     def __init__(self, pickeUpLayerType: PickedUpLayerType, iconLayer: IconLayer, animationInterface: Animation) -> None:
+        from org.allbinary.animation.Animation import Animation
         super().__init__()
         self._init_fields()
         self.pickedUpLayerType = pickeUpLayerType
@@ -35,16 +37,18 @@ class PickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactoryBase):
     
 
     def getIconLayer(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.iconLayer
     
 
     def getAnimationInterface(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return self.animationInterface
     
 
     def getPickedUpLayerType(self) -> PickedUpLayerType:
         return self.pickedUpLayerType
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

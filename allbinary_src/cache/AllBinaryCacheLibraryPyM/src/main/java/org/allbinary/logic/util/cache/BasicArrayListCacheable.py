@@ -26,7 +26,8 @@ class BasicArrayListCacheable(BasicArrayListD, CacheableInterface):
     
 
     def getKey(self) -> object:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

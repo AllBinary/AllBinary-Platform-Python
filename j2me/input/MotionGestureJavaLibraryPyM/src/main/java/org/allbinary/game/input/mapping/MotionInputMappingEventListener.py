@@ -22,18 +22,24 @@ class MotionInputMappingEventListener(InputMappingEventListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     # throws Exception
     def onInputMappingEvent(self, inputMappingEvent: InputMappingEvent) -> None:
+        from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
+        from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEventFactory import GameKeyCompleteMotionGestureInputEventFactory
+        from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
         GameKeyCompleteMotionGestureInputEventFactory.getInstance().updateAll()
         BasicTouchInputFactory.getInstance().updateAll(inputMappingEvent.getInputToGameKeyMapping())
-from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
-from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEventFactory import GameKeyCompleteMotionGestureInputEventFactory
-from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
+# from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEventFactory import GameKeyCompleteMotionGestureInputEventFactory
+# from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 

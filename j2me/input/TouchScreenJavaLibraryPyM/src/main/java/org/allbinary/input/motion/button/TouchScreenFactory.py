@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchScreenFactory:
     SINGLETON: TouchScreenFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.touch: bool = False
         self.multiTouch: bool = False
@@ -29,6 +31,7 @@ class TouchScreenFactory:
     
 
     def __init__(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             self.setTouch(True)
@@ -76,6 +79,8 @@ class TouchScreenFactory:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("TouchScreen: ")
         stringBuffer.appendboolean(self.isTouch())
@@ -89,12 +94,15 @@ class TouchScreenFactory:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.input.motion.button.TouchScreenTypesFactory import TouchScreenTypesFactory
 
 
-TouchScreenFactory.SINGLETON = TouchScreenFactory()
+def _TouchScreenFactory_SINGLETON() -> object:
+    return TouchScreenFactory()
+
+lazy_static(TouchScreenFactory, "SINGLETON", _TouchScreenFactory_SINGLETON)
 

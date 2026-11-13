@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.LayerManagerLoggingBase import LayerManagerLoggingBase
 
 
@@ -30,5 +31,8 @@ class LayerManagerNoDebug(LayerManagerLoggingBase):
         return LayerManagerNoDebug.instance
 
 
-LayerManagerNoDebug.instance = LayerManagerNoDebug()
+def _LayerManagerNoDebug_instance() -> object:
+    return LayerManagerNoDebug()
+
+lazy_static(LayerManagerNoDebug, "instance", _LayerManagerNoDebug_instance)
 

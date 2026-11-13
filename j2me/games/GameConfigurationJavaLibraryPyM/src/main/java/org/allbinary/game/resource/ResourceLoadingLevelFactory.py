@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ResourceLoadingLevelFactory:
@@ -46,5 +47,8 @@ class ResourceLoadingLevelFactory:
 from org.allbinary.game.resource.ResourceLoadingLevel import ResourceLoadingLevel
 
 
-ResourceLoadingLevelFactory.instance = ResourceLoadingLevelFactory()
+def _ResourceLoadingLevelFactory_instance() -> object:
+    return ResourceLoadingLevelFactory()
+
+lazy_static(ResourceLoadingLevelFactory, "instance", _ResourceLoadingLevelFactory_instance)
 

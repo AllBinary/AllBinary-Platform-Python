@@ -22,11 +22,14 @@ class TimeBaseInterface:
     
 
     def getTimeBase(self) -> TimeBase:
+        from javax.microedition.media.TimeBase import TimeBase
         raise NotImplementedError()
     
 
     # throws MediaException
     def setTimeBase(self, timeBase: TimeBase) -> None:
+        from javax.microedition.media.MediaException import MediaException
+        from javax.microedition.media.TimeBase import TimeBase
         raise NotImplementedError()
 # from javax.microedition.media.MediaException import MediaException
 # from javax.microedition.media.TimeBase import TimeBase

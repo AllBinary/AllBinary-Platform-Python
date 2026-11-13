@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShaderUpdater:
     instance: ShaderUpdater = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.opengles.renderer.RendererStrings import RendererStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.rendererStrings: RendererStrings = RendererStrings.getInstance()
 
@@ -34,12 +37,17 @@ class ShaderUpdater:
     
 
     def onSurfaceCreated(self, gl: GL10, eglConfig: EGLConfig) -> None:
+        from javax.microedition.khronos.egl.EGLConfig import EGLConfig
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.egl.EGLConfig import EGLConfig
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.graphics.opengles.renderer.RendererStrings import RendererStrings
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.opengles.renderer.RendererStrings import RendererStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ShaderUpdater.instance = ShaderUpdater()
+def _ShaderUpdater_instance() -> object:
+    return ShaderUpdater()
+
+lazy_static(ShaderUpdater, "instance", _ShaderUpdater_instance)
 

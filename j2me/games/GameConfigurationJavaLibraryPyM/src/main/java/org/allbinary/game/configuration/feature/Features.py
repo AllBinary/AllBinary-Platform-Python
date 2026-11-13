@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Features:
-    SINGLETON: object = NullUtil.getInstance().NULL_OBJECT
+    SINGLETON: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.list_: BasicArrayList = None
@@ -30,12 +33,14 @@ class Features:
 
     @staticmethod
     def getInstance() -> Features:
+        from org.allbinary.logic.NullUtil import NullUtil
         if Features.SINGLETON == NullUtil.getInstance().NULL_OBJECT:
             Features.SINGLETON = Features()
         return Features.SINGLETON
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.list_ = BasicArrayListD()
         self.defaultList = BasicArrayListD()
@@ -51,6 +56,10 @@ class Features:
 
     # throws Exception
     def add(self, gameFeature: Feature) -> None:
+        from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
+        from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         if not self.list_.contains(gameFeature):
             self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(str(gameFeature))), self, self.commonStrings.ADD)
             self.list_.add(gameFeature)
@@ -59,6 +68,8 @@ class Features:
 
     # throws Exception
     def removeDefault(self, gameFeature: Feature) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(str(gameFeature))), self, "removeDefault")
         self.remove(gameFeature)
         self.defaultList.remove(gameFeature)
@@ -66,6 +77,8 @@ class Features:
 
     # throws Exception
     def remove(self, gameFeature: Feature) -> None:
+        from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
+        from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
         if self.list_.contains(gameFeature):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.REMOVE)
             self.list_.remove(gameFeature)
@@ -79,6 +92,9 @@ class Features:
         from org.allbinary.game.configuration.feature.TouchFeatureFactory import TouchFeatureFactory
         from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         try:
             gameFeatureFactory: GameFeatureFactory = GameFeatureFactory.getInstance()
             inputFeatureFactory: InputFeatureFactory = InputFeatureFactory.getInstance()
@@ -120,16 +136,23 @@ class Features:
             self.remove(gameFeature)
         else:
             self.add(gameFeature)
-from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
-from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
+# from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _Features_SINGLETON() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(Features, "SINGLETON", _Features_SINGLETON)
 

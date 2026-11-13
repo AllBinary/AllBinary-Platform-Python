@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 
@@ -24,10 +25,12 @@ class NullAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAnimati
     NULL_ANIMATION_FACTORY: NullAnimationFactory = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.NULL_ANIMATION: Animation = (Animation()  # Java anonymous class body:
 #         
 # 
 #         def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+#             from javax.microedition.lcdui.Graphics import Graphics
 #             pass
 )
         self.EMPTY_ARRAY: list[Animation] = [None] * (0)
@@ -52,13 +55,20 @@ class NullAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAnimati
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 from org.allbinary.animation.Animation import Animation
 
 
-NullAnimationFactory.NULL_NOT_FOR_USE_ANIMATION_FACTORY = NullAnimationFactory()
+def _NullAnimationFactory_NULL_NOT_FOR_USE_ANIMATION_FACTORY() -> object:
+    return NullAnimationFactory()
 
-NullAnimationFactory.NULL_ANIMATION_FACTORY = NullAnimationFactory()
+lazy_static(NullAnimationFactory, "NULL_NOT_FOR_USE_ANIMATION_FACTORY", _NullAnimationFactory_NULL_NOT_FOR_USE_ANIMATION_FACTORY)
+
+def _NullAnimationFactory_NULL_ANIMATION_FACTORY() -> object:
+    return NullAnimationFactory()
+
+lazy_static(NullAnimationFactory, "NULL_ANIMATION_FACTORY", _NullAnimationFactory_NULL_ANIMATION_FACTORY)
 

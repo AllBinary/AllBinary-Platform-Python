@@ -21,10 +21,12 @@ from org.allbinary.canvas.Processor import Processor
 class MidletExitProcessor(Processor):
 
     def _init_fields(self) -> None:
+        from javax.microedition.midlet.MIDlet import MIDlet
         self.midlet: MIDlet = None
     
 
     def __init__(self, midlet: MIDlet) -> None:
+        from javax.microedition.midlet.MIDlet import MIDlet
         super().__init__()
         self._init_fields()
         self.midlet = midlet

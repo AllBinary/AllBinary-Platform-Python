@@ -15,8 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.cache.BasicArrayListResetablePool import BasicArrayListResetablePool
-from org.allbinary.animation.image.ImageArrayRotationAnimationCacheableInterfaceFactory import ImageArrayRotationAnimationCacheableInterfaceFactory
 
 
 class ImageArrayRotationAnimationPool(BasicArrayListResetablePool):
@@ -24,25 +24,33 @@ class ImageArrayRotationAnimationPool(BasicArrayListResetablePool):
     
 
     def __init__(self, cacheableInterfaceFactoryInterface: CacheableInterfaceFactoryInterface) -> None:
+        from org.allbinary.logic.util.cache.CacheableInterfaceFactoryInterface import CacheableInterfaceFactoryInterface
         super().__init__(cacheableInterfaceFactoryInterface)
     
 
     @staticmethod
     def getInstance() -> PoolInterface:
+        from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
         return ImageArrayRotationAnimationPool.IMAGE_ROTATION_ANIMATION_POOL
     
 
     # throws Exception
     def remove(self, key: object) -> CacheableInterface:
+        from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
         cacheableInterface: CacheableInterface = super().remove(key)
         allBinaryImageRotationAnimationInfo: ImageArrayRotationAnimationInfo = key
         imageArrayRotationAnimationCacheable: ImageArrayRotationAnimationCacheable = (cacheableInterface)
         imageArrayRotationAnimationCacheable.setImageArray(allBinaryImageRotationAnimationInfo.getImageArray())
         return cacheableInterface
-from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
-from org.allbinary.logic.util.cache.CacheableInterfaceFactoryInterface import CacheableInterfaceFactoryInterface
-from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+# from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
+# from org.allbinary.logic.util.cache.CacheableInterfaceFactoryInterface import CacheableInterfaceFactoryInterface
+# from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
 
 
-ImageArrayRotationAnimationPool.IMAGE_ROTATION_ANIMATION_POOL = ImageArrayRotationAnimationPool(ImageArrayRotationAnimationCacheableInterfaceFactory())
+def _ImageArrayRotationAnimationPool_IMAGE_ROTATION_ANIMATION_POOL() -> object:
+    from org.allbinary.animation.image.ImageArrayRotationAnimationCacheableInterfaceFactory import ImageArrayRotationAnimationCacheableInterfaceFactory
+    from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+    return ImageArrayRotationAnimationPool(ImageArrayRotationAnimationCacheableInterfaceFactory())
+
+lazy_static(ImageArrayRotationAnimationPool, "IMAGE_ROTATION_ANIMATION_POOL", _ImageArrayRotationAnimationPool_IMAGE_ROTATION_ANIMATION_POOL)
 

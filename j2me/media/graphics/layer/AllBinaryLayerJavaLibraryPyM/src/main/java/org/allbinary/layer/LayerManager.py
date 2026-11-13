@@ -10,6 +10,13 @@ class LayerManager:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.thread.SynchObject import SynchObject
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
@@ -93,6 +100,7 @@ class LayerManager:
     
 
     def paint(self, g: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         with self._lock:  # synchronized (self.anyType)
             comp: Layer = None
             index = self.list_.size()
@@ -101,12 +109,12 @@ class LayerManager:
                 if comp is not None and comp.isVisible():
                     comp.paint(g)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.SynchObject import SynchObject
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.SynchObject import SynchObject
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
 
 

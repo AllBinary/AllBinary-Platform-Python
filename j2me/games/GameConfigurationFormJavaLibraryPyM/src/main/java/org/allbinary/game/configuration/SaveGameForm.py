@@ -16,19 +16,23 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 
 
 class SaveGameForm(CommandForm):
-    FORM: CommandForm = CommandForm.getNullCommandForm()
+    FORM: CommandForm = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.MEUtil import MEUtil
         self.meUtil: MEUtil = MEUtil.getInstance()
     
 
     # throws Exception
     @staticmethod
     def createForm(commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> CommandForm:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         SaveGameForm.FORM = SaveGameForm(commandListener, title, backgrounBasicColor, foregroundBasicColor)
         return SaveGameForm.FORM
     
@@ -39,6 +43,10 @@ class SaveGameForm(CommandForm):
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from javax.microedition.lcdui.TextField import TextField
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -48,6 +56,8 @@ class SaveGameForm(CommandForm):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         self.removeAllCommands()
         self.addCommand(gameCommandsFactory.SAVE)
@@ -55,9 +65,14 @@ class SaveGameForm(CommandForm):
         self.setCommandListener(cmdListener)
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.TextField import TextField
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-from org.allbinary.logic.MEUtil import MEUtil
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+# from org.allbinary.logic.MEUtil import MEUtil
 
+
+def _SaveGameForm_FORM() -> object:
+    return CommandForm.getNullCommandForm()
+
+lazy_static(SaveGameForm, "FORM", _SaveGameForm_FORM)
 

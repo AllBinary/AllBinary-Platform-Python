@@ -32,7 +32,8 @@ class PointsLayerFactory(AllBinaryLayerFactoryInterface):
     # throws Exception
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.game.ag.layer.pickup.points.PointsLayer import PointsLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return PointsLayer(self.points)
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class Input:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.id: int = 0
         self.name: str = StringUtil.getInstance().EMPTY_STRING
     
@@ -47,6 +48,7 @@ class Input:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Name: ")
         stringBuffer.append(self.getName())
@@ -56,7 +58,7 @@ class Input:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

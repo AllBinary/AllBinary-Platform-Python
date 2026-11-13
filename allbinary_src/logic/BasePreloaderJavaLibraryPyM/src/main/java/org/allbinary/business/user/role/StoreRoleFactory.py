@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StoreRoleFactory:
     instance: StoreRoleFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.roles: BasicArrayList = BasicArrayListD()
         self.subscriberRoles: BasicArrayList = BasicArrayListD()
         self.wholesaleRoles: BasicArrayList = BasicArrayListD()
@@ -43,18 +46,24 @@ class StoreRoleFactory:
     
 
     def getRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.roles
     
 
     def getSubscriberRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.subscriberRoles
     
 
     def getWholesaleRoles(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.wholesaleRoles
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-StoreRoleFactory.instance = StoreRoleFactory()
+def _StoreRoleFactory_instance() -> object:
+    return StoreRoleFactory()
+
+lazy_static(StoreRoleFactory, "instance", _StoreRoleFactory_instance)
 

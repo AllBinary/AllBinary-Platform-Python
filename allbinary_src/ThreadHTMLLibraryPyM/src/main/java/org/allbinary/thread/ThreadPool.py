@@ -23,6 +23,10 @@ class ThreadPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.NULL_RUNNABLE: NullRunnable = NullRunnable.getInstance()
@@ -61,6 +65,7 @@ class ThreadPool:
     
 
     def init(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         if not self.isAlive:
             self.isAlive = True
             self.taskQueue = BasicArrayListD()
@@ -163,10 +168,10 @@ class ThreadPool:
 
     def completedTask(self, task: object) -> None:
         pass
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.thread.NullRunnable import NullRunnable
 from org.allbinary.thread.ThreadPoolStrings import ThreadPoolStrings
 from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil

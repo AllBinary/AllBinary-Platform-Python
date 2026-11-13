@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.score.remote.RemoteHighScoresProcessor import RemoteHighScoresProcessor
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RemoteHighScoresProcessorFactory:
-    SINGLETON: RemoteHighScoresProcessorInterface = RemoteHighScoresProcessor()
+    SINGLETON: RemoteHighScoresProcessorInterface = None
     
 
     @staticmethod
     def getInstance() -> RemoteHighScoresProcessorInterface:
         return RemoteHighScoresProcessorFactory.SINGLETON
 
+
+def _RemoteHighScoresProcessorFactory_SINGLETON() -> object:
+    from org.allbinary.game.score.remote.RemoteHighScoresProcessor import RemoteHighScoresProcessor
+    return RemoteHighScoresProcessor()
+
+lazy_static(RemoteHighScoresProcessorFactory, "SINGLETON", _RemoteHighScoresProcessorFactory_SINGLETON)
 

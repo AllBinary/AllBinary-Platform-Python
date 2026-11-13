@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseStrings:
@@ -32,5 +33,8 @@ class LicenseStrings:
         return LicenseStrings.instance
 
 
-LicenseStrings.instance = LicenseStrings()
+def _LicenseStrings_instance() -> object:
+    return LicenseStrings()
+
+lazy_static(LicenseStrings, "instance", _LicenseStrings_instance)
 

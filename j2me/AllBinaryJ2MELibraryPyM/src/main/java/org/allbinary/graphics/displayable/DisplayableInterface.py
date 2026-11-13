@@ -22,6 +22,7 @@ class DisplayableInterface:
     
 
     def addCommand(self, cmd: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         raise NotImplementedError()
     
 
@@ -34,10 +35,12 @@ class DisplayableInterface:
     
 
     def removeCommand(self, cmd: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         raise NotImplementedError()
     
 
     def setCommandListener(self, l: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         raise NotImplementedError()
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener

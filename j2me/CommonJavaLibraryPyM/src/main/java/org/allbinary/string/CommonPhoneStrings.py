@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommonPhoneStrings:
@@ -46,8 +47,11 @@ class CommonPhoneStrings:
     @staticmethod
     def getInstance() -> CommonPhoneStrings:
         return CommonPhoneStrings.instance
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-CommonPhoneStrings.instance = CommonPhoneStrings()
+def _CommonPhoneStrings_instance() -> object:
+    return CommonPhoneStrings()
+
+lazy_static(CommonPhoneStrings, "instance", _CommonPhoneStrings_instance)
 

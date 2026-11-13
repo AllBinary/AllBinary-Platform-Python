@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DemoLimitedCommandTextItemArrayFactory:
     instance: DemoLimitedCommandTextItemArrayFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
+        from org.allbinary.graphics.form.item.LimitCommandsVisitor import LimitCommandsVisitor
         self.commandTextItemArrayFactory: CommandTextItemArrayFactory = CommandTextItemArrayFactory(LimitCommandsVisitor())
 
     def __init__(self) -> None:
@@ -33,10 +36,14 @@ class DemoLimitedCommandTextItemArrayFactory:
     
 
     def getCommandTextItemArrayFactory(self) -> CommandTextItemArrayFactory:
+        from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
         return self.commandTextItemArrayFactory
-from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
-from org.allbinary.graphics.form.item.LimitCommandsVisitor import LimitCommandsVisitor
+# from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
+# from org.allbinary.graphics.form.item.LimitCommandsVisitor import LimitCommandsVisitor
 
 
-DemoLimitedCommandTextItemArrayFactory.instance = DemoLimitedCommandTextItemArrayFactory()
+def _DemoLimitedCommandTextItemArrayFactory_instance() -> object:
+    return DemoLimitedCommandTextItemArrayFactory()
+
+lazy_static(DemoLimitedCommandTextItemArrayFactory, "instance", _DemoLimitedCommandTextItemArrayFactory_instance)
 

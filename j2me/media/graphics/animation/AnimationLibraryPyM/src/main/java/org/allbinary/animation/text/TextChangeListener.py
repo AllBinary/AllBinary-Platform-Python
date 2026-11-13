@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TextChangeListener:
@@ -30,5 +31,8 @@ class TextChangeListener:
         pass
 
 
-TextChangeListener.instance = TextChangeListener()
+def _TextChangeListener_instance() -> object:
+    return TextChangeListener()
+
+lazy_static(TextChangeListener, "instance", _TextChangeListener_instance)
 

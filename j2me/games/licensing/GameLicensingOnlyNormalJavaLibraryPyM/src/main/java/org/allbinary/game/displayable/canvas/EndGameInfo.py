@@ -20,6 +20,7 @@ from __future__ import annotations
 class EndGameInfo:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.NORMAL_GAME_OVER: str = "Game Over"
         self.NORMAL_GAME_OVER_WIN: str = "You Won"
         self.gameOverStr: str = StringUtil.getInstance().EMPTY_STRING
@@ -31,6 +32,8 @@ class EndGameInfo:
     
 
     def update(self, gameInfo: GameInfo, myCanvas: MyCanvas) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         self.setGameOverStr(self.NORMAL_GAME_OVER)
         self.setWinStr(self.NORMAL_GAME_OVER_WIN)
     
@@ -49,8 +52,8 @@ class EndGameInfo:
 
     def setWinStr(self, winStr: str) -> None:
         self.winStr = winStr
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

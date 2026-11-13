@@ -25,6 +25,9 @@ class NumberLayersSequenceAI(SequenceAI):
     
 
     def __init__(self, numberOfEnemiesLeft: int, artificialIntelligenceInterface: list[ArtificialIntelligenceInterface], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(artificialIntelligenceInterface, ownerLayerInterface, gameInput)
         self._init_fields()
         self.numberOfLayersLeft = numberOfEnemiesLeft
@@ -32,13 +35,14 @@ class NumberLayersSequenceAI(SequenceAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.getIndex() == 0:
             if allBinaryLayerManager.getSize() < self.numberOfLayersLeft:
                 self.setIndex(1)
         super().processAI(allBinaryLayerManager)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

@@ -22,6 +22,8 @@ class LeftToRightImageAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, sequenceArray: list[int], dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         super().__init__(image, sequenceArray, image.getWidth(), image.getHeight(), dx, dy, animationBehaviorFactory)
     
 
@@ -29,6 +31,8 @@ class LeftToRightImageAnimationFactory(BaseImageAnimationFactory):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.LeftToRightImageAnimation import LeftToRightImageAnimation
         from org.allbinary.animation.image.AdjustedLeftToRightImageAnimation import AdjustedLeftToRightImageAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
         scaledImage: Image = self.animationFactoryImageScaleUtil.createImage(self.getImage(), self.animationFactoryInitializationVisitor.width, self.animationFactoryInitializationVisitor.height, self.scaleProperties.scaleWidth, self.scaleProperties.scaleHeight)
         if self.animationFactoryInitializationVisitor.dx != 0 or self.animationFactoryInitializationVisitor.dy != 0:
             self.animationFactoryImageScaleUtil.processAdjust(self)
@@ -36,7 +40,7 @@ class LeftToRightImageAnimationFactory(BaseImageAnimationFactory):
         else:
             return LeftToRightImageAnimation(scaledImage, self.getSequenceArray(), self.animationBehaviorFactory.getOrCreateInstance())
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
 
 

@@ -23,23 +23,29 @@ class HealLayer(AllBinaryLayer, HealthVisitorInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.view.ViewPosition import ViewPosition
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0), ViewPosition.getInstanceD())
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def visit(self, healthInterface: HealthInterface) -> None:
+        from org.allbinary.game.health.HealthInterface import HealthInterface
         if healthInterface.isAlive():
             healthInterface.healMax()
         else:
             self.logUtil.putF("Heal attempt on dead: Does not currently occur", self, "visit")
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.health.HealthInterface import HealthInterface
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.view.ViewPosition import ViewPosition
+# from org.allbinary.game.health.HealthInterface import HealthInterface
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.view.ViewPosition import ViewPosition
 
 

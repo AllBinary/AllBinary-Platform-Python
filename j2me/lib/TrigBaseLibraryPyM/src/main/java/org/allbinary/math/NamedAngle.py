@@ -21,15 +21,17 @@ from org.allbinary.math.Angle import Angle
 class NamedAngle(Angle):
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.name: str = None
     
 
     def __init__(self, angle: int, name: str) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         super().__init__(angle)
         self._init_fields()
         self.name = name
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsProperty import JsProperty
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 

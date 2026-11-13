@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DestroyEventCircularStaticPool:
     instance: DestroyEventCircularStaticPool = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
         self.EVENT_POOL: AllBinaryEventCircularPool = AllBinaryEventCircularPool(20)
     
 
@@ -35,18 +37,23 @@ class DestroyEventCircularStaticPool:
 
     def init(self, combatGameCanvas: AllBinaryGameCanvas) -> None:
         from org.allbinary.game.combat.destroy.event.DestroyEventFactory import DestroyEventFactory
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         self.EVENT_POOL.initAllBinaryEventCircularPool(DestroyEventFactory(combatGameCanvas))
     
 
     # throws Exception
     def getInstanceForLayer(self, layerInterface: AllBinaryLayer) -> DestroyedEvent:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         destroyedEvent: DestroyedEvent = self.EVENT_POOL.getNextInstance()
         destroyedEvent.setLayerInterfaceForCircularStaticPool(layerInterface)
         return destroyedEvent
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.util.event.AllBinaryEventCircularPool import AllBinaryEventCircularPool
 
 
-DestroyEventCircularStaticPool.instance = DestroyEventCircularStaticPool()
+def _DestroyEventCircularStaticPool_instance() -> object:
+    return DestroyEventCircularStaticPool()
+
+lazy_static(DestroyEventCircularStaticPool, "instance", _DestroyEventCircularStaticPool_instance)
 

@@ -21,6 +21,7 @@ from org.allbinary.logic.control.validate.ValidatorBase import ValidatorBase
 class NumberTextFieldItemValidator(ValidatorBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         self.textFieldItem: ABTextFieldItem = None
         self.min: int = None
         self.max: int = None
@@ -28,6 +29,7 @@ class NumberTextFieldItemValidator(ValidatorBase):
     
 
     def __init__(self, textFieldItem: ABTextFieldItem, maxChars: int, min: int, max: int) -> None:
+        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         super().__init__()
         self._init_fields()
         self.textFieldItem = textFieldItem
@@ -37,14 +39,18 @@ class NumberTextFieldItemValidator(ValidatorBase):
     
 
     def isNumberValid(self, value: int) -> bool:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         return BooleanFactory.getInstance().TRUE
     
 
     def toNumberVector(self, value: int) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         return BasicArrayListD()
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         result: bool = BooleanFactory.getInstance().TRUE
         string: str = self.textFieldItem.getString()
         textLength: int = len(string)
@@ -62,6 +68,10 @@ class NumberTextFieldItemValidator(ValidatorBase):
     
 
     def toList(self) -> BasicArrayList:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = BasicArrayListD()
         string: str = self.textFieldItem.getString()
         textLength: int = len(string)
@@ -89,11 +99,11 @@ class NumberTextFieldItemValidator(ValidatorBase):
                 stringMaker.delete(0, stringMaker.length())
                 list_.add(str(stringMaker.append(name).append(" is to long")))
         return list_
-from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

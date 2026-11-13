@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.PlatformImage import PlatformImage
 
 
@@ -31,5 +32,8 @@ class PreLoadPlatformImage(PlatformImage):
         return PreLoadPlatformImage.instance
 
 
-PreLoadPlatformImage.instance = PreLoadPlatformImage()
+def _PreLoadPlatformImage_instance() -> object:
+    return PreLoadPlatformImage()
+
+lazy_static(PreLoadPlatformImage, "instance", _PreLoadPlatformImage_instance)
 

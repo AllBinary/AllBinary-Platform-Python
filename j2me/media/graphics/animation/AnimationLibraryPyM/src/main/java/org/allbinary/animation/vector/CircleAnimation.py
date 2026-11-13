@@ -22,12 +22,14 @@ from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeI
 class CircleAnimation(Animation, ColorCompositeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.TOTAL_ANGLE: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         self.width: int = None
         self.height: int = None
     
 
     def __init__(self, width: int, height: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.width = width
@@ -40,10 +42,21 @@ class CircleAnimation(Animation, ColorCompositeInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
         graphics.drawArc(x, y, self.width, self.height, 0, self.TOTAL_ANGLE)
+    
+
+    def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getBasicColorP()
+    
+
+    def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        super().setBasicColorP(basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.math.AngleFactory import AngleFactory
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NotificationUtil:
@@ -27,9 +28,13 @@ class NotificationUtil:
     
 
     def notify(self, command: Command, resource: str, message: str) -> None:
+        from javax.microedition.lcdui.Command import Command
         pass
 # from javax.microedition.lcdui.Command import Command
 
 
-NotificationUtil.SINGLETON = NotificationUtil()
+def _NotificationUtil_SINGLETON() -> object:
+    return NotificationUtil()
+
+lazy_static(NotificationUtil, "SINGLETON", _NotificationUtil_SINGLETON)
 

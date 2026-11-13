@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ABRunnable import ABRunnable
 
 
@@ -40,5 +41,8 @@ class NullABRunnable(ABRunnable):
         return False
 
 
-NullABRunnable.instance = NullABRunnable()
+def _NullABRunnable_instance() -> object:
+    return NullABRunnable()
+
+lazy_static(NullABRunnable, "instance", _NullABRunnable_instance)
 

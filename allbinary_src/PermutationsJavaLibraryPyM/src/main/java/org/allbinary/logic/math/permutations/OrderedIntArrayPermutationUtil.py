@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OrderedIntArrayPermutationUtil:
@@ -66,6 +67,7 @@ class OrderedIntArrayPermutationUtil:
     
 
     def generate(self, data: list[int], visitor: Visitor) -> None:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         iterations: int = self.factorial(len(data))
         print(self.TOTAL_ITERATIONS_TABLE, end="")
         print(iterations)
@@ -78,6 +80,7 @@ class OrderedIntArrayPermutationUtil:
     @staticmethod
     def main(args: list[str]) -> None:
         from org.allbinary.logic.math.permutations.IntPermutationVisitor import IntPermutationVisitor
+        from org.allbinary.logic.string.StringMaker import StringMaker
         TOTAL: int = 3
         data: list[int] = [0] * (TOTAL)
         for i in range(0, TOTAL):
@@ -85,10 +88,14 @@ class OrderedIntArrayPermutationUtil:
         permutationVisitor: IntPermutationVisitor = IntPermutationVisitor(data)
         ORIGINAL_DATA_LABEL: str = "Original Data: "
         print(ORIGINAL_DATA_LABEL, end="")
-        permutationVisitor.print_(data)
+        permutationVisitor.print_(data, StringMaker())
         OrderedIntArrayPermutationUtil.getInstance().generate(data, permutationVisitor)
-from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-OrderedIntArrayPermutationUtil.instance = OrderedIntArrayPermutationUtil()
+def _OrderedIntArrayPermutationUtil_instance() -> object:
+    return OrderedIntArrayPermutationUtil()
+
+lazy_static(OrderedIntArrayPermutationUtil, "instance", _OrderedIntArrayPermutationUtil_instance)
 

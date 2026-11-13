@@ -21,6 +21,9 @@ from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 class TweenedImageAnimation(IndexedAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.image: Image = None
         self.dx: int = None
         self.dy: int = None
@@ -30,6 +33,9 @@ class TweenedImageAnimation(IndexedAnimation):
     
 
     def __init__(self, image: Image, dx: int, dy: int, totalFrames: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(animationBehavior)
         self._init_fields()
         self.image = image
@@ -69,10 +75,12 @@ class TweenedImageAnimation(IndexedAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         frame: int = self.getFrame()
         currentX: int = self.dx * frame
         currentY: int = self.dy * frame
@@ -81,18 +89,20 @@ class TweenedImageAnimation(IndexedAnimation):
 
     # throws Exception
     def close(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         DisposalUtil.getInstance().disposeImage(self.image)
     
 
     # throws Throwable
     def finalize(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         DisposalUtil.getInstance().disposeImage(self.image)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.DisposalUtil import DisposalUtil
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.DisposalUtil import DisposalUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

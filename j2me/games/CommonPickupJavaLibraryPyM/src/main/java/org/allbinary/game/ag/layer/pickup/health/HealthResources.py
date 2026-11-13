@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HealthResources:
@@ -33,5 +34,8 @@ class HealthResources:
         return HealthResources.SINGLETON
 
 
-HealthResources.SINGLETON = HealthResources()
+def _HealthResources_SINGLETON() -> object:
+    return HealthResources()
+
+lazy_static(HealthResources, "SINGLETON", _HealthResources_SINGLETON)
 

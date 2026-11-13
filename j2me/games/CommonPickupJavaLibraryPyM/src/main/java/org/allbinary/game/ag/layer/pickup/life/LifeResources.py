@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LifeResources:
@@ -33,5 +34,8 @@ class LifeResources:
         return LifeResources.SINGLETON
 
 
-LifeResources.SINGLETON = LifeResources()
+def _LifeResources_SINGLETON() -> object:
+    return LifeResources()
+
+lazy_static(LifeResources, "SINGLETON", _LifeResources_SINGLETON)
 

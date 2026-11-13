@@ -21,6 +21,7 @@ from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
 class AbCrypt(CryptInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.secretComposite: BaseSecretComposite = BaseSecretComposite.NULL_SECRET_COMPOSITE
         self.algorithm: str = None
@@ -34,6 +35,9 @@ class AbCrypt(CryptInterface):
     def init(self, keyAsString: str) -> None:
         from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
         from org.allbinary.logic.system.security.crypt.jcehelper.SecretComposite import SecretComposite
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.bouncycastle.jce.provider.BouncyCastleProvider import BouncyCastleProvider
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             try:
@@ -51,6 +55,8 @@ class AbCrypt(CryptInterface):
     
 
     def encrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             return self.secretComposite.encrypt(array)
         except Exception as e:
@@ -59,6 +65,8 @@ class AbCrypt(CryptInterface):
     
 
     def decrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             return self.secretComposite.decrypt(array)
         except Exception as e:
@@ -69,11 +77,11 @@ class AbCrypt(CryptInterface):
 # from javax.crypto.Cipher import Cipher
 # from javax.crypto.SecretKey import SecretKey
 # from javax.crypto.SecretKeyFactory import SecretKeyFactory
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.bouncycastle.jce.provider.BouncyCastleProvider import BouncyCastleProvider
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.bouncycastle.jce.provider.BouncyCastleProvider import BouncyCastleProvider
 from org.allbinary.logic.system.security.crypt.jcehelper.BaseSecretComposite import BaseSecretComposite
 
 

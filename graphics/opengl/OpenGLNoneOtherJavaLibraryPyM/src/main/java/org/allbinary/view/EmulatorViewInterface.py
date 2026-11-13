@@ -10,6 +10,7 @@ class EmulatorViewInterface:
     
 
     def setMidlet(self, midlet: MIDlet) -> None:
+        from javax.microedition.midlet.MIDlet import MIDlet
         raise NotImplementedError()
     
 
@@ -18,6 +19,7 @@ class EmulatorViewInterface:
     
 
     def onSetDisplayable(self, displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Displayable import Displayable
         raise NotImplementedError()
 # from javax.microedition.lcdui.Displayable import Displayable
 # from javax.microedition.midlet.MIDlet import MIDlet

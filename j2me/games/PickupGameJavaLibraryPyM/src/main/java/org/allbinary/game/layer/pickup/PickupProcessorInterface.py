@@ -23,7 +23,8 @@ class PickupProcessorInterface:
 
     # throws Exception
     def process(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         raise NotImplementedError()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

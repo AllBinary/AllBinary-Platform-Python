@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class VirtualKeyboard:
@@ -22,10 +23,14 @@ class VirtualKeyboard:
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onVirtualKeyboardEvent(self, virtualKeyboardEvent: VirtualKeyboardEvent) -> None:
+        from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
         pass
     
 
@@ -35,11 +40,14 @@ class VirtualKeyboard:
 
     def hide(self) -> None:
         pass
-from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 
-VirtualKeyboard.NULL_VIRTUAL_KEYBOARD = VirtualKeyboard()
+def _VirtualKeyboard_NULL_VIRTUAL_KEYBOARD() -> object:
+    return VirtualKeyboard()
+
+lazy_static(VirtualKeyboard, "NULL_VIRTUAL_KEYBOARD", _VirtualKeyboard_NULL_VIRTUAL_KEYBOARD)
 

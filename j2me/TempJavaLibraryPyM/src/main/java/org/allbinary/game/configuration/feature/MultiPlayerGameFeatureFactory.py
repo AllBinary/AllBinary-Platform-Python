@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MultiPlayerGameFeatureFactory:
@@ -22,5 +23,8 @@ class MultiPlayerGameFeatureFactory:
         pass
 
 
-MultiPlayerGameFeatureFactory.instance = MultiPlayerGameFeatureFactory()
+def _MultiPlayerGameFeatureFactory_instance() -> object:
+    return MultiPlayerGameFeatureFactory()
+
+lazy_static(MultiPlayerGameFeatureFactory, "instance", _MultiPlayerGameFeatureFactory_instance)
 

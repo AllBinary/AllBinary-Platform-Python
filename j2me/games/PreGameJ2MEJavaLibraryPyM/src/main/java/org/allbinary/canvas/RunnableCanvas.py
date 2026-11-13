@@ -25,6 +25,15 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
+        from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.thread.NullThread import NullThread
+        from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.nullUtil: NullUtil = NullUtil.getInstance()
         self.stdUtil: StdUtil = StdUtil.getInstance()
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
@@ -50,6 +59,10 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
 
     def __init__(self, commandListener: CommandListener, childNameList: BasicArrayList, hasParam: bool) -> None:
         from org.allbinary.canvas.RunnableCanvasRefreshHelper import RunnableCanvasRefreshHelper
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(CommonStrings.getInstance().UNKNOWN, childNameList)
         self._init_fields()
         self.logUtil.putF(str(StringMaker().append("RunnableCanvas delay: ").appendint(int(self.loopTimeHelper.delay))), self, self.commonStrings.CONSTRUCTOR)
@@ -61,6 +74,7 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         self.logUtil.putF(self.commonStrings.NOT_IMPLEMENTED, self, "initCommands")
     
 
@@ -76,6 +90,8 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
     
 
     def setRunning(self, running: bool) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.thread.NullThread import NullThread
         self.running = running
         if not self.running:
             self.thread = NullThread.NULL_THREAD
@@ -89,6 +105,8 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
             return self._isRunning_unlocked()
 
     def _isRunning_unlocked(self) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         if self.thread == self.currentThread:
             return self.running
         else:
@@ -104,10 +122,12 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
     
 
     def getLoopTimeHelperP(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         return self.loopTimeHelper
     
 
     def setWait(self, wait: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.loopTimeHelper.delay = wait
         self.pauseWait = wait * 3
         self.logUtil.putF(str(StringMaker().append("setWait - delay: ").appendint(int(self.loopTimeHelper.delay))), self, self.commonStrings.CONSTRUCTOR)
@@ -169,6 +189,7 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
 
     # throws Exception
     def processLoopSleep(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.runnableCanvasRefreshHelper.process()
         if self.isPaused():
             stringMaker: StringMaker = StringMaker()
@@ -206,19 +227,19 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
     def getType(self) -> int:
         return -1
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.NullThread import NullThread
-from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.NullThread import NullThread
+# from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 from org.allbinary.canvas.Processor import Processor
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.physics.velocity.VelocityBehaviorBase import VelocityBehaviorBase
 
 
@@ -26,6 +27,7 @@ class DragVelocityBehavior(VelocityBehaviorBase):
     
 
     def reduce(self, velocityProperties: BasicVelocityProperties, nominator: int, denominator: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         if velocityProperties.getVelocityXBasicDecimalP().getUnscaled() != 0:
             basicDecimal: BasicDecimal = velocityProperties.getVelocityXBasicDecimalP()
             basicDecimal.multiplyint(nominator)
@@ -37,6 +39,7 @@ class DragVelocityBehavior(VelocityBehaviorBase):
     
 
     def reduceX(self, velocityProperties: BasicVelocityProperties, nominator: int, denominator: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         basicDecimal: BasicDecimal = velocityProperties.getVelocityXBasicDecimalP()
         if basicDecimal.getUnscaled() != 0:
             basicDecimal.multiplyint(nominator)
@@ -44,12 +47,16 @@ class DragVelocityBehavior(VelocityBehaviorBase):
     
 
     def reduceY(self, velocityProperties: BasicVelocityProperties, nominator: int, denominator: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         if velocityProperties.getVelocityYBasicDecimalP().getUnscaled() != 0:
             basicDecimal: BasicDecimal = velocityProperties.getVelocityYBasicDecimalP()
             basicDecimal.multiplyint(nominator)
             basicDecimal.divideint(denominator)
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 
-DragVelocityBehavior.instance = DragVelocityBehavior()
+def _DragVelocityBehavior_instance() -> object:
+    return DragVelocityBehavior()
+
+lazy_static(DragVelocityBehavior, "instance", _DragVelocityBehavior_instance)
 

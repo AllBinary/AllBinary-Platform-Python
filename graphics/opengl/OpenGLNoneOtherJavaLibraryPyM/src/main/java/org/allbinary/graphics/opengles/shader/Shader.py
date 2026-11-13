@@ -20,6 +20,9 @@ from __future__ import annotations
 class Shader:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.shaderName: str = StringUtil.getInstance().EMPTY_STRING
         self.shaderStringList: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.shaderAsString: str = StringUtil.getInstance().EMPTY_STRING
@@ -27,8 +30,8 @@ class Shader:
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

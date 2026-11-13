@@ -16,12 +16,14 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SWTProcessor:
     instance: SWTProcessor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.thread.NullRunnable import NullRunnable
         self.runnable: object = NullRunnable.getInstance()
 
     def __init__(self) -> None:
@@ -34,10 +36,14 @@ class SWTProcessor:
     
 
     def process(self, display: Display) -> None:
+        from org.eclipse.swt.widgets.Display import Display
         display.sleep()
-from org.eclipse.swt.widgets.Display import Display
-from org.allbinary.thread.NullRunnable import NullRunnable
+# from org.eclipse.swt.widgets.Display import Display
+# from org.allbinary.thread.NullRunnable import NullRunnable
 
 
-SWTProcessor.instance = SWTProcessor()
+def _SWTProcessor_instance() -> object:
+    return SWTProcessor()
+
+lazy_static(SWTProcessor, "instance", _SWTProcessor_instance)
 

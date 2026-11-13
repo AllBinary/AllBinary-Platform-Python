@@ -21,7 +21,8 @@ class AnalogControllerVisitor:
     
 
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, analogLocationInputProcessor: AnalogLocationInputProcessor) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

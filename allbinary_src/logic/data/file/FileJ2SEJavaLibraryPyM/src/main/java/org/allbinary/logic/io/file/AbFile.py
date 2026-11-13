@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.io.file.AbFileInterface import AbFileInterface
 
 
@@ -35,17 +35,22 @@ class AbFile(AbFileInterface):
     # throws Exception
     @staticmethod
     def createAbFile(filePath: str) -> AbFile:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return AbFile(File(AbPath(filePath, StringUtil.getInstance().EMPTY_STRING).toFileSystemString()))
     
 
     # throws Exception
     @staticmethod
     def createAbFilePathAndName(filePath: str, fileName: str) -> AbFile:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return AbFile(File(AbPath(filePath, StringUtil.getInstance().EMPTY_STRING).toFileSystemString(), fileName))
     
 
     @staticmethod
     def createAbFileFromAbPath(abPath: AbPath) -> AbFile:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return AbFile(File(abPath.toFileSystemString()))
     
 
@@ -239,6 +244,7 @@ class AbFile(AbFileInterface):
     
 
     def equals(self, obj: object) -> bool:
+        from org.allbinary.TsUtil import TsUtil
         return TsUtil.getInstance().equalsNotstring(self.file, obj)
 
     def __eq__(self, other: object) -> bool:
@@ -246,7 +252,7 @@ class AbFile(AbFileInterface):
     
 
     def hashCode(self) -> int:
-        return self.file.hashCode()
+        return hash(self.file)
 
     def __hash__(self) -> int:
         return self.hashCode()
@@ -262,9 +268,14 @@ class AbFile(AbFileInterface):
 # from java.io.FilenameFilter import FilenameFilter
 # from java.io.IOException import IOException
 # from java.net.URI import URI
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-AbFile.NULL_FILE = AbFile.createAbFileFromRawPath(StringUtil.getInstance().EMPTY_STRING)
+def _AbFile_NULL_FILE() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return AbFile.createAbFileFromRawPath(StringUtil.getInstance().EMPTY_STRING)
+
+lazy_static(AbFile, "NULL_FILE", _AbFile_NULL_FILE)
 

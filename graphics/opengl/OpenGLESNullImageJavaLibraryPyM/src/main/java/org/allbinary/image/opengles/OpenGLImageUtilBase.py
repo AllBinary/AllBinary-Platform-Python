@@ -21,25 +21,31 @@ class OpenGLImageUtilBase:
     
 
     def paint(self, alphaBitmap: OpenGLBitmap, originalBitmap: OpenGLBitmap, index: int) -> OpenGLBitmap:
+        from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
         raise RuntimeError()
     
 
     # Java overloaded method: Python keeps the last definition
     def paint(self, colorBitmap: OpenGLBitmap, originalBitmap: OpenGLBitmap, alpha: int, basicColor: BasicColor) -> OpenGLBitmap:
+        from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise RuntimeError()
     
 
     # throws IOException
     def createImage(self, name: str) -> OpenGLBitmap:
+        from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
         raise RuntimeError()
     
 
     # throws IOException
     def createImageFromInputStream(self, inputStream: InputStream) -> OpenGLBitmap:
+        from java.io.InputStream import InputStream
+        from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
         raise RuntimeError()
 # from java.io.IOException import IOException
 # from java.io.InputStream import InputStream
-from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

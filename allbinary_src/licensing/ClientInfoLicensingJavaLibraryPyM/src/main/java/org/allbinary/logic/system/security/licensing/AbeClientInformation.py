@@ -22,6 +22,7 @@ from org.allbinary.logic.system.security.licensing.ClientInformation import Clie
 class AbeClientInformation(ClientInformation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -31,6 +32,14 @@ class AbeClientInformation(ClientInformation):
     
 
     def init(self) -> None:
+        from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.setOperatingSystemInterface(OperatingSystemFactory.getInstance().getOperatingSystemInstance())
             licenseInitInfo: LicenseInitInfo = LicenseInitInfoUtil.getInstance().read()
@@ -46,13 +55,13 @@ class AbeClientInformation(ClientInformation):
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             logUtil.put(commonStrings.EXCEPTION, self, commonStrings.CONSTRUCTOR, e)
-from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
-from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+# from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -21,11 +21,13 @@ from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
 class OnlyTouchButtonRecognizer(MotionRecognizer):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
         self.touchButtonRecognizer: TouchButtonRecognizer = None
         self.touchButtonProcessing: bool = False
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
         super().__init__()
         self._init_fields()
         self.touchButtonRecognizer = TouchButtonRecognizer()
@@ -49,6 +51,6 @@ class OnlyTouchButtonRecognizer(MotionRecognizer):
     def processDraggedMotionEvent(self, x: int, y: int, deviceId: int, modifiers: int) -> None:
         if self.touchButtonProcessing:
             self.touchButtonRecognizer.pressTouchButtonInput(x, y, deviceId)
-from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
+# from org.allbinary.input.motion.button.TouchButtonRecognizer import TouchButtonRecognizer
 
 

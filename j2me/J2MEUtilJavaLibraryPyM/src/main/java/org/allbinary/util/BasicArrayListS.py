@@ -22,13 +22,16 @@ class BasicArrayListS(BasicArrayList):
     
 
     def __init__(self, size: int) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from jsinterop.annotations.JsConstructor import JsConstructor
         super().__init__(NullUtil.getInstance().NULL_OBJECT_ARRAY)
         if size < 0:
             raise ValueError(str(StringMaker().append("Init Size Exception: ").appendint(size)))
         self.objectArray = [None] * (size)
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 

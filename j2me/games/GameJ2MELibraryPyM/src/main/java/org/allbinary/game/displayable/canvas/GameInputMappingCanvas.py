@@ -15,18 +15,26 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Command import Command
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface
-from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 
 
 class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
     NAME: str = "GameInputMappingCanvas"
-    DISPLAY: Command = Command("Controls", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 2)
-    DEFAULT: Command = Command("Default", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 2)
+    DISPLAY: Command = None
+    DEFAULT: Command = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
+        from org.allbinary.game.paint.help.InputMappingHelpPaintable import InputMappingHelpPaintable
+        from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.paintable: ProcessPaintable = None
         self.helpPaintable: InputMappingHelpPaintable = None
         self.colorFillPaintable: ColorFillBasePaintable = None
@@ -39,6 +47,14 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, allBinaryGameLayerManager: AllBinaryGameLayerManager, helpPaintable: HelpPaintable) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
+        from org.allbinary.game.paint.help.HelpPaintable import HelpPaintable
+        from org.allbinary.game.paint.help.InputMappingHelpPaintable import InputMappingHelpPaintable
+        from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(commandListener, GameInputMappingCanvas.NAME, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -62,6 +78,8 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
 
     def initCommands(self, cmdListener: CommandListener) -> None:
         from org.allbinary.game.displayable.canvas.GameInputMappingInstructionsCanvas import GameInputMappingInstructionsCanvas
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         self.removeAllCommands()
         self.addCommand(GameCommandsFactory.getInstance().CLOSE_AND_SHOW_GAME_CANVAS)
         self.addCommand(GameInputMappingCanvas.DEFAULT)
@@ -87,6 +105,9 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
     
 
     def addGameKey(self, keyCode: int, repeated: bool) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             self.logUtil.putF(str(StringMaker().append("Raw Device Key Code: ").append(format(keyCode, "x"))), self, self.gameInputStrings.ADD_KEY_EVENT)
             gameKey: GameKey = self.inputToGameKeyMapping.getInstanceForCanvas(self, keyCode)
@@ -98,6 +119,9 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
 
     # throws Exception
     def processInputMapping(self, gameKey: GameKey, input: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Start Passed GameKey: ")
         stringBuffer.append(self.stringUtil.toString(gameKey))
@@ -111,6 +135,8 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
     
 
     def setSelectedAction(self, gameKey: GameKey) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append("Selected GameKey: ").append(self.stringUtil.toString(gameKey))), self, "setSelectedAction")
         self.selectedGameKey = gameKey
         self.selectedInput = self.NONE
@@ -120,6 +146,10 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
 
     # throws Exception
     def gameActionCrud(self, gameKey: GameKey, input: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Start GameKey: ")
         stringBuffer.append(self.stringUtil.toString(self.selectedGameKey))
@@ -144,6 +174,9 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
 
     # throws Exception
     def addNewMapping(self, gameKey: GameKey, input: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
         METHOD_NAME: str = "addNewMapping"
         self.logUtil.putF(self.commonStrings.START, self, METHOD_NAME)
         isInputAlreadyMapped: bool = self.inputMapping.getInputMapping().isMapped(input)
@@ -164,6 +197,8 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
 
     # throws Exception
     def deleteCurrentMapping(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         METHOD_NAME: str = "deleteCurrentMapping"
         list_: BasicArrayList = self.inputMapping.getInputMapping().getMappedInput(self.selectedGameKey)
         if list_.size() > 1:
@@ -196,27 +231,44 @@ class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.colorFillPaintable.paint(graphics)
         self.helpPaintable.paint(graphics)
         self.paintable.paint(graphics)
         super().paint(graphics)
+# from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
-from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
-from org.allbinary.game.paint.help.HelpPaintable import HelpPaintable
-from org.allbinary.game.paint.help.InputMappingHelpPaintable import InputMappingHelpPaintable
-from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
+# from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
+# from org.allbinary.game.paint.help.HelpPaintable import HelpPaintable
+# from org.allbinary.game.paint.help.InputMappingHelpPaintable import InputMappingHelpPaintable
+# from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
+
+def _GameInputMappingCanvas_DISPLAY() -> object:
+    from javax.microedition.lcdui.Command import Command
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return Command("Controls", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 2)
+
+lazy_static(GameInputMappingCanvas, "DISPLAY", _GameInputMappingCanvas_DISPLAY)
+
+def _GameInputMappingCanvas_DEFAULT() -> object:
+    from javax.microedition.lcdui.Command import Command
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return Command("Default", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 2)
+
+lazy_static(GameInputMappingCanvas, "DEFAULT", _GameInputMappingCanvas_DEFAULT)
 

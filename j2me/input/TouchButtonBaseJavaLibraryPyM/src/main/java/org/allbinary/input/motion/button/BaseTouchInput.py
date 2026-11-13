@@ -20,6 +20,8 @@ from __future__ import annotations
 class BaseTouchInput:
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
     
@@ -29,6 +31,7 @@ class BaseTouchInput:
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.basicArrayListUtil.getImmutableInstance()
     
 
@@ -37,8 +40,8 @@ class BaseTouchInput:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.BasicPlayer import BasicPlayer
 
 
@@ -31,19 +32,25 @@ class NoPlayer(BasicPlayer):
     
 
     def getContentType(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().NULL_STRING
     
 
     def getControl(self, controlType: str) -> Control:
         from org.allbinary.media.audio.NullControl import NullControl
+        from javax.microedition.media.Control import Control
         return NullControl()
     
 
     def getControls(self) -> list[Control]:
+        from javax.microedition.media.Control import Control
         return [None] * (0)
 # from javax.microedition.media.Control import Control
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-NoPlayer.NO_PLAYER = NoPlayer()
+def _NoPlayer_NO_PLAYER() -> object:
+    return NoPlayer()
+
+lazy_static(NoPlayer, "NO_PLAYER", _NoPlayer_NO_PLAYER)
 

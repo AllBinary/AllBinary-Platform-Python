@@ -10,7 +10,8 @@ class AppNameLicensingAdConfiguration(AdConfiguration):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__([StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING])
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

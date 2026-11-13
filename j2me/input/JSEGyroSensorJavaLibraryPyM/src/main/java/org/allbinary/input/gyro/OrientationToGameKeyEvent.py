@@ -26,6 +26,8 @@ class OrientationToGameKeyEvent:
 
     def __init__(self) -> None:
         from org.allbinary.input.gyro.NoGyroSensor import NoGyroSensor
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
         self._init_fields()
         if Features.getInstance().isFeature(SensorFeatureFactory.getInstance().NO_ORIENTATION):
             self.allBinaryGyroSensor = NoGyroSensor()
@@ -48,9 +50,10 @@ class OrientationToGameKeyEvent:
 
     # throws Exception
     def updateGameKeyEvents(self, orientation: Orientation, yaw: int, pitch: int, roll: int) -> None:
+        from org.allbinary.logic.math.Orientation import Orientation
         pass
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
-from org.allbinary.logic.math.Orientation import Orientation
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
+# from org.allbinary.logic.math.Orientation import Orientation
 
 

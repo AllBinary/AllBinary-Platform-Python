@@ -20,21 +20,26 @@ from __future__ import annotations
 class GameInputMapping:
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.name: str = StringUtil.getInstance().EMPTY_STRING
         self.gameKey: GameKey = GameKey.NULL_GAME_KEY
     
 
     def __init__(self, name: str, gameKey: GameKey) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
         self._init_fields()
         self.setName(name)
         self.setGameKey(gameKey)
     
 
     def setGameKey(self, gameKey: GameKey) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
         self.gameKey = gameKey
     
 
     def getGameKey(self) -> GameKey:
+        from org.allbinary.game.input.GameKey import GameKey
         return self.gameKey
     
 
@@ -44,7 +49,7 @@ class GameInputMapping:
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

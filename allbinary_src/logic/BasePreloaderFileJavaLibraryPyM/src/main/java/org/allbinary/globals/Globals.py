@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Globals:
     instance: Globals = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -38,6 +40,11 @@ class Globals:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         appUrlGlobals: AppUrlGlobals = AppUrlGlobals()
         appUrlGlobals.setWebappPath(pathString)
@@ -63,13 +70,16 @@ class Globals:
         stringBuffer.append("Webapp Path Set To: ")
         stringBuffer.append(self.URLGLOBALS.getWebappPath())
         self.logUtil.putF(str(stringBuffer), self, commonStrings.INIT)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-Globals.instance = Globals()
+def _Globals_instance() -> object:
+    return Globals()
+
+lazy_static(Globals, "instance", _Globals_instance)
 

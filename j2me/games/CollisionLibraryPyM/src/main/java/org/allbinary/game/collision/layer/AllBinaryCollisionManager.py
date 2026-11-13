@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinaryCollisionManager:
@@ -32,6 +33,8 @@ class AllBinaryCollisionManager:
 
     # throws Exception
     def process(self, layerManager: LayerManager, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface, startIndex: int) -> None:
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.layer.LayerManager import LayerManager
         size: int = layerManager.getSize()
         for index in range(startIndex + 1, size):
             collidableInterfaceCompositeInterface2: CollidableInterfaceCompositeInterface = layerManager.getLayerAt(index)
@@ -40,17 +43,24 @@ class AllBinaryCollisionManager:
 
     # throws Exception
     def collide(self, layerManager: LayerManager, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface, collidableInterfaceCompositeInterface2: CollidableInterfaceCompositeInterface) -> None:
+        from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.layer.LayerManager import LayerManager
         collidableBase2: CollidableBaseBehavior = collidableInterfaceCompositeInterface2.getCollidableInferface()
         collidableBase: CollidableBaseBehavior = collidableInterfaceCompositeInterface.getCollidableInferface()
         if collidableBase2.isCollidable(collidableInterfaceCompositeInterface):
             if collidableBase.isCollisionInterface(collidableInterfaceCompositeInterface, collidableInterfaceCompositeInterface2):
                 collidableBase.collideInterface(collidableInterfaceCompositeInterface, collidableInterfaceCompositeInterface2)
                 collidableBase2.collideInterface(collidableInterfaceCompositeInterface, collidableInterfaceCompositeInterface)
-from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
-from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.layer.LayerManager import LayerManager
+# from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
+# from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.layer.LayerManager import LayerManager
 
 
-AllBinaryCollisionManager.allBinaryCollisionManager = AllBinaryCollisionManager()
+def _AllBinaryCollisionManager_allBinaryCollisionManager() -> object:
+    return AllBinaryCollisionManager()
+
+lazy_static(AllBinaryCollisionManager, "allBinaryCollisionManager", _AllBinaryCollisionManager_allBinaryCollisionManager)
 

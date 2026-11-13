@@ -22,10 +22,12 @@ class ABCustomItemInterface:
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         raise NotImplementedError()
     
 
     def paintUnselected(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         raise NotImplementedError()
 # from javax.microedition.lcdui.Graphics import Graphics
 

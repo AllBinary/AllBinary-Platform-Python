@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -22,6 +23,8 @@ class PressGameKeyEventHandler(BasicEventHandler):
     instance: PressGameKeyEventHandler = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -36,6 +39,7 @@ class PressGameKeyEventHandler(BasicEventHandler):
     
 
     def addListener(self, playerGameInput: PlayerGameInput) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
         if not self.list_.contains(playerGameInput):
             self.list_.add(playerGameInput)
     
@@ -46,12 +50,16 @@ class PressGameKeyEventHandler(BasicEventHandler):
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     # throws Exception
     def fireEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -64,16 +72,21 @@ class PressGameKeyEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         pressGameKeyEventListenerInterface: PressGameKeyEventListenerInterface = (eventListenerInterface)
         pressGameKeyEventListenerInterface.onPressGameKeyEvent(eventObject)
-from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-PressGameKeyEventHandler.instance = PressGameKeyEventHandler()
+def _PressGameKeyEventHandler_instance() -> object:
+    return PressGameKeyEventHandler()
+
+lazy_static(PressGameKeyEventHandler, "instance", _PressGameKeyEventHandler_instance)
 

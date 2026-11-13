@@ -15,15 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformKeyFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     
 
     @staticmethod
     def getInstance() -> PlatformKeyFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if PlatformKeyFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             PlatformKeyFactory.instance = PlatformKeyFactory()
         return PlatformKeyFactory.instance
@@ -72,5 +73,12 @@ class PlatformKeyFactory:
     def isRight(self, input: Input) -> bool:
         from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         return PCKeyFactory.getInstance().isRight(input)
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _PlatformKeyFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(PlatformKeyFactory, "instance", _PlatformKeyFactory_instance)
 

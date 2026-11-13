@@ -22,8 +22,10 @@ class GraphicsInterface:
     
 
     def setFontDebug(self, font: Font, fontDebug: FontDebugBase) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.graphics.font.FontDebugBase import FontDebugBase
         raise NotImplementedError()
 # from javax.microedition.lcdui.Font import Font
-from org.allbinary.graphics.font.FontDebugBase import FontDebugBase
+# from org.allbinary.graphics.font.FontDebugBase import FontDebugBase
 
 

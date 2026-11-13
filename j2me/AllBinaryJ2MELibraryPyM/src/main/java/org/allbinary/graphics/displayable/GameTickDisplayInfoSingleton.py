@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameTickDisplayInfoSingleton:
@@ -60,5 +61,8 @@ class GameTickDisplayInfoSingleton:
 from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 
-GameTickDisplayInfoSingleton.instance = GameTickDisplayInfoSingleton()
+def _GameTickDisplayInfoSingleton_instance() -> object:
+    return GameTickDisplayInfoSingleton()
+
+lazy_static(GameTickDisplayInfoSingleton, "instance", _GameTickDisplayInfoSingleton_instance)
 

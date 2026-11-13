@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #TempBase
@@ -27,15 +28,30 @@ class TsUtil:
         return TsUtil.instance
     
 
+    def longBitsToDouble(self, bits: int) -> float:
+        return java.lang.Double.longBitsToDouble(bits)
+    
+
+    def intBitsToFloat(self, bits: int) -> float:
+        return java.lang.Float.intBitsToFloat(bits)
+    
+
     def hashCode(self, anyType: object) -> int:
-        return anyType.hashCode()
+        return hash(anyType)
     
 
     # throws InterruptedException
     def waitFor(self, any: object, timeoutMillis: int) -> None:
         anyType: object = any
         anyType.wait(timeoutMillis)
+    
+
+    def compareTo(self, a: str, b: str) -> int:
+        return ((a > b) - (a < b))
 
 
-TsUtil.instance = TsUtil()
+def _TsUtil_instance() -> object:
+    return TsUtil()
+
+lazy_static(TsUtil, "instance", _TsUtil_instance)
 

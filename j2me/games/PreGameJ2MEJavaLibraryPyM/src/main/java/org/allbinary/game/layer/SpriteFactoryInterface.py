@@ -22,6 +22,8 @@ class SpriteFactoryInterface:
     
 
     def createSprite(self, image: Image, frameWidth: int, frameHeight: int) -> Sprite:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
         raise NotImplementedError()
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite

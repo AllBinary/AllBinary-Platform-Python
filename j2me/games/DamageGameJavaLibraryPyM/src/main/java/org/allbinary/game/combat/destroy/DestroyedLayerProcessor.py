@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.BasicLayerProcessor import BasicLayerProcessor
 
 
 class DestroyedLayerProcessor(BasicLayerProcessor):
-    DESTROYED_LAYER_PROCESSOR: BasicLayerProcessor = BasicLayerProcessor.NULL_LAYER_PROCESSOR
+    DESTROYED_LAYER_PROCESSOR: BasicLayerProcessor = None
     
 
     def __init__(self) -> None:
@@ -38,6 +39,13 @@ class DestroyedLayerProcessor(BasicLayerProcessor):
 
     # throws Exception
     def process(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.combat.destroy.event.DestroyEventCircularStaticPool import DestroyEventCircularStaticPool
+        from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
+        from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getList()
         size: int = list_.size()
         destroyedEventHandler: DestroyedEventHandler = DestroyedEventHandler.getInstance()
@@ -54,14 +62,19 @@ class DestroyedLayerProcessor(BasicLayerProcessor):
             else:
                 commonStrings: CommonStrings = CommonStrings.getInstance()
         list_.clear()
-from org.allbinary.game.combat.destroy.event.DestroyEventCircularStaticPool import DestroyEventCircularStaticPool
-from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
-from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.combat.destroy.event.DestroyEventCircularStaticPool import DestroyEventCircularStaticPool
+# from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
+# from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
+
+def _DestroyedLayerProcessor_DESTROYED_LAYER_PROCESSOR() -> object:
+    return BasicLayerProcessor.NULL_LAYER_PROCESSOR
+
+lazy_static(DestroyedLayerProcessor, "DESTROYED_LAYER_PROCESSOR", _DestroyedLayerProcessor_DESTROYED_LAYER_PROCESSOR)
 

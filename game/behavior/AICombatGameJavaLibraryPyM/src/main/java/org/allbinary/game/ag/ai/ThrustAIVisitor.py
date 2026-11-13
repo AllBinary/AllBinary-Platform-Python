@@ -21,6 +21,8 @@ from org.allbinary.logic.util.visitor.Visitor import Visitor
 class ThrustAIVisitor(Visitor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.TRUE: bool = BooleanFactory.getInstance().TRUE
     
@@ -31,6 +33,9 @@ class ThrustAIVisitor(Visitor):
     
 
     def visit(self, anyType: object) -> object:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.ai.BasicAI import BasicAI
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             basicAI: BasicAI = anyType
             basicAI.processKeyAI(Canvas.UP)
@@ -39,9 +44,9 @@ class ThrustAIVisitor(Visitor):
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.VISIT, e)
         return self.TRUE
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.ai.BasicAI import BasicAI
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.ai.BasicAI import BasicAI
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

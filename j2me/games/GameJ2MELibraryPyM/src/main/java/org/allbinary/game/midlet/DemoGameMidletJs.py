@@ -23,7 +23,8 @@ class DemoGameMidletJs:
 
     # throws Exception
     def createDemoGameCanvasRunnableInterface(self) -> GameCanvasRunnableInterface:
+        from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
         raise NotImplementedError()
-from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
+# from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
 
 

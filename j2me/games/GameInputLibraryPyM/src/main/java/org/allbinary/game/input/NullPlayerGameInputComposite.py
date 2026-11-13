@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
 
 
@@ -23,11 +24,13 @@ class NullPlayerGameInputComposite(PlayerGameInputCompositeInterface):
     
 
     def getName(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     # throws Exception
     def processInput(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
@@ -38,9 +41,12 @@ class NullPlayerGameInputComposite(PlayerGameInputCompositeInterface):
     def getPlayerGameInput(self) -> PlayerGameInput:
         from org.allbinary.game.input.NoPlayerGameInput import NoPlayerGameInput
         return NoPlayerGameInput.getInstance()
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-NullPlayerGameInputComposite.NULL_PLAYER_GAME_INPUT_COMPOSITE = NullPlayerGameInputComposite()
+def _NullPlayerGameInputComposite_NULL_PLAYER_GAME_INPUT_COMPOSITE() -> object:
+    return NullPlayerGameInputComposite()
+
+lazy_static(NullPlayerGameInputComposite, "NULL_PLAYER_GAME_INPUT_COMPOSITE", _NullPlayerGameInputComposite_NULL_PLAYER_GAME_INPUT_COMPOSITE)
 

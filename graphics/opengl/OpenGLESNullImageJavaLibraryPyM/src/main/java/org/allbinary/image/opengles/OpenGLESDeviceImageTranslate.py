@@ -32,10 +32,12 @@ class OpenGLESDeviceImageTranslate(OpenGLESImageTranslate):
     
 
     def translate(self, gl: GL10, openGLESImage: OpenGLESImage, x: float, y: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         openGLESImage.imageProcessor.translate(gl, self.translateX + (openGLESImage.openGLESImageProperties.scaleX * x), self.translateY + (openGLESImage.openGLESImageProperties.scaleY * y))
     
 
     def translate2(self, gl: GL10, openGLESImage: OpenGLESImage) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         openGLESImage.imageProcessor.translate(gl, self.translateX2, self.translateY2)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 

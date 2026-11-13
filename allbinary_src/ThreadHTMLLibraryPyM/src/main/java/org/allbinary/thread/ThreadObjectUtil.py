@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreadObjectUtil:
@@ -39,5 +40,8 @@ class ThreadObjectUtil:
 from org.allbinary.thread.NullPriorityRunnable import NullPriorityRunnable
 
 
-ThreadObjectUtil.instance = ThreadObjectUtil()
+def _ThreadObjectUtil_instance() -> object:
+    return ThreadObjectUtil()
+
+lazy_static(ThreadObjectUtil, "instance", _ThreadObjectUtil_instance)
 

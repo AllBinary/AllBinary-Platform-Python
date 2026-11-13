@@ -22,6 +22,7 @@ class IntermissionInterface:
     
 
     def getTimeDelayHelper(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         raise NotImplementedError()
     
 
@@ -35,6 +36,6 @@ class IntermissionInterface:
 
     def setListener(self, enableListener: IntermissionEnableListenerInterface) -> None:
         raise NotImplementedError()
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

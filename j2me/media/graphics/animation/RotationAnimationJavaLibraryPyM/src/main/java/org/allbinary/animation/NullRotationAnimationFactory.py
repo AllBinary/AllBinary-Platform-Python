@@ -15,8 +15,10 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+from org.allbinary.animation.NullRotationAnimation import NullRotationAnimation
 
 
 class NullRotationAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface):
@@ -26,10 +28,14 @@ class NullRotationAnimationFactory(AnimationInterfaceFactoryInterface, Procedura
 
         def __init__(self) -> None:
             from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
+            from org.allbinary.math.AngleFactory import AngleFactory
+            from org.allbinary.math.AngleInfo import AngleInfo
+            from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
             super().__init__(AngleInfo.getInstance(AngleFactory.getInstance().QUARTER_TOTAL_ANGLE), CircularIndexUtil.createInstance(4), IndexedAnimationBehavior(1, 250))
         
 
         def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+            from javax.microedition.lcdui.Graphics import Graphics
             pass
 
     def _init_fields(self) -> None:
@@ -56,14 +62,17 @@ class NullRotationAnimationFactory(AnimationInterfaceFactoryInterface, Procedura
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.ScaleProperties import ScaleProperties
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from org.allbinary.animation.NullRotationAnimation2 import NullRotationAnimation2
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 
-NullRotationAnimationFactory.NULL_ROTATION_ANIMATION_FACTORY = NullRotationAnimationFactory()
+def _NullRotationAnimationFactory_NULL_ROTATION_ANIMATION_FACTORY() -> object:
+    return NullRotationAnimationFactory()
+
+lazy_static(NullRotationAnimationFactory, "NULL_ROTATION_ANIMATION_FACTORY", _NullRotationAnimationFactory_NULL_ROTATION_ANIMATION_FACTORY)
 

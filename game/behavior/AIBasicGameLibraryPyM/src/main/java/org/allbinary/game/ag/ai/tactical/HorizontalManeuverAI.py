@@ -26,6 +26,8 @@ class HorizontalManeuverAI(BasicAI):
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.currentSpeed = 5
@@ -33,6 +35,10 @@ class HorizontalManeuverAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         x: int = ownerLayerInterface.getXP()
         if ownerLayerInterface.getXP() - self.currentSpeed <= 0:
@@ -66,6 +72,8 @@ class HorizontalManeuverAI(BasicAI):
     
 
     def drop(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         y: int = ownerLayerInterface.getYP()
         if ownerLayerInterface.getY2() + ownerLayerInterface.getHeight() > DisplayInfoSingleton.getInstance().getLastHeight():
@@ -74,9 +82,9 @@ class HorizontalManeuverAI(BasicAI):
             y += ownerLayerInterface.getHeight() + 1
         ownerLayerInterface.setPosition(ownerLayerInterface.getXP(), y, ownerLayerInterface.getZP())
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

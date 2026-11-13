@@ -15,20 +15,20 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
-from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 
 
 #OpenGLESNullImageJ2MEJavaLibrary
 class OpenGLESImage(OpenGLSurfaceChangedInterface):
     NULL_OPENGL_IMAGE: OpenGLESImage = None
-    texture2dList: BasicArrayList = BasicArrayListD()
+    texture2dList: BasicArrayList = None
     TYPE: int = 4
 
     def _init_fields(self) -> None:
+        from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
+        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.textureFactory: PlatformTextureBaseFactory = None
         self.openGLBitmap: PlatformBitmapBase = None
@@ -36,6 +36,9 @@ class OpenGLESImage(OpenGLSurfaceChangedInterface):
     
 
     def __init__(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         self._init_fields()
         self.openGLBitmap = bitmapFactory.createBitmap(image)
         self.textureFactory = textureFactory
@@ -43,18 +46,22 @@ class OpenGLESImage(OpenGLSurfaceChangedInterface):
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
     
 
     def initTexture(self, gl: GL10) -> bool:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         return False
     
 
     def drawRegion(self, gl: GL10, viewHeight: int, x_src: float, y_src: float, width: float, height: float, x: int, y: int, z: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def draw(self, gl: GL10, x: int, y: int, z: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
@@ -63,11 +70,28 @@ class OpenGLESImage(OpenGLSurfaceChangedInterface):
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from javax.microedition.lcdui.NullImage import NullImage
+# from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
+# from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+# from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
 
 
-OpenGLESImage.NULL_OPENGL_IMAGE = OpenGLESImage(NullImage.NULL_IMAGE, PlatformBitmapBaseFactory.NULL_PLATFORM_BITMAP_BASE_FACTORY, PlatformTextureBaseFactory.NULL_PLATFORM_TEXTURE_BASE_FACTORY)
+def _OpenGLESImage_NULL_OPENGL_IMAGE() -> object:
+    from javax.microedition.lcdui.NullImage import NullImage
+    from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+    from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
+    return OpenGLESImage(NullImage.NULL_IMAGE, PlatformBitmapBaseFactory.NULL_PLATFORM_BITMAP_BASE_FACTORY, PlatformTextureBaseFactory.NULL_PLATFORM_TEXTURE_BASE_FACTORY)
+
+lazy_static(OpenGLESImage, "NULL_OPENGL_IMAGE", _OpenGLESImage_NULL_OPENGL_IMAGE)
+
+def _OpenGLESImage_texture2dList() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(OpenGLESImage, "texture2dList", _OpenGLESImage_texture2dList)
 

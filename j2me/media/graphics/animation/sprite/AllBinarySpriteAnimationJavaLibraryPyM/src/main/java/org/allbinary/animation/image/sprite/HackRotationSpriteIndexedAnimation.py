@@ -21,11 +21,18 @@ from org.allbinary.animation.RotationAnimation import RotationAnimation
 class HackRotationSpriteIndexedAnimation(RotationAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
         self.sprite: Sprite = None
         self.image: Image = None
     
 
     def __init__(self, sprite: Sprite, image: Image, angleInfo: AngleInfo, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(angleInfo, CircularIndexUtil.createInstance(360 / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
         self._init_fields()
         self.sprite = sprite
@@ -38,16 +45,19 @@ class HackRotationSpriteIndexedAnimation(RotationAnimation):
     
 
     def paintFrame(self, g: Graphics, frame: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.setFrame(frame)
         self.paintXY(g, x, y)
     
 
     def paintXY(self, g: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.sprite.setPosition(x, y)
         self.paint(g)
     
 
     def paint(self, g: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.sprite.paint(g)
     
 
@@ -76,13 +86,14 @@ class HackRotationSpriteIndexedAnimation(RotationAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

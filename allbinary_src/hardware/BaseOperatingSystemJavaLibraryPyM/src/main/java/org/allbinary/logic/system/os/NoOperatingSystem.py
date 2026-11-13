@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 
 
 class NoOperatingSystem(GenericOperatingSystem):
-    NO_OPERATING_SYSTEM: GenericOperatingSystem = GenericOperatingSystem()
+    NO_OPERATING_SYSTEM: GenericOperatingSystem = None
     
 
     def __init__(self) -> None:
         super().__init__()
 
+
+def _NoOperatingSystem_NO_OPERATING_SYSTEM() -> object:
+    from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+    return GenericOperatingSystem()
+
+lazy_static(NoOperatingSystem, "NO_OPERATING_SYSTEM", _NoOperatingSystem_NO_OPERATING_SYSTEM)
 

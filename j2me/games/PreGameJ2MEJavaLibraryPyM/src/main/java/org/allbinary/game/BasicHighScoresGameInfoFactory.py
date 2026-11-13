@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicHighScoresGameInfoFactory:
@@ -37,5 +38,8 @@ from org.allbinary.game.GameMode import GameMode
 from org.allbinary.game.PlayerTypesFactory import PlayerTypesFactory
 
 
-BasicHighScoresGameInfoFactory.SINGLETON = BasicHighScoresGameInfoFactory()
+def _BasicHighScoresGameInfoFactory_SINGLETON() -> object:
+    return BasicHighScoresGameInfoFactory()
+
+lazy_static(BasicHighScoresGameInfoFactory, "SINGLETON", _BasicHighScoresGameInfoFactory_SINGLETON)
 

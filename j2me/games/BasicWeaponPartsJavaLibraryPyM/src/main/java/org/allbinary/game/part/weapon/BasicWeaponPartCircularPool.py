@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicWeaponPartCircularPool:
@@ -40,14 +41,21 @@ class BasicWeaponPartCircularPool:
             return self._getInstance_unlocked(sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
 
     def _getInstance_unlocked(self, sourceLayerInterface: AllBinaryLayer, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> BasicWeaponPart:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.basicWeaponPart.init(sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
         return self.basicWeaponPart
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 
 
-BasicWeaponPartCircularPool.NULL_BASIC_WEAPON_PART_CIRCULAR_POOL = BasicWeaponPartCircularPool()
+def _BasicWeaponPartCircularPool_NULL_BASIC_WEAPON_PART_CIRCULAR_POOL() -> object:
+    return BasicWeaponPartCircularPool()
+
+lazy_static(BasicWeaponPartCircularPool, "NULL_BASIC_WEAPON_PART_CIRCULAR_POOL", _BasicWeaponPartCircularPool_NULL_BASIC_WEAPON_PART_CIRCULAR_POOL)
 

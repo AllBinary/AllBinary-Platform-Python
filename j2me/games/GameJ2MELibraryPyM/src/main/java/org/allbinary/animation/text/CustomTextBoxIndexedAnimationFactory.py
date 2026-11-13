@@ -21,12 +21,15 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class CustomTextBoxIndexedAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.scaleProperties: ScaleProperties = None
         self.maxLength: int = None
     
 
     def __init__(self, fontSize: int, maxLength: int) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self._init_fields()
         self.scaleProperties = ScaleProperties()
         self.scaleProperties.scaleHeight = fontSize
@@ -37,6 +40,13 @@ class CustomTextBoxIndexedAnimationFactory(AnimationInterfaceFactoryInterface):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.text.CustomTextBox2 import CustomTextBox2
         from org.allbinary.animation.text.CustomTextBoxIndexedAnimation import CustomTextBoxIndexedAnimation
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.TextField import TextField
+        from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.canvas.ABToGBUtil import ABToGBUtil
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.logic.string.StringUtil import StringUtil
         abToGBUtil: ABToGBUtil = ABToGBUtil.getInstance()
         abCanvas: AllBinaryGameCanvas = abToGBUtil.abCanvas
         font: Font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, self.scaleProperties.scaleHeight)
@@ -45,19 +55,20 @@ class CustomTextBoxIndexedAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         fontSize: int = self.scaleProperties.scaleHeight
         self.scaleProperties = scaleProperties
         if self.scaleProperties.scaleHeight < 6:
             self.scaleProperties.scaleHeight = fontSize
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.TextField import TextField
-from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.game.canvas.ABToGBUtil import ABToGBUtil
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.game.canvas.ABToGBUtil import ABToGBUtil
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CompleteMotionGestureInputToGameMotionGestureInput:
     instance: CompleteMotionGestureInputToGameMotionGestureInput = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -33,6 +35,22 @@ class CompleteMotionGestureInputToGameMotionGestureInput:
     
 
     def init(self) -> None:
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+        from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
+        from org.allbinary.input.motion.touch.action.DiagonalDownLeftTouchInputToGameKeyEventAction import DiagonalDownLeftTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.DiagonalDownRightTouchInputToGameKeyEventAction import DiagonalDownRightTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.DiagonalUpLeftTouchInputToGameKeyEventAction import DiagonalUpLeftTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.DiagonalUpRightTouchInputToGameKeyEventAction import DiagonalUpRightTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.DownTouchInputToGameKeyEventAction import DownTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.LeftTouchInputToGameKeyEventAction import LeftTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.ReleaseTouchInputToGameKeyEventAction import ReleaseTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.RightTouchInputToGameKeyEventAction import RightTouchInputToGameKeyEventAction
+        from org.allbinary.input.motion.touch.action.UpTouchInputToGameKeyEventAction import UpTouchInputToGameKeyEventAction
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             PreLogUtil.put("Compound Motion Gestures", self, commonStrings.INIT)
@@ -67,24 +85,27 @@ class CompleteMotionGestureInputToGameMotionGestureInput:
             motionGestureConfiguration.addMotionGestureAction(list_, ReleaseTouchInputToGameKeyEventAction.getInstance())
         except Exception as e:
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.INIT, e)
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
-from org.allbinary.input.motion.touch.action.DiagonalDownLeftTouchInputToGameKeyEventAction import DiagonalDownLeftTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.DiagonalDownRightTouchInputToGameKeyEventAction import DiagonalDownRightTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.DiagonalUpLeftTouchInputToGameKeyEventAction import DiagonalUpLeftTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.DiagonalUpRightTouchInputToGameKeyEventAction import DiagonalUpRightTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.DownTouchInputToGameKeyEventAction import DownTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.LeftTouchInputToGameKeyEventAction import LeftTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.ReleaseTouchInputToGameKeyEventAction import ReleaseTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.RightTouchInputToGameKeyEventAction import RightTouchInputToGameKeyEventAction
-from org.allbinary.input.motion.touch.action.UpTouchInputToGameKeyEventAction import UpTouchInputToGameKeyEventAction
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+# from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
+# from org.allbinary.input.motion.touch.action.DiagonalDownLeftTouchInputToGameKeyEventAction import DiagonalDownLeftTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.DiagonalDownRightTouchInputToGameKeyEventAction import DiagonalDownRightTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.DiagonalUpLeftTouchInputToGameKeyEventAction import DiagonalUpLeftTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.DiagonalUpRightTouchInputToGameKeyEventAction import DiagonalUpRightTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.DownTouchInputToGameKeyEventAction import DownTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.LeftTouchInputToGameKeyEventAction import LeftTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.ReleaseTouchInputToGameKeyEventAction import ReleaseTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.RightTouchInputToGameKeyEventAction import RightTouchInputToGameKeyEventAction
+# from org.allbinary.input.motion.touch.action.UpTouchInputToGameKeyEventAction import UpTouchInputToGameKeyEventAction
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-CompleteMotionGestureInputToGameMotionGestureInput.instance = CompleteMotionGestureInputToGameMotionGestureInput()
+def _CompleteMotionGestureInputToGameMotionGestureInput_instance() -> object:
+    return CompleteMotionGestureInputToGameMotionGestureInput()
+
+lazy_static(CompleteMotionGestureInputToGameMotionGestureInput, "instance", _CompleteMotionGestureInputToGameMotionGestureInput_instance)
 

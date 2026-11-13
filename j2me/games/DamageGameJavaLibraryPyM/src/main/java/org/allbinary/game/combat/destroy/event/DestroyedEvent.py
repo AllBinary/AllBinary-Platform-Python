@@ -21,34 +21,44 @@ from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventOb
 class DestroyedEvent(AllBinaryEventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.allBinaryGameCanvas: AllBinaryGameCanvas = NullGameCanvas.getInstance()
         self.allBinaryLayerInterface: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
     
 
     def __init__(self, combatGameCanvas: AllBinaryGameCanvas) -> None:
         from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         super().__init__(DestroyedEventHandler.getInstance())
         self._init_fields()
         self.setAllBinaryGameCanvas(combatGameCanvas)
     
 
     def getAllBinaryGameCanvas(self) -> AllBinaryGameCanvas:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         return self.allBinaryGameCanvas
     
 
     def getLayerInterface(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.allBinaryLayerInterface
     
 
     def setAllBinaryGameCanvas(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         self.allBinaryGameCanvas = allBinaryGameCanvas
     
 
     def setLayerInterfaceForCircularStaticPool(self, allBinaryLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.allBinaryLayerInterface = allBinaryLayerInterface
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("DestroyedEvent: \n")
         stringBuffer.append("AllBinaryLayerInterface: ")
@@ -59,10 +69,10 @@ class DestroyedEvent(AllBinaryEventObject):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

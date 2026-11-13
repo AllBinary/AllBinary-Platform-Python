@@ -22,16 +22,20 @@ class TopToBottomImageAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, sequenceArray: list[int], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         super().__init__(image, sequenceArray, image.getWidth(), image.getHeight(), 0, 0, animationBehaviorFactory)
     
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.TopToBottomImageAnimation import TopToBottomImageAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
         scaledImage: Image = self.animationFactoryImageScaleUtil.createImage(self.getImage(), self.animationFactoryInitializationVisitor.width, self.animationFactoryInitializationVisitor.height, self.scaleProperties.scaleWidth, self.scaleProperties.scaleHeight)
         return TopToBottomImageAnimation(scaledImage, self.getSequenceArray(), self.animationBehaviorFactory.getOrCreateInstance())
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
 
 

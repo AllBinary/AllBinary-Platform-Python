@@ -31,6 +31,7 @@ class TouchButtonLocationHelper:
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         self._init_fields()
         buttonSize: int = CommonButtons.getInstance().STANDARD_BUTTON_SIZE
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
@@ -67,6 +68,7 @@ class TouchButtonLocationHelper:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("totalColumns: ")
         stringBuffer.appendint(self.totalColumns)
@@ -84,7 +86,7 @@ class TouchButtonLocationHelper:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

@@ -15,14 +15,10 @@
 
 from __future__ import annotations
 
-import threading
 # from java.io.Serializable import Serializable
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
 class BasicUserRole(object):
-    roleVector: BasicArrayList = BasicArrayListD()
-    _lock = threading.RLock()
 
     def _init_fields(self) -> None:
         self.m_int_RoleId: int = None
@@ -43,13 +39,14 @@ class BasicUserRole(object):
     
 
     def _constructor5(self, aRole: str, aDisplayValue: str, a_int_RoleId: int, aSessionTimeout: int, aSessionInactivityTimeout: int) -> None:
+        from org.allbinary.business.user.role.BasicUserRoles import BasicUserRoles
         self._init_fields()
         self.m_int_RoleId = a_int_RoleId
         self.role = aRole
         self.displayValue = aDisplayValue
         self.sessionTimeout = aSessionTimeout
         self.sessionInactivityTimeout = aSessionInactivityTimeout
-        BasicUserRole.roleVector.add(self)
+        BasicUserRoles.getInstance().roleVector.add(self)
     
 
     def getRoleId(self) -> int:
@@ -75,6 +72,8 @@ class BasicUserRole(object):
 
     def __eq__(self, other: object) -> bool:
         return self.equals(other)
+
+    __hash__ = object.__hash__
     
 
     def toString(self) -> str:
@@ -82,29 +81,5 @@ class BasicUserRole(object):
 
     def __str__(self) -> str:
         return self.toString()
-    
-
-    # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    @staticmethod
-    def getRole(role: str) -> BasicUserRole:
-        with BasicUserRole._lock:
-            return BasicUserRole._getRole_unlocked(role)
-
-    @staticmethod
-    def _getRole_unlocked(role: str) -> BasicUserRole:
-        roleVector: BasicArrayList = BasicUserRole.getAll()
-        size: int = roleVector.size()
-        for index in range(0, size):
-            userRole: BasicUserRole = roleVector.get(index)
-            if ((role > str(userRole)) - (role < str(userRole))) == 0:
-                return userRole
-        raise Exception("Unable to get role - Unknown Role")
-    
-
-    @staticmethod
-    def getAll() -> BasicArrayList:
-        return BasicUserRole.roleVector
-from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

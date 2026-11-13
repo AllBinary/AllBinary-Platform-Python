@@ -22,14 +22,16 @@ class HealthBarTwodAnimation(HealthBarAnimation):
     
 
     def __init__(self, layerInterface: AllBinaryLayer, location: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(layerInterface, location)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         ax: int = self.allbinaryLayer.getViewPosition().getX()
         self.basicSetColorUtil.setBasicColorP3(graphics, self.basicColor, self.colorP)
         graphics.fillRect(ax, self.getY() - 1, self.x2, self.thickness)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

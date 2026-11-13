@@ -22,6 +22,7 @@ class HighScoresInterface:
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -36,6 +37,6 @@ class HighScoresInterface:
     # throws Exception
     def isBestScore(self, newHighScore: HighScore) -> bool:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

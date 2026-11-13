@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileFactory:
@@ -50,5 +51,8 @@ class FileFactory:
             return False
 
 
-FileFactory.instance = FileFactory()
+def _FileFactory_instance() -> object:
+    return FileFactory()
+
+lazy_static(FileFactory, "instance", _FileFactory_instance)
 

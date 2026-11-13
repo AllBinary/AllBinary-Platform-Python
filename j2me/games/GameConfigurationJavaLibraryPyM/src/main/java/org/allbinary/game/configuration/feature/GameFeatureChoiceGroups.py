@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameFeatureChoiceGroups:
@@ -22,6 +23,8 @@ class GameFeatureChoiceGroups:
     gameFeatureChoiceGroupsMultiple: GameFeatureChoiceGroups = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
     
 
@@ -40,17 +43,25 @@ class GameFeatureChoiceGroups:
     
 
     def get(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.hashtable
     
 
     def add(self, name: str, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.hashtable.put(name, list_)
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-GameFeatureChoiceGroups.gameFeatureChoiceGroupsExclusive = GameFeatureChoiceGroups()
+def _GameFeatureChoiceGroups_gameFeatureChoiceGroupsExclusive() -> object:
+    return GameFeatureChoiceGroups()
 
-GameFeatureChoiceGroups.gameFeatureChoiceGroupsMultiple = GameFeatureChoiceGroups()
+lazy_static(GameFeatureChoiceGroups, "gameFeatureChoiceGroupsExclusive", _GameFeatureChoiceGroups_gameFeatureChoiceGroupsExclusive)
+
+def _GameFeatureChoiceGroups_gameFeatureChoiceGroupsMultiple() -> object:
+    return GameFeatureChoiceGroups()
+
+lazy_static(GameFeatureChoiceGroups, "gameFeatureChoiceGroupsMultiple", _GameFeatureChoiceGroups_gameFeatureChoiceGroupsMultiple)
 

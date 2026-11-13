@@ -21,6 +21,8 @@ from org.allbinary.game.score.HighScoresInterface import HighScoresInterface
 class HighScores(HighScoresInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.orderedHighScoresList: BasicArrayList = BasicArrayListD()
         self.name: str = None
         self.heading: str = None
@@ -36,10 +38,12 @@ class HighScores(HighScoresInterface):
     
 
     def setList(self, orderedHighScoresList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.orderedHighScoresList = orderedHighScoresList
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.orderedHighScoresList
     
 
@@ -73,6 +77,9 @@ class HighScores(HighScoresInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("HighScores: ")
         stringBuffer.append(self.heading)
@@ -83,10 +90,10 @@ class HighScores(HighScoresInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

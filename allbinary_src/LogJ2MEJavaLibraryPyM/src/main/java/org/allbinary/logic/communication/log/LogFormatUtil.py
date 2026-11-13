@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -22,6 +23,12 @@ class LogFormatUtil:
     instance: LogFormatUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.time.TimeStampUtil import TimeStampUtil
         self.timeStampUtil: TimeStampUtil = TimeStampUtil.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.NONE: str = "None"
@@ -47,6 +54,7 @@ class LogFormatUtil:
     
 
     def get(self, className: str, functionName: str, specialMessage: str, exception: object) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = self.getF(className, functionName)
         stringBuffer.append(self.getO(exception))
         stringBuffer.append(self.SPECIAL_MESSAGE)
@@ -56,6 +64,7 @@ class LogFormatUtil:
     
 
     def getS(self, className: str, functionName: str, specialMessage: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = self.getF(className, functionName)
         stringBuffer.append(self.SPECIAL_MESSAGE)
         stringBuffer.append(specialMessage)
@@ -64,8 +73,7 @@ class LogFormatUtil:
     
 
     def getF(self, className: str, functionName: str) -> StringMaker:
-        if functionName is None:
-            functionName = self.NONE
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.TIME)
         stringBuffer.append(self.timeStampUtil.getAsString())
@@ -77,14 +85,13 @@ class LogFormatUtil:
     
 
     def getO(self, exception: object) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         if exception != self.nullUtil.NULL_OBJECT:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(self.LOG_ERROR)
             exceptionAsString: str = str(exception)
-            if exceptionAsString is not None:
-                stringBuffer.append(exceptionAsString)
-            else:
-                stringBuffer.append(self.EMPTY)
+            stringBuffer.append(exceptionAsString)
             stringBuffer.append(self.STACK_TRACE)
             if exception != self.nullUtil.NULL_OBJECT:
                 stringBuffer.append(self.exceptionUtil.getStackTrace(exception))
@@ -93,14 +100,17 @@ class LogFormatUtil:
             return str(stringBuffer)
         else:
             return StringUtil.getInstance().EMPTY_STRING
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.time.TimeStampUtil import TimeStampUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.time.TimeStampUtil import TimeStampUtil
 
 
-LogFormatUtil.instance = LogFormatUtil()
+def _LogFormatUtil_instance() -> object:
+    return LogFormatUtil()
+
+lazy_static(LogFormatUtil, "instance", _LogFormatUtil_instance)
 

@@ -24,8 +24,10 @@ class ImageArrayRotationAnimationCacheableInterfaceFactory(CacheableInterfaceFac
     # throws Exception
     def getInstance(self, key: object) -> CacheableInterface:
         from org.allbinary.animation.image.ImageArrayRotationAnimationCacheable import ImageArrayRotationAnimationCacheable
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
         return ImageArrayRotationAnimationCacheable(key, AnimationBehavior.getInstance())
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 
 

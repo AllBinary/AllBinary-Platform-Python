@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicGroupFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.NAME: str = "GROUP_NAME"
@@ -39,9 +39,17 @@ class BasicGroupFactory:
 
     @staticmethod
     def getInstance() -> BasicGroupFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if BasicGroupFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             BasicGroupFactory.instance = BasicGroupFactory()
         return BasicGroupFactory.instance
+# from org.allbinary.logic.NullUtil import NullUtil
 from org.allbinary.game.identification.Group import Group
 
+
+def _BasicGroupFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(BasicGroupFactory, "instance", _BasicGroupFactory_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class LastDisplayChangeEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         displayChangeEventListener: DisplayChangeEventListener = (eventListenerInterface)
         displayChangeEventListener.onDisplayChangeEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-LastDisplayChangeEventHandler.SINGLETON = LastDisplayChangeEventHandler()
+def _LastDisplayChangeEventHandler_SINGLETON() -> object:
+    return LastDisplayChangeEventHandler()
+
+lazy_static(LastDisplayChangeEventHandler, "SINGLETON", _LastDisplayChangeEventHandler_SINGLETON)
 

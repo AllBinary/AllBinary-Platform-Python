@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.health.HealthInterface import HealthInterface
 
 
@@ -56,6 +57,9 @@ class Health(HealthInterface):
     
 
     def damage(self, ahealth: int) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         if ahealth < 0:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("******* Trying to heal when damaging. Damage: ")
@@ -103,6 +107,7 @@ class Health(HealthInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(Health.HEALTH_LABEL)
         stringBuffer.appendint(self.health)
@@ -112,11 +117,14 @@ class Health(HealthInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 from org.allbinary.game.health.NullHealthListener import NullHealthListener
 
 
-Health.NULL_HEALTH = Health(0)
+def _Health_NULL_HEALTH() -> object:
+    return Health(0)
+
+lazy_static(Health, "NULL_HEALTH", _Health_NULL_HEALTH)
 

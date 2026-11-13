@@ -24,7 +24,8 @@ class HealLayerFactory(AllBinaryLayerFactoryInterface):
     # throws Exception
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.game.ag.layer.pickup.health.HealLayer import HealLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return HealLayer()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

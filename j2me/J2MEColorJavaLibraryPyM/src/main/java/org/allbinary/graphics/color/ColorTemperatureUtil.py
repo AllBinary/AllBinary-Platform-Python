@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ColorTemperatureUtil:
@@ -52,5 +53,8 @@ class ColorTemperatureUtil:
 from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 
-ColorTemperatureUtil.instance = ColorTemperatureUtil()
+def _ColorTemperatureUtil_instance() -> object:
+    return ColorTemperatureUtil()
+
+lazy_static(ColorTemperatureUtil, "instance", _ColorTemperatureUtil_instance)
 

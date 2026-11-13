@@ -22,12 +22,15 @@ from org.allbinary.animation.image.ImageArrayAnimation import ImageArrayAnimatio
 class ImageArraySpecialAnimation(ImageArrayAnimation, SpecialAnimationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(270)
         self.loopCount: int = 0
         self.loopCountTotal: int = 1
     
 
     def __init__(self, imageArray: list[Image], animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(imageArray, animationBehavior)
         self._init_fields()
         self.reset()
@@ -47,6 +50,7 @@ class ImageArraySpecialAnimation(ImageArrayAnimation, SpecialAnimationInterface)
     
 
     def nextFrame(self) -> None:
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.getFrame() > 0:
             if self.timeDelayHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
                 self.previousFrame()
@@ -62,14 +66,16 @@ class ImageArraySpecialAnimation(ImageArrayAnimation, SpecialAnimationInterface)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         x = DisplayInfoSingleton.getInstance().getLastHalfWidth() - (self.getImage(self.circularIndexUtil.getIndex()).getWidth() >> 1)
         y = 5
         super().paintXY(graphics, x, y)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

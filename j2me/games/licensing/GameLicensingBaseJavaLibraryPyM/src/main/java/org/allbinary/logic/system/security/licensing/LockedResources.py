@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LockedResources:
@@ -32,5 +33,8 @@ class LockedResources:
         return LockedResources.instance
 
 
-LockedResources.instance = LockedResources()
+def _LockedResources_instance() -> object:
+    return LockedResources()
+
+lazy_static(LockedResources, "instance", _LockedResources_instance)
 

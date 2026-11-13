@@ -22,6 +22,10 @@ class BasicProbabilityAIDataFactory:
 
     def getInstance(self) -> ABHashtable[object, object]:
         from org.allbinary.game.ag.ai.InputProbability import InputProbability
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
+        from org.allbinary.util.ABHashtable import ABHashtable
         likelyhoodIntegerArray: list[list[int]] = [[None] * (2) for _ in range(Canvas.KEY_NUM9 + 1)]
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         likelyhoodIntegerArray[Canvas.UP][0] = smallIntegerSingletonFactory.getAt(0)
@@ -49,8 +53,8 @@ class BasicProbabilityAIDataFactory:
         inputProbability: InputProbability = InputProbability(likelyhoodIntegerArray, repeatLikelyhoodIntegerArray, 42, NoTimeDelayHelper.SINGLETON)
         return inputProbability.toHashtable()
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

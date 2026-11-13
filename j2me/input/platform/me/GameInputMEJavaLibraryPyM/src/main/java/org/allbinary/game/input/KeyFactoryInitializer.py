@@ -21,6 +21,7 @@ from org.allbinary.init.Init import Init
 class KeyFactoryInitializer(Init):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -30,6 +31,6 @@ class KeyFactoryInitializer(Init):
 
     def init(self) -> None:
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

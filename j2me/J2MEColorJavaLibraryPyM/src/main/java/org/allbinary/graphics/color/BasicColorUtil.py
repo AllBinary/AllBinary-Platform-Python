@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicColorUtil:
@@ -58,5 +59,8 @@ class BasicColorUtil:
         return (0xFFFFFF - color) | self.ALPHA
 
 
-BasicColorUtil.instance = BasicColorUtil()
+def _BasicColorUtil_instance() -> object:
+    return BasicColorUtil()
+
+lazy_static(BasicColorUtil, "instance", _BasicColorUtil_instance)
 

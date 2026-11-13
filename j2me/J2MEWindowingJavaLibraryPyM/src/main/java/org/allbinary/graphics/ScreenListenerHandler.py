@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScreenListenerHandler:
@@ -45,5 +46,8 @@ class ScreenListenerHandler:
 from org.allbinary.graphics.ScreenEmptyListener import ScreenEmptyListener
 
 
-ScreenListenerHandler.instance = ScreenListenerHandler()
+def _ScreenListenerHandler_instance() -> object:
+    return ScreenListenerHandler()
+
+lazy_static(ScreenListenerHandler, "instance", _ScreenListenerHandler_instance)
 

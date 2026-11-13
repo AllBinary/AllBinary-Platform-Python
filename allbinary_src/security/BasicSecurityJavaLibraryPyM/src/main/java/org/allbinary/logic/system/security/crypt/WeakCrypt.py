@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WeakCrypt:
@@ -22,11 +23,16 @@ class WeakCrypt:
     KEYMAX: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
+        from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.abCrypt: AbCrypt = AbCrypt(KeySpecFactory.getInstance().DES)
     
 
     def __init__(self, key: int) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             self.abCrypt.init(WeakCrypt.keys[key])
@@ -37,6 +43,8 @@ class WeakCrypt:
 
     def encrypt(self, value: str) -> str:
         from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             crypted: list[int] = self.abCrypt.encrypt(self.tsUtil.getByteArray(value))
             return DatabaseEncoder.encode(crypted)
@@ -47,19 +55,24 @@ class WeakCrypt:
 
     def decrypt(self, value: str) -> str:
         from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             decrypted: list[int] = self.abCrypt.decrypt(DatabaseEncoder.decode(value))
             return bytes(decrypted).decode()
         except Exception as e:
             PreLogUtil.putOE("decrypt Failed", self, "decrypt", e)
             return StringUtil.getInstance().EMPTY_STRING
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
-from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
+# from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-WeakCrypt.KEYMAX = len(WeakCrypt.keys)
+def _WeakCrypt_KEYMAX() -> object:
+    return len(WeakCrypt.keys)
+
+lazy_static(WeakCrypt, "KEYMAX", _WeakCrypt_KEYMAX)
 

@@ -22,6 +22,7 @@ class DemoGameStartupRunnable(ABRunnable):
     TYPE: int = 4
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.demoCanvas: DemoCanvas = None
     
@@ -33,6 +34,7 @@ class DemoGameStartupRunnable(ABRunnable):
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.setRunning(True)
             self.demoCanvas.stopGameDemo()
@@ -47,7 +49,7 @@ class DemoGameStartupRunnable(ABRunnable):
 
     def getType(self) -> int:
         return DemoGameStartupRunnable.TYPE
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

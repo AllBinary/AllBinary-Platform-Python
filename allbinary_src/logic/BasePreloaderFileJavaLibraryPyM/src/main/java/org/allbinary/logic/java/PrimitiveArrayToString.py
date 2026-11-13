@@ -22,10 +22,11 @@ class PrimitiveArrayToString:
 
     @staticmethod
     def toString(floats: list[float]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         for index in range(0, len(floats)):
             stringBuffer.appendfloat(floats[index])
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

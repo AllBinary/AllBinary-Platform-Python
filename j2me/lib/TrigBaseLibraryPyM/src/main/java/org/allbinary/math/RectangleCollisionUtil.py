@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RectangleCollisionUtil:
@@ -23,14 +24,17 @@ class RectangleCollisionUtil:
 
     @staticmethod
     def getInstance() -> RectangleCollisionUtil:
+        from jsinterop.annotations.JsMethod import JsMethod
         return RectangleCollisionUtil.instance
     
 
     def __init__(self) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         pass
     
 
     def isCollision(self, rectX1: int, rectY1: int, rectX2: int, rectY2: int, rect2X1: int, rect2Y1: int, rect2X2: int, rect2Y2: int) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         if rect2X1 >= rectX2 or rect2Y1 >= rectY2 or rect2X2 <= rectX1 or rect2Y2 <= rectY1:
             return False
         else:
@@ -38,14 +42,18 @@ class RectangleCollisionUtil:
     
 
     def isInside(self, rectX1: int, rectY1: int, rectX2: int, rectY2: int, x: int, y: int) -> bool:
+        from jsinterop.annotations.JsMethod import JsMethod
         if x >= rectX2 or y >= rectY2 or x <= rectX1 or y <= rectY1:
             return False
         else:
             return True
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 
-RectangleCollisionUtil.instance = RectangleCollisionUtil()
+def _RectangleCollisionUtil_instance() -> object:
+    return RectangleCollisionUtil()
+
+lazy_static(RectangleCollisionUtil, "instance", _RectangleCollisionUtil_instance)
 

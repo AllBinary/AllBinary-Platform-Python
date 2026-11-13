@@ -31,6 +31,7 @@ class InputProcessor:
     
 
     def keyReleasedByDevice(self, canvas: Canvas, keyCode: int, deviceId: int) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         pass
 # from javax.microedition.lcdui.Canvas import Canvas
 from org.allbinary.game.input.GameInputStrings import GameInputStrings

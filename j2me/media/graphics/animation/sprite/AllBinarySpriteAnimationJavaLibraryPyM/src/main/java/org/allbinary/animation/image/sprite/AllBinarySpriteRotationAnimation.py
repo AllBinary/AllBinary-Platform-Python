@@ -22,6 +22,11 @@ class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
     
 
     def __init__(self, sprite: Sprite, image: Image, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(sprite, image, AngleInfo.getInstance(((int((AngleFactory.getInstance().TOTAL_ANGLE / sprite.getRawFrameCount())) + 32768) % 65536 - 32768)), animationBehavior)
         self.angleInfo.adjustAngle(self.sprite.getFrame())
     
@@ -37,11 +42,14 @@ class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
     
 
     def setFrameByDirection(self, direction: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getFrameAngle(direction)
         self.adjustFrameToAngle(angle)
     
 
     def setFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrameToAngle(angle)
     
 
@@ -51,6 +59,7 @@ class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
     
 
     def adjustFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrame(angle.getValue())
     
 
@@ -58,10 +67,10 @@ class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
         self.setFrame(self.frameUtil.getFrameForAngle(angle, int(self.angleInfo.getAngleIncrementInfo().getAngleIncrement())))
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

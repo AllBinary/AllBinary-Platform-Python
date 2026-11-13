@@ -21,6 +21,7 @@ from org.allbinary.canvas.Processor import Processor
 class EndGameProcessor(Processor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.state.GameStateFactory import GameStateFactory
         self.gameStateFactory: GameStateFactory = GameStateFactory.getInstance()
         self.gameCanvas: AllBinaryGameCanvas = None
         self.WAIT: int = 5000
@@ -34,6 +35,10 @@ class EndGameProcessor(Processor):
 
     # throws Exception
     def process(self) -> None:
+        from org.allbinary.game.score.HighScores import HighScores
+        from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
+        from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         if self.gameCanvas.isHighScoreSubmitted():
             if self.gameCanvas.getGameStateTimeHelper().isElapsedTNT(self.WAIT):
                 if self.gameCanvas.getGameState() == self.gameStateFactory.SHOW_END_RESULT_GAME_STATE:
@@ -47,10 +52,10 @@ class EndGameProcessor(Processor):
                 elif self.gameCanvas.getGameState() == self.gameStateFactory.SHOW_HIGH_SCORE_GAME_STATE:
                     self.gameCanvas.setGameState(self.gameStateFactory.SHOW_END_RESULT_GAME_STATE)
                     self.gameCanvas.setHighScoresPaintable(NullPaintable.getInstance())
-from org.allbinary.game.score.HighScores import HighScores
-from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
-from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
-from org.allbinary.game.state.GameStateFactory import GameStateFactory
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.game.score.HighScores import HighScores
+# from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
+# from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
+# from org.allbinary.game.state.GameStateFactory import GameStateFactory
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
 
 

@@ -21,12 +21,16 @@ from org.allbinary.animation.image.ImageSegmentAnimation import ImageSegmentAnim
 class RightToLeftImageAnimation(ImageSegmentAnimation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
         self.startWidth: int = 0
         self.currentWidth: int = 0
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, image: Image, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), animationBehavior)
         self._init_fields()
         self.setFrame(self.getSize() - 1)
@@ -53,12 +57,14 @@ class RightToLeftImageAnimation(ImageSegmentAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.game.Sprite import Sprite
         graphics.drawRegion(self.getImage(), self.startWidth, self.getStartY(), self.currentWidth, self.getDrawHeight(), Sprite.TRANS_NONE, x + self.startWidth, y, self.anchor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
 
 

@@ -21,6 +21,10 @@ from org.allbinary.game.physics.velocity.BasicVelocityInterface import BasicVelo
 class BasicVelocityProperties(BasicVelocityInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.direction.DirectionUtil import DirectionUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.velocityXBasicDecimal: BasicDecimal = None
         self.velocityYBasicDecimal: BasicDecimal = None
@@ -30,6 +34,7 @@ class BasicVelocityProperties(BasicVelocityInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self._init_fields()
         self.velocityXBasicDecimal = BasicDecimal(0)
         self.velocityYBasicDecimal = BasicDecimal(0)
@@ -43,56 +48,75 @@ class BasicVelocityProperties(BasicVelocityInterface):
     
 
     def getVelocityXBasicDecimalP(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.velocityXBasicDecimal
     
 
     def getVelocityYBasicDecimalP(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.velocityYBasicDecimal
     
 
     def getVelocityZBasicDecimalP(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.velocityZBasicDecimal
     
 
     def setVelocityWithBigDecimalAndDirection(self, magnitudeBasicDecimal: BasicDecimal, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getAngle(direction)
         otherAngle: Angle = self.directionUtil.getAngle(otherDirection)
         self.setVelocityWithBigDecimal(magnitudeBasicDecimal, angle, otherAngle)
     
 
     def setVelocityWithDirection(self, magnitude: int, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getAngle(direction)
         otherAngle: Angle = self.directionUtil.getAngle(otherDirection)
         self.setVelocity(magnitude, angle, otherAngle)
     
 
     def addVelocityWithBigDecimalAndDirection(self, magnitudeBasicDecimal: BasicDecimal, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getAngle(direction)
         otherAngle: Angle = self.directionUtil.getAngle(otherDirection)
         self.addVelocityWithBigDecimal(magnitudeBasicDecimal, angle, otherAngle)
     
 
     def addVelocityWithDirection(self, magnitude: int, direction: Direction, otherDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getAngle(direction)
         otherAngle: Angle = self.directionUtil.getAngle(otherDirection)
         self.addVelocity(magnitude, angle, otherAngle)
     
 
     def setVelocityWithBigDecimal(self, magnitudeBasicDecimal: BasicDecimal, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.Angle import Angle
         magnitude: int = magnitudeBasicDecimal.getUnscaled()
         self.setVelocity(magnitude, angle, otherAngle)
     
 
     def addVelocityWithBigDecimal(self, magnitudeBasicDecimal: BasicDecimal, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.Angle import Angle
         magnitude: int = magnitudeBasicDecimal.getUnscaled()
         self.addVelocity(magnitude, angle, otherAngle)
     
 
     def setVelocity(self, magnitude: int, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.setVelocityi(magnitude, int(angle.getValue()), int(otherAngle.getValue()))
     
 
     def addVelocity(self, magnitude: int, angle: Angle, otherAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.addVelocityi(magnitude, int(angle.getValue()), int(otherAngle.getValue()))
     
 
@@ -115,6 +139,10 @@ class BasicVelocityProperties(BasicVelocityInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         positionStrings: PositionStrings = PositionStrings.getInstance()
         stringBuffer: StringMaker = StringMaker()
@@ -132,15 +160,15 @@ class BasicVelocityProperties(BasicVelocityInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionUtil import DirectionUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionUtil import DirectionUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

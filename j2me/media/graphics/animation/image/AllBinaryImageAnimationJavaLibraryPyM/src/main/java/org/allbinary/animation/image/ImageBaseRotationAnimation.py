@@ -21,11 +21,17 @@ from org.allbinary.animation.RotationAnimation import RotationAnimation
 class ImageBaseRotationAnimation(RotationAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.Anchor import Anchor
         self.image: Image = None
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(angleInfo, CircularIndexUtil.createInstance(totalAngle / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
         self._init_fields()
         self.image = image
@@ -41,14 +47,17 @@ class ImageBaseRotationAnimation(RotationAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawImage(self.image, x, y, self.anchor)
     
 
     def getImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.image
     
 
@@ -62,19 +71,21 @@ class ImageBaseRotationAnimation(RotationAnimation):
 
     # throws Exception
     def close(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         DisposalUtil.getInstance().disposeImage(self.image)
     
 
     # throws Throwable
     def finalize(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         DisposalUtil.getInstance().disposeImage(self.image)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.DisposalUtil import DisposalUtil
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.DisposalUtil import DisposalUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

@@ -23,7 +23,8 @@ class HighScoresCanvasChangeLevelInputProcessorFactory(HighScoresCanvasInputProc
 
     def getInstance(self, highScoresCanvas: HighScoresCanvas) -> HighScoresCanvasInputProcessor:
         from org.allbinary.game.score.HighScoresCanvasLevelChangeInputProcessor import HighScoresCanvasLevelChangeInputProcessor
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         return HighScoresCanvasLevelChangeInputProcessor(highScoresCanvas)
-from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+# from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
 
 

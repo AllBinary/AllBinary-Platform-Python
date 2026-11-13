@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,11 +34,16 @@ class ScrollMapEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         scrollMapEventListenerInterface: ScrollMapEventListenerInterface = (eventListenerInterface)
         scrollMapEventListenerInterface.onMoveEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-ScrollMapEventHandler.SINGLETON = ScrollMapEventHandler()
+def _ScrollMapEventHandler_SINGLETON() -> object:
+    return ScrollMapEventHandler()
+
+lazy_static(ScrollMapEventHandler, "SINGLETON", _ScrollMapEventHandler_SINGLETON)
 

@@ -22,28 +22,37 @@ class BasicEventHandlerInterface:
     
 
     def addListenerInterface(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
     
 
     def addListeners(self, basicArrayList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
     
 
     # throws Exception
     def fireEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
     
 
     def removeAllListeners(self) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from jsinterop.annotations.JsMethod import JsMethod
 
 

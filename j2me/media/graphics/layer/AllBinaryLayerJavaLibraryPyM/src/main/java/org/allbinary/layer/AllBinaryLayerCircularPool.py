@@ -27,10 +27,11 @@ class AllBinaryLayerCircularPool(BaseCircularPool):
 
     # throws Exception
     def initAllBinaryLayerCircularPool(self, allbinaryLayerFactoryInterface: AllBinaryLayerFactoryInterface, total: int) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.circularIndexUtil = CircularIndexUtil.createInstance(total)
         self.OBJECT_ARRAY = [None] * (total)
         for localIndex in range(0, total):
             self.OBJECT_ARRAY[localIndex] = allbinaryLayerFactoryInterface.getInstance()
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

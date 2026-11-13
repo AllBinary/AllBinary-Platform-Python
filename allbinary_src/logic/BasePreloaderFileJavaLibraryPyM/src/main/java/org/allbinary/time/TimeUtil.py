@@ -16,12 +16,12 @@
 from __future__ import annotations
 
 import datetime
-# from java.util.Calendar import Calendar
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TimeUtil:
     instance: TimeUtil = None
-    calendar: datetime.datetime = datetime.datetime.now()
+    calendar: datetime.datetime = None
     
 
     @staticmethod
@@ -37,8 +37,7 @@ class TimeUtil:
         calendar.set(year, month, day, hour, 0)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def setCalendar(self, calendar: datetime.datetime, yearString: str, monthString: str, dayString: str, hourString: str, minuteString: str, secondString: str) -> None:
+    def setCalendarWithTime(self, calendar: datetime.datetime, yearString: str, monthString: str, dayString: str, hourString: str, minuteString: str, secondString: str) -> None:
         year: int = int(int(yearString))
         month: int = int(int(monthString))
         day: int = int(int(dayString))
@@ -63,7 +62,16 @@ class TimeUtil:
         self.setExpirationCalendar(TimeUtil.calendar, yearString, monthString, dayString, hourString, minuteString, secondString)
         timeDelta: int = TimeUtil.calendar.getTimeInMillis()
         return timeDelta - time
+# from java.util.Calendar import Calendar
 
 
-TimeUtil.instance = TimeUtil()
+def _TimeUtil_instance() -> object:
+    return TimeUtil()
+
+lazy_static(TimeUtil, "instance", _TimeUtil_instance)
+
+def _TimeUtil_calendar() -> object:
+    return datetime.datetime.now()
+
+lazy_static(TimeUtil, "calendar", _TimeUtil_calendar)
 

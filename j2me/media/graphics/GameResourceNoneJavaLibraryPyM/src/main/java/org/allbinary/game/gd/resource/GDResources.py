@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GDResources:
@@ -33,5 +34,8 @@ class GDResources:
         return GDResources.instance
 
 
-GDResources.instance = GDResources()
+def _GDResources_instance() -> object:
+    return GDResources()
+
+lazy_static(GDResources, "instance", _GDResources_instance)
 

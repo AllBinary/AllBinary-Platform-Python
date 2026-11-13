@@ -23,7 +23,8 @@ class HighScoresCanvasNoInputProcessorFactory(HighScoresCanvasInputProcessorFact
 
     def getInstance(self, highScoresCanvas: HighScoresCanvas) -> HighScoresCanvasInputProcessor:
         from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         return HighScoresCanvasInputProcessor(highScoresCanvas)
-from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+# from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
 
 
@@ -28,9 +29,13 @@ class NullInputMappingEventListener(InputMappingEventListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         pass
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
-NullInputMappingEventListener.NULL_INPUT_MAPPING_EVENT_LISTENER = NullInputMappingEventListener()
+def _NullInputMappingEventListener_NULL_INPUT_MAPPING_EVENT_LISTENER() -> object:
+    return NullInputMappingEventListener()
+
+lazy_static(NullInputMappingEventListener, "NULL_INPUT_MAPPING_EVENT_LISTENER", _NullInputMappingEventListener_NULL_INPUT_MAPPING_EVENT_LISTENER)
 

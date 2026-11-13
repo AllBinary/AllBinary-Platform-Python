@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLThreadUtil:
@@ -26,5 +27,8 @@ class OpenGLThreadUtil:
         pass
 
 
-OpenGLThreadUtil.instance = OpenGLThreadUtil()
+def _OpenGLThreadUtil_instance() -> object:
+    return OpenGLThreadUtil()
+
+lazy_static(OpenGLThreadUtil, "instance", _OpenGLThreadUtil_instance)
 

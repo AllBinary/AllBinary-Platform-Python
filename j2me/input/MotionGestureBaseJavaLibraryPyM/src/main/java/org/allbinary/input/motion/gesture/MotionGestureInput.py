@@ -22,9 +22,10 @@ class MotionGestureInput(Input):
     
 
     def __init__(self, id: int, name: str) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
         super().__init__(id, name)
         inputFactory: InputFactory = InputFactory.getInstance()
         inputFactory.add(self.getId(), self)
-from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.InputFactory import InputFactory
 
 

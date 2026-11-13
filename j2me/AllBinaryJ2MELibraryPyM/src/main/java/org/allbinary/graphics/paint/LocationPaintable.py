@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.paint.LocationPaintableInterface import LocationPaintableInterface
 
 
@@ -28,9 +29,13 @@ class LocationPaintable(LocationPaintableInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
 
 
-LocationPaintable.instance = LocationPaintable()
+def _LocationPaintable_instance() -> object:
+    return LocationPaintable()
+
+lazy_static(LocationPaintable, "instance", _LocationPaintable_instance)
 

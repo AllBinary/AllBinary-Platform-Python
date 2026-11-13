@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameConfiguration:
-    MIN_VALUE: int = int(-2147483648)
+    MIN_VALUE: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.name: str = StringUtil.getInstance().EMPTY_STRING
         self.defaultValue: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
         self.value: int = GameConfiguration.MIN_VALUE
@@ -42,6 +46,9 @@ class GameConfiguration:
 
     # throws Exception
     def setValue(self, value: int) -> None:
+        from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
+        from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if self.value != value:
             oldValue: int = self.value
             self.value = value
@@ -90,6 +97,7 @@ class GameConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Name: ")
         stringBuffer.append(self.name)
@@ -115,11 +123,16 @@ class GameConfiguration:
 
     def isModifiable(self) -> bool:
         return self.modifiable
-from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
-from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
+# from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
+
+def _GameConfiguration_MIN_VALUE() -> object:
+    return int(-2147483648)
+
+lazy_static(GameConfiguration, "MIN_VALUE", _GameConfiguration_MIN_VALUE)
 

@@ -35,7 +35,7 @@
     </dependencies>
     <modules>
 
-        <module>../BlisketJavaLibraryP</module>
+        <module>../BlisketJavaLibraryPyP</module>
 
         <!--
         <module>../logging/LogConfigTypeFreeblisketJavaLibraryPyM</module>

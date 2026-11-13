@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameGraphicsResourceUtil:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.SPRITE: str = "_sprite"
         self.QUARTER: str = "_quarter"
@@ -30,12 +32,14 @@ class GameGraphicsResourceUtil:
 
     @staticmethod
     def getInstance() -> GameGraphicsResourceUtil:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameGraphicsResourceUtil.instance == NullUtil.getInstance().NULL_OBJECT:
             GameGraphicsResourceUtil.instance = GameGraphicsResourceUtil()
         return GameGraphicsResourceUtil.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             self.name = self.getString()
@@ -46,6 +50,9 @@ class GameGraphicsResourceUtil:
 
     # throws Exception
     def getString(self) -> str:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GraphicsFeature import GraphicsFeature
+        from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
         graphicsFeatureFactory: GraphicsFeatureFactory = GraphicsFeatureFactory.getInstance()
         graphicsFeature: GraphicsFeature = graphicsFeatureFactory.NONE
         features: Features = Features.getInstance()
@@ -62,6 +69,12 @@ class GameGraphicsResourceUtil:
 
     # throws Exception
     def getStringForFeature(self, graphicsFeature: GraphicsFeature) -> str:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GraphicsFeature import GraphicsFeature
+        from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         graphicsFeatureFactory: GraphicsFeatureFactory = GraphicsFeatureFactory.getInstance()
         stringBuffer.delete(0, stringBuffer.length())
@@ -87,14 +100,21 @@ class GameGraphicsResourceUtil:
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GraphicsFeature import GraphicsFeature
-from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GraphicsFeature import GraphicsFeature
+# from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _GameGraphicsResourceUtil_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameGraphicsResourceUtil, "instance", _GameGraphicsResourceUtil_instance)
 

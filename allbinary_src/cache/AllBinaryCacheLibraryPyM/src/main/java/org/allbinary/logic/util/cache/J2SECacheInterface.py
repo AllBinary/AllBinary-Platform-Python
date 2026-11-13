@@ -23,6 +23,7 @@ class J2SECacheInterface(AutomaticCacheInterface):
     
 
     def keySet(self) -> Set[object]:
+        from java.util.Set import Set
         raise NotImplementedError()
 # from java.util.Set import Set
 

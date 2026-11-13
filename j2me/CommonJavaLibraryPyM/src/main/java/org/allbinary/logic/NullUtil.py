@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -40,8 +41,11 @@ class NullUtil:
     @staticmethod
     def getInstance() -> NullUtil:
         return NullUtil.instance
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-NullUtil.instance = NullUtil()
+def _NullUtil_instance() -> object:
+    return NullUtil()
+
+lazy_static(NullUtil, "instance", _NullUtil_instance)
 

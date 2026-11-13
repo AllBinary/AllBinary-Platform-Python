@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameKeyFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.NONE: GameKey = GameKey(InputFactory.getInstance().MAX - 1, "None")
         self.UP: GameKey = GameKey(Canvas.UP, CommonPhoneStrings.getInstance().UP)
         self.DOWN: GameKey = GameKey(Canvas.DOWN, CommonPhoneStrings.getInstance().DOWN)
@@ -53,12 +55,20 @@ class GameKeyFactory:
 
     @staticmethod
     def getInstance() -> GameKeyFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameKeyFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             GameKeyFactory.instance = GameKeyFactory()
         return GameKeyFactory.instance
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
 from org.allbinary.game.input.GameKey import GameKey
 from org.allbinary.game.input.InputFactory import InputFactory
 
+
+def _GameKeyFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameKeyFactory, "instance", _GameKeyFactory_instance)
 

@@ -23,7 +23,8 @@ class AllBinaryGameCanvasInterface(DisplayableInterface):
     
 
     def getLayerManager(self) -> AllBinaryGameLayerManager:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         raise NotImplementedError()
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
 
 

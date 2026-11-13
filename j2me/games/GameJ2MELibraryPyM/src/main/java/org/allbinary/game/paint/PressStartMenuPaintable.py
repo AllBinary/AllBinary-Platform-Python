@@ -22,6 +22,12 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class PressStartMenuPaintable(Paintable, UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.PRESS_START: str = "Press Screen To Start"
         self.KEY_START: str = "Press or Click F2 To Begin"
@@ -36,6 +42,8 @@ class PressStartMenuPaintable(Paintable, UpdateMyFontInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.AppletUtil import AppletUtil
+        from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
         super().__init__()
         self._init_fields()
         if TouchScreenFactory.getInstance().isTouch():
@@ -47,6 +55,9 @@ class PressStartMenuPaintable(Paintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.beginWidth = (graphics.getFont().stringWidth(self.startString) >> 1)
         self.line = (4 * MyFontProcessor.defaultCharWidth(font)) + (font.getHeight() >> 1)
@@ -54,6 +65,7 @@ class PressStartMenuPaintable(Paintable, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         if self.timeDelayHelper.isTimeTNT():
             if self.isFlash():
                 self.setFlash(False)
@@ -72,13 +84,13 @@ class PressStartMenuPaintable(Paintable, UpdateMyFontInterface):
         return self.flash
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.AppletUtil import AppletUtil
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.AppletUtil import AppletUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

@@ -14,6 +14,7 @@ class ARectangleFilledAnimation(RectangleFilledAnimation):
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(0, 0, BasicColorFactory.getInstance().BLACK)
         self._init_fields()
     
@@ -23,8 +24,9 @@ class ARectangleFilledAnimation(RectangleFilledAnimation):
     
 
     def paintXY(self, graphics: Graphics, unusedX: int, unusedY: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, self.x, self.y)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 

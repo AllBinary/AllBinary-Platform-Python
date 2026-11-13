@@ -3,7 +3,8 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Canvas import Canvas
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.lcdui.Canvas import Canvas
 
 
 #J2SEForJ2ME
@@ -11,6 +12,8 @@ class NullDisplayable(Canvas):
     SINGLETON: NullDisplayable = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
+        from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
         self.baseGameStatistics: BaseGameStatistics = GameStatisticsFactory.getInstance()
     
 
@@ -25,11 +28,15 @@ class NullDisplayable(Canvas):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.baseGameStatistics.nextRefresh()
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
-from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
+# from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
+# from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
 
 
-NullDisplayable.SINGLETON = NullDisplayable()
+def _NullDisplayable_SINGLETON() -> object:
+    return NullDisplayable()
+
+lazy_static(NullDisplayable, "SINGLETON", _NullDisplayable_SINGLETON)
 

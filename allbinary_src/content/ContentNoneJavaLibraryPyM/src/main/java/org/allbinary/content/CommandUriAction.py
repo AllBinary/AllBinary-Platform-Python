@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommandUriAction:
     instance: CommandUriAction = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -33,14 +35,19 @@ class CommandUriAction:
     
 
     def add(self, command: Command, url: str) -> None:
+        from javax.microedition.lcdui.Command import Command
         pass
     
 
     def process(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         pass
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-CommandUriAction.instance = CommandUriAction()
+def _CommandUriAction_instance() -> object:
+    return CommandUriAction()
+
+lazy_static(CommandUriAction, "instance", _CommandUriAction_instance)
 

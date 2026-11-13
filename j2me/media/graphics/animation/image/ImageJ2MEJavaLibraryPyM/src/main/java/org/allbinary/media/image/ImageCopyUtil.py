@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCopyUtil:
     instance: ImageCopyUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageCreationUtil: ImageCreationUtil = ImageCreationUtil.getInstance()
@@ -41,11 +47,13 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImageForRotation(self, originalImage: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.createImage(originalImage)
     
 
     # throws Exception
     def createImage(self, originalImage: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.put(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR, Exception())
             return originalImage
@@ -59,6 +67,8 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImageScale(self, originalImage: Image, canvasScale: float, resize: bool) -> Image:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.put(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR, Exception())
             return originalImage
@@ -80,13 +90,16 @@ class ImageCopyUtil:
             raise Exception("Not Mutable")
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
 
 
-ImageCopyUtil.instance = ImageCopyUtil()
+def _ImageCopyUtil_instance() -> object:
+    return ImageCopyUtil()
+
+lazy_static(ImageCopyUtil, "instance", _ImageCopyUtil_instance)
 

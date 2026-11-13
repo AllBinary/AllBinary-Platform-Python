@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinaryRenderer:
@@ -34,5 +35,8 @@ class AllBinaryRenderer:
         pass
 
 
-AllBinaryRenderer.instance = AllBinaryRenderer()
+def _AllBinaryRenderer_instance() -> object:
+    return AllBinaryRenderer()
+
+lazy_static(AllBinaryRenderer, "instance", _AllBinaryRenderer_instance)
 

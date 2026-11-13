@@ -21,11 +21,14 @@ from org.allbinary.physics.movement.BasicConstantVelocityMovement import BasicCo
 class CustomGravityConstantVelocityMovement(BasicConstantVelocityMovement):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
         self.customGravity: int = None
         self.gravityUtil: GravityUtil = GravityUtil.getInstance()
     
 
     def __init__(self, speedBasicDecimal: BasicDecimal, customGravity: int) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(speedBasicDecimal, VelocityProperties(int(speedBasicDecimal.getUnscaled()), int(speedBasicDecimal.getUnscaled())))
         self._init_fields()
         self.customGravity = customGravity
@@ -33,13 +36,15 @@ class CustomGravityConstantVelocityMovement(BasicConstantVelocityMovement):
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         super().process(layer)
         self.gravityUtil.process(self.getVelocityProperties(), self.customGravity)
         velocityProperties: VelocityProperties = self.getVelocityProperties()
         velocityProperties.limitMaxYForwardVelocity()
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

@@ -22,10 +22,18 @@ from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 class PlayerGameInputGameLayer(AllBinaryGameLayer, PlayerGameInputCompositeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
         self.playerGameInput: PlayerGameInput = None
     
 
     def __init__(self, playerInputId: int) -> None:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.view.StaticViewPosition import StaticViewPosition
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0), StaticViewPosition(0, 0, 0))
         self._init_fields()
         self.playerGameInput = PlayerGameInput(self.getGameKeyEventList(), BasicArrayListD(), playerInputId)
@@ -34,6 +42,7 @@ class PlayerGameInputGameLayer(AllBinaryGameLayer, PlayerGameInputCompositeInter
     
 
     def getPlayerGameInput(self) -> PlayerGameInput:
+        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
         return self.playerGameInput
     
 
@@ -43,19 +52,21 @@ class PlayerGameInputGameLayer(AllBinaryGameLayer, PlayerGameInputCompositeInter
 
     # throws Exception
     def processInput(self, myManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.view.StaticViewPosition import StaticViewPosition
+# from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.view.StaticViewPosition import StaticViewPosition
 
 

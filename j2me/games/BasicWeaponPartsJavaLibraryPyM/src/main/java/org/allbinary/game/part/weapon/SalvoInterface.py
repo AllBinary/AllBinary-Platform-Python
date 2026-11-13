@@ -23,14 +23,18 @@ class SalvoInterface:
 
     # throws Exception
     def process(self, allbinaryLayerManager: AllBinaryLayerManager, angle: int, otherAngle: int) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise NotImplementedError()
     
 
     # throws Exception
     def processScore(self, allbinaryLayerManager: AllBinaryLayerManager, angle: int, otherAngle: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface) -> None:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise NotImplementedError()
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

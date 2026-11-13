@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicHudFactory:
@@ -42,5 +43,8 @@ class BasicHudFactory:
         self._init_fields()
 
 
-BasicHudFactory.instance = BasicHudFactory()
+def _BasicHudFactory_instance() -> object:
+    return BasicHudFactory()
+
+lazy_static(BasicHudFactory, "instance", _BasicHudFactory_instance)
 

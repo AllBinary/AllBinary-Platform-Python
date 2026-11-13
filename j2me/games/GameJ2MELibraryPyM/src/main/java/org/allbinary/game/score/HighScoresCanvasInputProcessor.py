@@ -23,10 +23,13 @@ class HighScoresCanvasInputProcessor(PlayerGameInput):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         self.highScoresCanvas: HighScoresCanvas = None
     
 
     def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(BasicArrayListD(), BasicArrayListD(), -1)
         self._init_fields()
         self.highScoresCanvas = highScoresCanvas
@@ -45,6 +48,7 @@ class HighScoresCanvasInputProcessor(PlayerGameInput):
             return self._onPressGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onPressGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         super().onPressGameKeyEvent(gameKeyEvent)
         self.update()
     
@@ -54,6 +58,7 @@ class HighScoresCanvasInputProcessor(PlayerGameInput):
             return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         super().onDownGameKeyEvent(gameKeyEvent)
         self.update()
     
@@ -63,20 +68,23 @@ class HighScoresCanvasInputProcessor(PlayerGameInput):
             return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         super().onUpGameKeyEvent(gameKeyEvent)
         self.update()
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def getHighScoresCanvas(self) -> HighScoresCanvas:
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         return self.highScoresCanvas
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

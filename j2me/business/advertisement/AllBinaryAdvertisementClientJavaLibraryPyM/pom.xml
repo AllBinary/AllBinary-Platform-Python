@@ -127,8 +127,7 @@
                 </executions>
             </plugin>
 
-
-
+            <!-- Java build plugin converted with a Py suffix. The Python build does not use it (like Erlang).
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-pluginPy</artifactId>
@@ -142,14 +141,13 @@
                         <configuration>
                             <classifier>sources</classifier>
                             <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-                            <!--
-                            <outputDirectory>${project.build.directory}/sources</outputDirectory>
-                            -->
+                            <outputDirectory>${project.build.directory}/sources</outputDirectory> was commented out
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            
+            -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

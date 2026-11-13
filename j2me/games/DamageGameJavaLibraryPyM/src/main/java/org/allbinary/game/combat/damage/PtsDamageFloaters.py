@@ -15,16 +15,19 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorArrayIndexer import BasicColorArrayIndexer
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
 
 
 class PtsDamageFloaters(DamageFloaters):
-    basicColorArrayIndexer: BasicColorArrayIndexer = BasicColorArrayIndexer([BasicColorFactory.getInstance().WHITE, BasicColorFactory.getInstance().RED, BasicColorFactory.getInstance().YELLOW, BasicColorFactory.getInstance().BLUE])
+    basicColorArrayIndexer: BasicColorArrayIndexer = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
         self.layerInterface: AllBinaryLayer = None
         self.lastDamage: list[int] = [0] * (5)
@@ -36,6 +39,9 @@ class PtsDamageFloaters(DamageFloaters):
     
 
     def __init__(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__()
         self._init_fields()
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(100000)
@@ -54,6 +60,8 @@ class PtsDamageFloaters(DamageFloaters):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         viewPosition: ViewPositionBase = self.layerInterface.getViewPosition()
         x: int = viewPosition.getX()
         y: int = viewPosition.getY()
@@ -65,13 +73,24 @@ class PtsDamageFloaters(DamageFloaters):
                 PtsDamageFloaters.basicColorArrayIndexer.next()
             self.lastDamage[index] = 0
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from org.allbinary.view.ViewPosition import ViewPosition
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorArrayIndexer import BasicColorArrayIndexer
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.view.ViewPosition import ViewPosition
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
+
+def _PtsDamageFloaters_basicColorArrayIndexer() -> object:
+    from org.allbinary.graphics.color.BasicColor import BasicColor
+    from org.allbinary.graphics.color.BasicColorArrayIndexer import BasicColorArrayIndexer
+    from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+    return BasicColorArrayIndexer([BasicColorFactory.getInstance().WHITE, BasicColorFactory.getInstance().RED, BasicColorFactory.getInstance().YELLOW, BasicColorFactory.getInstance().BLUE])
+
+lazy_static(PtsDamageFloaters, "basicColorArrayIndexer", _PtsDamageFloaters_basicColorArrayIndexer)
 

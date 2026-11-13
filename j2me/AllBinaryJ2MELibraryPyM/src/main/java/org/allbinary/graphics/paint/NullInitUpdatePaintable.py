@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
@@ -31,5 +32,8 @@ class NullInitUpdatePaintable(InitUpdatePaintable):
         return NullInitUpdatePaintable.SINGLETON
 
 
-NullInitUpdatePaintable.SINGLETON = NullInitUpdatePaintable()
+def _NullInitUpdatePaintable_SINGLETON() -> object:
+    return NullInitUpdatePaintable()
+
+lazy_static(NullInitUpdatePaintable, "SINGLETON", _NullInitUpdatePaintable_SINGLETON)
 

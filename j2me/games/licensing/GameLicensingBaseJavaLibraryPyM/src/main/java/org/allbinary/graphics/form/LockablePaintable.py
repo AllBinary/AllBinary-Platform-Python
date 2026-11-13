@@ -21,6 +21,9 @@ from org.allbinary.graphics.form.ItemPaintable import ItemPaintable
 class LockablePaintable(ItemPaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
         self.animation: Animation = FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(LockedResources.getInstance().LOCKED_DEMO_GAME_FEATURE_RESOURCE).getInstance(0)
         self.lockedIndex: int = None
     
@@ -32,6 +35,8 @@ class LockablePaintable(ItemPaintable):
     
 
     def paint(self, graphics: Graphics, currentIndex: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
         if LockedUtil.getInstance().isLocked() and currentIndex >= self.getLockedIndex():
             self.getAnimation().paintXY(graphics, x, y)
     
@@ -41,11 +46,12 @@ class LockablePaintable(ItemPaintable):
     
 
     def getAnimation(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return self.animation
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
-from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
+# from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
 
 

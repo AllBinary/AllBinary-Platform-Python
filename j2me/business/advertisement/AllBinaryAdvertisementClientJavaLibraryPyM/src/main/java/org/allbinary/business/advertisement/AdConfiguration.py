@@ -33,10 +33,12 @@ class AdConfiguration:
     
 
     def getValidAdSpots(self) -> list[Direction]:
+        from org.allbinary.direction.Direction import Direction
         return [None] * (0)
     
 
     def process(self, gameState: GameState) -> None:
+        from org.allbinary.game.state.GameState import GameState
         pass
     
 
@@ -54,7 +56,7 @@ class AdConfiguration:
 
     def isShowAds(self) -> bool:
         return True
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.game.state.GameState import GameState
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.game.state.GameState import GameState
 
 

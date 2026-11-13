@@ -15,13 +15,13 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactory import PickedUpLayerInterfaceFactory
 from org.allbinary.game.layer.pickup.PickupProcessorInterface import PickupProcessorInterface
 
 
 class HealPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, PickupProcessorInterface):
-    pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = CountedPickedUpLayerInterfaceFactory.NULL_COUNTED_PICKUP_LAYER_FACTORY
+    pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = None
 
     def _init_fields(self) -> None:
         self.pool: HealLayerCircularStaticPool = HealLayerCircularStaticPool(HealLayerFactory(), 1)
@@ -36,6 +36,9 @@ class HealPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, PickupPro
     def __init__(self) -> None:
         from org.allbinary.game.ag.layer.pickup.health.HealthResources import HealthResources
         from org.allbinary.game.ag.layer.pickup.health.HealthResources import HealthResources
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.game.layer.pickup.IconLayerFactory import IconLayerFactory
+        from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
         super().__init__(PickedUpLayerTypeFactory.getInstance().HEAL, IconLayerFactory.getInstance(FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(HealthResources.getInstance().RESOURCE).getInstance(0), 10, 10), FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(HealthResources.getInstance().RESOURCE).getInstance(0))
         self._init_fields()
     
@@ -46,18 +49,28 @@ class HealPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, PickupPro
 
     @staticmethod
     def getInstance() -> PickedUpLayerInterfaceFactoryInterface:
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
         return HealPickedUpLayerInterfaceFactory.pickedUpLayerInterfaceFactoryInterface
     
 
     # throws Exception
     def process(self, sourceLayerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.pool.visit(sourceLayerInterface)
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.game.layer.pickup.IconLayerFactory import IconLayerFactory
-from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
-from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
+# from org.allbinary.game.layer.pickup.IconLayerFactory import IconLayerFactory
+# from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
+# from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.game.ag.layer.pickup.health.HealLayerCircularStaticPool import HealLayerCircularStaticPool
 from org.allbinary.game.ag.layer.pickup.health.HealLayerFactory import HealLayerFactory
 
+
+def _HealPickedUpLayerInterfaceFactory_pickedUpLayerInterfaceFactoryInterface() -> object:
+    from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
+    from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
+    return CountedPickedUpLayerInterfaceFactory.NULL_COUNTED_PICKUP_LAYER_FACTORY
+
+lazy_static(HealPickedUpLayerInterfaceFactory, "pickedUpLayerInterfaceFactoryInterface", _HealPickedUpLayerInterfaceFactory_pickedUpLayerInterfaceFactoryInterface)
 

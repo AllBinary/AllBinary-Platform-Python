@@ -21,7 +21,8 @@ class DiveAndDirectionalTrackingAICompositeVisitorFactory:
     
 
     def getInstance(self, diveBombAI: DiveAndDirectionalTrackingAI) -> Visitor:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         return Visitor.getInstance()
-from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 

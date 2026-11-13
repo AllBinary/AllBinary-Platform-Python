@@ -31,6 +31,7 @@ class EndGamePaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.gameCanvas.paintGameOver(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
 

@@ -21,6 +21,9 @@ from org.allbinary.game.score.HighScoresBase import HighScoresBase
 class BasicHighScoresFactory(HighScoresBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = None
         self.softwareInformation: SoftwareInformation = None
@@ -33,6 +36,8 @@ class BasicHighScoresFactory(HighScoresBase):
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, softwareInformation: SoftwareInformation) -> None:
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__()
         self._init_fields()
         self.abeClientInformation = abeClientInformation
@@ -40,6 +45,7 @@ class BasicHighScoresFactory(HighScoresBase):
     
 
     def fetchHighScores(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         self.logUtil.putF("Getting Remote/Local HighScores", self, self.FETCH)
         self.fetchHighScoresPreload(gameInfo, highScoresResultsListener, True)
     
@@ -48,6 +54,15 @@ class BasicHighScoresFactory(HighScoresBase):
         from org.allbinary.game.score.RecordStoreHighScores import RecordStoreHighScores
         from org.allbinary.game.score.ScoreComparator import ScoreComparator
         from org.allbinary.game.score.LastFetchHighScoresFactory import LastFetchHighScoresFactory
+        from org.allbinary.thread.ARunnable import ARunnable
+        from org.allbinary.game.BasicHighScoresGameInfoFactory import BasicHighScoresGameInfoFactory
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.GameType import GameType
+        from org.allbinary.game.GameTypeFactory import GameTypeFactory
+        from org.allbinary.game.score.remote.RemoteHighScores import RemoteHighScores
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
         SecondaryThreadPool.getInstance().runTask((ARunnable()  # Java anonymous class body:
 #             
 # 
@@ -55,6 +70,13 @@ class BasicHighScoresFactory(HighScoresBase):
 #                 from org.allbinary.game.score.RecordStoreHighScores import RecordStoreHighScores
 #                 from org.allbinary.game.score.ScoreComparator import ScoreComparator
 #                 from org.allbinary.game.score.LastFetchHighScoresFactory import LastFetchHighScoresFactory
+#                 from org.allbinary.game.BasicHighScoresGameInfoFactory import BasicHighScoresGameInfoFactory
+#                 from org.allbinary.game.GameInfo import GameInfo
+#                 from org.allbinary.game.GameType import GameType
+#                 from org.allbinary.game.GameTypeFactory import GameTypeFactory
+#                 from org.allbinary.game.score.remote.RemoteHighScores import RemoteHighScores
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     logUtil.putF(self.commonStrings.START, self, self.FETCH)
@@ -85,16 +107,16 @@ class BasicHighScoresFactory(HighScoresBase):
         if index2 >= 0:
             return True
         return False
-from org.allbinary.thread.ARunnable import ARunnable
-from org.allbinary.game.BasicHighScoresGameInfoFactory import BasicHighScoresGameInfoFactory
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.GameType import GameType
-from org.allbinary.game.GameTypeFactory import GameTypeFactory
-from org.allbinary.game.score.remote.RemoteHighScores import RemoteHighScores
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
+# from org.allbinary.thread.ARunnable import ARunnable
+# from org.allbinary.game.BasicHighScoresGameInfoFactory import BasicHighScoresGameInfoFactory
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.GameType import GameType
+# from org.allbinary.game.GameTypeFactory import GameTypeFactory
+# from org.allbinary.game.score.remote.RemoteHighScores import RemoteHighScores
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
 
 

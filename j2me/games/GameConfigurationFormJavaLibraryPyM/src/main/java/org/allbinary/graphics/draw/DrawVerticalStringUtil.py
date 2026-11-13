@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DrawVerticalStringUtil:
     instance: DrawVerticalStringUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.anchor: int = Anchor.TOP_LEFT
         self.charHeight: int = 0
@@ -37,6 +41,11 @@ class DrawVerticalStringUtil:
     
 
     def updateMeasurement(self, graphics: Graphics, string: str) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
         openGLFeatureUtil: OpenGLFeatureUtil = OpenGLFeatureUtil.getInstance()
         font: Font = graphics.getFont()
         self.charHeight = font.getHeight()
@@ -60,6 +69,7 @@ class DrawVerticalStringUtil:
     
 
     def paintVerticle(self, graphics: Graphics, string: str, x: int, y: int, anchor: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         size: int = len(string)
         aChar: str = '\0'
         for index in range(size - 1, 0 - 1, -1):
@@ -68,6 +78,9 @@ class DrawVerticalStringUtil:
     
 
     def drawCenterString(self, graphics: Graphics, string: str, offset: int, length: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         width: int = (graphics.getFont().substringWidth(string, offset, length) >> 1)
         try:
             graphics.drawSubstring(string, offset, length, x - width, y, self.anchor)
@@ -76,6 +89,7 @@ class DrawVerticalStringUtil:
     
 
     def drawCenterStrings(self, graphics: Graphics, stringArray: list[str], maxWidth: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         extraLines: int = 0
         for index in range(0, len(stringArray)):
             string: str = stringArray[index]
@@ -102,15 +116,18 @@ class DrawVerticalStringUtil:
                 extraLines -= 1
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-DrawVerticalStringUtil.instance = DrawVerticalStringUtil()
+def _DrawVerticalStringUtil_instance() -> object:
+    return DrawVerticalStringUtil()
+
+lazy_static(DrawVerticalStringUtil, "instance", _DrawVerticalStringUtil_instance)
 

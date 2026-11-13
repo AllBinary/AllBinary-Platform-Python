@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class VectorMirrorGenerator:
     instance: VectorMirrorGenerator = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.vectorAnimationUtil: VectorAnimationUtil = VectorAnimationUtil.getInstance()
     
@@ -36,6 +38,11 @@ class VectorMirrorGenerator:
 
     # Java overloaded method: Python keeps the last definition
     def getInstance(self, points: list[list[list[int]]], width: int) -> list[list[list[int]]]:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         try:
             pointFactory: PointFactory = PointFactory.getInstance()
             pointBasicArrayList: BasicArrayList = None
@@ -63,19 +70,24 @@ class VectorMirrorGenerator:
     # throws Exception
     # Java overloaded method: Python keeps the last definition
     def getInstance(self, pointBasicArrayList: BasicArrayList, width: int) -> BasicArrayList:
+        from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicsPipe: BasicGraphicsPipeline = BasicGraphicsPipeline(pointBasicArrayList)
         graphicsPipe.createMatrix()
         graphicsPipe.mirror(width)
         return graphicsPipe.getMatrix()
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 from org.allbinary.animation.VectorAnimationUtil import VectorAnimationUtil
 
 
-VectorMirrorGenerator.instance = VectorMirrorGenerator()
+def _VectorMirrorGenerator_instance() -> object:
+    return VectorMirrorGenerator()
+
+lazy_static(VectorMirrorGenerator, "instance", _VectorMirrorGenerator_instance)
 

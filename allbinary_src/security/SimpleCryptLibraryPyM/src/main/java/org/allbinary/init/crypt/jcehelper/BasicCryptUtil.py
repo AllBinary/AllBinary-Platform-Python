@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicCryptUtil:
     instance: BasicCryptUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.XML_START: str = "<?xml"
@@ -36,6 +39,7 @@ class BasicCryptUtil:
 
     # throws Exception
     def getDecryptedInputStream(self, inputStream: InputStream, cryptInterface: CryptInterface) -> InputStream:
+        from java.io.InputStream import InputStream
         buffer: ByteArrayOutputStream = ByteArrayOutputStream()
         ch: int = 0
         while True:
@@ -52,9 +56,12 @@ class BasicCryptUtil:
 # from java.io.ByteArrayInputStream import ByteArrayInputStream
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.InputStream import InputStream
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-BasicCryptUtil.instance = BasicCryptUtil()
+def _BasicCryptUtil_instance() -> object:
+    return BasicCryptUtil()
+
+lazy_static(BasicCryptUtil, "instance", _BasicCryptUtil_instance)
 

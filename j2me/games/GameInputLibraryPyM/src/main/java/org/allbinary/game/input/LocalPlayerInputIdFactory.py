@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LocalPlayerInputIdFactory:
     instance: LocalPlayerInputIdFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.MAX_NUMBER_OF_PLAYERS: int = 6
         self.MAX_FAST_DEVICEID: int = 65
@@ -46,6 +48,8 @@ class LocalPlayerInputIdFactory:
     
 
     def getPlayerForDevice(self, deviceId: int) -> int:
+        from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         index: int = 0
         if deviceId < self.MAX_FAST_DEVICEID:
             playerInputId: int = self.deviceIdToplayerId[deviceId]
@@ -80,21 +84,26 @@ class LocalPlayerInputIdFactory:
     
 
     def setPlayerInPlay(self, playerInputId: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append("Setting PlayerInPlay with playerInputId: ").appendint(playerInputId)), self, "setPlayerInPlay")
         self.playersInPlay[playerInputId] = True
     
 
     def setPlayerOutOfPlay(self, playerInputId: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append("Setting PlayerOutOfPlay with playerInputId: ").appendint(playerInputId)), self, "setPlayerOutOfPlay")
         self.playersInPlay[playerInputId] = False
     
 
     def getPlayersInPlay(self) -> list[bool]:
         return self.playersInPlay
-from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.game.input.analog.AnalogLocationInputFactory import AnalogLocationInputFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-LocalPlayerInputIdFactory.instance = LocalPlayerInputIdFactory()
+def _LocalPlayerInputIdFactory_instance() -> object:
+    return LocalPlayerInputIdFactory()
+
+lazy_static(LocalPlayerInputIdFactory, "instance", _LocalPlayerInputIdFactory_instance)
 

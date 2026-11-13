@@ -23,6 +23,12 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class HighScoresPaintable(Paintable, ColorChangeListener, UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
@@ -37,17 +43,24 @@ class HighScoresPaintable(Paintable, ColorChangeListener, UpdateMyFontInterface)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.charHeight = font.getHeight()
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.graphics.color.ColorChangeEvent import ColorChangeEvent
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         colorChangeEvent: ColorChangeEvent = eventObject
         self.basicColor = colorChangeEvent.getBasicColorP()
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.myFontProcessor.process(graphics)
         width: int = self.displayInfoSingleton.getLastWidth()
         height: int = self.displayInfoSingleton.getLastHeight()
@@ -82,10 +95,12 @@ class HighScoresPaintable(Paintable, ColorChangeListener, UpdateMyFontInterface)
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
@@ -93,15 +108,15 @@ class HighScoresPaintable(Paintable, ColorChangeListener, UpdateMyFontInterface)
         self.highScores = highScores
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.color.ColorChangeEvent import ColorChangeEvent
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.ColorChangeEvent import ColorChangeEvent
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
 
 

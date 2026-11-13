@@ -21,21 +21,24 @@ from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 class TimeHudWidget(BasicHud):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
         self.TIME_STRING: str = "Time "
         self.TIME_CHAR_ARRAY: list[str] = ['T', 'i', 'm', 'e', ' ']
         self.offset: int = 0
         self.string: list[str] = PrimitiveLongSingleton.getInstance().ZERO
         self.totalDigits: int = 1
-        self.timer: Timer = None
+        self.timer: HudTimer = None
     
 
     # throws Exception
     @staticmethod
-    def getInstance(location: int, direction: int, basicColor: BasicColor, timer: Timer) -> TimeHudWidget:
+    def getInstance(location: int, direction: int, basicColor: BasicColor, timer: HudTimer) -> TimeHudWidget:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return TimeHudWidget(location, direction, 2, basicColor, timer)
     
 
-    def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor, timer: Timer) -> None:
+    def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor, timer: HudTimer) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, bufferZone, basicColor)
         self._init_fields()
         self.timer = timer
@@ -44,6 +47,9 @@ class TimeHudWidget(BasicHud):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * 5
         self.offset = font.stringWidth(self.TIME_STRING) + MyFontProcessor.defaultStringWidth(font, 3)
@@ -60,16 +66,17 @@ class TimeHudWidget(BasicHud):
         self.totalDigits = self.timer.getCurrentTotalDigits()
     
 
-    def getTimer(self) -> Timer:
+    def getTimer(self) -> HudTimer:
         return self.timer
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintDX(graphics, self.TIME_CHAR_ARRAY, 0, len(self.TIME_CHAR_ARRAY), self.string, 0, self.totalDigits, self.offset)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
 
 

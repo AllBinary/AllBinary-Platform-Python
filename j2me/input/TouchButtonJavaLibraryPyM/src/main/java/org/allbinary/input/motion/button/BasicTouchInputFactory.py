@@ -16,14 +16,17 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicTouchInputFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.SPECIAL_BUTTON_SEVEN_TESTING_ONLY: TouchButtonInput = None
         self.SPECIAL_BUTTON_EIGHT_TESTING_ONLY: TouchButtonInput = None
@@ -44,6 +47,7 @@ class BasicTouchInputFactory:
 
     @staticmethod
     def getInstance() -> BasicTouchInputFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if BasicTouchInputFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             BasicTouchInputFactory.instance = BasicTouchInputFactory()
         return BasicTouchInputFactory.instance
@@ -63,6 +67,7 @@ class BasicTouchInputFactory:
         from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
         from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
         from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.game.input.InputFactory import InputFactory
         self._init_fields()
         MAX: int = InputFactory.getInstance().MAX
         self.SPECIAL_BUTTON_SEVEN_TESTING_ONLY = TouchButtonInput(MAX - 41, "Button 7 - Testing Only May Cross Over Key Values")
@@ -85,6 +90,7 @@ class BasicTouchInputFactory:
             return self._init_unlocked(inputToGameKeyMapping)
 
     def _init_unlocked(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         if not self.initialized:
             self.initialized = True
             self.list_.add(self.UP)
@@ -104,10 +110,15 @@ class BasicTouchInputFactory:
     
 
     def updateAll(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         self.updateAllFromList(self.list_, inputToGameKeyMapping)
     
 
     def updateAllFromList(self, list_: BasicArrayList, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).appendint(list_.size())), self, "updateAll")
         touchButtonInput: TouchButtonInput = None
         for index in range(list_.size() - 1, 0 - 1, -1):
@@ -116,13 +127,21 @@ class BasicTouchInputFactory:
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _BasicTouchInputFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(BasicTouchInputFactory, "instance", _BasicTouchInputFactory_instance)
 

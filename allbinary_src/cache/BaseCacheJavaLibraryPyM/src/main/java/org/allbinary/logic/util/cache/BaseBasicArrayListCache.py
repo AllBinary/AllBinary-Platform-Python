@@ -20,6 +20,9 @@ from __future__ import annotations
 class BaseBasicArrayListCache:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from jsinterop.annotations.JsProperty import JsProperty
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -27,15 +30,17 @@ class BaseBasicArrayListCache:
     
 
     def log(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("S: ")
         stringBuffer.appendint(self.list_.size())
         return str(stringBuffer)
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsProperty import JsProperty
 
 

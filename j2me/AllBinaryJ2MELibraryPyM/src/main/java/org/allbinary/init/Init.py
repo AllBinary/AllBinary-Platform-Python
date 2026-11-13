@@ -21,6 +21,7 @@ from org.allbinary.init.InitInterface import InitInterface
 class Init(InitInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -30,6 +31,6 @@ class Init(InitInterface):
     # throws Exception
     def init(self) -> None:
         pass
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

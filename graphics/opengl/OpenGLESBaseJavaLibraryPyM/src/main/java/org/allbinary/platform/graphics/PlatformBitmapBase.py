@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformBitmapBase:
     NULL_PLATFORM_BITMAP_BASE: PlatformBitmapBase = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.alpha: int = 255
         self.basicColor: BasicColor = BasicColorFactory.getInstance().NULL_COLOR
 
@@ -37,12 +40,17 @@ class PlatformBitmapBase:
     
 
     def getImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         return NullImage.NULL_IMAGE
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 
-PlatformBitmapBase.NULL_PLATFORM_BITMAP_BASE = PlatformBitmapBase()
+def _PlatformBitmapBase_NULL_PLATFORM_BITMAP_BASE() -> object:
+    return PlatformBitmapBase()
+
+lazy_static(PlatformBitmapBase, "NULL_PLATFORM_BITMAP_BASE", _PlatformBitmapBase_NULL_PLATFORM_BITMAP_BASE)
 

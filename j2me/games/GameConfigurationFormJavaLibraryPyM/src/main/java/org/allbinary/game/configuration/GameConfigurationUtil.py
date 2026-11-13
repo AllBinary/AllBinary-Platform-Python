@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameConfigurationUtil:
     instance: GameConfigurationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.GAUGE_UPDATE: str = "Gauge Update: "
@@ -49,6 +52,8 @@ class GameConfigurationUtil:
     # throws Exception
     def update(self, gauge: GameConfigurationGauge) -> None:
         from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfiguration: GameConfiguration = gameConfigurationSingleton.getInstanceByName(gauge.getLabel())
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
@@ -67,6 +72,7 @@ class GameConfigurationUtil:
     # throws Exception
     def setDefault(self, gauge: GameConfigurationGauge) -> None:
         from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
+        from org.allbinary.logic.string.StringMaker import StringMaker
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfiguration: GameConfiguration = gameConfigurationSingleton.getInstanceByName(gauge.getLabel())
         stringBuffer: StringMaker = StringMaker()
@@ -83,6 +89,7 @@ class GameConfigurationUtil:
     def updateChallange(self, gameOptionsForm: GameOptionsForm, gameConfiguration: GameConfiguration) -> None:
         from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from javax.microedition.lcdui.Item import Item
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfigurationCentral: GameConfigurationCentral = GameConfigurationCentral.getInstance()
         if gameConfiguration == gameConfigurationCentral.CHALLENGE_LEVEL:
@@ -119,11 +126,14 @@ class GameConfigurationUtil:
     def getCompetitionValue(self) -> int:
         return self.COMPETITION_VALUE
 # from javax.microedition.lcdui.Item import Item
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-GameConfigurationUtil.instance = GameConfigurationUtil()
+def _GameConfigurationUtil_instance() -> object:
+    return GameConfigurationUtil()
+
+lazy_static(GameConfigurationUtil, "instance", _GameConfigurationUtil_instance)
 

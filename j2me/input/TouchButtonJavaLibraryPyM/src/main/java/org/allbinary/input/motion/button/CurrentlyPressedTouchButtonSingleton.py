@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CurrentlyPressedTouchButtonSingleton:
     instance: CurrentlyPressedTouchButtonSingleton = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -55,9 +58,12 @@ class CurrentlyPressedTouchButtonSingleton:
 
     def add(self, touchButtonInput: TouchButtonInput) -> None:
         self.list_.add(touchButtonInput)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-CurrentlyPressedTouchButtonSingleton.instance = CurrentlyPressedTouchButtonSingleton()
+def _CurrentlyPressedTouchButtonSingleton_instance() -> object:
+    return CurrentlyPressedTouchButtonSingleton()
+
+lazy_static(CurrentlyPressedTouchButtonSingleton, "instance", _CurrentlyPressedTouchButtonSingleton_instance)
 

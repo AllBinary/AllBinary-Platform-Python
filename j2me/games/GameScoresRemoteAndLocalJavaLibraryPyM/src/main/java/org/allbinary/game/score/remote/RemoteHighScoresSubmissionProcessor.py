@@ -23,6 +23,9 @@ class RemoteHighScoresSubmissionProcessor(RemoteHighScoresSubmissionProcessorInt
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.crypt.jcehelper.NoCrypt import NoCrypt
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.noCrypt: NoCrypt = NoCrypt()
@@ -42,6 +45,15 @@ class RemoteHighScoresSubmissionProcessor(RemoteHighScoresSubmissionProcessorInt
         from org.allbinary.game.score.remote.RemoteHighScoresData import RemoteHighScoresData
         from org.allbinary.game.score.remote.RemoteHighScoresData import RemoteHighScoresData
         from org.allbinary.game.score.remote.XmlRpcRemoteHighScoresClient import XmlRpcRemoteHighScoresClient
+        from org.allbinary.game.GameInfoData import GameInfoData
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.game.score.HighScore import HighScore
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         try:
             self.logUtil.putF("Begin Remote HighScores Submission", self, self.commonStrings.PROCESS)
             gameInfoData: GameInfoData = GameInfoData.getInstance()
@@ -60,17 +72,17 @@ class RemoteHighScoresSubmissionProcessor(RemoteHighScoresSubmissionProcessorInt
                 remoteHighScores.update(resultHashtable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-from org.allbinary.game.GameInfoData import GameInfoData
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.game.score.HighScore import HighScore
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.system.security.crypt.jcehelper.NoCrypt import NoCrypt
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.game.GameInfoData import GameInfoData
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.game.score.HighScore import HighScore
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.system.security.crypt.jcehelper.NoCrypt import NoCrypt
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.HashtableUtil import HashtableUtil
 
 

@@ -15,10 +15,17 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Graphics import Graphics
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Anchor:
-    TOP_LEFT: int = Graphics.TOP & Graphics.LEFT
+    TOP_LEFT: int = None
+# from javax.microedition.lcdui.Graphics import Graphics
 
+
+def _Anchor_TOP_LEFT() -> object:
+    from javax.microedition.lcdui.Graphics import Graphics
+    return Graphics.TOP & Graphics.LEFT
+
+lazy_static(Anchor, "TOP_LEFT", _Anchor_TOP_LEFT)
 

@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MultiplayerBehavior:
@@ -36,7 +36,12 @@ class MultiplayerBehavior:
 
     def getApproximateElapsed(self) -> int:
         return 0
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-MultiplayerBehavior.NULL_MULTIPLAYER_BEHAVIOR = MultiplayerBehavior(StringUtil.getInstance().EMPTY_STRING)
+def _MultiplayerBehavior_NULL_MULTIPLAYER_BEHAVIOR() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return MultiplayerBehavior(StringUtil.getInstance().EMPTY_STRING)
+
+lazy_static(MultiplayerBehavior, "NULL_MULTIPLAYER_BEHAVIOR", _MultiplayerBehavior_NULL_MULTIPLAYER_BEHAVIOR)
 

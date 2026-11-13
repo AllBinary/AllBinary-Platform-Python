@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DistanceUtil:
     instance: DistanceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
 
     def __init__(self) -> None:
@@ -36,8 +38,11 @@ class DistanceUtil:
         dx: int = x1 - x2
         dy: int = y1 - y2
         return int(self.mathUtil.sqrt((dx * dx) + (dy * dy)))
-from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.math.MathUtil import MathUtil
 
 
-DistanceUtil.instance = DistanceUtil()
+def _DistanceUtil_instance() -> object:
+    return DistanceUtil()
+
+lazy_static(DistanceUtil, "instance", _DistanceUtil_instance)
 

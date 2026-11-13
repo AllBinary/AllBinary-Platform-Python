@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.BaseTouchInput import BaseTouchInput
 
 
@@ -22,6 +23,7 @@ class BasicTouchButtonsBuilder(BaseTouchInput):
     SINGLETON: BasicTouchButtonsBuilder = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -35,6 +37,9 @@ class BasicTouchButtonsBuilder(BaseTouchInput):
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.GET_LIST)
             list_: BasicArrayList = BasicArrayListD()
@@ -42,12 +47,15 @@ class BasicTouchButtonsBuilder(BaseTouchInput):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_LIST, e)
             return BasicArrayListUtil.getInstance().getImmutableInstance()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-BasicTouchButtonsBuilder.SINGLETON = BasicTouchButtonsBuilder()
+def _BasicTouchButtonsBuilder_SINGLETON() -> object:
+    return BasicTouchButtonsBuilder()
+
+lazy_static(BasicTouchButtonsBuilder, "SINGLETON", _BasicTouchButtonsBuilder_SINGLETON)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchButtonsBuilderFactory:
@@ -26,5 +27,8 @@ class TouchButtonsBuilderFactory:
         return NoButtonsTouchInputFactory.getInstance()
 
 
-TouchButtonsBuilderFactory.NO_TOUCH_BUTTON_BUILDER_FACTORY = TouchButtonsBuilderFactory()
+def _TouchButtonsBuilderFactory_NO_TOUCH_BUTTON_BUILDER_FACTORY() -> object:
+    return TouchButtonsBuilderFactory()
+
+lazy_static(TouchButtonsBuilderFactory, "NO_TOUCH_BUTTON_BUILDER_FACTORY", _TouchButtonsBuilderFactory_NO_TOUCH_BUTTON_BUILDER_FACTORY)
 

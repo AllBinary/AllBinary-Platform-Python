@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.event.LayerManagerEventListener import LayerManagerEventListener
 
 
@@ -22,6 +23,9 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     SINGLETON: GroupLayerManagerListener = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -32,12 +36,14 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def __init__(self) -> None:
+        from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
         super().__init__()
         self._init_fields()
         LayerManagerEventHandler.getInstance().addListener(self)
     
 
     def clear(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         groupList: BasicArrayList = None
         size: int = self.list_.size()
         for index in range(size - 1, 0 - 1, -1):
@@ -46,32 +52,41 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def getGroupSizeFromInterface(self, groupInterfaceCompositeInterface: GroupInterfaceCompositeInterface) -> int:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
         groupInterfaceArray: list[Group] = groupInterfaceCompositeInterface.getGroupInterface()
         return self.getGroupSize(groupInterfaceArray[0])
     
 
     def getGroupSize(self, groupInterface: Group) -> int:
+        from org.allbinary.game.identification.Group import Group
         id: int = int(groupInterface.getGroupId())
         return self.getGroupSizeById(id)
     
 
     def getList(self, groupInterface: Group) -> BasicArrayList:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         id: int = int(groupInterface.getGroupId())
         return self.getListById(id)
     
 
     def getListById(self, groupId: int) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         groupList: BasicArrayList = self.list_.objectArray[groupId]
         return groupList
     
 
     def getGroupSizeById(self, groupId: int) -> int:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         groupList: BasicArrayList = self.list_.objectArray[groupId]
         size: int = groupList.size()
         return size
     
 
     def areAllOtherGroupsEmpty(self, groupInterface: Group) -> bool:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.logic.string.StringMaker import StringMaker
         id: int = int(groupInterface.getGroupId())
         size: int = self.list_.size()
         for index in range(size - 1, 0 - 1, -1):
@@ -84,6 +99,8 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def isIdInList(self, id: int, excludeGroupList: BasicArrayList) -> bool:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = excludeGroupList.size()
         groupInterfaceArray: list[Group] = None
         groupInterface: Group = None
@@ -100,6 +117,7 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def areAllOtherGroupsLessThan(self, excludeGroupList: BasicArrayList, maxSize: int) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = self.list_.size()
         for index in range(size - 1, 0 - 1, -1):
             if not self.isIdInList(index, excludeGroupList):
@@ -110,16 +128,25 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def init(self, total: int) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         while self.list_.size() <= total + 1:
             self.list_.add(BasicArrayListD())
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     # throws Exception
     def onCreateLayerManagerEvent(self, layerManagerEvent: LayerManagerEvent) -> None:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         layerInterface: AllBinaryLayer = layerManagerEvent.getLayerInterface()
         groupInterfaceArray: list[Group] = layerInterface.getGroupInterface()
         size: int = len(groupInterfaceArray)
@@ -138,6 +165,10 @@ class GroupLayerManagerListener(LayerManagerEventListener):
 
     # throws Exception
     def onDeleteLayerManagerEvent(self, layerManagerEvent: LayerManagerEvent) -> None:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         layerInterface: AllBinaryLayer = layerManagerEvent.getLayerInterface()
         groupInterfaceArray: list[Group] = layerInterface.getGroupInterface()
         size: int = len(groupInterfaceArray)
@@ -150,6 +181,10 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def log(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         GROUP: str = "Group: "
         SPACE: str = CommonSeps.getInstance().SPACE
@@ -164,21 +199,24 @@ class GroupLayerManagerListener(LayerManagerEventListener):
             stringBuffer.appendint(groupList.size())
             stringBuffer.append(SPACE)
         self.logUtil.putF(str(stringBuffer), self, "log")
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
-from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
+# from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-GroupLayerManagerListener.SINGLETON = GroupLayerManagerListener()
+def _GroupLayerManagerListener_SINGLETON() -> object:
+    return GroupLayerManagerListener()
+
+lazy_static(GroupLayerManagerListener, "SINGLETON", _GroupLayerManagerListener_SINGLETON)
 

@@ -22,8 +22,9 @@ class AllBinaryObjectFactoryInterface:
     
 
     def getInstance(self) -> object:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
 
 

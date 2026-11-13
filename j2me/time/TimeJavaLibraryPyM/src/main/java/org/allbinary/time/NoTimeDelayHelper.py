@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 
@@ -42,5 +43,8 @@ class NoTimeDelayHelper(TimeDelayHelper):
         return True
 
 
-NoTimeDelayHelper.SINGLETON = NoTimeDelayHelper()
+def _NoTimeDelayHelper_SINGLETON() -> object:
+    return NoTimeDelayHelper()
+
+lazy_static(NoTimeDelayHelper, "SINGLETON", _NoTimeDelayHelper_SINGLETON)
 

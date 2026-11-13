@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.weapon.SimpleWeaponProperties import SimpleWeaponProperties
 
 
@@ -26,6 +27,7 @@ class WeaponProperties(SimpleWeaponProperties):
     RELOAD: str = "Reload: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self.reloadTime: int = 0
         self.targetingTime: int = 0
         self.speed: BasicDecimal = BasicDecimal.ZERO_BIGDECIMAL
@@ -34,6 +36,10 @@ class WeaponProperties(SimpleWeaponProperties):
     
 
     def __init__(self, reloadTime: int, targetingTime: int, speed: int, damage: int, dissipation: int) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__()
         self._init_fields()
         if speed < self.MAX and speed != 0 and not WeaponProperties.messageSent:
@@ -70,10 +76,12 @@ class WeaponProperties(SimpleWeaponProperties):
     
 
     def getSpeed(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.speed
     
 
     def setSpeed(self, speed: BasicDecimal) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self.speed = speed
     
 
@@ -82,6 +90,7 @@ class WeaponProperties(SimpleWeaponProperties):
     
 
     def toStringArray(self) -> list[str]:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         index: int = 0
         stringArray: list[str] = [None] * (3)
         stringBuffer: StringMaker = StringMaker()
@@ -94,6 +103,8 @@ class WeaponProperties(SimpleWeaponProperties):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(WeaponProperties.DAMAGE).appendint(int(self.getDamage()))
         stringBuffer.append(CommonSeps.getInstance().SPACE)
@@ -104,12 +115,15 @@ class WeaponProperties(SimpleWeaponProperties):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-WeaponProperties.NULL_WEAPON_PROPERTIES = WeaponProperties(0, 0, 0, 0, ((int(0) + 32768) % 65536 - 32768))
+def _WeaponProperties_NULL_WEAPON_PROPERTIES() -> object:
+    return WeaponProperties(0, 0, 0, 0, ((int(0) + 32768) % 65536 - 32768))
+
+lazy_static(WeaponProperties, "NULL_WEAPON_PROPERTIES", _WeaponProperties_NULL_WEAPON_PROPERTIES)
 

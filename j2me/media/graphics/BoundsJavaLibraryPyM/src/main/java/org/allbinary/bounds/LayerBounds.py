@@ -21,16 +21,20 @@ from org.allbinary.bounds.event.BoundsChangeEventListener import BoundsChangeEve
 class LayerBounds(BoundsChangeEventListener):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.rectangle: Rectangle = None
     
 
     def __init__(self, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self._init_fields()
         self.rectangle = rectangle
     
 
     def getRectangleP(self) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
         return self.rectangle
     
 
@@ -39,16 +43,20 @@ class LayerBounds(BoundsChangeEventListener):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onBoundsChangeEvent(self, boundsChangeEvent: BoundsChangeEvent) -> None:
+        from org.allbinary.bounds.event.BoundsChangeEvent import BoundsChangeEvent
         self.rectangle = boundsChangeEvent.getRectangle()
-from org.allbinary.bounds.event.BoundsChangeEvent import BoundsChangeEvent
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.bounds.event.BoundsChangeEvent import BoundsChangeEvent
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 

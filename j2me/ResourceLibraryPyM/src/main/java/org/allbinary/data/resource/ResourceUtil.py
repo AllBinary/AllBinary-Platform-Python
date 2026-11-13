@@ -16,15 +16,16 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #J2SE - J2ME
 class ResourceUtil:
-    classLoader: object = NullUtil.getInstance().NULL_OBJECT
+    classLoader: object = None
     instance: ResourceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -38,16 +39,20 @@ class ResourceUtil:
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil.putF(CommonStrings.getInstance().NOT_IMPLEMENTED, self, "setLoadingPaths")
     
 
     def setClassLoader(self, classLoader: ClassLoader) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append("Resource Loader: ").append(type(classLoader).__module__ + "." + type(classLoader).__qualname__)), self, "setClassLoader")
         ResourceUtil.classLoader = classLoader
     
 
     # throws Exception
     def getResourceAsStream(self, resource: str) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.string.StringMaker import StringMaker
         inputStream: InputStream = self.getResourceAsStreamAtStart(resource, 2)
         if inputStream is None:
             inputStream = self.getResourceAsStreamAtStart(resource, 1)
@@ -58,6 +63,8 @@ class ResourceUtil:
 
     # throws Exception
     def getResourceAsStreamAtStart(self, resource: str, startIndex: int) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         index: int = resource.find(commonSeps.COLON)
         resourcePath: str = resource[index + startIndex:]
@@ -77,11 +84,21 @@ class ResourceUtil:
     def addResource(self, resource: str, value: int) -> None:
         pass
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ResourceUtil.instance = ResourceUtil()
+def _ResourceUtil_classLoader() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(ResourceUtil, "classLoader", _ResourceUtil_classLoader)
+
+def _ResourceUtil_instance() -> object:
+    return ResourceUtil()
+
+lazy_static(ResourceUtil, "instance", _ResourceUtil_instance)
 

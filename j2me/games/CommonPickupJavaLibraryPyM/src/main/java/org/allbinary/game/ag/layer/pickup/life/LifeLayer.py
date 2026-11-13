@@ -23,20 +23,26 @@ class LifeLayer(AllBinaryLayer, LifeVisitorInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.view.ViewPosition import ViewPosition
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0), ViewPosition.getInstanceD())
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def visit(self, lifeInterface: Life) -> None:
+        from org.allbinary.game.ag.life.Life import Life
         lifeInterface.add(((int(1) + 32768) % 65536 - 32768))
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.ag.life.Life import Life
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.view.ViewPosition import ViewPosition
+# from org.allbinary.game.ag.life.Life import Life
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.view.ViewPosition import ViewPosition
 
 

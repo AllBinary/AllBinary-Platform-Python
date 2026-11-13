@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PreResourceImageUtil:
@@ -27,19 +28,27 @@ class PreResourceImageUtil:
     
 
     def encapsulate(self, image: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return image
     
 
     def updateGL(self, gl: GL, image: Image) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
+        from javax.microedition.lcdui.Image import Image
         pass
     
 
     def update(self, graphics: Graphics, image: Image) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
         pass
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 
 
-PreResourceImageUtil.instance = PreResourceImageUtil()
+def _PreResourceImageUtil_instance() -> object:
+    return PreResourceImageUtil()
+
+lazy_static(PreResourceImageUtil, "instance", _PreResourceImageUtil_instance)
 

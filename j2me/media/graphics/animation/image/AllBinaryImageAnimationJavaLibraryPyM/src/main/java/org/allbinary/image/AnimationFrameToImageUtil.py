@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnimationFrameToImageUtil:
@@ -29,6 +30,9 @@ class AnimationFrameToImageUtil:
     # throws Exception
     def getInstanceTranslate(self, width: int, height: int, animationInterface: Animation) -> Image:
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
         image: Image = GameFeatureImageCacheFactory.getInstance().get(type(AnimationFrameToImageUtil.instance).__module__ + "." + type(AnimationFrameToImageUtil.instance).__qualname__, ((width * 3) >> 1), ((height * 3) >> 1))
         graphics: Graphics = image.getGraphics()
         tranlateX: int = (width >> 2)
@@ -42,14 +46,20 @@ class AnimationFrameToImageUtil:
     # throws Exception
     def getInstanceWH(self, width: int, height: int, animationInterface: Animation) -> Image:
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
         image: Image = GameFeatureImageCacheFactory.getInstance().get(type(AnimationFrameToImageUtil.instance).__module__ + "." + type(AnimationFrameToImageUtil.instance).__qualname__, width, height)
         graphics: Graphics = image.getGraphics()
         animationInterface.paintXY(graphics, 0, 0)
         return image
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.Animation import Animation
 
 
-AnimationFrameToImageUtil.instance = AnimationFrameToImageUtil()
+def _AnimationFrameToImageUtil_instance() -> object:
+    return AnimationFrameToImageUtil()
+
+lazy_static(AnimationFrameToImageUtil, "instance", _AnimationFrameToImageUtil_instance)
 

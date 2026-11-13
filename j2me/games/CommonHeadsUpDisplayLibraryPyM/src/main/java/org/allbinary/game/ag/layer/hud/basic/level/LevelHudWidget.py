@@ -22,6 +22,8 @@ from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 class LevelHudWidget(BasicHud, PaintableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.level: int = None
         self.maxlevel: int = None
         self.levelString: list[str] = None
@@ -39,6 +41,8 @@ class LevelHudWidget(BasicHud, PaintableInterface):
 
     def __init__(self, maxlevel: int, location: int, direction: int) -> None:
         from org.allbinary.game.ag.layer.hud.basic.level.LEVEL import LEVEL
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__(location, direction, 2, BasicColorFactory.getInstance().GREY)
         self._init_fields()
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(1000)
@@ -51,6 +55,8 @@ class LevelHudWidget(BasicHud, PaintableInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * 4
         self.offset = font.charsWidth(self.levelString, 0, len(self.levelString)) + font.getSize()
@@ -87,15 +93,17 @@ class LevelHudWidget(BasicHud, PaintableInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintDX(graphics, self.levelString, 0, len(self.levelString), self.levelNumberCharArray, 0, self.levelNumberTotalDigits, self.offset)
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
 
 

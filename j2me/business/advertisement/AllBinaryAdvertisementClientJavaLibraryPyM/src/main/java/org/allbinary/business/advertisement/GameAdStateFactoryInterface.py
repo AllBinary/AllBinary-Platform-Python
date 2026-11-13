@@ -23,7 +23,8 @@ class GameAdStateFactoryInterface:
 
     # throws Exception
     def getInstanceForApp(self, softwareInformation: SoftwareInformation) -> GameAdStateBase:
+        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
         raise NotImplementedError()
-from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
+# from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
 
 

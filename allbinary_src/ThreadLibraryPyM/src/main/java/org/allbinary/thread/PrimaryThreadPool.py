@@ -16,12 +16,12 @@
 from __future__ import annotations
 
 import time
-from org.allbinary.thread.ThreadPool import ThreadPool
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
 class PrimaryThreadPool(ThreadPool):
-    THREAD_POOL: ThreadPool = ThreadPool("Primary", 1, ThreadPool.NORMAL_PRIORITY)
+    THREAD_POOL: ThreadPool = None
     
 
     @staticmethod
@@ -34,17 +34,30 @@ class PrimaryThreadPool(ThreadPool):
     
 
     def runTask(self, task: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(StringUtil.getInstance().toString(task)).appendlong(int(int(time.time() * 1000)))), self, self.threadPoolStrings.ADD_TASK)
         super().runTask(task)
     
 
     def startTask(self, task: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(self.threadPoolStrings.START_TASK).append(StringUtil.getInstance().toString(task))), self, self.commonStrings.RUN)
     
 
     def completedTask(self, task: object) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(self.threadPoolStrings.COMPLETE_TASK).append(StringUtil.getInstance().toString(task))), self, self.commonStrings.RUN)
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
+
+def _PrimaryThreadPool_THREAD_POOL() -> object:
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    return ThreadPool("Primary", 1, ThreadPool.NORMAL_PRIORITY)
+
+lazy_static(PrimaryThreadPool, "THREAD_POOL", _PrimaryThreadPool_THREAD_POOL)
 

@@ -26,16 +26,23 @@ class SequenceAI(ArrayAI):
     
 
     def __init__(self, artificialIntelligenceInterfaceArray: list[ArtificialIntelligenceInterface], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(artificialIntelligenceInterfaceArray, ownerLayerInterface, gameInput)
         self._init_fields()
     
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.getArtificialIntelligenceInterface()[self.index].processAI(allBinaryLayerManager)
     
 
     def next(self) -> None:
+        from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.ai.ArtificialIntelligenceTransitionInterface import ArtificialIntelligenceTransitionInterface
         self.index += 1
         artificialIntelligenceInterface: ArtificialIntelligenceInterface = self.getSelectedArtificialIntelligenceInterface()
         if artificialIntelligenceInterface.getId() == ArtificialIntelligence.AI_ID:
@@ -52,6 +59,7 @@ class SequenceAI(ArrayAI):
     
 
     def getSelectedArtificialIntelligenceInterface(self) -> ArtificialIntelligenceInterface:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         return self.getArtificialIntelligenceInterface()[self.index]
     
 
@@ -60,6 +68,8 @@ class SequenceAI(ArrayAI):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(" Selected AI: ")
@@ -68,13 +78,13 @@ class SequenceAI(ArrayAI):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.ai.ArtificialIntelligenceTransitionInterface import ArtificialIntelligenceTransitionInterface
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.ai.ArtificialIntelligenceTransitionInterface import ArtificialIntelligenceTransitionInterface
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

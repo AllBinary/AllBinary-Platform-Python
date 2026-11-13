@@ -21,19 +21,22 @@ from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintab
 class ColorFillPaintable(ColorFillBasePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(basicColor)
         self._init_fields()
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.setColor(self.colorP)
         graphics.fillRect(0, 0, self.displayInfoSingleton.getLastWidth(), self.displayInfoSingleton.getLastHeight())
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 

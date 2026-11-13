@@ -15,24 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class UpTrackballInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     
 
     @staticmethod
     def getInstance() -> GameKeyCompleteMotionGestureInputEvent:
+        from org.allbinary.logic.NullUtil import NullUtil
         if UpTrackballInputToGameKeyEventAction.instance == NullUtil.getInstance().NULL_OBJECT:
             UpTrackballInputToGameKeyEventAction.instance = UpTrackballInputToGameKeyEventAction()
         return UpTrackballInputToGameKeyEventAction.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.input.motion.gesture.TrackballMotionGestureFactory import TrackballMotionGestureFactory
         super().__init__("Up Action", TrackballMotionGestureFactory.getInstance().UP, PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping())
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.input.motion.gesture.TrackballMotionGestureFactory import TrackballMotionGestureFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.input.motion.gesture.TrackballMotionGestureFactory import TrackballMotionGestureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _UpTrackballInputToGameKeyEventAction_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(UpTrackballInputToGameKeyEventAction, "instance", _UpTrackballInputToGameKeyEventAction_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class J2MEKeyFactory:
@@ -89,5 +90,8 @@ class J2MEKeyFactory:
 from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
 
 
-J2MEKeyFactory.instance = J2MEKeyFactory()
+def _J2MEKeyFactory_instance() -> object:
+    return J2MEKeyFactory()
+
+lazy_static(J2MEKeyFactory, "instance", _J2MEKeyFactory_instance)
 

@@ -21,6 +21,7 @@ from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHel
 class HighScoresHelperBase(HighScoresHelperBaseInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.highScoresArrayP: list[HighScores] = LastFetchHighScoresFactory.getInstance().highScoresArray
 
@@ -29,6 +30,8 @@ class HighScoresHelperBase(HighScoresHelperBaseInterface):
     
 
     def setHighScoresArray(self, highScoresArrayP: list[HighScores]) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         if highScoresArrayP is not None:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(str(StringMaker().append(commonStrings.START).appendint(len(highScoresArrayP))), self, "setHighScoresArray")
@@ -62,9 +65,9 @@ class HighScoresHelperBase(HighScoresHelperBaseInterface):
 
     def selectHighScores(self) -> None:
         pass
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.game.score.LastFetchHighScoresFactory import LastFetchHighScoresFactory
 
 

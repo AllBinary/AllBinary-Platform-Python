@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageToRotationImageArrayUtil:
@@ -33,6 +34,7 @@ class ImageToRotationImageArrayUtil:
     # throws Exception
     def generate(self, image: Image, angleIncrement: int, totalAngle: int) -> list[Image]:
         from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
+        from javax.microedition.lcdui.Image import Image
         imageRotationUtil: ImageRotationUtil = ImageRotationUtil.getInstance()
         totalFrames: int = int(totalAngle / angleIncrement)
         imageArray: list[Image] = [None] * (totalFrames)
@@ -43,5 +45,8 @@ class ImageToRotationImageArrayUtil:
 # from javax.microedition.lcdui.Image import Image
 
 
-ImageToRotationImageArrayUtil.instance = ImageToRotationImageArrayUtil()
+def _ImageToRotationImageArrayUtil_instance() -> object:
+    return ImageToRotationImageArrayUtil()
+
+lazy_static(ImageToRotationImageArrayUtil, "instance", _ImageToRotationImageArrayUtil_instance)
 

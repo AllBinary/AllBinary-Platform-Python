@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
 
 
@@ -31,5 +32,8 @@ class TouchButtonTurnLeftResource(TouchButtonResource):
         super().__init__("/touch_button_turn_left_arrow_64_by_64.png", "/touch_button_turn_left_arrow_hint_64_by_64.png")
 
 
-TouchButtonTurnLeftResource.instance = TouchButtonTurnLeftResource()
+def _TouchButtonTurnLeftResource_instance() -> object:
+    return TouchButtonTurnLeftResource()
+
+lazy_static(TouchButtonTurnLeftResource, "instance", _TouchButtonTurnLeftResource_instance)
 

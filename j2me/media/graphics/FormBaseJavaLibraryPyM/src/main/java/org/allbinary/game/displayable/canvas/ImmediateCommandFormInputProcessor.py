@@ -23,11 +23,14 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeHelper: TimeDelayHelper = TimeDelayHelper(25)
         self.gameCommandCanvas: GameCommandCanvas = None
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCommandCanvas: GameCommandCanvas, form: ScrollSelectionForm) -> None:
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCommandCanvas, form)
         self._init_fields()
         self.gameCommandCanvas = gameCommandCanvas
@@ -38,6 +41,7 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
             return self._onPressGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onPressGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         try:
             super().onPressGameKeyEvent(gameKeyEvent)
             if self.timeHelper.isTimeTNT():
@@ -52,6 +56,7 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
             return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         try:
             super().onDownGameKeyEvent(gameKeyEvent)
             if self.timeHelper.isTimeTNT():
@@ -66,6 +71,7 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
             return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         try:
             super().onUpGameKeyEvent(gameKeyEvent)
             if self.timeHelper.isTimeTNT():
@@ -76,6 +82,7 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
     
 
     def onMotionGestureEvent(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         try:
             super().onMotionGestureEvent(motionGestureEvent)
             if self.timeHelper.isTimeTNT():
@@ -83,10 +90,10 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
                 self.gameCommandCanvas.repaintBehavior.onChangeRepaint(self.getCanvas())
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onMotionGestureEvent", e)
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

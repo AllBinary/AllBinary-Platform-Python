@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #GameInputPersistanceLibrary
 class PersistentInputMapping:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.InputPersistance import InputPersistance
+        from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
+        from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
+        from org.allbinary.game.input.mapping.event.NullInputMappingEventListener import NullInputMappingEventListener
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
@@ -34,12 +41,15 @@ class PersistentInputMapping:
 
     @staticmethod
     def getNullInstance() -> PersistentInputMapping:
+        from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+        from org.allbinary.logic.NullUtil import NullUtil
         if PersistentInputMapping.instance == NullUtil.getInstance().NULL_OBJECT:
             PersistentInputMapping.instance = PersistentInputMapping(GamePersistanceStrings.getInstance().SAVED_INPUT_CONFIGURATION_RECORD_ID)
         return PersistentInputMapping.instance
     
 
     def __init__(self, name: str) -> None:
+        from org.allbinary.game.input.InputPersistance import InputPersistance
         self._init_fields()
         self.inputPersistance = InputPersistance(name)
     
@@ -59,6 +69,7 @@ class PersistentInputMapping:
 
     # throws Exception
     def setDefault(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.getInputMapping().removeAll()
         self.getInputMapping().addMapping(self.getDefault())
         self.save(abeClientInformation)
@@ -66,12 +77,14 @@ class PersistentInputMapping:
 
     # throws Exception
     def update(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.inputPersistance.deleteAll(abeClientInformation)
         self.save(abeClientInformation)
     
 
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.inputPersistance.save(abeClientInformation, self.getInputMapping().getHashtable())
         self.inputMappingEvent.setInputToGameKeyMapping(self.getInputMapping())
         if self.getInputMappingEventListenerInterface() is not None:
@@ -80,6 +93,13 @@ class PersistentInputMapping:
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from java.util.Enumeration import Enumeration
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         try:
             self.inputPersistance.loadAll(abeClientInformation)
@@ -112,10 +132,12 @@ class PersistentInputMapping:
     
 
     def setInputMappingEventListenerInterface(self, inputMappingEventListenerInterface: InputMappingEventListenerInterface) -> None:
+        from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
         self.inputMappingEventListenerInterface = inputMappingEventListenerInterface
     
 
     def getInputMappingEventListenerInterface(self) -> InputMappingEventListenerInterface:
+        from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
         return self.inputMappingEventListenerInterface
     
 
@@ -125,27 +147,36 @@ class PersistentInputMapping:
 
     # throws Exception
     def isDelete(self, input: Input) -> bool:
+        from org.allbinary.game.input.Input import Input
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
     
 
     # throws Exception
     def isSystemInput(self, input: Input) -> bool:
+        from org.allbinary.game.input.Input import Input
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
 # from java.util.Enumeration import Enumeration
-from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputPersistance import InputPersistance
-from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
-from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
-from org.allbinary.game.input.mapping.event.NullInputMappingEventListener import NullInputMappingEventListener
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.EnumerationUtil import EnumerationUtil
+# from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputPersistance import InputPersistance
+# from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
+# from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
+# from org.allbinary.game.input.mapping.event.NullInputMappingEventListener import NullInputMappingEventListener
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.EnumerationUtil import EnumerationUtil
 from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
+
+def _PersistentInputMapping_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(PersistentInputMapping, "instance", _PersistentInputMapping_instance)
 

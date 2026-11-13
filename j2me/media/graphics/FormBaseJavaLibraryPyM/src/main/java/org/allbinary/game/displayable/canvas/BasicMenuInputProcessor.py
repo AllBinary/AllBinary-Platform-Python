@@ -22,29 +22,40 @@ from org.allbinary.input.motion.gesture.observer.BaseMotionGestureEventListener 
 class BasicMenuInputProcessor(PlayerGameInput, BaseMotionGestureEventListener):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.NullCanvas import NullCanvas
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.motionGestureEventList: BasicArrayList = BasicArrayListD()
         self.canvas: Canvas = NullCanvas.NULL_CANVAS
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCanvas: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(gameKeyEventList, BasicArrayListD(), playerInputId)
         self._init_fields()
         self.canvas = gameCanvas
     
 
     def onMotionGestureEvent(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         self.motionGestureEventList.add(motionGestureEvent)
     
 
     def onScrolledMotionGestureEvent(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         pass
     
 
     def setCanvas(self, canvas: MyCanvas) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         self.canvas = canvas
     
 
     def getCanvas(self) -> MyCanvas:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         return self.canvas
     
 
@@ -53,9 +64,9 @@ class BasicMenuInputProcessor(PlayerGameInput, BaseMotionGestureEventListener):
         return -1
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.NullCanvas import NullCanvas
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

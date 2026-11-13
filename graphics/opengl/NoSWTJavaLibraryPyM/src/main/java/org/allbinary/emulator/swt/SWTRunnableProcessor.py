@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.swt.SWTProcessor import SWTProcessor
 
 
@@ -31,9 +32,13 @@ class SWTRunnableProcessor(SWTProcessor):
     
 
     def process(self, display: Display) -> None:
+        from org.eclipse.swt.widgets.Display import Display
         pass
-from org.eclipse.swt.widgets.Display import Display
+# from org.eclipse.swt.widgets.Display import Display
 
 
-SWTRunnableProcessor.instanceR = SWTRunnableProcessor()
+def _SWTRunnableProcessor_instanceR() -> object:
+    return SWTRunnableProcessor()
+
+lazy_static(SWTRunnableProcessor, "instanceR", _SWTRunnableProcessor_instanceR)
 

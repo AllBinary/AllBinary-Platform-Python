@@ -22,9 +22,12 @@ class MiddleRelativeLayerRelationship(RelativeLayerRelationship):
     
 
     def __init__(self, layer: AllBinaryLayer) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         super().__init__(layer, PointFactory.getInstance().createXY(layer.getHalfWidth(), layer.getHalfHeight()), BasicArrayListUtil.getInstance().getImmutableInstance())
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

@@ -22,12 +22,17 @@ from org.allbinary.physics.movement.Movement import Movement
 class BasicConstantVelocityMovement(Movement, VelocityInterfaceCompositeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
         self.velocityProperties: BasicVelocityProperties = None
         self.speedBasicDecimal: BasicDecimal = BasicDecimal.ZERO_BIGDECIMAL
         self.axisMathVectorUtil: AxisMathVectorUtil = AxisMathVectorUtil.getInstance()
     
 
     def __init__(self, basicDecimal: BasicDecimal, velocityProperties: BasicVelocityProperties) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__()
         self._init_fields()
         self.setSpeedBasicDecimal(basicDecimal)
@@ -35,12 +40,15 @@ class BasicConstantVelocityMovement(Movement, VelocityInterfaceCompositeInterfac
     
 
     def init(self, speedBasicDecimal: BasicDecimal, angle: int, otherAngle: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.speedBasicDecimal = speedBasicDecimal
         angleFactory: AngleFactory = AngleFactory.getInstance()
         self.velocityProperties.setVelocityWithBigDecimal(speedBasicDecimal, angleFactory.getAt(angle), angleFactory.getAt(otherAngle))
     
 
     def moveOutsideRadius(self, layer: AllBinaryLayer, radius: int, angle: int, otherAngle: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         scaleFactorValue: int = self.speedBasicDecimal.getScaledFactorValue()
         xVector: int = int((self.axisMathVectorUtil.calculateX(radius, angle) / scaleFactorValue))
         yVector: int = int((self.axisMathVectorUtil.calculateY(radius, angle) / scaleFactorValue))
@@ -50,6 +58,7 @@ class BasicConstantVelocityMovement(Movement, VelocityInterfaceCompositeInterfac
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         layer.moveDXYZ(self.velocityProperties.getVelocityXBasicDecimalP().getScaled(), self.velocityProperties.getVelocityYBasicDecimalP().getScaled(), self.velocityProperties.getVelocityZBasicDecimalP().getScaled())
     
 
@@ -65,24 +74,28 @@ class BasicConstantVelocityMovement(Movement, VelocityInterfaceCompositeInterfac
     
 
     def getVelocityProperties(self) -> BasicVelocityProperties:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         return self.velocityProperties
     
 
     def setVelocityProperties(self, velocityProperties: BasicVelocityProperties) -> None:
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         self.velocityProperties = velocityProperties
     
 
     def setSpeedBasicDecimal(self, speedBasicDecimal: BasicDecimal) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self.speedBasicDecimal = speedBasicDecimal
     
 
     def getSpeedBasicDecimal(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.speedBasicDecimal
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
-from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
 
 

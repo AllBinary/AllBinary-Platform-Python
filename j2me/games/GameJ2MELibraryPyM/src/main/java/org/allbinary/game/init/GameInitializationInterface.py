@@ -23,8 +23,10 @@ class GameInitializationInterface:
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, level: int) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         raise NotImplementedError()
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

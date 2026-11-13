@@ -21,6 +21,9 @@ class PlayerQueue:
     TOTAL: str = "Sounds In Queue: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
         self.max: int = None
@@ -32,6 +35,7 @@ class PlayerQueue:
     
 
     def add(self, sound: Sound) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             if not self.list_.contains(sound):
                 self.list_.add(sound)
@@ -41,6 +45,9 @@ class PlayerQueue:
 
     def process(self) -> bool:
         from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         sound: Sound = NoSound.getInstance()
         try:
             played: bool = False
@@ -65,15 +72,16 @@ class PlayerQueue:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(PlayerQueue.TOTAL).appendint(self.list_.size()))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

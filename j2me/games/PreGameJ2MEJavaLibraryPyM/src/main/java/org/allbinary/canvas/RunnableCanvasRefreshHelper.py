@@ -21,10 +21,12 @@ from org.allbinary.canvas.Processor import Processor
 class RunnableCanvasRefreshHelper(Processor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         self.runnableCanvas: MyCanvas = None
     
 
     def __init__(self, runnableCanvas: MyCanvas) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         super().__init__()
         self._init_fields()
         self.runnableCanvas = runnableCanvas
@@ -32,6 +34,6 @@ class RunnableCanvasRefreshHelper(Processor):
 
     def process(self) -> None:
         self.runnableCanvas.repaint()
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 
 

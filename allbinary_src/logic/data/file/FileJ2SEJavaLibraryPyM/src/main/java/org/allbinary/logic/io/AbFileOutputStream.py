@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from java.io.FileOutputStream import FileOutputStream
+from java.io.FileOutputStream import FileOutputStream
 
 
 class AbFileOutputStream(FileOutputStream):
@@ -24,12 +24,14 @@ class AbFileOutputStream(FileOutputStream):
     # throws FileNotFoundException
     @staticmethod
     def createFromAbFile(file: AbFile) -> AbFileOutputStream:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFileOutputStream(file.getPath(), False)
     
 
     # throws FileNotFoundException
     @staticmethod
     def createFromAbFileAppend(file: AbFile, append: bool) -> AbFileOutputStream:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFileOutputStream(file.getPath(), append)
     
 
@@ -48,7 +50,7 @@ class AbFileOutputStream(FileOutputStream):
     def __init__(self, name: str, append: bool) -> None:
         super().__init__(name, append)
 # from java.io.FileNotFoundException import FileNotFoundException
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
 
 

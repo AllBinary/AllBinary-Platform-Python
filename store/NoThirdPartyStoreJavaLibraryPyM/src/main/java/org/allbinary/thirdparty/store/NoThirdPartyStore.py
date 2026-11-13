@@ -22,12 +22,14 @@ class NoThirdPartyStore(ThirdPartyStore):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(StringUtil.getInstance().EMPTY_STRING)
     
 
     def authorize(self, clientInformationInterface: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.setAuthorized(True)
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

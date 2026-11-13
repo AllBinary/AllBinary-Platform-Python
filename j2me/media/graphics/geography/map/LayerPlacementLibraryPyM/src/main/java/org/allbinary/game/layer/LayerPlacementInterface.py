@@ -35,7 +35,8 @@ class LayerPlacementInterface:
 
     # throws Exception
     def getInstance(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BooleanUtil:
     instance: BooleanUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
         self.tsUtil: TsUtil = TsUtil.getInstance()
     
 
@@ -36,6 +38,7 @@ class BooleanUtil:
     # throws Exception
     def getFromString(self, booleanString: str) -> bool:
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         booleanFactory: BooleanFactory = BooleanFactory.getInstance()
         if stringValidationUtil.isEmpty(booleanString):
@@ -60,15 +63,19 @@ class BooleanUtil:
     
 
     def toStringFromBooleanArray(self, booleanArray: list[bool]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringMaker: StringMaker = StringMaker()
         size: int = len(booleanArray)
         for index in range(0, size):
             stringMaker.appendboolean(booleanArray[index])
         return str(stringMaker)
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 
 
-BooleanUtil.instance = BooleanUtil()
+def _BooleanUtil_instance() -> object:
+    return BooleanUtil()
+
+lazy_static(BooleanUtil, "instance", _BooleanUtil_instance)
 

@@ -27,11 +27,13 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
     
 
     def __init__(self, name: str) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
         super().__init__(name, StdUtil.getInstance().createHashtable(), StdUtil.getInstance().createHashtable(), StdUtil.getInstance().createHashtable())
     
 
     # throws Exception
     def init(self, level: int) -> None:
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         self.initImageCache(ImageCacheFactory.getInstance(), level)
     
 
@@ -48,6 +50,16 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
         from org.allbinary.input.motion.button.TouchButtonStrafeRightResource import TouchButtonStrafeRightResource
         from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
         from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.animation.image.sprite.OneRowSpriteIndexedAnimationFactory import OneRowSpriteIndexedAnimationFactory
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.image.ImageCache import ImageCache
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+        from org.allbinary.media.image.ImageCompleteUtil import ImageCompleteUtil
         if self.isInitialized():
             return
         portion: int = 140
@@ -122,6 +134,7 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
     
 
     def isLoadingLevel(self, level: int) -> bool:
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if level == resourceLoadingLevelFactory.LOAD_TOUCH.getLevel():
             return True
@@ -130,24 +143,26 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
     
 
     def isFeature(self) -> bool:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         if not Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
             return True
         else:
             return False
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.animation.image.sprite.OneRowSpriteIndexedAnimationFactory import OneRowSpriteIndexedAnimationFactory
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
-from org.allbinary.media.image.ImageCompleteUtil import ImageCompleteUtil
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.animation.image.sprite.OneRowSpriteIndexedAnimationFactory import OneRowSpriteIndexedAnimationFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.media.image.ImageCompleteUtil import ImageCompleteUtil
 
 

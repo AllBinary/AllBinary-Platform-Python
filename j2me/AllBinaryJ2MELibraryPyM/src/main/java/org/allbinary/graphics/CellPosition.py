@@ -56,6 +56,8 @@ class CellPosition(V):
 
     @staticmethod
     def toStringColRow(i_column: int, i_row: int) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer.append(commonSeps.PARENTHESIS_OPEN)
@@ -68,7 +70,7 @@ class CellPosition(V):
 
     def getId(self) -> int:
         return self.id
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

@@ -22,22 +22,29 @@ class CompoundRotationAnimationInterfaceFactory(CompoundAnimationInterfaceFactor
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         super().__init__(basicAnimationInterfaceFactoryInterfaceArray, animationBehaviorFactory)
         if animationBehaviorFactory == AnimationBehaviorFactory.getInstance():
             ForcedLogUtil.log("Using default AnimationBehaviorFactory with IndexedAnimationFactory", self)
     
 
     def createArray(self, size: int) -> list[Animation]:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         return [None] * (size)
     
 
     def createAnimation(self, animationInterfaceArray: list[Animation]) -> Animation:
         from org.allbinary.animation.compound.CompoundRotationAnimation import CompoundRotationAnimation
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         return CompoundRotationAnimation(animationInterfaceArray, self.animationBehaviorFactory.getOrCreateInstance())
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
-from org.allbinary.animation.RotationAnimation import RotationAnimation
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+# from org.allbinary.animation.RotationAnimation import RotationAnimation
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
 
 

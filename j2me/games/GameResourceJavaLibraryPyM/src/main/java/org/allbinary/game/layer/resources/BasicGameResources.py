@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.string.StringMaker import StringMaker
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicGameResources:
-    stringBuffer: StringMaker = StringMaker()
+    stringBuffer: StringMaker = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.RESOURCE: str = StringUtil.getInstance().EMPTY_STRING
         self.RESOURCE_DESTROY: str = StringUtil.getInstance().EMPTY_STRING
@@ -33,6 +35,9 @@ class BasicGameResources:
 
     def init(self, ROOT: str, SIZE: list[str]) -> None:
         from org.allbinary.game.layer.resources.SIZE import SIZE
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             scale: int = int(GameConfigurationCentral.getInstance().SCALE.getValue())
             if scale > 1 and scale - 1 < len(SIZE):
@@ -65,9 +70,16 @@ class BasicGameResources:
     def getString(self) -> str:
         from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
         return GameGraphicsResourceUtil.getInstance().getName()
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _BasicGameResources_stringBuffer() -> object:
+    from org.allbinary.logic.string.StringMaker import StringMaker
+    return StringMaker()
+
+lazy_static(BasicGameResources, "stringBuffer", _BasicGameResources_stringBuffer)
 

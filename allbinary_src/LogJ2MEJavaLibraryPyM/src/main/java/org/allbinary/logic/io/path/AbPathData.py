@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbPathData:
     instance: AbPathData = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.EXTENSION_SEP: str = CommonSeps.getInstance().PERIOD
         self.SEPARATORCHAR: str = '/'
         self.SEPARATOR: str = CommonSeps.getInstance().FORWARD_SLASH
@@ -33,10 +35,13 @@ class AbPathData:
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-AbPathData.instance = AbPathData()
+def _AbPathData_instance() -> object:
+    return AbPathData()
+
+lazy_static(AbPathData, "instance", _AbPathData_instance)
 

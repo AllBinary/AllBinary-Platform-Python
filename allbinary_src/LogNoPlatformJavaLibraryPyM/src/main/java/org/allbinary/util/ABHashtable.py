@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.Hashtable import Hashtable
+from java.util.Hashtable import Hashtable
 
 
-class ABHashtable(dict):
+class ABHashtable(Hashtable):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:

@@ -23,6 +23,8 @@ class AllBinaryLayerManager(LayerManager):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
+        from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
         self.layerManagerEventHandler: LayerManagerEventHandler = LayerManagerEventHandler.getInstance()
         self.createLayerManagerEvent: LayerManagerEvent = LayerManagerEvent(self, self.layerManagerEventHandler.CREATE)
         self.deleteLayerManagerEvent: LayerManagerEvent = LayerManagerEvent(self, self.layerManagerEventHandler.DELETE)
@@ -108,7 +110,7 @@ class AllBinaryLayerManager(LayerManager):
             layerProcessorInterface = self.basicLayerProcessorArray[index]
             layerProcessorInterface.getLayerManager().cleanup()
         super().cleanup()
-from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
-from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
+# from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
+# from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
 
 

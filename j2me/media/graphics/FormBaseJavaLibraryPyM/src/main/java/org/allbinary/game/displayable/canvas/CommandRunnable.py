@@ -20,6 +20,9 @@ from __future__ import annotations
 class CommandRunnable(object):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commandFormInputProcessor: CommandFormInputProcessor = None
@@ -27,12 +30,15 @@ class CommandRunnable(object):
     
 
     def __init__(self, commandFormInputProcessor: CommandFormInputProcessor, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         self._init_fields()
         self.commandFormInputProcessor = commandFormInputProcessor
         self.command = command
     
 
     def run(self) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         try:
             self.logUtil.putF(self.commonStrings.START_RUNNABLE, self, self.commonStrings.RUN)
             canvas: MyCanvas = self.commandFormInputProcessor.getCanvas()
@@ -43,8 +49,8 @@ class CommandRunnable(object):
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

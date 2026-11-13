@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.CompositeSound import CompositeSound
 
 
@@ -32,5 +33,8 @@ class FireworksSound(CompositeSound):
         return FireworksSound.soundInterface
 
 
-FireworksSound.soundInterface = FireworksSound()
+def _FireworksSound_soundInterface() -> object:
+    return FireworksSound()
+
+lazy_static(FireworksSound, "soundInterface", _FireworksSound_soundInterface)
 

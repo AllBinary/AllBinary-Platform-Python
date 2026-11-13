@@ -26,6 +26,7 @@ class UniformTextureOpenGLProcessor(OpenGLObject3dProcessor):
     
 
     def process(self, gl: GL10, unused: object, index: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 

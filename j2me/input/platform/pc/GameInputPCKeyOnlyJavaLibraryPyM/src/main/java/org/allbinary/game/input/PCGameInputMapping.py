@@ -22,12 +22,14 @@ class PCGameInputMapping(PersistentInputMapping):
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
         super().__init__(GamePersistanceStrings.getInstance().SAVED_INPUT_CONFIGURATION_RECORD_ID)
     
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
         from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         PCKeyFactory.getInstance()
         super().init(abeClientInformation)
@@ -46,7 +48,7 @@ class PCGameInputMapping(PersistentInputMapping):
 
     def isSystemInput(self, input: Input) -> bool:
         return False
-from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

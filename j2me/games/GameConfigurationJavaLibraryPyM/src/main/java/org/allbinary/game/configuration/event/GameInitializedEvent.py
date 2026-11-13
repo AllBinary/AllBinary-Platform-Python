@@ -21,6 +21,8 @@ from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventOb
 class GameInitializedEvent(AllBinaryEventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.resource.ResourceLoadingLevel import ResourceLoadingLevel
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         self.resourceLoadingLevel: ResourceLoadingLevel = ResourceLoadingLevelFactory.getInstance().LEVEL
         self.level: int = 0
     
@@ -31,6 +33,7 @@ class GameInitializedEvent(AllBinaryEventObject):
     
 
     def setLevel(self, level: int) -> None:
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         self.level = level
         self.resourceLoadingLevel = ResourceLoadingLevelFactory.getInstance().LEVEL
     
@@ -40,13 +43,15 @@ class GameInitializedEvent(AllBinaryEventObject):
     
 
     def setResourceLoadingLevel(self, resourceLoadingLevel: ResourceLoadingLevel) -> None:
+        from org.allbinary.game.resource.ResourceLoadingLevel import ResourceLoadingLevel
         self.resourceLoadingLevel = resourceLoadingLevel
         self.level = self.resourceLoadingLevel.getLevel()
     
 
     def getResourceLoadingLevel(self) -> ResourceLoadingLevel:
+        from org.allbinary.game.resource.ResourceLoadingLevel import ResourceLoadingLevel
         return self.resourceLoadingLevel
-from org.allbinary.game.resource.ResourceLoadingLevel import ResourceLoadingLevel
-from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+# from org.allbinary.game.resource.ResourceLoadingLevel import ResourceLoadingLevel
+# from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
 
 

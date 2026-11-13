@@ -23,8 +23,10 @@ class TouchButtonsPaintableFactory:
     @staticmethod
     def getInstance(basicColor: BasicColor) -> Paintable:
         from org.allbinary.input.motion.button.TouchButtonsPaintable import TouchButtonsPaintable
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.paint.Paintable import Paintable
         return TouchButtonsPaintable(basicColor)
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.paint.Paintable import Paintable
 
 

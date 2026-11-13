@@ -21,6 +21,12 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class TouchButton(Paintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.RectangleFactory import RectangleFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.touchButtonInput: TouchButtonInput = None
@@ -35,6 +41,11 @@ class TouchButton(Paintable):
     
 
     def __init__(self, touchButtonInput: TouchButtonInput, animationInterface: AnimationInterface, rawRectangle: Rectangle, cellPosition: CellPosition, xBorder: int, yBorder: int) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationInterface import AnimationInterface
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.logic.string.StringMaker import StringMaker
         super().__init__()
         self._init_fields()
         self.touchButtonInput = touchButtonInput
@@ -48,10 +59,14 @@ class TouchButton(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animationInterface.paintXY(graphics, self.animationX, self.animationY)
     
 
     def updateRectangle(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
         try:
             x: int = self.rawRectangle.getWidth() * self.cellPosition.getColumn()
             y: int = self.rawRectangle.getHeight() * self.cellPosition.getRow()
@@ -65,10 +80,12 @@ class TouchButton(Paintable):
     
 
     def getCellPositionP(self) -> CellPosition:
+        from org.allbinary.graphics.CellPosition import CellPosition
         return self.cellPosition
     
 
     def getRectangleP(self) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
         return self.rectangle
     
 
@@ -77,6 +94,8 @@ class TouchButton(Paintable):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         stringBuffer.append("TouchButton: ")
@@ -92,16 +111,16 @@ class TouchButton(Paintable):
     def __str__(self) -> str:
         return self.toString()
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationInterface import AnimationInterface
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.RectangleFactory import RectangleFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationInterface import AnimationInterface
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.RectangleFactory import RectangleFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ColorFillPaintableFactory:
@@ -30,15 +31,21 @@ class ColorFillPaintableFactory:
     def getInstance(self, basicColor: BasicColor, forThreedCanvas: bool) -> ColorFillBasePaintable:
         from org.allbinary.game.paint.ColorFillPaintable import ColorFillPaintable
         from org.allbinary.game.paint.OverScanColorFillPaintable import OverScanColorFillPaintable
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         operatingSystem: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
         if operatingSystem.isOverScan():
             return OverScanColorFillPaintable(basicColor)
         else:
             return ColorFillPaintable(basicColor)
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
 
 
-ColorFillPaintableFactory.instance = ColorFillPaintableFactory()
+def _ColorFillPaintableFactory_instance() -> object:
+    return ColorFillPaintableFactory()
+
+lazy_static(ColorFillPaintableFactory, "instance", _ColorFillPaintableFactory_instance)
 

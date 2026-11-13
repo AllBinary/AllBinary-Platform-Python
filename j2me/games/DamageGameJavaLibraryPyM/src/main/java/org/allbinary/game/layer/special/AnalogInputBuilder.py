@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnalogInputBuilder:
@@ -33,6 +34,8 @@ class AnalogInputBuilder:
         from org.allbinary.game.layer.special.SpecialLeftGameInputProcessor import SpecialLeftGameInputProcessor
         from org.allbinary.game.layer.special.Special1GameInputProcessor import Special1GameInputProcessor
         from org.allbinary.game.layer.special.Special3GameInputProcessor import Special3GameInputProcessor
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
         inputProcessorArray[Canvas.UP] = SpecialUpGameInputProcessor(collidableDestroyableDamageableLayer)
         inputProcessorArray[Canvas.DOWN] = SpecialDownGameInputProcessor(collidableDestroyableDamageableLayer)
         inputProcessorArray[Canvas.RIGHT] = SpecialRightGameInputProcessor(collidableDestroyableDamageableLayer)
@@ -48,6 +51,8 @@ class AnalogInputBuilder:
         from org.allbinary.game.layer.special.SpecialAnalogLeftGameInputProcessor import SpecialAnalogLeftGameInputProcessor
         from org.allbinary.game.layer.special.SpecialAnalogLeftTriggerGameInputProcessor import SpecialAnalogLeftTriggerGameInputProcessor
         from org.allbinary.game.layer.special.SpecialAnalogRightTriggerGameInputProcessor import SpecialAnalogRightTriggerGameInputProcessor
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
         inputProcessorArray[Canvas.UP] = SpecialAnalogUpGameInputProcessor(collidableDestroyableDamageableLayer)
         inputProcessorArray[Canvas.DOWN] = SpecialAnalogDownGameInputProcessor(collidableDestroyableDamageableLayer)
         inputProcessorArray[Canvas.RIGHT] = SpecialAnalogRightGameInputProcessor(collidableDestroyableDamageableLayer)
@@ -55,8 +60,11 @@ class AnalogInputBuilder:
         inputProcessorArray[Canvas.KEY_NUM0] = SpecialAnalogLeftTriggerGameInputProcessor(collidableDestroyableDamageableLayer)
         inputProcessorArray[Canvas.KEY_NUM5] = SpecialAnalogRightTriggerGameInputProcessor(collidableDestroyableDamageableLayer)
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
+# from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
 
 
-AnalogInputBuilder.instance = AnalogInputBuilder()
+def _AnalogInputBuilder_instance() -> object:
+    return AnalogInputBuilder()
+
+lazy_static(AnalogInputBuilder, "instance", _AnalogInputBuilder_instance)
 

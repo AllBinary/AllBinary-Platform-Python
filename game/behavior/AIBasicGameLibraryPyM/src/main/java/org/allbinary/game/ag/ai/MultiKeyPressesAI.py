@@ -21,11 +21,17 @@ from org.allbinary.game.ag.ai.KeyPressesAI import KeyPressesAI
 class MultiKeyPressesAI(KeyPressesAI):
 
     def _init_fields(self) -> None:
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.toggleTimeHelper: TimeDelayHelper = TimeDelayHelper(600)
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(hashtable, ownerLayerInterface, gameInput)
         self._init_fields()
         self.update()
@@ -33,11 +39,13 @@ class MultiKeyPressesAI(KeyPressesAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def update(self) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
         gameInput: GameInput = self.getGameInput()
         keys: list[int] = self.keys
         size: int = len(keys)
@@ -72,12 +80,12 @@ class MultiKeyPressesAI(KeyPressesAI):
         if self.toggleTimeHelper.isTime(self.gameTickTimeDelayHelper.startTime):
             super().enable()
             self.update()
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

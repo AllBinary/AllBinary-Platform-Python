@@ -21,11 +21,13 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class CompoundAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self.basicAnimationInterfaceFactoryInterfaceArrayP: list[AnimationInterfaceFactoryInterface] = None
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self._init_fields()
         self.basicAnimationInterfaceFactoryInterfaceArrayP = basicAnimationInterfaceFactoryInterfaceArray
         self.animationBehaviorFactory = animationBehaviorFactory
@@ -33,6 +35,7 @@ class CompoundAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         size: int = len(self.basicAnimationInterfaceFactoryInterfaceArrayP)
         animationInterfaceArray: list[Animation] = self.createArray(size)
         for index in range(0, size):
@@ -41,10 +44,14 @@ class CompoundAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
     
 
     def createArray(self, size: int) -> list[Animation]:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         return NullAnimationFactory.getFactoryInstance().EMPTY_ARRAY
     
 
     def createAnimation(self, animationInterfaceArray: list[Animation]) -> Animation:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         return NullAnimationFactory.getFactoryInstance().getInstance(0)
     
 
@@ -53,13 +60,14 @@ class CompoundAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         size: int = len(self.basicAnimationInterfaceFactoryInterfaceArrayP)
         for index in range(0, size):
             self.basicAnimationInterfaceFactoryInterfaceArrayP[index].setInitialScale(scaleProperties)
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

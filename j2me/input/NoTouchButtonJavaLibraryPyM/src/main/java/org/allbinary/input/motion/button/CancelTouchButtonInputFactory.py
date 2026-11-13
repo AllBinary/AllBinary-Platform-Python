@@ -15,18 +15,20 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CancelTouchButtonInputFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
         self.cancelInputArray: list[TouchButtonInput] = [None] * (InputFactory.getInstance().MAX)
     
 
     @staticmethod
     def getInstance() -> CancelTouchButtonInputFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if CancelTouchButtonInputFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             CancelTouchButtonInputFactory.instance = CancelTouchButtonInputFactory()
         return CancelTouchButtonInputFactory.instance
@@ -46,6 +48,13 @@ class CancelTouchButtonInputFactory:
 
     def getCancel(self, touchButtonInput: TouchButtonInput) -> TouchButtonInput:
         return self.cancelInputArray[touchButtonInput.getId()]
-from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _CancelTouchButtonInputFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(CancelTouchButtonInputFactory, "instance", _CancelTouchButtonInputFactory_instance)
 

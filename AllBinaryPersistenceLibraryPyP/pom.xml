@@ -47,7 +47,7 @@
         <module>../j2me/PCResourceLibraryPyM</module>
         <module>../j2me/ProgressJ2MEJavaLibraryPyM</module>
         <module>../allbinary_src/licensing/ClientInfoBaseJavaLibraryPyM</module>
-        <!--<module>../allbinary_src/licensing/RemoteXmlRpcJavaLibraryPyM</module>-->
+        <module>../allbinary_src/licensing/RemoteXmlRpcJavaLibraryPyM</module>
         <!--<module>../allbinary_src/licensing/LicenseClientJavaLibraryPyM</module>-->
 
         <!--

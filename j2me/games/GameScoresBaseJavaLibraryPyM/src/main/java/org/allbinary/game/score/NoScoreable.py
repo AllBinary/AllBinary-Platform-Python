@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.Scoreable import Scoreable
 
 
@@ -39,5 +40,8 @@ class NoScoreable(Scoreable):
         pass
 
 
-NoScoreable.SINGLETON = NoScoreable()
+def _NoScoreable_SINGLETON() -> object:
+    return NoScoreable()
+
+lazy_static(NoScoreable, "SINGLETON", _NoScoreable_SINGLETON)
 

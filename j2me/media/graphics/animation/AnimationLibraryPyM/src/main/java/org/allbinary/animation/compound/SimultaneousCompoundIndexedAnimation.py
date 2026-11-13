@@ -21,10 +21,13 @@ from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 class SimultaneousCompoundIndexedAnimation(IndexedAnimation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.animationInterfaceArray: list[Animation] = None
     
 
     def __init__(self, animationInterfaceArray: list[Animation], animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(animationBehavior)
         self._init_fields()
         self.animationInterfaceArray = animationInterfaceArray
@@ -61,6 +64,7 @@ class SimultaneousCompoundIndexedAnimation(IndexedAnimation):
     
 
     def getSequence(self) -> list[int]:
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         return PrimitiveIntUtil.getArrayInstance()
     
 
@@ -72,26 +76,30 @@ class SimultaneousCompoundIndexedAnimation(IndexedAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         size: int = len(self.animationInterfaceArray)
         for index in range(0, size):
             self.animationInterfaceArray[index].paintXY(graphics, x, y)
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         size: int = len(self.animationInterfaceArray)
         for index in range(0, size):
             self.animationInterfaceArray[index].paintThreedXYZ(graphics, x, y, z)
     
 
     def getAnimationInterfaceArray(self) -> list[Animation]:
+        from org.allbinary.animation.Animation import Animation
         return self.animationInterfaceArray
     
 
     def setAnimationInterfaceArray(self, animationInterfaceArray: list[Animation]) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.animationInterfaceArray = animationInterfaceArray
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
 
 

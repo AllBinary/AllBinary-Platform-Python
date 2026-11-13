@@ -26,6 +26,7 @@ class UniformCameraPositionOpenGLProcessor(OpenGLObject3dProcessor):
     
 
     def process(self, gl: GL10, anyType: object) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 

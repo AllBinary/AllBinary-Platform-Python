@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-# from java.io.DataOutputStream import DataOutputStream
+from java.io.DataOutputStream import DataOutputStream
 
 
 class AbDataOutputStream(DataOutputStream):
     
 
     def __init__(self, out: OutputStream) -> None:
+        from java.io.OutputStream import OutputStream
         super().__init__(out)
 # from java.io.OutputStream import OutputStream
 

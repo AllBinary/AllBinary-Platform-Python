@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Canvas import Canvas
+from javax.microedition.lcdui.Canvas import Canvas
 
 
 class GameFeatureCanvas(Canvas):
@@ -26,6 +26,7 @@ class GameFeatureCanvas(Canvas):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
 

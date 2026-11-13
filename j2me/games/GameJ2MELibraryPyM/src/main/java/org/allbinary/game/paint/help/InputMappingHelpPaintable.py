@@ -25,11 +25,13 @@ class InputMappingHelpPaintable(HelpPaintable):
     class UpdateMyFontProperties:
 
         def _init_fields(self) -> None:
+            from org.allbinary.logic.NullUtil import NullUtil
+            from org.allbinary.logic.string.StringUtil import StringUtil
             self.actionStringArray: list[str] = StringUtil.getInstance().getArrayInstance()
             self.keymappingBeginWidthArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
             self.actionStringDeltaXArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
             self.inputDeltaXArray: list[list[int]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
-            self.sepArray: list[list[str]] = [[None] * (0) for _ in range(0)]
+            self.sepArray: list[list[str]] = StringUtil.getInstance().ONE_EMPTY_STRING_ARRAY_OF_ARRAYS
             self.sepWidthArray: list[list[int]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
             self.charHeight: int = 0
 
@@ -37,6 +39,17 @@ class InputMappingHelpPaintable(HelpPaintable):
             self._init_fields()
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -46,13 +59,15 @@ class InputMappingHelpPaintable(HelpPaintable):
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.gameInputMappingArray: list[GameInputMapping] = None
         self.keyMappingArray: list[BasicArrayList] = [None] * (0)
-        self.actionBasicColor: list[BasicColor] = [None] * (0)
+        self.actionBasicColor: list[BasicColor] = BasicColorUtil.getInstance().ZERO_ARRAY
         self.inputBasicColorArray: list[list[BasicColor]] = [[None] * (0) for _ in range(0)]
         self.selectedBasicColor: BasicColor = None
         self.updateMyFontProperties: UpdateMyFontProperties = UpdateMyFontProperties()
     
 
     def __init__(self, gameInputMappingArray: list[GameInputMapping], backgroundBasicColor: BasicColor, basicColor: BasicColor) -> None:
+        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__("Input Mapping", backgroundBasicColor, basicColor)
         self._init_fields()
         self.gameInputMappingArray = gameInputMappingArray
@@ -64,7 +79,11 @@ class InputMappingHelpPaintable(HelpPaintable):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
-        from org.allbinary.game.paint.help.UpdateMyFontProperties import UpdateMyFontProperties
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         font: Font = graphics.getFont()
         updateMyFontProperties: UpdateMyFontProperties = UpdateMyFontProperties()
         updateMyFontProperties.charHeight = font.getHeight()
@@ -114,6 +133,15 @@ class InputMappingHelpPaintable(HelpPaintable):
     
 
     def update(self, selectedGameKey: GameKey, selectedInput: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+        from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringMaker: StringMaker = StringMaker()
         self.logUtil.putF(str(stringMaker.append(CommonLabels.getInstance().START_LABEL).append("selected GameKey: ").append(self.stringUtil.toString(selectedGameKey)).append(" Input: ").append(self.stringUtil.toString(selectedInput))), self, self.commonStrings.UPDATE)
         gameKeyMapping: PersistentInputMapping = PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance()
@@ -154,6 +182,9 @@ class InputMappingHelpPaintable(HelpPaintable):
     
 
     def get(self, keyList: BasicArrayList) -> str:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         key: Input = None
         size: int = keyList.size()
@@ -172,6 +203,9 @@ class InputMappingHelpPaintable(HelpPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.myFontProcessor.process(graphics)
         halfWidth: int = self.displayInfo.getLastHalfWidth()
         graphics.setColor(int(self.basicColor))
@@ -207,22 +241,22 @@ class InputMappingHelpPaintable(HelpPaintable):
                 deltaX += self.updateMyFontProperties.sepWidthArray[index][index2]
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
-from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.game.paint.help.UpdateMyFontProperties import UpdateMyFontProperties
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
+# from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

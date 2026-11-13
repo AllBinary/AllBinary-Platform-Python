@@ -23,6 +23,20 @@ from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingE
 class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, DestroyedEventListenerInterface):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.direction.DirectionalInterface import DirectionalInterface
+        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.math.MathUtil import MathUtil
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.mathUtil: MathUtil = MathUtil.getInstance()
         self.directionFactory: DirectionFactory = DirectionFactory.getInstance()
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
@@ -42,6 +56,13 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, artificialIntelligenceInterface: ArtificialIntelligenceInterface, gameInput: GameInput, visitor: Visitor) -> None:
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.direction.DirectionalCompositeInterface import DirectionalCompositeInterface
+        from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.aiVistor = visitor
@@ -56,6 +77,7 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.isBeyondTarget():
             self.init()
             self.velocityInterface.zero()
@@ -68,6 +90,8 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     
 
     def init(self) -> None:
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         self.diveP = False
         self.directionOfTarget = DirectionFactory.getInstance().NOT_BORDERED_WITH
         TrackingEventHandler.getInstance().addListenerInterface(self)
@@ -75,13 +99,20 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
 
     # throws Exception
     def target(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.list_.size() == 0:
             return
         lastTrackingEvent: TrackingEvent = self.list_.removeAt(0)
         self.lastTrackingLayerInterface = lastTrackingEvent.getLayerInterface()
         layerInterface: AllBinaryLayer = self.lastTrackingLayerInterface
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
-        if layerInterface.getGroupInterface() == ownerLayerInterface.getGroupInterface():
+        groupArray: list[Group] = layerInterface.getGroupInterface()
+        ownerGroupArray: list[Group] = ownerLayerInterface.getGroupInterface()
+        if groupArray == ownerGroupArray:
             return
         x: int = self.lastTrackingLayerInterface.getXP()
         y: int = self.lastTrackingLayerInterface.getYP()
@@ -111,6 +142,7 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
 
     # throws Exception
     def verticalTargeting(self, x: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         if ownerLayerInterface.getXP() < x:
             self.moveRight()
@@ -122,6 +154,7 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
 
     # throws Exception
     def horizontalTargeting(self, y: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         if ownerLayerInterface.getYP() < y:
             self.moveDown()
@@ -132,6 +165,7 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     
 
     def setDive(self) -> None:
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         self.diveP = True
         self.velocityInterface.zero()
         TrackingEventHandler.getInstance().removeListener(self)
@@ -173,6 +207,7 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
 
     # throws Exception
     def attack(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         super().processKeyAI(Canvas.KEY_NUM1)
     
 
@@ -209,20 +244,28 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onMovement(self, trackingEvent: TrackingEvent) -> None:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         self.list_.add(trackingEvent)
     
 
     def onDestroyed(self, destroyedEvent: DestroyedEvent) -> None:
+        from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
+        from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         if self.getOwnerLayerInterface() == destroyedEvent.getLayerInterface():
             TrackingEventHandler.getInstance().removeListener(self)
             DestroyedEventHandler.getInstance().removeListener(self)
     
 
     def setLastDirection(self, lastDirection: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
         self.lastDirection = lastDirection
         value: int = self.getLastDirection().getValue()
         if value < 4:
@@ -230,6 +273,8 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     
 
     def setLastKey(self, lastKey: int) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
         super().setLastKey(lastKey)
         if self.getLastKey() == Canvas.LEFT:
             self.lastDirection = DirectionFactory.getInstance().LEFT
@@ -242,10 +287,13 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     
 
     def getLastDirection(self) -> Direction:
+        from org.allbinary.direction.Direction import Direction
         return self.lastDirection
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(" LastDirection: ")
@@ -255,31 +303,32 @@ class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, Dest
     def __str__(self) -> str:
         return self.toString()
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.direction.DirectionalCompositeInterface import DirectionalCompositeInterface
-from org.allbinary.direction.DirectionalInterface import DirectionalInterface
-from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
-from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.logic.util.visitor.Visitor import Visitor
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.direction.DirectionalCompositeInterface import DirectionalCompositeInterface
+# from org.allbinary.direction.DirectionalInterface import DirectionalInterface
+# from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
+# from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
+# from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

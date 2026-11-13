@@ -21,6 +21,12 @@ from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAn
 class CaptionAnimationHelper(CaptionAnimationHelperBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.animation.text.TextAnimation import TextAnimation
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeHelper: TimeDelayHelper = TimeDelayHelper(620)
         self.textAnimation: TextAnimation = TextAnimation(StringUtil.getInstance().EMPTY_STRING, AnimationBehavior.getInstance())
         self.captionAnimation: Animation = None
@@ -29,6 +35,7 @@ class CaptionAnimationHelper(CaptionAnimationHelperBase):
 
     def __init__(self, captionAnimation: Animation, captionDx: int, captionDy: int, dx: int, dy: int) -> None:
         from org.allbinary.animation.caption.CaptionAnimation import CaptionAnimation
+        from org.allbinary.animation.Animation import Animation
         super().__init__()
         self._init_fields()
         self.captionAnimation = CaptionAnimation(captionAnimation, self.textAnimation, captionDx, captionDy, dx, dy)
@@ -42,11 +49,14 @@ class CaptionAnimationHelper(CaptionAnimationHelperBase):
     
 
     def tick(self) -> None:
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.timeHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
             self.animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
     
 
     def update(self, message: str, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.textAnimation.setBasicColorP(basicColor)
         self.textAnimation.setText(message)
         self.animation = self.captionAnimation
@@ -54,15 +64,16 @@ class CaptionAnimationHelper(CaptionAnimationHelperBase):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.animation.paintXY(graphics, x, y)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.animation.text.TextAnimation import TextAnimation
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.animation.text.TextAnimation import TextAnimation
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

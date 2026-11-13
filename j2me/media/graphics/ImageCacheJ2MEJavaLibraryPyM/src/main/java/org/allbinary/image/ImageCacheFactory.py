@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.image.ImageCache import ImageCache
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCacheFactory:
-    IMAGE_CACHE: ImageCache = ImageCache()
+    IMAGE_CACHE: ImageCache = None
     
 
     @staticmethod
@@ -31,4 +31,10 @@ class ImageCacheFactory:
     def init() -> None:
         pass
 
+
+def _ImageCacheFactory_IMAGE_CACHE() -> object:
+    from org.allbinary.image.ImageCache import ImageCache
+    return ImageCache()
+
+lazy_static(ImageCacheFactory, "IMAGE_CACHE", _ImageCacheFactory_IMAGE_CACHE)
 

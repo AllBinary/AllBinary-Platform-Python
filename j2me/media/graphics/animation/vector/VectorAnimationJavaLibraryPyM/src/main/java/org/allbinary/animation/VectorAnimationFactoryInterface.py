@@ -22,7 +22,8 @@ class VectorAnimationFactoryInterface:
     
 
     def getInstance(self, points: list[list[list[int]]], basicColor: BasicColor) -> VectorAnimation:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise NotImplementedError()
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

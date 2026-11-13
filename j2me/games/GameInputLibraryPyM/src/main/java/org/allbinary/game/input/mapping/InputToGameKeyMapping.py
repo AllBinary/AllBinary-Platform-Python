@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.mapping.InputMapping import InputMapping
 
 
 class InputToGameKeyMapping(InputMapping):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.InputFactory import InputFactory
         self.gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
         self.mappedGameKeys: list[GameKey] = [self.gameKeyFactory.UP, self.gameKeyFactory.DOWN, self.gameKeyFactory.LEFT, self.gameKeyFactory.RIGHT]
         self.platformToGameKeyMapping: list[GameKey] = [None] * (InputFactory.getInstance().MAX)
@@ -31,6 +34,7 @@ class InputToGameKeyMapping(InputMapping):
 
     @staticmethod
     def getNullInstance() -> InputToGameKeyMapping:
+        from org.allbinary.logic.NullUtil import NullUtil
         if InputToGameKeyMapping.instance == NullUtil.getInstance().NULL_OBJECT:
             InputToGameKeyMapping.instance = InputToGameKeyMapping()
         return InputToGameKeyMapping.instance
@@ -54,6 +58,7 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def addMapping(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.Input import Input
         for index in range(inputToGameKeyMapping.getMaxMappable() - 1, 0 - 1, -1):
             input: Input = inputToGameKeyMapping.getInstance(index)
             if input != self.gameKeyFactory.NONE:
@@ -61,23 +66,32 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def addAll(self, input: Input, list_: BasicArrayList) -> None:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         for index in range(list_.size() - 1, 0 - 1, -1):
             mappedToInput: Input = list_.objectArray[index]
             self.add(input, mappedToInput)
     
 
     def add(self, input: Input, mappedToInput: Input) -> None:
+        from org.allbinary.game.input.Input import Input
         super().add(input, mappedToInput)
         self.set(input, mappedToInput)
     
 
     def remove(self, input: Input, mappedToInput: Input) -> None:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(StringUtil.getInstance().toString(input)).append(" == ").append(StringUtil.getInstance().toString(mappedToInput))), self, "InputToGameKeyMapping::remove")
         super().remove(input, mappedToInput)
         self.set(input, self.gameKeyFactory.NONE)
     
 
     def set(self, input: Input, mappedToInput: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
         id: int = mappedToInput.getId()
         if id >= 0 and id < len(self.platformToGameKeyMapping):
             self.platformToGameKeyMapping[id] = input
@@ -88,6 +102,10 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def getReverseInstance(self, id: int) -> BasicArrayList:
+        from org.allbinary.game.input.Input import Input
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = BasicArrayListD()
         inputFactory: InputFactory = InputFactory.getInstance()
         for index in range(0, len(self.platformToGameKeyMapping)):
@@ -100,6 +118,11 @@ class InputToGameKeyMapping(InputMapping):
 
     # throws Exception
     def initGameKey(self, canvas: Canvas, gameKey: GameKey) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         key: int = canvas.getKeyCode(gameKey.getId())
         if key < 0 and -key < len(self.negativePlatformToGameKeyMapping):
             self.negativePlatformToGameKeyMapping[-key] = gameKey
@@ -112,6 +135,7 @@ class InputToGameKeyMapping(InputMapping):
 
     # throws Exception
     def getSmallestCanvasGameKeyCode(self, canvas: Canvas) -> int:
+        from javax.microedition.lcdui.Canvas import Canvas
         nextKey: int = 0
         smallestKey: int = 0
         index = len(self.mappedGameKeys)
@@ -123,6 +147,8 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def init(self, canvas: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameKey import GameKey
         try:
             negativePlatformToGameKeyMapping: list[GameKey] = [None] * (0)
             smallestKey: int = self.getSmallestCanvasGameKeyCode(canvas)
@@ -143,6 +169,8 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def getInstanceForCanvas(self, canvas: Canvas, id: int) -> GameKey:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.GameKey import GameKey
         if id >= 0 and id < len(self.platformToGameKeyMapping):
             return self.platformToGameKeyMapping[id]
         elif id < 0 and -id < len(self.negativePlatformToGameKeyMapping):
@@ -152,6 +180,7 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def getInstance(self, id: int) -> GameKey:
+        from org.allbinary.game.input.GameKey import GameKey
         if id >= 0 and id < len(self.platformToGameKeyMapping):
             return self.platformToGameKeyMapping[id]
         elif id < 0 and -id < len(self.negativePlatformToGameKeyMapping):
@@ -159,16 +188,23 @@ class InputToGameKeyMapping(InputMapping):
         else:
             return self.gameKeyFactory.NONE
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.Input import Input
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _InputToGameKeyMapping_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(InputToGameKeyMapping, "instance", _InputToGameKeyMapping_instance)
 

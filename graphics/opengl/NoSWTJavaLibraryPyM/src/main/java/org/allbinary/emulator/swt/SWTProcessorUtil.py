@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SWTProcessorUtil:
@@ -33,5 +34,8 @@ class SWTProcessorUtil:
 from org.allbinary.emulator.swt.SWTProcessor import SWTProcessor
 
 
-SWTProcessorUtil.instance = SWTProcessorUtil()
+def _SWTProcessorUtil_instance() -> object:
+    return SWTProcessorUtil()
+
+lazy_static(SWTProcessorUtil, "instance", _SWTProcessorUtil_instance)
 

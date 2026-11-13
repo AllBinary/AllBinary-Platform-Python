@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DamageUtil:
     instance: DamageUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.COLLIDE: str = "collide"
     
@@ -41,6 +43,9 @@ class DamageUtil:
 
     # throws Exception
     def debugDamage(self, collidableInterfaceCompositeInterface1: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.logic.string.StringMaker import StringMaker
         collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = collidableInterfaceCompositeInterface
         damage: int = collidableDestroyableDamageableLayer.getDamage(0)
         if damage > 20000:
@@ -52,11 +57,14 @@ class DamageUtil:
             stringBuffer.append(" damage: ")
             stringBuffer.appendint(damage)
             self.logUtil.putF(str(stringBuffer), collidableInterfaceCompositeInterface1, self.COLLIDE)
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-DamageUtil.instance = DamageUtil()
+def _DamageUtil_instance() -> object:
+    return DamageUtil()
+
+lazy_static(DamageUtil, "instance", _DamageUtil_instance)
 

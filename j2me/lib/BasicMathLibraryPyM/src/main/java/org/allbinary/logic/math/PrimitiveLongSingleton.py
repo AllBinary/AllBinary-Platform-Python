@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PrimitiveLongSingleton:
@@ -38,13 +39,17 @@ class PrimitiveLongSingleton:
 
     # throws Exception
     def getNumberFromChar(self, numberAsChar: str) -> int:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         size: int = len(self.NUMBER_CHAR_ARRAY)
         for index in range(0, size):
             if self.NUMBER_CHAR_ARRAY[index] == numberAsChar:
                 return self.NUMBER_ARRAY[index]
         raise Exception(str(StringMaker().append("numberAsChar was not in array: ").appendchar(numberAsChar)))
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-PrimitiveLongSingleton.instance = PrimitiveLongSingleton()
+def _PrimitiveLongSingleton_instance() -> object:
+    return PrimitiveLongSingleton()
+
+lazy_static(PrimitiveLongSingleton, "instance", _PrimitiveLongSingleton_instance)
 

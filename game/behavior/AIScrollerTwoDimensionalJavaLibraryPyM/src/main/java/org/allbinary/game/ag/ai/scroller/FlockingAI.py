@@ -26,6 +26,9 @@ class FlockingAI(BasicAI):
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
         from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         allowedDistance: int = hashtable.get(BasePatrolAI.MAX_DISTANCE)
@@ -34,6 +37,13 @@ class FlockingAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
+        from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         maxDistance: int = 0
         farAllbinaryLayer: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
         groupLayerManagerListener: GroupLayerManagerListener = GroupLayerManagerListener.getInstance()
@@ -64,6 +74,8 @@ class FlockingAI(BasicAI):
     
 
     def getXYDistance(self, allBinaryLayer: AllBinaryLayer) -> int:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.math.MathUtil import MathUtil
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         xTotalDistance: int = (allBinaryLayer.getXP() + allBinaryLayer.getHalfWidth()) - (ownerLayerInterface.getXP() + ownerLayerInterface.getHalfWidth())
         yTotalDistance: int = (allBinaryLayer.getYP() + allBinaryLayer.getHalfHeight()) - (ownerLayerInterface.getYP() + ownerLayerInterface.getHalfHeight())
@@ -71,14 +83,14 @@ class FlockingAI(BasicAI):
         totalDistance: int = mathUtil.abs(xTotalDistance) + mathUtil.abs(yTotalDistance)
         return totalDistance
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
-from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
+# from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

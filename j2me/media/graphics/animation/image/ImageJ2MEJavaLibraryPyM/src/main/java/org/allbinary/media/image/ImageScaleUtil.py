@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageScaleUtil:
@@ -32,15 +33,22 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage2(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return self.createImage3(imageCache, originalImage, scaleNominatorX, scaleDenominatorX, scaleNominatorY, scaleDenominatorY, cached, True)
     
 
     # throws Exception
     def createImage3(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return originalImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.image.ImageCache import ImageCache
 
 
-ImageScaleUtil.instance = ImageScaleUtil()
+def _ImageScaleUtil_instance() -> object:
+    return ImageScaleUtil()
+
+lazy_static(ImageScaleUtil, "instance", _ImageScaleUtil_instance)
 

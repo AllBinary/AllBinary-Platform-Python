@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CharArrayFactory:
@@ -36,5 +37,8 @@ class CharArrayFactory:
         return self.zeroCharArray
 
 
-CharArrayFactory.instance = CharArrayFactory()
+def _CharArrayFactory_instance() -> object:
+    return CharArrayFactory()
+
+lazy_static(CharArrayFactory, "instance", _CharArrayFactory_instance)
 

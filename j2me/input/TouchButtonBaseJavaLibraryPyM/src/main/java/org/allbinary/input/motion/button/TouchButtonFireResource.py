@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
 
 
@@ -31,5 +32,8 @@ class TouchButtonFireResource(TouchButtonResource):
         super().__init__("/touch_button_fire_64_by_64.png", "/touch_button_fire_hint_64_by_64.png")
 
 
-TouchButtonFireResource.instance = TouchButtonFireResource()
+def _TouchButtonFireResource_instance() -> object:
+    return TouchButtonFireResource()
+
+lazy_static(TouchButtonFireResource, "instance", _TouchButtonFireResource_instance)
 

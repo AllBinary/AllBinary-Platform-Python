@@ -15,16 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 
 class BasicAI(ArtificialIntelligence, GameKeyEventSourceInterface):
-    AI_VISITOR: int = SmallIntegerSingletonFactory.getInstance().getAt(2)
-    ID: int = SmallIntegerSingletonFactory.getInstance().getAt(1)
+    AI_VISITOR: int = None
+    ID: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
@@ -34,6 +39,8 @@ class BasicAI(ArtificialIntelligence, GameKeyEventSourceInterface):
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
         self._init_fields()
         self.ownerLayerInterface = ownerLayerInterface
@@ -42,6 +49,7 @@ class BasicAI(ArtificialIntelligence, GameKeyEventSourceInterface):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
     
 
@@ -60,10 +68,12 @@ class BasicAI(ArtificialIntelligence, GameKeyEventSourceInterface):
     
 
     def getOwnerLayerInterface(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return self.ownerLayerInterface
     
 
     def getGameInput(self) -> GameInput:
+        from org.allbinary.game.input.GameInput import GameInput
         return self.gameInput
     
 
@@ -72,6 +82,9 @@ class BasicAI(ArtificialIntelligence, GameKeyEventSourceInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.game.displayable.canvas.CanvasUtil import CanvasUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(CommonSeps.getInstance().NEW_LINE)
         stringBuffer.append(self.getName())
@@ -85,14 +98,27 @@ class BasicAI(ArtificialIntelligence, GameKeyEventSourceInterface):
 
     def getSourceId(self) -> int:
         return 1
-from org.allbinary.game.displayable.canvas.CanvasUtil import CanvasUtil
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.displayable.canvas.CanvasUtil import CanvasUtil
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _BasicAI_AI_VISITOR() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(2)
+
+lazy_static(BasicAI, "AI_VISITOR", _BasicAI_AI_VISITOR)
+
+def _BasicAI_ID() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(1)
+
+lazy_static(BasicAI, "ID", _BasicAI_ID)
 

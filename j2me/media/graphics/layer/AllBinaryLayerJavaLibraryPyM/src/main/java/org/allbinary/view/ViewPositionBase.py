@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.GPoint import GPoint
 
 
@@ -42,5 +43,8 @@ class ViewPositionBase(GPoint):
         pass
 
 
-ViewPositionBase.NULL_VIEW_POSITION = ViewPositionBase(0, 0, 0)
+def _ViewPositionBase_NULL_VIEW_POSITION() -> object:
+    return ViewPositionBase(0, 0, 0)
+
+lazy_static(ViewPositionBase, "NULL_VIEW_POSITION", _ViewPositionBase_NULL_VIEW_POSITION)
 

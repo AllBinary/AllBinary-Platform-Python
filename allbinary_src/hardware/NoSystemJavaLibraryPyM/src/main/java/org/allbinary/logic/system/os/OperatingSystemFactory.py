@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OperatingSystemFactory:
@@ -23,6 +24,7 @@ class OperatingSystemFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.genericOperatingSystem: GenericOperatingSystem = NoOperatingSystem.NO_OPERATING_SYSTEM
     
@@ -41,6 +43,8 @@ class OperatingSystemFactory:
             return self._getOperatingSystemInstance_unlocked()
 
     def _getOperatingSystemInstance_unlocked(self) -> GenericOperatingSystem:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             osString: str = str(StringMaker().append("OperatingSystem Info: ").append(str(self.genericOperatingSystem)))
@@ -49,11 +53,14 @@ class OperatingSystemFactory:
         except Exception as e:
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
         return self.genericOperatingSystem
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
 
 
-OperatingSystemFactory.instance = OperatingSystemFactory()
+def _OperatingSystemFactory_instance() -> object:
+    return OperatingSystemFactory()
+
+lazy_static(OperatingSystemFactory, "instance", _OperatingSystemFactory_instance)
 

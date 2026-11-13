@@ -15,16 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 
 class AllBinaryGameLayerManager(AllBinaryLayerManager):
-    NULL_ALLBINARY_LAYER_MANAGER: object = NullUtil.getInstance().NULL_OBJECT
-    ID: int = SmallIntegerSingletonFactory.getInstance().getAt(22)
+    NULL_ALLBINARY_LAYER_MANAGER: object = None
+    ID: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.input.NullPlayerGameInputComposite import NullPlayerGameInputComposite
+        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.backgroundBasicColor: BasicColor = None
         self.foregroundBasicColor: BasicColor = None
         self.gameInfo: GameInfo = None
@@ -33,12 +36,18 @@ class AllBinaryGameLayerManager(AllBinaryLayerManager):
 
     @staticmethod
     def getNullInstance() -> AllBinaryGameLayerManager:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.NullUtil import NullUtil
         if AllBinaryGameLayerManager.NULL_ALLBINARY_LAYER_MANAGER == NullUtil.getInstance().NULL_OBJECT:
             AllBinaryGameLayerManager.NULL_ALLBINARY_LAYER_MANAGER = AllBinaryGameLayerManager(BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE, GameInfo.NONE)
         return AllBinaryGameLayerManager.NULL_ALLBINARY_LAYER_MANAGER
     
 
     def __init__(self, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor, gameInfo: GameInfo) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.graphics.ItemColorFactory import ItemColorFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.backgroundBasicColor = backgroundBasicColor
@@ -58,32 +67,42 @@ class AllBinaryGameLayerManager(AllBinaryLayerManager):
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.backgroundBasicColor
     
 
     def setBackgroundBasicColor(self, backgroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.ItemColorFactory import ItemColorFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.backgroundBasicColor = backgroundBasicColor
         ItemColorFactory.getInstance().INVERT_PAINT = int(self.backgroundBasicColor)
     
 
     def getForegroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.foregroundBasicColor
     
 
     def setForegroundBasicColor(self, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.ItemColorFactory import ItemColorFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.foregroundBasicColor = foregroundBasicColor
         ItemColorFactory.getInstance().PAINT = int(self.foregroundBasicColor)
     
 
     def getGameInfo(self) -> GameInfo:
+        from org.allbinary.game.GameInfo import GameInfo
         return self.gameInfo
     
 
     def setGameInfo(self, gameInfo: GameInfo) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         self.gameInfo = gameInfo
     
 
     def setLayerProcessorList(self, list_: BasicArrayList) -> None:
+        from org.allbinary.layer.LayerProcessor import LayerProcessor
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         layerProcessorInterfaceArray: list[LayerProcessor] = [None] * (list_.size())
         size: int = len(layerProcessorInterfaceArray)
         for index in range(0, size):
@@ -92,18 +111,34 @@ class AllBinaryGameLayerManager(AllBinaryLayerManager):
     
 
     def setPlayerGameInputCompositeInterface(self, playerGameInputCompositeInterface: PlayerGameInputCompositeInterface) -> None:
+        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
         self.playerGameInputCompositeInterface = playerGameInputCompositeInterface
     
 
     def getPlayerGameInputCompositeInterface(self) -> PlayerGameInputCompositeInterface:
+        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
         return self.playerGameInputCompositeInterface
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.input.NullPlayerGameInputComposite import NullPlayerGameInputComposite
-from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
-from org.allbinary.graphics.ItemColorFactory import ItemColorFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.layer.LayerProcessor import LayerProcessor
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.input.NullPlayerGameInputComposite import NullPlayerGameInputComposite
+# from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
+# from org.allbinary.graphics.ItemColorFactory import ItemColorFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.layer.LayerProcessor import LayerProcessor
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
+
+def _AllBinaryGameLayerManager_NULL_ALLBINARY_LAYER_MANAGER() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(AllBinaryGameLayerManager, "NULL_ALLBINARY_LAYER_MANAGER", _AllBinaryGameLayerManager_NULL_ALLBINARY_LAYER_MANAGER)
+
+def _AllBinaryGameLayerManager_ID() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(22)
+
+lazy_static(AllBinaryGameLayerManager, "ID", _AllBinaryGameLayerManager_ID)
 

@@ -22,12 +22,14 @@ class ColorLessVectorAnimation(VectorAnimation):
     
 
     def __init__(self, currentPoints: list[list[list[int]]], animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(currentPoints, BasicColorFactory.getInstance().WHITE, animationBehavior)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.paintVectors(graphics, x, y)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 

@@ -26,6 +26,7 @@ class SoundInterface:
     
 
     def getPlayerP(self) -> Player:
+        from javax.microedition.media.Player import Player
         raise NotImplementedError()
     
 

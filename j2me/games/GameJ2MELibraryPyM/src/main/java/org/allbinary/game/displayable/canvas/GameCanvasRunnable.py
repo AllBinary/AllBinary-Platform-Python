@@ -21,6 +21,10 @@ from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 class GameCanvasRunnable(GameRunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.GameTickDisplayInfoSingleton import GameTickDisplayInfoSingleton
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameTickDisplayInfoSingleton: GameTickDisplayInfoSingleton = GameTickDisplayInfoSingleton.getInstance()
         self.allBinaryGameCanvas: AllBinaryGameCanvas = None
@@ -34,6 +38,7 @@ class GameCanvasRunnable(GameRunnable):
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.allBinaryGameCanvas.getLoopTimeHelperP().setStartTime(self.gameTickTimeDelayHelper.setStartTime())
             self.gameTickDisplayInfoSingleton.update()
@@ -46,10 +51,10 @@ class GameCanvasRunnable(GameRunnable):
     # throws Exception
     def processLoopSleep(self) -> None:
         self.allBinaryGameCanvas.processLoopSleep()
-from org.allbinary.graphics.displayable.GameTickDisplayInfoSingleton import GameTickDisplayInfoSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.graphics.displayable.GameTickDisplayInfoSingleton import GameTickDisplayInfoSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 
 

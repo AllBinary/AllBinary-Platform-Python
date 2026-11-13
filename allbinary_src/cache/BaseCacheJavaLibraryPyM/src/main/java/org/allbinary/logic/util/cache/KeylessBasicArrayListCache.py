@@ -21,6 +21,8 @@ from org.allbinary.logic.util.cache.IndexedBasicArrayListCache import IndexedBas
 class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
     
@@ -31,6 +33,7 @@ class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
     
 
     def get(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             if self.index >= self.list_.size():
                 self.addDefault()
@@ -42,6 +45,7 @@ class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
     
 
     def clear(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().clear()
         basicArrayList: BasicArrayList = None
         for index in range(self.list_.size() - 1, 0 - 1, -1):
@@ -50,6 +54,8 @@ class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
     
 
     def log(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("S: ")
         stringBuffer.appendint(self.list_.size())
@@ -60,9 +66,9 @@ class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
             basicArrayList = (self.list_.objectArray[index])
             stringBuffer.appendint(basicArrayList.size())
         return str(stringBuffer)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class EventStrings:
@@ -35,5 +36,8 @@ class EventStrings:
         return EventStrings.instance
 
 
-EventStrings.instance = EventStrings()
+def _EventStrings_instance() -> object:
+    return EventStrings()
+
+lazy_static(EventStrings, "instance", _EventStrings_instance)
 

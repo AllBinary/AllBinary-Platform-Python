@@ -24,12 +24,14 @@ class MotionGestureReceiveInterfaceFactory:
     def getInstance() -> CompleteMotionGestureListenerInterface:
         from org.allbinary.input.motion.gesture.observer.ResolveCompleteMotionGestureListener import ResolveCompleteMotionGestureListener
         from org.allbinary.input.motion.gesture.observer.NullCompleteMotionGestureReceiver import NullCompleteMotionGestureReceiver
+        from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+        from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
         configuration: MotionGestureConfiguration = MotionGestureConfigurationFactory.getInstance()
         if not configuration.isExecutingActionsAllowed():
             return NullCompleteMotionGestureReceiver()
         else:
             return ResolveCompleteMotionGestureListener()
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
-from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
+# from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
+# from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
 
 

@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.KEY_CODE_LABEL: str = "KeyCode: "
@@ -33,6 +36,7 @@ class InputFactory:
 
     @staticmethod
     def getInstance() -> InputFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if InputFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             InputFactory.instance = InputFactory()
         return InputFactory.instance
@@ -50,16 +54,24 @@ class InputFactory:
     
 
     def getInstanceById(self, id: int) -> Input:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if id < 0:
             id = -id
         if id > len(self.inputIntegerArray):
             self.logUtil.putF(str(StringMaker().append("Warning id: ").appendint(id)), self, self.commonStrings.GET_INSTANCE)
             return self.NO_INPUT
         return self.inputIntegerArray[id]
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.game.input.Input import Input
 
+
+def _InputFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(InputFactory, "instance", _InputFactory_instance)
 

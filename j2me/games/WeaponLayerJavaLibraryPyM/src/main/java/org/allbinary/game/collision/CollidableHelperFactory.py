@@ -24,12 +24,15 @@ class CollidableHelperFactory:
     def getInstance() -> CollisionHelper:
         from org.allbinary.game.collision.SourceCollisionHelper import SourceCollisionHelper
         from org.allbinary.game.collision.CollisionHelper import CollisionHelper
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if Features.getInstance().isFeature(GameFeatureFactory.getInstance().COLLISIONS_WITH_SOURCE):
             return CollisionHelper(AllBinaryLayer.NULL_ALLBINARY_LAYER)
         else:
             return SourceCollisionHelper(AllBinaryLayer.NULL_ALLBINARY_LAYER)
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

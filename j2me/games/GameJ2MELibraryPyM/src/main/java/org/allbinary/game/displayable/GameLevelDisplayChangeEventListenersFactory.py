@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameLevelDisplayChangeEventListenersFactory:
     instance: GameLevelDisplayChangeEventListenersFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -33,11 +36,16 @@ class GameLevelDisplayChangeEventListenersFactory:
     
 
     def add(self, displayChangeEventListener: DisplayChangeEventListener) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
         self.list_.add(displayChangeEventListener)
         DisplayChangeEventHandler.getInstance().addListenerInterface(displayChangeEventListener)
     
 
     def clear(self) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
+        from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
         displayChangeEventHandler: BasicEventHandler = DisplayChangeEventHandler.getInstance()
         displayChangeEventListener: DisplayChangeEventListener = None
         index = self.list_.size()
@@ -45,12 +53,15 @@ class GameLevelDisplayChangeEventListenersFactory:
             displayChangeEventListener = self.list_.objectArray[index]
             displayChangeEventHandler.removeListener(displayChangeEventListener)
         self.list_.clear()
-from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
-from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
-from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+# from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
+# from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-GameLevelDisplayChangeEventListenersFactory.instance = GameLevelDisplayChangeEventListenersFactory()
+def _GameLevelDisplayChangeEventListenersFactory_instance() -> object:
+    return GameLevelDisplayChangeEventListenersFactory()
+
+lazy_static(GameLevelDisplayChangeEventListenersFactory, "instance", _GameLevelDisplayChangeEventListenersFactory_instance)
 

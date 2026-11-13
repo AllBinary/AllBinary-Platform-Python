@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ModelViewProjection:
@@ -27,9 +28,13 @@ class ModelViewProjection:
     
 
     def get(self) -> list[float]:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_FLOAT_ARRAY
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 
-ModelViewProjection.instance = ModelViewProjection()
+def _ModelViewProjection_instance() -> object:
+    return ModelViewProjection()
+
+lazy_static(ModelViewProjection, "instance", _ModelViewProjection_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidInfoFactory:
@@ -36,5 +37,8 @@ class AndroidInfoFactory:
         return self.version
 
 
-AndroidInfoFactory.instance = AndroidInfoFactory()
+def _AndroidInfoFactory_instance() -> object:
+    return AndroidInfoFactory()
+
+lazy_static(AndroidInfoFactory, "instance", _AndroidInfoFactory_instance)
 

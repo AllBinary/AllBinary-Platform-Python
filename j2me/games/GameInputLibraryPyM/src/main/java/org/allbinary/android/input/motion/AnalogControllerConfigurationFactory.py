@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AnalogControllerConfigurationFactory:
     instance: AnalogControllerConfigurationFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.android.input.motion.event.AnalogControllerConfigurationEvent import AnalogControllerConfigurationEvent
+        from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
         self.SCALE_FACTOR: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_FACTOR
         self.SCALE_VALUE: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_VALUE
         self.available: bool = False
@@ -42,12 +45,16 @@ class AnalogControllerConfigurationFactory:
 
     # throws Exception
     def setAvailable(self, available: bool) -> None:
+        from org.allbinary.android.input.motion.event.AnalogControllerConfigurationEventHandler import AnalogControllerConfigurationEventHandler
         self.available = available
         AnalogControllerConfigurationEventHandler.getInstance().fireEvent(self.analogControllerConfigurationEvent)
-from org.allbinary.android.input.motion.event.AnalogControllerConfigurationEvent import AnalogControllerConfigurationEvent
-from org.allbinary.android.input.motion.event.AnalogControllerConfigurationEventHandler import AnalogControllerConfigurationEventHandler
-from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
+# from org.allbinary.android.input.motion.event.AnalogControllerConfigurationEvent import AnalogControllerConfigurationEvent
+# from org.allbinary.android.input.motion.event.AnalogControllerConfigurationEventHandler import AnalogControllerConfigurationEventHandler
+# from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
 
 
-AnalogControllerConfigurationFactory.instance = AnalogControllerConfigurationFactory()
+def _AnalogControllerConfigurationFactory_instance() -> object:
+    return AnalogControllerConfigurationFactory()
+
+lazy_static(AnalogControllerConfigurationFactory, "instance", _AnalogControllerConfigurationFactory_instance)
 

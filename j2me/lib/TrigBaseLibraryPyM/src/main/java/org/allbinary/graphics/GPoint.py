@@ -28,10 +28,12 @@ class GPoint:
 
     @staticmethod
     def getInstance(point: GPoint) -> GPoint:
+        from jsinterop.annotations.JsMethod import JsMethod
         return GPoint(point.getX(), point.getY(), point.getZ())
     
 
     def __init__(self, x: int, y: int, z: int) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.x = x
         self.y = y
@@ -39,30 +41,37 @@ class GPoint:
     
 
     def getX(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.x
     
 
     def getY(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.y
     
 
     def getZ(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.z
     
 
     def getRawX(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.x
     
 
     def getRawY(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.y
     
 
     def getRawZ(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.z
     
 
     def toString(self) -> str:
+        from jsinterop.annotations.JsMethod import JsMethod
         return GPoint.toStringStatic(self.getX(), self.getY(), self.getZ())
 
     def __str__(self) -> str:
@@ -71,6 +80,10 @@ class GPoint:
 
     @staticmethod
     def toStringStatic(x: int, y: int, z: int) -> str:
+        from jsinterop.annotations.JsMethod import JsMethod
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         positionStrings: PositionStrings = PositionStrings.getInstance()
         stringBuffer.append(GPoint.POINT_LABEL)
@@ -83,11 +96,11 @@ class GPoint:
         stringBuffer.append(positionStrings.Z_LABEL)
         stringBuffer.appendint(z)
         return str(stringBuffer)
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

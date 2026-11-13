@@ -28,6 +28,8 @@ class FilePathUtil:
     @staticmethod
     def adjust(path: str) -> str:
         from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         abPathData: AbPathData = AbPathData.getInstance()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         filePathData: FilePathData = FilePathData.getInstance()
@@ -35,7 +37,7 @@ class FilePathUtil:
             return filePathData.PATH_START
         path = path.replace(abPathData.SEPARATORCHAR, filePathData.SEPARATORCHAR)
         return path
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 
 

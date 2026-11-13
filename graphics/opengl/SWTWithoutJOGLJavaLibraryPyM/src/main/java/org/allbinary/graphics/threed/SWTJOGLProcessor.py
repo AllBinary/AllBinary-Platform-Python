@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #SWTWithoutJOGL
@@ -79,6 +80,7 @@ class SWTJOGLProcessor(object):
     
 
     def addListeners(self, midlet: MIDlet) -> None:
+        from javax.microedition.midlet.MIDlet import MIDlet
         pass
     
 
@@ -99,23 +101,30 @@ class SWTJOGLProcessor(object):
     
 
     def charWidth(self, font: Font, ch: str) -> int:
+        from javax.microedition.lcdui.Font import Font
         raise RuntimeError()
     
 
     def charsWidth(self, font: Font, ch: list[str], offset: int, length: int) -> int:
+        from javax.microedition.lcdui.Font import Font
         raise RuntimeError()
     
 
     def stringWidth(self, font: Font, str_: str) -> int:
+        from javax.microedition.lcdui.Font import Font
         raise RuntimeError()
     
 
     def substringWidth(self, font: Font, str_: str, offset: int, len_: int) -> int:
+        from javax.microedition.lcdui.Font import Font
         raise RuntimeError()
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.midlet.MIDlet import MIDlet
 from org.allbinary.graphics.threed.GLHolder import GLHolder
 
 
-SWTJOGLProcessor.instance = SWTJOGLProcessor()
+def _SWTJOGLProcessor_instance() -> object:
+    return SWTJOGLProcessor()
+
+lazy_static(SWTJOGLProcessor, "instance", _SWTJOGLProcessor_instance)
 

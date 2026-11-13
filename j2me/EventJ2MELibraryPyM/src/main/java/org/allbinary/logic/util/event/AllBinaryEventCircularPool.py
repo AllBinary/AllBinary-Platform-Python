@@ -22,6 +22,7 @@ class AllBinaryEventCircularPool(BaseCircularPool):
     
 
     def __init__(self, max: int) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__()
         self.OBJECT_ARRAY = [None] * (max)
         self.circularIndexUtil = CircularIndexUtil.createInstance(max)
@@ -32,6 +33,6 @@ class AllBinaryEventCircularPool(BaseCircularPool):
         size: int = self.circularIndexUtil.getSize()
         for index in range(0, size):
             self.OBJECT_ARRAY[index] = allBinaryEventObjectFactoryInterface.getInstance()
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

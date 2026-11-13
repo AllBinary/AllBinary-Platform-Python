@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLImageFactory:
@@ -22,11 +23,17 @@ class OpenGLImageFactory:
     
 
     def getInstance(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         raise RuntimeError()
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
-from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
+# from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+# from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
 
 
-OpenGLImageFactory.NULL_OPENGL_IMAGE_FACTORY = OpenGLImageFactory()
+def _OpenGLImageFactory_NULL_OPENGL_IMAGE_FACTORY() -> object:
+    return OpenGLImageFactory()
+
+lazy_static(OpenGLImageFactory, "NULL_OPENGL_IMAGE_FACTORY", _OpenGLImageFactory_NULL_OPENGL_IMAGE_FACTORY)
 

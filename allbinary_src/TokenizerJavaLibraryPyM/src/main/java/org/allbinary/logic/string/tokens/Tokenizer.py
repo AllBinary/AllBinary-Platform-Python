@@ -20,13 +20,16 @@ from __future__ import annotations
 class Tokenizer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.sep: str = None
         self.endSep: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, sep: str) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self._init_fields()
-        if sep is None or TsUtil.getInstance().compareTo(sep, StringUtil.getInstance().EMPTY_STRING) == 0:
+        if TsUtil.getInstance().compareTo(sep, StringUtil.getInstance().EMPTY_STRING) == 0:
             raise Exception("Sep provided is not valid")
         self.sep = sep
     
@@ -40,6 +43,8 @@ class Tokenizer:
     
 
     def getInsideSep(self, string: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         tokenList: BasicArrayList = BasicArrayListD()
         index: int = 0
         size: int = len(string)
@@ -58,6 +63,7 @@ class Tokenizer:
     
 
     def getTokensFromString(self, string: str, tokenVector: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         index: int = 0
         end: int = 0
         while index < len(string):
@@ -72,6 +78,10 @@ class Tokenizer:
     
 
     def getTokens(self, stringVector: BasicArrayList) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         tokenHashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         string: str = StringUtil.getInstance().EMPTY_STRING
         end: int = 0
@@ -82,11 +92,11 @@ class Tokenizer:
             if end >= 0:
                 tokenHashtable.put(string[0:end], string[end + 1:len(string)])
         return tokenHashtable
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

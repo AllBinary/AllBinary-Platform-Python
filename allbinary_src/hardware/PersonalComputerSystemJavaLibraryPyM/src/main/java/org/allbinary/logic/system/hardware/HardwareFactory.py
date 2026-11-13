@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HardwareFactory:
@@ -34,6 +35,10 @@ class HardwareFactory:
     # Java overloaded method: Python keeps the last definition
     @staticmethod
     def getInstance(os: GenericOperatingSystem) -> HardwareInterface:
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.hardware.linux.LinuxHardware import LinuxHardware
+        from org.allbinary.logic.system.hardware.windows.WindowsHardware import WindowsHardware
         try:
             operatingSystems: OperatingSystems = OperatingSystems.getInstance()
             if os.getName().compareTo(operatingSystems.LINUX) == 0:
@@ -43,11 +48,14 @@ class HardwareFactory:
             raise Exception("No Hardware Imp for: " + os.getName())
         except Exception as e:
             raise e
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
-from org.allbinary.logic.system.hardware.linux.LinuxHardware import LinuxHardware
-from org.allbinary.logic.system.hardware.windows.WindowsHardware import WindowsHardware
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+# from org.allbinary.logic.system.hardware.linux.LinuxHardware import LinuxHardware
+# from org.allbinary.logic.system.hardware.windows.WindowsHardware import WindowsHardware
 
 
-HardwareFactory.instance = HardwareFactory()
+def _HardwareFactory_instance() -> object:
+    return HardwareFactory()
+
+lazy_static(HardwareFactory, "instance", _HardwareFactory_instance)
 

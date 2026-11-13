@@ -28,6 +28,8 @@ class OscillateVelocityMovement(BasicConstantVelocityMovement):
     
 
     def __init__(self, speedBasicDecimal: BasicDecimal, oscillateMin: int, oscillateMax: int) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(speedBasicDecimal, VelocityProperties(int(speedBasicDecimal.getUnscaled()), int(speedBasicDecimal.getUnscaled())))
         self._init_fields()
         self.oscillateMin = oscillateMin
@@ -36,6 +38,7 @@ class OscillateVelocityMovement(BasicConstantVelocityMovement):
 
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         super().process(layer)
         if self.oscillate < self.oscillateMin:
             self.oscillatePositive = True
@@ -47,8 +50,8 @@ class OscillateVelocityMovement(BasicConstantVelocityMovement):
         else:
             self.oscillate -= 1
             self.getVelocityProperties().getVelocityXBasicDecimalP().subtractint(2000)
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

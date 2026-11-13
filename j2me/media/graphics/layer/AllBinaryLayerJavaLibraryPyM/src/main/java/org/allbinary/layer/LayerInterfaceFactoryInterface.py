@@ -23,7 +23,8 @@ class LayerInterfaceFactoryInterface:
 
     # throws Exception
     def getNextInstance(self, hashtable: ABHashtable[object, object], x: int, y: int, z: int) -> AllBinaryLayer:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

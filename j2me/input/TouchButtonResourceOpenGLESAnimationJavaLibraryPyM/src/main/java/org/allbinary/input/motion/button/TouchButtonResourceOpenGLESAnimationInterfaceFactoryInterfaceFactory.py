@@ -27,16 +27,19 @@ class TouchButtonResourceOpenGLESAnimationInterfaceFactoryInterfaceFactory(Touch
 
     # throws Exception
     def init(self, level: int) -> None:
+        from org.allbinary.image.opengles.OpenGLImageCacheFactory import OpenGLImageCacheFactory
         super().initImageCache(OpenGLImageCacheFactory.getInstance(), level)
     
 
     def isFeature(self) -> bool:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         if Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
             return True
         else:
             return False
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.image.opengles.OpenGLImageCacheFactory import OpenGLImageCacheFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.image.opengles.OpenGLImageCacheFactory import OpenGLImageCacheFactory
 
 

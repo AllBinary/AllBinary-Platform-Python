@@ -22,12 +22,18 @@ from org.allbinary.game.input.CompleteMotionGestureInputInterface import Complet
 class CompleteMotionGestureInputEvent(AllBinaryEventObject, CompleteMotionGestureInputInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.name: str = StringUtil.getInstance().EMPTY_STRING
         self.motionGestureInput: MotionGestureInput = TouchMotionGestureFactory.getInstance().NO_MOTION
     
 
     def __init__(self, name: str, motionGestureInput: MotionGestureInput) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__(motionGestureInput)
         self._init_fields()
         self.setName(name)
@@ -47,15 +53,17 @@ class CompleteMotionGestureInputEvent(AllBinaryEventObject, CompleteMotionGestur
     
 
     def setMotionGestureInput(self, motionGestureInput: MotionGestureInput) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         self.motionGestureInput = motionGestureInput
     
 
     def getMotionGestureInput(self) -> MotionGestureInput:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         return self.motionGestureInput
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

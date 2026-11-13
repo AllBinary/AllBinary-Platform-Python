@@ -25,6 +25,17 @@ class TopUBoundBounceAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.game.ag.ai.BoundBounceAI import BoundBounceAI
         from org.allbinary.game.ag.ai.ReverseVelocityBoundsVisitor import ReverseVelocityBoundsVisitor
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.bounds.TopULayerBounds import TopULayerBounds
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
+        from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
         velocityInterfaceCompositeInterface: VelocityInterfaceCompositeInterface = ownerLayerInterface
         velocityInterface: VelocityInterface = velocityInterfaceCompositeInterface.getVelocityProperties()
         maxDistancePerTick: int = (velocityInterface.getMaxForwardVelocity() >> velocityInterface.getVelocityXBasicDecimalP().getScaledFactor())
@@ -34,16 +45,16 @@ class TopUBoundBounceAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         rectangle: Rectangle = Rectangle(point, (displayInfo.getLastWidth() - halfWidth - point.getX()), (displayInfo.getLastHeight() - halfHeight - point.getY()))
         return BoundBounceAI(ownerLayerInterface, gameInput, TopULayerBounds(rectangle), ReverseVelocityBoundsVisitor(ownerLayerInterface))
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.bounds.TopULayerBounds import TopULayerBounds
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
-from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.bounds.TopULayerBounds import TopULayerBounds
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
+# from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

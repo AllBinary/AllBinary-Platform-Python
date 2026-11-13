@@ -21,18 +21,21 @@ from org.allbinary.logic.util.event.AllBinaryEventObjectFactoryInterface import 
 class DestroyEventFactory(AllBinaryEventObjectFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         self.combatGameCanvas: AllBinaryGameCanvas = None
     
 
     def __init__(self, combatGameCanvas: AllBinaryGameCanvas) -> None:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         self._init_fields()
         self.combatGameCanvas = combatGameCanvas
     
 
     def getInstance(self) -> AllBinaryEventObject:
         from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         return DestroyedEvent(self.combatGameCanvas)
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

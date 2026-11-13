@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RendererStrings:
@@ -36,5 +37,8 @@ class RendererStrings:
         return RendererStrings.instance
 
 
-RendererStrings.instance = RendererStrings()
+def _RendererStrings_instance() -> object:
+    return RendererStrings()
+
+lazy_static(RendererStrings, "instance", _RendererStrings_instance)
 

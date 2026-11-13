@@ -22,6 +22,7 @@ from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 class NumberStringHud(BasicHud, PaintableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.primitiveLongUtil: PrimitiveLongUtil = None
         self.prependString: str = None
         self.PREPEND_STRING: list[str] = None
@@ -33,6 +34,10 @@ class NumberStringHud(BasicHud, PaintableInterface):
     
 
     def __init__(self, prependString: str, max: int, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__(location, direction, bufferZone, basicColor)
         self._init_fields()
         self.prependString = prependString
@@ -46,6 +51,9 @@ class NumberStringHud(BasicHud, PaintableInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.offset = font.stringWidth(self.prependString) + MyFontProcessor.defaultCharWidth(font)
         super().updateMeasurement(graphics)
@@ -72,10 +80,12 @@ class NumberStringHud(BasicHud, PaintableInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintDX(graphics, self.PREPEND_STRING, 0, len(self.PREPEND_STRING), self.valueString, 0, self.valueTotalDigits, self.offset)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         charArray: list[str] = self.PREPEND_STRING
         len_: int = len(self.PREPEND_STRING)
@@ -87,13 +97,14 @@ class NumberStringHud(BasicHud, PaintableInterface):
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
 
 

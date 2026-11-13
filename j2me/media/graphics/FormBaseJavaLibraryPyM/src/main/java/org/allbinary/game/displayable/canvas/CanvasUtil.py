@@ -26,6 +26,8 @@ class CanvasUtil:
 
     @staticmethod
     def getKeyName(key: int) -> str:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         if key == Canvas.UP:
             return commonPhoneStrings.UP
@@ -39,6 +41,6 @@ class CanvasUtil:
             return commonPhoneStrings.FIRE
         return "UNKNOWN KEY"
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
 
 

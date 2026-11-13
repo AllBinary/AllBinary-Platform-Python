@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.AllBinaryLayerCircularPool import AllBinaryLayerCircularPool
 
 
@@ -31,5 +32,8 @@ class GenericTrackingLayerCircularStaticPool(AllBinaryLayerCircularPool):
         return GenericTrackingLayerCircularStaticPool.SINGLETON
 
 
-GenericTrackingLayerCircularStaticPool.SINGLETON = GenericTrackingLayerCircularStaticPool()
+def _GenericTrackingLayerCircularStaticPool_SINGLETON() -> object:
+    return GenericTrackingLayerCircularStaticPool()
+
+lazy_static(GenericTrackingLayerCircularStaticPool, "SINGLETON", _GenericTrackingLayerCircularStaticPool_SINGLETON)
 

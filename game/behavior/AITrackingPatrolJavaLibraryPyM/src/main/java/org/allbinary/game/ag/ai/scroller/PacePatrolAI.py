@@ -23,12 +23,18 @@ from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
 class PacePatrolAI(BasePatrolAI, TrackingEventListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.trackingList: BasicArrayList = None
         self.firingDistance: int = 0
         self.isFollowLimitedByTerrain: bool = False
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(hashtable, ownerLayerInterface, gameInput)
         self._init_fields()
         TrackingEventHandler.getInstance().addListenerInterface(self)
@@ -37,6 +43,10 @@ class PacePatrolAI(BasePatrolAI, TrackingEventListenerInterface):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.update()
         direction: Direction = self.setFiringDirectionForTargetIfInRange()
         directionFactory: DirectionFactory = DirectionFactory.getInstance()
@@ -59,6 +69,12 @@ class PacePatrolAI(BasePatrolAI, TrackingEventListenerInterface):
     
 
     def setFiringDirectionForTargetIfInRange(self) -> Direction:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionCompositeInterface import DirectionCompositeInterface
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.LayerInterface import LayerInterface
         directionFactory: DirectionFactory = DirectionFactory.getInstance()
         ownerLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         direction: Direction = directionFactory.NOT_BORDERED_WITH
@@ -90,10 +106,14 @@ class PacePatrolAI(BasePatrolAI, TrackingEventListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onMovement(self, trackingEvent: TrackingEvent) -> None:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         self.trackingList.clear()
         self.trackingList.add(trackingEvent)
     
@@ -105,20 +125,20 @@ class PacePatrolAI(BasePatrolAI, TrackingEventListenerInterface):
     def setFiringDistance(self, firingDistance: int) -> None:
         self.firingDistance = firingDistance
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionCompositeInterface import DirectionCompositeInterface
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.LayerInterface import LayerInterface
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionCompositeInterface import DirectionCompositeInterface
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.LayerInterface import LayerInterface
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

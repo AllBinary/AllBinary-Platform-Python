@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OrientationMotionGestureFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         self.LEFT: MotionGestureInput = None
         self.RIGHT: MotionGestureInput = None
         self.UP: MotionGestureInput = None
@@ -32,12 +33,15 @@ class OrientationMotionGestureFactory:
 
     @staticmethod
     def getInstance() -> OrientationMotionGestureFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if OrientationMotionGestureFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             OrientationMotionGestureFactory.instance = OrientationMotionGestureFactory()
         return OrientationMotionGestureFactory.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         self._init_fields()
         MAX: int = InputFactory.getInstance().MAX
         self.LEFT = MotionGestureInput(MAX - 20, "Left Orient")
@@ -46,7 +50,14 @@ class OrientationMotionGestureFactory:
         self.DOWN = MotionGestureInput(MAX - 23, "Down Orient")
         self.ROLL_LEFT = MotionGestureInput(MAX - 24, "Roll Left")
         self.ROLL_RIGHT = MotionGestureInput(MAX - 25, "Roll Right")
-from org.allbinary.game.input.InputFactory import InputFactory
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _OrientationMotionGestureFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(OrientationMotionGestureFactory, "instance", _OrientationMotionGestureFactory_instance)
 

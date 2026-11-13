@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.tick.TickableInterface import TickableInterface
 
 
@@ -35,13 +36,17 @@ class NullTickable(TickableInterface):
 
     # throws Exception
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     def getName(self) -> str:
         return self.NAME
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 
-NullTickable.SINGLETON = NullTickable()
+def _NullTickable_SINGLETON() -> object:
+    return NullTickable()
+
+lazy_static(NullTickable, "SINGLETON", _NullTickable_SINGLETON)
 

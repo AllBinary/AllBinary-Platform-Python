@@ -26,6 +26,10 @@ class AdjustedSpriteIndexedAnimation(SpriteIndexedAnimation):
     
 
     def __init__(self, sprite: Sprite, image: Image, basicColorArray: list[BasicColor], dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(sprite, image, basicColorArray, animationBehavior)
         self._init_fields()
         self.dx = dx
@@ -33,24 +37,27 @@ class AdjustedSpriteIndexedAnimation(SpriteIndexedAnimation):
     
 
     def paintFrame(self, graphics: Graphics, frame: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.setFrame(frame)
         self.sprite.setPosition(x + self.dx, y + self.dy)
         super().paint(graphics)
     
 
     def paintXY(self, g: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.sprite.setPosition(x + self.dx, y + self.dy)
         super().paint(g)
     
 
     def paint(self, g: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.sprite.setPosition(self.dx, self.dy)
         super().paint(g)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
 
 

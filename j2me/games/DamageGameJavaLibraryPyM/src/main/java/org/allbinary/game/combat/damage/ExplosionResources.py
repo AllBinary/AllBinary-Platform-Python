@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ExplosionResources:
@@ -36,5 +37,8 @@ class ExplosionResources:
         self._init_fields()
 
 
-ExplosionResources.instance = ExplosionResources()
+def _ExplosionResources_instance() -> object:
+    return ExplosionResources()
+
+lazy_static(ExplosionResources, "instance", _ExplosionResources_instance)
 

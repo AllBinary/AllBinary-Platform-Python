@@ -22,6 +22,10 @@ from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSou
 class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, GameKeyEventSourceInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
         self.SOURCE_ID: int = self.gameKeyEventFactory.MOTION_GESTURE_SOURCE_ID
         self.gameKey: GameKey = GameKey.NULL_GAME_KEY
@@ -31,6 +35,8 @@ class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, Ga
 
     def __init__(self, name: str, motionGestureInput: MotionGestureInput, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
         from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEventFactory import GameKeyCompleteMotionGestureInputEventFactory
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         super().__init__(name, motionGestureInput)
         self._init_fields()
         self.inputToGameKeyMapping = inputToGameKeyMapping
@@ -43,6 +49,7 @@ class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, Ga
     
 
     def update(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.setGameKey(self.inputToGameKeyMapping.getInstance(self.getMotionGestureInput().getId()))
             self.setGameKeyEvent(self.gameKeyEventFactory.getInstanceForInput(self, self.getGameKey()))
@@ -52,24 +59,28 @@ class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, Ga
     
 
     def setGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.gameKeyEvent = gameKeyEvent
     
 
     def getGameKeyEvent(self) -> GameKeyEvent:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         return self.gameKeyEvent
     
 
     def setGameKey(self, gameKey: GameKey) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
         self.gameKey = gameKey
     
 
     def getGameKey(self) -> GameKey:
+        from org.allbinary.game.input.GameKey import GameKey
         return self.gameKey
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

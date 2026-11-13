@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
 
 
 class Scoreable(ScoreableInterface):
-    ID: int = SmallIntegerSingletonFactory.getInstance().getAt(3)
+    ID: int = None
 
     def _init_fields(self) -> None:
         self.points: int = None
@@ -45,5 +45,12 @@ class Scoreable(ScoreableInterface):
 
     def getPoints(self) -> int:
         return self.points
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
+
+def _Scoreable_ID() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(3)
+
+lazy_static(Scoreable, "ID", _Scoreable_ID)
 

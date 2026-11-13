@@ -20,29 +20,35 @@ from __future__ import annotations
 class BasicColorArrayIndexer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.basicColorArray: list[BasicColor] = None
         self.circularIndexUtil: CircularIndexUtil = None
     
 
     def __init__(self, basicColorArray: list[BasicColor]) -> None:
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.basicColorArray = basicColorArray
         self.circularIndexUtil = CircularIndexUtil.createInstance(len(self.basicColorArray))
     
 
     def next(self) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         self.circularIndexUtil.next()
     
 
     def get(self) -> BasicColor:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.basicColorArray[self.circularIndexUtil.getIndex()]
     
 
     def getBasicColorArray(self) -> list[BasicColor]:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.basicColorArray
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 

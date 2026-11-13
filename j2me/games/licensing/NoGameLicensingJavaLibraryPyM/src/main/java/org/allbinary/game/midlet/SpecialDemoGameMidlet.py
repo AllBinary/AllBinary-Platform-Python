@@ -22,6 +22,7 @@ class SpecialDemoGameMidlet(DemoGameMidlet):
     
 
     def __init__(self, clientInformationFactory: ClientInformationFactory, licenseLoadingType: LicenseLoadingType, demoSetupFactory: LicensedDemoSetupFactory, licenseCheckRunnableFactory: LicenseCheckRunnableFactory) -> None:
+        from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
         super().__init__(clientInformationFactory)
     
 
@@ -30,8 +31,9 @@ class SpecialDemoGameMidlet(DemoGameMidlet):
     
 
     def preInit(self) -> None:
+        from org.allbinary.logic.system.security.licensing.LicenseServerInitFileUtil import LicenseServerInitFileUtil
         LicenseServerInitFileUtil().init()
-from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
-from org.allbinary.logic.system.security.licensing.LicenseServerInitFileUtil import LicenseServerInitFileUtil
+# from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
+# from org.allbinary.logic.system.security.licensing.LicenseServerInitFileUtil import LicenseServerInitFileUtil
 
 

@@ -31,11 +31,13 @@ class ImmutableBasicArrayList(BasicArrayListS):
     
 
     def add(self, e: object) -> bool:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log(self.name, self)
         return True
     
 
     def addAt(self, index: int, element: object) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         ForcedLogUtil.log(self.name, self)
     
 
@@ -44,6 +46,7 @@ class ImmutableBasicArrayList(BasicArrayListS):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
 
 

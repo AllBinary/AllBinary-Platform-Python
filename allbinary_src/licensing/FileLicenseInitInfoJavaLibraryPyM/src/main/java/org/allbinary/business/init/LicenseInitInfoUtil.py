@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseInitInfoUtil:
@@ -23,6 +24,8 @@ class LicenseInitInfoUtil:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.INITFILENAME: str = "licenseinitdata.dat"
@@ -53,6 +56,14 @@ class LicenseInitInfoUtil:
             return self._write_unlocked(initData)
 
     def _write_unlocked(self, initData: LicenseInitInfo) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
         if self.filePath == self.stringUtil.EMPTY_STRING:
             self.filePath = self.URLGLOBALS.getMainPath() + self.PATH_GLOBALS.getInstance().INIT_PATH
         try:
@@ -88,6 +99,15 @@ class LicenseInitInfoUtil:
 
     def _readAgain_unlocked(self, initializeCounter: int) -> LicenseInitInfo:
         from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+        from org.allbinary.string.CommonLabels import CommonLabels
         METHOD_NAME: str = "readAgain"
         if self.filePath == self.stringUtil.EMPTY_STRING:
             self.filePath = self.URLGLOBALS.getMainPath() + self.PATH_GLOBALS.getInstance().INIT_PATH
@@ -122,21 +142,24 @@ class LicenseInitInfoUtil:
 
     def getFilePath(self) -> str:
         return self.filePath
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
-from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+# from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 
-LicenseInitInfoUtil.instance = LicenseInitInfoUtil()
+def _LicenseInitInfoUtil_instance() -> object:
+    return LicenseInitInfoUtil()
+
+lazy_static(LicenseInitInfoUtil, "instance", _LicenseInitInfoUtil_instance)
 

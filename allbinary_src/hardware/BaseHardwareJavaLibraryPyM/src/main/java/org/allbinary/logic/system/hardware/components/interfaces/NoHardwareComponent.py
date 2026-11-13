@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 
 
@@ -34,12 +35,16 @@ class NoHardwareComponent(HardwareComponentInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().NULL_STRING
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-NoHardwareComponent.instance = NoHardwareComponent()
+def _NoHardwareComponent_instance() -> object:
+    return NoHardwareComponent()
+
+lazy_static(NoHardwareComponent, "instance", _NoHardwareComponent_instance)
 

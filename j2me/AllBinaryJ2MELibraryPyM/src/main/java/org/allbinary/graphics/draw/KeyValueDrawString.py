@@ -21,6 +21,9 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 class KeyValueDrawString(UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.LABEL: str = None
         self.labelX: int = None
@@ -35,23 +38,25 @@ class KeyValueDrawString(UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         labelWidth: int = graphics.getFont().stringWidth(self.LABEL) - len(self.LABEL)
         self.valueX = labelWidth + self.labelX
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
     def paint(self, graphics: Graphics, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         graphics.drawString(self.LABEL, self.labelX, y, 0)
         graphics.drawString(self.value, self.valueX, y, 0)
     
 
     def update(self, value: str) -> None:
-        if value is not None:
-            self.value = value
+        self.value = value
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

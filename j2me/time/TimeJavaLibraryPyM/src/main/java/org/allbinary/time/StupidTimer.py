@@ -10,6 +10,10 @@ class StupidTimer:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.nullUtil: NullUtil = NullUtil.getInstance()
@@ -20,6 +24,7 @@ class StupidTimer:
     
 
     def visitBool(self, visitorInterface: Visitor) -> bool:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         result: bool = visitorInterface.visit(self.nullUtil.NULL_OBJECT)
         result2: bool = result
         return result2
@@ -27,6 +32,10 @@ class StupidTimer:
 
     # throws Exception
     def visit(self, visitorInterface: Visitor, timeDelayHelper: TimeDelayHelper) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         tookTooLong: bool = False
         WAITING_FOR: str = "Waiting for: "
         PreLogUtil.put(str(StringMaker().append(WAITING_FOR).append(StringUtil.getInstance().toString(visitorInterface))), self, self.commonStrings.VISIT)
@@ -50,13 +59,13 @@ class StupidTimer:
     def stopWaiting(self) -> None:
         with self._lock:  # synchronized (self)
             self.threadObjectUtil.notifyObject(self)
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.visitor.Visitor import Visitor
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 
 

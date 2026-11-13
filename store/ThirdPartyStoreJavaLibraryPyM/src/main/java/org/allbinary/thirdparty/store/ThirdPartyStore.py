@@ -30,6 +30,7 @@ class ThirdPartyStore:
     
 
     def authorize(self, clientInformationInterface: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         pass
     
 
@@ -43,6 +44,6 @@ class ThirdPartyStore:
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

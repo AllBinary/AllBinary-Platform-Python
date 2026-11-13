@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseUtil:
@@ -49,9 +50,13 @@ class LicenseUtil:
     
 
     def shouldWait(self, commandListener: CommandListener) -> bool:
+        from javax.microedition.lcdui.CommandListener import CommandListener
         return self.isRunning()
 # from javax.microedition.lcdui.CommandListener import CommandListener
 
 
-LicenseUtil.instance = LicenseUtil()
+def _LicenseUtil_instance() -> object:
+    return LicenseUtil()
+
+lazy_static(LicenseUtil, "instance", _LicenseUtil_instance)
 

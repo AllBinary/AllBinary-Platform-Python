@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MathData:
@@ -35,15 +36,20 @@ class MathData:
     
 
     def __init__(self) -> None:
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         self._init_fields()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         self.EQUALS = commonSeps.EQUALS
         self.MINUS = commonSeps.DASH
         self.DIVIDE = commonSeps.FORWARD_SLASH
         self.MULTIPLY = CommonPhoneStrings.getInstance().STAR
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-MathData.instance = MathData()
+def _MathData_instance() -> object:
+    return MathData()
+
+lazy_static(MathData, "instance", _MathData_instance)
 

@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.ag.ai.ThrustAIVisitor import ThrustAIVisitor
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThrustAIVisitorFactory:
-    instance: ThrustAIVisitor = ThrustAIVisitor()
+    instance: ThrustAIVisitor = None
     
 
     @staticmethod
     def getInstance() -> ThrustAIVisitor:
         return ThrustAIVisitorFactory.instance
 
+
+def _ThrustAIVisitorFactory_instance() -> object:
+    from org.allbinary.game.ag.ai.ThrustAIVisitor import ThrustAIVisitor
+    return ThrustAIVisitor()
+
+lazy_static(ThrustAIVisitorFactory, "instance", _ThrustAIVisitorFactory_instance)
 

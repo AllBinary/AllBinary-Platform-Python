@@ -22,7 +22,8 @@ class PasswordValidator(TextFieldItemValidator):
     
 
     def __init__(self, textFieldItem: ABTextFieldItem, min: int, max: int, allowOnEmpty: bool) -> None:
+        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         super().__init__(textFieldItem, min, max, allowOnEmpty)
-from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
+# from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ABKeyEventWrapper:
@@ -219,8 +220,11 @@ class ABKeyEventWrapper:
     def getInstance() -> ABKeyEventWrapper:
         return ABKeyEventWrapper.instance
 # from java.awt.event.KeyEvent import KeyEvent
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-ABKeyEventWrapper.instance = ABKeyEventWrapper()
+def _ABKeyEventWrapper_instance() -> object:
+    return ABKeyEventWrapper()
+
+lazy_static(ABKeyEventWrapper, "instance", _ABKeyEventWrapper_instance)
 

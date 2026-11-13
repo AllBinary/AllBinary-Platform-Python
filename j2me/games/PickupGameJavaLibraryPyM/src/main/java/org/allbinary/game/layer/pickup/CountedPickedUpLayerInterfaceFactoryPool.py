@@ -15,21 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CountedPickedUpLayerInterfaceFactoryPool:
     SINGLETON: CountedPickedUpLayerInterfaceFactoryPool = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.list_: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.list_ = BasicArrayListD()
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
     
 
@@ -41,9 +45,12 @@ class CountedPickedUpLayerInterfaceFactoryPool:
     @staticmethod
     def init() -> None:
         CountedPickedUpLayerInterfaceFactoryPool.SINGLETON = CountedPickedUpLayerInterfaceFactoryPool()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-CountedPickedUpLayerInterfaceFactoryPool.SINGLETON = CountedPickedUpLayerInterfaceFactoryPool()
+def _CountedPickedUpLayerInterfaceFactoryPool_SINGLETON() -> object:
+    return CountedPickedUpLayerInterfaceFactoryPool()
+
+lazy_static(CountedPickedUpLayerInterfaceFactoryPool, "SINGLETON", _CountedPickedUpLayerInterfaceFactoryPool_SINGLETON)
 

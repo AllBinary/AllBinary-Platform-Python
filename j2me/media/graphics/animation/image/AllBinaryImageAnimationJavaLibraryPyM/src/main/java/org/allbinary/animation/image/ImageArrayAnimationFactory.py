@@ -21,6 +21,8 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class ImageArrayAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self.dx: int = 0
         self.dy: int = 0
         self.imageArray: list[Image] = None
@@ -28,6 +30,8 @@ class ImageArrayAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def __init__(self, imageArray: list[Image], dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self._init_fields()
         self.imageArray = imageArray
         self.animationBehaviorFactory = animationBehaviorFactory
@@ -39,6 +43,8 @@ class ImageArrayAnimationFactory(AnimationInterfaceFactoryInterface):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.ImageArrayAnimation import ImageArrayAnimation
         from org.allbinary.animation.image.AdjustedImageArrayAnimation import AdjustedImageArrayAnimation
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         if self.dx != 0 or self.dy != 0:
             return AdjustedImageArrayAnimation(self.imageArray, self.dx, self.dy, self.animationBehaviorFactory.getOrCreateInstance())
         else:
@@ -46,12 +52,13 @@ class ImageArrayAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

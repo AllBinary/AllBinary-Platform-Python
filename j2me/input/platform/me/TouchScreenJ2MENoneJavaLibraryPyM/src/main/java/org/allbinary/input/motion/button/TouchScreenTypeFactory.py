@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchScreenTypeFactory:
@@ -32,5 +33,8 @@ class TouchScreenTypeFactory:
         touchScreenFactory.setTouch(False)
 
 
-TouchScreenTypeFactory.instance = TouchScreenTypeFactory()
+def _TouchScreenTypeFactory_instance() -> object:
+    return TouchScreenTypeFactory()
+
+lazy_static(TouchScreenTypeFactory, "instance", _TouchScreenTypeFactory_instance)
 

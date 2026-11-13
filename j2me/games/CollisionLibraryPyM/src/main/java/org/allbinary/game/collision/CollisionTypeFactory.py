@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CollisionTypeFactory:
@@ -36,5 +37,8 @@ class CollisionTypeFactory:
 from org.allbinary.game.collision.CollisionType import CollisionType
 
 
-CollisionTypeFactory.SINGLETON = CollisionTypeFactory()
+def _CollisionTypeFactory_SINGLETON() -> object:
+    return CollisionTypeFactory()
+
+lazy_static(CollisionTypeFactory, "SINGLETON", _CollisionTypeFactory_SINGLETON)
 

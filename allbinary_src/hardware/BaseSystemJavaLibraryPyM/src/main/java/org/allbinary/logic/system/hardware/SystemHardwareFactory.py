@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SystemHardwareFactory:
     instance: SystemHardwareFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.hardwareInterface: HardwareInterface = NoHardware.getInstance()
@@ -39,6 +42,7 @@ class SystemHardwareFactory:
     def getInstance(self, operatingSystemInterface: GenericOperatingSystem) -> HardwareInterface:
         from org.allbinary.logic.system.hardware.NoHardware import NoHardware
         from org.allbinary.logic.system.hardware.HardwareFactory import HardwareFactory
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         try:
             if self.hardwareInterface == NoHardware.getInstance():
                 self.hardwareInterface = HardwareFactory.getInstance().getInstance(operatingSystemInterface)
@@ -50,6 +54,8 @@ class SystemHardwareFactory:
 
     @staticmethod
     def static_toString() -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         systemHardwareFactory: SystemHardwareFactory = SystemHardwareFactory.getInstance()
         osBuffer: StringMaker = StringMaker()
         osBuffer.append("Hardware Info: \n")
@@ -58,13 +64,16 @@ class SystemHardwareFactory:
         else:
             osBuffer.append(StringUtil.getInstance().NULL_STRING)
         return str(osBuffer)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.system.hardware.NoHardware import NoHardware
 
 
-SystemHardwareFactory.instance = SystemHardwareFactory()
+def _SystemHardwareFactory_instance() -> object:
+    return SystemHardwareFactory()
+
+lazy_static(SystemHardwareFactory, "instance", _SystemHardwareFactory_instance)
 

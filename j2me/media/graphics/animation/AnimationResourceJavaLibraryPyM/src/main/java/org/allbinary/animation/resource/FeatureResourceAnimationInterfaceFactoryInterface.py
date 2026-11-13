@@ -25,7 +25,8 @@ class FeatureResourceAnimationInterfaceFactoryInterface(ResourceAnimationInterfa
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         raise NotImplementedError()
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

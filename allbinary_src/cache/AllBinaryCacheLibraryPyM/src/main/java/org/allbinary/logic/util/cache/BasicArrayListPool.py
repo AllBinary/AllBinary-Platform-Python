@@ -40,6 +40,7 @@ class BasicArrayListPool(AbstractArrayListPool):
 
     # throws Exception
     def addAll(self, usedList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         index = usedList.size()
         while (index := index - 1) >= 0:
             anyType: CacheableInterface = usedList.objectArray[index]
@@ -49,12 +50,13 @@ class BasicArrayListPool(AbstractArrayListPool):
 
     # throws Exception
     def releaseUsedBackToPool(self, usedList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         index = usedList.size()
         while (index := index - 1) >= 0:
             list_: BasicArrayListCacheable = usedList.objectArray[index]
             if list_.size() == 0:
                 usedList.removeAt(index)
                 self.add(list_)
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

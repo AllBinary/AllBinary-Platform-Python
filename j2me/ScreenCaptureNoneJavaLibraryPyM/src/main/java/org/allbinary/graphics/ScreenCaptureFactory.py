@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.ScreenCaptureNoneFactory import ScreenCaptureNoneFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScreenCaptureFactory:
-    instance: ScreenCapture = ScreenCaptureNoneFactory.getInstance()
+    instance: ScreenCapture = None
     
 
     @staticmethod
     def getInstance() -> ScreenCapture:
         return ScreenCaptureFactory.instance
 
+
+def _ScreenCaptureFactory_instance() -> object:
+    from org.allbinary.graphics.ScreenCaptureNoneFactory import ScreenCaptureNoneFactory
+    return ScreenCaptureNoneFactory.getInstance()
+
+lazy_static(ScreenCaptureFactory, "instance", _ScreenCaptureFactory_instance)
 

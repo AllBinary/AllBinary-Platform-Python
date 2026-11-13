@@ -27,6 +27,7 @@ class PreLogUtil:
 
     @staticmethod
     def put(specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         PreLogUtil.putOE(specialMessage, anyType, functionName, NullUtil.getInstance().NULL_OBJECT)
     
 
@@ -38,6 +39,6 @@ class PreLogUtil:
     @staticmethod
     def putSE(specialMessage: str, className: str, functionName: str, exception: object) -> None:
         raise RuntimeError()
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 

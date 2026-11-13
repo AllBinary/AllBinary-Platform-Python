@@ -31,6 +31,7 @@ class StringLocationPaintable(LocationPaintable):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawString(self.value, x, y, 0)
 # from javax.microedition.lcdui.Graphics import Graphics
 

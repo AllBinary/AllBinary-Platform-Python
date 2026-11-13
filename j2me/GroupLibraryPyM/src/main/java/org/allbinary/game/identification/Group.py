@@ -21,6 +21,7 @@ from org.allbinary.game.identification.GroupInterface import GroupInterface
 class Group(GroupInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.name: str = StringUtil.getInstance().EMPTY_STRING
         self.teamId: int = None
         self.string: str = StringUtil.getInstance().EMPTY_STRING
@@ -38,6 +39,7 @@ class Group(GroupInterface):
 
     def setName(self, name: str) -> None:
         from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.name = name
         groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         stringBuffer: StringMaker = StringMaker()
@@ -57,7 +59,7 @@ class Group(GroupInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

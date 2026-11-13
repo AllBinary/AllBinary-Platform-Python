@@ -26,6 +26,7 @@ class AdjustedVectorAnimation(VectorAnimation):
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(currentPoints, basicColor, animationBehavior)
         self._init_fields()
         self.dx = dx
@@ -33,8 +34,9 @@ class AdjustedVectorAnimation(VectorAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, x + self.dx, y + self.dy)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

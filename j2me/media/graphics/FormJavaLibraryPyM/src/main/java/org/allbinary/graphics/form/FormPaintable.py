@@ -31,6 +31,7 @@ class FormPaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.form.paint(graphics)
     
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommonButtons:
     instance: CommonButtons = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self.STANDARD_BUTTON_SIZE: int = None
         self.NORMAL_BUTTON: Rectangle = None
         self.LARGE_BUTTON: Rectangle = None
@@ -32,6 +34,9 @@ class CommonButtons:
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         self._init_fields()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         commonButtonSize: int = 128
@@ -47,10 +52,13 @@ class CommonButtons:
         self.STANDARD_BUTTON_SIZE = commonButtonSize
         self.NORMAL_BUTTON = Rectangle(PointFactory.getInstance().ZERO_ZERO, self.STANDARD_BUTTON_SIZE, self.STANDARD_BUTTON_SIZE)
         self.LARGE_BUTTON = Rectangle(PointFactory.getInstance().ZERO_ZERO, self.STANDARD_BUTTON_SIZE << 1, self.STANDARD_BUTTON_SIZE << 1)
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 
-CommonButtons.instance = CommonButtons()
+def _CommonButtons_instance() -> object:
+    return CommonButtons()
+
+lazy_static(CommonButtons, "instance", _CommonButtons_instance)
 

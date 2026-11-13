@@ -23,6 +23,12 @@ from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 class HealthHudWidget(BasicHud, PaintableInterface, HealthListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.health.Health import Health
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.healthScale: int = None
         self.animationInterface: Animation = None
         self.healthInterface: Health = None
@@ -36,6 +42,9 @@ class HealthHudWidget(BasicHud, PaintableInterface, HealthListenerInterface):
     
 
     def __init__(self, animationInterface: Animation, healthInterface: Health, location: int, direction: int) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.health.Health import Health
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(location, direction, 2, BasicColorFactory.getInstance().WHITE)
         self._init_fields()
         self.animationInterface = animationInterface
@@ -61,6 +70,7 @@ class HealthHudWidget(BasicHud, PaintableInterface, HealthListenerInterface):
     
 
     def onHealthChange(self) -> None:
+        from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
         self.max = (self.healthInterface.getHealth() / self.healthScale)
         self.timeDelayHelper = NoTimeDelayHelper.SINGLETON
         if self.max <= 1 and self.healthInterface.isAlive():
@@ -74,6 +84,7 @@ class HealthHudWidget(BasicHud, PaintableInterface, HealthListenerInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         for index in range(0, self.max):
             if self.timeDelayHelper.isTime(self.gameTickTimeDelayHelper.startTime):
@@ -81,14 +92,15 @@ class HealthHudWidget(BasicHud, PaintableInterface, HealthListenerInterface):
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.game.health.Health import Health
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.game.health.Health import Health
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

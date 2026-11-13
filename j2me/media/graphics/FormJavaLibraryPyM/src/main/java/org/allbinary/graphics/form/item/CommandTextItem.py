@@ -21,10 +21,13 @@ from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
 class CommandTextItem(ABTextItem):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Command import Command
         self.command: Command = None
     
 
     def __init__(self, command: Command, layout: int, altText: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(command.getLabel(), layout, altText, backgroundBasicColor, foregroundBasicColor)
         self._init_fields()
         self.command = command
@@ -35,8 +38,9 @@ class CommandTextItem(ABTextItem):
     
 
     def getCommand(self) -> Command:
+        from javax.microedition.lcdui.Command import Command
         return self.command
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

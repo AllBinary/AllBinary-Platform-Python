@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class VectorRotationGenerator:
     instance: VectorRotationGenerator = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.vectorAnimationUtil: VectorAnimationUtil = VectorAnimationUtil.getInstance()
         self.angleFactory: AngleFactory = AngleFactory.getInstance()
@@ -37,10 +40,16 @@ class VectorRotationGenerator:
 
     # Java overloaded method: Python keeps the last definition
     def getInstance(self, vectorRotationInfo: VectorInfo) -> list[list[list[int]]]:
+        from org.allbinary.vector.VectorInfo import VectorInfo
         return self.getInstanceFrames(vectorRotationInfo.getWidth(), vectorRotationInfo.getHeight(), vectorRotationInfo.getPoints(), vectorRotationInfo.getTotalFrames())
     
 
     def getInstanceFrames(self, width: int, height: int, points: list[list[int]], frames: int) -> list[list[list[int]]]:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         try:
             totalAngle: int = self.angleFactory.TOTAL_ANGLE
             angleIncrement: int = int(totalAngle / frames)
@@ -64,24 +73,30 @@ class VectorRotationGenerator:
 
     # throws Exception
     def getListAtAngle(self, width: int, height: int, pointBasicArrayList: BasicArrayList, angle: Angle) -> BasicArrayList:
+        from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+        from org.allbinary.math.Angle import Angle
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicsPipe: BasicGraphicsPipeline = BasicGraphicsPipeline(pointBasicArrayList)
         graphicsPipe.createMatrix()
         graphicsPipe.translate(-(width >> 1), -(height >> 1))
         graphicsPipe.rotateToAngle(angle)
         graphicsPipe.translate((width >> 1), (height >> 1))
         return graphicsPipe.getMatrix()
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
-from org.allbinary.vector.VectorInfo import VectorInfo
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.vector.VectorInfo import VectorInfo
 from org.allbinary.animation.VectorAnimationUtil import VectorAnimationUtil
 
 
-VectorRotationGenerator.instance = VectorRotationGenerator()
+def _VectorRotationGenerator_instance() -> object:
+    return VectorRotationGenerator()
+
+lazy_static(VectorRotationGenerator, "instance", _VectorRotationGenerator_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.BaseMenuBehavior import BaseMenuBehavior
 
 
@@ -32,6 +33,7 @@ class InGameMenuBehavior(BaseMenuBehavior):
 
     # throws Exception
     def onDisplayChangeEvent(self, allBinaryGameCanvas: AllBinaryGameCanvas, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
         allBinaryGameCanvas.updateMenuFromEvent(displayChangeEvent)
     
 
@@ -57,8 +59,11 @@ class InGameMenuBehavior(BaseMenuBehavior):
 
     def closeMenu(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
         allBinaryGameCanvas.closeMenu2()
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
 
 
-InGameMenuBehavior.instanceC = InGameMenuBehavior()
+def _InGameMenuBehavior_instanceC() -> object:
+    return InGameMenuBehavior()
+
+lazy_static(InGameMenuBehavior, "instanceC", _InGameMenuBehavior_instanceC)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
 
 
@@ -34,13 +35,17 @@ class ArtificialIntelligence(ArtificialIntelligenceInterface):
 
     # throws Exception
     def processAI(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     def getId(self) -> int:
         return 1
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 
-ArtificialIntelligence.instance = ArtificialIntelligence()
+def _ArtificialIntelligence_instance() -> object:
+    return ArtificialIntelligence()
+
+lazy_static(ArtificialIntelligence, "instance", _ArtificialIntelligence_instance)
 

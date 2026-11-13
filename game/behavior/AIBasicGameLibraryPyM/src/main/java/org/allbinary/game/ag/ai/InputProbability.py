@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputProbability:
-    INPUT_PROBABILITY: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
+    INPUT_PROBABILITY: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.likelyhoodIntegerArray: list[list[int]] = None
         self.repeatLikelyhoodIntegerArray: list[int] = None
         self.max: int = None
@@ -29,6 +30,7 @@ class InputProbability:
     
 
     def __init__(self, likelyhoodIntegerArray: list[list[int]], repeatLikelyhoodIntegerArray: list[int], max: int, timeDelayHelper: TimeDelayHelper) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self._init_fields()
         self.likelyhoodIntegerArray = likelyhoodIntegerArray
         self.repeatLikelyhoodIntegerArray = repeatLikelyhoodIntegerArray
@@ -49,15 +51,25 @@ class InputProbability:
     
 
     def getTimeDelayHelper(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         return self.timeDelayHelper
     
 
     def toHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         hashtable.put(InputProbability.INPUT_PROBABILITY, self)
         return hashtable
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
 
+
+def _InputProbability_INPUT_PROBABILITY() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(0)
+
+lazy_static(InputProbability, "INPUT_PROBABILITY", _InputProbability_INPUT_PROBABILITY)
 

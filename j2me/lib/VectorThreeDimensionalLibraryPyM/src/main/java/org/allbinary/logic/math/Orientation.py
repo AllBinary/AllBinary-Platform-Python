@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Orientation:
@@ -43,6 +44,7 @@ class Orientation:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Y: ")
         stringBuffer.append(str(self.yaw))
@@ -54,11 +56,17 @@ class Orientation:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 
-Orientation.NONE = Orientation(0, 0, 0)
+def _Orientation_NONE() -> object:
+    return Orientation(0, 0, 0)
 
-Orientation.SINGLETON = Orientation(0, 0, 0)
+lazy_static(Orientation, "NONE", _Orientation_NONE)
+
+def _Orientation_SINGLETON() -> object:
+    return Orientation(0, 0, 0)
+
+lazy_static(Orientation, "SINGLETON", _Orientation_SINGLETON)
 

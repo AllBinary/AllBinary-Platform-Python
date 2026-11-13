@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ArkTs does not have this.  So this is for the ArkTs build.
@@ -24,27 +25,37 @@ class EnumerationUtil:
 
     @staticmethod
     def getInstance() -> EnumerationUtil:
+        from jsinterop.annotations.JsMethod import JsMethod
         return EnumerationUtil.instance
     
 
     def hasMoreElements(self, enumeration: Enumeration) -> bool:
+        from java.util.Enumeration import Enumeration
+        from jsinterop.annotations.JsMethod import JsMethod
         return enumeration.hasMoreElements()
     
 
     def nextElement(self, enumeration: Enumeration) -> object:
+        from java.util.Enumeration import Enumeration
+        from jsinterop.annotations.JsMethod import JsMethod
         return enumeration.nextElement()
     
 
     def getAsArray(self, enumeration: Enumeration) -> list[object]:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from java.util.Enumeration import Enumeration
+        from jsinterop.annotations.JsMethod import JsMethod
         basicArrayList: BasicArrayList = BasicArrayListD()
         while self.hasMoreElements(enumeration):
             basicArrayList.add(self.nextElement(enumeration))
         return basicArrayList.toArray()
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 # from java.util.Enumeration import Enumeration
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsMethod import JsMethod
 
 
-EnumerationUtil.instance = EnumerationUtil()
+def _EnumerationUtil_instance() -> object:
+    return EnumerationUtil()
+
+lazy_static(EnumerationUtil, "instance", _EnumerationUtil_instance)
 

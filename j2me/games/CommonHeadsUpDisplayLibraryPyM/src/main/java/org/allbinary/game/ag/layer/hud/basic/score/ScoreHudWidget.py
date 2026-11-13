@@ -24,21 +24,25 @@ class ScoreHudWidget(NumberStringHud):
     # throws Exception
     @staticmethod
     def getInstance(maxscore: int, location: int, direction: int) -> ScoreHudWidget:
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         return ScoreHudWidget(maxscore, location, direction, 2, BasicColorFactory.getInstance().GREY)
     
 
     def __init__(self, maxscore: int, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__("Pts ", maxscore, location, direction, bufferZone, basicColor)
         self.updateMaxHeight = 14
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * 5
         super().updateMeasurement(graphics)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 

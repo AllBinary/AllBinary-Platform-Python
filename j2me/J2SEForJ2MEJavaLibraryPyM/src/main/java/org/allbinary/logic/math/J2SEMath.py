@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class J2SEMath:
@@ -39,5 +40,8 @@ class J2SEMath:
         return (-value if (value < 0.0) else value)
 
 
-J2SEMath.instance = J2SEMath()
+def _J2SEMath_instance() -> object:
+    return J2SEMath()
+
+lazy_static(J2SEMath, "instance", _J2SEMath_instance)
 

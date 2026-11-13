@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SmallIntegerSingletonFactory:
@@ -36,6 +37,10 @@ class SmallIntegerSingletonFactory:
     
 
     def getMin(self) -> int:
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         minAllowed: int = self.getMinAllowed()
         if self.MIN <= minAllowed:
             if J2MEUtil.isJ2ME():
@@ -55,6 +60,8 @@ class SmallIntegerSingletonFactory:
     
 
     def getMinAllowed(self) -> int:
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.J2MEUtil import J2MEUtil
         if J2MEUtil.isJ2ME():
             return 0
         else:
@@ -114,11 +121,14 @@ class SmallIntegerSingletonFactory:
         if self.STRING_ARRAY[i] is None:
             self.STRING_ARRAY[i] = str(self.INTEGER_ARRAY[i])
         return self.STRING_ARRAY[i]
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-SmallIntegerSingletonFactory.instance = SmallIntegerSingletonFactory()
+def _SmallIntegerSingletonFactory_instance() -> object:
+    return SmallIntegerSingletonFactory()
+
+lazy_static(SmallIntegerSingletonFactory, "instance", _SmallIntegerSingletonFactory_instance)
 

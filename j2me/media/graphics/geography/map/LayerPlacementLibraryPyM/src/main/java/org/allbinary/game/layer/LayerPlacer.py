@@ -20,12 +20,17 @@ from __future__ import annotations
 class LayerPlacer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.LayerInterfaceVisitor import LayerInterfaceVisitor
+        from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
         self.layerInterfaceVisitor: LayerInterfaceVisitor = None
         self.dimension: GPoint = None
     
 
     def __init__(self, layerInterfaceVisitor: LayerInterfaceVisitor, dimension: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.LayerInterfaceVisitor import LayerInterfaceVisitor
         self._init_fields()
         self.layerInterfaceVisitor = layerInterfaceVisitor
         self.dimension = dimension
@@ -33,6 +38,7 @@ class LayerPlacer:
 
     # throws Exception
     def processList(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = list_.size()
         layerPlacementInterface: LayerPlacementInterface = None
         for index in range(0, size):
@@ -42,6 +48,11 @@ class LayerPlacer:
 
     # throws Exception
     def process(self, layerPlacementInterface: LayerPlacementInterface) -> None:
+        from java.util.Enumeration import Enumeration
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.LayerInterfaceFactory import LayerInterfaceFactory
+        from org.allbinary.util.ABHashtable import ABHashtable
         relativePoint: GPoint = self.getPoint(layerPlacementInterface)
         layerInterfaceFactory: LayerInterfaceFactory = LayerInterfaceFactory.getInstance()
         hashtable: ABHashtable[object, object] = layerPlacementInterface.getInstance()
@@ -66,6 +77,8 @@ class LayerPlacer:
     def getPoint(self, layerPlacementInterface: LayerPlacementInterface) -> GPoint:
         from org.allbinary.game.layer.LayerPlacementTypeFactory import LayerPlacementTypeFactory
         from org.allbinary.game.layer.LayerPlacementTypeFactory import LayerPlacementTypeFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
         pointFactory: PointFactory = PointFactory.getInstance()
         layerPlacementType: LayerPlacementType = layerPlacementInterface.getLayerType()
         if layerPlacementType == LayerPlacementTypeFactory.getInstance().MAP:
@@ -83,13 +96,13 @@ class LayerPlacer:
         else:
             raise Exception("PlacementType Not Recognized")
 # from java.util.Enumeration import Enumeration
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.LayerInterfaceFactory import LayerInterfaceFactory
-from org.allbinary.layer.LayerInterfaceVisitor import LayerInterfaceVisitor
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.EnumerationUtil import EnumerationUtil
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.LayerInterfaceFactory import LayerInterfaceFactory
+# from org.allbinary.layer.LayerInterfaceVisitor import LayerInterfaceVisitor
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.EnumerationUtil import EnumerationUtil
 
 

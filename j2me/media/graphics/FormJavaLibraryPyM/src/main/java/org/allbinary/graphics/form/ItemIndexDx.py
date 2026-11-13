@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ItemIndexDx:
@@ -28,9 +29,13 @@ class ItemIndexDx:
 
     # throws Exception
     def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return 0
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 
 
-ItemIndexDx.instance = ItemIndexDx()
+def _ItemIndexDx_instance() -> object:
+    return ItemIndexDx()
+
+lazy_static(ItemIndexDx, "instance", _ItemIndexDx_instance)
 

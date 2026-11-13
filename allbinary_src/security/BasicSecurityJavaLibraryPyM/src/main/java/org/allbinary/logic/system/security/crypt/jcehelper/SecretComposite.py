@@ -21,6 +21,7 @@ from org.allbinary.logic.system.security.crypt.jcehelper.BaseSecretComposite imp
 class SecretComposite(BaseSecretComposite):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
         self.byteUtil: ByteUtil = ByteUtil.getInstance()
         self.cipher: Cipher = None
         self.secretKey: SecretKey = None
@@ -56,6 +57,6 @@ class SecretComposite(BaseSecretComposite):
         return array
 # from javax.crypto.Cipher import Cipher
 # from javax.crypto.SecretKey import SecretKey
-from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
+# from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
 
 

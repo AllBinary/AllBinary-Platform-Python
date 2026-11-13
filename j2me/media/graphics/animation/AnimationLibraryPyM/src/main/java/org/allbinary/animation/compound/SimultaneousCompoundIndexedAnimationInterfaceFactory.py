@@ -22,19 +22,23 @@ class SimultaneousCompoundIndexedAnimationInterfaceFactory(CompoundAnimationInte
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
         super().__init__(basicAnimationInterfaceFactoryInterfaceArray, animationBehaviorFactory)
     
 
     def createArray(self, size: int) -> list[Animation]:
+        from org.allbinary.animation.Animation import Animation
         return [None] * (size)
     
 
     def createAnimation(self, animationArray: list[Animation]) -> Animation:
         from org.allbinary.animation.compound.SimultaneousCompoundIndexedAnimation import SimultaneousCompoundIndexedAnimation
+        from org.allbinary.animation.Animation import Animation
         return SimultaneousCompoundIndexedAnimation(animationArray, self.animationBehaviorFactory.getOrCreateInstance())
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
 
 

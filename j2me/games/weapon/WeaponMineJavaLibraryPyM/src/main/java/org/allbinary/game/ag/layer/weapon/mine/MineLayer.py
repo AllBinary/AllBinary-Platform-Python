@@ -22,16 +22,26 @@ class MineLayer(SimpleWeaponLayer):
     NAME: str = "MineLayer"
 
     def _init_fields(self) -> None:
+        from org.allbinary.view.event.ViewPositionEventHandler import ViewPositionEventHandler
         self.viewPositionEventHandler: ViewPositionEventHandler = ViewPositionEventHandler.getInstance()
     
 
     def __init__(self, viewPosition: ViewPositionBase) -> None:
         from org.allbinary.game.ag.layer.weapon.mine.MineWeaponResources import MineWeaponResources
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.physics.movement.NoMovementFactory import NoMovementFactory
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(MineLayer.NAME, RemoteInfo.REMOTE_INFO, -1, NoMovementFactory.getInstance().getMovmentInstance(), FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(MineWeaponResources.getInstance().RESOURCE).getInstance(0), SimpleWeaponLayer.createDestroyed(), Rectangle(PointFactory.getInstance().ZERO_ZERO, 10, 10), viewPosition)
         self._init_fields()
     
 
     def initXYZ(self, x: int, y: int, z: int) -> None:
+        from org.allbinary.ag.weapon.media.audio.DropWeaponSound import DropWeaponSound
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
         self.setPosition(x + 5, y + 5, z)
         self.viewPositionEventHandler.addListener(self)
         SecondaryPlayerQueueFactory.getInstance().add(DropWeaponSound.getInstance())
@@ -50,15 +60,15 @@ class MineLayer(SimpleWeaponLayer):
         super().setDestroyed(destroyed)
         if self.isDestroyed():
             self.viewPositionEventHandler.removeListener(self)
-from org.allbinary.ag.weapon.media.audio.DropWeaponSound import DropWeaponSound
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-from org.allbinary.physics.movement.NoMovementFactory import NoMovementFactory
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
-from org.allbinary.view.event.ViewPositionEventHandler import ViewPositionEventHandler
+# from org.allbinary.ag.weapon.media.audio.DropWeaponSound import DropWeaponSound
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+# from org.allbinary.physics.movement.NoMovementFactory import NoMovementFactory
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.view.event.ViewPositionEventHandler import ViewPositionEventHandler
 
 

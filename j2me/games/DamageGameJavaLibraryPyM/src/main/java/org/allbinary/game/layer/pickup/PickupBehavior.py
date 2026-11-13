@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.pickup.PickupBehaviorInterface import PickupBehaviorInterface
 
 
 class PickupBehavior(PickupBehaviorInterface):
-    NULL_PICKUP_BEHAVIOR: object = NullUtil.getInstance().NULL_OBJECT
+    NULL_PICKUP_BEHAVIOR: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.countedIndex: int = None
         self.ownerLayerInterface: CollidableCompositeLayer = None
@@ -30,18 +32,23 @@ class PickupBehavior(PickupBehaviorInterface):
 
     @staticmethod
     def getNullInstance() -> PickupBehavior:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.logic.NullUtil import NullUtil
         if PickupBehavior.NULL_PICKUP_BEHAVIOR == NullUtil.getInstance().NULL_OBJECT:
             PickupBehavior.NULL_PICKUP_BEHAVIOR = PickupBehavior(CollidableCompositeLayer.getNullInstance(), 0)
         return PickupBehavior.NULL_PICKUP_BEHAVIOR
     
 
     def __init__(self, ownerLayerInterface: CollidableCompositeLayer, countedIndex: int) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         self._init_fields()
         self.ownerLayerInterface = ownerLayerInterface
         self.countedIndex = countedIndex
     
 
     def doPickup(self, pickupProcessorInterface: PickupProcessorInterface) -> None:
+        from org.allbinary.game.health.HealthInterfaceCompositeInterface import HealthInterfaceCompositeInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             healthInterfaceCompositeInterface: HealthInterfaceCompositeInterface = self.ownerLayerInterface
             if healthInterfaceCompositeInterface.getHealthInterface().isAlive():
@@ -53,6 +60,9 @@ class PickupBehavior(PickupBehaviorInterface):
 
     def doPickupLayer(self, pickupLayerInterface: PickedUpLayerInterface) -> None:
         from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = pickupLayerInterface.getPickedUpLayerInterfaceFactoryInterface()
             pickedUpLayerType: PickedUpLayerType = pickedUpLayerInterfaceFactoryInterface.getPickedUpLayerType()
@@ -79,12 +89,17 @@ class PickupBehavior(PickupBehaviorInterface):
     
 
     def addAt(self, countedPickedUpLayerInterfaceFactoryInterface: CountedPickedUpLayerInterfaceFactoryInterface, partIndex: int) -> None:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.game.part.CountedLayerInterfaceFactoryPart import CountedLayerInterfaceFactoryPart
         collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = self.ownerLayerInterface
         countedLayerInterfaceFactory: CountedLayerInterfaceFactoryPart = collidableDestroyableDamageableLayer.getPartInterfaceArray()[partIndex]
         countedLayerInterfaceFactory.setTotal(countedLayerInterfaceFactory.getTotal() + countedPickedUpLayerInterfaceFactoryInterface.getTotal())
     
 
     def getFirstAvailableCountedLayerInterfaceFactory(self, pickedUpLayerTypeArray: list[PickedUpLayerType]) -> CountedLayerInterfaceFactoryPart:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.game.part.CountedLayerInterfaceFactoryPart import CountedLayerInterfaceFactoryPart
+        from org.allbinary.game.part.PartInterface import PartInterface
         collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = self.ownerLayerInterface
         partInterfaceArray: list[PartInterface] = collidableDestroyableDamageableLayer.getPartInterfaceArray()
         size: int = len(partInterfaceArray)
@@ -103,6 +118,9 @@ class PickupBehavior(PickupBehaviorInterface):
 
     # throws Exception
     def getCountedLayerInterfaceFactoryForSlot(self, slotIndex: int) -> CountedLayerInterfaceFactoryPart:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.game.part.CountedLayerInterfaceFactoryPart import CountedLayerInterfaceFactoryPart
+        from org.allbinary.game.part.PartInterface import PartInterface
         currentSlot: int = 0
         collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = self.ownerLayerInterface
         partInterfaceArray: list[PartInterface] = collidableDestroyableDamageableLayer.getPartInterfaceArray()
@@ -120,13 +138,20 @@ class PickupBehavior(PickupBehaviorInterface):
 
     def getCountedIndex(self) -> int:
         return self.countedIndex
-from org.allbinary.game.health.HealthInterfaceCompositeInterface import HealthInterfaceCompositeInterface
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.game.part.CountedLayerInterfaceFactoryPart import CountedLayerInterfaceFactoryPart
-from org.allbinary.game.part.PartInterface import PartInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.health.HealthInterfaceCompositeInterface import HealthInterfaceCompositeInterface
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.game.part.CountedLayerInterfaceFactoryPart import CountedLayerInterfaceFactoryPart
+# from org.allbinary.game.part.PartInterface import PartInterface
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _PickupBehavior_NULL_PICKUP_BEHAVIOR() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(PickupBehavior, "NULL_PICKUP_BEHAVIOR", _PickupBehavior_NULL_PICKUP_BEHAVIOR)
 

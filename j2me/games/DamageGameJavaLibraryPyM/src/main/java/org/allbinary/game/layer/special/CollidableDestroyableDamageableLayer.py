@@ -15,19 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
 from org.allbinary.game.combat.destroy.DestroyableInterface import DestroyableInterface
 from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
 from org.allbinary.game.layer.pickup.PickupCompositeInterface import PickupCompositeInterface
-from org.allbinary.logic.NullUtil import NullUtil
 from org.allbinary.game.layer.special.SpecialGameInputInterface import SpecialGameInputInterface
 
 
 class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, DestroyableInterface, DamageableInterface, PickupCompositeInterface, SpecialGameInputInterface):
-    NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER: object = NullUtil.getInstance().NULL_OBJECT
+    NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER: object = None
     READYFOREXPLOSION: str = "ReadyForExplosion: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
+        from org.allbinary.game.part.PartInterface import PartInterface
+        from org.allbinary.game.part.PartInterfaceUtil import PartInterfaceUtil
         self.groupInterface: list[Group] = None
         self.readyForExplosion: bool = False
         self.initWidth: int = None
@@ -45,12 +50,22 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
 
     @staticmethod
     def getNullInstance() -> CollidableDestroyableDamageableLayer:
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.graphics.RectangleFactory import RectangleFactory
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         if CollidableDestroyableDamageableLayer.NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER == NullUtil.getInstance().NULL_OBJECT:
             CollidableDestroyableDamageableLayer.NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER = CollidableDestroyableDamageableLayer(BasicGroupFactory.getInstance().NONE_ARRAY, StringUtil.getInstance().EMPTY_STRING, RectangleFactory.SINGLETON, ViewPositionBase.NULL_VIEW_POSITION)
         return CollidableDestroyableDamageableLayer.NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER
     
 
     def __init__(self, groupInterface: list[Group], name: str, layerInfo: Rectangle, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.game.collision.CollidableNeverCollideBehaviorFactory import CollidableNeverCollideBehaviorFactory
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, layerInfo, viewPosition, CollidableNeverCollideBehaviorFactory.getInstance())
         self._init_fields()
         self.initWidth = layerInfo.getWidth()
@@ -72,6 +87,7 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paint(graphics)
     
 
@@ -91,15 +107,18 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
     
 
     def getGroupInterface(self) -> list[Group]:
+        from org.allbinary.game.identification.Group import Group
         return self.groupInterface
     
 
     def setGroupInterface(self, teamInterface: list[Group]) -> None:
+        from org.allbinary.game.identification.Group import Group
         self.groupInterface = teamInterface
     
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         self.allBinaryGameLayerManagerP = allBinaryGameLayerManager
         if self.allBinaryGameLayerManagerP is None:
             raise RuntimeError()
@@ -161,31 +180,43 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
 
     # throws Exception
     def fire(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def special1(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def special2(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def special3(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def special4(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def special5(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
@@ -211,40 +242,55 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
 
     # throws Exception
     def rightTrigger(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent, xAnalogValue: int) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def leftTrigger(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent, xAnalogValue: int) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     def onDestroyed(self, destroyedEvent: DestroyedEvent) -> None:
+        from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
         pass
     
 
     def getPickupBehavior(self) -> PickupBehavior:
+        from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
         return self.pickupBehavior
     
 
     def setPickupBehavior(self, pickupBehavior: PickupBehavior) -> None:
+        from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
         self.pickupBehavior = pickupBehavior
     
 
     # throws Exception
     def addPart(self, pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface) -> None:
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
         pass
     
 
     def setPartInterfaceArray(self, partInterfaceArray: list[PartInterface]) -> None:
+        from org.allbinary.game.part.PartInterface import PartInterface
         self.partInterfaceArrayP = partInterfaceArray
     
 
     def getPartInterfaceArray(self) -> list[PartInterface]:
+        from org.allbinary.game.part.PartInterface import PartInterface
         return self.partInterfaceArrayP
     
 
     def toStringAppend(self, stringBuffer: StringMaker) -> None:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         positionStrings: PositionStrings = PositionStrings.getInstance()
         super().toStringAppend(stringBuffer)
@@ -273,6 +319,7 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         self.toStringAppend(stringBuffer)
         return str(stringBuffer)
@@ -280,23 +327,30 @@ class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, Destroyable
     def __str__(self) -> str:
         return self.toString()
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.collision.CollidableNeverCollideBehaviorFactory import CollidableNeverCollideBehaviorFactory
-from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
-from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
-from org.allbinary.game.part.PartInterface import PartInterface
-from org.allbinary.game.part.PartInterfaceUtil import PartInterfaceUtil
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.RectangleFactory import RectangleFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.game.collision.CollidableNeverCollideBehaviorFactory import CollidableNeverCollideBehaviorFactory
+# from org.allbinary.game.combat.destroy.event.DestroyedEvent import DestroyedEvent
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
+# from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
+# from org.allbinary.game.part.PartInterface import PartInterface
+# from org.allbinary.game.part.PartInterfaceUtil import PartInterfaceUtil
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.RectangleFactory import RectangleFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
+
+def _CollidableDestroyableDamageableLayer_NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(CollidableDestroyableDamageableLayer, "NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER", _CollidableDestroyableDamageableLayer_NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER)
 

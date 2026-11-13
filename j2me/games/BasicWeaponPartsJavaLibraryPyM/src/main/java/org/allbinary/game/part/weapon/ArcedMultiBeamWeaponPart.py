@@ -21,12 +21,20 @@ from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 class ArcedMultiBeamWeaponPart(BasicWeaponPart):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
         self.total: int = None
         self.TOTAL_ANGLE: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
     
 
     def __init__(self, animationInterface: Animation, sourceLayerInterface: AllBinaryLayer, weaponLayerCircularStaticPool: WeaponLayerCircularPool, total: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(animationInterface, sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
         self._init_fields()
         self.total = total
@@ -35,6 +43,10 @@ class ArcedMultiBeamWeaponPart(BasicWeaponPart):
 
     # throws Exception
     def processScore(self, allbinaryLayerManager: AllBinaryLayerManager, angle: int, otherAngle: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface) -> None:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         increment: int = ((int((int((self.total - 1) / self.TOTAL_ANGLE))) + 32768) % 65536 - 32768)
         minAngle: int = ((int((angle - ((increment * self.total) >> 1))) + 32768) % 65536 - 32768)
         next: int = 0
@@ -43,14 +55,14 @@ class ArcedMultiBeamWeaponPart(BasicWeaponPart):
             weaponLayer = self.weaponLayerCircularStaticPool.getInstanceWeaponLayer(self.getOwnerLayerInterface(), self.relativeRelationship.getX(), self.relativeRelationship.getY(), 0, (minAngle + increment), otherAngle, weaponProperties, scoreableInterface)
             allbinaryLayerManager.append(weaponLayer)
             next += increment
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
-from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
+# from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.math.AngleFactory import AngleFactory
 
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CompleteMotionGestureInputToGameMotionGestureInput:
     instance: CompleteMotionGestureInputToGameMotionGestureInput = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -33,10 +35,14 @@ class CompleteMotionGestureInputToGameMotionGestureInput:
     
 
     def init(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         PreLogUtil.put("No Touch Button = No Compound Motion Gestures", self, self.commonStrings.INIT)
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-CompleteMotionGestureInputToGameMotionGestureInput.instance = CompleteMotionGestureInputToGameMotionGestureInput()
+def _CompleteMotionGestureInputToGameMotionGestureInput_instance() -> object:
+    return CompleteMotionGestureInputToGameMotionGestureInput()
+
+lazy_static(CompleteMotionGestureInputToGameMotionGestureInput, "instance", _CompleteMotionGestureInputToGameMotionGestureInput_instance)
 

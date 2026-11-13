@@ -23,6 +23,10 @@ class MotionJ2MEDefaultGameInputMapping(PersistentInputMapping):
 
     def __init__(self) -> None:
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         super().__init__(GamePersistanceStrings.getInstance().DEFAULT_INPUT_MAPPING_RECORD_ID)
         inputToGameKeyMapping: InputToGameKeyMapping = self.getInputMapping()
         gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
@@ -64,9 +68,9 @@ class MotionJ2MEDefaultGameInputMapping(PersistentInputMapping):
         inputToGameKeyMapping.add(gameKeyFactory.KEY_NUM1, basicTouchInputFactory.SPECIAL_BUTTON_TWO)
         inputToGameKeyMapping.add(gameKeyFactory.KEY_NUM3, basicTouchInputFactory.SPECIAL_BUTTON_ONE)
         inputToGameKeyMapping.add(gameKeyFactory.KEY_NUM2, basicTouchInputFactory.SPECIAL_BUTTON_SIX)
-from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
 
 

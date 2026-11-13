@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DirectionUtil:
     instance: DirectionUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.Angle import Angle
         self.directionArray: list[Angle] = [None] * (10)
         self.directionArray2: list[Angle] = [None] * (10)
     
@@ -32,6 +34,7 @@ class DirectionUtil:
 
     def __init__(self) -> None:
         from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.math.AngleFactory import AngleFactory
         self._init_fields()
         angleFactory: AngleFactory = AngleFactory.getInstance()
         directionFactory: DirectionFactory = DirectionFactory.getInstance()
@@ -46,14 +49,19 @@ class DirectionUtil:
     
 
     def getAngle(self, direction: Direction) -> Angle:
+        from org.allbinary.math.Angle import Angle
         return self.directionArray2[direction.getValue()]
     
 
     def getFrameAngle(self, direction: Direction) -> Angle:
+        from org.allbinary.math.Angle import Angle
         return self.directionArray[direction.getValue()]
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleFactory import AngleFactory
 
 
-DirectionUtil.instance = DirectionUtil()
+def _DirectionUtil_instance() -> object:
+    return DirectionUtil()
+
+lazy_static(DirectionUtil, "instance", _DirectionUtil_instance)
 

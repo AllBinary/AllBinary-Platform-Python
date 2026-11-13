@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ag.life.LifeInterface import LifeInterface
 
 
@@ -98,5 +99,8 @@ class Life(LifeInterface):
         self.startLives = startLives
 
 
-Life.NO_LIFE = Life.createLife()
+def _Life_NO_LIFE() -> object:
+    return Life.createLife()
+
+lazy_static(Life, "NO_LIFE", _Life_NO_LIFE)
 

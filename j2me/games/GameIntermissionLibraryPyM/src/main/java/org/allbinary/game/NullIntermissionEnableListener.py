@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.IntermissionEnableListenerInterface import IntermissionEnableListenerInterface
 
 
@@ -35,5 +36,8 @@ class NullIntermissionEnableListener(IntermissionEnableListenerInterface):
         pass
 
 
-NullIntermissionEnableListener.SINGLETON = NullIntermissionEnableListener()
+def _NullIntermissionEnableListener_SINGLETON() -> object:
+    return NullIntermissionEnableListener()
+
+lazy_static(NullIntermissionEnableListener, "SINGLETON", _NullIntermissionEnableListener_SINGLETON)
 

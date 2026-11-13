@@ -16,7 +16,7 @@
 from __future__ import annotations
 
 import threading
-# from javax.microedition.media.Player import Player
+from javax.microedition.media.Player import Player
 from org.allbinary.media.audio.Controllable2 import Controllable2
 
 
@@ -26,6 +26,9 @@ class BasicPlayer(Player, Controllable2):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.listenersList: BasicArrayList = BasicArrayListD()
         self.stateP: int = 0
@@ -39,15 +42,18 @@ class BasicPlayer(Player, Controllable2):
     
 
     def getContentType(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     def getControl(self, controlType: str) -> Control:
         from org.allbinary.media.audio.NullControl import NullControl
+        from javax.microedition.media.Control import Control
         return NullControl()
     
 
     def getControls(self) -> list[Control]:
+        from javax.microedition.media.Control import Control
         return [None] * (0)
     
 
@@ -60,11 +66,13 @@ class BasicPlayer(Player, Controllable2):
             return self._addPlayerListener_unlocked(playerListener)
 
     def _addPlayerListener_unlocked(self, playerListener: PlayerListener) -> None:
+        from javax.microedition.media.PlayerListener import PlayerListener
         if not self.listenersList.contains(playerListener):
             self.listenersList.add(playerListener)
     
 
     def removePlayerListener(self, playerListener: PlayerListener) -> None:
+        from javax.microedition.media.PlayerListener import PlayerListener
         self.listenersList.remove(playerListener)
     
 
@@ -94,11 +102,13 @@ class BasicPlayer(Player, Controllable2):
 
     # throws MediaException
     def prefetch(self) -> None:
+        from javax.microedition.media.MediaException import MediaException
         pass
     
 
     # throws MediaException
     def realize(self) -> None:
+        from javax.microedition.media.MediaException import MediaException
         pass
     
 
@@ -120,6 +130,7 @@ class BasicPlayer(Player, Controllable2):
             return self._setMediaTime_unlocked(now)
 
     def _setMediaTime_unlocked(self, now: int) -> int:
+        from javax.microedition.media.MediaException import MediaException
         return 0
     
 
@@ -129,6 +140,7 @@ class BasicPlayer(Player, Controllable2):
             return self._start_unlocked()
 
     def _start_unlocked(self) -> None:
+        from javax.microedition.media.MediaException import MediaException
         self.setState(Player.STARTED)
     
 
@@ -138,6 +150,7 @@ class BasicPlayer(Player, Controllable2):
             return self._stop_unlocked()
 
     def _stop_unlocked(self) -> None:
+        from javax.microedition.media.MediaException import MediaException
         self.setState(Player.PREFETCHED)
     
 
@@ -146,9 +159,9 @@ class BasicPlayer(Player, Controllable2):
 # from javax.microedition.media.Control import Control
 # from javax.microedition.media.MediaException import MediaException
 # from javax.microedition.media.PlayerListener import PlayerListener
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

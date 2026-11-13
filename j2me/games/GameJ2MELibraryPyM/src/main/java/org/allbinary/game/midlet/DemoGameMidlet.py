@@ -24,11 +24,13 @@ class DemoGameMidlet(GameMidlet):
     
 
     def __init__(self, clientInformationFactory: ClientInformationFactory) -> None:
+        from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
         super().__init__(clientInformationFactory)
     
 
     # throws Exception
     def isContinue(self) -> bool:
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = self.getStartStateHashtable()
         if hashtable is not None and hashtable.size() > 0:
             return True
@@ -42,17 +44,22 @@ class DemoGameMidlet(GameMidlet):
 
     # throws Exception
     def createDemoGameCanvasRunnableInterface(self) -> GameCanvasRunnableInterface:
+        from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
+        from org.allbinary.game.displayable.canvas.NullGameCanvasRunnable import NullGameCanvasRunnable
         self.logUtil.putF(self.commonStrings.NOT_IMPLEMENTED, self, self.commonStrings.CREATE)
         return NullGameCanvasRunnable.NULL_GAME_CANVAS_RUNNABLE
     
 
     # throws Exception
     def createGameCanvasRunnable(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> GameCanvasRunnableInterface:
+        from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
     
 
     # throws Exception
     def createGameCanvasRunnableInterface(self) -> GameCanvasRunnableInterface:
+        from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
         return self.createGameCanvasRunnable(self.createGameLayerManager())
     
 
@@ -71,6 +78,9 @@ class DemoGameMidlet(GameMidlet):
 
     def _setDemo_unlocked(self) -> None:
         from org.allbinary.game.midlet.DemoRunnable import DemoRunnable
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         self.logUtil.putF(self.commonStrings.START, self, "setDemo")
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
         progressCanvas.start()
@@ -84,6 +94,11 @@ class DemoGameMidlet(GameMidlet):
 
     def _createGame_unlocked(self) -> None:
         from org.allbinary.game.midlet.CreateGameRunnable import CreateGameRunnable
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+        from org.allbinary.util.ABHashtable import ABHashtable
         CREATE_GAME: str = "createGame"
         self.logUtil.putF(self.commonStrings.START, self, CREATE_GAME)
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -96,14 +111,14 @@ class DemoGameMidlet(GameMidlet):
 
     def isReady(self) -> bool:
         return True
-from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
-from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
-from org.allbinary.game.displayable.canvas.NullGameCanvasRunnable import NullGameCanvasRunnable
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
+# from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+# from org.allbinary.game.displayable.canvas.NullGameCanvasRunnable import NullGameCanvasRunnable
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

@@ -24,6 +24,8 @@ from org.allbinary.animation.text.TextInterface import TextInterface
 class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, UpdateMyFontInterface, TextInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.customTextBox: CustomTextBox = None
         self.lastText: str = StringUtil.getInstance().INIT_STRING
         self.hasChanged: bool = True
@@ -31,16 +33,20 @@ class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, Updat
     
 
     def __init__(self, customTextBox: CustomTextBox) -> None:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
         super().__init__(AnimationBehavior.getInstance())
         self._init_fields()
         self.customTextBox = customTextBox
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.customTextBox.getTextFieldItem().setForegroundBasicColorP(basicColor)
     
 
     def setBackgroundBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.customTextBox.getTextFieldItem().setBackgroundBasicColorP(basicColor)
     
 
@@ -51,6 +57,8 @@ class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, Updat
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from org.allbinary.animation.text.TextChangeListener import TextChangeListener
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         font: Font = graphics.getFont()
         self.textChangeListener.onMeasure()
         self.textChangeListener = TextChangeListener.getInstance()
@@ -76,17 +84,23 @@ class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, Updat
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.customTextBox.paintXY(graphics, x, y)
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
+    
+
+    def getWidth(self) -> int:
+        return super().getWidth()
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
+# from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.animation.text.TextChangeListener import TextChangeListener
 
 

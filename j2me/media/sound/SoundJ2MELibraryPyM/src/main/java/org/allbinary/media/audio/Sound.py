@@ -21,6 +21,7 @@ from org.allbinary.media.audio.SoundInterface import SoundInterface
 class Sound(SoundInterface, object):
 
     def _init_fields(self) -> None:
+        from javax.microedition.media.Player import Player
         self.resource: str = None
         self.player: Player = NoPlayer.NO_PLAYER
     
@@ -35,10 +36,12 @@ class Sound(SoundInterface, object):
     
 
     def getPlayerP(self) -> Player:
+        from javax.microedition.media.Player import Player
         return self.player
     
 
     def setPlayerP(self, player: Player) -> None:
+        from javax.microedition.media.Player import Player
         self.player = player
     
 
@@ -52,14 +55,16 @@ class Sound(SoundInterface, object):
     
 
     def run(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.player.start()
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             PreLogUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN)
 # from javax.microedition.media.Player import Player
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.audio.NoPlayer import NoPlayer
 
 

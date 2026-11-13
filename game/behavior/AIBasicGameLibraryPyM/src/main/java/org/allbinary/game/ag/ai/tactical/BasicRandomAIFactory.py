@@ -24,17 +24,24 @@ class BasicRandomAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
     # throws Exception
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.game.ag.ai.tactical.BasicRandomAI import BasicRandomAI
+        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+        from org.allbinary.game.ai.BasicAI import BasicAI
+        from org.allbinary.game.ag.ai.InputProbability import InputProbability
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
+        from org.allbinary.util.ABHashtable import ABHashtable
         visitor: Visitor = hashtable.get(BasicAI.AI_VISITOR)
         if visitor is None:
             raise Exception("No Visitor Provided")
         inputProbability: InputProbability = hashtable.get(InputProbability.INPUT_PROBABILITY)
         return BasicRandomAI(ownerLayerInterface, gameInput, inputProbability, visitor)
-from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
-from org.allbinary.game.ai.BasicAI import BasicAI
-from org.allbinary.game.ag.ai.InputProbability import InputProbability
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.util.visitor.Visitor import Visitor
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
+# from org.allbinary.game.ai.BasicAI import BasicAI
+# from org.allbinary.game.ag.ai.InputProbability import InputProbability
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

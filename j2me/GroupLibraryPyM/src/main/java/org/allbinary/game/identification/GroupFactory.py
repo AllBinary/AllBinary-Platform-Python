@@ -9,18 +9,22 @@
 # AllBinary or the root directory of AllBinary's AllBinary Platform repository.
 # 
 # Created By: Travis Berthelot
-#  
+#   
 # Generated Code Do Not Modify
 # package org.allbinary.game.identification
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GroupFactory:
     instance: GroupFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NULL_GROUP_ARRAY: list[Group] = [None] * (0)
         self.list_: BasicArrayList = BasicArrayListD()
@@ -49,14 +53,17 @@ class GroupFactory:
 
     def init(self, groups: int, nameArray: list[str]) -> None:
         from org.allbinary.game.identification.Group import Group
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringMaker: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         TEAM: str = "Team "
         self.list_.clear()
         self.index = 0
         size: int = self.list_.size()
+        name: str = None
         while size < groups:
-            name: str = stringUtil.EMPTY_STRING
+            name = stringUtil.EMPTY_STRING
             if size < len(nameArray):
                 name = nameArray[size]
             else:
@@ -64,12 +71,15 @@ class GroupFactory:
                 name = str(stringMaker.append(TEAM).appendint(size))
             self.list_.add(Group(name, ((int((size + 3)) + 32768) % 65536 - 32768)))
             size += 1
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-GroupFactory.instance = GroupFactory()
+def _GroupFactory_instance() -> object:
+    return GroupFactory()
+
+lazy_static(GroupFactory, "instance", _GroupFactory_instance)
 

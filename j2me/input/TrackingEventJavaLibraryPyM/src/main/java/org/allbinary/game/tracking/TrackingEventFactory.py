@@ -28,7 +28,8 @@ class TrackingEventFactory(AllBinaryEventObjectFactoryInterface):
     def getInstance(self) -> AllBinaryEventObject:
         from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         return TrackingEvent(TrackingEventHandler.getInstance())
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ArtificialIntelligenceInterfaceFactoryInterfaceFactory:
     SINGLETON: ArtificialIntelligenceInterfaceFactoryInterfaceFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.list_: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
 
     def __init__(self) -> None:
@@ -28,6 +31,7 @@ class ArtificialIntelligenceInterfaceFactoryInterfaceFactory:
     
 
     def clear(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_ = BasicArrayListD()
     
 
@@ -38,6 +42,7 @@ class ArtificialIntelligenceInterfaceFactoryInterfaceFactory:
 
     def getInstanceFromCollection(self, hashtable: ABHashtable[object, object]) -> ArtificialIntelligenceInterfaceFactoryInterface:
         from org.allbinary.game.ai.BasicAI import BasicAI
+        from org.allbinary.util.ABHashtable import ABHashtable
         typeInteger: int = hashtable.get(BasicAI.ID)
         type_: int = int(typeInteger)
         artificialIntelligenceInterfaceFactoryInterface: ArtificialIntelligenceInterfaceFactoryInterface = self.list_.objectArray[type_ - 1]
@@ -46,11 +51,14 @@ class ArtificialIntelligenceInterfaceFactoryInterfaceFactory:
 
     def add(self, artificialIntelligenceInterfaceFactoryInterface: ArtificialIntelligenceInterfaceFactoryInterface) -> None:
         self.list_.add(artificialIntelligenceInterfaceFactoryInterface)
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-ArtificialIntelligenceInterfaceFactoryInterfaceFactory.SINGLETON = ArtificialIntelligenceInterfaceFactoryInterfaceFactory()
+def _ArtificialIntelligenceInterfaceFactoryInterfaceFactory_SINGLETON() -> object:
+    return ArtificialIntelligenceInterfaceFactoryInterfaceFactory()
+
+lazy_static(ArtificialIntelligenceInterfaceFactoryInterfaceFactory, "SINGLETON", _ArtificialIntelligenceInterfaceFactoryInterfaceFactory_SINGLETON)
 

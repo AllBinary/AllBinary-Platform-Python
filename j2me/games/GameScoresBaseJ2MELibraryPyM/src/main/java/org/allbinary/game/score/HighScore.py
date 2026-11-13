@@ -20,6 +20,7 @@ from __future__ import annotations
 class HighScore:
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         self.id: int = None
         self.name: str = None
         self.gameInfo: GameInfo = None
@@ -28,6 +29,7 @@ class HighScore:
     
 
     def __init__(self, id: int, name: str, gameInfo: GameInfo, score: int) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
         self._init_fields()
         self.id = id
         self.name = name
@@ -50,6 +52,7 @@ class HighScore:
 
     # throws Exception
     def getAsBytes(self) -> list[int]:
+        from java.io.DataOutputStream import DataOutputStream
         byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
         outputStream: DataOutputStream = DataOutputStream(byteArrayOutputStream)
         outputStream.writeUTF(self.getName())
@@ -58,6 +61,7 @@ class HighScore:
     
 
     def getGameInfo(self) -> GameInfo:
+        from org.allbinary.game.GameInfo import GameInfo
         return self.gameInfo
     
 
@@ -70,6 +74,8 @@ class HighScore:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         return str(StringMaker().append(self.name).append(commonSeps.COLON).appendlong(self.score).append(commonSeps.FORWARD_SLASH).append(self.scoreString))
 
@@ -77,8 +83,8 @@ class HighScore:
         return self.toString()
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.DataOutputStream import DataOutputStream
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

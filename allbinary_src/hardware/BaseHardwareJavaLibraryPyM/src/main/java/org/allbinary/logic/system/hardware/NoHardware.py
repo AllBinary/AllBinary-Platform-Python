@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterface
 
 
@@ -28,6 +29,8 @@ class NoHardware(HardwareInterface):
     
 
     def getComponent(self, index: int) -> HardwareComponentInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+        from org.allbinary.logic.system.hardware.components.interfaces.NoHardwareComponent import NoHardwareComponent
         return NoHardwareComponent.getInstance()
     
 
@@ -43,12 +46,17 @@ class NoHardware(HardwareInterface):
     
 
     def difference(self, hardwareInterface: HardwareInterface) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
-from org.allbinary.logic.system.hardware.components.interfaces.NoHardwareComponent import NoHardwareComponent
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.NoHardwareComponent import NoHardwareComponent
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-NoHardware.instance = NoHardware()
+def _NoHardware_instance() -> object:
+    return NoHardware()
+
+lazy_static(NoHardware, "instance", _NoHardware_instance)
 

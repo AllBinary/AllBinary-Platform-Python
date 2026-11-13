@@ -21,11 +21,17 @@ from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandC
 class BasicPaintablesCanvas(GameCommandCanvas):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.paintableArray: list[Paintable] = None
         self.colorFillPaintable: ColorFillBasePaintable = None
     
 
     def __init__(self, cmdListener: CommandListener, name: str, allBinaryGameLayerManager: AllBinaryGameLayerManager, paintableArray: list[Paintable]) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
+        from org.allbinary.graphics.paint.Paintable import Paintable
         super().__init__(cmdListener, name, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
         self._init_fields()
         self.paintableArray = paintableArray
@@ -33,6 +39,7 @@ class BasicPaintablesCanvas(GameCommandCanvas):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.colorFillPaintable.paint(graphics)
         graphics.setColor(self.foregroundColor)
         for index in range(len(self.paintableArray) - 1, 0 - 1, -1):
@@ -40,9 +47,9 @@ class BasicPaintablesCanvas(GameCommandCanvas):
         super().paint(graphics)
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
-from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
-from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
+# from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
+# from org.allbinary.graphics.paint.Paintable import Paintable
 
 

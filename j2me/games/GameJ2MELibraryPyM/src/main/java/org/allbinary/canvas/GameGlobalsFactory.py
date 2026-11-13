@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameGlobalsFactory:
     instance: GameGlobalsFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
         self.newCanvas: bool = True
         self.newDisplaybleTime: int = int(-2147483648)
         self.point: GPoint = PointFactory.getInstance().ZERO_ZERO
@@ -32,9 +35,12 @@ class GameGlobalsFactory:
     @staticmethod
     def getInstance() -> GameGlobalsFactory:
         return GameGlobalsFactory.instance
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
 
 
-GameGlobalsFactory.instance = GameGlobalsFactory()
+def _GameGlobalsFactory_instance() -> object:
+    return GameGlobalsFactory()
+
+lazy_static(GameGlobalsFactory, "instance", _GameGlobalsFactory_instance)
 

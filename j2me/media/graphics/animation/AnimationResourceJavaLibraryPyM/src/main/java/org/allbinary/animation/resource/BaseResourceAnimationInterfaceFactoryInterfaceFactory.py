@@ -21,6 +21,9 @@ from org.allbinary.animation.resource.FeatureResourceAnimationInterfaceFactoryIn
 class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.hashtable: ABHashtable[object, object] = None
@@ -31,6 +34,7 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
     
 
     def __init__(self, name: str, hashtable: ABHashtable[object, object], rectangleHashtable: ABHashtable[object, object], rectangleArrayHashtable: ABHashtable[object, object]) -> None:
+        from org.allbinary.util.ABHashtable import ABHashtable
         self._init_fields()
         self.hashtable = hashtable
         self.rectangleHashtable = rectangleHashtable
@@ -44,6 +48,8 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
 
     # throws Exception
     def init(self, level: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(str(StringMaker().append("Available List of Animations: ").append(str(self.hashtable))), self, commonStrings.INIT)
         self.setInitialized(True)
@@ -51,11 +57,14 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
 
     # throws Exception
     def initImageCache(self, imageCache: ImageCache, level: int) -> None:
+        from org.allbinary.image.ImageCache import ImageCache
         pass
     
 
     # throws Exception
     def add(self, resource: str, animationInterfaceFactoryInterface: BasicAnimationInterfaceFactoryInterface) -> None:
+        from org.allbinary.animation.BasicAnimationInterfaceFactoryInterface import BasicAnimationInterfaceFactoryInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if self.hashtable.containsKey(resource):
             raise Exception(str(StringMaker().append("Resource Already Created: ").append(resource)))
         self.hashtable.put(resource, animationInterfaceFactoryInterface)
@@ -63,6 +72,8 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
 
     # throws Exception
     def getBasicAnimationInterfaceFactoryInstance(self, resource: str) -> BasicAnimationInterfaceFactoryInterface:
+        from org.allbinary.animation.BasicAnimationInterfaceFactoryInterface import BasicAnimationInterfaceFactoryInterface
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         basicAnimationInterfaceFactoryInterfaceCanBeNull: object = self.hashtable.get(resource)
         if basicAnimationInterfaceFactoryInterfaceCanBeNull is None:
             return NullAnimationFactory.NULL_NOT_FOR_USE_ANIMATION_FACTORY
@@ -71,6 +82,8 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
 
     # throws Exception
     def getRectangle(self, resource: str) -> Rectangle:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.RectangleFactory import RectangleFactory
         rectangleCanBeNull: object = self.rectangleHashtable.get(resource)
         if rectangleCanBeNull is None:
             return RectangleFactory.SINGLETON
@@ -79,16 +92,25 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
 
     # throws Exception
     def addRectangle(self, resource: str, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self.rectangleHashtable.put(resource, rectangle)
     
 
     # throws Exception
     def getRectangleArrayOfArrays(self, resource: str) -> list[list[Rectangle]]:
-        return self.rectangleArrayOfArraysHashtable.get(resource)
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.RectangleFactory import RectangleFactory
+        valueCanBeNull: object = self.rectangleArrayOfArraysHashtable.get(resource)
+        if valueCanBeNull is not None:
+            rectangleArrayOfArrays: list[list[Rectangle]] = valueCanBeNull
+            return rectangleArrayOfArrays
+        else:
+            return RectangleFactory.ARRAY_OF_ARRAYS
     
 
     # throws Exception
     def addRectangleArrayOfArrays(self, resource: str, rectangleArrayOfArrays: list[list[Rectangle]]) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
         self.rectangleArrayOfArraysHashtable.put(resource, rectangleArrayOfArrays)
     
 
@@ -97,6 +119,7 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
     
 
     def isLoadingLevel(self, level: int) -> bool:
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if level == resourceLoadingLevelFactory.LOAD_ALL.getLevel():
             return True
@@ -105,6 +128,8 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         return str(StringMaker().append(type(self).__module__ + "." + type(self).__qualname__).append(CommonSeps.getInstance().SEMICOLON).append(CommonSeps.getInstance().SPACE).append(self.name))
 
     def __str__(self) -> str:
@@ -112,14 +137,17 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.hashtable
     
 
     def getRectangleHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.rectangleHashtable
     
 
     def getRectangleArrayOfArraysHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.rectangleArrayOfArraysHashtable
     
 
@@ -129,16 +157,16 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
 
     def isInitialized(self) -> bool:
         return self.initialized
-from org.allbinary.animation.BasicAnimationInterfaceFactoryInterface import BasicAnimationInterfaceFactoryInterface
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.RectangleFactory import RectangleFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.animation.BasicAnimationInterfaceFactoryInterface import BasicAnimationInterfaceFactoryInterface
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.RectangleFactory import RectangleFactory
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

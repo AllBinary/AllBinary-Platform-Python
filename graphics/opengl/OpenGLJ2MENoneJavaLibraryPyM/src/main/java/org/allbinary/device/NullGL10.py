@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
-# from javax.microedition.khronos.opengles.GL10 import GL10
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.khronos.opengles.GL10 import GL10
 
 
 class NullGL10(GL10):
     NULL_GL10: NullGL10 = None
 
 
-NullGL10.NULL_GL10 = NullGL10()
+def _NullGL10_NULL_GL10() -> object:
+    return NullGL10()
+
+lazy_static(NullGL10, "NULL_GL10", _NullGL10_NULL_GL10)
 

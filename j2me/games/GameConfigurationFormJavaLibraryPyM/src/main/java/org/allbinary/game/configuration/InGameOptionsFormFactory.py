@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InGameOptionsFormFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.SINGLETON: CommandForm = CommandForm.getNullCommandForm()
 
@@ -31,6 +33,7 @@ class InGameOptionsFormFactory:
 
     @staticmethod
     def getInstance() -> InGameOptionsFormFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if InGameOptionsFormFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             InGameOptionsFormFactory.instance = InGameOptionsFormFactory()
         return InGameOptionsFormFactory.instance
@@ -38,6 +41,11 @@ class InGameOptionsFormFactory:
 
     def init(self, commandListener: CommandListener, initInterface: Init, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
         from org.allbinary.game.configuration.InGameOptionsForm import InGameOptionsForm
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+        from org.allbinary.init.Init import Init
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             if self.SINGLETON == CommandForm.getNullCommandForm():
                 initInterface.init()
@@ -48,12 +56,20 @@ class InGameOptionsFormFactory:
     
 
     def get(self) -> CommandForm:
+        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
         return self.SINGLETON
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
-from org.allbinary.init.Init import Init
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
+# from org.allbinary.init.Init import Init
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _InGameOptionsFormFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(InGameOptionsFormFactory, "instance", _InGameOptionsFormFactory_instance)
 

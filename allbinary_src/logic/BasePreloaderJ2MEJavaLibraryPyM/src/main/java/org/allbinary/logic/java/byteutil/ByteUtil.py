@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ByteUtil:
@@ -102,5 +103,8 @@ class ByteUtil:
         return True
 
 
-ByteUtil.instance = ByteUtil()
+def _ByteUtil_instance() -> object:
+    return ByteUtil()
+
+lazy_static(ByteUtil, "instance", _ByteUtil_instance)
 

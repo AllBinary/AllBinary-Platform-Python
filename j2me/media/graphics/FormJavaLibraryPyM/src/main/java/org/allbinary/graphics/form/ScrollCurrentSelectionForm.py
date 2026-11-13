@@ -15,8 +15,12 @@
 
 from __future__ import annotations
 
+from org.allbinary.canvas.Processor import Processor
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
+from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
+from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
 
 
 class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
@@ -82,6 +86,7 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
 
         # throws Exception
         def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
             return self.scrollCurrentSelectionForm.getXTempHorizontalForm(index, item, dx, dy)
     class HorizontalItemIndexDx(ItemIndexDx):
 
@@ -97,6 +102,7 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
 
         # throws Exception
         def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
             return self.scrollCurrentSelectionForm.getXHorizontalForm(index, item, dx, dy)
     class VerticalItemIndexDx(ItemIndexDx):
 
@@ -112,9 +118,12 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
 
         # throws Exception
         def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
             return self.scrollCurrentSelectionForm.getXVerticalForm(index, item, dx, dy)
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.moveForSmallScreen: bool = None
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
@@ -126,6 +135,8 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     
 
     def __init__(self, title: str, items: list[ABCustomItem], formPaintableFactory: ItemPaintableFactory, border: int, adjustedExtraBorder: int, moveForSmallScreen: bool, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         super().__init__(title, items, formPaintableFactory, border, adjustedExtraBorder, backgroundBasicColor, foregroundBasicColor)
         self._init_fields()
         self.moveForSmallScreen = moveForSmallScreen
@@ -134,12 +145,7 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     # throws Exception
     def init(self, rectangle: Rectangle, formType: FormType) -> None:
         from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
-        from org.allbinary.graphics.form.VerticalFormProcessor import VerticalFormProcessor
-        from org.allbinary.graphics.form.VerticalItemIndexDx import VerticalItemIndexDx
-        from org.allbinary.graphics.form.HorizontalFormProcessor import HorizontalFormProcessor
-        from org.allbinary.graphics.form.HorizontalItemIndexDx import HorizontalItemIndexDx
-        from org.allbinary.graphics.form.TempHorizontalFormProcessor import TempHorizontalFormProcessor
-        from org.allbinary.graphics.form.TempHorizontalItemIndexDx import TempHorizontalItemIndexDx
+        from org.allbinary.graphics.Rectangle import Rectangle
         super().init(rectangle, formType)
         formTypeFactory: FormTypeFactory = FormTypeFactory.getInstance()
         if formType == formTypeFactory.TEMP_HORIZONTAL_FORM:
@@ -159,6 +165,8 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
@@ -168,6 +176,7 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     
 
     def processHorizontalForm(self) -> None:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         size: int = self.size()
         totalWidth: int = 0
         item: ABCustomItem = None
@@ -183,6 +192,7 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     
 
     def processVerticalForm(self) -> None:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         totalHeight: int = 0
         size: int = self.size()
         item2: ABCustomItem = None
@@ -203,18 +213,22 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     
 
     def getXTempHorizontalForm(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return self.getDiffX(item)
     
 
     def getXHorizontalForm(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return 0
     
 
     def getXVerticalForm(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return self.getDiffX(item) + self.halfBorder
     
 
     def getDiffX(self, item: ABCustomItem) -> int:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return ((self.maxWidth - item.getMinimumWidth()) >> 1)
     
 
@@ -228,6 +242,8 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
 
     def paint(self, graphics: Graphics) -> None:
         from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         try:
             self.processor.process()
             delta: int = 0
@@ -256,12 +272,11 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.canvasStrings.PAINT, e)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
 
 

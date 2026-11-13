@@ -24,6 +24,8 @@ class RandomTranslation:
     @staticmethod
     def getInstance(vector: BasicArrayList, howMuch: int) -> BasicArrayList:
         from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         myRandomFactory: MyRandomFactory = MyRandomFactory.getInstance()
         x: int = -myRandomFactory.getNextInt(howMuch)
         y: int = myRandomFactory.getNextInt(howMuch)
@@ -31,7 +33,7 @@ class RandomTranslation:
         graphicsPipe.createMatrix()
         graphicsPipe.translate(x, y)
         return graphicsPipe.getMatrix()
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

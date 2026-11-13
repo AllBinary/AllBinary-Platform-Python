@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CellPositionFactory:
     SINGLETON: CellPositionFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NONE: CellPosition = CellPosition(-1, -1, -1, -1)
         self.cellPositionArray: list[list[CellPosition]] = [[None] * (0) for _ in range(0)]
@@ -38,6 +40,8 @@ class CellPositionFactory:
     
 
     def init(self, columns: int, rows: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Init: columns: ")
@@ -54,6 +58,8 @@ class CellPositionFactory:
     
 
     def getInstanceColRow(self, i_column: int, i_row: int) -> CellPosition:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             return self.cellPositionArray[i_column][i_row]
         except Exception as e:
@@ -77,11 +83,14 @@ class CellPositionFactory:
 
     def getRows(self) -> int:
         return self.rows
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.graphics.CellPosition import CellPosition
 
 
-CellPositionFactory.SINGLETON = CellPositionFactory()
+def _CellPositionFactory_SINGLETON() -> object:
+    return CellPositionFactory()
+
+lazy_static(CellPositionFactory, "SINGLETON", _CellPositionFactory_SINGLETON)
 

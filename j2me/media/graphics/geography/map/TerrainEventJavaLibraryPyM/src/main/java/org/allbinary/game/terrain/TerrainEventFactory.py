@@ -27,8 +27,10 @@ class TerrainEventFactory(AllBinaryEventObjectFactoryInterface):
 
     def getInstance(self) -> AllBinaryEventObject:
         from org.allbinary.game.terrain.TerrainEvent import TerrainEvent
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         return TerrainEvent(NullUtil.getInstance().NULL_OBJECT)
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

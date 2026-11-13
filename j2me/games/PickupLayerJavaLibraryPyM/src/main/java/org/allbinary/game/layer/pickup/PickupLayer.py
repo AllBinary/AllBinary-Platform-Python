@@ -23,12 +23,20 @@ from org.allbinary.game.layer.pickup.PickupableInterface import PickupableInterf
 class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         self.pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = CountedPickedUpLayerInterfaceFactory.NULL_COUNTED_PICKUP_LAYER_FACTORY
         self.destroyed: bool = False
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
     
 
     def __init__(self, name: str, remoteInfo: RemoteInfo, total: int, pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface, animationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.collision.CollidableAlwaysPickupNeverCollideBehaviorFactory import CollidableAlwaysPickupNeverCollideBehaviorFactory
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, BasicGroupFactory.getInstance().NONE_ARRAY, name, rectangle, viewPosition)
         self._init_fields()
         self.setCollidableInferface(CollidableAlwaysPickupNeverCollideBehaviorFactory.getInstance().createBehavior())
@@ -38,6 +46,7 @@ class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterf
     
 
     def init(self, pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface, animationInterface: Animation) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.pickedUpLayerInterfaceFactoryInterface = pickedUpLayerInterfaceFactoryInterface
         self.animationInterface = animationInterface
         self.setDestroyed(False)
@@ -48,6 +57,8 @@ class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterf
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         viewPosition: ViewPositionBase = self.getViewPosition()
         viewX: int = viewPosition.getX()
         viewY: int = viewPosition.getY()
@@ -55,6 +66,8 @@ class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterf
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         viewPosition: ViewPositionBase = self.getViewPosition()
         viewX: int = viewPosition.getX()
         viewY: int = viewPosition.getY()
@@ -74,6 +87,7 @@ class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterf
     
 
     def setDestroyed(self, destroyed: bool) -> None:
+        from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
         self.destroyed = destroyed
         if self.isDestroyed():
             DestroyedLayerProcessor.getInstance().add(self)
@@ -89,19 +103,21 @@ class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterf
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
+        from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
         openGLSurfaceChangedInterface: OpenGLSurfaceChangedInterface = self.animationInterface
         openGLSurfaceChangedInterface.set(gl)
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.game.collision.CollidableAlwaysPickupNeverCollideBehaviorFactory import CollidableAlwaysPickupNeverCollideBehaviorFactory
-from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.game.collision.CollidableAlwaysPickupNeverCollideBehaviorFactory import CollidableAlwaysPickupNeverCollideBehaviorFactory
+# from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
 
 

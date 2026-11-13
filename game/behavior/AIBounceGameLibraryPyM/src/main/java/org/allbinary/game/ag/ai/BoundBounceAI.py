@@ -21,12 +21,18 @@ from org.allbinary.game.ai.BasicAI import BasicAI
 class BoundBounceAI(BasicAI):
 
     def _init_fields(self) -> None:
+        from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
+        from org.allbinary.bounds.LayerBounds import LayerBounds
         self.currentRelativeAngle: int = 0
         self.layerBounds: LayerBounds = None
         self.boundsVisitorInterface: BoundsVisitorInterface = None
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput, layerBounds: LayerBounds, boundsVisitorInterface: BoundsVisitorInterface) -> None:
+        from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
+        from org.allbinary.bounds.LayerBounds import LayerBounds
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.layerBounds = layerBounds
@@ -34,19 +40,22 @@ class BoundBounceAI(BasicAI):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.Rectangle import Rectangle
         rectange: Rectangle = self.layerBounds.getRectangleP()
         graphics.drawRect(rectange.getPoint().getX(), rectange.getPoint().getY(), rectange.getWidth(), rectange.getHeight())
     
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.layerBounds.visit(self.boundsVisitorInterface)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
-from org.allbinary.bounds.LayerBounds import LayerBounds
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
+# from org.allbinary.bounds.LayerBounds import LayerBounds
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

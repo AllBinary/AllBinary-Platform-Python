@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlayerStateUtil:
     instance: PlayerStateUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.UNREALIZED: str = "UNREALIZED"
         self.REALIZED: str = "REALIZED"
@@ -38,6 +40,7 @@ class PlayerStateUtil:
     
 
     def convert(self, state: int) -> str:
+        from javax.microedition.media.Player import Player
         if state == Player.UNREALIZED:
             return self.UNREALIZED
         elif state == Player.REALIZED:
@@ -50,8 +53,11 @@ class PlayerStateUtil:
             return self.CLOSED
         return self.commonStrings.UNKNOWN
 # from javax.microedition.media.Player import Player
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-PlayerStateUtil.instance = PlayerStateUtil()
+def _PlayerStateUtil_instance() -> object:
+    return PlayerStateUtil()
+
+lazy_static(PlayerStateUtil, "instance", _PlayerStateUtil_instance)
 

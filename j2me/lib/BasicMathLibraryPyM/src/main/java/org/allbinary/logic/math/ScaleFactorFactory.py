@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScaleFactorFactory:
@@ -33,5 +34,8 @@ class ScaleFactorFactory:
         return ScaleFactorFactory.instance
 
 
-ScaleFactorFactory.instance = ScaleFactorFactory()
+def _ScaleFactorFactory_instance() -> object:
+    return ScaleFactorFactory()
+
+lazy_static(ScaleFactorFactory, "instance", _ScaleFactorFactory_instance)
 

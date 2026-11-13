@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreadPoolStrings:
@@ -34,5 +35,8 @@ class ThreadPoolStrings:
         return ThreadPoolStrings.instance
 
 
-ThreadPoolStrings.instance = ThreadPoolStrings()
+def _ThreadPoolStrings_instance() -> object:
+    return ThreadPoolStrings()
+
+lazy_static(ThreadPoolStrings, "instance", _ThreadPoolStrings_instance)
 

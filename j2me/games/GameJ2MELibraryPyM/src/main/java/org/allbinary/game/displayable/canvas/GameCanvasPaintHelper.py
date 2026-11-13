@@ -35,6 +35,7 @@ class GameCanvasPaintHelper(ProcessPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.gameCanvas.draw(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
 

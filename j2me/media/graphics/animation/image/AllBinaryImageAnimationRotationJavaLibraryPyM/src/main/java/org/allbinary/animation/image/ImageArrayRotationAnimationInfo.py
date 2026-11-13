@@ -20,6 +20,7 @@ from __future__ import annotations
 class ImageArrayRotationAnimationInfo:
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.imageArray: list[Image] = None
         self.angleIncrement: int = None
         self.totalAngle: int = None
@@ -28,6 +29,7 @@ class ImageArrayRotationAnimationInfo:
     
 
     def __init__(self, imageArray: list[Image], angleIncrement: int, totalAngle: int, dx: int, dy: int) -> None:
+        from javax.microedition.lcdui.Image import Image
         self._init_fields()
         self.imageArray = imageArray
         self.angleIncrement = angleIncrement
@@ -37,14 +39,17 @@ class ImageArrayRotationAnimationInfo:
     
 
     def setImageArray(self, imageArray: list[Image]) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.imageArray = imageArray
     
 
     def getImageArray(self) -> list[Image]:
+        from javax.microedition.lcdui.Image import Image
         return self.imageArray
     
 
     def getAngleInfoP(self) -> AngleInfo:
+        from org.allbinary.math.AngleInfo import AngleInfo
         return AngleInfo.getInstance(((int(self.angleIncrement) + 32768) % 65536 - 32768))
     
 
@@ -71,6 +76,6 @@ class ImageArrayRotationAnimationInfo:
     def getDy(self) -> int:
         return self.dy
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

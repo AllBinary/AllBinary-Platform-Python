@@ -21,6 +21,7 @@ from org.allbinary.input.gyro.SensorGameUpdateProcessor import SensorGameUpdateP
 class SingleSensorGameUpdateProcessor(SensorGameUpdateProcessor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
         self.accelerometerSensorUpdateProcessor: Processor = AccelerometerSensorUpdateProcessor()
         self.gyroSensorUpdateProcessor: Processor = GyroSensorUpdateProcessor()
 
@@ -37,7 +38,7 @@ class SingleSensorGameUpdateProcessor(SensorGameUpdateProcessor):
     # throws Exception
     def sendNotifications(self, anyType: object) -> None:
         pass
-from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.canvas.Processor import Processor
 from org.allbinary.input.gyro.AccelerometerSensorUpdateProcessor import AccelerometerSensorUpdateProcessor
 from org.allbinary.input.gyro.GyroSensorUpdateProcessor import GyroSensorUpdateProcessor
 

@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AngleFactory:
     instance: AngleFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from jsinterop.annotations.JsProperty import JsProperty
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.TOTAL_ANGLE: int = 360
         self.QUARTER_TOTAL_ANGLE: int = 90
@@ -36,6 +40,7 @@ class AngleFactory:
 
     @staticmethod
     def getInstance() -> AngleFactory:
+        from jsinterop.annotations.JsMethod import JsMethod
         return AngleFactory.instance
     
 
@@ -48,6 +53,8 @@ class AngleFactory:
         from org.allbinary.math.Angle import Angle
         from org.allbinary.math.NamedAngle import NamedAngle
         from org.allbinary.math.Angle import Angle
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         total: int = ((int(len(self.angleArray)) + 32768) % 65536 - 32768)
@@ -70,11 +77,13 @@ class AngleFactory:
     
 
     def getAt(self, index: int) -> Angle:
+        from jsinterop.annotations.JsMethod import JsMethod
         adjustedIndex: int = int(self.frameUtil.adjustAngleToFrameAngle(index))
         return self.angleArray[adjustedIndex]
     
 
     def getClosestDirection(self, angle: int) -> Angle:
+        from jsinterop.annotations.JsMethod import JsMethod
         if (angle >= 315 and angle < 360) or (angle >= 0 and angle < 45):
             return self.UP
         elif angle >= 45 and angle < 135:
@@ -87,28 +96,36 @@ class AngleFactory:
     
 
     def getGeneralDirection(self) -> Angle:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.NOT_ANGLE
     
 
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from jsinterop.annotations.JsMethod import JsMethod
         stringMaker: StringMaker = StringMaker()
         angleFactory: AngleFactory = AngleFactory.getInstance()
         for index in range(0, 360):
             stringMaker.appendint(index).append(CommonSeps.getInstance().FORWARD_SLASH).appendshort(((int(angleFactory.getClosestDirection(index).getValue()) + 32768) % 65536 - 32768)).append(CommonSeps.getInstance().NEW_LINE)
         LogUtil.getInstance().putF(str(stringMaker), "main", "main")
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsProperty import JsProperty
 from org.allbinary.math.NamedAngle import NamedAngle
 from org.allbinary.math.FrameUtil import FrameUtil
 
 
-AngleFactory.instance = AngleFactory()
+def _AngleFactory_instance() -> object:
+    return AngleFactory()
+
+lazy_static(AngleFactory, "instance", _AngleFactory_instance)
 

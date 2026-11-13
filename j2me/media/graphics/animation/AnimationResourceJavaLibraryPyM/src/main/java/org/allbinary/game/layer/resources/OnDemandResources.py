@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OnDemandResources:
     NULL_ON_DEMAND_RESOURCES: OnDemandResources = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -40,11 +42,16 @@ class OnDemandResources:
 
     # throws Exception
     def initAt(self, imageCache: ImageCache, resourceAnimationInterfaceFactoryInterfaceFactory: BaseResourceAnimationInterfaceFactoryInterfaceFactory, portion: int, loadingString: str, index: int) -> int:
+        from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.image.ImageCache import ImageCache
         return 0
-from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-OnDemandResources.NULL_ON_DEMAND_RESOURCES = OnDemandResources()
+def _OnDemandResources_NULL_ON_DEMAND_RESOURCES() -> object:
+    return OnDemandResources()
+
+lazy_static(OnDemandResources, "NULL_ON_DEMAND_RESOURCES", _OnDemandResources_NULL_ON_DEMAND_RESOURCES)
 

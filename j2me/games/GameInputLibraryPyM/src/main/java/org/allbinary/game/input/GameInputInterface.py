@@ -24,11 +24,12 @@ class GameInputInterface(NamedInterface):
 
     # throws Exception
     def processInput(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise NotImplementedError()
     
 
     def initInputProcessors(self) -> None:
         raise NotImplementedError()
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

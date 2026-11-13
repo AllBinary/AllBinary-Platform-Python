@@ -23,6 +23,11 @@ class MotionGestureEvent(AllBinaryEventObject):
     HASHCODE: str = " hashcode: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.motionGesture: MotionGestureInput = TouchMotionGestureFactory.getInstance().NO_MOTION
         self.id: int = None
         self.previousPoint: GPoint = PointFactory.getInstance().ZERO_ZERO
@@ -31,6 +36,7 @@ class MotionGestureEvent(AllBinaryEventObject):
     
 
     def __init__(self, source: object, id: int, motionGesture: MotionGestureInput) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         super().__init__(source)
         self._init_fields()
         self.id = id
@@ -38,30 +44,39 @@ class MotionGestureEvent(AllBinaryEventObject):
     
 
     def getMotionGesture(self) -> MotionGestureInput:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         return self.motionGesture
     
 
     def setMotionGesture(self, motionGesture: MotionGestureInput) -> None:
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         self.motionGesture = motionGesture
     
 
     def getPreviousPoint(self) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         return self.previousPoint
     
 
     def setPreviousPoint(self, previousPoint: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         self.previousPoint = previousPoint
     
 
     def getCurrentPoint(self) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         return self.currentPoint
     
 
     def setCurrentPoint(self, currentPoint: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         self.currentPoint = currentPoint
     
 
     def toString(self) -> str:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         stringBuffer.append(stringUtil.toString(self.motionGesture))
@@ -79,13 +94,13 @@ class MotionGestureEvent(AllBinaryEventObject):
 
     def getId(self) -> int:
         return self.id
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

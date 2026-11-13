@@ -22,8 +22,9 @@ class EventListenerInterface:
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
 
 

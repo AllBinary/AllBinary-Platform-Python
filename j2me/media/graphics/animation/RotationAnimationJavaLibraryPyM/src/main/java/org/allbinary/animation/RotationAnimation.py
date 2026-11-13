@@ -22,6 +22,10 @@ from org.allbinary.animation.RotationAnimationInterface import RotationAnimation
 class RotationAnimation(IndexedAnimation, RotationAnimationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.direction.DirectionUtil import DirectionUtil
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.math.FrameUtil import FrameUtil
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.frameUtil: FrameUtil = FrameUtil.getInstance()
         self.directionUtil: DirectionUtil = DirectionUtil.getInstance()
         self.angleInfo: AngleInfo = None
@@ -29,6 +33,8 @@ class RotationAnimation(IndexedAnimation, RotationAnimationInterface):
     
 
     def __init__(self, angleInfo: AngleInfo, circularIndexUtil: CircularIndexUtil, animationBehavior: AnimationBehavior) -> None:
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(animationBehavior)
         self._init_fields()
         self.angleInfo = angleInfo
@@ -66,15 +72,19 @@ class RotationAnimation(IndexedAnimation, RotationAnimationInterface):
     
 
     def setFrameByDirection(self, direction: Direction) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.math.Angle import Angle
         angle: Angle = self.directionUtil.getFrameAngle(direction)
         self.adjustFrameToAngle(angle)
     
 
     def setFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrameToAngle(angle)
     
 
     def adjustFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         self.adjustFrame(angle.getValue())
     
 
@@ -91,20 +101,22 @@ class RotationAnimation(IndexedAnimation, RotationAnimationInterface):
     
 
     def getAngleInfoP(self) -> AngleInfo:
+        from org.allbinary.math.AngleInfo import AngleInfo
         return self.angleInfo
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(str(super())).append("circularIndexUtil: ").append(str(self.circularIndexUtil)).append("angleInfo: ").append(str(self.angleInfo)))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionUtil import DirectionUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.Angle import Angle
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.math.FrameUtil import FrameUtil
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionUtil import DirectionUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.math.FrameUtil import FrameUtil
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

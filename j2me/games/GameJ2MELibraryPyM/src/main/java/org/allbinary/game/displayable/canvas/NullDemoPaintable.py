@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.DemoPaintableInterface import DemoPaintableInterface
 
 
@@ -26,5 +27,8 @@ class NullDemoPaintable(DemoPaintableInterface):
         pass
 
 
-NullDemoPaintable.NULL_DEMO_PAINTABLE = NullDemoPaintable()
+def _NullDemoPaintable_NULL_DEMO_PAINTABLE() -> object:
+    return NullDemoPaintable()
+
+lazy_static(NullDemoPaintable, "NULL_DEMO_PAINTABLE", _NullDemoPaintable_NULL_DEMO_PAINTABLE)
 

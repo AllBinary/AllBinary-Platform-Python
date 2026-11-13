@@ -22,6 +22,9 @@ from org.allbinary.animation.text.TextInterface import TextInterface
 class CustomTextAnimation(TextAnimation, TextInterface):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.graphics.font.FontDebugFactory import FontDebugFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.fontDebugFactory: FontDebugFactory = FontDebugFactory.getInstance()
         self.fontSize: int = None
         self.font: Font = None
@@ -31,6 +34,8 @@ class CustomTextAnimation(TextAnimation, TextInterface):
     
 
     def __init__(self, text: str, fontSize: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(text, animationBehavior)
         self._init_fields()
         self.fontSize = fontSize
@@ -38,6 +43,8 @@ class CustomTextAnimation(TextAnimation, TextInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         existingFont: Font = graphics.getFont()
         self.fontDebugFactory.setFont(self.font, graphics)
@@ -46,10 +53,15 @@ class CustomTextAnimation(TextAnimation, TextInterface):
     
 
     def setScale(self, scaleX: float, scaleY: float) -> None:
+        from javax.microedition.lcdui.Font import Font
         if scaleX != scaleY:
             raise RuntimeError()
         self.hasChanged = True
         self.font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, int((float(self.fontSize) * scaleX)))
+    
+
+    def setTextWithOnMeasure(self, text: str, textChangeListener: TextChangeListener) -> None:
+        super().setTextWithOnMeasure(text, textChangeListener)
     
 
     def setText(self, text: str) -> None:
@@ -74,8 +86,8 @@ class CustomTextAnimation(TextAnimation, TextInterface):
         return self.font.getHeight()
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.font.FontDebugFactory import FontDebugFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.font.FontDebugFactory import FontDebugFactory
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

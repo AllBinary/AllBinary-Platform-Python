@@ -21,6 +21,7 @@ from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventOb
 class InputMappingEvent(AllBinaryEventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         self.inputToGameKeyMapping: InputToGameKeyMapping = InputToGameKeyMapping.getNullInstance()
     
 
@@ -30,11 +31,13 @@ class InputMappingEvent(AllBinaryEventObject):
     
 
     def setInputToGameKeyMapping(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         self.inputToGameKeyMapping = inputToGameKeyMapping
     
 
     def getInputToGameKeyMapping(self) -> InputToGameKeyMapping:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         return self.inputToGameKeyMapping
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
 

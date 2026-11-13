@@ -22,11 +22,15 @@ from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSou
 class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, GameKeyEventSourceInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.gameKey: GameKey = GameKey.NULL_GAME_KEY
         self.gameKeyEvent: GameKeyEvent = GameKeyEvent.NONE
     
 
     def __init__(self, name: str, motionGestureInput: MotionGestureInput, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         super().__init__(name, motionGestureInput)
         self._init_fields()
     
@@ -40,22 +44,26 @@ class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, Ga
     
 
     def setGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         self.gameKeyEvent = gameKeyEvent
     
 
     def getGameKeyEvent(self) -> GameKeyEvent:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         return self.gameKeyEvent
     
 
     def setGameKey(self, gameKey: GameKey) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
         self.gameKey = gameKey
     
 
     def getGameKey(self) -> GameKey:
+        from org.allbinary.game.input.GameKey import GameKey
         return self.gameKey
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
 
 

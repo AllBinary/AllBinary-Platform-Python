@@ -21,6 +21,9 @@ from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
 class AbstractArrayListPool(PoolInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.buffers: BasicArrayList = BasicArrayListD()
         self.cacheableInterfaceFactoryInterface: CacheableInterfaceFactoryInterface = None
@@ -50,8 +53,8 @@ class AbstractArrayListPool(PoolInterface):
     def addArray(self, cacheableInterfaces: list[CacheableInterface]) -> None:
         for index in range(0, len(cacheableInterfaces)):
             self.buffers.add(cacheableInterfaces[index])
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

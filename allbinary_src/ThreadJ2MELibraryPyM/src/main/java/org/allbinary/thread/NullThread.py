@@ -16,9 +16,15 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullThread:
-    NULL_THREAD: threading.Thread = threading.Thread()
+    NULL_THREAD: threading.Thread = None
 
+
+def _NullThread_NULL_THREAD() -> object:
+    return threading.Thread()
+
+lazy_static(NullThread, "NULL_THREAD", _NullThread_NULL_THREAD)
 

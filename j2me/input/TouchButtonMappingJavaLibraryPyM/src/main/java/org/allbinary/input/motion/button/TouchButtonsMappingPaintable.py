@@ -21,6 +21,7 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class TouchButtonsMappingPaintable(Paintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.foregroundColor: int = None
         self.paintableTable: list[list[Paintable]] = [[None] * (0) for _ in range(0)]
@@ -28,6 +29,7 @@ class TouchButtonsMappingPaintable(Paintable):
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         self.foregroundColor = int(basicColor)
@@ -35,6 +37,7 @@ class TouchButtonsMappingPaintable(Paintable):
     
 
     def init(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.paintableTable = self.createPaintableTable()
         except Exception as e:
@@ -48,6 +51,7 @@ class TouchButtonsMappingPaintable(Paintable):
         from org.allbinary.input.motion.button.TouchButton import TouchButton
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
         from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
+        from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
         totalColumns: int = self.touchButtonLocationHelper.getTotalColumns()
         totalRows: int = self.touchButtonLocationHelper.getTotalRows()
         paintableTable: list[list[Paintable]] = [[None] * (totalRows) for _ in range(totalColumns)]
@@ -60,16 +64,17 @@ class TouchButtonsMappingPaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         totalColumns: int = self.touchButtonLocationHelper.getTotalColumns()
         totalRows: int = self.touchButtonLocationHelper.getTotalRows()
         for index in range(totalColumns - 1, 0 - 1, -1):
             for rowIndex in range(totalRows - 1, 0 - 1, -1):
                 self.paintableTable[index][rowIndex].paint(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
 
 

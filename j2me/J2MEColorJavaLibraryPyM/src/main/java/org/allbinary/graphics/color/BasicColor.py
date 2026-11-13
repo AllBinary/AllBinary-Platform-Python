@@ -20,6 +20,7 @@ from __future__ import annotations
 class BasicColor:
 
     def _init_fields(self) -> None:
+        from jsinterop.annotations.JsProperty import JsProperty
         self.name: str = None
         self.value: int = None
         self.redComponent: float = None
@@ -34,6 +35,7 @@ class BasicColor:
 
     def __init__(self, alphaValue: int, value: int, name: str) -> None:
         from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
         self.name = name
         tempValue: int = 0
@@ -61,14 +63,18 @@ class BasicColor:
     
 
     def intValue(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.value
     
 
     def toInt(self) -> int:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.value
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from jsinterop.annotations.JsMethod import JsMethod
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("BasicColor: ")
         stringBuffer.append("Alpha: ")
@@ -88,27 +94,32 @@ class BasicColor:
     
 
     def getName(self) -> str:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.name
     
 
     def getRedComponent(self) -> float:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.redComponent
     
 
     def getGreenComponent(self) -> float:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.greenComponent
     
 
     def getBlueComponent(self) -> float:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.blueComponent
     
 
     def getAlphaComponent(self) -> float:
+        from jsinterop.annotations.JsMethod import JsMethod
         return self.alphaComponent
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.logic.string.StringMaker import StringMaker
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from jsinterop.annotations.JsProperty import JsProperty
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
+# from jsinterop.annotations.JsProperty import JsProperty
 
 

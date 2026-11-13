@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RendererStateFactory:
@@ -49,5 +50,8 @@ class RendererStateFactory:
         return self.surfaceChanged
 
 
-RendererStateFactory.instance = RendererStateFactory()
+def _RendererStateFactory_instance() -> object:
+    return RendererStateFactory()
+
+lazy_static(RendererStateFactory, "instance", _RendererStateFactory_instance)
 

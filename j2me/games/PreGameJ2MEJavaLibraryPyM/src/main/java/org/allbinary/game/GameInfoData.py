@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameInfoData:
@@ -38,5 +39,8 @@ class GameInfoData:
         self._init_fields()
 
 
-GameInfoData.instance = GameInfoData()
+def _GameInfoData_instance() -> object:
+    return GameInfoData()
+
+lazy_static(GameInfoData, "instance", _GameInfoData_instance)
 

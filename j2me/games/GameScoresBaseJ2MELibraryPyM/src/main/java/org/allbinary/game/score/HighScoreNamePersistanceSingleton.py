@@ -15,12 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HighScoreNamePersistanceSingleton:
     SINGLETON: HighScoreNamePersistanceSingleton = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -39,11 +47,14 @@ class HighScoreNamePersistanceSingleton:
     
 
     def clear(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.name = StringUtil.getInstance().EMPTY_STRING
     
 
     # throws Exception
     def deleteAll(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         size: int = self.nameBasicArrayList.size()
         for index in range(0, size):
             integer: int = self.nameBasicArrayList.objectArray[index]
@@ -52,11 +63,18 @@ class HighScoreNamePersistanceSingleton:
     
 
     def getRecordId(self, abeClientInformation: AbeClientInformationInterface) -> str:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         return self.platformRecordIdUtil.getRecordId(abeClientInformation, self.RECORD_ID)
     
 
     # throws Exception
     def delete(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, deleteId: int) -> None:
+        from javax.microedition.rms.RecordStore import RecordStore
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             self.logUtil.putF(str(StringMaker().append("Deleting: ").appendint(deleteId)), self, self.commonStrings.delete)
@@ -71,10 +89,25 @@ class HighScoreNamePersistanceSingleton:
     
 
     def getIds(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.nameBasicArrayList
     
 
     def load(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo) -> str:
+        from java.io.DataInputStream import DataInputStream
+        from javax.microedition.rms.RecordEnumeration import RecordEnumeration
+        from javax.microedition.rms.RecordStore import RecordStore
+        from javax.microedition.rms.RecordStoreException import RecordStoreException
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+        from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
+        from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             if self.name == StringUtil.getInstance().EMPTY_STRING:
@@ -108,6 +141,14 @@ class HighScoreNamePersistanceSingleton:
     
 
     def save(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, name: str) -> None:
+        from java.io.DataOutputStream import DataOutputStream
+        from javax.microedition.rms.RecordStore import RecordStore
+        from javax.microedition.rms.RecordStoreException import RecordStoreException
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             self.logUtil.putF(str(StringMaker().append("Saving: ").append(name)), self, self.commonStrings.SAVE)
@@ -134,23 +175,26 @@ class HighScoreNamePersistanceSingleton:
 # from javax.microedition.rms.RecordEnumeration import RecordEnumeration
 # from javax.microedition.rms.RecordStore import RecordStore
 # from javax.microedition.rms.RecordStoreException import RecordStoreException
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
-from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
-from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+# from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
+# from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-HighScoreNamePersistanceSingleton.SINGLETON = HighScoreNamePersistanceSingleton()
+def _HighScoreNamePersistanceSingleton_SINGLETON() -> object:
+    return HighScoreNamePersistanceSingleton()
+
+lazy_static(HighScoreNamePersistanceSingleton, "SINGLETON", _HighScoreNamePersistanceSingleton_SINGLETON)
 

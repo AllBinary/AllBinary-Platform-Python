@@ -25,6 +25,24 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     id: int = 0
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+        from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
+        from org.allbinary.game.input.GameInputStrings import GameInputStrings
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.graphics.form.PaintableForm import PaintableForm
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.repaintProcessor: Processor = ScreenRepaintProcessorFactory.getInstance().create(self)
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
         self.foregroundBasicColor: BasicColor = None
@@ -47,6 +65,11 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def __init__(self, cmdListener: CommandListener, name: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from javax.microedition.lcdui.NullCommandListener import NullCommandListener
+        from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
         super().__init__(name, CanvasStrings.getInstance().EMPTY_CHILD_NAME_LIST)
         self._init_fields()
         self.repaintBehavior = RepaintBehavior.getInstance()
@@ -64,6 +87,12 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             font: Font = graphics.getFont()
             self.logUtil.putF(str(StringMaker().append(self.commonStrings.START).append(self.canvasStrings.FD_WIDTH).appendint(int(MyFontProcessor.defaultCharWidth(font))).append(self.canvasStrings.FD_HEIGHT).appendint(int(font.getHeight()))), self, self.canvasStrings.UPDATE_MEASUREMENT)
@@ -77,15 +106,23 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onDisplayChangeEvent(self, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(self.commonStrings.START).append(str(DisplayInfoSingleton.getInstance()))), self, self.canvasStrings.ON_DISPLAY_CHANGE_EVENT)
         self.myFontProcessor = self.updateMyFontProcessor
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         self.removeAllCommands()
         self.addCommand(GameCommandsFactory.getInstance().CLOSE_AND_SHOW_GAME_CANVAS)
         self.setCommandListener(cmdListener)
@@ -94,6 +131,10 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     # throws Exception
     def initMenu(self) -> None:
         from org.allbinary.game.displayable.canvas.ImmediateCommandFormInputProcessor import ImmediateCommandFormInputProcessor
+        from org.allbinary.graphics.form.FormPaintable import FormPaintable
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.graphics.form.ScrollSelectionFormNoneFactory import ScrollSelectionFormNoneFactory
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         form: ScrollSelectionForm = self.createForm()
         self.menuForm = form
         if form != ScrollSelectionFormNoneFactory.getInstance():
@@ -104,12 +145,22 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
 
     # throws Exception
     def createForm(self) -> ScrollSelectionForm:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.form.CommandCurrentSelectionFormFactory import CommandCurrentSelectionFormFactory
+        from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.graphics.form.item.validation.AllCommandsVisitor import AllCommandsVisitor
+        from org.allbinary.logic.string.StringUtil import StringUtil
         items: list[ABCustomItem] = CommandTextItemArrayFactory(AllCommandsVisitor()).getInstance(self.getCommandStack(), self.backgroundBasicColor, self.foregroundBasicColor)
         rectangle: Rectangle = self.createRectangle(len(items))
         return CommandCurrentSelectionFormFactory.getInstance(StringUtil.getInstance().EMPTY_STRING, items, rectangle, FormTypeFactory.getInstance().VERTICAL_CENTER_FORM, 15, False, self.backgroundBasicColor, self.foregroundBasicColor)
     
 
     def createRectangle(self, size: int) -> Rectangle:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
         height: int = size * self.fontHeight
         startY: int = (self.displayInfo.getLastHeight() * 2 / 3) - height
         pointFactory: PointFactory = PointFactory.getInstance()
@@ -118,6 +169,9 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def open(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         self.logUtil.putF(self.commonStrings.START, self, "open")
         BasicMotionGesturesHandler.getInstance().addListenerInterface(self.getMenuInputProcessor())
         GameKeyEventHandler.getInstance().addListener(self.getMenuInputProcessor())
@@ -126,6 +180,9 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
 
     # throws Exception
     def close(self) -> None:
+        from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CLOSE)
         BasicMotionGesturesHandler.getInstance().removeListener(self.getMenuInputProcessor())
         GameKeyEventHandler.getInstance().removeListener(self.getMenuInputProcessor())
@@ -154,6 +211,8 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def keyPressedByDevice(self, keyCode: int, deviceId: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.logUtil.putF(str(StringMaker().append(CommonSeps.getInstance().SPACE).appendint(keyCode)), self, self.gameInputStrings.KEY_PRESSED)
         self.addGameKeyEvent(keyCode, 0, False)
     
@@ -168,6 +227,9 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def addGameKeyEvent(self, keyCode: int, deviceId: int, repeated: bool) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             gameKey: GameKey = self.inputToGameKeyMapping.getInstanceForCanvas(self, keyCode)
             if gameKey != self.gameKeyFactory.NONE:
@@ -181,6 +243,9 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def removeGameKeyEvent(self, keyCode: int, deviceId: int, repeated: bool) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             gameKey: GameKey = self.inputToGameKeyMapping.getInstanceForCanvas(self, keyCode)
             if gameKey != self.gameKeyFactory.NONE:
@@ -194,6 +259,7 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         self.menuPaintable.paint(graphics)
         self.repaintBehavior.repaint(self)
@@ -209,50 +275,50 @@ class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, Upda
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.NullCommandListener import NullCommandListener
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
-from org.allbinary.game.input.GameInputStrings import GameInputStrings
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
-from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
-from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.graphics.form.CommandCurrentSelectionFormFactory import CommandCurrentSelectionFormFactory
-from org.allbinary.graphics.form.FormPaintable import FormPaintable
-from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
-from org.allbinary.graphics.form.PaintableForm import PaintableForm
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.graphics.form.ScrollSelectionFormNoneFactory import ScrollSelectionFormNoneFactory
-from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.graphics.form.item.validation.AllCommandsVisitor import AllCommandsVisitor
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+# from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
+# from org.allbinary.game.input.GameInputStrings import GameInputStrings
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
+# from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
+# from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+# from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.graphics.form.CommandCurrentSelectionFormFactory import CommandCurrentSelectionFormFactory
+# from org.allbinary.graphics.form.FormPaintable import FormPaintable
+# from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+# from org.allbinary.graphics.form.PaintableForm import PaintableForm
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.graphics.form.ScrollSelectionFormNoneFactory import ScrollSelectionFormNoneFactory
+# from org.allbinary.graphics.form.item.CommandTextItemArrayFactory import CommandTextItemArrayFactory
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.graphics.form.item.validation.AllCommandsVisitor import AllCommandsVisitor
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
 
 

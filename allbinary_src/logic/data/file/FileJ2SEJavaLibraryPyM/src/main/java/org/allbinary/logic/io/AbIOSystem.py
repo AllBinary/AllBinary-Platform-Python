@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbIOSystem:
@@ -43,5 +44,8 @@ class AbIOSystem:
             return False
 
 
-AbIOSystem.instance = AbIOSystem()
+def _AbIOSystem_instance() -> object:
+    return AbIOSystem()
+
+lazy_static(AbIOSystem, "instance", _AbIOSystem_instance)
 

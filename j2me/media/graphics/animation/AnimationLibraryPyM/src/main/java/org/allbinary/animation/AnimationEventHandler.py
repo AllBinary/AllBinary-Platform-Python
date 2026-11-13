@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -38,5 +39,8 @@ class AnimationEventHandler(BasicEventHandler):
         return AnimationEventHandler.eventHandler
 
 
-AnimationEventHandler.eventHandler = AnimationEventHandler()
+def _AnimationEventHandler_eventHandler() -> object:
+    return AnimationEventHandler()
+
+lazy_static(AnimationEventHandler, "eventHandler", _AnimationEventHandler_eventHandler)
 

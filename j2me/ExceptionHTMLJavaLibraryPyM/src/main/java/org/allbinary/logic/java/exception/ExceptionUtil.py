@@ -16,12 +16,13 @@
 from __future__ import annotations
 
 import traceback
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
 class ExceptionUtil:
     instance: ExceptionUtil = None
-    PRETEND_EXCEPTION: Exception = Exception("Not Really An Exception")
+    PRETEND_EXCEPTION: Exception = None
 
     def _init_fields(self) -> None:
         self.NONE: str = "No Stack Trace"
@@ -39,8 +40,16 @@ class ExceptionUtil:
     def getStackTrace(self, e: BaseException) -> str:
         traceback.print_exception(e)
         return self.NONE
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-ExceptionUtil.instance = ExceptionUtil()
+def _ExceptionUtil_instance() -> object:
+    return ExceptionUtil()
+
+lazy_static(ExceptionUtil, "instance", _ExceptionUtil_instance)
+
+def _ExceptionUtil_PRETEND_EXCEPTION() -> object:
+    return Exception("Not Really An Exception")
+
+lazy_static(ExceptionUtil, "PRETEND_EXCEPTION", _ExceptionUtil_PRETEND_EXCEPTION)
 

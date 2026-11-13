@@ -22,13 +22,15 @@ class OverScanColorFillPaintable(ColorFillPaintable):
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(basicColor)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.setColor(self.colorP)
         graphics.fillRect(-graphics.getClipX(), -graphics.getClipY(), self.displayInfoSingleton.getLastWidth() + (graphics.getClipX() * 2), self.displayInfoSingleton.getLastHeight() + (graphics.getClipY() * 2))
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

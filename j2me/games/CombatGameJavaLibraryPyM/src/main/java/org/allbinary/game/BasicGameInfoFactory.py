@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicGameInfoFactory:
@@ -40,5 +41,8 @@ class BasicGameInfoFactory:
         return self.total - self.currentDestroyIndex
 
 
-BasicGameInfoFactory.SINGLETON = BasicGameInfoFactory()
+def _BasicGameInfoFactory_SINGLETON() -> object:
+    return BasicGameInfoFactory()
+
+lazy_static(BasicGameInfoFactory, "SINGLETON", _BasicGameInfoFactory_SINGLETON)
 

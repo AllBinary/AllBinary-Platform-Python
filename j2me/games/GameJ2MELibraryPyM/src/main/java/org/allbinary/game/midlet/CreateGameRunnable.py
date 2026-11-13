@@ -20,6 +20,9 @@ from __future__ import annotations
 class CreateGameRunnable(object):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.demoGameMidlet: DemoGameMidlet = None
@@ -30,6 +33,7 @@ class CreateGameRunnable(object):
     def __init__(self, demoGameMidlet: DemoGameMidlet, hashtable: ABHashtable[object, object]) -> None:
         from org.allbinary.game.midlet.DemoGameMidletEvent import DemoGameMidletEvent
         from org.allbinary.game.midlet.DemoGameMidletStateFactory import DemoGameMidletStateFactory
+        from org.allbinary.util.ABHashtable import ABHashtable
         self._init_fields()
         self.demoGameMidlet = demoGameMidlet
         self.hashtable = hashtable
@@ -38,6 +42,9 @@ class CreateGameRunnable(object):
 
     def run(self) -> None:
         from org.allbinary.game.midlet.DemoGameMidletEventHandler import DemoGameMidletEventHandler
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
         try:
             self.logUtil.putF(self.commonStrings.START_RUNNABLE, self, self.commonStrings.RUN)
             progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -50,11 +57,11 @@ class CreateGameRunnable(object):
             self.logUtil.putF(self.commonStrings.END_RUNNABLE, self, self.commonStrings.RUN)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

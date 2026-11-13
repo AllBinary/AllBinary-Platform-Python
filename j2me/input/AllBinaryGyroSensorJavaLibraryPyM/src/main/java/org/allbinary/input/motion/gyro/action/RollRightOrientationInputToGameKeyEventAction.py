@@ -15,24 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class RollRightOrientationInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
     
 
     @staticmethod
     def getInstance() -> GameKeyCompleteMotionGestureInputEvent:
+        from org.allbinary.logic.NullUtil import NullUtil
         if RollRightOrientationInputToGameKeyEventAction.instance == NullUtil.getInstance().NULL_OBJECT:
             RollRightOrientationInputToGameKeyEventAction.instance = RollRightOrientationInputToGameKeyEventAction()
         return RollRightOrientationInputToGameKeyEventAction.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+        from org.allbinary.input.gyro.OrientationMotionGestureFactory import OrientationMotionGestureFactory
         super().__init__("Roll Right Action", OrientationMotionGestureFactory.getInstance().ROLL_RIGHT, PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping())
-from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
-from org.allbinary.input.gyro.OrientationMotionGestureFactory import OrientationMotionGestureFactory
+# from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
+# from org.allbinary.input.gyro.OrientationMotionGestureFactory import OrientationMotionGestureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _RollRightOrientationInputToGameKeyEventAction_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(RollRightOrientationInputToGameKeyEventAction, "instance", _RollRightOrientationInputToGameKeyEventAction_instance)
 

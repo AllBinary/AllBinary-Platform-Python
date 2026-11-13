@@ -23,15 +23,24 @@ class GameAdState(GameAdStateBase, VirtualKeyboardEventListenerInterface):
     
 
     def __init__(self, adConfiguration: AdConfiguration) -> None:
+        from org.allbinary.business.advertisement.AdConfiguration import AdConfiguration
+        from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
         super().__init__(adConfiguration)
         VirtualKeyboardEventHandler.getInstance().addListenerInterface(self)
     
 
     # throws Exception
     def onVirtualKeyboardEvent(self, virtualKeyboardEvent: VirtualKeyboardEvent) -> None:
+        from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
         pass
-from org.allbinary.business.advertisement.AdConfiguration import AdConfiguration
-from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
-from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
+    
+
+    def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        super().onEvent(eventObject)
+# from org.allbinary.business.advertisement.AdConfiguration import AdConfiguration
+# from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
+# from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

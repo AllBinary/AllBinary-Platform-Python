@@ -21,11 +21,16 @@ from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
 class BasicCrypt(CryptInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
         self.byteUtil: ByteUtil = ByteUtil.getInstance()
         self.key: list[int] = None
     
 
     def __init__(self, keyAsString: str) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         key: list[int] = NullUtil.getInstance().NULL_BYTE_ARRAY
         try:
@@ -37,6 +42,8 @@ class BasicCrypt(CryptInterface):
     
 
     def encrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             return self.mutilate(array)
         except Exception as e:
@@ -45,6 +52,8 @@ class BasicCrypt(CryptInterface):
     
 
     def decrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             return self.mutilate(array)
         except Exception as e:
@@ -58,10 +67,10 @@ class BasicCrypt(CryptInterface):
             value = self.key[index]
             array = self.byteUtil.xor(array, value)
         return array
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

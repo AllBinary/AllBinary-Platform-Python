@@ -16,16 +16,17 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
 
 
 class DownKeyEventHandler(DownKeyEventHandlerBase):
     instance: DownKeyEventHandler = None
-    instanceArray: list[DownKeyEventHandlerBase] = [DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase()]
+    instanceArray: list[DownKeyEventHandlerBase] = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.LocalPlayerInputIdFactory import LocalPlayerInputIdFactory
         self.playerInputIdFactory: LocalPlayerInputIdFactory = LocalPlayerInputIdFactory.getInstance()
     
 
@@ -55,6 +56,7 @@ class DownKeyEventHandler(DownKeyEventHandlerBase):
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         super().removeListenerSingleThreaded(eventListenerInterface)
         for index in range(len(DownKeyEventHandler.instanceArray) - 1, 0 - 1, -1):
             DownKeyEventHandler.instanceArray[index].removeListenerSingleThreaded(eventListenerInterface)
@@ -65,12 +67,27 @@ class DownKeyEventHandler(DownKeyEventHandlerBase):
             return self._removeListener_unlocked(eventListenerInterface)
 
     def _removeListener_unlocked(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         super().removeListener(eventListenerInterface)
         for index in range(len(DownKeyEventHandler.instanceArray) - 1, 0 - 1, -1):
             DownKeyEventHandler.instanceArray[index].removeListener(eventListenerInterface)
-from org.allbinary.game.input.LocalPlayerInputIdFactory import LocalPlayerInputIdFactory
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.game.input.LocalPlayerInputIdFactory import LocalPlayerInputIdFactory
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-DownKeyEventHandler.instance = DownKeyEventHandler()
+def _DownKeyEventHandler_instance() -> object:
+    return DownKeyEventHandler()
+
+lazy_static(DownKeyEventHandler, "instance", _DownKeyEventHandler_instance)
+
+def _DownKeyEventHandler_instanceArray() -> object:
+    from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+    from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+    from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+    from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+    from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+    from org.allbinary.game.input.event.DownKeyEventHandlerBase import DownKeyEventHandlerBase
+    return [DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase(), DownKeyEventHandlerBase()]
+
+lazy_static(DownKeyEventHandler, "instanceArray", _DownKeyEventHandler_instanceArray)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLFeatureUtil:
@@ -34,5 +35,8 @@ class OpenGLFeatureUtil:
         return False
 
 
-OpenGLFeatureUtil.instance = OpenGLFeatureUtil()
+def _OpenGLFeatureUtil_instance() -> object:
+    return OpenGLFeatureUtil()
+
+lazy_static(OpenGLFeatureUtil, "instance", _OpenGLFeatureUtil_instance)
 

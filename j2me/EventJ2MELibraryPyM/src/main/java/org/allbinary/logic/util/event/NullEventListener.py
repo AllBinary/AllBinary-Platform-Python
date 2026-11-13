@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
@@ -26,5 +27,8 @@ class NullEventListener(EventListenerInterface):
         pass
 
 
-NullEventListener.NULL_EVENT_LISTENER = NullEventListener()
+def _NullEventListener_NULL_EVENT_LISTENER() -> object:
+    return NullEventListener()
+
+lazy_static(NullEventListener, "NULL_EVENT_LISTENER", _NullEventListener_NULL_EVENT_LISTENER)
 

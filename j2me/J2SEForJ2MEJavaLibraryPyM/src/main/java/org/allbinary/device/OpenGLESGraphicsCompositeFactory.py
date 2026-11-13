@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLESGraphicsCompositeFactory:
@@ -41,5 +42,8 @@ class OpenGLESGraphicsCompositeFactory:
 from org.allbinary.device.OpenGLESGraphicsFactory import OpenGLESGraphicsFactory
 
 
-OpenGLESGraphicsCompositeFactory.instance = OpenGLESGraphicsCompositeFactory()
+def _OpenGLESGraphicsCompositeFactory_instance() -> object:
+    return OpenGLESGraphicsCompositeFactory()
+
+lazy_static(OpenGLESGraphicsCompositeFactory, "instance", _OpenGLESGraphicsCompositeFactory_instance)
 

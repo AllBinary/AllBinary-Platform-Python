@@ -23,6 +23,7 @@ class Memory:
 
     @staticmethod
     def getInfo() -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Memory: Free: ")
         stringBuffer.appendlong(int(Runtime.getRuntime().freeMemory()))
@@ -31,6 +32,6 @@ class Memory:
         stringBuffer.append(" Total: ")
         stringBuffer.appendlong(int(Runtime.getRuntime().totalMemory()))
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

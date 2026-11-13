@@ -21,10 +21,12 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class LineAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor: BasicColor = None
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self._init_fields()
         self.basicColor = basicColor
     
@@ -32,13 +34,15 @@ class LineAnimationFactory(AnimationInterfaceFactoryInterface):
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.vector.LineAnimation import LineAnimation
+        from org.allbinary.animation.Animation import Animation
         return LineAnimation(self.basicColor)
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

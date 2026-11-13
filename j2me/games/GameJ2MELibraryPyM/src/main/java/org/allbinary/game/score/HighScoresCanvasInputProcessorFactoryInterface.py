@@ -22,7 +22,8 @@ class HighScoresCanvasInputProcessorFactoryInterface:
     
 
     def getInstance(self, highScoresCanvas: HighScoresCanvas) -> HighScoresCanvasInputProcessor:
+        from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         raise NotImplementedError()
-from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
+# from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
 
 

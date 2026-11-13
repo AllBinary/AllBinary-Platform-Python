@@ -16,12 +16,13 @@
 from __future__ import annotations
 
 import traceback
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
 class ExceptionUtil:
     instance: ExceptionUtil = None
-    PRETEND_EXCEPTION: Exception = Exception("Not Really An Exception")
+    PRETEND_EXCEPTION: Exception = None
 
     def _init_fields(self) -> None:
         self.NONE: str = "No Stack Trace"
@@ -42,12 +43,19 @@ class ExceptionUtil:
             printStream: PrintStream = PrintStream(byteArrayOutputStream)
             e.printStackTrace(printStream)
             output: str = str(byteArrayOutputStream)
-            if output is not None:
-                return str(output)
+            return str(output)
         return self.NONE
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.PrintStream import PrintStream
 
 
-ExceptionUtil.instance = ExceptionUtil()
+def _ExceptionUtil_instance() -> object:
+    return ExceptionUtil()
+
+lazy_static(ExceptionUtil, "instance", _ExceptionUtil_instance)
+
+def _ExceptionUtil_PRETEND_EXCEPTION() -> object:
+    return Exception("Not Really An Exception")
+
+lazy_static(ExceptionUtil, "PRETEND_EXCEPTION", _ExceptionUtil_PRETEND_EXCEPTION)
 

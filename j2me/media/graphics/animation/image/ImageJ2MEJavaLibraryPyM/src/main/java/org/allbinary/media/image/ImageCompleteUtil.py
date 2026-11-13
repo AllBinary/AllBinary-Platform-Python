@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCompleteUtil:
@@ -28,9 +29,13 @@ class ImageCompleteUtil:
 
     # throws Exception
     def waitForImage(self, image: Image, name: str) -> None:
+        from javax.microedition.lcdui.Image import Image
         pass
 # from javax.microedition.lcdui.Image import Image
 
 
-ImageCompleteUtil.instance = ImageCompleteUtil()
+def _ImageCompleteUtil_instance() -> object:
+    return ImageCompleteUtil()
+
+lazy_static(ImageCompleteUtil, "instance", _ImageCompleteUtil_instance)
 

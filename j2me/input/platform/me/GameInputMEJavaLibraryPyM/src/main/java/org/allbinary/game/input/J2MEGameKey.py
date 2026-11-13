@@ -31,6 +31,7 @@ class J2MEGameKey(Input):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append("J2MEGameKey: ").append(str(super())))
 
     def __str__(self) -> str:
@@ -40,12 +41,13 @@ class J2MEGameKey(Input):
     @staticmethod
     def getString(keyCode: int) -> str:
         from org.allbinary.game.input.InputFactory import InputFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
         input: Input = InputFactory.getInstance().getInstanceById(keyCode)
         if input is not None:
             return input.getName()
         else:
             return StringUtil.getInstance().EMPTY_STRING
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

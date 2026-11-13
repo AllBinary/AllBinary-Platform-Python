@@ -18,12 +18,65 @@ from __future__ import annotations
 import time
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 from org.allbinary.game.score.HighScoresResultsListener import HighScoresResultsListener
+from org.allbinary.thread.ARunnable import ARunnable
 
 
 class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
     NAME: str = "HighScoresCanvas"
+    class HighScoreRunnable(ARunnable):
+
+        def _init_fields(self) -> None:
+            self.highScoresCanvas: HighScoresCanvas = None
+        
+
+        def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
+            super().__init__()
+            self._init_fields()
+            self.highScoresCanvas = highScoresCanvas
+        
+
+        def run(self) -> None:
+            from org.allbinary.J2MEUtil import J2MEUtil
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.logic.string.StringMaker import StringMaker
+            from org.allbinary.string.CommonStrings import CommonStrings
+            from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+            commonStrings: CommonStrings = CommonStrings.getInstance()
+            logUtil: LogUtil = LogUtil.getInstance()
+            highScoresCanvas: HighScoresCanvas = self.highScoresCanvas
+            try:
+                isHTML: bool = J2MEUtil.isHTML()
+                if not isHTML:
+                    while not highScoresCanvas.hasPainted:
+                        pass
+                    highScoresCanvas.hasPainted = False
+                stringMaker: StringMaker = StringMaker()
+                systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
+                currentTimeMillis: int = systemWrapper.currentTimeMillis()
+                logUtil.putF(str(stringMaker.append("HighScoresCanvas - Request repaint to be sure: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
+                highScoresCanvas.repaintBehavior.onChangeRepaint(highScoresCanvas)
+                if not isHTML:
+                    while not highScoresCanvas.hasPainted:
+                        pass
+                stringMaker.delete(0, stringMaker.length())
+                logUtil.putF(str(stringMaker.append("HighScoresCanvas - Now that the canvas has completed repaint go ahead and fetch the scores: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
+                highScoresCanvas.executeUpdate()
+            except Exception as e:
+                logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
+        from org.allbinary.game.score.HighScoreCommandsFactory import HighScoreCommandsFactory
+        from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
+        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
+        from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
+        from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
+        from org.allbinary.graphics.paint.SimpleTextPaintable import SimpleTextPaintable
         self.paintable: Paintable = NullPaintable.getInstance()
         self.highScoreCommandsFactory: HighScoreCommandsFactory = HighScoreCommandsFactory.getInstance()
         self.waitPaintable: SimpleTextPaintable = SimpleTextPaintable(self.commonStrings.PLEASE_WAIT_FOR_SERVER, BasicColorFactory.getInstance().WHITE)
@@ -38,7 +91,15 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
     
 
     def __init__(self, commandListener: CommandListener, allBinaryGameLayerManager: AllBinaryGameLayerManager, gameInfo: GameInfo, paintable: HighScoresPaintable, highScoresFactoryInterface: HighScoresFactoryInterface, highScoresCanvasInputProcessorFactoryInterface: HighScoresCanvasInputProcessorFactoryInterface) -> None:
-        from org.allbinary.game.score.displayable.HighScoreRunnable import HighScoreRunnable
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
+        from org.allbinary.game.score.HighScoresCanvasInputProcessorFactoryInterface import HighScoresCanvasInputProcessorFactoryInterface
+        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
+        from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
+        from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
+        from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
         super().__init__(commandListener, HighScoresCanvas.NAME, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -49,51 +110,18 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
         self.waitPaintable.setBasicColorP(allBinaryGameLayerManager.getForegroundBasicColor())
         self.getHighScoresPaintable().setBasicColorP(allBinaryGameLayerManager.getForegroundBasicColor())
         self.colorFillPaintable = ColorFillPaintableFactory.getInstance().getInstance(allBinaryGameLayerManager.getBackgroundBasicColor(), False)
-        if self.highScoresHelper.getHighScoresArray() == NoHighScoresFactory.getInstance().NO_HIGH_SCORES:
+        if len(self.highScoresHelper.getHighScoresArray()) == len(NoHighScoresFactory.getInstance().NO_HIGH_SCORES):
             self.setPaintable(self.waitPaintable)
         else:
             self.logUtil.putF("Show HighScores that are already loaded", self, self.commonStrings.CONSTRUCTOR)
             self.updateCommand(self.currentCommand)
             self.setPaintable(self.getHighScoresPaintable())
-        class HighScoreRunnable(ARunnable):
-
-            def _init_fields(self) -> None:
-                self.highScoresCanvas: HighScoresCanvas = None
-            
-
-            def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
-                super().__init__()
-                self._init_fields()
-                self.highScoresCanvas = highScoresCanvas
-            
-
-            def run(self) -> None:
-                commonStrings: CommonStrings = CommonStrings.getInstance()
-                logUtil: LogUtil = LogUtil.getInstance()
-                highScoresCanvas: HighScoresCanvas = self.highScoresCanvas
-                try:
-                    isHTML: bool = J2MEUtil.isHTML()
-                    if not isHTML:
-                        while not highScoresCanvas.hasPainted:
-                            pass
-                        highScoresCanvas.hasPainted = False
-                    stringMaker: StringMaker = StringMaker()
-                    systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
-                    currentTimeMillis: int = systemWrapper.currentTimeMillis()
-                    logUtil.putF(str(stringMaker.append("HighScoresCanvas - Request repaint to be sure: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
-                    highScoresCanvas.repaintBehavior.onChangeRepaint(highScoresCanvas)
-                    if not isHTML:
-                        while not highScoresCanvas.hasPainted:
-                            pass
-                    stringMaker.delete(0, stringMaker.length())
-                    logUtil.putF(str(stringMaker.append("HighScoresCanvas - Now that the canvas has completed repaint go ahead and fetch the scores: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
-                    highScoresCanvas.executeUpdate()
-                except Exception as e:
-                    logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
         SecondaryThreadPool.getInstance().runTask(HighScoreRunnable(self))
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         self.removeAllCommands()
         self.addCommand(GameCommandsFactory.getInstance().CLOSE_AND_SHOW_GAME_CANVAS)
         self.setCommandListener(cmdListener)
@@ -111,6 +139,7 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.colorFillPaintable.paint(graphics)
         self.paintable.paint(graphics)
         if self.waitPaintable != self.paintable:
@@ -127,10 +156,13 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
     
 
     def getHighScoresPaintable(self) -> HighScoresPaintable:
+        from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
         return self.highScoresPaintable
     
 
     def setHighScoresArray(self, highScoresArray: list[HighScores]) -> None:
+        from org.allbinary.game.score.HighScores import HighScores
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             if highScoresArray is not None:
                 self.logUtil.putF(str(StringMaker().append(self.commonStrings.START).appendint(len(highScoresArray))), self, "setHighScoresArray")
@@ -145,6 +177,11 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
 
     # throws Exception
     def updateCommand(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+        from org.allbinary.game.score.HighScores import HighScores
+        from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(self.commonStrings.START).append(self.stringUtil.toString(command))), self, self.commonStrings.UPDATE)
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         if self.highScoreCommandsFactory.isHighScoreCommand(command):
@@ -169,39 +206,40 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
     
 
     def getGameInfo(self) -> GameInfo:
+        from org.allbinary.game.GameInfo import GameInfo
         return self.gameInfo
     
 
     def setPaintable(self, paintable: Paintable) -> None:
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.paintable = paintable
         self.repaintBehavior.onChangeRepaint(self)
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
-from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
-from org.allbinary.game.score.HighScoreCommandsFactory import HighScoreCommandsFactory
-from org.allbinary.game.score.HighScores import HighScores
-from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
-from org.allbinary.game.score.HighScoresCanvasInputProcessorFactoryInterface import HighScoresCanvasInputProcessorFactoryInterface
-from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
-from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
-from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
-from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
-from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.graphics.paint.SimpleTextPaintable import SimpleTextPaintable
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.ARunnable import ARunnable
-from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
+# from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
+# from org.allbinary.game.score.HighScoreCommandsFactory import HighScoreCommandsFactory
+# from org.allbinary.game.score.HighScores import HighScores
+# from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
+# from org.allbinary.game.score.HighScoresCanvasInputProcessorFactoryInterface import HighScoresCanvasInputProcessorFactoryInterface
+# from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
+# from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
+# from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
+# from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
+# from org.allbinary.game.score.NullHighScoresSingletonFactory import NullHighScoresSingletonFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.graphics.paint.SimpleTextPaintable import SimpleTextPaintable
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
 
 

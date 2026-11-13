@@ -21,6 +21,9 @@ from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 class DemoGameRunnable(GameRunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.demoCanvas: DemoCanvas = None
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
@@ -33,6 +36,7 @@ class DemoGameRunnable(GameRunnable):
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.demoCanvas.getLoopTimeHelperP().setStartTime(self.gameTickTimeDelayHelper.setStartTime())
             self.demoCanvas.processGame()
@@ -44,9 +48,9 @@ class DemoGameRunnable(GameRunnable):
     # throws Exception
     def processLoopSleep(self) -> None:
         self.demoCanvas.processLoopSleep()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 
 

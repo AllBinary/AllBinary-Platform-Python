@@ -21,12 +21,16 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class VectorRotationAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.NullUtil import NullUtil
         self.currentPoints: list[list[list[int]]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY_ARRAY
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self._init_fields()
         self.currentPoints = currentPoints
         self.setBasicColorP(basicColor)
@@ -40,18 +44,21 @@ class VectorRotationAnimationInterfaceFactory(AnimationInterfaceFactoryInterface
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

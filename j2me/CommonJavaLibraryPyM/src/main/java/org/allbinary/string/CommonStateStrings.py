@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommonStateStrings:
@@ -43,5 +44,8 @@ class CommonStateStrings:
         return CommonStateStrings.instance
 
 
-CommonStateStrings.instance = CommonStateStrings()
+def _CommonStateStrings_instance() -> object:
+    return CommonStateStrings()
+
+lazy_static(CommonStateStrings, "instance", _CommonStateStrings_instance)
 

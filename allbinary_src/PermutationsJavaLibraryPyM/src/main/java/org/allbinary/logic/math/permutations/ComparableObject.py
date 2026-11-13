@@ -21,11 +21,12 @@ class ComparableObject(object):
     
 
     def compareTo(self, anyType: object) -> int:
+        from org.allbinary.TsUtil import TsUtil
         if TsUtil.getInstance().hashCode(self) < TsUtil.getInstance().hashCode(anyType):
             return -1
         elif TsUtil.getInstance().hashCode(self) > TsUtil.getInstance().hashCode(anyType):
             return 1
         return 0
-from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.TsUtil import TsUtil
 
 

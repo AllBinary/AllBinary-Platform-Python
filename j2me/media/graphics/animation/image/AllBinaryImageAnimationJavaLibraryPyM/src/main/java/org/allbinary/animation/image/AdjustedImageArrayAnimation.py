@@ -26,6 +26,8 @@ class AdjustedImageArrayAnimation(ImageArrayAnimation):
     
 
     def __init__(self, imageArray: list[Image], dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(imageArray, animationBehavior)
         self._init_fields()
         self.init(dx, dy)
@@ -38,6 +40,7 @@ class AdjustedImageArrayAnimation(ImageArrayAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, x + self.dx, y + self.dy)
     
 
@@ -57,6 +60,6 @@ class AdjustedImageArrayAnimation(ImageArrayAnimation):
         return self.dy
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
 
 

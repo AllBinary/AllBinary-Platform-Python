@@ -21,6 +21,12 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.animationBehaviorFactory: AnimationBehaviorFactory = None
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
@@ -34,6 +40,7 @@ class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
 
     @staticmethod
     def createDXY(text: str, fontSize: int, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> CustomTextAnimationFactory:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         customTextAnimationFactory: CustomTextAnimationFactory = CustomTextAnimationFactory(text, fontSize, animationBehaviorFactory)
         customTextAnimationFactory.dx = dx
         customTextAnimationFactory.dy = dy
@@ -41,6 +48,9 @@ class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def __init__(self, text: str, fontSize: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self._init_fields()
         self.scaleProperties = ScaleProperties()
         self.text = text
@@ -54,6 +64,7 @@ class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.text.CustomTextAnimation import CustomTextAnimation
         from org.allbinary.animation.text.AdjustCustomTextAnimation import AdjustCustomTextAnimation
+        from org.allbinary.animation.Animation import Animation
         customTextAnimation: CustomTextAnimation = None
         if self.dx != 0 or self.dy != 0:
             customTextAnimation = AdjustCustomTextAnimation(self.text, self.scaleProperties.scaleHeight, self.dx, self.dy, self.animationBehaviorFactory.getOrCreateInstance())
@@ -64,6 +75,7 @@ class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
     
 
@@ -74,11 +86,11 @@ class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
     def getHeight(self) -> int:
         return self.font.getHeight()
 # from javax.microedition.lcdui.Font import Font
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

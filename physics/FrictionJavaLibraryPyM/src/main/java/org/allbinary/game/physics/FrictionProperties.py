@@ -25,9 +25,12 @@ class FrictionProperties:
     
 
     def friction(self, velocityProperties: VelocityProperties, nominator: int) -> None:
+        from org.allbinary.game.physics.friction.FrictionData import FrictionData
+        from org.allbinary.game.physics.velocity.DragVelocityBehavior import DragVelocityBehavior
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         DragVelocityBehavior.instance.reduce(velocityProperties, nominator, FrictionData.getFrictionDenominator())
-from org.allbinary.game.physics.friction.FrictionData import FrictionData
-from org.allbinary.game.physics.velocity.DragVelocityBehavior import DragVelocityBehavior
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.game.physics.friction.FrictionData import FrictionData
+# from org.allbinary.game.physics.velocity.DragVelocityBehavior import DragVelocityBehavior
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
 
 

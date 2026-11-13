@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LockableFeatureFactory:
     instance: LockableFeatureFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -33,10 +36,14 @@ class LockableFeatureFactory:
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-LockableFeatureFactory.instance = LockableFeatureFactory()
+def _LockableFeatureFactory_instance() -> object:
+    return LockableFeatureFactory()
+
+lazy_static(LockableFeatureFactory, "instance", _LockableFeatureFactory_instance)
 

@@ -24,6 +24,8 @@ class LogFactory:
     @staticmethod
     def getInstanceD() -> Log:
         from org.allbinary.logic.communication.log.Log import Log
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
         nullUtil: NullUtil = NullUtil.getInstance()
         return Log(stringUtil.EMPTY_STRING, nullUtil.NULL_OBJECT, stringUtil.EMPTY_STRING, nullUtil.NULL_OBJECT)
@@ -32,6 +34,7 @@ class LogFactory:
     @staticmethod
     def getInstanceNoF(specialMessage: str, anyType: object, exception: object) -> Log:
         from org.allbinary.logic.communication.log.Log import Log
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return Log(specialMessage, anyType, StringUtil.getInstance().EMPTY_STRING, exception)
     
 
@@ -44,9 +47,10 @@ class LogFactory:
     @staticmethod
     def getInstanceF(specialMessage: str, anyType: object, functionName: str) -> Log:
         from org.allbinary.logic.communication.log.Log import Log
+        from org.allbinary.logic.NullUtil import NullUtil
         nullUtil: NullUtil = NullUtil.getInstance()
         return Log(specialMessage, anyType, functionName, nullUtil.NULL_OBJECT)
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

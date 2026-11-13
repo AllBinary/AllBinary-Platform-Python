@@ -21,6 +21,7 @@ from org.allbinary.input.motion.button.BaseTouchInput import BaseTouchInput
 class NoButtonsBuilder(BaseTouchInput):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -29,6 +30,8 @@ class NoButtonsBuilder(BaseTouchInput):
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
             list_: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
@@ -36,8 +39,8 @@ class NoButtonsBuilder(BaseTouchInput):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_LIST, e)
             return BasicArrayListUtil.getInstance().getImmutableInstance()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GraphicsStrings:
@@ -39,5 +40,8 @@ class GraphicsStrings:
         return GraphicsStrings.instance
 
 
-GraphicsStrings.instance = GraphicsStrings()
+def _GraphicsStrings_instance() -> object:
+    return GraphicsStrings()
+
+lazy_static(GraphicsStrings, "instance", _GraphicsStrings_instance)
 

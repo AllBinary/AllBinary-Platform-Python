@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.GPoint import GPoint
 
 
@@ -66,5 +67,8 @@ class CustomGPoint(GPoint):
         return self.cz
 
 
-CustomGPoint.NULL_CUSTOM_POINT = CustomGPoint(0, 0, 0)
+def _CustomGPoint_NULL_CUSTOM_POINT() -> object:
+    return CustomGPoint(0, 0, 0)
+
+lazy_static(CustomGPoint, "NULL_CUSTOM_POINT", _CustomGPoint_NULL_CUSTOM_POINT)
 

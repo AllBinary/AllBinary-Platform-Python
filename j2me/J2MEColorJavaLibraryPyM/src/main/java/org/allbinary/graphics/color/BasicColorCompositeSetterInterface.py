@@ -22,8 +22,9 @@ class BasicColorCompositeSetterInterface:
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         raise NotImplementedError()
-from jsinterop.annotations.JsType import JsType
-from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsMethod import JsMethod
 
 

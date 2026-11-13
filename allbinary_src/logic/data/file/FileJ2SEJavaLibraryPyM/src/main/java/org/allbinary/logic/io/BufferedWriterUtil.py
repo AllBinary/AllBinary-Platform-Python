@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BufferedWriterUtil:
     instance: BufferedWriterUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonLabels: CommonLabels = CommonLabels.getInstance()
@@ -37,6 +41,9 @@ class BufferedWriterUtil:
 
     # throws Exception
     def overwrite(self, path: str, data: str) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         abFile: AbFile = AbFile.createAbFile(path)
         if abFile.exists():
             self.logUtil.putF(self.REMOVING_OLD + path, self, self.commonStrings.CREATE)
@@ -58,6 +65,9 @@ class BufferedWriterUtil:
     # throws Exception
     # Java overloaded method: Python keeps the last definition
     def overwrite(self, abFile: AbFile, data: str) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if abFile.exists():
             self.logUtil.putF(self.REMOVING_OLD + str(abFile.getPath()), self, self.commonStrings.CREATE)
             abFile.delete()
@@ -77,20 +87,25 @@ class BufferedWriterUtil:
 
     # throws Exception
     def write(self, abFile: AbFile, data: str) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         fileOut: BufferedWriter = BufferedWriter(FileWriter(AbFileNativeUtil.get(abFile)))
         fileOut.write(data, 0, len(data))
         fileOut.newLine()
         fileOut.flush()
 # from java.io.BufferedWriter import BufferedWriter
 # from java.io.FileWriter import FileWriter
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-BufferedWriterUtil.instance = BufferedWriterUtil()
+def _BufferedWriterUtil_instance() -> object:
+    return BufferedWriterUtil()
+
+lazy_static(BufferedWriterUtil, "instance", _BufferedWriterUtil_instance)
 

@@ -26,6 +26,8 @@ class SpinnerAI(BasicAI):
     
 
     def __init__(self, direction: list[int], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        from org.allbinary.game.input.GameInput import GameInput
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
         self._init_fields()
         self.direction = direction
@@ -33,6 +35,8 @@ class SpinnerAI(BasicAI):
 
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.isEven:
             super().processKeyAI(self.direction[0])
             self.isEven = False
@@ -40,8 +44,8 @@ class SpinnerAI(BasicAI):
             super().processKeyAI(Canvas.KEY_NUM1)
             self.isEven = True
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.input.GameInput import GameInput
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.GameInput import GameInput
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

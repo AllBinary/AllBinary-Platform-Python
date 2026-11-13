@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PATH_GLOBALS:
@@ -34,6 +35,9 @@ class PATH_GLOBALS:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
         abPathData: AbPathData = AbPathData.getInstance()
@@ -60,10 +64,13 @@ class PATH_GLOBALS:
         stringBuffer.append("views")
         stringBuffer.append(abPathData.SEPARATOR)
         self.VIEWS_PATH = str(stringBuffer)
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-PATH_GLOBALS.instance = PATH_GLOBALS()
+def _PATH_GLOBALS_instance() -> object:
+    return PATH_GLOBALS()
+
+lazy_static(PATH_GLOBALS, "instance", _PATH_GLOBALS_instance)
 

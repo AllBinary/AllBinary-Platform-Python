@@ -26,15 +26,17 @@ class DirectionalInterface:
     
 
     def setFrameToAngle(self, angle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         raise NotImplementedError()
     
 
     def adjustFrameToAngle(self, newAngle: Angle) -> None:
+        from org.allbinary.math.Angle import Angle
         raise NotImplementedError()
     
 
     def adjustFrame(self, angle: int) -> None:
         raise NotImplementedError()
-from org.allbinary.math.Angle import Angle
+# from org.allbinary.math.Angle import Angle
 
 

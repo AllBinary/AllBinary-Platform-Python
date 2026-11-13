@@ -24,7 +24,8 @@ class LifeLayerFactory(AllBinaryLayerFactoryInterface):
     # throws Exception
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.game.ag.layer.pickup.life.LifeLayer import LifeLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return LifeLayer()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

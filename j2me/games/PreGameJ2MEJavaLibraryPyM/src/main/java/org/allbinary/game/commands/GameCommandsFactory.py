@@ -15,13 +15,17 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameCommandsFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.TOGGLE_FULLSCREEN: Command = Command("Toggle FullScreen", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
         self.TOGGLE_KEYBOARD: Command = Command("Keyboard", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
         self.SET_MENU_DISPLAYABLE: Command = Command("Set Menu Displayable", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
@@ -53,6 +57,7 @@ class GameCommandsFactory:
 
     @staticmethod
     def getInstance() -> GameCommandsFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameCommandsFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             GameCommandsFactory.instance = GameCommandsFactory()
         return GameCommandsFactory.instance
@@ -61,8 +66,15 @@ class GameCommandsFactory:
     def __init__(self) -> None:
         self._init_fields()
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _GameCommandsFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameCommandsFactory, "instance", _GameCommandsFactory_instance)
 

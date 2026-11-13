@@ -26,6 +26,9 @@ class GameLayerUtil:
 
     @staticmethod
     def isOnScreen(layer: AllBinaryLayer) -> bool:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         viewPosition: ViewPositionBase = layer.getViewPosition()
         return GameLayerUtil.isInside(viewPosition.getX(), viewPosition.getY(), viewPosition.getX2(), viewPosition.getY2(), 0, 0, displayInfo.getLastWidth(), displayInfo.getLastHeight())
@@ -37,8 +40,8 @@ class GameLayerUtil:
             return True
         else:
             return False
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

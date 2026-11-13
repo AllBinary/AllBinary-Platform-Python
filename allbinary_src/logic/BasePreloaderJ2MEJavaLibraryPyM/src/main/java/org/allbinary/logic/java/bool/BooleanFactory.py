@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BooleanFactory:
@@ -44,5 +45,8 @@ class BooleanFactory:
             return self.FALSE_STRING
 
 
-BooleanFactory.instance = BooleanFactory()
+def _BooleanFactory_instance() -> object:
+    return BooleanFactory()
+
+lazy_static(BooleanFactory, "instance", _BooleanFactory_instance)
 

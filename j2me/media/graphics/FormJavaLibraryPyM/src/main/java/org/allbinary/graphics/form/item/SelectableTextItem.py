@@ -22,6 +22,7 @@ class SelectableTextItem(ABTextItem):
     
 
     def __init__(self, label: str, layout: int, altText: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(label, layout, altText, backgroundBasicColor, foregroundBasicColor)
     
 
@@ -30,12 +31,13 @@ class SelectableTextItem(ABTextItem):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         stringComponent: ABStringComponent = self.getLabelStringComponent()
         if stringComponent is not None:
             graphics.setColor(int(stringComponent.getForegroundBasicColor()))
         graphics.drawString(self.getLabel(), x + 2, y, 0)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

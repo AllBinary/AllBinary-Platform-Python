@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PersistanceStrings:
@@ -42,5 +43,8 @@ class PersistanceStrings:
         return PersistanceStrings.instance
 
 
-PersistanceStrings.instance = PersistanceStrings()
+def _PersistanceStrings_instance() -> object:
+    return PersistanceStrings()
+
+lazy_static(PersistanceStrings, "instance", _PersistanceStrings_instance)
 

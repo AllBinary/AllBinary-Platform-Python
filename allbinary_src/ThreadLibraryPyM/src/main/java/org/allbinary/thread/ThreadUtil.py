@@ -16,12 +16,14 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreadUtil:
     instance: ThreadUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.JOIN: str = "join"
 
@@ -46,8 +48,11 @@ class ThreadUtil:
         if ThreadUtil.getInstance().isRunning(thread):
             self.logUtil.putF("Waiting for Thread To Join/End", self, self.JOIN)
             thread.join()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-ThreadUtil.instance = ThreadUtil()
+def _ThreadUtil_instance() -> object:
+    return ThreadUtil()
+
+lazy_static(ThreadUtil, "instance", _ThreadUtil_instance)
 

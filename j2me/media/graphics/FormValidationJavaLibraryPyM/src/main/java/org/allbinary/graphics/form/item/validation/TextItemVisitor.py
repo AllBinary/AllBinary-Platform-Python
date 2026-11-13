@@ -26,11 +26,12 @@ class TextItemVisitor(Visitor):
     
 
     def visit(self, anyType: object) -> object:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         value: str = anyType
         if len(value) < 2:
             return BooleanFactory.getInstance().TRUE
         else:
             return BooleanFactory.getInstance().FALSE
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
 
 

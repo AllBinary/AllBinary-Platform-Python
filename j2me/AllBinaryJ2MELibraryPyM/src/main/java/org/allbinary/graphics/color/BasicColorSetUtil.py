@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicColorSetUtil:
@@ -31,13 +32,18 @@ class BasicColorSetUtil:
     
 
     def setBasicColorP(self, graphics: Graphics, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.setColor(int(basicColor))
     
 
     def setBasicColorP3(self, graphics: Graphics, basicColor: BasicColor, value: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.setColor(value)
 # from javax.microedition.lcdui.Graphics import Graphics
 
 
-BasicColorSetUtil.instance = BasicColorSetUtil()
+def _BasicColorSetUtil_instance() -> object:
+    return BasicColorSetUtil()
+
+lazy_static(BasicColorSetUtil, "instance", _BasicColorSetUtil_instance)
 

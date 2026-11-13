@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class IntermissionFactory:
     instance: IntermissionFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.state.GameState import GameState
+        from org.allbinary.game.state.GameStateFactory import GameStateFactory
         self.START_LEVEL_INTERMISSION_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("START_LEVEL_INTERMISSION_GAME_STATE")
         self.WAIT_LEVEL_INTERMISSION_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("WAIT_LEVEL_INTERMISSION_GAME_STATE")
         self.SHOW_RESULTS_LEVEL_INTERMISSION_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("SHOW_RESULTS_LEVEL_INTERMISSION_GAME_STATE")
@@ -33,9 +36,12 @@ class IntermissionFactory:
     @staticmethod
     def getInstance() -> IntermissionFactory:
         return IntermissionFactory.instance
-from org.allbinary.game.state.GameState import GameState
-from org.allbinary.game.state.GameStateFactory import GameStateFactory
+# from org.allbinary.game.state.GameState import GameState
+# from org.allbinary.game.state.GameStateFactory import GameStateFactory
 
 
-IntermissionFactory.instance = IntermissionFactory()
+def _IntermissionFactory_instance() -> object:
+    return IntermissionFactory()
+
+lazy_static(IntermissionFactory, "instance", _IntermissionFactory_instance)
 

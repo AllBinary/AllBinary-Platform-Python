@@ -23,8 +23,10 @@ class InputMappingInterface:
 
     # throws Exception
     def processInputMapping(self, gameKey: GameKey, input: Input) -> None:
+        from org.allbinary.game.input.GameKey import GameKey
+        from org.allbinary.game.input.Input import Input
         raise NotImplementedError()
-from org.allbinary.game.input.GameKey import GameKey
-from org.allbinary.game.input.Input import Input
+# from org.allbinary.game.input.GameKey import GameKey
+# from org.allbinary.game.input.Input import Input
 
 

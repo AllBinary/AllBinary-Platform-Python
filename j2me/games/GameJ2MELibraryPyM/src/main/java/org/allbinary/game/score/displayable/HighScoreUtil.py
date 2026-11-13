@@ -15,15 +15,22 @@
 
 from __future__ import annotations
 
-# from javax.microedition.lcdui.Command import Command
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScoresResultsListener import HighScoresResultsListener
-from org.allbinary.logic.string.StringUtil import StringUtil
 
 
 class HighScoreUtil(HighScoresResultsListener):
-    SUBMIT_TEXTBOX_COMMAND: Command = Command("Submit", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
+    SUBMIT_TEXTBOX_COMMAND: Command = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.score.HighScore import HighScore
+        from org.allbinary.game.score.HighScores import HighScores
+        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
+        from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHelperBaseInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.highScoresFactoryInterface: HighScoresFactoryInterface = None
@@ -36,6 +43,12 @@ class HighScoreUtil(HighScoresResultsListener):
     
 
     def __init__(self, highScoresFactoryInterface: HighScoresFactoryInterface, highScoresHelper: HighScoresHelperBaseInterface, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, cmdListener: CommandListener, name: str, highScore: HighScore) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.score.HighScore import HighScore
+        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
+        from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHelperBaseInterface
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         self.highScoresFactoryInterface = highScoresFactoryInterface
         self.highScoresHelper = highScoresHelper
@@ -46,17 +59,22 @@ class HighScoreUtil(HighScoresResultsListener):
     
 
     def setHighScoresArray(self, highScoresArray: list[HighScores]) -> None:
+        from org.allbinary.game.score.HighScores import HighScores
         self.highScoresArray = highScoresArray
         self.firstTime = False
         self.saveHighScore()
     
 
     def update(self, name: str) -> None:
+        from org.allbinary.game.score.HighScoreNamePersistanceSingleton import HighScoreNamePersistanceSingleton
         HighScoreNamePersistanceSingleton.getInstance().save(self.abeClientInformation, self.gameInfo, name)
         self.highScore.setName(name)
     
 
     def saveHighScore(self) -> None:
+        from org.allbinary.game.score.HighScores import HighScores
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(self.commonStrings.START).append(StringUtil.getInstance().toString(self.highScore))), self, "saveHighScore")
         size: int = len(self.highScoresArray)
         if self.firstTime and size == 0:
@@ -74,19 +92,30 @@ class HighScoreUtil(HighScoresResultsListener):
     
 
     def submit(self, myCanvas: MyCanvas) -> None:
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         commandListener: CommandListener = myCanvas.getCustomCommandListener()
         commandListener.commandAction(HighScoreUtil.SUBMIT_TEXTBOX_COMMAND, myCanvas)
+# from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.score.HighScore import HighScore
-from org.allbinary.game.score.HighScoreNamePersistanceSingleton import HighScoreNamePersistanceSingleton
-from org.allbinary.game.score.HighScores import HighScores
-from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
-from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHelperBaseInterface
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.score.HighScore import HighScore
+# from org.allbinary.game.score.HighScoreNamePersistanceSingleton import HighScoreNamePersistanceSingleton
+# from org.allbinary.game.score.HighScores import HighScores
+# from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
+# from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHelperBaseInterface
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 
+
+def _HighScoreUtil_SUBMIT_TEXTBOX_COMMAND() -> object:
+    from javax.microedition.lcdui.Command import Command
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return Command("Submit", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
+
+lazy_static(HighScoreUtil, "SUBMIT_TEXTBOX_COMMAND", _HighScoreUtil_SUBMIT_TEXTBOX_COMMAND)
 

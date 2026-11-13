@@ -22,6 +22,10 @@ from org.allbinary.game.displayable.canvas.BasicMenuInputProcessor import BasicM
 class CommandFormInputProcessor(BasicMenuInputProcessor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.MOTION_GESTURE_SOURCE_ID: int = GameKeyEventFactory.getInstance().MOTION_GESTURE_SOURCE_ID
         self.CLICK_DELAY: int = 150
         self.clickTimeHelper: TimeDelayHelper = TimeDelayHelper(self.CLICK_DELAY)
@@ -35,6 +39,9 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCanvas: MyCanvas, form: ScrollSelectionForm) -> None:
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCanvas)
         self._init_fields()
         self.form = form
@@ -42,6 +49,9 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processInput(self, key: int) -> int:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.media.audio.PrimaryPlayerQueueFactory import PrimaryPlayerQueueFactory
+        from org.allbinary.media.audio.SelectSound import SelectSound
         if key == Canvas.LEFT or key == Canvas.RIGHT or key == Canvas.UP or key == Canvas.DOWN:
             PrimaryPlayerQueueFactory.getInstance().add(SelectSound.getInstance())
             self.form.processInputKey(key)
@@ -55,6 +65,13 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
     def processCommand(self) -> int:
         from org.allbinary.game.displayable.canvas.CommandRunnable import CommandRunnable
         from org.allbinary.game.displayable.canvas.CommandRunnable import CommandRunnable
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.layer.SWTUtil import SWTUtil
+        from org.allbinary.graphics.form.CommandCurrentSelectionForm import CommandCurrentSelectionForm
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         commandCurrentSelectionForm: CommandCurrentSelectionForm = self.form
         command: Command = commandCurrentSelectionForm.getSelectedCommand()
         self.logUtil.putF(str(command), self, self.PROCESS_COMMAND)
@@ -72,6 +89,8 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processInputList(self) -> int:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             motionInputsIndex: int = self.processMotionInputs()
             list_: BasicArrayList = self.getGameKeyEventList()
@@ -96,6 +115,7 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processMotionInputs(self) -> int:
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         lastIndex: int = self.motionGestureEventList.size() - 1
         if lastIndex >= 0:
             motionGestureEvent: MotionGestureEvent = self.motionGestureEventList.objectArray[lastIndex]
@@ -106,6 +126,12 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
 
     # throws Exception
     def processMotionInput(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+        from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+        from org.allbinary.media.audio.PrimaryPlayerQueueFactory import PrimaryPlayerQueueFactory
+        from org.allbinary.media.audio.SelectSound import SelectSound
         touchMotionGestureFactory: TouchMotionGestureFactory = TouchMotionGestureFactory.getInstance()
         motionGestureInput: MotionGestureInput = motionGestureEvent.getMotionGesture()
         if motionGestureInput == touchMotionGestureFactory.RELEASED:
@@ -134,31 +160,32 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(str(super())).append(self.NAME_LABEL).append(str(self.form)))
 
     def __str__(self) -> str:
         return self.toString()
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.layer.SWTUtil import SWTUtil
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.graphics.form.CommandCurrentSelectionForm import CommandCurrentSelectionForm
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.audio.PrimaryPlayerQueueFactory import PrimaryPlayerQueueFactory
-from org.allbinary.media.audio.SelectSound import SelectSound
-from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.layer.SWTUtil import SWTUtil
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.graphics.form.CommandCurrentSelectionForm import CommandCurrentSelectionForm
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
+# from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.audio.PrimaryPlayerQueueFactory import PrimaryPlayerQueueFactory
+# from org.allbinary.media.audio.SelectSound import SelectSound
+# from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

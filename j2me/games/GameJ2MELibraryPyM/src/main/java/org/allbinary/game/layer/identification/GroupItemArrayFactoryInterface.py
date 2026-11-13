@@ -23,8 +23,10 @@ class GroupItemArrayFactoryInterface:
 
     # throws Exception
     def getInstance(self, groupInterface: Group) -> list[ABCustomItem]:
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         raise NotImplementedError()
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 
 

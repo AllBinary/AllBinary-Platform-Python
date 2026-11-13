@@ -21,6 +21,8 @@ from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 class StraightMultiProjectileWeaponPart(BasicWeaponPart):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+        from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
         self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
         self.total: int = None
         self.noDecimalTrigTable: NoDecimalTrigTable = NoDecimalTrigTable.getInstance()
@@ -28,10 +30,22 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
 
     @staticmethod
     def createStraightMultiProjectileWeaponPart(animationInterface: Animation, weaponLayerCircularStaticPool: WeaponLayerCircularPool) -> StraightMultiProjectileWeaponPart:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+        from org.allbinary.game.score.NoScoreable import NoScoreable
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return StraightMultiProjectileWeaponPart(animationInterface, AllBinaryLayer.NULL_ALLBINARY_LAYER, weaponLayerCircularStaticPool, 2, WeaponProperties.NULL_WEAPON_PROPERTIES, NoScoreable.getInstance(), RelativeRelationship.NULL_RELATIVE_RELATIONSHIP)
     
 
     def __init__(self, animationInterface: Animation, sourceLayerInterface: AllBinaryLayer, weaponLayerCircularStaticPool: WeaponLayerCircularPool, total: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(animationInterface, sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
         self._init_fields()
         self.total = total
@@ -40,6 +54,11 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
 
     # throws Exception
     def processScore(self, allbinaryLayerManager: AllBinaryLayerManager, angle: int, otherAngle: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface) -> None:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
+        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         sourceLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
         reducedWidth: int = (sourceLayerInterface.getWidth() * 8 / 10)
         halfWidth: int = (reducedWidth >> 1)
@@ -60,15 +79,15 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
             weaponLayer = self.weaponLayerCircularStaticPool.getInstanceWeaponLayer(sourceLayerInterface, x + beamX, y + beamY, 0, angle, otherAngle, weaponProperties, scoreableInterface)
             allbinaryLayerManager.append(weaponLayer)
             next += increment
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
-from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
-from org.allbinary.game.score.NoScoreable import NoScoreable
-from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
-from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
+# from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
+# from org.allbinary.game.score.NoScoreable import NoScoreable
+# from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
+# from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
 
 

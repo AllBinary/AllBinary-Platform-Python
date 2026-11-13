@@ -26,12 +26,14 @@ class PickedUpLayerInterfaceFactoryInterface:
     
 
     def getIconLayer(self) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         raise NotImplementedError()
     
 
     def getAnimationInterface(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         raise NotImplementedError()
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

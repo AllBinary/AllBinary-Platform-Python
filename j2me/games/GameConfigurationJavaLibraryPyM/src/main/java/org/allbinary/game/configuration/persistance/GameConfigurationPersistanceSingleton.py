@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.configuration.persistance.KeyValuePersistance import KeyValuePersistance
 
 
@@ -32,5 +33,8 @@ class GameConfigurationPersistanceSingleton(KeyValuePersistance):
         super().__init__(GamePersistanceStrings.getInstance().SAVED_GAME_CONFIGURATION_RECORD_ID)
 
 
-GameConfigurationPersistanceSingleton.GAME_PERSISTANCE = GameConfigurationPersistanceSingleton()
+def _GameConfigurationPersistanceSingleton_GAME_PERSISTANCE() -> object:
+    return GameConfigurationPersistanceSingleton()
+
+lazy_static(GameConfigurationPersistanceSingleton, "GAME_PERSISTANCE", _GameConfigurationPersistanceSingleton_GAME_PERSISTANCE)
 

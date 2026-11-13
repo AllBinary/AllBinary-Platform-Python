@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicUserRoleFactory:
@@ -53,5 +54,8 @@ class BasicUserRoleFactory:
 from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
 
 
-BasicUserRoleFactory.instance = BasicUserRoleFactory()
+def _BasicUserRoleFactory_instance() -> object:
+    return BasicUserRoleFactory()
+
+lazy_static(BasicUserRoleFactory, "instance", _BasicUserRoleFactory_instance)
 

@@ -20,6 +20,9 @@ from __future__ import annotations
 class Advertisements:
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.bannerList: BasicArrayList = BasicArrayListD()
         self.pageList: BasicArrayList = BasicArrayListD()
         self.myRandomFactory: MyRandomFactory = MyRandomFactory.getInstance()
@@ -42,6 +45,7 @@ class Advertisements:
     
 
     def processRandomPage(self) -> None:
+        from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
         if LockedUtil.getInstance().isLocked():
             size: int = self.pageList.size()
             if size > 0:
@@ -84,9 +88,9 @@ class Advertisements:
     def stopAll(self) -> None:
         self.stopAllBanner()
         self.stopAllPage()
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

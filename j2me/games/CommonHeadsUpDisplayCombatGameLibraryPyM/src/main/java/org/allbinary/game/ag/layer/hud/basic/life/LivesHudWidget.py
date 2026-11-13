@@ -22,12 +22,17 @@ from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 class LivesHudWidget(BasicHud, PaintableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.ag.life.Life import Life
         self.lifeInterface: Life = None
         self.xArray: list[int] = None
         self.animationInterface: Animation = None
     
 
     def __init__(self, animationInterface: Animation, lifeInterface: Life, location: int, direction: int) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.game.ag.life.Life import Life
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(location, direction, 2, BasicColorFactory.getInstance().WHITE)
         self._init_fields()
         self.lifeInterface = lifeInterface
@@ -39,6 +44,7 @@ class LivesHudWidget(BasicHud, PaintableInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().updateMeasurement(graphics)
         maxLives: int = int(self.getLifeInterface().getMaxlives())
         for index in range(0, maxLives):
@@ -46,6 +52,7 @@ class LivesHudWidget(BasicHud, PaintableInterface):
     
 
     def onDisplayChangeEvent(self, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
         super().onDisplayChangeEvent(displayChangeEvent)
         self.myFontProcessor = self.updateMyFontProcessor
     
@@ -56,6 +63,7 @@ class LivesHudWidget(BasicHud, PaintableInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         index = int(self.getLifeInterface().get())
         while (index := index - 1) >= 0:
@@ -63,15 +71,17 @@ class LivesHudWidget(BasicHud, PaintableInterface):
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def getLifeInterface(self) -> Life:
+        from org.allbinary.game.ag.life.Life import Life
         return self.lifeInterface
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.game.ag.life.Life import Life
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.game.ag.life.Life import Life
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
 
 

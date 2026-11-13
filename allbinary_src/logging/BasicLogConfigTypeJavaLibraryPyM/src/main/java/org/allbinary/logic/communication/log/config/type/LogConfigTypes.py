@@ -15,15 +15,23 @@
 
 from __future__ import annotations
 
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigTypes:
-    LOGGING: BasicArrayList = BasicArrayListD()
+    LOGGING: BasicArrayList = None
     
 
     def __init__(self) -> None:
         pass
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _LogConfigTypes_LOGGING() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(LogConfigTypes, "LOGGING", _LogConfigTypes_LOGGING)
 

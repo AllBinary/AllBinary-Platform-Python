@@ -20,16 +20,20 @@ from __future__ import annotations
 class HighScoreCommandsBaseFactory:
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.HIGH_SCORE_COMMANDS: list[Command] = None
     
 
     def __init__(self, HIGH_SCORE_COMMANDS: list[Command]) -> None:
+        from javax.microedition.lcdui.Command import Command
         self._init_fields()
         self.HIGH_SCORE_COMMANDS = HIGH_SCORE_COMMANDS
     
 
     def isHighScoreCommand(self, command: Command) -> bool:
+        from javax.microedition.lcdui.Command import Command
         for index in range(len(self.HIGH_SCORE_COMMANDS) - 1, 0 - 1, -1):
             if command == self.HIGH_SCORE_COMMANDS[index]:
                 return True
@@ -38,12 +42,13 @@ class HighScoreCommandsBaseFactory:
 
     # throws Exception
     def getIndex(self, command: Command) -> int:
+        from javax.microedition.lcdui.Command import Command
         for index in range(len(self.HIGH_SCORE_COMMANDS) - 1, 0 - 1, -1):
             if command == self.HIGH_SCORE_COMMANDS[index]:
                 return index
         raise Exception("No Such Command")
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

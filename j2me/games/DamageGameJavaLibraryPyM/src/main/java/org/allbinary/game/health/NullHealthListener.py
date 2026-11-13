@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.health.HealthListenerInterface import HealthListenerInterface
 
 
@@ -26,5 +27,8 @@ class NullHealthListener(HealthListenerInterface):
         pass
 
 
-NullHealthListener.NULL_HEALTH_LISTENER = NullHealthListener()
+def _NullHealthListener_NULL_HEALTH_LISTENER() -> object:
+    return NullHealthListener()
+
+lazy_static(NullHealthListener, "NULL_HEALTH_LISTENER", _NullHealthListener_NULL_HEALTH_LISTENER)
 

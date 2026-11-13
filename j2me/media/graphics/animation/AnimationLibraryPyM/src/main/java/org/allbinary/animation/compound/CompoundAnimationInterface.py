@@ -35,7 +35,8 @@ class CompoundAnimationInterface(AnimationInterface):
     
 
     def getCurrentAnimation(self) -> IndexedAnimation:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         raise NotImplementedError()
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 
 
