@@ -138,15 +138,16 @@ def main(arguments):
             dependency_dirs.append(dependency_dir)
         else:
             print(f"Warning: Python dependency source directory does not exist: {dependency_dir}", file=sys.stderr)
-    dependency_dirs.extend(local_dependency_dirs(Path(__file__).resolve().parent))
-    if RUNTIME_SOURCE.is_dir() and RUNTIME_SOURCE != source_dir:
-        dependency_dirs.append(RUNTIME_SOURCE)
+
 
     sources = find_sources(source_dir)
     failures = compile_sources(source_dir, output_dir, sources)
     print(f"Python modules compiled: {len(sources) - len(failures)} of {len(sources)}")
 
     if import_check:
+        dependency_dirs.extend(local_dependency_dirs(Path(__file__).resolve().parent))
+        if RUNTIME_SOURCE.is_dir() and RUNTIME_SOURCE != source_dir:
+            dependency_dirs.append(RUNTIME_SOURCE)
         import_failures = import_modules(source_dir, dependency_dirs, sources)
         print(f"Python modules imported: {len(sources) - len(import_failures)} of {len(sources)}")
         failures += import_failures

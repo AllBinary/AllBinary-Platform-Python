@@ -29,6 +29,8 @@
     </properties>
 
     <modules>
+        <module>../work_cpp/j2me/AvianNativeForJ2SELibraryM</module>
+        <module>../workpython/j2me/NativeJ2SEForPythonLibraryPyM</module>
 
         <!--
         -->

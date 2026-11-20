@@ -25,6 +25,7 @@
     
 
     <properties>
+        <desktop.preloader.build.directory>${project.basedir}/target</desktop.preloader.build.directory>
         <python.executable>python</python.executable>
         <python.jsinterop.source.path>G:/mnt/bc/mydev/workingpython/replace_these_stub_projects/allbinary_src/J2MEJsInteropCompatibilityJavaLibraryPyM/src/main/java</python.jsinterop.source.path>
         <python.import.check>true</python.import.check>
@@ -32,6 +33,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.allbinary</groupId>
+            <artifactId>NativeJ2SEForPythonLibraryPy</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -128,7 +135,31 @@
     </dependencies>
 
     <build>
+        <directory>${desktop.preloader.build.directory}</directory>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>package-desktop-python-bindings</id>
+                        <phase>prepare-package</phase>
+                        <goals><goal>unpack</goal></goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.allbinary</groupId>
+                                    <artifactId>NativeJ2SEForPythonLibraryPy</artifactId>
+                                    <version>${project.version}</version>
+                                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                                    <includes>META-INF/python/**</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

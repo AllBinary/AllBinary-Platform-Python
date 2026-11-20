@@ -30,6 +30,7 @@ class JarUtil:
     
 
     def show(self) -> None:
+        from java.util.jar.JarInputStream import JarInputStream
         cache: list[int] = [0] * (1024)
         try:
             conn: URLConnection = self.jarURL.openConnection()
@@ -59,6 +60,7 @@ class JarUtil:
     # throws Exception
     @staticmethod
     def main(args: list[str]) -> None:
+        from java.net.URL import URL
         JarUtil(URL("file:///G:/mnt/bc/mydev/working/j2me/MiniSpaceWars/MiniSpaceWars/dist/MiniSpaceWars.jar")).show()
 # from java.io.IOException import IOException
 # from java.net.URL import URL
