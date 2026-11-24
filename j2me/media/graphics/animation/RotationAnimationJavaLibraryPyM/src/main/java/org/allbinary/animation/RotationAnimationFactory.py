@@ -44,6 +44,7 @@ class RotationAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, P
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.NullRotationAnimation import NullRotationAnimation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         return NullRotationAnimation.createTotalAngle(AngleInfo.getInstance(self.angleIncrement), self.totalAngle, AnimationBehavior.getInstance())
     
@@ -51,6 +52,7 @@ class RotationAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, P
     # throws Exception
     def getInstanceAnimation(self, animationInterface: Animation) -> Animation:
         from org.allbinary.animation.NullRotationAnimation import NullRotationAnimation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         return NullRotationAnimation.createTotalAngle(AngleInfo.getInstance(self.angleIncrement), self.totalAngle, AnimationBehavior.getInstance())
     

@@ -241,5 +241,6 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
 # from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 # from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 # from org.allbinary.util.BasicArrayList import BasicArrayList
+from org.allbinary.canvas.Processor import Processor
 
 

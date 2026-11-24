@@ -40,6 +40,7 @@ class ProgressMidlet(AllBinaryMidlet):
 
     def exitProgress(self, isProgress: bool) -> None:
         from org.allbinary.midlet.MidletExitProcessorFactory import MidletExitProcessorFactory
+        from org.allbinary.midlet.ExitRunnable import ExitRunnable
         from org.allbinary.canvas.Processor import Processor
         from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         from org.allbinary.thread.ThreadPool import ThreadPool

@@ -35,6 +35,8 @@ class BasicHighScoresFactory(HighScoresBase):
     
 
     def fetchHighScoresPreload(self, gameInfo: GameInfo, highScoresResultsListener: HighScoresResultsListener, preload: bool) -> None:
+        from org.allbinary.game.score.RecordStoreHighScores import RecordStoreHighScores
+        from org.allbinary.game.score.ScoreComparator import ScoreComparator
         from org.allbinary.game.GameInfo import GameInfo
         try:
             self.highScoresArray[0] = RecordStoreHighScores.getInstance(self.abeClientInformation, gameInfo, self.TOP, self.PERSONAL_HIGH_SCORES, self.SCORES, ScoreComparator(True))
@@ -44,6 +46,7 @@ class BasicHighScoresFactory(HighScoresBase):
     
 
     def createHighScoresHelper(self) -> HighScoresHelperBaseInterface:
+        from org.allbinary.game.score.HighScoresHelper2 import HighScoresHelper2
         return HighScoresHelper2()
     
 

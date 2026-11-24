@@ -54,6 +54,19 @@ class BasicTouchInputFactory:
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
+        from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
         from org.allbinary.game.input.InputFactory import InputFactory
         self._init_fields()
         MAX: int = InputFactory.getInstance().MAX

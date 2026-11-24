@@ -39,6 +39,8 @@ class SystemHardwareFactory:
     
 
     def getInstance_j1(self, operatingSystemInterface: GenericOperatingSystem) -> HardwareInterface:
+        from org.allbinary.logic.system.hardware.NoHardware import NoHardware
+        from org.allbinary.logic.system.hardware.HardwareFactory import HardwareFactory
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         try:
             if self.hardwareInterface == NoHardware.getInstance():
@@ -69,6 +71,7 @@ class SystemHardwareFactory:
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.system.hardware.NoHardware import NoHardware
 
 
 def _SystemHardwareFactory_instance() -> object:

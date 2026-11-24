@@ -36,6 +36,7 @@ class TouchButtonRecognizer:
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
         from org.allbinary.input.motion.button.ReleaseHelper import ReleaseHelper
         from org.allbinary.input.motion.button.MultitouchReleaseHelper import MultitouchReleaseHelper
         self._init_fields()
@@ -61,6 +62,7 @@ class TouchButtonRecognizer:
             return self._releaseTouchButtonInput_unlocked(x, y, deviceId)
 
     def _releaseTouchButtonInput_unlocked(self, x: int, y: int, deviceId: int) -> bool:
+        from org.allbinary.input.motion.button.TouchButtonFactory import TouchButtonFactory
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.Rectangle import Rectangle
@@ -92,6 +94,7 @@ class TouchButtonRecognizer:
             return self._pressTouchButtonInput_unlocked(x, y, deviceId)
 
     def _pressTouchButtonInput_unlocked(self, x: int, y: int, deviceId: int) -> bool:
+        from org.allbinary.input.motion.button.TouchButtonFactory import TouchButtonFactory
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.Rectangle import Rectangle

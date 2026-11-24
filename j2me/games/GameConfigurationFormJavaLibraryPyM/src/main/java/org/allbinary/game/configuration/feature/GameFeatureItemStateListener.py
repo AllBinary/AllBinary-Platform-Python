@@ -30,6 +30,7 @@ class GameFeatureItemStateListener(ItemStateListener):
     
 
     def __init__(self, gameOptionsForm: GameOptionsForm) -> None:
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
         self._init_fields()
         self.gameOptionsForm = gameOptionsForm
@@ -51,6 +52,7 @@ class GameFeatureItemStateListener(ItemStateListener):
     
 
     def itemStateChanged(self, item: Item) -> None:
+        from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
         from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         from javax.microedition.lcdui.Item import Item
         from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge

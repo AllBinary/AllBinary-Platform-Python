@@ -25,6 +25,7 @@ class RectangleFactory:
 
 def _RectangleFactory_SINGLETON() -> object:
     from org.allbinary.graphics.Rectangle import Rectangle
+    from org.allbinary.graphics.PointFactory import PointFactory
     return Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0)
 
 lazy_static(RectangleFactory, "SINGLETON", _RectangleFactory_SINGLETON)

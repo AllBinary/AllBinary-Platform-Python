@@ -97,6 +97,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, highScoresFactoryInterface: HighScoresFactoryInterface, paintable: Paintable, overlayPaintable: InitUpdatePaintable, gameInitializationInterfaceFactoryInterface: BasicBuildGameInitializerFactory, isContinue: bool) -> None:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
@@ -324,6 +325,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
     
 
     def isPausable(self) -> bool:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
         if CurrentDisplayableFactory.getInstance().getUsedRunnable() == NullWaitGameRunnable.getInstance():
             return True
@@ -771,5 +773,8 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
 # from org.allbinary.util.ABHashtable import ABHashtable
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from org.allbinary.game.displayable.canvas.FormUtil import FormUtil
+from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
+from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
 
 

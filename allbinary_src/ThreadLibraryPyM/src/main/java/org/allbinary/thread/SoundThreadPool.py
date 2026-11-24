@@ -28,6 +28,8 @@ class SoundThreadPool:
 
 
 def _SoundThreadPool_instance() -> object:
+    from org.allbinary.thread.ThreadPool import ThreadPool
+    from org.allbinary.thread.ThreadPool import ThreadPool
     return ThreadPool("Sound", 1, ThreadPool.NORMAL_PRIORITY)
 
 lazy_static(SoundThreadPool, "instance", _SoundThreadPool_instance)

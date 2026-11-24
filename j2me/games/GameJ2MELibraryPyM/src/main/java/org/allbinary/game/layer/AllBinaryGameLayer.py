@@ -40,6 +40,7 @@ class AllBinaryGameLayer(*java_bases(AllBinaryLayer, ViewPositionEventListenerIn
 
     @staticmethod
     def createPaintable() -> Paintable:
+        from org.allbinary.game.layer.SWTUtil import SWTUtil
         from org.allbinary.game.layer.SWTBlackPaintable import SWTBlackPaintable
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         from org.allbinary.graphics.paint.Paintable import Paintable

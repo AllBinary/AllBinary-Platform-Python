@@ -25,6 +25,7 @@ class PaintableToImageUtil:
     # throws Exception
     @staticmethod
     def getImage(paintableInterface: PaintableInterface, width: int, height: int) -> Image:
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface

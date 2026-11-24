@@ -44,6 +44,7 @@ class PlayerQueue:
     
 
     def process(self) -> bool:
+        from org.allbinary.media.audio.NoSound import NoSound
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil

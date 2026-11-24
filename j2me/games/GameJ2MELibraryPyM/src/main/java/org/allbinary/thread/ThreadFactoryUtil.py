@@ -45,6 +45,8 @@ class ThreadFactoryUtil:
     
 
     def getInstanceType(self, runnable: object, type_: int) -> threading.Thread:
+        from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+        from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
         from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas

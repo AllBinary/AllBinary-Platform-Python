@@ -28,6 +28,7 @@ class ScreenCaptureFactory:
 
 
 def _ScreenCaptureFactory_instance() -> object:
+    from org.allbinary.graphics.ScreenCaptureNoneFactory import ScreenCaptureNoneFactory
     return ScreenCaptureNoneFactory.getInstance()
 
 lazy_static(ScreenCaptureFactory, "instance", _ScreenCaptureFactory_instance)

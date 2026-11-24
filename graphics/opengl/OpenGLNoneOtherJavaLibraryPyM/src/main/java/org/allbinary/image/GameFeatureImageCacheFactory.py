@@ -22,16 +22,19 @@ class GameFeatureImageCacheFactory:
 
     @staticmethod
     def getInstance() -> ImageCache:
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         return ImageCacheFactory.getInstance()
     
 
     @staticmethod
     def init() -> None:
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         ImageCacheFactory.init()
     
 
     @staticmethod
     def releaseAll() -> None:
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         ImageCacheFactory.getInstance().releaseAll()
 
 

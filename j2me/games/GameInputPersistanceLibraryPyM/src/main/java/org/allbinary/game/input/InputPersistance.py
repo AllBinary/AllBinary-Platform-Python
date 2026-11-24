@@ -35,6 +35,8 @@ class InputPersistance(BasicPersitance):
 
     # throws Exception
     def loadAll(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.game.input.GameKeyMappingFactory import GameKeyMappingFactory
+        from org.allbinary.game.input.InputFactory import InputFactory
         from java.io.DataInputStream import DataInputStream
         from javax.microedition.rms.RecordEnumeration import RecordEnumeration
         from javax.microedition.rms.RecordStore import RecordStore

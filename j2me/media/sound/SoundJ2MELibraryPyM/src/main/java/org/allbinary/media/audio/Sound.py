@@ -66,5 +66,6 @@ class Sound(*java_bases(SoundInterface, object)):
 # from javax.microedition.media.Player import Player
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.media.audio.NoPlayer import NoPlayer
 
 

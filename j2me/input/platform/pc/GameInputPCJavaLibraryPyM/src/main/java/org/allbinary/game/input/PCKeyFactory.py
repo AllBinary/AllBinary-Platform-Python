@@ -165,6 +165,7 @@ class PCKeyFactory:
 # from org.allbinary.math.PositionStrings import PositionStrings
 # from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
 # from org.allbinary.string.CommonSeps import CommonSeps
+from org.allbinary.game.input.ABKeyEventWrapper import ABKeyEventWrapper
 from org.allbinary.game.input.PCGameKey import PCGameKey
 
 

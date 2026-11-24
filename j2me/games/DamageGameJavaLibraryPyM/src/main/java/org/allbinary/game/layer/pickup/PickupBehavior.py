@@ -59,6 +59,7 @@ class PickupBehavior(PickupBehaviorInterface):
     
 
     def doPickupLayer(self, pickupLayerInterface: PickedUpLayerInterface) -> None:
+        from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings

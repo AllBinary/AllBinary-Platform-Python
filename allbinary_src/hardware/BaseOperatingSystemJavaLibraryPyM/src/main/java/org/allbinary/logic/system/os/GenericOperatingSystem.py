@@ -30,6 +30,7 @@ class GenericOperatingSystem(OperatingSystemInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.system.os.SystemProperties import SystemProperties
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self._init_fields()

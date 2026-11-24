@@ -106,5 +106,6 @@ class Sounds:
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonLabels import CommonLabels
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.media.audio.SoundStrings import SoundStrings
 
 

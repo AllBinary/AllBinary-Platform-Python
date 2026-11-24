@@ -22,6 +22,7 @@ class BasicColorUtilFactory:
 
     @staticmethod
     def getInstance() -> BasicColorUtil:
+        from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
         return BasicColorUtil.getInstance()
 
 

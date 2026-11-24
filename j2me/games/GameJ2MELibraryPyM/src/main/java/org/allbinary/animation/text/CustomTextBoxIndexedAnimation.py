@@ -57,6 +57,7 @@ class CustomTextBoxIndexedAnimation(*java_bases(IndexedAnimation, RawKeyEventLis
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from org.allbinary.animation.text.TextChangeListener import TextChangeListener
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
         font: Font = graphics.getFont()
@@ -101,5 +102,6 @@ class CustomTextBoxIndexedAnimation(*java_bases(IndexedAnimation, RawKeyEventLis
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
 # from org.allbinary.logic.string.StringUtil import StringUtil
+from org.allbinary.animation.text.TextChangeListener import TextChangeListener
 
 

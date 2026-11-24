@@ -26,6 +26,7 @@ class RectangleCollisionPointUtil:
 
     @staticmethod
     def allPointsInside(rectX1: int, rectY1: int, rectX2: int, rectY2: int, list_: BasicArrayList) -> bool:
+        from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.util.BasicArrayList import BasicArrayList
         rectangleCollisionUtil: RectangleCollisionUtil = RectangleCollisionUtil.getInstance()
@@ -40,6 +41,7 @@ class RectangleCollisionPointUtil:
 
     @staticmethod
     def allPointsInsideCell(rectX1: int, rectY1: int, rectX2: int, rectY2: int, list_: BasicArrayList, xCellSize: int, yCellSize: int) -> bool:
+        from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.util.BasicArrayList import BasicArrayList
         rectangleCollisionUtil: RectangleCollisionUtil = RectangleCollisionUtil.getInstance()

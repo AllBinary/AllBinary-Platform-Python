@@ -198,6 +198,7 @@ class AllBinaryGameCanvas(*java_bases(RunnableCanvas, AllBinaryGameCanvasInterfa
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.Rectangle import Rectangle
@@ -279,6 +280,8 @@ class AllBinaryGameCanvas(*java_bases(RunnableCanvas, AllBinaryGameCanvasInterfa
 
     # throws Exception
     def initPopupMenu(self) -> None:
+        from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
+        from org.allbinary.game.displayable.canvas.BasicPopupMenuPaintable import BasicPopupMenuPaintable
         from org.allbinary.game.displayable.canvas.PopupMenuInputProcessor import PopupMenuInputProcessor
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.graphics.Rectangle import Rectangle
@@ -394,6 +397,7 @@ class AllBinaryGameCanvas(*java_bases(RunnableCanvas, AllBinaryGameCanvasInterfa
     
 
     def isPausable(self) -> bool:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
         if CurrentDisplayableFactory.getInstance().getUsedRunnable() == NullWaitGameRunnable.getInstance():
             return True
@@ -1674,6 +1678,10 @@ class AllBinaryGameCanvas(*java_bases(RunnableCanvas, AllBinaryGameCanvasInterfa
 # from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 from org.allbinary.game.displayable.canvas.GameCanvasRunnable import GameCanvasRunnable
 from org.allbinary.game.displayable.canvas.GameCanvasPauseRunnable import GameCanvasPauseRunnable
+from org.allbinary.game.displayable.canvas.FormUtil import FormUtil
+from org.allbinary.game.displayable.canvas.MyFormUtil import MyFormUtil
+from org.allbinary.game.displayable.canvas.EndGameInfo import EndGameInfo
+from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
 from org.allbinary.game.displayable.canvas.NullDemoPaintable import NullDemoPaintable
 from org.allbinary.game.displayable.canvas.GameCanvasInputProcessor import GameCanvasInputProcessor
 from org.allbinary.game.displayable.canvas.FormInputProcessor import FormInputProcessor

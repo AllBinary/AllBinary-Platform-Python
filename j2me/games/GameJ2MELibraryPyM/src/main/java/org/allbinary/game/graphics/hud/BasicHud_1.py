@@ -86,6 +86,7 @@ class BasicHud_1(UpdateMyFontInterface):
 
     # throws Exception
     def getHudGraphicsPositionWH(self, width: int, height: int, maxWidth: int, maxHeight: int) -> HudGraphicsPosition:
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
         from org.allbinary.game.graphics.hud.HudGraphicsPosition import HudGraphicsPosition
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.Anchor import Anchor

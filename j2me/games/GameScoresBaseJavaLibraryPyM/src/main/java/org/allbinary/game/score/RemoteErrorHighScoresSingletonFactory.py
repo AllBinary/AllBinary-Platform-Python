@@ -29,6 +29,7 @@ class RemoteErrorHighScoresSingletonFactory:
 
 
 def _RemoteErrorHighScoresSingletonFactory_SINGLETON() -> object:
+    from org.allbinary.game.score.HighScores import HighScores
     from org.allbinary.string.CommonStrings import CommonStrings
     return HighScores(CommonStrings.getInstance().LOADING, "Remote High Scores Did Not Load", CommonStrings.getInstance().PERIODS)
 

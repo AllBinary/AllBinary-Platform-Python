@@ -22,6 +22,7 @@ class NullRotationAnimation2(NullRotationAnimation):
     
 
     def __init__(self) -> None:
+        from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil

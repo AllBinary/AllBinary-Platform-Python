@@ -22,6 +22,7 @@ class PlatformImage:
     
 
     def getImage(self, graphicsSurface2: object) -> object:
+        from javax.microedition.lcdui.NullImage import NullImage
         return NullImage.NULL_IMAGE
     
 

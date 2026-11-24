@@ -27,6 +27,8 @@ class CompositeSound(Sound):
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.media.audio.PlayerComposite import PlayerComposite
+        from org.allbinary.media.audio.AllBinaryMediaManager import AllBinaryMediaManager
         self.setPlayerP(PlayerComposite(AllBinaryMediaManager.createPlayer(self.getResource()), 570))
 
 

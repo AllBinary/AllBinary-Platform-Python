@@ -28,6 +28,7 @@ class PCGameInputMapping(PersistentInputMapping):
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         from org.allbinary.input.motion.gesture.TrackballMotionGestureFactory import TrackballMotionGestureFactory
@@ -44,6 +45,7 @@ class PCGameInputMapping(PersistentInputMapping):
     
 
     def isDelete(self, input: Input) -> bool:
+        from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         if input == PCKeyFactory.getInstance().DEL:
             return True
         else:

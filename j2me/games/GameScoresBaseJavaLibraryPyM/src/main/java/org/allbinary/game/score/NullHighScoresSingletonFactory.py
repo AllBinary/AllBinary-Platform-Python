@@ -29,6 +29,7 @@ class NullHighScoresSingletonFactory:
 
 
 def _NullHighScoresSingletonFactory_SINGLETON() -> object:
+    from org.allbinary.game.score.HighScores import HighScores
     from org.allbinary.string.CommonStrings import CommonStrings
     return HighScores(CommonStrings.getInstance().LOADING, "High Scores Not Loaded", CommonStrings.getInstance().PERIODS)
 

@@ -38,6 +38,7 @@ class VectorAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.VectorAnimation import VectorAnimation
         return VectorAnimation(self.currentPoints, self.getBasicColorP(), self.animationBehaviorFactory.getOrCreateInstance())
     
 

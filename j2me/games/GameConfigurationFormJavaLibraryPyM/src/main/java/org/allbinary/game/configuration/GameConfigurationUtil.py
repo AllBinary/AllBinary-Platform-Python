@@ -42,6 +42,7 @@ class GameConfigurationUtil:
 
     # throws Exception
     def change(self, gameOptionsForm: GameOptionsForm, gauge: GameConfigurationGauge) -> None:
+        from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
         self.update(gauge)
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfiguration: GameConfiguration = gameConfigurationSingleton.getInstanceByName(gauge.getLabel())
@@ -50,6 +51,7 @@ class GameConfigurationUtil:
 
     # throws Exception
     def update(self, gauge: GameConfigurationGauge) -> None:
+        from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         from org.allbinary.logic.string.StringMaker import StringMaker
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
@@ -69,6 +71,7 @@ class GameConfigurationUtil:
 
     # throws Exception
     def setDefault(self, gauge: GameConfigurationGauge) -> None:
+        from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
         from org.allbinary.logic.string.StringMaker import StringMaker
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfiguration: GameConfiguration = gameConfigurationSingleton.getInstanceByName(gauge.getLabel())
@@ -84,6 +87,8 @@ class GameConfigurationUtil:
 
     # throws Exception
     def updateChallange(self, gameOptionsForm: GameOptionsForm, gameConfiguration: GameConfiguration) -> None:
+        from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from javax.microedition.lcdui.Item import Item
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfigurationCentral: GameConfigurationCentral = GameConfigurationCentral.getInstance()
@@ -111,6 +116,7 @@ class GameConfigurationUtil:
     
 
     def updateCompetitionValue(self) -> None:
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         self.logUtil.putF(self.commonStrings.START, self, "updateCompetitionValue")
         gameConfigurationCentral: GameConfigurationCentral = GameConfigurationCentral.getInstance()
         self.COMPETITION_VALUE = int(gameConfigurationCentral.COLLIDE_DAMAGE.getValue()) + int(gameConfigurationCentral.ATTACK_CHALLENGE_LEVEL.getValue()) + int(gameConfigurationCentral.DURABILITY_CHALLENGE_LEVEL.getValue()) + int(gameConfigurationCentral.SPEED_CHALLENGE_LEVEL.getValue())

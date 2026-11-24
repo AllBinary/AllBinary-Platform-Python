@@ -37,6 +37,7 @@ class GameFeatureFormUtil:
     
 
     def getChoiceGroup(self, hashtable: ABHashtable[object, object], name: str, option: int) -> ChoiceGroup:
+        from org.allbinary.game.configuration.feature.Features import Features
         from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -80,6 +81,7 @@ class GameFeatureFormUtil:
 
     # throws Exception
     def setDefault(self, form: CommandForm) -> None:
+        from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
         from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         from javax.microedition.lcdui.Item import Item
         from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge

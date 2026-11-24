@@ -63,5 +63,6 @@ class OpenGLESGraphics(*java_bases(OpenGLSurfaceChangedInterface, GraphicsInterf
 # from javax.microedition.lcdui.Font import Font
 # from org.allbinary.graphics.font.FontDebugBase import FontDebugBase
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.device.NullGL10 import NullGL10
 
 

@@ -68,6 +68,7 @@ class GameOptionsForm(CommandForm):
     
 
     def addTextFields(self) -> None:
+        from org.allbinary.game.configuration.GameConfigurationTextInput import GameConfigurationTextInput
         from javax.microedition.lcdui.TextField import TextField
         from org.allbinary.util.HashtableUtil import HashtableUtil
         from org.allbinary.util.ABHashtable import ABHashtable
@@ -83,6 +84,8 @@ class GameOptionsForm(CommandForm):
     
 
     def addConfiguration(self) -> None:
+        from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
+        from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
         from javax.microedition.lcdui.Command import Command
         from org.allbinary.game.configuration.feature.GameFeatureItemCommandListener import GameFeatureItemCommandListener
         from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
@@ -118,8 +121,10 @@ class GameOptionsForm(CommandForm):
 
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.game.configuration.GameConfigurationTextInput import GameConfigurationTextInput
         from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
         from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from javax.microedition.lcdui.Item import Item
         from javax.microedition.lcdui.TextField import TextField
         from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton

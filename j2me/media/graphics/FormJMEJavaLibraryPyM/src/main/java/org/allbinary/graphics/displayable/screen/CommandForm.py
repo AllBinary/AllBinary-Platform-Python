@@ -106,6 +106,7 @@ class CommandForm(*java_bases(Form, MyCommandInterface, MenuListener)):
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.logic.StdUtil import StdUtil
 # from org.allbinary.util.ABStack import ABStack
+from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
 
 
 def _CommandForm_NULL_COMMAND_FORM() -> object:

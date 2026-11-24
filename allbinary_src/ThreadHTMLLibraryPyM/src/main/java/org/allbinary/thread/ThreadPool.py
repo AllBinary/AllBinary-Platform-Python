@@ -172,6 +172,7 @@ class ThreadPool:
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from org.allbinary.thread.NullRunnable import NullRunnable
 from org.allbinary.thread.ThreadPoolStrings import ThreadPoolStrings
 from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 

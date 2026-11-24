@@ -28,6 +28,8 @@ class ColorFillPaintableFactory:
     
 
     def getInstance_j2(self, basicColor: BasicColor, forThreedCanvas: bool) -> ColorFillBasePaintable:
+        from org.allbinary.game.paint.ColorFillPaintable import ColorFillPaintable
+        from org.allbinary.game.paint.OverScanColorFillPaintable import OverScanColorFillPaintable
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory

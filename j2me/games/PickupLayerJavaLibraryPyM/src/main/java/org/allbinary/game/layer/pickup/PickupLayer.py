@@ -119,5 +119,6 @@ class PickupLayer(*java_bases(MultiPlayerGameLayer, PickedUpLayerInterface, Pick
 # from org.allbinary.graphics.Rectangle import Rectangle
 # from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 # from org.allbinary.view.ViewPositionBase import ViewPositionBase
+from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
 
 

@@ -46,6 +46,9 @@ class OperatingSystemFactory:
             return self._getOperatingSystemInstance_unlocked()
 
     def _getOperatingSystemInstance_unlocked(self) -> GenericOperatingSystem:
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+        from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
         from org.allbinary.logic.communication.log.Log import Log
         from org.allbinary.logic.communication.log.LogFactory import LogFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -97,6 +100,7 @@ class OperatingSystemFactory:
 # from org.allbinary.logic.system.os.solaris.SolarisOperatingSystemFactory import SolarisOperatingSystemFactory
 # from org.allbinary.logic.system.os.windows.WindowsOperatingSystemFactory import WindowsOperatingSystemFactory
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
 
 
 def _OperatingSystemFactory_instance() -> object:

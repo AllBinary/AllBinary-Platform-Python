@@ -44,6 +44,7 @@ class FeaturedResourceFactory:
 
     # throws Exception
     def init(self, level: int) -> None:
+        from org.allbinary.game.resource.ResourceLoadingLevelFactory import ResourceLoadingLevelFactory
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
         from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory

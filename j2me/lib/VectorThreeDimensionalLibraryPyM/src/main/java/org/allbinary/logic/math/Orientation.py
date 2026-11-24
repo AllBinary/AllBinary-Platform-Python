@@ -57,6 +57,7 @@ class Orientation:
     def __str__(self) -> str:
         return self.toString()
 # from org.allbinary.logic.string.StringMaker import StringMaker
+from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 
 def _Orientation_NONE() -> object:

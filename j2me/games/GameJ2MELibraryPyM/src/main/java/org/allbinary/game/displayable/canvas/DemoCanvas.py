@@ -110,6 +110,7 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, highScoresFactoryInterface: HighScoresFactoryInterface, paintable: Paintable, overlayPaintable: InitUpdatePaintable, gameInitializationInterfaceFactoryInterface: BasicBuildGameInitializerFactory, isContinue: bool) -> None:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.game.displayable.canvas.DemoGameStartupRunnable import DemoGameStartupRunnable
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
@@ -245,6 +246,7 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
     # throws Exception
     def initMenu(self) -> None:
         from org.allbinary.game.displayable.canvas.DemoLimitedCommandTextItemArrayFactory import DemoLimitedCommandTextItemArrayFactory
+        from org.allbinary.game.displayable.canvas.CommandFormInputProcessor import CommandFormInputProcessor
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.graphics.form.CommandCurrentSelectionFormFactory import CommandCurrentSelectionFormFactory
         from org.allbinary.graphics.form.FormType import FormType
@@ -355,6 +357,7 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
             return self._pause_unlocked()
 
     def _pause_unlocked(self) -> None:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         self.close()
         self.setPaused(True)
         self.gameRunnable = NullWaitGameRunnable.getInstance()
@@ -373,6 +376,7 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
     
 
     def isPausable(self) -> bool:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
         if CurrentDisplayableFactory.getInstance().getUsedRunnable() == NullWaitGameRunnable.getInstance():
             return True
@@ -509,6 +513,7 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
 
     # throws Exception
     def start(self) -> None:
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         gameCanvas: AllBinaryGameCanvas = self.gameCanvas
@@ -582,6 +587,7 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
     def showGamePaintable(self) -> None:
         from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
         from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
+        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.game.layer.SWTUtil import SWTUtil
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
@@ -966,6 +972,9 @@ class DemoCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuLi
 # from org.allbinary.util.ABHashtable import ABHashtable
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from org.allbinary.game.displayable.canvas.FormUtil import FormUtil
 from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
+from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
+from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
 
 

@@ -66,6 +66,7 @@ class LogUtil:
         print(self.LOG_SUCCESS, end="")
         print(message)
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _LogUtil_instance() -> object:

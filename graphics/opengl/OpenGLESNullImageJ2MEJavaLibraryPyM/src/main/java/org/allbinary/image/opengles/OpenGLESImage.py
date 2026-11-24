@@ -77,6 +77,7 @@ class OpenGLESImage(OpenGLSurfaceChangedInterface):
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
 
 
 def _OpenGLESImage_NULL_OPENGL_IMAGE() -> object:

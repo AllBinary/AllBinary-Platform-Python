@@ -35,6 +35,7 @@ class J2MEKeyFactory:
     
 
     def init(self) -> None:
+        from org.allbinary.game.input.InputFactory import InputFactory
         gameKeyArray: list[GameKey] = [self.gameKeyFactory.DOWN, self.gameKeyFactory.FIRE, self.gameKeyFactory.GAME_A, self.gameKeyFactory.GAME_B, self.gameKeyFactory.GAME_C, self.gameKeyFactory.GAME_D, self.gameKeyFactory.KEY_NUM0, self.gameKeyFactory.KEY_NUM1, self.gameKeyFactory.KEY_NUM2, self.gameKeyFactory.KEY_NUM3, self.gameKeyFactory.KEY_NUM4, self.gameKeyFactory.KEY_NUM5, self.gameKeyFactory.KEY_NUM6, self.gameKeyFactory.KEY_NUM7, self.gameKeyFactory.KEY_NUM8, self.gameKeyFactory.KEY_NUM9, self.gameKeyFactory.KEY_POUND, self.gameKeyFactory.KEY_STAR, self.gameKeyFactory.LEFT, self.gameKeyFactory.LEVEL_DOWN, self.gameKeyFactory.LEVEL_UP, self.gameKeyFactory.NONE, self.gameKeyFactory.RIGHT, self.gameKeyFactory.UP]
         inputFactory: InputFactory = InputFactory.getInstance()
         index = len(gameKeyArray)
@@ -86,6 +87,7 @@ class J2MEKeyFactory:
         if input == self.gameKeyFactory.FIRE:
             return True
         return False
+from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
 
 
 def _J2MEKeyFactory_instance() -> object:

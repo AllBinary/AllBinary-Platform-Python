@@ -28,6 +28,7 @@ class TouchScreenTypeFactory:
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
         touchScreenFactory: TouchScreenFactory = TouchScreenFactory.getInstance()
         touchScreenFactory.setTouch(False)
 

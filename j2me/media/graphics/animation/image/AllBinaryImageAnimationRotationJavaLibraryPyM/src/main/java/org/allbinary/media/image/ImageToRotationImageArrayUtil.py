@@ -33,6 +33,7 @@ class ImageToRotationImageArrayUtil:
 
     # throws Exception
     def generate(self, image: Image, angleIncrement: int, totalAngle: int) -> list[Image]:
+        from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
         from javax.microedition.lcdui.Image import Image
         imageRotationUtil: ImageRotationUtil = ImageRotationUtil.getInstance()
         totalFrames: int = int(totalAngle / angleIncrement)

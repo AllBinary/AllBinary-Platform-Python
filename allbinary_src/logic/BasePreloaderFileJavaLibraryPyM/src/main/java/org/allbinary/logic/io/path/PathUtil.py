@@ -129,6 +129,7 @@ class PathUtil:
 # from org.allbinary.logic.io.file.FilePathData import FilePathData
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+from org.allbinary.logic.io.path.AbPathData import AbPathData
 
 
 def _PathUtil_instance() -> object:

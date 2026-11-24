@@ -25,6 +25,7 @@ class DiveAndDirectionalTrackingAIFactory(ArtificialIntelligenceInterfaceFactory
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.game.ag.ai.ThrustAIVisitorFactory import ThrustAIVisitorFactory
         from org.allbinary.game.ag.ai.BasicProbabilityAIDataFactory import BasicProbabilityAIDataFactory
+        from org.allbinary.game.ag.ai.LastKeyAIVisitorFactory import LastKeyAIVisitorFactory
         from org.allbinary.game.ag.ai.DiveAndDirectionalTrackingAI import DiveAndDirectionalTrackingAI
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.game.ag.ai.tactical.BasicRandomAIFactory import BasicRandomAIFactory

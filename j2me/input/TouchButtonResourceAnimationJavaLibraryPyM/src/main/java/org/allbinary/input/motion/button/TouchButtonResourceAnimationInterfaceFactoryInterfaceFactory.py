@@ -39,6 +39,17 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
 
     # throws Exception
     def initImageCache(self, imageCache: ImageCache, level: int) -> None:
+        from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
+        from org.allbinary.input.motion.button.TouchButtonGenericActionResource import TouchButtonGenericActionResource
+        from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
+        from org.allbinary.input.motion.button.TouchButtonUpResource import TouchButtonUpResource
+        from org.allbinary.input.motion.button.TouchButtonDownResource import TouchButtonDownResource
+        from org.allbinary.input.motion.button.TouchButtonTurnLeftResource import TouchButtonTurnLeftResource
+        from org.allbinary.input.motion.button.TouchButtonTurnRightResource import TouchButtonTurnRightResource
+        from org.allbinary.input.motion.button.TouchButtonStrafeLeftResource import TouchButtonStrafeLeftResource
+        from org.allbinary.input.motion.button.TouchButtonStrafeRightResource import TouchButtonStrafeRightResource
+        from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
+        from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory

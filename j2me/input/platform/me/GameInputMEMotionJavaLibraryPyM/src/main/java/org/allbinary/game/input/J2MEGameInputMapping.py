@@ -28,6 +28,7 @@ class J2MEGameInputMapping(PersistentInputMapping):
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.game.input.J2MEKeyFactory import J2MEKeyFactory
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         J2MEKeyFactory.getInstance().init()
@@ -38,6 +39,7 @@ class J2MEGameInputMapping(PersistentInputMapping):
     
 
     def isDelete(self, input: Input) -> bool:
+        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         if input == GameKeyFactory.getInstance().GAME_D:
             return True
         else:

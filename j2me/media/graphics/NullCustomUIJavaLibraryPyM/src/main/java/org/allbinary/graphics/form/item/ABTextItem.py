@@ -26,6 +26,7 @@ class ABTextItem(*java_bases(CustomCustomItem, ABCustomItemInterface)):
     
 
     def getLabelStringComponent(self) -> ABStringComponent:
+        from org.allbinary.graphics.form.item.ABStringComponent import ABStringComponent
         return ABStringComponent.NULL_STRING_COMPONENT
     
 

@@ -45,6 +45,7 @@ class HardwareFactory:
     def getInstance(self, *args):
         return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
+from org.allbinary.logic.system.hardware.NoHardware import NoHardware
 
 
 def _HardwareFactory_instance() -> object:

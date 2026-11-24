@@ -80,6 +80,7 @@ class LogUtil:
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonSeps import CommonSeps
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _LogUtil_instance() -> object:

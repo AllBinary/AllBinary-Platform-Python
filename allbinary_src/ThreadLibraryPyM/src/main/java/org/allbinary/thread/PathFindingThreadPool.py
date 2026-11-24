@@ -30,6 +30,7 @@ class PathFindingThreadPool(ThreadPool):
     
 
     def __init__(self, poolName: str, numThreads: int, priority: int) -> None:
+        from org.allbinary.thread.ThreadPool import ThreadPool
         super().__init__(poolName, numThreads, ThreadPool.NORMAL_PRIORITY)
     
 

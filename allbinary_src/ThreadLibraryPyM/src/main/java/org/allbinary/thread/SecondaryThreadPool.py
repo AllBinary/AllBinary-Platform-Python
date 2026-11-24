@@ -57,6 +57,7 @@ class SecondaryThreadPool(ThreadPool):
 
 
 def _SecondaryThreadPool_instance() -> object:
+    from org.allbinary.thread.ThreadPool import ThreadPool
     return SecondaryThreadPool("Secondary", 1, ThreadPool.NORMAL_PRIORITY)
 
 lazy_static(SecondaryThreadPool, "instance", _SecondaryThreadPool_instance)

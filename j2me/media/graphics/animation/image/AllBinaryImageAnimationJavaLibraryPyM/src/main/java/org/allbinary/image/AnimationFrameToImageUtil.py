@@ -29,6 +29,7 @@ class AnimationFrameToImageUtil:
 
     # throws Exception
     def getInstanceTranslate(self, width: int, height: int, animationInterface: Animation) -> Image:
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.Animation import Animation
@@ -44,6 +45,7 @@ class AnimationFrameToImageUtil:
 
     # throws Exception
     def getInstanceWH(self, width: int, height: int, animationInterface: Animation) -> Image:
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.Animation import Animation
