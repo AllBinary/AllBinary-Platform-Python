@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CanvasExpandUtil:
     instance: CanvasExpandUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
 
@@ -35,7 +38,6 @@ class CanvasExpandUtil:
 
     # throws Exception
     def process(self, imageProcessorInput: ImageProcessorInput, increaseX: int, increaseY: int, visitor: ImageProcessedVisitor) -> None:
-        from org.allbinary.media.image.ImageUtil import ImageUtil
         imageUtil: ImageUtil = ImageUtil.getInstance()
         bufferedImageArray: list[BufferedImage] = imageProcessorInput.getBufferedImageArray()
         subBufferedImageArray: list[BufferedImage] = [None] * (len(bufferedImageArray))
@@ -46,9 +48,12 @@ class CanvasExpandUtil:
             subBufferedImageArray[index] = imageUtil.createBufferedImage(bufferedImage, bufferedImage.getWidth() + increaseX, bufferedImage.getHeight() + increaseY, False)
             visitor.visit(subBufferedImageArray[index], self.stringUtil.EMPTY_STRING, index)
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-CanvasExpandUtil.instance = CanvasExpandUtil()
+def _CanvasExpandUtil_instance() -> object:
+    return CanvasExpandUtil()
+
+lazy_static(CanvasExpandUtil, "instance", _CanvasExpandUtil_instance)
 

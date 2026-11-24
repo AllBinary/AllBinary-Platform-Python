@@ -23,8 +23,10 @@ class PaymentProcessorInterfaceFactoryInterface:
 
     # throws Exception
     def getInstance(self, transformInfoInterface: TransformInfoInterface, paymentTransactionInterface: PaymentTransactionInterface) -> PaymentProcessorInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.game.input.event.RawKeyEventListener import RawKeyEventListener
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.animation.text.TextInterface import TextInterface
 
 
-class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, UpdateMyFontInterface, TextInterface):
+class CustomTextBoxIndexedAnimation(*java_bases(IndexedAnimation, RawKeyEventListener, UpdateMyFontInterface, TextInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
@@ -56,7 +57,6 @@ class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, Updat
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
-        from org.allbinary.animation.text.TextChangeListener import TextChangeListener
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
         font: Font = graphics.getFont()
@@ -101,6 +101,5 @@ class CustomTextBoxIndexedAnimation(IndexedAnimation, RawKeyEventListener, Updat
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
 # from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.animation.text.TextChangeListener import TextChangeListener
 
 

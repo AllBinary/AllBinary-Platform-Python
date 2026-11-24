@@ -41,6 +41,12 @@ class BasicTopViewGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
         from org.allbinary.media.graphics.geography.map.topview.BasicTopViewGeographicMapCellType import BasicTopViewGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.topview.BasicTopViewGeographicMapCellType import BasicTopViewGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.topview.BasicTopViewGeographicMapCellType import BasicTopViewGeographicMapCellType
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         super().__init__()
         self._init_fields()
         commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -122,22 +128,24 @@ class BasicTopViewGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
     
 
     def isPath(self, cellType: GeographicMapCellType) -> bool:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         if self.FLOOR_CELL_TYPE.isType(cellType):
             return True
         return False
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append("key: WALL/BLOCK_CELL_TYPE: ").append(str(self.BLOCK_CELL_TYPE)).append("key: FLOOR_CELL_TYPE: ").append(str(self.FLOOR_CELL_TYPE)).append("key: OTHER_CELL_TYPE: ").append(str(self.OTHER_CELL_TYPE)).append("key: OFF_MAP_CELL_TYPE: ").append(str(self.OFF_MAP_CELL_TYPE)).append("key: DOOR_CELL_TYPE: ").append(str(self.DOOR_CELL_TYPE)).append("key: STAIRS_DOWN_CELL_TYPE: ").append(str(self.STAIRS_DOWN_CELL_TYPE)).append("key: STAIRS_UP_CELL_TYPE: ").append(str(self.STAIRS_UP_CELL_TYPE)))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.HashtableUtil import HashtableUtil
 
 

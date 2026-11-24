@@ -16,13 +16,15 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.thread.PriorityRunnable import PriorityRunnable
 from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 
-class WaypointPathRunnableBase(RunnableInterface, PriorityRunnable):
+class WaypointPathRunnableBase(*java_bases(RunnableInterface, PriorityRunnable)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
         self.layerDistanceUtil: LayerDistanceUtil = LayerDistanceUtil.getInstance()
         self.pathFindingLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
         self.targetPathFindingLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
@@ -52,6 +54,7 @@ class WaypointPathRunnableBase(RunnableInterface, PriorityRunnable):
     
 
     def setPriority(self) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         pathFindingLayer: AllBinaryLayer = self.pathFindingLayer
         targetLayer: AllBinaryLayer = self.targetPathFindingLayer
         if targetLayer is not None:
@@ -82,8 +85,8 @@ class WaypointPathRunnableBase(RunnableInterface, PriorityRunnable):
 
     def reset(self) -> None:
         pass
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
 from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
 
 

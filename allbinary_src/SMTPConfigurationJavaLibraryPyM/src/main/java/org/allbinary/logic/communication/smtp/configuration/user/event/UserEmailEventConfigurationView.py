@@ -25,20 +25,25 @@ class UserEmailEventConfigurationView(DomNodeInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, node: Node) -> None:
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
+    def _constructor1_1(self, node: Node) -> None:
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfiguration import UserEmailEventConfiguration
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         childNodeList: NodeList = node.getChildNodes()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         name: str = DomNodeHelper.getTextNodeValue(UserEmailEventConfigurationData.NAME, childNodeList)
         hashMap.put(UserEmailEventConfigurationData.NAME, name)
         eventListenerClassPath: str = DomNodeHelper.getTextNodeValue(UserEmailEventConfigurationData.LISTENER_CLASSPATH, childNodeList)
@@ -46,7 +51,7 @@ class UserEmailEventConfigurationView(DomNodeInterface):
         self.setUserEmailEventConfigurationInterface(UserEmailEventConfiguration(hashMap))
     
 
-    def _constructor1(self, userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface) -> None:
+    def _constructor1_2(self, userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface) -> None:
         self._init_fields()
         self.setUserEmailEventConfigurationInterface(userEmailEventConfigurationInterface)
     
@@ -54,9 +59,12 @@ class UserEmailEventConfigurationView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationMapping import UserEmailEventConfigurationMapping
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         userEmailEventConfigurationMapping: UserEmailEventConfigurationMapping = UserEmailEventConfigurationMapping(self.getUserEmailEventConfigurationInterface())
-        hashMap: dict = userEmailEventConfigurationMapping.toHashMap()
+        hashMap: HashMap = userEmailEventConfigurationMapping.toHashMap()
         node: Node = ModDomHelper.createNameValueNodes(document, UserEmailEventConfigurationData.NAME, hashMap)
         return node
     
@@ -68,11 +76,11 @@ class UserEmailEventConfigurationView(DomNodeInterface):
     def setUserEmailEventConfigurationInterface(self, userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface) -> None:
         self.userEmailEventConfigurationInterface = userEmailEventConfigurationInterface
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

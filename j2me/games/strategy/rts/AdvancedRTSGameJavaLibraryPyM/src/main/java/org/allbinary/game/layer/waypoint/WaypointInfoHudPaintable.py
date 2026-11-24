@@ -21,24 +21,31 @@ from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 class WaypointInfoHudPaintable(SelectionHudPaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.graphics.draw.KeyValueDrawString import KeyValueDrawString
         self.keyvalueDrawString: KeyValueDrawString = None
         self.rtsLayerP: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
         self.textLine2Y: int = 0
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.draw.KeyValueDrawString import KeyValueDrawString
         super().__init__()
         self._init_fields()
         self.keyvalueDrawString = KeyValueDrawString("Owner: ", self.textX)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         super().updateMeasurement(graphics)
         font: Font = graphics.getFont()
         self.textLine2Y = (self.y + font.getHeight())
     
 
     def updateSelectionInfo(self) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
         rtsLayer: RTSLayer = self.rtsLayerP
         self.setName(rtsLayer.getName())
         self.setAnimationInterface(rtsLayer.getVerticleBuildAnimationInterface())
@@ -46,22 +53,25 @@ class WaypointInfoHudPaintable(SelectionHudPaintable):
     
 
     def setRtsLayer(self, rtsLayer: RTSLayer) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
         self.rtsLayerP = rtsLayer
     
 
     def getRtsLayer(self) -> PathFindingLayerInterface:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         return self.rtsLayerP
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paint(graphics)
         self.keyvalueDrawString.paint(graphics, self.textLine2Y)
         self.getAnimationInterface().paintXY(graphics, self.imageX, self.y)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.graphics.draw.KeyValueDrawString import KeyValueDrawString
+# from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.graphics.draw.KeyValueDrawString import KeyValueDrawString
 
 

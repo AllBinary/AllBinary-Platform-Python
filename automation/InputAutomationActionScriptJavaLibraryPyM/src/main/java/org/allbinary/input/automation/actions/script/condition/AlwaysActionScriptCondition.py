@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.BasicProfileActionScriptCondition import BasicProfileActionScriptCondition
 from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionInterface import AlwaysActionScriptConditionInterface
 
 
-class AlwaysActionScriptCondition(BasicProfileActionScriptCondition, AlwaysActionScriptConditionInterface):
+class AlwaysActionScriptCondition(*java_bases(BasicProfileActionScriptCondition, AlwaysActionScriptConditionInterface)):
     NAME: str = "Always On/Off"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.alwaysActionScriptConditionJPanel: AlwaysActionScriptConditionJPanel = None
         self.isOn: bool = False
@@ -37,6 +39,10 @@ class AlwaysActionScriptCondition(BasicProfileActionScriptCondition, AlwaysActio
     def _constructor1(self, node: Node) -> None:
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionData import AlwaysActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionData import AlwaysActionScriptConditionData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(AlwaysActionScriptCondition.NAME, node)
         self._init_fields()
         actionNode: Node = DomSearchHelper.getNode(AlwaysActionScriptConditionData.NAME, node.getChildNodes())
@@ -77,9 +83,11 @@ class AlwaysActionScriptCondition(BasicProfileActionScriptCondition, AlwaysActio
         self.alwaysActionScriptConditionJPanel.getAlwaysActionJDialog().setVisible(True)
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionData import AlwaysActionScriptConditionData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(AlwaysActionScriptConditionData.IS_ON, str(self.isIsOn()))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
@@ -88,6 +96,9 @@ class AlwaysActionScriptCondition(BasicProfileActionScriptCondition, AlwaysActio
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionData import AlwaysActionScriptConditionData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, AlwaysActionScriptConditionData.NAME, self.toHashMap()))
         return node
@@ -103,13 +114,13 @@ class AlwaysActionScriptCondition(BasicProfileActionScriptCondition, AlwaysActio
     def log(self) -> None:
         self.logUtil.putF("Is On: " + str(self.isIsOn()), self, "log")
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

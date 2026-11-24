@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
-from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
 
 
 class AllBinaryVibration(AllBinaryVibrationME):
-    VIBRATION: AllBinaryVibrationME = AllBinaryNoVibration.NO_VIBRATION
+    VIBRATION: AllBinaryVibrationME = None
 
     def _init_fields(self) -> None:
+        from android.content.Context import Context
+        from android.os.Vibrator import Vibrator
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         self.vibrator: Vibrator = ResourceUtil.getInstance().getContext().getSystemService(Context.VIBRATOR_SERVICE)
     
 
@@ -38,7 +41,7 @@ class AllBinaryVibration(AllBinaryVibrationME):
 
     @staticmethod
     def init() -> None:
-        from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         if int(GameConfigurationCentral.getInstance().VIBRATION.getValue()) == 0:
             AllBinaryVibration.VIBRATION = AllBinaryNoVibration.NO_VIBRATION
         else:
@@ -47,9 +50,14 @@ class AllBinaryVibration(AllBinaryVibrationME):
 
     def vibrate(self, duration: int, type_: int, volume: int) -> None:
         self.vibrator.vibrate(duration)
-from android.content.Context import Context
-from android.os.Vibrator import Vibrator
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from android.content.Context import Context
+# from android.os.Vibrator import Vibrator
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
 
+
+def _AllBinaryVibration_VIBRATION() -> object:
+    return AllBinaryNoVibration.NO_VIBRATION
+
+lazy_static(AllBinaryVibration, "VIBRATION", _AllBinaryVibration_VIBRATION)
 

@@ -23,6 +23,7 @@ class BasicTransformerInterface(CompositeTransformInfoInterface):
     
 
     def setInputStream(self, inputStream: InputStream) -> None:
+        from java.io.InputStream import InputStream
         raise NotImplementedError()
     
 
@@ -35,6 +36,7 @@ class BasicTransformerInterface(CompositeTransformInfoInterface):
     
 
     def getInputStream(self) -> InputStream:
+        from java.io.InputStream import InputStream
         raise NotImplementedError()
     
 

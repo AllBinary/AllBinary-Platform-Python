@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 
 
-class HealthBarAnimationInterfaceFactory(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface):
+class HealthBarAnimationInterfaceFactory(*java_bases(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface)):
     
 
     def __init__(self) -> None:
@@ -29,23 +30,27 @@ class HealthBarAnimationInterfaceFactory(AnimationInterfaceFactoryInterface, Pro
     # throws Exception
     def getInstanceByLocation(self, layerInterface: AllBinaryLayer, location: int) -> HealthBarAnimation:
         from org.allbinary.game.health.HealthBarThreedAnimation import HealthBarThreedAnimation
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return HealthBarThreedAnimation(layerInterface, location)
     
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return None
     
 
     # throws Exception
     def getInstanceAnimation(self, animationInterface: Animation) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return None
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

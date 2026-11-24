@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileStreamFactory:
-    SINGLETON: object = NullUtil.getInstance().NULL_OBJECT
+    SINGLETON: object = None
 
     def _init_fields(self) -> None:
         self.context: object = None
@@ -27,12 +27,15 @@ class FileStreamFactory:
 
     @staticmethod
     def getInstance() -> FileStreamFactory:
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.logic.NullUtil import NullUtil
         if FileStreamFactory.SINGLETON == NullUtil.getInstance().NULL_OBJECT:
             FileStreamFactory.SINGLETON = FileStreamFactory(ResourceUtil.getInstance().getContext())
         return FileStreamFactory.SINGLETON
     
 
     def __init__(self, context: Context) -> None:
+        from android.content.Context import Context
         self._init_fields()
         self.context = context
     
@@ -46,6 +49,7 @@ class FileStreamFactory:
     # throws Exception
     def getFileOutputStreamInstance(self, path: str, fileName: str) -> AbFileOutputStream:
         from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from android.content.Context import Context
         context: Context = self.getContext()
         context.deleteFile(fileName)
         return AbFileOutputStream(context.openFileOutput(fileName, 0))
@@ -57,8 +61,16 @@ class FileStreamFactory:
     
 
     def getContext(self) -> Context:
+        from android.content.Context import Context
         return self.context
-from android.content.Context import Context
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from android.content.Context import Context
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _FileStreamFactory_SINGLETON() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(FileStreamFactory, "SINGLETON", _FileStreamFactory_SINGLETON)
 

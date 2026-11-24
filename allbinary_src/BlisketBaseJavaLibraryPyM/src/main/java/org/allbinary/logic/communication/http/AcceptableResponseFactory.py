@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AcceptableResponseFactory:
@@ -35,5 +36,8 @@ class AcceptableResponseFactory:
 from org.allbinary.logic.communication.http.AcceptableResponse import AcceptableResponse
 
 
-AcceptableResponseFactory.instance = AcceptableResponseFactory()
+def _AcceptableResponseFactory_instance() -> object:
+    return AcceptableResponseFactory()
+
+lazy_static(AcceptableResponseFactory, "instance", _AcceptableResponseFactory_instance)
 

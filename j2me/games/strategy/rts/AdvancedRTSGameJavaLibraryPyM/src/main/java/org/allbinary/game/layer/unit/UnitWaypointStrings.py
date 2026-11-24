@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class UnitWaypointStrings:
     instance: UnitWaypointStrings = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonLabels import CommonLabels
+        self.PATHING: str = "Pathing"
         self.WANDERING: str = "Order?"
         self.THINKING: str = "Thinking"
         self.THINKING_ABOUT_TARGET: str = "Hmmm"
@@ -34,6 +37,10 @@ class UnitWaypointStrings:
         self.ALREADY_THERE_SHORT: str = "Again?"
         self.ALREADY_THERE: str = "Already There"
         self.NEXT_PATH_NODE: str = str(CommonLabels.getInstance().NEXT) + " Path Node"
+        self._ALL_VISITED_SHORT: str = " Arrived"
+        self._ALREADY_THERE_SHORT: str = " Again?"
+        self.VISITED_MOST_OF_THE_PATH: str = " visited most of the path"
+        self.RETURNING_AS_WAYPOINT_PATH_LIST: str = " returning as waypointPathsList was runningWaypointPathList"
 
     def __init__(self) -> None:
         self._init_fields()
@@ -42,8 +49,11 @@ class UnitWaypointStrings:
     @staticmethod
     def getInstance() -> UnitWaypointStrings:
         return UnitWaypointStrings.instance
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 
-UnitWaypointStrings.instance = UnitWaypointStrings()
+def _UnitWaypointStrings_instance() -> object:
+    return UnitWaypointStrings()
+
+lazy_static(UnitWaypointStrings, "instance", _UnitWaypointStrings_instance)
 

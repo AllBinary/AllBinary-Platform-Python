@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StoreFrontInventoryStatisticsData:
@@ -35,5 +36,8 @@ class StoreFrontInventoryStatisticsData:
         self._init_fields()
 
 
-StoreFrontInventoryStatisticsData.instance = StoreFrontInventoryStatisticsData()
+def _StoreFrontInventoryStatisticsData_instance() -> object:
+    return StoreFrontInventoryStatisticsData()
+
+lazy_static(StoreFrontInventoryStatisticsData, "instance", _StoreFrontInventoryStatisticsData_instance)
 

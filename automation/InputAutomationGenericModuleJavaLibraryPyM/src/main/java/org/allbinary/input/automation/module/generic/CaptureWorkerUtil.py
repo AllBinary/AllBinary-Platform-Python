@@ -20,6 +20,7 @@ from __future__ import annotations
 class CaptureWorkerUtil:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,6 +31,10 @@ class CaptureWorkerUtil:
     # throws Exception
     @staticmethod
     def processProfileActionConditions(vector: BasicArrayList, frame: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonStrings.START, "CaptureWorkerUtil", "processProfileActionConditions")
@@ -40,10 +45,10 @@ class CaptureWorkerUtil:
                 profileActionConditionInterface.process(frame)
             else:
                 pass
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

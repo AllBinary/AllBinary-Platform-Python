@@ -97,7 +97,6 @@ class StringValidationUtil:
         else:
             return True
 # from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
 
 
 def _StringValidationUtil_instance() -> object:

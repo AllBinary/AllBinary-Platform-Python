@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DisplayPointScalar:
@@ -39,12 +40,16 @@ class DisplayPointScalar:
     
 
     def process(self, point: GPoint) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         return point
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
 
 
-DisplayPointScalar.instance = DisplayPointScalar()
+def _DisplayPointScalar_instance() -> object:
+    return DisplayPointScalar()
+
+lazy_static(DisplayPointScalar, "instance", _DisplayPointScalar_instance)
 

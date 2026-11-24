@@ -29,6 +29,7 @@ class DbInitInfo(DbConnectionInfo):
     
 
     def getUrl(self) -> str:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         url: str = super().getUrl()
         PreLogUtil.put("Url: " + url, self, "getUrl")
         return url
@@ -58,6 +59,6 @@ class DbInitInfo(DbConnectionInfo):
 
     def _setHasRead_unlocked(self, value: bool) -> None:
         pass
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 
 

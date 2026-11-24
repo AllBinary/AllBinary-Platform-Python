@@ -52,7 +52,7 @@ class ThreadPool:
             if runnable == self.NULL_RUNNABLE:
                 return
             self.currentPriorityRunnable = runnable
-            if not (self.currentPriorityRunnable == self.threadObjectUtil.NULL_PRIORITY_RUNNABLE):
+            if not self.currentPriorityRunnable == self.threadObjectUtil.NULL_PRIORITY_RUNNABLE:
                 self.currentPriorityRunnable.reset()
                 self.currentPriorityRunnable.run()
     
@@ -172,7 +172,6 @@ class ThreadPool:
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.thread.NullRunnable import NullRunnable
 from org.allbinary.thread.ThreadPoolStrings import ThreadPoolStrings
 from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 

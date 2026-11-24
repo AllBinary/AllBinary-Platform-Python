@@ -20,6 +20,9 @@ from __future__ import annotations
 class ImageComparisonResult:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.bufferedImages: list[BufferedImage] = [None] * (2)
@@ -38,6 +41,8 @@ class ImageComparisonResult:
     
 
     def __init__(self, name: str, bufferedImage: BufferedImage, bufferedImage2: BufferedImage, frameOne: int, frameTwo: int, tolerance: int) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         self._init_fields()
         self.name = name
         self.nonMatchingPixelVector = BasicArrayListD()
@@ -76,14 +81,17 @@ class ImageComparisonResult:
     
 
     def add(self, pixel: PixelDelta) -> None:
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         self.nonMatchingPixelVector.add(pixel)
     
 
     def getNonMatchingPixelVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.nonMatchingPixelVector
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append("ImageComparisonInfo: ").append(self.name).append(" Number Of Matching Pixels: ").appendint(self.pixelsThatMatch).append("\nNumber Of Non-Matching Pixels: ").appendint(self.getNonMatchingPixelVector().size()).append("\nNumber Of Pixels Ignored: ").appendint(self.pixelsIgnored).append("\nMatching Percentage: ").appendfloat(self.getMatchingPercent()))
 
     def __str__(self) -> str:
@@ -109,13 +117,13 @@ class ImageComparisonResult:
     def getFrameTwo(self) -> int:
         return self.frameTwo
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.image.ImageUtil import ImageUtil
-from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

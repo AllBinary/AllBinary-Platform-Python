@@ -22,10 +22,12 @@ class AdvertisementCampaignsInterface:
     
 
     def add(self, advertisementInterface: AdvertisementInterface) -> None:
+        from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
         raise NotImplementedError()
     
 
     def get(self, index: int) -> AdvertisementInterface:
+        from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
         raise NotImplementedError()
     
 
@@ -35,6 +37,6 @@ class AdvertisementCampaignsInterface:
 
     def isEnabled(self) -> bool:
         raise NotImplementedError()
-from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
+# from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
 
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class AbstractInputRobot:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.helpSet: HelpSet = None
     
@@ -33,13 +34,13 @@ class AbstractInputRobot:
         return self.helpSet
     
 
-    def mouseMove(self, point: Point) -> None:
+    def mouseMove_j1(self, point: Point) -> None:
         self.mouseMove(point.x, point.y)
         self.logUtil.putF("Moved Mouse To: x: " + str(point.x) + " y: " + str(point.y), self, "moveMouse")
     
 
     # throws Exception
-    def mouseMoveToTarget(self, rectangle: Rectangle, x: int, y: int) -> None:
+    def mouseMoveToTarget_j3(self, rectangle: Rectangle, x: int, y: int) -> None:
         from org.allbinary.input.automation.PointHelper import PointHelper
         point: Point = PointHelper.getCenterPoint(rectangle)
         self.mouseMove(point.x + x, point.y + y)
@@ -47,20 +48,25 @@ class AbstractInputRobot:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def mouseMoveToTarget(self, rectangle: Rectangle) -> None:
+    def mouseMoveToTarget_j1(self, rectangle: Rectangle) -> None:
         self.mouseMoveToTarget(rectangle, 0, 0)
+
+    def mouseMoveToTarget(self, *args):
+        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def mouseMove(self, x: int, y: int) -> None:
+    def mouseMove_j2(self, x: int, y: int) -> None:
         raise RuntimeError()
+
+    def mouseMove(self, *args):
+        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
     
 
     def setHelpSet(self, helpSet: HelpSet) -> None:
         self.helpSet = helpSet
-# from java.awt import *
+# from java.awt.Point import Point
+# from java.awt.Rectangle import Rectangle
 # from javax.help.HelpSet import HelpSet
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

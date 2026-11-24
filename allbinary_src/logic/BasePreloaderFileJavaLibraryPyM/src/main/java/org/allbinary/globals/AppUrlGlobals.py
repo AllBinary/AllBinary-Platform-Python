@@ -48,7 +48,7 @@ class AppUrlGlobals(UrlGlobalsInterface):
 
     def _setWebappPath_unlocked(self, path: str) -> None:
         self.path = path
-        if not (self.path.endswith("\\") or self.path.endswith("/")):
+        if not self.path.endswith("\\") or self.path.endswith("/"):
             self.path = self.path + "\\"
     
 

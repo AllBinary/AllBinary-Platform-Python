@@ -25,24 +25,34 @@ class TimeLastModifiedView(DomNodeInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, timeLastModified: TimeLastModified) -> None:
+    def _constructor1_1(self, timeLastModified: TimeLastModified) -> None:
         self._init_fields()
         self.setTimeLastModified(timeLastModified)
     
 
-    def _constructor1(self, node: Node) -> None:
+    def _constructor1_2(self, node: Node) -> None:
         from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.setTimeLastModified(TimeLastModified(DomNodeHelper.getTextNodeValue(node)))
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return ModDomHelper.createTextNode(document, EntryData.getInstance().TIMECREATED, str(self.getTimeLastModified()))
     
 
@@ -52,10 +62,10 @@ class TimeLastModifiedView(DomNodeInterface):
 
     def setTimeLastModified(self, timeLastModified: TimeLastModified) -> None:
         self.timeLastModified = timeLastModified
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

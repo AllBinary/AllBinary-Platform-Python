@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -22,6 +23,7 @@ class LogUtil:
     instance: LogUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.logFormatUtil: LogFormatUtil = LogFormatUtil.getInstance()
         self.LABEL: str = "org.allbinary"
@@ -45,14 +47,18 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         self.put(specialMessage, anyType, functionName, NullUtil.getInstance().NULL_OBJECT)
     
 
     def putFS(self, specialMessage: str, string: str, functionName: str) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         self.putS(specialMessage, string, functionName, NullUtil.getInstance().NULL_OBJECT)
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         className: str = self.LABEL
         className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(self.commonSeps.COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
@@ -60,16 +66,20 @@ class LogUtil:
     
 
     def putS(self, specialMessage: str, string: str, functionName: str, exception: object) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         className: str = self.LABEL
         className = str(str(StringMaker().append(string).append(self.commonSeps.COLON).append(format(TsUtil.getInstance().hashCode(string), "x"))))
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         android.util.Log.i(self.LABEL, message)
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

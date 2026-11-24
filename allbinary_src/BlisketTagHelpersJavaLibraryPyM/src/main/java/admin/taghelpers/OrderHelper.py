@@ -21,15 +21,24 @@ from admin.taghelpers.TagHelper import TagHelper
 class OrderHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.weblisketSession: WeblisketSession = None
         self.storeFrontInterface: StoreFrontInterface = None
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
         self.pageContext: PageContext = None
         self.request: HttpServletRequest = None
     
 
-    def __init__(self, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         super().__init__()
         self._init_fields()
         self.propertiesHashMap = propertiesHashMap
@@ -42,6 +51,17 @@ class OrderHelper(TagHelper):
     
 
     def setPaymentGateway(self) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntity import PaymentGatewayEntity
+        from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityFactory import PaymentGatewayEntityFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             paymentGatewayBoolean: bool = False
             orderInterface: OrderInterface = self.weblisketSession.getOrder()
@@ -59,7 +79,7 @@ class OrderHelper(TagHelper):
                 self.weblisketSession.setPaymentMethod(paymentGateway)
                 orderInterface.setPaymentMethod(paymentGateway)
                 paymentGatewayBoolean = True
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Successfully set PaymentGateway Order: ")
                 stringBuffer.append(orderInterface.getId())
@@ -68,7 +88,7 @@ class OrderHelper(TagHelper):
                 self.logUtil.putF(str(stringBuffer), self, "setPaymentGateway()")
             return paymentGatewayBoolean
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Failed to set PaymentGateway for Order: ")
                 try:
@@ -84,11 +104,17 @@ class OrderHelper(TagHelper):
     
 
     def process(self) -> str:
+        from org.allbinary.business.user.commerce.inventory.order.Order import Order
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderProcessorUtil import OrderProcessorUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             order: OrderInterface = self.weblisketSession.getOrder()
             order.setStoreName(self.storeFrontInterface.getName())
             result: str = OrderProcessorUtil.getInstance().process(self.weblisketSession.getUserName(), order)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF("Successfully Processed Order: " + result, self, "processOrder()")
             return result
         except Exception as e:
@@ -99,28 +125,30 @@ class OrderHelper(TagHelper):
             except Exception as ex:
                 stringBuffer.append(" Exception Getting Id")
             error: str = str(stringBuffer)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
             return error
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.order.Order import Order
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.inventory.order.OrderProcessorUtil import OrderProcessorUtil
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
-from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntity import PaymentGatewayEntity
-from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityFactory import PaymentGatewayEntityFactory
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.order.Order import Order
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.inventory.order.OrderProcessorUtil import OrderProcessorUtil
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+# from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntity import PaymentGatewayEntity
+# from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityFactory import PaymentGatewayEntityFactory
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -16,11 +16,11 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.graphics.j2me.workarea.tools.event.EventListenerList import EventListenerList
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MyGraphicItemEventService:
-    listenerList: EventListenerList = EventListenerList()
+    listenerList: EventListenerList = None
     DELETE: str = "delete"
     DESELECT: str = "deselect"
     SELECT: str = "select"
@@ -40,7 +40,8 @@ class MyGraphicItemEventService:
 
     @staticmethod
     def _addListener_unlocked(listener: MyGraphicItemEventListener) -> None:
-        MyGraphicItemEventService.listenerList.add(type(listener), listener)
+        from java.util.EventListener import EventListener
+        MyGraphicItemEventService.listenerList.add((type(listener)), listener)
     
 
     @staticmethod
@@ -50,7 +51,8 @@ class MyGraphicItemEventService:
 
     @staticmethod
     def _removeListener_unlocked(listener: MyGraphicItemEventListener) -> None:
-        MyGraphicItemEventService.listenerList.remove(type(listener), listener)
+        from java.util.EventListener import EventListener
+        MyGraphicItemEventService.listenerList.remove((type(listener)), listener)
     
 
     # throws Exception
@@ -74,5 +76,12 @@ class MyGraphicItemEventService:
                     (listeners[i + 1]).duplicate(evt)
                 elif evt.getCommand().compareTo(MyGraphicItemEventService.ROTATE) == 0:
                     (listeners[i + 1]).rotate(evt)
+# from java.util.EventListener import EventListener
+# from javax.swing.event.EventListenerList import EventListenerList
 
+
+def _MyGraphicItemEventService_listenerList() -> object:
+    return EventListenerList()
+
+lazy_static(MyGraphicItemEventService, "listenerList", _MyGraphicItemEventService_listenerList)
 

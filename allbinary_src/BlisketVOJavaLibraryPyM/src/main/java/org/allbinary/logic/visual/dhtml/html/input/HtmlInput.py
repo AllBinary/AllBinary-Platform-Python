@@ -42,33 +42,34 @@ class HtmlInput(HtmlTag):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
         result: str = stringUtil.EMPTY_STRING
         attributeKeys: list[object] = self.otherAttributes.keySet().toArray()
         attributeSize: int = len(attributeKeys)
         result = self.before
-        result += self.STARTINPUT
-        result += self.TYPE
-        result += self.type_
+        result += str(self.STARTINPUT)
+        result += str(self.TYPE)
+        result += str(self.type_)
         result += "\" "
-        result += self.NAME
-        result += self.name
+        result += str(self.NAME)
+        result += str(self.name)
         result += "\" "
         for i in range(0, attributeSize):
             key: str = attributeKeys[i]
             value: str = self.otherAttributes.get(key)
             if value is not None and ((value > stringUtil.EMPTY_STRING) - (value < stringUtil.EMPTY_STRING)) != 0:
-                result += key
+                result += str(key)
                 result += "=\""
-                result += value
+                result += str(value)
                 result += "\" "
-        result += self.END
-        result += self.ENDINPUT
-        result += self.after
+        result += str(self.END)
+        result += str(self.ENDINPUT)
+        result += str(self.after)
         return result
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

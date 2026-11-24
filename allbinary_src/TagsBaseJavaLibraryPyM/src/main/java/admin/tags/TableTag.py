@@ -21,6 +21,8 @@ from tags.PropertiesTag import PropertiesTag
 class TableTag(PropertiesTag):
 
     def _init_fields(self) -> None:
+        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.enabled: str = None
         self.tagHelperFactoryInterface: TagHelperFactoryInterface = None
@@ -31,9 +33,11 @@ class TableTag(PropertiesTag):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
 
@@ -43,6 +47,8 @@ class TableTag(PropertiesTag):
 
     # throws Exception
     def isEnabled(self) -> bool:
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if not StringValidationUtil.getInstance().isEmpty(self.enabled):
             if BooleanUtil.getInstance().getFromString(self.enabled) or ((self.enabled > "on") - (self.enabled < "on")) == 0:
                 return True
@@ -50,18 +56,22 @@ class TableTag(PropertiesTag):
     
 
     def setTagHelperFactory(self, tagHelperFactoryInterface: TagHelperFactoryInterface) -> None:
+        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         self.tagHelperFactoryInterface = tagHelperFactoryInterface
     
 
     def getTagHelperFactoryInterface(self) -> TagHelperFactoryInterface:
+        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         return self.tagHelperFactoryInterface
     
 
     def setTagRequestHelperFactory(self, tagHelperFactoryInterface: TagHelperFactoryInterface) -> None:
+        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         self.tagRequestHelperFactoryInterface = tagHelperFactoryInterface
     
 
     def getTagRequestHelperFactoryInterface(self) -> TagHelperFactoryInterface:
+        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         return self.tagRequestHelperFactoryInterface
     
 
@@ -83,6 +93,9 @@ class TableTag(PropertiesTag):
 
     # throws LicensingException
     def drop(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -91,13 +104,16 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to drop table"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.DROP, e)
             return error
     
 
     # throws LicensingException
     def create(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -106,13 +122,16 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to create table"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "create()", e)
             return error
     
 
     # throws LicensingException
     def restore(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -121,13 +140,16 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to restore backup"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "restore()", e)
             return error
     
 
     # throws LicensingException
     def backup(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -136,13 +158,16 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to make backup"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "backup()", e)
             return error
     
 
     # throws LicensingException
     def insert(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.requestObject)
             method: Method = helperClass.getMethod("insert", None)
@@ -150,13 +175,16 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to insert"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "insert()", e)
             return error
     
 
     # throws LicensingException
     def delete(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.requestObject)
             method: Method = helperClass.getMethod(self.commonStrings.delete, None)
@@ -164,13 +192,16 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to delete"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "delete()", e)
             return error
     
 
     # throws LicensingException
     def update(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.requestObject)
             method: Method = helperClass.getMethod("update", None)
@@ -178,15 +209,22 @@ class TableTag(PropertiesTag):
             return result
         except Exception as e:
             error: str = "Failed to update"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "update()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 request: HttpServletRequest = self.pageContext.getRequest()
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("TableTag Helper: ")
@@ -195,12 +233,12 @@ class TableTag(PropertiesTag):
                 stringBuffer.append(request.getRequestURI())
                 self.logUtil.putF(str(stringBuffer), self, self.tagStrings.DO_START_TAG)
             if self.getTagRequestHelperFactoryInterface() is not None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                     self.logUtil.putF("TableTag RequestHelper: " + type(self.getTagRequestHelperFactoryInterface()).__module__ + "." + type(self.getTagRequestHelperFactoryInterface()).__qualname__, self, self.tagStrings.DO_START_TAG)
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                     self.logUtil.putF("TableTag RequestHelper: null", self, self.tagStrings.DO_START_TAG)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF("TableTag this.getCommand(): " + str(self.getCommand()), self, self.tagStrings.DO_START_TAG)
             if self.isEnabled():
                 if self.getCommand() is not None:
@@ -212,39 +250,39 @@ class TableTag(PropertiesTag):
                         self.delete()
                     elif self.getCommand().compareTo(self.commonStrings.UPDATE) == 0 or self.getCommand().compareTo(SqlStrings.getInstance().UPDATE) == 0:
                         self.update()
-                    if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.BACKUP) == 0:
+                    if self.getCommand().compareTo(GLOBALS2.BACKUP) == 0:
                         output: str = self.backup()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                         return self.SKIP_BODY
-                    elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.RESTORE) == 0:
+                    elif self.getCommand().compareTo(GLOBALS2.RESTORE) == 0:
                         self.getPropertiesHashMap().put("current", self.getCurrent())
                         self.getPropertiesHashMap().put("total", self.getTotal())
                         output: str = self.restore()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                         return self.SKIP_BODY
                     elif self.getCommand().compareTo(self.commonStrings.DROP) == 0:
                         output: str = self.drop()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                         return self.SKIP_BODY
                     elif self.getCommand().compareTo(self.commonStrings.CREATE) == 0:
                         output: str = self.create()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                         return self.SKIP_BODY
                     elif self.getCommand().compareTo(self.commonStrings.INSERT) == 0:
                         output: str = self.insert()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                     elif self.getCommand().compareTo(self.commonStrings.DELETE) == 0:
                         output: str = self.delete()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                     elif self.getCommand().compareTo(self.commonStrings.UPDATE) == 0:
                         output: str = self.update()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
             return self.EVAL_BODY_INCLUDE
         except LicensingException as e:
@@ -256,13 +294,16 @@ class TableTag(PropertiesTag):
 # from java.lang.reflect.Method import Method
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
-from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

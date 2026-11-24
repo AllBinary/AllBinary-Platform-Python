@@ -26,7 +26,10 @@ class RequestWorkFlowFactory:
 
     # throws Exception, LicensingException
     @staticmethod
-    def getInstance(request: ServletRequest, response: ServletResponse, servletConfig: ServletConfig, servletContext: ServletContext) -> WorkFlowInterface:
+    def getInstance_j4(request: ServletRequest, response: ServletResponse, servletConfig: ServletConfig, servletContext: ServletContext) -> WorkFlowInterface:
+        from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         httpRequest: HttpServletRequest = request
         requestCommand: str = httpRequest.getPathInfo()
         index: int = requestCommand.find(AbPathData.getInstance().SEPARATOR)
@@ -36,14 +39,20 @@ class RequestWorkFlowFactory:
     
 
     # throws Exception, LicensingException
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(hashMap: dict, pageContext: PageContext) -> WorkFlowInterface:
-        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
+    def getInstance_j2(hashMap: HashMap, pageContext: PageContext) -> WorkFlowInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         workFlowName: str = pageContext.getRequest().getParameter(WorkFlowData.getInstance().NAME)
         weblisketSession: WeblisketSession = WeblisketSession(hashMap, pageContext)
         storeName: str = weblisketSession.getStoreName()
         return WorkFlowEntityFactory.getInstance().create2().get(workFlowName, storeName)
+
+    @staticmethod
+    def getInstance(*args):
+        return getattr(RequestWorkFlowFactory, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.ServletConfig import ServletConfig
 # from javax.servlet.ServletContext import ServletContext
@@ -51,9 +60,9 @@ class RequestWorkFlowFactory:
 # from javax.servlet.ServletResponse import ServletResponse
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

@@ -38,8 +38,10 @@ class GenericProfileDataWorkerTypeInterface:
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         raise NotImplementedError()
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

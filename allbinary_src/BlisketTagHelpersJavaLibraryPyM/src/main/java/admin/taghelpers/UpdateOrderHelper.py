@@ -21,6 +21,7 @@ from admin.taghelpers.TagHelper import TagHelper
 class UpdateOrderHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.request: HttpServletRequest = None
         self.entryId: str = None
@@ -62,7 +63,8 @@ class UpdateOrderHelper(TagHelper):
         self.storeCancelComment: str = None
     
 
-    def __init__(self, hashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
         super().__init__()
         self._init_fields()
         self.request = pageContext.getRequest()
@@ -70,6 +72,15 @@ class UpdateOrderHelper(TagHelper):
     
 
     def getFormData(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
         self.entryId = self.request.getParameter(EntryData.getInstance().ID)
         self.orderId = self.request.getParameter(OrderData.ID)
         self.userName = self.request.getParameter(UserData.USERNAME)
@@ -110,10 +121,24 @@ class UpdateOrderHelper(TagHelper):
     
 
     def update(self) -> str:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             success: str = "Successful update"
-            orderHashMap: dict = StdUtil.getInstance().createHashMap()
-            whereHashMap: dict = StdUtil.getInstance().createHashMap()
+            orderHashMap: HashMap = StdUtil.getInstance().createHashMap()
+            whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             orderHashMap.put(EntryData.getInstance().ID, self.entryId)
             orderHashMap.put(OrderData.ID, self.orderId)
             orderHashMap.put(UserData.USERNAME, self.userName)
@@ -151,28 +176,30 @@ class UpdateOrderHelper(TagHelper):
             orderHashMap.put(OrderData.STORECANCELCOMMENT, self.storeCancelComment)
             whereHashMap.put(OrderData.ID, self.orderId)
             OrderHistoryEntityFactory.getInstance().update(whereHashMap, orderHashMap)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF(success, self, "update()")
             return success
         except Exception as e:
             error: str = "Failed to update order table"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "update()", e)
             return error
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

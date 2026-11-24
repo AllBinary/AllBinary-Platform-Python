@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 from org.allbinary.layer.Layer import Layer
 from org.allbinary.layer.NamedInterface import NamedInterface
 
 
-class AllBinaryTiledLayer(Layer, NamedInterface, PaintableInterface):
+class AllBinaryTiledLayer(*java_bases(Layer, NamedInterface, PaintableInterface)):
 
     def _init_fields(self) -> None:
         self.cellWidth: int = None
@@ -48,6 +49,7 @@ class AllBinaryTiledLayer(Layer, NamedInterface, PaintableInterface):
     
 
     def setCells(self, mapTwoDArray: list[list[int]]) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Start: r: ")
         stringBuffer.appendint(len(mapTwoDArray))
@@ -80,10 +82,12 @@ class AllBinaryTiledLayer(Layer, NamedInterface, PaintableInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
@@ -153,8 +157,8 @@ class AllBinaryTiledLayer(Layer, NamedInterface, PaintableInterface):
     def getAnimatedTile(self, animationTileIndex: int) -> int:
         return animationTileIndex
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

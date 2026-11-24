@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHudCompositeInterface import GameNotificationHudCompositeInterface
 from org.allbinary.game.input.BuildMenuCompositeInterface import BuildMenuCompositeInterface
 from org.allbinary.game.combat.destroy.event.DestroyedEventListenerInterface import DestroyedEventListenerInterface
@@ -24,18 +25,21 @@ from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerI
 
 
 # Java interface
-class RTSPlayerLayerInterface(GameNotificationHudCompositeInterface, BuildMenuCompositeInterface, PlayerGameInputCompositeInterface, DestroyedEventListenerInterface, TickableInterface, PathFindingLayerInterface):
+class RTSPlayerLayerInterface(*java_bases(GameNotificationHudCompositeInterface, BuildMenuCompositeInterface, PlayerGameInputCompositeInterface, DestroyedEventListenerInterface, TickableInterface, PathFindingLayerInterface)):
     
 
     def getCapital(self) -> Capital:
+        from org.allbinary.game.layer.capital.Capital import Capital
         raise NotImplementedError()
     
 
     def getRTSFormInput(self) -> RTSFormInput:
+        from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
         raise NotImplementedError()
     
 
     def add(self, sound: Sound) -> None:
+        from org.allbinary.media.audio.Sound import Sound
         raise NotImplementedError()
     
 
@@ -45,8 +49,8 @@ class RTSPlayerLayerInterface(GameNotificationHudCompositeInterface, BuildMenuCo
 
     def implmentsArtificialIntelligenceCompositeInterface(self) -> bool:
         raise NotImplementedError()
-from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
-from org.allbinary.game.layer.capital.Capital import Capital
-from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
+# from org.allbinary.game.layer.capital.Capital import Capital
+# from org.allbinary.media.audio.Sound import Sound
 
 

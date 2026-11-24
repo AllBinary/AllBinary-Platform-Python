@@ -22,20 +22,27 @@ from tags.StoreWorkFlowTag import StoreWorkFlowTag
 class BasicWorkFlowTag(StoreWorkFlowTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF(self.commonStrings.START, self, self.tagStrings.DO_START_TAG)
             self.getPropertiesHashMap().put(DynamicObjectData.NAME, "workflows.template.data.BasicStoreWorkFlow")
             return super().doStartTag()
@@ -43,8 +50,10 @@ class BasicWorkFlowTag(StoreWorkFlowTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

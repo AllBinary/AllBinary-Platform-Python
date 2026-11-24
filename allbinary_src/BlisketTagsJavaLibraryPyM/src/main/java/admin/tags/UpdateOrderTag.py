@@ -22,9 +22,10 @@ class UpdateOrderTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.UpdateOrderHelperFactory import UpdateOrderHelperFactory
         super().__init__()
         self.setTagHelperFactory(UpdateOrderHelperFactory())
         self.setTagRequestHelperFactory(UpdateOrderHelperFactory())
-from admin.taghelpers.UpdateOrderHelperFactory import UpdateOrderHelperFactory
+# from admin.taghelpers.UpdateOrderHelperFactory import UpdateOrderHelperFactory
 
 

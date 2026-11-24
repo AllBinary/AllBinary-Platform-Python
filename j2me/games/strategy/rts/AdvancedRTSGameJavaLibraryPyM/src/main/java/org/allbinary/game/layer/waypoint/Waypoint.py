@@ -15,13 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.building.event.BuildingEventListenerInterface import BuildingEventListenerInterface
 from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
 
 
-class Waypoint(WaypointBase, BuildingEventListenerInterface):
+class Waypoint(*java_bases(WaypointBase, BuildingEventListenerInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
         self.ownerLayer: PathFindingLayerInterface = None
@@ -30,6 +35,8 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
     
 
     def __init__(self, ownerLayer: PathFindingLayerInterface, sound: Sound) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.media.audio.Sound import Sound
         super().__init__(sound)
         self._init_fields()
         self.ownerLayer = ownerLayer
@@ -37,6 +44,11 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -49,6 +61,8 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
     
 
     def releaseCachedPaths(self) -> None:
+        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapExtractedPathsCacheFactory import BasicGeographicMapExtractedPathsCacheFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         columnIndex = len(self.paths)
         while (columnIndex := columnIndex - 1) >= 0:
             rowIndex = len(self.paths)
@@ -60,11 +74,15 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
 
     # throws Exception
     def getPathsListFromCacheOnly(self, geographicMapCellPosition: GeographicMapCellPosition) -> BasicArrayList:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.paths[geographicMapCellPosition.getColumn()][geographicMapCellPosition.getRow()]
     
 
     # throws Exception
     def getPathsListRunnable(self, geographicMapCellPosition: GeographicMapCellPosition) -> BasicArrayList:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pathsList: BasicArrayList = self.paths[geographicMapCellPosition.getColumn()][geographicMapCellPosition.getRow()]
         if pathsList == self.basicArrayListUtil.getImmutableInstance():
             pathsList = self.createPaths(geographicMapCellPosition)
@@ -73,6 +91,7 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
     
 
     def getEndGeographicMapCellPosition(self, startGeographicMapCellPosition: GeographicMapCellPosition) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         endGeographicMapCellPosition: GeographicMapCellPosition = self.basicArrayListUtil.getRandom(self.endList)
         if startGeographicMapCellPosition == endGeographicMapCellPosition:
             for index in range(self.endList.size() - 1, 0 - 1, -1):
@@ -84,6 +103,16 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
 
     # throws Exception
     def createPaths(self, startGeographicMapCellPosition: GeographicMapCellPosition) -> BasicArrayList:
+        from org.allbinary.game.media.graphics.geography.map.racetrack.PathFindingInfoFactory import PathFindingInfoFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.racetrack.CustomMapGenerator import CustomMapGenerator
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+        from org.allbinary.media.graphics.geography.pathfinding.PathGenerator import PathGenerator
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if self.endList.size() == 0:
             return self.basicArrayListUtil.getImmutableInstance()
         endGeographicMapCellPosition: GeographicMapCellPosition = self.getEndGeographicMapCellPosition(startGeographicMapCellPosition)
@@ -111,11 +140,15 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     # throws Exception
     def onBuildingEvent(self, event: RTSLayerEvent) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
         self.clearPaths()
     
 
@@ -134,6 +167,9 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
 
     # throws Exception
     def visit(self, unitLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
         if unitLayer.getGroupInterface()[0] != self.ownerLayer.getGroupInterface()[0]:
             return
         size: int = self.getConnectedWaypointList().size()
@@ -147,28 +183,28 @@ class Waypoint(WaypointBase, BuildingEventListenerInterface):
                     unitLayer.handleCost(self.ownerLayer)
                     unitWaypointBehavior.insertWaypoint(0, rtsLayer)
                     break
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
-from org.allbinary.game.media.graphics.geography.map.racetrack.PathFindingInfoFactory import PathFindingInfoFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.media.audio.Sound import Sound
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.racetrack.CustomMapGenerator import CustomMapGenerator
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
-from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapExtractedPathsCacheFactory import BasicGeographicMapExtractedPathsCacheFactory
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-from org.allbinary.media.graphics.geography.pathfinding.PathGenerator import PathGenerator
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
+# from org.allbinary.game.media.graphics.geography.map.racetrack.PathFindingInfoFactory import PathFindingInfoFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.racetrack.CustomMapGenerator import CustomMapGenerator
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
+# from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapExtractedPathsCacheFactory import BasicGeographicMapExtractedPathsCacheFactory
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+# from org.allbinary.media.graphics.geography.pathfinding.PathGenerator import PathGenerator
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

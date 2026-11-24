@@ -295,14 +295,16 @@ class PaymentGatewayInterface(TableMappingInterface):
     
 
     # throws Exception
-    def toHashMap(self, isEncrypted: bool) -> dict:
+    def toHashMap(self, isEncrypted: bool) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
     
 
     def toVector(self, isEncrypted: bool) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.health.HealthListenerInterface import HealthListenerInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
-class HealthIncludingLifeBar(Paintable, HealthListenerInterface):
+class HealthIncludingLifeBar(*java_bases(Paintable, HealthListenerInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.health.HealthBarAnimation import HealthBarAnimation

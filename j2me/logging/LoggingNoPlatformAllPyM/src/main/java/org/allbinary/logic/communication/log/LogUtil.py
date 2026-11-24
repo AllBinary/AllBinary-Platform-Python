@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogUtil:
@@ -42,8 +43,7 @@ class LogUtil:
         raise RuntimeError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def putF(self, specialMessage: str, className: str, functionName: str) -> None:
+    def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
         raise RuntimeError()
     
 
@@ -51,5 +51,8 @@ class LogUtil:
         raise RuntimeError()
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

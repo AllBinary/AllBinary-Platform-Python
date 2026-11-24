@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorChangeListener import ColorChangeListener
 from org.allbinary.game.paint.BasicGameDemoPaintable import BasicGameDemoPaintable
 
 
-class GameScrollMenuPaintable(BasicGameDemoPaintable, ColorChangeListener):
+class GameScrollMenuPaintable(*java_bases(BasicGameDemoPaintable, ColorChangeListener)):
     
 
     def __init__(self, mainDemoStatePaintable: Paintable, ownershipPaintable: Paintable, helpPaintableInterface: Paintable, basicColor: BasicColor) -> None:

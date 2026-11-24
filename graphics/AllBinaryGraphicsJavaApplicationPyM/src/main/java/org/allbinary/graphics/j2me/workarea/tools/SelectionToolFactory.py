@@ -23,7 +23,8 @@ class SelectionToolFactory(GraphicsItemInterfaceFactoryInterface):
 
     def getInstance(self, canvasJPanel: CanvasJPanel) -> GraphicItemInterface:
         from org.allbinary.graphics.j2me.workarea.tools.SelectionTool import SelectionTool
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         return SelectionTool(canvasJPanel)
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
 
 

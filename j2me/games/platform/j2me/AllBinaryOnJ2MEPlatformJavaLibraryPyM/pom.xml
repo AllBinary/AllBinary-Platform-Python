@@ -235,7 +235,7 @@
 
             <!-- Java build plugin converted with a Py suffix. The Python build does not use it (like Erlang).
             <plugin>
-                <artifactId>maven-assembly-pluginPy</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
                         <phase>package</phase>

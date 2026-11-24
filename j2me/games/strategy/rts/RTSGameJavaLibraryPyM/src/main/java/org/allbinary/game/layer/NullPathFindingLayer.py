@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
 
 
@@ -28,6 +29,7 @@ class NullPathFindingLayer(PathFindingLayerInterface):
 
     # throws Exception
     def getEndGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
@@ -63,19 +65,25 @@ class NullPathFindingLayer(PathFindingLayerInterface):
 
     # throws Exception
     def init(self, geographicMapCellHistory: GeographicMapCellHistory, geographicMapCellPositionBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     def getMoveOutOfBuildAreaPath(self, geographicMapCellPosition: GeographicMapCellPosition) -> BasicArrayList:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     # throws Exception
     def setClosestGeographicMapCellHistory(self, pathsList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     def teleportTo(self, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
@@ -86,6 +94,7 @@ class NullPathFindingLayer(PathFindingLayerInterface):
 
     # throws Exception
     def getSurroundingGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
@@ -113,10 +122,13 @@ class NullPathFindingLayer(PathFindingLayerInterface):
 
     # throws Exception
     def buildingChase(self, allbinaryLayer: AllBinaryLayer, cellPosition: GeographicMapCellPosition) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
     def getTrackingEvent(self) -> TrackingEvent:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         raise RuntimeError()
     
 
@@ -130,15 +142,18 @@ class NullPathFindingLayer(PathFindingLayerInterface):
 
     # throws Exception
     def getCurrentGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
     # throws Exception
     def getTopLeftGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
     def getCaptionAnimationHelper(self) -> CaptionAnimationHelperBase:
+        from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
         raise RuntimeError()
     
 
@@ -147,18 +162,22 @@ class NullPathFindingLayer(PathFindingLayerInterface):
     
 
     def getWaypointLogHelper(self) -> WaypointLogHelper:
+        from org.allbinary.game.layer.waypoint.WaypointLogHelper import WaypointLogHelper
         raise RuntimeError()
     
 
     def getWaypoint2LogHelper(self) -> Waypoint2LogHelper:
+        from org.allbinary.game.layer.waypoint.Waypoint2LogHelper import Waypoint2LogHelper
         raise RuntimeError()
     
 
     def getWaypointRunnableLogHelper(self) -> WaypointRunnableLogHelper:
+        from org.allbinary.game.layer.waypoint.WaypointRunnableLogHelper import WaypointRunnableLogHelper
         raise RuntimeError()
     
 
     def getGroupInterface(self) -> list[Group]:
+        from org.allbinary.game.identification.Group import Group
         raise RuntimeError()
     
 
@@ -169,17 +188,20 @@ class NullPathFindingLayer(PathFindingLayerInterface):
 
     def getSourceId(self) -> int:
         raise RuntimeError()
-from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.layer.waypoint.Waypoint2LogHelper import Waypoint2LogHelper
-from org.allbinary.game.layer.waypoint.WaypointLogHelper import WaypointLogHelper
-from org.allbinary.game.layer.waypoint.WaypointRunnableLogHelper import WaypointRunnableLogHelper
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.layer.waypoint.Waypoint2LogHelper import Waypoint2LogHelper
+# from org.allbinary.game.layer.waypoint.WaypointLogHelper import WaypointLogHelper
+# from org.allbinary.game.layer.waypoint.WaypointRunnableLogHelper import WaypointRunnableLogHelper
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-NullPathFindingLayer.NULL_PATH_FINDING_LAYER = NullPathFindingLayer()
+def _NullPathFindingLayer_NULL_PATH_FINDING_LAYER() -> object:
+    return NullPathFindingLayer()
+
+lazy_static(NullPathFindingLayer, "NULL_PATH_FINDING_LAYER", _NullPathFindingLayer_NULL_PATH_FINDING_LAYER)
 

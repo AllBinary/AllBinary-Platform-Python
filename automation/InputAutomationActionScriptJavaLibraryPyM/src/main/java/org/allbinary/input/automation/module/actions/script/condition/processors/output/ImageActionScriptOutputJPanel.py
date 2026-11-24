@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.module.actions.script.condition.processors.output.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class ImageActionScriptOutputJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.capturedImageActionScriptOutputInterface: ImageActionScriptOutputInterface = None
@@ -45,6 +47,8 @@ class ImageActionScriptOutputJPanel(JPanel):
     
 
     def set(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.media.image.InputImageType import InputImageType
         self.setImageTypeJlistModel()
         imageTypes: ImageTypes = self.capturedImageActionScriptOutputInterface.getImageTypes()
         vector: BasicArrayList = imageTypes.getVector()
@@ -78,7 +82,8 @@ class ImageActionScriptOutputJPanel(JPanel):
     
 
     def setImageTypeJlistModel(self) -> None:
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.DefaultListModel import DefaultListModel
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.media.image.InputImageType import InputImageType
         defaultListModel: DefaultListModel = DefaultListModel()
         vector: BasicArrayList = InputImageType.getAllAsVector()
         size: int = vector.size()
@@ -97,25 +102,6 @@ class ImageActionScriptOutputJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JDialog import JDialog
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JLabel import JLabel
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JButton import JButton
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JCheckBox import JCheckBox
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JCheckBox import JCheckBox
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JScrollPane import JScrollPane
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JList import JList
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JButton import JButton
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.JLabel import JLabel
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.Dimension import Dimension
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.ActionListener import ActionListener
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.Insets import Insets
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.Insets import Insets
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.ActionListener import ActionListener
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.AbstractListModel import AbstractListModel
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.Dimension import Dimension
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.ActionListener import ActionListener
-        from org.allbinary.input.automation.module.actions.script.condition.processors.output.GroupLayout import GroupLayout
         self.capturedImageActionJDialog = JDialog()
         self.titleJLabel = JLabel()
         self.okJButton = JButton()
@@ -135,10 +121,10 @@ class ImageActionScriptOutputJPanel(JPanel):
 #                 self.okJButtonActionPerformed(evt)
 ))
         self.saveJCheckBox.setText("Save To File")
-        self.saveJCheckBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.saveJCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.saveJCheckBox.setMargin(Insets(0, 0, 0, 0))
         self.displayJCheckBox.setText("Display")
-        self.displayJCheckBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.displayJCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.displayJCheckBox.setMargin(Insets(0, 0, 0, 0))
         self.displayJCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -160,8 +146,8 @@ class ImageActionScriptOutputJPanel(JPanel):
         self.jScrollPane1.setViewportView(self.itemTypesJList)
         capturedImageActionJDialogLayout: GroupLayout = GroupLayout(self.capturedImageActionJDialog.getContentPane())
         self.capturedImageActionJDialog.getContentPane().setLayout(capturedImageActionJDialogLayout)
-        capturedImageActionJDialogLayout.setHorizontalGroup(capturedImageActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addGroup(capturedImageActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addGap(61, 61, 61).addComponent(self.titleJLabel)).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addContainerGap().addGroup(capturedImageActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.displayJCheckBox).addComponent(self.saveJCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addGap(84, 84, 84).addComponent(self.okJButton)))).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))).addContainerGap()))
-        capturedImageActionJDialogLayout.setVerticalGroup(capturedImageActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addGap(5, 5, 5).addComponent(self.jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.saveJCheckBox).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.displayJCheckBox).addGap(9, 9, 9).addComponent(self.okJButton).addContainerGap()))
+        capturedImageActionJDialogLayout.setHorizontalGroup(capturedImageActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addGroup(capturedImageActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addGap(61, 61, 61).addComponent(self.titleJLabel)).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addContainerGap().addGroup(capturedImageActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.displayJCheckBox).addComponent(self.saveJCheckBox, GroupLayout.Alignment.TRAILING)).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addGap(84, 84, 84).addComponent(self.okJButton)))).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.jScrollPane1, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))).addContainerGap()))
+        capturedImageActionJDialogLayout.setVerticalGroup(capturedImageActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addGap(5, 5, 5).addComponent(self.jScrollPane1, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.saveJCheckBox).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.displayJCheckBox).addGap(9, 9, 9).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.capturedImageActionJButton.setText("Edit")
         self.capturedImageActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
@@ -173,8 +159,8 @@ class ImageActionScriptOutputJPanel(JPanel):
         self.jLabel1.setText("Capture Image:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.capturedImageActionJButton)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.capturedImageActionJButton)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.capturedImageActionJButton)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.capturedImageActionJButton)))
     
 
     def displayJCheckBoxActionPerformed(self, evt: ActionEvent) -> None:
@@ -188,11 +174,25 @@ class ImageActionScriptOutputJPanel(JPanel):
 
     def capturedImageActionJButtonActionPerformed(self, evt: ActionEvent) -> None:
         self.getCapturedImageActionJDialog().setVisible(True)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-# from javax.swing import *
-from org.allbinary.input.media.image.InputImageType import InputImageType
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from javax.swing.DefaultListModel import DefaultListModel
+# from org.allbinary.input.media.image.InputImageType import InputImageType
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.Insets import Insets
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.AbstractListModel import AbstractListModel
+# from javax.swing.BorderFactory import BorderFactory
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JCheckBox import JCheckBox
+# from javax.swing.JDialog import JDialog
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JList import JList
+# from javax.swing.JScrollPane import JScrollPane
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

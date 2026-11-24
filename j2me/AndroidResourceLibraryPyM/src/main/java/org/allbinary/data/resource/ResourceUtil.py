@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #Android
@@ -22,6 +23,10 @@ class ResourceUtil:
     instance: ResourceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.context: object = NullUtil.getInstance().NULL_OBJECT
         self.resources: object = NullUtil.getInstance().NULL_OBJECT
@@ -38,22 +43,31 @@ class ResourceUtil:
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil.putF(CommonStrings.getInstance().NOT_IMPLEMENTED, self, "setLoadingPaths")
     
 
     def getContext(self) -> Context:
+        from android.content.Context import Context
         return self.context
     
 
     def setContextFromActivity(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
         self.context = activity
     
 
     def setContext(self, aContext: Context) -> None:
+        from android.content.Context import Context
         self.context = aContext
     
 
     def getResourceId(self, resource: str) -> int:
+        from org.allbinary.debug.DebugFactory import DebugFactory
+        from org.allbinary.debug.NoDebug import NoDebug
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         value: int = self.hashMap.get(resource)
         if DebugFactory.getInstance() != NoDebug.getInstance():
             PreLogUtil.put(str(StringMaker().append(resource).append(CommonSeps.getInstance().COLON).append(str(value))), self, "getResourceId")
@@ -61,6 +75,12 @@ class ResourceUtil:
     
 
     def addResource(self, resource: str, value: int) -> None:
+        from org.allbinary.debug.DebugFactory import DebugFactory
+        from org.allbinary.debug.NoDebug import NoDebug
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         if DebugFactory.getInstance() != NoDebug.getInstance():
             PreLogUtil.put(str(StringMaker().append(resource).append(CommonSeps.getInstance().COLON).append(str(value))), self, "addResource")
             if self.containsDuplicate(resource, value):
@@ -69,6 +89,7 @@ class ResourceUtil:
     
 
     def containsDuplicate(self, resource: str, value: int) -> bool:
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         objectArray: list[object] = HashtableUtil.getInstance().getKeysAsArray(self.hashMap)
         index = len(objectArray)
         while (index := index - 1) >= 0:
@@ -81,12 +102,16 @@ class ResourceUtil:
     
 
     def setResources(self, resources: Resources) -> None:
+        from android.content.res.Resources import Resources
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append("Resource Loader: ").append(type(resources).__module__ + "." + type(resources).__qualname__)), self, "setResources")
         self.resources = resources
     
 
     # throws Exception
     def getResourceAsStream(self, resource: str) -> InputStream:
+        from java.io.InputStream import InputStream
+        from android.content.res.Resources import Resources
         integer: int = self.hashMap.get(resource)
         id: int = int(integer)
         resources: Resources = (self.resources)
@@ -95,22 +120,25 @@ class ResourceUtil:
             return inputStream
         return inputStream
 # from java.io.InputStream import InputStream
-from android.app.Activity import Activity
-from android.content.Context import Context
-from android.content.res.Resources import Resources
-from org.allbinary.debug.DebugFactory import DebugFactory
-from org.allbinary.debug.NoDebug import NoDebug
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.HashtableUtil import HashtableUtil
+# from android.app.Activity import Activity
+# from android.content.Context import Context
+# from android.content.res.Resources import Resources
+# from org.allbinary.debug.DebugFactory import DebugFactory
+# from org.allbinary.debug.NoDebug import NoDebug
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.HashtableUtil import HashtableUtil
 
 
-ResourceUtil.instance = ResourceUtil()
+def _ResourceUtil_instance() -> object:
+    return ResourceUtil()
+
+lazy_static(ResourceUtil, "instance", _ResourceUtil_instance)
 

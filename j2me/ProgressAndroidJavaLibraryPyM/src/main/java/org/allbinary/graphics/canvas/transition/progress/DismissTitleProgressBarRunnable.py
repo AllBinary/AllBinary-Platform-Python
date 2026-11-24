@@ -21,24 +21,28 @@ from org.allbinary.graphics.canvas.transition.progress.ProgressRunnable import P
 class DismissTitleProgressBarRunnable(ProgressRunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.transition.TransistionTypes import TransistionTypes
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.ZOOM_OUT_AND_IN: list[int] = [TransistionTypes.getInstance().ZOOM_OUT, TransistionTypes.getInstance().ZOOM_IN]
     
 
     def __init__(self, midletActivity: Activity, progressCanvas: ProgressCanvas) -> None:
+        from android.app.Activity import Activity
         super().__init__(midletActivity, progressCanvas)
         self._init_fields()
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.midletActivity.onDismissProgress(self.ZOOM_OUT_AND_IN)
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-from org.allbinary.animation.transition.TransistionTypes import TransistionTypes
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from android.app.Activity import Activity
+# from org.allbinary.animation.transition.TransistionTypes import TransistionTypes
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from android.app.Activity import Activity
 
 

@@ -17,12 +17,14 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MediaPlayerUtil:
     instance: MediaPlayerUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -36,6 +38,7 @@ class MediaPlayerUtil:
 
     # throws Exception
     def waitForMediaPlayer(self, mediaPlayer: MediaPlayer) -> None:
+        from android.media.MediaPlayer import MediaPlayer
         MESSAGE: str = "Not Stopped Waiting"
         METHOD_NAME: str = "wait"
         index: int = 0
@@ -43,9 +46,12 @@ class MediaPlayerUtil:
             self.logUtil.putF(MESSAGE, self, METHOD_NAME)
             time.sleep((100) / 1000)
             index += 1
-from android.media.MediaPlayer import MediaPlayer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from android.media.MediaPlayer import MediaPlayer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-MediaPlayerUtil.instance = MediaPlayerUtil()
+def _MediaPlayerUtil_instance() -> object:
+    return MediaPlayerUtil()
+
+lazy_static(MediaPlayerUtil, "instance", _MediaPlayerUtil_instance)
 

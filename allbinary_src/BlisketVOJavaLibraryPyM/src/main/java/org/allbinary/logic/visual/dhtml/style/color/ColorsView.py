@@ -21,6 +21,7 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class ColorsView(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         self.HEXRADIX: int = 16
         self.MAX: int = 255
@@ -33,7 +34,10 @@ class ColorsView(DomNodeInterface):
 
     # throws Exception
     def getColorNode(self, document: Document, redIndex: int, greenIndex: int, blueIndex: int) -> Node:
-        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         hexColorStringBuffer: StringMaker = StringMaker()
         if redIndex < self.HEXRADIX:
             hexColorStringBuffer.append(self.commonPhoneStrings.ZERO)
@@ -50,10 +54,10 @@ class ColorsView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.dhtml.style.color.ColorsData import ColorsData
-        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
-        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
-        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createNameValueNodes(document, ColorsData.getInstance().NAME, "RGB Colors In Hex")
         blackNode: Node = ModDomHelper.createNameValueNodes(document, ColorData.getInstance().NAME, "000000")
         node.appendChild(blackNode)
@@ -89,10 +93,10 @@ class ColorsView(DomNodeInterface):
                 for blueIndex in range(0, self.MAX, 2 * self.delta):
                     node.appendChild(self.getColorNode(document, redIndex, greenIndex, blueIndex))
         return node
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

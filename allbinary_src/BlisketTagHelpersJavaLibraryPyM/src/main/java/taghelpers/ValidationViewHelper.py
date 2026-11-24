@@ -15,65 +15,83 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from taghelpers.ViewHelper import ViewHelper
 
 
-class ValidationViewHelper(ViewHelper, ValidationComponentInterface):
+class ValidationViewHelper(*java_bases(ViewHelper, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.viewInterface: ValidationComponentInterface = None
     
 
-    def __init__(self, hashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(hashMap, pageContext)
         self._init_fields()
         self.viewInterface = self.getViewObject()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 self.logUtil.putF("Started", self, self.commonStrings.IS_VALID)
             return self.viewInterface.isValid()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.viewInterface.validationInfo()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "validationInfo()", e)
             return "Unknown Validation Error"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.viewInterface.toValidationInfoDoc()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "toValidationInfoDoc()", e)
             return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.viewInterface.toValidationInfoNode(document)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "toValidationInfoNode()", e)
             return None
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

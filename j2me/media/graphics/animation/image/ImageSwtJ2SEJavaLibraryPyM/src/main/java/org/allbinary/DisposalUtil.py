@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DisposalUtil:
     instance: DisposalUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -33,6 +35,9 @@ class DisposalUtil:
     
 
     def disposeImage(self, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.eclipse.swt.graphics.Resource import Resource
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         if image is None:
             return
         if image.isMutable():
@@ -43,14 +48,18 @@ class DisposalUtil:
     
 
     def disposeResource(self, resource: Resource) -> None:
+        from org.eclipse.swt.graphics.Resource import Resource
         if not resource.isDisposed():
             print(self.commonStrings.CLOSE)
             resource.dispose()
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.eclipse.swt.graphics.Resource import Resource
-from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.eclipse.swt.graphics.Resource import Resource
+# from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
 
 
-DisposalUtil.instance = DisposalUtil()
+def _DisposalUtil_instance() -> object:
+    return DisposalUtil()
+
+lazy_static(DisposalUtil, "instance", _DisposalUtil_instance)
 

@@ -15,18 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransformFactory:
     instance: TransformFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
 
     @staticmethod
-    def getInstance() -> TransformFactory:
+    def getInstance_j0() -> TransformFactory:
         return TransformFactory.instance
     
 
@@ -35,10 +38,18 @@ class TransformFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, viewName: str, ownerTransformInfoInterface: TransformInfoInterface) -> TransformInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j3_1(self, abeClientInformation: AbeClientInformationInterface, viewName: str, ownerTransformInfoInterface: TransformInfoInterface) -> TransformInterface:
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoObjectFactory import TransformInfoObjectFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 self.logUtil.putF("Creating Transform: " + viewName, self, self.commonStrings.GET_INSTANCE)
             ownerTransformInfoHttpInterface: TransformInfoHttpInterface = ownerTransformInfoInterface
             transformInfoEntity: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
@@ -47,21 +58,32 @@ class TransformFactory:
                 raise Exception("No Such View In DB: " + viewName)
             transformInfoInterface.setChild()
             anyType: object = TransformInfoObjectFactory.getInstance().getInstance(abeClientInformation, transformInfoInterface)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 self.logUtil.putF("Created Transform: " + viewName, self, self.commonStrings.GET_INSTANCE)
             return anyType
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_INSTANCE, e)
             raise e
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, propertiesHashMap: dict, pageContext: PageContext) -> TransformInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j3_2(self, abeClientInformation: AbeClientInformationInterface, propertiesHashMap: HashMap, pageContext: PageContext) -> TransformInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoObjectFactory import TransformInfoObjectFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             transformInfoData: TransformInfoData = TransformInfoData.getInstance()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 self.logUtil.putF("Creating Transform: " + str(propertiesHashMap.get(transformInfoData.NAME)), self, self.commonStrings.GET_INSTANCE)
             transformInfoEntity: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
             transformInfoInterface: TransformInfoInterface = transformInfoEntity.get(propertiesHashMap.get(transformInfoData.NAME), propertiesHashMap, pageContext)
@@ -70,11 +92,11 @@ class TransformFactory:
             else:
                 transformInfoInterface = TransformInfoHttpFactory.getInstance(propertiesHashMap, pageContext)
             anyType: object = TransformInfoObjectFactory.getInstance().getInstance(abeClientInformation, transformInfoInterface)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 self.logUtil.putF("Created Transform: " + str(propertiesHashMap.get(transformInfoData.NAME)), self, self.commonStrings.GET_INSTANCE)
             return anyType
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Failed To Get Instance: ")
                 stringBuffer.append(propertiesHashMap.get(TransformInfoData.getInstance().NAME))
@@ -84,33 +106,49 @@ class TransformFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> TransformInterface:
+    def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> TransformInterface:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoObjectFactory import TransformInfoObjectFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 self.logUtil.putF("Creating Transform: " + transformInfoInterface.getName(), self, "getInstance(TransformInfoInterface)")
             anyType: object = TransformInfoObjectFactory.getInstance().getInstance(abeClientInformation, transformInfoInterface)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 self.logUtil.putF("Created Transform: " + transformInfoInterface.getName(), self, "getInstance(TransformInfoInterface)")
             return anyType
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getInstance(TransformInfoInterface)", e)
             raise e
+
+    def getInstance(self, *args):
+        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and not isinstance(args[2], (str, list, int, float)):
+            return self.getInstance_j3_1(*args)
+        if len(args) == 3:
+            return self.getInstance_j3_2(*args)
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
-from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoObjectFactory import TransformInfoObjectFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+# from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoObjectFactory import TransformInfoObjectFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-TransformFactory.instance = TransformFactory()
+def _TransformFactory_instance() -> object:
+    return TransformFactory()
+
+lazy_static(TransformFactory, "instance", _TransformFactory_instance)
 

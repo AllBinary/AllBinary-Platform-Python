@@ -21,6 +21,7 @@ from org.allbinary.logic.io.file.visitor.IncludeFileExtensionsBooleanFileVisitor
 class DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor(IncludeFileExtensionsBooleanFileVisitor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.java.runtime.process.git.GitProcessHelper import GitProcessHelper
         self.trackedStrings: TrackedStrings = TrackedStrings.getInstance()
         self.gitProcessHelper: GitProcessHelper = GitProcessHelper.getInstance()
         self.includesString: str = None
@@ -33,18 +34,21 @@ class DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor(IncludeFileExt
     
 
     def _constructor1(self, filterStringBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
         self._init_fields()
         self.includesString = None
     
 
     def _constructor2(self, filterStringBasicArrayList: BasicArrayList, includesString: str) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
         self._init_fields()
         self.includesString = includesString
     
 
-    def visit(self, file: AbFile) -> bool:
+    def visit_j1(self, file: AbFile) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         if file.isDirectory():
             return True
         if self.includesString is None or file.getAbsolutePath().indexOf(self.includesString) >= 0:
@@ -53,12 +57,12 @@ class DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor(IncludeFileExt
             return False
     
 
-    # Java overloaded method: Python keeps the last definition
-    def visit(self, file: AbFile, fileNameString: str) -> bool:
+    def visit_j2(self, file: AbFile, fileNameString: str) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         filePath: str = file.getPath()
         if super().visit(file, fileNameString):
-            if not ((self.trackedStrings.APPLICATION in filePath) or (self.trackedStrings.APP in filePath) or (self.trackedStrings.HTML_TEMP in filePath)):
-                if not ((self.trackedStrings.TARGET_PATH_WINDOWS in filePath) or (self.trackedStrings.TARGET_PATH_UNIX in filePath)):
+            if not (self.trackedStrings.APPLICATION in filePath) or (self.trackedStrings.APP in filePath) or (self.trackedStrings.HTML_TEMP in filePath):
+                if not (self.trackedStrings.TARGET_PATH_WINDOWS in filePath) or (self.trackedStrings.TARGET_PATH_UNIX in filePath):
                     if self.gitProcessHelper.isTracked(file):
                         return True
                     else:
@@ -68,21 +72,28 @@ class DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor(IncludeFileExt
             else:
                 pass
         return False
+
+    def visit(self, *args):
+        return getattr(self, "visit_j" + str(len(args)))(*args)
     
 
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         commonFileStrings: CommonDataFileStrings = CommonDataFileStrings.getInstance()
         list_: BasicArrayList = BasicArrayListD()
         list_.add(commonFileStrings.JAVA)
         filePath: str = "G:\\mnt\\bc\\mydev\\games\\ZeptoRacer\\platform\\j2se\\ZeptoRacerStaticPathsJ2SEM\\target\\dependency\\org\\allbinary\\logic\\system\\security\\licensing\\ZeptoRacerPCClientInformation.java"
         result: bool = DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor(list_).visit(AbFile.createAbFileFromRawPath(filePath))
         print(filePath + " is Tracked: " + str(result))
-from org.allbinary.java.runtime.process.git.GitProcessHelper import GitProcessHelper
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.java.runtime.process.git.GitProcessHelper import GitProcessHelper
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.logic.io.file.directory.TrackedStrings import TrackedStrings
 
 

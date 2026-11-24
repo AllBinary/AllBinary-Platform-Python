@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.thirdparty.store.LongArrayIdentifierInterface import LongArrayIdentifierInterface
 from org.allbinary.logic.system.security.licensing.AbeClientInformation import AbeClientInformation
 
 
-class StoreAppClientInformation(AbeClientInformation, LongArrayIdentifierInterface):
+class StoreAppClientInformation(*java_bases(AbeClientInformation, LongArrayIdentifierInterface)):
 
     def _init_fields(self) -> None:
         self.longArrayIdentifier: list[int] = None

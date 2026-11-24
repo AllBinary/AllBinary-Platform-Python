@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CpuInfo:
@@ -53,39 +54,93 @@ class CpuInfo:
         return self.toString()
 
 
-CpuInfo.PROCESSOR = CpuInfo("processor")
+def _CpuInfo_PROCESSOR() -> object:
+    return CpuInfo("processor")
 
-CpuInfo.VENDORID = CpuInfo("vendor_id")
+lazy_static(CpuInfo, "PROCESSOR", _CpuInfo_PROCESSOR)
 
-CpuInfo.CPUFAMILY = CpuInfo("cpu family")
+def _CpuInfo_VENDORID() -> object:
+    return CpuInfo("vendor_id")
 
-CpuInfo.MODEL = CpuInfo("model")
+lazy_static(CpuInfo, "VENDORID", _CpuInfo_VENDORID)
 
-CpuInfo.MODELNAME = CpuInfo("model name")
+def _CpuInfo_CPUFAMILY() -> object:
+    return CpuInfo("cpu family")
 
-CpuInfo.STEPPING = CpuInfo("stepping")
+lazy_static(CpuInfo, "CPUFAMILY", _CpuInfo_CPUFAMILY)
 
-CpuInfo.CPUMHZ = CpuInfo("cpu MHz")
+def _CpuInfo_MODEL() -> object:
+    return CpuInfo("model")
 
-CpuInfo.CACHESIZE = CpuInfo("cache size")
+lazy_static(CpuInfo, "MODEL", _CpuInfo_MODEL)
 
-CpuInfo.FDIVBUG = CpuInfo("fdiv_bug")
+def _CpuInfo_MODELNAME() -> object:
+    return CpuInfo("model name")
 
-CpuInfo.HLTBUG = CpuInfo("hlt_bug")
+lazy_static(CpuInfo, "MODELNAME", _CpuInfo_MODELNAME)
 
-CpuInfo.F00FBUG = CpuInfo("f00f_bug")
+def _CpuInfo_STEPPING() -> object:
+    return CpuInfo("stepping")
 
-CpuInfo.COMABUG = CpuInfo("coma_bug")
+lazy_static(CpuInfo, "STEPPING", _CpuInfo_STEPPING)
 
-CpuInfo.FPU = CpuInfo("fpu")
+def _CpuInfo_CPUMHZ() -> object:
+    return CpuInfo("cpu MHz")
 
-CpuInfo.FPUEXCEPTION = CpuInfo("fpu_exception")
+lazy_static(CpuInfo, "CPUMHZ", _CpuInfo_CPUMHZ)
 
-CpuInfo.CPUIDLEVEL = CpuInfo("cache size")
+def _CpuInfo_CACHESIZE() -> object:
+    return CpuInfo("cache size")
 
-CpuInfo.WP = CpuInfo("yes")
+lazy_static(CpuInfo, "CACHESIZE", _CpuInfo_CACHESIZE)
 
-CpuInfo.FLAGS = CpuInfo("flags")
+def _CpuInfo_FDIVBUG() -> object:
+    return CpuInfo("fdiv_bug")
 
-CpuInfo.BOGOMIPS = CpuInfo("bogomips")
+lazy_static(CpuInfo, "FDIVBUG", _CpuInfo_FDIVBUG)
+
+def _CpuInfo_HLTBUG() -> object:
+    return CpuInfo("hlt_bug")
+
+lazy_static(CpuInfo, "HLTBUG", _CpuInfo_HLTBUG)
+
+def _CpuInfo_F00FBUG() -> object:
+    return CpuInfo("f00f_bug")
+
+lazy_static(CpuInfo, "F00FBUG", _CpuInfo_F00FBUG)
+
+def _CpuInfo_COMABUG() -> object:
+    return CpuInfo("coma_bug")
+
+lazy_static(CpuInfo, "COMABUG", _CpuInfo_COMABUG)
+
+def _CpuInfo_FPU() -> object:
+    return CpuInfo("fpu")
+
+lazy_static(CpuInfo, "FPU", _CpuInfo_FPU)
+
+def _CpuInfo_FPUEXCEPTION() -> object:
+    return CpuInfo("fpu_exception")
+
+lazy_static(CpuInfo, "FPUEXCEPTION", _CpuInfo_FPUEXCEPTION)
+
+def _CpuInfo_CPUIDLEVEL() -> object:
+    return CpuInfo("cache size")
+
+lazy_static(CpuInfo, "CPUIDLEVEL", _CpuInfo_CPUIDLEVEL)
+
+def _CpuInfo_WP() -> object:
+    return CpuInfo("yes")
+
+lazy_static(CpuInfo, "WP", _CpuInfo_WP)
+
+def _CpuInfo_FLAGS() -> object:
+    return CpuInfo("flags")
+
+lazy_static(CpuInfo, "FLAGS", _CpuInfo_FLAGS)
+
+def _CpuInfo_BOGOMIPS() -> object:
+    return CpuInfo("bogomips")
+
+lazy_static(CpuInfo, "BOGOMIPS", _CpuInfo_BOGOMIPS)
 

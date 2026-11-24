@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.waypoint.WaypointRunnableLogHelper import WaypointRunnableLogHelper
 
 
@@ -22,6 +23,8 @@ class WaypointRunnableSelectedLogHelper(WaypointRunnableLogHelper):
     instanceC: WaypointRunnableSelectedLogHelper = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
@@ -36,16 +39,23 @@ class WaypointRunnableSelectedLogHelper(WaypointRunnableLogHelper):
     
 
     def start(self, pathFindingLayerInterface: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(pathFindingLayerInterface.getName()).append(self.commonStrings.START_RUNNABLE)), self, self.commonStrings.RUN)
     
 
     def end(self, pathFindingLayerInterface: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(pathFindingLayerInterface.getName()).append(self.commonStrings.END_RUNNABLE)), self, self.commonStrings.RUN)
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-WaypointRunnableSelectedLogHelper.instanceC = WaypointRunnableSelectedLogHelper()
+def _WaypointRunnableSelectedLogHelper_instanceC() -> object:
+    return WaypointRunnableSelectedLogHelper()
+
+lazy_static(WaypointRunnableSelectedLogHelper, "instanceC", _WaypointRunnableSelectedLogHelper_instanceC)
 

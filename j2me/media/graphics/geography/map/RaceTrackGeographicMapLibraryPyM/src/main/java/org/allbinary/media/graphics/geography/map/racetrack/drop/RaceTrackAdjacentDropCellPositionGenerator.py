@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.drop.RaceTrackDropCellPositionGenerator import RaceTrackDropCellPositionGenerator
 
 
@@ -22,6 +23,12 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
     SINGLETON: RaceTrackAdjacentDropCellPositionGenerator = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+        from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapDirectionUtil import GeographicMapDirectionUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.layerCoveringCellPositionsUtil: LayerCoveringCellPositionsUtil = LayerCoveringCellPositionsUtil.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         self.surroundingCellPositions: list[GeographicMapCellPosition] = [None] * (4)
@@ -31,6 +38,7 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
 
     @staticmethod
     def getInstance() -> DropCellPositionGeneratorInterface:
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionGeneratorInterface import DropCellPositionGeneratorInterface
         return RaceTrackAdjacentDropCellPositionGenerator.SINGLETON
     
 
@@ -41,6 +49,12 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
 
     # throws Exception
     def getFirstNonRoadAdjacentCellPosition(self, column: int, row: int) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
         nonRoadGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = self.raceTrackGeographicMap.getGeographicMapCellPositionFactory()
         self.surroundingCellPositions[0] = geographicMapCellPositionFactory.getAt(column, row - 1)
@@ -63,6 +77,8 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
 
     # throws Exception
     def update(self, allBinaryGameLayerManager: AllBinaryGameLayerManager, geographicMapInterface: BasicGeographicMap) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.hashtable.put(AllBinaryGameLayerManager.ID, allBinaryGameLayerManager)
         super().update(allBinaryGameLayerManager, geographicMapInterface)
     
@@ -70,6 +86,18 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
     # throws Exception
     def drop(self, allBinaryLayerManager: AllBinaryLayerManager, index: int) -> None:
         from org.allbinary.media.graphics.geography.map.racetrack.drop.RaceTrackAdjacentDropLayerFactory import RaceTrackAdjacentDropLayerFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+        from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
         geographicMapCellPosition: GeographicMapCellPosition = self.list_.get(index)
         randomGeographicMapCellPosition: GeographicMapCellPosition = self.getFirstNonRoadAdjacentCellPosition(geographicMapCellPosition.getColumn(), geographicMapCellPosition.getRow())
         if randomGeographicMapCellPosition is None:
@@ -100,31 +128,34 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
                     return
             dropCellPositionHistory.addAll(list_, layerInterface)
             allBinaryLayerManager.append(layerInterface)
-from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.GeographicMapDirectionUtil import GeographicMapDirectionUtil
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionGeneratorInterface import DropCellPositionGeneratorInterface
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.GeographicMapDirectionUtil import GeographicMapDirectionUtil
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionGeneratorInterface import DropCellPositionGeneratorInterface
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-RaceTrackAdjacentDropCellPositionGenerator.SINGLETON = RaceTrackAdjacentDropCellPositionGenerator()
+def _RaceTrackAdjacentDropCellPositionGenerator_SINGLETON() -> object:
+    return RaceTrackAdjacentDropCellPositionGenerator()
+
+lazy_static(RaceTrackAdjacentDropCellPositionGenerator, "SINGLETON", _RaceTrackAdjacentDropCellPositionGenerator_SINGLETON)
 

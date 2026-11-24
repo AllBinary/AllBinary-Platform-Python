@@ -21,6 +21,7 @@ from org.allbinary.business.context.modules.storefront.statistics.orders.history
 class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.numberOfOrdersLong: int = None
         self.subTotalMoney: Money = None
         self.shippingCostMoney: Money = None
@@ -29,6 +30,12 @@ class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterfa
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
         self._init_fields()
         self.subTotalMoney = Money()
         self.shippingCostMoney = Money()
@@ -54,24 +61,29 @@ class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterfa
     
 
     def getSubTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.subTotalMoney
     
 
     def getShippingCost(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.shippingCostMoney
     
 
     def getTaxes(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.taxesMoney
     
 
     def getTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.totalMoney
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsData import StoreFrontOrdersHistoryStatisticsData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         storeFrontOrdersHistoryStatisticsData: StoreFrontOrdersHistoryStatisticsData = StoreFrontOrdersHistoryStatisticsData.getInstance()
         hashMap.put(storeFrontOrdersHistoryStatisticsData.NUMBEROFORDERS, str(self.getNumberOfOrders()))
         hashMap.put(storeFrontOrdersHistoryStatisticsData.SUBTOTAL, str(self.getSubTotal()))
@@ -82,19 +94,20 @@ class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterfa
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return None
     
 
     def getKey(self) -> object:
         return None
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

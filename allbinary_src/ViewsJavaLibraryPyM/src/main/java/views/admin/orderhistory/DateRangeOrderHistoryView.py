@@ -16,14 +16,16 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInterface, DomNodeInterface):
+class DateRangeOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationComponentInterface, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.VIEWALLORDERS: str = "View All"
         self.VIEWORDERSINLASTHOUR: str = "Last Hour"
@@ -53,6 +55,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.request = self.getPageContext().getRequest()
@@ -60,6 +63,8 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
     
 
     def getFormData(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         self.dateType = self.request.getParameter(OrderHistoryData.DATETYPE)
         self.preprocessing = self.request.getParameter(OrderHistoryData.PREPROCESSINGNAME)
         self.shipped = self.request.getParameter(OrderHistoryData.SHIPPEDNAME)
@@ -74,7 +79,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
         self.toMonth = self.request.getParameter(OrderHistoryData.TOMONTH)
         self.toDay = self.request.getParameter(OrderHistoryData.TODAY)
         self.toHour = self.request.getParameter(OrderHistoryData.TOHOUR)
-        self.command = self.request.getParameter(self.GLOBALS2.ADMINCOMMAND)
+        self.command = self.request.getParameter(GLOBALS2.ADMINCOMMAND)
     
 
     def addDomNodeInterfaces(self) -> None:
@@ -83,18 +88,32 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
     
 
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Attempt to View orders in (fromDate=")
                 stringBuffer.append(self.fromDate)
@@ -104,7 +123,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                 self.logUtil.putF(str(stringBuffer), self, "view")
             node: Node = document.createElement(OrderData.ORDERS)
             if self.preprocessing is not None and ((self.preprocessing > self.ON) - (self.preprocessing < self.ON)) == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Adding Preprocessing Orders", self, "toXmlNode")
                 orderHistoryVector: BasicArrayList = OrderHistoryEntityFactory.getInstance().getOrders(OrderHistoryData.PREPROCESSING, self.fromDate, self.toDate)
                 size: int = orderHistoryVector.size()
@@ -112,7 +131,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                     orderHistory: OrderHistory = orderHistoryVector.get(index)
                     node.appendChild(orderHistory.toXmlNode(document))
             if self.shipped is not None and ((self.shipped > self.ON) - (self.shipped < self.ON)) == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Adding Shipped Orders", self, "toXmlNode")
                 orderHistoryVector: BasicArrayList = OrderHistoryEntityFactory.getInstance().getOrders(OrderHistoryData.SHIPPED, self.fromDate, self.toDate)
                 size: int = orderHistoryVector.size()
@@ -120,7 +139,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                     orderHistory: OrderHistory = orderHistoryVector.get(index)
                     node.appendChild(orderHistory.toXmlNode(document))
             if self.partiallyShipped is not None and ((self.partiallyShipped > self.ON) - (self.partiallyShipped < self.ON)) == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Adding Partially Shipped Orders", self, "toDomNode")
                 orderHistoryVector: BasicArrayList = OrderHistoryEntityFactory.getInstance().getOrders(OrderHistoryData.PARTIALLYSHIPPED, self.fromDate, self.toDate)
                 size: int = orderHistoryVector.size()
@@ -128,7 +147,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                     orderHistory: OrderHistory = orderHistoryVector.get(index)
                     node.appendChild(orderHistory.toXmlNode(document))
             if self.processing is not None and ((self.processing > self.ON) - (self.processing < self.ON)) == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Adding Processing Orders", self, "toXmlNode")
                 orderHistoryVector: BasicArrayList = OrderHistoryEntityFactory.getInstance().getOrders(OrderHistoryData.PROCESSING, self.fromDate, self.toDate)
                 size: int = orderHistoryVector.size()
@@ -136,7 +155,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                     orderHistory: OrderHistory = orderHistoryVector.get(index)
                     node.appendChild(orderHistory.toXmlNode(document))
             if self.cancelled is not None and ((self.cancelled > self.ON) - (self.cancelled < self.ON)) == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Adding Cancelled Orders", self, "view")
                 orderHistoryVector: BasicArrayList = OrderHistoryEntityFactory.getInstance().getOrders(OrderHistoryData.CANCELLED, self.fromDate, self.toDate)
                 size: int = orderHistoryVector.size()
@@ -148,15 +167,22 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
             node.appendChild(ModDomHelper.createNameValueNodes(document, OrderHistoryData.CANCELLEDNAME, OrderHistoryData.CANCELLED))
             node.appendChild(ModDomHelper.createNameValueNodes(document, OrderHistoryData.PARTIALLYSHIPPEDNAME, OrderHistoryData.PARTIALLYSHIPPED))
             node.appendChild(ModDomHelper.createNameValueNodes(document, OrderHistoryData.SHIPPEDNAME, OrderHistoryData.SHIPPED))
-            node.appendChild(ModDomHelper.createNameValueNodes(document, self.GLOBALS2.VIEWNAME, self.GLOBALS2.VIEW))
+            node.appendChild(ModDomHelper.createNameValueNodes(document, GLOBALS2.VIEWNAME, GLOBALS2.VIEW))
             return node
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().XSLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().XSLLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "toXmlNode", e)
             return None
     
 
     def isValid(self) -> bool:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.time.TimeUtil import TimeUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             isValid: bool = True
             if self.dateType is None or (((self.dateType > OrderHistoryData.TYPELONG) - (self.dateType < OrderHistoryData.TYPELONG)) != 0 and ((self.dateType > OrderHistoryData.TYPECAESAR) - (self.dateType < OrderHistoryData.TYPECAESAR)) != 0):
@@ -194,7 +220,7 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                     isValid = False
                 if StringValidationUtil.getInstance().isEmpty(self.fromDate) or len(self.fromDate) > self.MAXLEN:
                     isValid = False
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Attempt to View orders in (fromDate=")
                 stringBuffer.append(self.fromDate)
@@ -204,21 +230,29 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                 self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
             return isValid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.put("Exception in validation", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     # throws Exception
     def validationInfo(self) -> str:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             result: StringMaker = StringMaker()
             if self.dateType is None or (((self.dateType > OrderHistoryData.TYPELONG) - (self.dateType < OrderHistoryData.TYPELONG)) != 0 and ((self.dateType > OrderHistoryData.TYPECAESAR) - (self.dateType < OrderHistoryData.TYPECAESAR)) != 0):
@@ -229,26 +263,34 @@ class DateRangeOrderHistoryView(HttpStoreComponentView, ValidationComponentInter
                 result.append("Invalid From Date")
             return str(result)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Getting Validation Info"
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
 # from java.util.Calendar import Calendar
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.time.TimeUtil import TimeUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.time.TimeUtil import TimeUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

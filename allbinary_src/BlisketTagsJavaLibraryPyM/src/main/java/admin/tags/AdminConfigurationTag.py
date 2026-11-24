@@ -22,10 +22,12 @@ class AdminConfigurationTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.AdminConfigurationHelperFactory import AdminConfigurationHelperFactory
+        from admin.taghelpers.AdminConfigurationRequestHelperFactory import AdminConfigurationRequestHelperFactory
         super().__init__()
         self.setTagHelperFactory(AdminConfigurationHelperFactory())
         self.setTagRequestHelperFactory(AdminConfigurationRequestHelperFactory())
-from admin.taghelpers.AdminConfigurationHelperFactory import AdminConfigurationHelperFactory
-from admin.taghelpers.AdminConfigurationRequestHelperFactory import AdminConfigurationRequestHelperFactory
+# from admin.taghelpers.AdminConfigurationHelperFactory import AdminConfigurationHelperFactory
+# from admin.taghelpers.AdminConfigurationRequestHelperFactory import AdminConfigurationRequestHelperFactory
 
 

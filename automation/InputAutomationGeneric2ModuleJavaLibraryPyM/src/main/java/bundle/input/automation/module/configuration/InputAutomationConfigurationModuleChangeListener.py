@@ -22,11 +22,13 @@ class InputAutomationConfigurationModuleChangeListener:
     
 
     def onAdd(self, inputAutomationConfigurationChangeEvent: InputAutomationConfigurationModuleChangeEvent) -> None:
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
         raise NotImplementedError()
     
 
     def onRemove(self, inputAutomationConfigurationChangeEvent: InputAutomationConfigurationModuleChangeEvent) -> None:
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
         raise NotImplementedError()
-from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+# from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
 
 

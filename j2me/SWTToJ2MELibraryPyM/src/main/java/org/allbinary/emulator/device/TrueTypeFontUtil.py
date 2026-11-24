@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.device.TrueTypeFontUtilBase import TrueTypeFontUtilBase
 
 
@@ -23,6 +24,8 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     instance: TrueTypeFontUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         self.preResourceImageUtil: PreResourceImageUtil = PreResourceImageUtil.getInstance()
         self.widthFloatArray: list[float] = None
         self.fontImage: OpenGLESImage = OpenGLESImage.NULL_OPENGL_IMAGE
@@ -35,6 +38,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def __init__(self) -> None:
+        from org.allbinary.AvianUtil import AvianUtil
         super().__init__(2)
         self._init_fields()
         if AvianUtil.isAvian():
@@ -45,23 +49,32 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def getFontBitmapGL(self, gl: GL10, filename: str, cellSize: int, basicColor: BasicColor) -> Image:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             if self.fontImage == OpenGLESImage.NULL_OPENGL_IMAGE:
                 canvasStrings: CanvasStrings = CanvasStrings.getInstance()
                 openGLCapabilities: OpenGLCapabilities = OpenGLCapabilities.getInstance()
                 if openGLCapabilities.isTextureSizeValid(1024) and self.scale == 2:
                     FONT_ATLAS_1024: str = "/font_1024.png"
-                    image: Image = Image.createImage(ResourceUtil.getInstance().getResourceAsStream(FONT_ATLAS_1024))
+                    image: Image = Image.createImageFromInputStream(ResourceUtil.getInstance().getResourceAsStream(FONT_ATLAS_1024))
                     image.setName(canvasStrings.FONT_ATLAS)
                     self.fontImage = self.preResourceImageUtil.encapsulate(image)
                 elif openGLCapabilities.isTextureSizeValid(512):
                     FONT_ATLAS_512: str = "/font_512.png"
-                    image: Image = Image.createImage(ResourceUtil.getInstance().getResourceAsStream(FONT_ATLAS_512))
+                    image: Image = Image.createImageFromInputStream(ResourceUtil.getInstance().getResourceAsStream(FONT_ATLAS_512))
                     image.setName(canvasStrings.FONT_ATLAS)
                     self.fontImage = self.preResourceImageUtil.encapsulate(image)
                 else:
                     FONT_ATLAS_512: str = "/font_512.png"
-                    image: Image = Image.createImage(ResourceUtil.getInstance().getResourceAsStream(FONT_ATLAS_512))
+                    image: Image = Image.createImageFromInputStream(ResourceUtil.getInstance().getResourceAsStream(FONT_ATLAS_512))
                     image.setName(canvasStrings.FONT_ATLAS)
                     self.fontImage = self.preResourceImageUtil.encapsulate(image)
                 return self.fontImage
@@ -74,15 +87,36 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def saveFontAtlasAsFile(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.eclipse.swt.SWT import SWT
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.eclipse.swt.graphics.ImageLoader import ImageLoader
+        from org.eclipse.swt.graphics.PaletteData import PaletteData
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         image: Image = self.getFontBitmap(None, self.cellSize, BasicColorFactory.getInstance().WHITE)
         imageLoader: ImageLoader = ImageLoader()
-        imageData: ImageData = (image).image.getImageData()
+        width: int = image.getWidth()
+        height: int = image.getHeight()
+        pixels: list[int] = [0] * (width * height)
+        image.getRGB(pixels, 0, width, 0, 0, width, height)
+        imageData: ImageData = ImageData(width, height, 32, PaletteData(0xFF0000, 0xFF00, 0xFF))
+        for index in range(0, len(pixels)):
+            pixels[index] &= 0xFFFFFF
+        for row in range(0, height):
+            imageData.setPixels(0, row, width, pixels, row * width)
         imageData.transparentPixel = imageData.getPixel(0, 0)
         imageLoader.data = [imageData]
         imageLoader.save(CommonSeps.getInstance().PERIOD + CanvasStrings.getInstance().FONT_ATLAS, SWT.IMAGE_PNG)
     
 
     def getFontBitmap(self, filename: str, cellSize: int, basicColor: BasicColor) -> Image:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         cellsPerRow2: int = self.CELLS_PER_ROW * 2
         cellsPerRow3: int = self.CELLS_PER_ROW * 3
         cellsPerRow4: int = self.CELLS_PER_ROW * 4
@@ -104,7 +138,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
             x = (index % self.CELLS_PER_ROW) * cellSize
             x += (cellSize >> 1)
             x -= (self._characterWidth[index] >> 1)
-            y = -(cellSize >> 1)
+            y = -cellSize >> 1
             if index >= self.CELLS_PER_ROW:
                 y += cellSize
             if index >= cellsPerRow2:
@@ -126,6 +160,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def getFontWidths(self, filename: str, fontSize: int) -> list[int]:
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         for index in range(0, self.size):
             self.characterArray[0] = self.pattern.charAt(index)
@@ -147,29 +182,32 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
                     self._characterWidth[index] -= 4
                 if self.characterArray[0] >= 'A' and self.characterArray[0] <= 'Z':
                     self._characterWidth[index] -= 2
-            self._characterWidth[index] *= self.widthScale
+            self._characterWidth[index] = int((self._characterWidth[index] * self.widthScale))
         return self._characterWidth
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.eclipse.swt.SWT import SWT
-from org.eclipse.swt.graphics.ImageData import ImageData
-from org.eclipse.swt.graphics.ImageLoader import ImageLoader
-from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
-from org.allbinary.AvianUtil import AvianUtil
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
-from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.eclipse.swt.SWT import SWT
+# from org.eclipse.swt.graphics.ImageData import ImageData
+# from org.eclipse.swt.graphics.ImageLoader import ImageLoader
+# from org.eclipse.swt.graphics.PaletteData import PaletteData
+# from org.allbinary.AvianUtil import AvianUtil
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
+# from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-TrueTypeFontUtil.instance = TrueTypeFontUtil()
+def _TrueTypeFontUtil_instance() -> object:
+    return TrueTypeFontUtil()
+
+lazy_static(TrueTypeFontUtil, "instance", _TrueTypeFontUtil_instance)
 

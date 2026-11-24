@@ -15,30 +15,53 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
 #Sets Template Type
-class InsertCustomizerValidationView(HttpStoreComponentView, ValidationComponentInterface):
+class InsertCustomizerValidationView(*java_bases(HttpStoreComponentView, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.viewName: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, self.commonStrings.CONSTRUCTOR)
-        requestHashMap: dict = RequestParams(self.getPageContext()).toHashMap()
+        requestHashMap: HashMap = RequestParams(self.getPageContext()).toHashMap()
         self.viewName = requestHashMap.get(TransformInfoData.getInstance().NAME)
     
 
     def isValid(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.TransformFactory import TransformFactory
+        from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+        from org.allbinary.logic.visual.transform.info.GeneratorTransformInfoData import GeneratorTransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from views.business.context.modules.storefront.customizer.template.objectConfig.InsertTemplateCustomizerTransformInfoObjectConfig import InsertTemplateCustomizerTransformInfoObjectConfig
+        from views.business.context.modules.storefront.customizer.template.objectConfig.NoTemplateTransformInfoObjectConfig import NoTemplateTransformInfoObjectConfig
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Started Validation", self, self.commonStrings.IS_VALID)
             isValid: bool = True
             if StringValidationUtil.getInstance().isEmpty(self.viewName):
@@ -47,7 +70,7 @@ class InsertCustomizerValidationView(HttpStoreComponentView, ValidationComponent
                 objectConfig: NoTemplateTransformInfoObjectConfig = NoTemplateTransformInfoObjectConfig(self.getTransformInfoInterface(), self.getTransformInfoInterface().getObjectConfigInterface().toXmlDoc())
                 componentVector: BasicArrayList = objectConfig.getGroupTransforms()
                 size: int = componentVector.size()
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("Pointing ")
                     stringBuffer.appendint(componentVector.size())
@@ -56,7 +79,7 @@ class InsertCustomizerValidationView(HttpStoreComponentView, ValidationComponent
                 for index in range(0, size):
                     transformInfo: TransformInfo = componentVector.get(index)
                     transformInfoName: str = transformInfo.getName()
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         self.logUtil.putF("Setting Template Component with ViewName: " + transformInfoName, self, self.commonStrings.IS_VALID)
                     componentInterface: TransformInterface = TransformFactory.getInstance().getInstance(self.abeClientInformation, transformInfoName, self.getTransformInfoInterface())
                     templateViewObjectConfig: InsertTemplateCustomizerTransformInfoObjectConfig = InsertTemplateCustomizerTransformInfoObjectConfig(componentInterface.getTransformInfoInterface(), componentInterface.getTransformInfoInterface().getObjectConfigInterface().toXmlDoc())
@@ -80,7 +103,7 @@ class InsertCustomizerValidationView(HttpStoreComponentView, ValidationComponent
                         newViewNameStringBuffer.append(commonSeps.SPACE)
                         newViewNameStringBuffer.append(GeneratorTransformInfoData.NAME)
                     newViewName: str = str(newViewNameStringBuffer)
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("Template Component: ")
                         stringBuffer.append(transformInfoName)
@@ -88,7 +111,7 @@ class InsertCustomizerValidationView(HttpStoreComponentView, ValidationComponent
                         stringBuffer.append(newViewName)
                         self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
                     templateViewObjectConfig.set(newViewName)
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("Template Component: ")
                         stringBuffer.append(transformInfoName)
@@ -96,56 +119,72 @@ class InsertCustomizerValidationView(HttpStoreComponentView, ValidationComponent
                         stringBuffer.append(str(templateViewObjectConfig))
                         self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
                     componentInterface.getTransformInfoInterface().setObjectConfigInterface(templateViewObjectConfig)
-                    updatedTransformInfoHashMap: dict = componentInterface.getTransformInfoInterface().toHashMap()
+                    updatedTransformInfoHashMap: HashMap = componentInterface.getTransformInfoInterface().toHashMap()
                     TransformInfoEntityBuilder.getInstance().update(updatedTransformInfoHashMap)
             return isValid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to validate", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Error: Template Name Is Empty.")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Getting Validation Info"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     # throws Exception
     def view(self) -> str:
-        return self.views.ValidationOnlyTempUtil.getInstance().view(self)
+        from views.ValidationOnlyTempUtil import ValidationOnlyTempUtil
+        return ValidationOnlyTempUtil.getInstance().view(self)
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.TransformFactory import TransformFactory
-from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
-from org.allbinary.logic.visual.transform.info.GeneratorTransformInfoData import GeneratorTransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from views.business.context.modules.storefront.customizer.template.objectConfig.InsertTemplateCustomizerTransformInfoObjectConfig import InsertTemplateCustomizerTransformInfoObjectConfig
-from views.business.context.modules.storefront.customizer.template.objectConfig.NoTemplateTransformInfoObjectConfig import NoTemplateTransformInfoObjectConfig
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.TransformFactory import TransformFactory
+# from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+# from org.allbinary.logic.visual.transform.info.GeneratorTransformInfoData import GeneratorTransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from views.business.context.modules.storefront.customizer.template.objectConfig.InsertTemplateCustomizerTransformInfoObjectConfig import InsertTemplateCustomizerTransformInfoObjectConfig
+# from views.business.context.modules.storefront.customizer.template.objectConfig.NoTemplateTransformInfoObjectConfig import NoTemplateTransformInfoObjectConfig
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from views.ValidationOnlyTempUtil import ValidationOnlyTempUtil
 
 

@@ -21,6 +21,8 @@ from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterf
 class WindowsHardware(HardwareInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.system.hardware.components.ComponentFactory import ComponentFactory
         self.componentInterfaceVector: BasicArrayList = None
         self.videoInterfaceVector: BasicArrayList = None
         self.hardDriveControllerInterfaceVector: BasicArrayList = None
@@ -39,6 +41,7 @@ class WindowsHardware(HardwareInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         try:
             self.componentInterfaceVector = BasicArrayListD()
@@ -79,54 +82,69 @@ class WindowsHardware(HardwareInterface):
     
 
     def getMultimedia(self, index: int) -> MediaInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
         return self.multimediaInterfaceVector.get(index)
     
 
     def getBridge(self, index: int) -> BridgeInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
         return self.bridgeInterfaceVector.get(index)
     
 
     def getCpu(self, index: int) -> CpuInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
         return self.cpuInterfaceVector.get(index)
     
 
     def getEthernet(self, index: int) -> EthernetInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
         return self.ethernetInterfaceVector.get(index)
     
 
     def getFireWire(self, index: int) -> FireWireInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.FireWireInterface import FireWireInterface
         return self.fireWireInterfaceVector.get(index)
     
 
     def getHardDriveController(self, index: int) -> HardDriveControllerInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
         return self.hardDriveControllerInterfaceVector.get(index)
     
 
     def getHardDrive(self, index: int) -> HardDriveInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardDriveInterface import HardDriveInterface
         return self.hardDriveInterfaceVector.get(index)
     
 
     def getMachineAccessControlAddress(self, index: int) -> MachineAccessControlAddressInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
         return self.macInterfaceVector.get(index)
     
 
     def getMonitor(self, index: int) -> MonitorInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.MonitorInterface import MonitorInterface
         return self.monitorInterfaceVector.get(index)
     
 
     def getUsb(self, index: int) -> UsbInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.UsbInterface import UsbInterface
         return self.usbInterfaceVector.get(index)
     
 
     def getVideo(self, index: int) -> VideoInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.VideoInterface import VideoInterface
         return self.videoInterfaceVector.get(index)
     
 
     def getComponent(self, index: int) -> HardwareComponentInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
         return self.componentInterfaceVector.get(index)
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
         hardwareBuffer: StringMaker = StringMaker()
         size: int = self.componentInterfaceVector.size()
         for index in range(0, size):
@@ -144,25 +162,27 @@ class WindowsHardware(HardwareInterface):
     
 
     def difference(self, hardwareInterface: HardwareInterface) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.hardware.components.ComponentFactory import ComponentFactory
-from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
-from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
-from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
-from org.allbinary.logic.system.hardware.components.interfaces.FireWireInterface import FireWireInterface
-from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
-from org.allbinary.logic.system.hardware.components.interfaces.HardDriveInterface import HardDriveInterface
-from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
-from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
-from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
-from org.allbinary.logic.system.hardware.components.interfaces.MonitorInterface import MonitorInterface
-from org.allbinary.logic.system.hardware.components.interfaces.UsbInterface import UsbInterface
-from org.allbinary.logic.system.hardware.components.interfaces.VideoInterface import VideoInterface
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.hardware.components.ComponentFactory import ComponentFactory
+# from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.FireWireInterface import FireWireInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.HardDriveInterface import HardDriveInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.MonitorInterface import MonitorInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.UsbInterface import UsbInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.VideoInterface import VideoInterface
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

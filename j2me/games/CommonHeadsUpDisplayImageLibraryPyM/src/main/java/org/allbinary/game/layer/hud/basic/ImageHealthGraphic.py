@@ -21,10 +21,15 @@ from org.allbinary.game.layer.hud.basic.HealthGraphic import HealthGraphic
 class ImageHealthGraphic(HealthGraphic):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.image: list[Image] = None
     
 
     def __init__(self, animationInterface: AnimationInterface, healthInterface: HealthInterface, location: int, direction: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationInterface import AnimationInterface
+        from org.allbinary.game.health.HealthInterface import HealthInterface
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         super().__init__(animationInterface, healthInterface, location, direction)
         self._init_fields()
         self.image = [None] * (self.healthInterface.getMaxHealth())
@@ -37,12 +42,14 @@ class ImageHealthGraphic(HealthGraphic):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.Anchor import Anchor
         graphics.drawImage(self.image[self.max], self.x, self.y, Anchor.TOP_LEFT)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationInterface import AnimationInterface
-from org.allbinary.game.health.HealthInterface import HealthInterface
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.animation.AnimationInterface import AnimationInterface
+# from org.allbinary.game.health.HealthInterface import HealthInterface
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
 
 

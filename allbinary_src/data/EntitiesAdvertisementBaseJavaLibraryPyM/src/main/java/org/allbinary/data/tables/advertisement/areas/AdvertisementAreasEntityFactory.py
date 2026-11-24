@@ -28,15 +28,21 @@ class AdvertisementAreasEntityFactory:
     @staticmethod
     def getInstance() -> AdvertisementAreasEntityInterface:
         from org.allbinary.data.tables.advertisement.areas.AdvertisementAreasEntity import AdvertisementAreasEntity
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             return AdvertisementAreasEntity()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, "AdvertisementAreasEntityFactory", commonStrings.GET_INSTANCE, e)
             return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

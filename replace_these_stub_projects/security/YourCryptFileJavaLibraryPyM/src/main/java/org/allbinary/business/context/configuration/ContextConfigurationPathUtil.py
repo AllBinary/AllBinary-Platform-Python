@@ -11,12 +11,14 @@ class ContextConfigurationPathUtil:
     # throws Exception
     @staticmethod
     def getAbFile(contextName: str) -> AbFile:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         return None
     
 
     # throws Exception
     @staticmethod
     def getAbPath(contextName: str) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return None
     
 
@@ -29,7 +31,7 @@ class ContextConfigurationPathUtil:
     @staticmethod
     def getFileName(contextName: str) -> str:
         return None
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 

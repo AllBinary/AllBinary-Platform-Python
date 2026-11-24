@@ -56,8 +56,6 @@ class MusicThreadPool(ThreadPool):
 
 
 def _MusicThreadPool_THREAD_POOL() -> object:
-    from org.allbinary.thread.ThreadPool import ThreadPool
-    from org.allbinary.thread.ThreadPool import ThreadPool
     return ThreadPool("Music", 2, ThreadPool.NORMAL_PRIORITY)
 
 lazy_static(MusicThreadPool, "THREAD_POOL", _MusicThreadPool_THREAD_POOL)

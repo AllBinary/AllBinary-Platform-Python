@@ -15,30 +15,47 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
-from org.allbinary.string.CommonLabels import CommonLabels
 from views.admin.inventory.InventoryItemView import InventoryItemView
 
 
-class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
+class AddFileValidationView(*java_bases(InventoryItemView, ValidationComponentInterface)):
     ADDPRODUCT: str = "Add Product"
-    NEXTSTEP: str = str(CommonLabels.getInstance().NEXT) + " Step"
+    NEXTSTEP: str = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
     
 
-    def isValid(self) -> bool:
+    def isValid_j0(self) -> bool:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            command: str = self.getRequestHashMap().get(self.GLOBALS2.ADMINCOMMAND)
+            command: str = self.getRequestHashMap().get(GLOBALS2.ADMINCOMMAND)
             if StringValidationUtil.getInstance().isEmpty(command) or (((command > AddFileValidationView.ADDPRODUCT) - (command < AddFileValidationView.ADDPRODUCT)) != 0 and ((command > AddFileValidationView.NEXTSTEP) - (command < AddFileValidationView.NEXTSTEP)) != 0):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("Invalid AdminCommand: ")
                     stringBuffer.append(command)
@@ -50,19 +67,19 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                 return False
             basicItemValidation: BasicItemValidation = BasicItemValidation(self.itemInterface)
             if basicItemValidation.isValid() == False:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF(basicItemValidation.validationInfo(), self, self.commonStrings.IS_VALID)
                 return False
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
             self.itemInterface.setCategory(storeFrontInterface.getCategoryPath() + self.itemInterface.getCategory())
-            fullCategory: str = str(StringMaker().append(self.URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
+            fullCategory: str = str(StringMaker().append(URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
             if not categoryFile.isDirectory():
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Category Does Not Exist: " + fullCategory, self, self.commonStrings.IS_VALID)
                 return False
             if InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.itemInterface.getId()) is not None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Item Already Exists", self, self.commonStrings.IS_VALID)
                 return False
             imageFileItemObject: object = self.getRequestHashMap().get(self.basicItemData.IMAGE)
@@ -75,23 +92,41 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                     return False
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Exception in validation", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
-    def validationInfo(self) -> str:
+    def validationInfo_j0(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
-            command: str = self.getRequestHashMap().get(self.GLOBALS2.ADMINCOMMAND)
+            command: str = self.getRequestHashMap().get(GLOBALS2.ADMINCOMMAND)
             if StringValidationUtil.getInstance().isEmpty(command) or (((command > AddFileValidationView.ADDPRODUCT) - (command < AddFileValidationView.ADDPRODUCT)) != 0 and ((command > AddFileValidationView.NEXTSTEP) - (command < AddFileValidationView.NEXTSTEP)) != 0):
                 return StringUtil.getInstance().EMPTY_STRING
             basicItemValidation: BasicItemValidation = BasicItemValidation(self.itemInterface)
@@ -99,8 +134,8 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                 stringBuffer.append(basicItemValidation.validationInfo())
                 stringBuffer.append("<br/>")
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
-            fullCategory: str = str(StringMaker().append(self.URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            fullCategory: str = str(StringMaker().append(URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Category: " + fullCategory, self, "validationInfo()")
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
             if not categoryFile.isDirectory():
@@ -111,7 +146,7 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                 if InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.itemInterface.getId()) is not None:
                     stringBuffer.append("Id is already in use. Refresh the page for a valid id.<br/>")
             except MoneyException as e:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Existing Item With MoneyException", self, "validationInfo()")
             anyType: object = self.getRequestHashMap().get(self.basicItemData.IMAGE)
             if HttpFileUploadUtil.getInstance().isValid(anyType):
@@ -122,14 +157,20 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                 self.validationInfo(stringBuffer, fileName, fileItemFieldName, size)
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Getting Validation Info"
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def isValid(self, fileName: str, size: int) -> bool:
+    def isValid_j2(self, fileName: str, size: int) -> bool:
+        from org.allbinary.logic.communication.http.file.upload.media.UploadMediaSingleton import UploadMediaSingleton
+        from org.allbinary.logic.io.file.FileData import FileData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINIMAGEFILESIZE:
             if size < fileData.MAXIMAGEFILESIZE:
@@ -142,7 +183,7 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                     if not uploadMedia.isWriterSupported(extension) and not uploadMedia.isReaderSupported(extension):
                         return False
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("File Size To Large: ")
                     stringBuffer.appendlong(size)
@@ -152,7 +193,7 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                 return False
             self.processImageFiles()
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("File Size To Small: ")
                 stringBuffer.appendlong(size)
@@ -161,10 +202,17 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
                 self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
             return False
         return True
+
+    def isValid(self, *args):
+        return getattr(self, "isValid_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def validationInfo(self, stringBuffer: StringMaker, fileName: str, fileItemFieldName: str, size: int) -> None:
+    def validationInfo_j4(self, stringBuffer: StringMaker, fileName: str, fileItemFieldName: str, size: int) -> None:
+        from org.allbinary.logic.communication.http.file.upload.media.UploadMediaSingleton import UploadMediaSingleton
+        from org.allbinary.logic.io.file.FileData import FileData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINIMAGEFILESIZE:
             if ((fileItemFieldName > self.basicItemData.IMAGE) - (fileItemFieldName < self.basicItemData.IMAGE)) == 0:
@@ -195,26 +243,44 @@ class AddFileValidationView(InventoryItemView, ValidationComponentInterface):
             stringBuffer.append(" < > ")
             stringBuffer.appendint(int(fileData.MAXIMAGEFILESIZE))
             stringBuffer.append("<br/>")
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
-from org.allbinary.logic.communication.http.file.upload.media.UploadMediaSingleton import UploadMediaSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileData import FileData
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.apache.commons.fileupload.FileItem import FileItem
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
 
+    def validationInfo(self, *args):
+        return getattr(self, "validationInfo_j" + str(len(args)))(*args)
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+# from org.allbinary.logic.communication.http.file.upload.media.UploadMediaSingleton import UploadMediaSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileData import FileData
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+
+
+def _AddFileValidationView_NEXTSTEP() -> object:
+    from org.allbinary.string.CommonLabels import CommonLabels
+    return str(CommonLabels.getInstance().NEXT) + " Step"
+
+lazy_static(AddFileValidationView, "NEXTSTEP", _AddFileValidationView_NEXTSTEP)
 

@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RTSLayerUtil:
     instance: RTSLayerUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         self.MAX_RELOAD_TIME: int = int(int(2147483647) / 100000)
@@ -35,6 +38,7 @@ class RTSLayerUtil:
     
 
     def createWeaponProperties(self, weaponProperties: WeaponProperties, currentLevel: int, lastLevel: int) -> WeaponProperties:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         reloadTime: int = weaponProperties.getReloadTime()
         if lastLevel > currentLevel:
             reloadTime = reloadTime + 50
@@ -45,6 +49,8 @@ class RTSLayerUtil:
     
 
     def downgrade(self, rtsLayer: RTSLayer) -> None:
+        from org.allbinary.game.part.PartInterface import PartInterface
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
         rtsLayer.setLevel(rtsLayer.getLevel() - 1)
         partInterfaceArray: list[PartInterface] = rtsLayer.getPartInterfaceArray()
         size: int = len(partInterfaceArray)
@@ -57,6 +63,8 @@ class RTSLayerUtil:
     
 
     def upgrade(self, rtsLayer: RTSLayer) -> None:
+        from org.allbinary.game.part.PartInterface import PartInterface
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
         rtsLayer.setLevel(rtsLayer.getLevel() + 1)
         partInterfaceArray: list[PartInterface] = rtsLayer.getPartInterfaceArray()
         size: int = len(partInterfaceArray)
@@ -73,12 +81,16 @@ class RTSLayerUtil:
     
 
     def getWeaponPropertiesCost(self, weaponProperties: WeaponProperties) -> int:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         cost: int = (weaponProperties.getDamage() + weaponProperties.getRange() + ((self.MAX_RELOAD_TIME / weaponProperties.getReloadTime()) >> 1))
         cost = self.getCostExponential(cost)
         return cost
     
 
     def getCost(self, rtsLayer: RTSLayer) -> int:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.part.PartInterface import PartInterface
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
         total: int = 0
         partInterfaceArray: list[PartInterface] = rtsLayer.getPartInterfaceArray()
         size: int = len(partInterfaceArray)
@@ -92,6 +104,10 @@ class RTSLayerUtil:
     
 
     def getDowngradeCost(self, rtsLayer: RTSLayer) -> int:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.part.PartInterface import PartInterface
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
+        from org.allbinary.logic.string.StringMaker import StringMaker
         partInterfaceArray: list[PartInterface] = rtsLayer.getPartInterfaceArray()
         size: int = len(partInterfaceArray)
         downgradeCost: int = 0
@@ -111,6 +127,10 @@ class RTSLayerUtil:
     
 
     def getUpgradeCost(self, rtsLayer: RTSLayer) -> int:
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.part.PartInterface import PartInterface
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
+        from org.allbinary.logic.string.StringMaker import StringMaker
         upgradeCost: int = 0
         partInterfaceArray: list[PartInterface] = rtsLayer.getPartInterfaceArray()
         size: int = len(partInterfaceArray)
@@ -130,6 +150,7 @@ class RTSLayerUtil:
 
     # throws Exception
     def destroyAndClear(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         rtsLayer: RTSLayer = None
         for index in range(list_.size() - 1, 0 - 1, -1):
             rtsLayer = list_.get(index)
@@ -139,7 +160,13 @@ class RTSLayerUtil:
 
     def createFakeRTSLayerHashtable(self, baseRaceTrackGeographicMap: BaseRaceTrackGeographicMap) -> ABHashtable[object, object]:
         from org.allbinary.game.layer.FakeLayerManager import FakeLayerManager
-        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         layerManager: FakeLayerManager = FakeLayerManager(GameInfo.NONE)
         layerManager.setGeographicMapInterface([baseRaceTrackGeographicMap])
@@ -147,21 +174,24 @@ class RTSLayerUtil:
         hashtable.put(DirectionFactory.getInstance().NAME, DirectionFactory.getInstance().LEFT)
         hashtable.put(self.groupCommonFactory.ID, BasicGroupFactory.getInstance().NONE_ARRAY)
         return hashtable
-from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.part.PartInterface import PartInterface
-from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+# from org.allbinary.game.part.PartInterface import PartInterface
+# from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-RTSLayerUtil.instance = RTSLayerUtil()
+def _RTSLayerUtil_instance() -> object:
+    return RTSLayerUtil()
+
+lazy_static(RTSLayerUtil, "instance", _RTSLayerUtil_instance)
 

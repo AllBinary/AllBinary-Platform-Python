@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogoData:
@@ -36,5 +37,8 @@ class LogoData:
         self._init_fields()
 
 
-LogoData.instance = LogoData()
+def _LogoData_instance() -> object:
+    return LogoData()
+
+lazy_static(LogoData, "instance", _LogoData_instance)
 

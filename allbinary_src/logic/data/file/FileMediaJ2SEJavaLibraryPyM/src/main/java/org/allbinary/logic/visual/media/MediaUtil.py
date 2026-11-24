@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #import com.sun.imageio.plugins.common.ImageUtil;
@@ -10,6 +11,7 @@ class MediaUtil:
     instance: MediaUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -26,13 +28,20 @@ class MediaUtil:
     def saveImageFile(self, originalImageFile: AbFile, newImageFileName: str, category: str, mediaData: MediaData, newWidth: int, newHeight: int) -> None:
         from org.allbinary.logic.visual.media.ImageIOUtil import ImageIOUtil
         from org.allbinary.logic.visual.media.ImageIOUtil import ImageIOUtil
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.image.ImageUtil import ImageUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
         if originalImageFile is None or not originalImageFile.isFile():
             raise Exception("Original Image File Does Not Exist.")
         bufferedImage: BufferedImage = ImageIOUtil.read(originalImageFile)
         if bufferedImage is None:
             raise Exception("Unable to find ImageReader for this file.")
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
-            hashMap: dict = self.getImageBufferPropertyHashMap(bufferedImage)
+            hashMap: HashMap = self.getImageBufferPropertyHashMap(bufferedImage)
             self.logUtil.putF("Image Properties: " + str(hashMap), self, "saveImageFile()")
         imageFile: AbFile = AbFile.createAbFile(category + newImageFileName)
         imageFile.createNewFile()
@@ -64,8 +73,10 @@ class MediaUtil:
     
 
     @staticmethod
-    def getImageBufferPropertyHashMap(bufferedImage: BufferedImage) -> dict:
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def getImageBufferPropertyHashMap(bufferedImage: BufferedImage) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         propertyStringArray: list[str] = bufferedImage.getPropertyNames()
         if propertyStringArray is not None:
             for index in range(0, len(propertyStringArray)):
@@ -75,15 +86,18 @@ class MediaUtil:
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.awt.image.RenderedImage import RenderedImage
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.image.ImageUtil import ImageUtil
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 
-MediaUtil.instance = MediaUtil()
+def _MediaUtil_instance() -> object:
+    return MediaUtil()
+
+lazy_static(MediaUtil, "instance", _MediaUtil_instance)
 

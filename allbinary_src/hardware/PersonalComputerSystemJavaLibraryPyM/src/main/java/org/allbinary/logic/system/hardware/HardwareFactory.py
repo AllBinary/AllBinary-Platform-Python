@@ -23,7 +23,7 @@ class HardwareFactory:
     
 
     @staticmethod
-    def getInstance() -> HardwareFactory:
+    def getInstance_j0() -> HardwareFactory:
         return HardwareFactory.instance
     
 
@@ -32,9 +32,8 @@ class HardwareFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(os: GenericOperatingSystem) -> HardwareInterface:
+    def getInstance_j1(os: GenericOperatingSystem) -> HardwareInterface:
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
         from org.allbinary.logic.system.hardware.linux.LinuxHardware import LinuxHardware
@@ -48,6 +47,10 @@ class HardwareFactory:
             raise Exception("No Hardware Imp for: " + os.getName())
         except Exception as e:
             raise e
+
+    @staticmethod
+    def getInstance(*args):
+        return getattr(HardwareFactory, "getInstance_j" + str(len(args)))(*args)
 # from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 # from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
 # from org.allbinary.logic.system.hardware.linux.LinuxHardware import LinuxHardware

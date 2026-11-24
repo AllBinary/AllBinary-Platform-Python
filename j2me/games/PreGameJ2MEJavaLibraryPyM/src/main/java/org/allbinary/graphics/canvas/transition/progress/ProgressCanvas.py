@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
-class ProgressCanvas(RunnableCanvas, PaintableInterface, UpdateMyFontInterface):
+class ProgressCanvas(*java_bases(RunnableCanvas, PaintableInterface, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.canvas.Processor import Processor

@@ -32,6 +32,9 @@ class ContextConfigurationDomDocumentMapping(DomDocumentMappingInterface):
     # throws Exception
     def toXmlDoc(self) -> Document:
         from org.allbinary.business.context.configuration.ContextConfigurationView import ContextConfigurationView
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         document: Document = DomDocumentHelper.create()
         node: Node = ContextConfigurationView(self.contextConfigurationInterface).toXmlNode(document)
         document.appendChild(node)
@@ -40,10 +43,11 @@ class ContextConfigurationDomDocumentMapping(DomDocumentMappingInterface):
 
     # throws Exception
     def toDomDocumentString(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
         return XmlDocumentHelper.toString(self.toXmlDoc())
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

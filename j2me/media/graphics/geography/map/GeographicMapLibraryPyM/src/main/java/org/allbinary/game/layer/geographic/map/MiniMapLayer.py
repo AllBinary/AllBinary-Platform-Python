@@ -16,14 +16,19 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventListenerInterface import GeographicMapCellPositionEventListenerInterface
 
 
-class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterface):
+class MiniMapLayer(*java_bases(AllBinaryLayer, GeographicMapCellPositionEventListenerInterface)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.animation.vector.CircleFilledAnimation import CircleFilledAnimation
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
         self.allBinaryTiledLayer: AllBinaryTiledLayer = None
         self.geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = None
         self.list_: BasicArrayList = None
@@ -33,6 +38,15 @@ class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterfa
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, viewPosition: ViewPositionBase) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.animation.vector.CircleFilledAnimation import CircleFilledAnimation
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventHandler import GeographicMapCellPositionEventHandler
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().createXY(0, viewPosition.getY()), geographicMapInterface.getAllBinaryTiledLayer().getWidth(), geographicMapInterface.getAllBinaryTiledLayer().getHeight()), viewPosition)
         self._init_fields()
         self.allBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
@@ -51,6 +65,9 @@ class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterfa
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
@@ -60,6 +77,8 @@ class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterfa
             return self._onRemoveGeographicMapCellPositionEvent_unlocked(geographicMapCellPositionEvent)
 
     def _onRemoveGeographicMapCellPositionEvent_unlocked(self, geographicMapCellPositionEvent: GeographicMapCellPositionEvent) -> None:
+        from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
+        from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEvent import GeographicMapCellPositionEvent
         colorCompositeInterface: ColorCompositeInterface = geographicMapCellPositionEvent.getSource()
         index: int = self.list_.indexOf(colorCompositeInterface)
         if index >= 0:
@@ -74,6 +93,11 @@ class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterfa
             return self._onGeographicMapCellPositionEvent_unlocked(geographicMapCellPositionEvent)
 
     def _onGeographicMapCellPositionEvent_unlocked(self, geographicMapCellPositionEvent: GeographicMapCellPositionEvent) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEvent import GeographicMapCellPositionEvent
         colorCompositeInterface: ColorCompositeInterface = geographicMapCellPositionEvent.getSource()
         layerIndex: int = -1
         size: int = self.list_.size()
@@ -96,6 +120,10 @@ class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterfa
     
 
     def paintDots(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         localPositionList: BasicArrayList = self.positionList
         localBasicColorList: BasicArrayList = self.basicColorList
         length: int = localPositionList.size()
@@ -111,28 +139,29 @@ class MiniMapLayer(AllBinaryLayer, GeographicMapCellPositionEventListenerInterfa
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.allBinaryTiledLayer.paint(graphics)
         self.paintDots(graphics)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.animation.vector.CircleFilledAnimation import CircleFilledAnimation
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEvent import GeographicMapCellPositionEvent
-from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventHandler import GeographicMapCellPositionEventHandler
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.animation.vector.CircleFilledAnimation import CircleFilledAnimation
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEvent import GeographicMapCellPositionEvent
+# from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventHandler import GeographicMapCellPositionEventHandler
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

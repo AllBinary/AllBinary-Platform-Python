@@ -26,22 +26,25 @@ class GeographicMapCellPositionEventUtil:
 
     def __init__(self, anyType: object) -> None:
         from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEvent import GeographicMapCellPositionEvent
+        from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
         self._init_fields()
         self.geographicMapCellPositionEvent = GeographicMapCellPositionEvent(anyType, CellPositionFactory.getInstance().NONE)
     
 
     # throws Exception
     def update(self, geographicMapCellPositionTracking: GeographicMapCellPositionTracking) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
         self.geographicMapCellPositionEvent.setGeographicMapCellPosition(geographicMapCellPositionTracking.getCurrentGeographicMapCellPosition())
         self.geographicMapCellPositionEventHandler.fireEvent(self.geographicMapCellPositionEvent)
     
 
     # throws Exception
     def remove(self, geographicMapCellPositionTracking: GeographicMapCellPositionTracking) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
         self.geographicMapCellPositionEvent.setGeographicMapCellPosition(geographicMapCellPositionTracking.getCurrentGeographicMapCellPosition())
         self.geographicMapCellPositionEventHandler.fireRemoveEvent(self.geographicMapCellPositionEvent)
-from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
+# from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
 from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventHandler import GeographicMapCellPositionEventHandler
 
 

@@ -38,52 +38,60 @@ class GL11Ext(GL):
         raise NotImplementedError()
     
 
-    def glDrawTexfvOES(self, coords: list[float], offset: int) -> None:
+    def glDrawTexfvOES_j2(self, coords: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDrawTexfvOES(self, coords: FloatBuffer) -> None:
+    def glDrawTexfvOES_j1(self, coords: FloatBuffer) -> None:
         raise NotImplementedError()
+
+    def glDrawTexfvOES(self, *args):
+        return getattr(self, "glDrawTexfvOES_j" + str(len(args)))(*args)
     
 
     def glDrawTexiOES(self, x: int, y: int, z: int, width: int, height: int) -> None:
         raise NotImplementedError()
     
 
-    def glDrawTexivOES(self, coords: list[int], offset: int) -> None:
+    def glDrawTexivOES_j2(self, coords: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDrawTexivOES(self, coords: IntBuffer) -> None:
+    def glDrawTexivOES_j1(self, coords: IntBuffer) -> None:
         raise NotImplementedError()
+
+    def glDrawTexivOES(self, *args):
+        return getattr(self, "glDrawTexivOES_j" + str(len(args)))(*args)
     
 
     def glDrawTexsOES(self, x: int, y: int, z: int, width: int, height: int) -> None:
         raise NotImplementedError()
     
 
-    def glDrawTexsvOES(self, coords: list[int], offset: int) -> None:
+    def glDrawTexsvOES_j2(self, coords: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDrawTexsvOES(self, coords: ShortBuffer) -> None:
+    def glDrawTexsvOES_j1(self, coords: ShortBuffer) -> None:
         raise NotImplementedError()
+
+    def glDrawTexsvOES(self, *args):
+        return getattr(self, "glDrawTexsvOES_j" + str(len(args)))(*args)
     
 
     def glDrawTexxOES(self, x: int, y: int, z: int, width: int, height: int) -> None:
         raise NotImplementedError()
     
 
-    def glDrawTexxvOES(self, coords: list[int], offset: int) -> None:
+    def glDrawTexxvOES_j2(self, coords: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDrawTexxvOES(self, coords: IntBuffer) -> None:
+    def glDrawTexxvOES_j1(self, coords: IntBuffer) -> None:
         raise NotImplementedError()
+
+    def glDrawTexxvOES(self, *args):
+        return getattr(self, "glDrawTexxvOES_j" + str(len(args)))(*args)
     
 
     def glEnable(self, cap: int) -> None:
@@ -98,22 +106,38 @@ class GL11Ext(GL):
         raise NotImplementedError()
     
 
-    def glMatrixIndexPointerOES(self, size: int, type_: int, stride: int, pointer: Buffer) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def glMatrixIndexPointerOES_j4_1(self, size: int, type_: int, stride: int, pointer: Buffer) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMatrixIndexPointerOES(self, size: int, type_: int, stride: int, offset: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def glMatrixIndexPointerOES_j4_2(self, size: int, type_: int, stride: int, offset: int) -> None:
+        raise NotImplementedError()
+
+    def glMatrixIndexPointerOES(self, *args):
+        if len(args) == 4 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool) and not isinstance(args[3], (str, list, int, float)):
+            return self.glMatrixIndexPointerOES_j4_1(*args)
+        if len(args) == 4:
+            return self.glMatrixIndexPointerOES_j4_2(*args)
+        return getattr(self, "glMatrixIndexPointerOES_j" + str(len(args)))(*args)
+    
+
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def glWeightPointerOES_j4_1(self, size: int, type_: int, stride: int, pointer: Buffer) -> None:
         raise NotImplementedError()
     
 
-    def glWeightPointerOES(self, size: int, type_: int, stride: int, pointer: Buffer) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def glWeightPointerOES_j4_2(self, size: int, type_: int, stride: int, offset: int) -> None:
         raise NotImplementedError()
-    
 
-    # Java overloaded method: Python keeps the last definition
-    def glWeightPointerOES(self, size: int, type_: int, stride: int, offset: int) -> None:
-        raise NotImplementedError()
+    def glWeightPointerOES(self, *args):
+        if len(args) == 4 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool) and not isinstance(args[3], (str, list, int, float)):
+            return self.glWeightPointerOES_j4_1(*args)
+        if len(args) == 4:
+            return self.glWeightPointerOES_j4_2(*args)
+        return getattr(self, "glWeightPointerOES_j" + str(len(args)))(*args)
 # from java.nio.Buffer import Buffer
 # from java.nio.FloatBuffer import FloatBuffer
 # from java.nio.IntBuffer import IntBuffer

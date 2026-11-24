@@ -22,10 +22,12 @@ class CustomItemsTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.CustomItemsHelperFactory import CustomItemsHelperFactory
+        from admin.taghelpers.CustomItemsRequestHelperFactory import CustomItemsRequestHelperFactory
         super().__init__()
         self.setTagHelperFactory(CustomItemsHelperFactory())
         self.setTagRequestHelperFactory(CustomItemsRequestHelperFactory())
-from admin.taghelpers.CustomItemsHelperFactory import CustomItemsHelperFactory
-from admin.taghelpers.CustomItemsRequestHelperFactory import CustomItemsRequestHelperFactory
+# from admin.taghelpers.CustomItemsHelperFactory import CustomItemsHelperFactory
+# from admin.taghelpers.CustomItemsRequestHelperFactory import CustomItemsRequestHelperFactory
 
 

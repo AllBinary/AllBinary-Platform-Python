@@ -22,6 +22,10 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
     instance: PathFindingInfoFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapGraph import BasicGeographicMapGraph
+        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapPathFinder import BasicGeographicMapPathFinder
+        from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorFactoryBase import PathFinderGraphVisitorFactoryBase
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         self.MAX_DIRECTIONS: int = 4
         self.pathFindingInfo: PathFindingInfo = None
         self.basicGeographicMapGraph: BasicGeographicMapGraph = None
@@ -41,6 +45,14 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
     
 
     def __init__(self, pathFinderGraphVisitorFactoryInterface: PathFinderGraphVisitorFactoryBase, max: int) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapGraph import BasicGeographicMapGraph
+        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapPathFinder import BasicGeographicMapPathFinder
+        from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorFactoryBase import PathFinderGraphVisitorFactoryBase
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactory import PathFindingNodeCostInfoFactory
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         super().__init__()
         self._init_fields()
         commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -53,6 +65,10 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
 
     # throws Exception
     def getInstancePathFindingInfo(self, geographicMapInterface: BasicGeographicMap, mapArray: list[list[int]]) -> PathFindingInfo:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         pathFindingInfo: PathFindingInfo = PathFindingInfo(self.pathFindingInfo.getPathFindingNodeCostInfoFactoryInterface(), BasicArrayListS(1), BasicArrayListS(1))
         RaceTrackRoadsGeographicMapCellHistoryFactory.getInstance().init()
         self.init(geographicMapInterface, pathFindingInfo, mapArray)
@@ -63,12 +79,24 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
 
     # throws Exception
     def init(self, geographicMapInterface: BasicGeographicMap, pathFindingInfo: PathFindingInfo, mapArray: list[list[int]]) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         super().init(geographicMapInterface, pathFindingInfo, mapArray)
         self.buildPathFindingNodes(geographicMapInterface, pathFindingInfo, mapArray)
     
 
     # throws Exception
     def buildPathFindingNodesForCellPosition(self, geographicMapInterface: BasicGeographicMap, pathFindingInfo: PathFindingInfo, mapArray: list[list[int]], cellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapUtil import BasicGeographicMapUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         cellTypeId: int = mapArray[cellPosition.getRow()][cellPosition.getColumn()]
         geographicMapCellType: GeographicMapCellType = GeographicMapCellTypeFactory.getInstance().get(geographicMapInterface.getCellTypeFromMapCellTypeInt(cellTypeId))
@@ -93,6 +121,10 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
 
     # throws Exception
     def buildPathFindingNodes(self, geographicMapInterface: BasicGeographicMap, pathFindingInfo: PathFindingInfo, mapArray: list[list[int]]) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         allBinaryTiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
         totalColumns: int = allBinaryTiledLayer.getColumns()
@@ -100,23 +132,23 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
         for column in range(0, totalColumns):
             for row in range(0, totalRows):
                 self.buildPathFindingNodesForCellPosition(geographicMapInterface, pathFindingInfo, mapArray, geographicMapCellPositionFactory.getAt(column, row))
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapUtil import BasicGeographicMapUtil
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
-from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapGraph import BasicGeographicMapGraph
-from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapPathFinder import BasicGeographicMapPathFinder
-from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorFactoryBase import PathFinderGraphVisitorFactoryBase
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactory import PathFindingNodeCostInfoFactory
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapUtil import BasicGeographicMapUtil
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
+# from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapGraph import BasicGeographicMapGraph
+# from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapPathFinder import BasicGeographicMapPathFinder
+# from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorFactoryBase import PathFinderGraphVisitorFactoryBase
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactory import PathFindingNodeCostInfoFactory
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 

@@ -20,6 +20,8 @@ from __future__ import annotations
 class MotionRectangles:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
         self.name: str = None
         self.rectangleVector: BasicArrayList = None
         self.imageComparisonResult: ImageComparisonResult = None
@@ -27,6 +29,8 @@ class MotionRectangles:
     
 
     def __init__(self, name: str, imageComparisonResult: ImageComparisonResult) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
         self._init_fields()
         self.name = name
         self.setImageComparisonResult(imageComparisonResult)
@@ -34,10 +38,12 @@ class MotionRectangles:
     
 
     def getVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.rectangleVector
     
 
     def setVector(self, rectangleVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.rectangleVector = rectangleVector
     
 
@@ -46,13 +52,15 @@ class MotionRectangles:
     
 
     def getImageComparisonResult(self) -> ImageComparisonResult:
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
         return self.imageComparisonResult
     
 
     def setImageComparisonResult(self, imageComparisonResult: ImageComparisonResult) -> None:
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
         self.imageComparisonResult = imageComparisonResult
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
 
 

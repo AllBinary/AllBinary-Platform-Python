@@ -21,6 +21,11 @@ from org.allbinary.business.advertisement.AdvertisementInterface import Advertis
 class Advertisement(AdvertisementInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
+        from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
+        from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
         self.artist: str = None
         self.artistLink: str = None
         self.title: str = None
@@ -90,18 +95,22 @@ class Advertisement(AdvertisementInterface):
     
 
     def getListPrice(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.listPrice
     
 
     def setListPrice(self, listPrice: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.listPrice = listPrice
     
 
     def getOurPrice(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.ourPrice
     
 
     def setOurPrice(self, ourPrice: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.ourPrice = ourPrice
     
 
@@ -114,35 +123,42 @@ class Advertisement(AdvertisementInterface):
     
 
     def getImage(self) -> AdvertisementImageInterface:
+        from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
         return self.image
     
 
     def setImage(self, image: AdvertisementImageInterface) -> None:
+        from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
         self.image = image
     
 
     def getProduct(self) -> AdvertisementProductInterface:
+        from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
         return self.product
     
 
     def setProduct(self, product: AdvertisementProductInterface) -> None:
+        from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
         self.product = product
     
 
     def getThumbnail(self) -> AdvertisementThumbnailInterface:
+        from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
         return self.thumbnail
     
 
     def setThumbnail(self, thumbnail: AdvertisementThumbnailInterface) -> None:
+        from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
         self.thumbnail = thumbnail
     
 
     def getDisplayInBrowserContraintsInterface(self) -> DisplayInBrowserContraintsInterface:
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
         return self.displayInBrowserContraintsInterface
-from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
-from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
-from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
+# from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
+# from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
+# from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
 
 

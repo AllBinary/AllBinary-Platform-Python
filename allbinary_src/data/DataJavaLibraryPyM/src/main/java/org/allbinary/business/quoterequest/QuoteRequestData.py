@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class QuoteRequestData:
@@ -38,5 +39,8 @@ class QuoteRequestData:
         self._init_fields()
 
 
-QuoteRequestData.instance = QuoteRequestData()
+def _QuoteRequestData_instance() -> object:
+    return QuoteRequestData()
+
+lazy_static(QuoteRequestData, "instance", _QuoteRequestData_instance)
 

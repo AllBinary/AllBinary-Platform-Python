@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.BaseGameInputMotionEventProcessor import BaseGameInputMotionEventProcessor
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.motionRecognizerArray: list[MotionRecognizer] = None
@@ -31,6 +34,7 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
 
     @staticmethod
     def getInstance() -> GameInputMotionEventProcessorAPI5:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameInputMotionEventProcessorAPI5.instance == NullUtil.getInstance().NULL_OBJECT:
             GameInputMotionEventProcessorAPI5.instance = GameInputMotionEventProcessorAPI5()
         return GameInputMotionEventProcessorAPI5.instance
@@ -38,6 +42,7 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
 
     def __init__(self) -> None:
         from org.allbinary.android.input.motion.api5.GameInputMotionInfoAPI5 import GameInputMotionInfoAPI5
+        from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
         super().__init__()
         self._init_fields()
         size: int = GameInputMotionInfoAPI5.getInstance().MAX_POINTERS
@@ -48,6 +53,7 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
     
 
     def isValid(self, pointerId: int) -> bool:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         if pointerId > self.TOTAL_MINUS_ONE:
             message: str = "Log that the pointer Ids are not what would be expected or Android has more than what I set my stuff to support pointerId: "
             ForcedLogUtil.log(message + str(pointerId), self)
@@ -57,6 +63,9 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
     
 
     def process(self, motionEvent: MotionEvent) -> None:
+        from android.view.MotionEvent import MotionEvent
+        from org.allbinary.graphics.displayable.ScalableListener import ScalableListener
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         try:
             action: int = motionEvent.getAction()
             total: int = len(self.motionRecognizerArray)
@@ -92,12 +101,19 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
                         self.motionRecognizerArray[pointerId].processDraggedMotionEvent(x, y, motionEvent.getDeviceId(), 0)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-from android.view.MotionEvent import MotionEvent
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.displayable.ScalableListener import ScalableListener
-from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
-from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from android.view.MotionEvent import MotionEvent
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.displayable.ScalableListener import ScalableListener
+# from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
+# from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
+
+def _GameInputMotionEventProcessorAPI5_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameInputMotionEventProcessorAPI5, "instance", _GameInputMotionEventProcessorAPI5_instance)
 

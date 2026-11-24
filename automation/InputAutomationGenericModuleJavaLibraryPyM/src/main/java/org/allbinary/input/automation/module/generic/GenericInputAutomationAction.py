@@ -31,7 +31,8 @@ class GenericInputAutomationAction(InputAutomationActionInterface):
     
 
     def getInputRobotInterfaceArray(self) -> list[InputRobotInterface]:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         return None
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 

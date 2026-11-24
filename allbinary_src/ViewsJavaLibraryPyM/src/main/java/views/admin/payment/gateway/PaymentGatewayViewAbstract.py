@@ -21,30 +21,36 @@ from org.allbinary.logic.visual.transform.info.TransformInfoHttpComposite import
 class PaymentGatewayViewAbstract(TransformInfoHttpComposite):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
         self.paymentGatewayPrimaryKey: PaymentGatewayPrimaryKey = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.getFormData(self.getPageContext().getRequest())
     
 
     def getFormData(self, request: HttpServletRequest) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
         storeName: str = self.getWeblisketSession().getStoreName()
         gatewayName: str = request.getParameter(str(PaymentGatewayData.NAME))
         self.setPaymentGatewayPrimaryKey(PaymentGatewayPrimaryKey(storeName, gatewayName))
     
 
     def getPaymentGatewayPrimaryKey(self) -> PaymentGatewayPrimaryKey:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
         return self.paymentGatewayPrimaryKey
     
 
     def setPaymentGatewayPrimaryKey(self, paymentGatewayPrimaryKey: PaymentGatewayPrimaryKey) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
         self.paymentGatewayPrimaryKey = paymentGatewayPrimaryKey
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

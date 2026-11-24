@@ -28,10 +28,12 @@ class InputAutomationConfigurationUtil:
     @staticmethod
     def getChangeEvent(inputAutomationModuleInterface: InputAutomationModuleFactoryInterface) -> InputAutomationConfigurationModuleChangeEvent:
         from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         inputAutomationModuleConfiguration: InputAutomationModuleConfiguration = InputAutomationModuleConfiguration(inputAutomationModuleInterface)
         inputAutomationConfigurationModuleChangeEvent: InputAutomationConfigurationModuleChangeEvent = InputAutomationConfigurationModuleChangeEvent(inputAutomationModuleConfiguration)
         return inputAutomationConfigurationModuleChangeEvent
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
 
 

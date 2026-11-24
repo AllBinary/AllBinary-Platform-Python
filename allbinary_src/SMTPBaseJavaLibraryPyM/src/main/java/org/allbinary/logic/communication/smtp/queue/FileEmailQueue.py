@@ -20,11 +20,12 @@ from __future__ import annotations
 class FileEmailQueue:
 
     def _init_fields(self) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentQueueInterface import DomDocumentQueueInterface
         self.domDocumentQueueInterface: DomDocumentQueueInterface = None
     
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.data.tree.dom.document.DomDocumentQueueInterface import DomDocumentQueueInterface
+# from org.allbinary.data.tree.dom.document.DomDocumentQueueInterface import DomDocumentQueueInterface
 
 

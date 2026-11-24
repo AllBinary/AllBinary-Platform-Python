@@ -33,8 +33,8 @@ class HtmlLengthInput(HtmlValueInput):
     
 
     def setMaxLength(self, length: int) -> None:
-        len(self) = str(length)
-        self.addAttribute(self.MAXLENGTH, len(self))
+        self.length = str(length)
+        self.addAttribute(self.MAXLENGTH, self.length)
     
 
     def setSize(self, size: int) -> None:

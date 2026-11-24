@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
 from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 
-class CustomTransformInfo(TransformInfo, TransformInfoInterface):
+class CustomTransformInfo(*java_bases(TransformInfo, TransformInfoInterface)):
     
 
     def __init__(self, outputTypeName: str, inputOutputTypeName: str, inputOutputTypeFile: str, name: str, objectFileName: str, objectConfigFileName: str, templateFileName: str, dataFileName: str) -> None:

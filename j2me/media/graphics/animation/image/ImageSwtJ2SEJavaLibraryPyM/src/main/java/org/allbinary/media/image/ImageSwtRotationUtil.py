@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageSwtRotationUtil:
     instance: ImageSwtRotationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
@@ -39,6 +44,7 @@ class ImageSwtRotationUtil:
     
 
     def getRotatedImage(self, bufferedImage: Image, totalAngle: int) -> Image:
+        from org.eclipse.swt.graphics.Image import Image
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return bufferedImage
@@ -46,6 +52,8 @@ class ImageSwtRotationUtil:
     
 
     def getRotatedImage2(self, bufferedImage: Image, newBufferedImage: Image, gc: GC, angle: float) -> Image:
+        from org.eclipse.swt.graphics.GC import GC
+        from org.eclipse.swt.graphics.Image import Image
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return bufferedImage
@@ -53,14 +61,19 @@ class ImageSwtRotationUtil:
     
 
     def rotateImage(self, originalSwtImage: Image, newSwtImage: Image, gc: GC, totalAngle: int) -> Image:
+        from org.eclipse.swt.graphics.GC import GC
+        from org.eclipse.swt.graphics.Image import Image
         return self.getRotatedImage2(originalSwtImage, newSwtImage, gc, totalAngle)
     
 
     def getRotatedImageSWT(self, bufferedImage: Image, newSwtImage: Image, gc: GC, totalAngle: int) -> Image:
+        from org.eclipse.swt.graphics.GC import GC
+        from org.eclipse.swt.graphics.Image import Image
         return self.getRotatedImage2(bufferedImage, newSwtImage, gc, totalAngle)
     
 
     def getRotatedImages(self, bufferedImage: Image, numberOfFrames: int, totalAngle: int) -> list[Image]:
+        from org.eclipse.swt.graphics.Image import Image
         bufferedImageArray: list[Image] = [None] * (numberOfFrames)
         angle: int = 0
         size: int = len(bufferedImageArray)
@@ -71,6 +84,10 @@ class ImageSwtRotationUtil:
     
 
     def createSpriteImage(self, bufferedImageArray: list[Image]) -> Image:
+        from org.eclipse.swt.SWT import SWT
+        from org.eclipse.swt.graphics.GC import GC
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.eclipse.swt.graphics.Image import Image
         columns: int = 9
         rows: int = 0
         size: int = len(bufferedImageArray)
@@ -98,15 +115,19 @@ class ImageSwtRotationUtil:
             columnIndex += 1
         gc.dispose()
         return bufferedImage
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.eclipse.swt.SWT import SWT
-from org.eclipse.swt.graphics.GC import GC
-from org.eclipse.swt.graphics.ImageData import ImageData
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.eclipse.swt.SWT import SWT
+# from org.eclipse.swt.graphics.GC import GC
+# from org.eclipse.swt.graphics.ImageData import ImageData
+# from org.eclipse.swt.graphics.Image import Image
 from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
-ImageSwtRotationUtil.instance = ImageSwtRotationUtil()
+def _ImageSwtRotationUtil_instance() -> object:
+    return ImageSwtRotationUtil()
+
+lazy_static(ImageSwtRotationUtil, "instance", _ImageSwtRotationUtil_instance)
 

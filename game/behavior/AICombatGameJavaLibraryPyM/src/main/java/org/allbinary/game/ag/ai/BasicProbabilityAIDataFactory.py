@@ -21,7 +21,6 @@ class BasicProbabilityAIDataFactory:
     
 
     def getInstance(self) -> ABHashtable[object, object]:
-        from org.allbinary.game.ag.ai.InputProbability import InputProbability
         from javax.microedition.lcdui.Canvas import Canvas
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper

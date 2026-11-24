@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CreditCardTypeFactory:
@@ -36,5 +37,8 @@ class CreditCardTypeFactory:
 from org.allbinary.business.user.commerce.money.payment.types.CreditCardType import CreditCardType
 
 
-CreditCardTypeFactory.instance = CreditCardTypeFactory()
+def _CreditCardTypeFactory_instance() -> object:
+    return CreditCardTypeFactory()
+
+lazy_static(CreditCardTypeFactory, "instance", _CreditCardTypeFactory_instance)
 

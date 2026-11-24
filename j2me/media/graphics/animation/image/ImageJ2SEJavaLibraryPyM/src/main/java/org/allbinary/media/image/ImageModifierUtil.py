@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageModifierUtil:
@@ -34,10 +35,13 @@ class ImageModifierUtil:
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
     
 
     def setColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         newBufferedImage: BufferedImage = self.imageUtil.getBufferedImage(image)
         r: int = basicColor.red
         g: int = basicColor.green
@@ -63,6 +67,8 @@ class ImageModifierUtil:
     
 
     def changeColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         newBufferedImage: BufferedImage = self.imageUtil.getBufferedImage(image)
         MAX: float = 255.0
         r: float = (float(basicColor.red)) / MAX
@@ -91,6 +97,7 @@ class ImageModifierUtil:
     
 
     def setAlpha(self, unusedOriginalImage: Image, image: Image, imageIndex: int, alphaInt: int) -> None:
+        from javax.microedition.lcdui.Image import Image
         alpha: int = ((int(alphaInt) + 128) % 256 - 128)
         newBufferedImage: BufferedImage = self.imageUtil.getBufferedImage(image)
         width: int = image.getWidth()
@@ -105,6 +112,10 @@ class ImageModifierUtil:
 
     def getImageArray(self, originalImageArray: list[Image]) -> list[Image]:
         from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             newImageArray: list[Image] = [None] * (len(originalImageArray))
             size: int = len(newImageArray)
@@ -122,6 +133,7 @@ class ImageModifierUtil:
     
 
     def handleImage(self, imageArray: list[Image], index: int, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         pass
     
 
@@ -131,12 +143,15 @@ class ImageModifierUtil:
 # from java.awt.image.ColorModel import ColorModel
 # from java.awt.image.WritableRaster import WritableRaster
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
-ImageModifierUtil.instance = ImageModifierUtil()
+def _ImageModifierUtil_instance() -> object:
+    return ImageModifierUtil()
+
+lazy_static(ImageModifierUtil, "instance", _ImageModifierUtil_instance)
 

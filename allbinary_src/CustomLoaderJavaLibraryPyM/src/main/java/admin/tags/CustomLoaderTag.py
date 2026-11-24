@@ -21,10 +21,12 @@ from tags.CustomTagSupport import CustomTagSupport
 class CustomLoaderTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.command: str = None
         self.webappPath: str = None
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
@@ -42,6 +44,10 @@ class CustomLoaderTag(CustomTagSupport):
 
     # throws LicensingException
     def setCustomLoaderWebappPath(self) -> None:
+        from admin.taghelpers.CustomLoaderHelperFactory import CustomLoaderHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = CustomLoaderHelperFactory().getInstance(self.propertiesHashMap, self.pageContext)
             helperClass: type = type(anyType)
@@ -52,18 +58,24 @@ class CustomLoaderTag(CustomTagSupport):
         except LicensingException as e:
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "setCustomLoaderWebappPath()", e)
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF(self.commonStrings.START, self, self.tagStrings.DO_START_TAG)
             if self.command is not None:
                 self.propertiesHashMap = StdUtil.getInstance().createHashMap()
-                if ((self.command > org.allbinary.globals.GLOBALS2.SET) - (self.command < org.allbinary.globals.GLOBALS2.SET)) == 0:
+                if ((self.command > GLOBALS2.SET) - (self.command < GLOBALS2.SET)) == 0:
                     self.setCustomLoaderWebappPath()
             return self.SKIP_BODY
         except LicensingException as e:
@@ -75,10 +87,13 @@ class CustomLoaderTag(CustomTagSupport):
 # from java.lang.reflect.Method import Method
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.CustomLoaderHelperFactory import CustomLoaderHelperFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.CustomLoaderHelperFactory import CustomLoaderHelperFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

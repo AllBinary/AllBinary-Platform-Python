@@ -22,15 +22,17 @@ class PathFindingInfoInterface:
     
 
     def getStartPathFindingNodeList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def getEndPathFindingNodeList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def getPathFinder(self) -> GeographicPathFinderBase:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BlisketServletUtil:
@@ -27,16 +28,23 @@ class BlisketServletUtil:
     
 
     def init(self, request: HttpServletRequest) -> None:
+        from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
         urlGlobals: AppUrlGlobals = AppUrlGlobals()
         urlGlobals.setWebappPath(request.getServletContext().getRealPath(AbPathData.getInstance().SEPARATOR))
-        self.URLGLOBALS.init(urlGlobals)
+        URLGLOBALS.init(urlGlobals)
         WebappClassLoaderInfo.setLoader(type(self).getClassLoader())
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
+# from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
 
 
-BlisketServletUtil.instance = BlisketServletUtil()
+def _BlisketServletUtil_instance() -> object:
+    return BlisketServletUtil()
+
+lazy_static(BlisketServletUtil, "instance", _BlisketServletUtil_instance)
 

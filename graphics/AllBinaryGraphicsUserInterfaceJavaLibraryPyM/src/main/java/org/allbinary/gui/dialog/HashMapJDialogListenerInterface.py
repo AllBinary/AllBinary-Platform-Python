@@ -22,7 +22,8 @@ class HashMapJDialogListenerInterface:
     
 
     # throws Exception
-    def onHashMap(self, hashMap: dict) -> None:
+    def onHashMap(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 

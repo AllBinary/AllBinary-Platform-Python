@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AuthorizationTypeFactory:
@@ -39,5 +40,8 @@ class AuthorizationTypeFactory:
 from org.allbinary.business.user.commerce.money.payment.types.AuthorizationType import AuthorizationType
 
 
-AuthorizationTypeFactory.instance = AuthorizationTypeFactory()
+def _AuthorizationTypeFactory_instance() -> object:
+    return AuthorizationTypeFactory()
+
+lazy_static(AuthorizationTypeFactory, "instance", _AuthorizationTypeFactory_instance)
 

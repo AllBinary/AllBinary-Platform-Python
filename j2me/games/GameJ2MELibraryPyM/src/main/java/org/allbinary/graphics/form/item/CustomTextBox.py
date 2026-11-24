@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 from org.allbinary.game.input.event.RawKeyEventListener import RawKeyEventListener
 
 
-class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
+class CustomTextBox(*java_bases(GameCommandCanvas, RawKeyEventListener)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.InputFactory import InputFactory
@@ -28,7 +29,6 @@ class CustomTextBox(GameCommandCanvas, RawKeyEventListener):
     
 
     def __init__(self, cmdListener: CommandListener, label: str, text: str, maxSize: int, constraints: int, font: Font, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
-        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.Font import Font
         from org.allbinary.graphics.color.BasicColor import BasicColor

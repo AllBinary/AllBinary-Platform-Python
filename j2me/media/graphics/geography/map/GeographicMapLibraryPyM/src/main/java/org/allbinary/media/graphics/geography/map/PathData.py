@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PathData:
@@ -32,5 +33,8 @@ class PathData:
         return PathData.instance
 
 
-PathData.instance = PathData()
+def _PathData_instance() -> object:
+    return PathData()
+
+lazy_static(PathData, "instance", _PathData_instance)
 

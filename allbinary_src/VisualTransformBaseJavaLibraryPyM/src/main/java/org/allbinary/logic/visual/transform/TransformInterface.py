@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
 from org.allbinary.logic.visual.transform.info.CompositeTransformInfoInterface import CompositeTransformInfoInterface
 
 
 # Java interface
-class TransformInterface(DomDocumentMappingInterface, CompositeTransformInfoInterface):
+class TransformInterface(*java_bases(DomDocumentMappingInterface, CompositeTransformInfoInterface)):
     
 
     def getTypeId(self) -> int:
@@ -28,16 +29,18 @@ class TransformInterface(DomDocumentMappingInterface, CompositeTransformInfoInte
     
 
     def setTransformDocumentInterface(self, viewDocumentInterface: TransformDocumentInterface) -> None:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         raise NotImplementedError()
     
 
     def getTransformDocumentInterface(self) -> TransformDocumentInterface:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def view(self) -> str:
         raise NotImplementedError()
-from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+# from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
 
 

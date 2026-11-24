@@ -29,13 +29,15 @@ class ProfileActionScriptOutputFactory:
     def getInstance(node: Node) -> ProfileActionScriptOutputInterface:
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutput import ImageActionScriptOutput
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
         profileActionScriptOutputInterface: ProfileActionScriptOutputInterface = None
         if DomSearchHelper.getNodeNoThrow(ImageActionScriptOutputData.NAME, node.getChildNodes()) is not None:
             profileActionScriptOutputInterface = ImageActionScriptOutput(node)
         else:
             raise Exception("No Such ActionScript Output")
         return profileActionScriptOutputInterface
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.w3c.dom.Node import Node
 
 

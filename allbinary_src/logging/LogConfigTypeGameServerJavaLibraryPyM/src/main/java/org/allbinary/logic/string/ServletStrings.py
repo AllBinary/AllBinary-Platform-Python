@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ServletStrings:
@@ -34,5 +35,8 @@ class ServletStrings:
         return ServletStrings.instance
 
 
-ServletStrings.instance = ServletStrings()
+def _ServletStrings_instance() -> object:
+    return ServletStrings()
+
+lazy_static(ServletStrings, "instance", _ServletStrings_instance)
 

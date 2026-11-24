@@ -15,14 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.BasicProfileActionScriptCondition import BasicProfileActionScriptCondition
 from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionInterface import ColorAtActionScriptConditionInterface
 
 
-class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtActionScriptConditionInterface):
+class ColorAtActionScriptCondition(*java_bases(BasicProfileActionScriptCondition, ColorAtActionScriptConditionInterface)):
     NAME: str = "If Color At"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.analysis.ColorRange import ColorRange
+        from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.colorAtActionScriptConditionJPanel: ColorAtActionScriptConditionJPanel = None
         self.point: Point = None
@@ -45,6 +49,10 @@ class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtAct
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(ColorAtActionScriptCondition.NAME, node)
         self._init_fields()
         self.point = Point(0, 0)
@@ -106,7 +114,7 @@ class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtAct
         self.colorAtActionScriptConditionJPanel.getColorAtActionJDialog().setVisible(True)
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
@@ -115,7 +123,9 @@ class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtAct
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(ColorAtActionScriptConditionData.LOCATION_X, str(self.getPoint().x))
         hashMap.put(ColorAtActionScriptConditionData.LOCATION_Y, str(self.getPoint().y))
         hashMap.put(ColorAtActionScriptConditionData.MIN_RED, str(self.getColorRangeInterface().getMinRed()))
@@ -131,6 +141,9 @@ class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtAct
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, ColorAtActionScriptConditionData.NAME, self.toHashMap()))
         return node
@@ -138,6 +151,11 @@ class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtAct
 
     # throws Exception
     def shouldProcess(self, frame: int) -> bool:
+        from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+        from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+        from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+        from org.allbinary.media.image.cache.BufferedImageFrameCacheable import BufferedImageFrameCacheable
         capturedBufferedImageCacheable: BufferedImageFrameCacheable = (CapturedBufferedImagesCacheSingleton.getInstance()).get(str(frame))
         bufferedImage: BufferedImage = capturedBufferedImageCacheable.getBufferedImage()
         automaticCacheInterface: AutomaticCacheInterface = ColorCacheFactory.getInstance()
@@ -150,36 +168,40 @@ class ColorAtActionScriptCondition(BasicProfileActionScriptCondition, ColorAtAct
     
 
     def log(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         message: str = str(StringMaker().append("getPoint(): ").append(str(self.getPoint())).append(CommonSeps.getInstance().NEW_LINE).append(str(self.getColorRangeInterface())))
         self.logUtil.putF(message, self, "log")
     
 
     def getColorRangeInterface(self) -> ColorRangeInterface:
+        from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         return self.colorRangeInterface
     
 
     def setColorRangeInterface(self, colorRangeInterface: ColorRangeInterface) -> None:
+        from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         self.colorRangeInterface = colorRangeInterface
 # from java.awt.Color import Color
 # from java.awt.Point import Point
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
-from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
-from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.media.image.analysis.ColorRange import ColorRange
-from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
-from org.allbinary.media.image.cache.BufferedImageFrameCacheable import BufferedImageFrameCacheable
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+# from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+# from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.media.image.analysis.ColorRange import ColorRange
+# from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
+# from org.allbinary.media.image.cache.BufferedImageFrameCacheable import BufferedImageFrameCacheable
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

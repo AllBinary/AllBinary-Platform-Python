@@ -21,6 +21,10 @@ from org.allbinary.animation.image.ImageBaseRotationAnimation import ImageBaseRo
 class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+        from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
+        from playn.core.Canvas import Canvas
         self.imageRotationUtil: ImageRotationUtil = ImageRotationUtil.getInstance()
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
         self.originalImage: Image = None
@@ -32,6 +36,10 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         super().__init__(image, angleInfo, totalAngle, animationBehavior)
         self._init_fields()
         self.originalImage = originalImage
@@ -43,15 +51,24 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def getCanvasSurface(self, image: Image) -> Canvas:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+        from playn.core.Canvas import Canvas
+        from playn.core.ImageImpl import ImageImpl
+        from playn.core.PlayN import PlayN
+        from playn.html.HtmlGraphics import HtmlGraphics
+        from playn.html.HtmlImage import HtmlImage
         htmlImage: PlaynMutableImage = image
         canvasImage: ImageImpl = htmlImage.getImage()
         playN: PlayN = PlayN.getInstance()
-        canvas: Canvas = (playN.graphics()).get(canvasImage)
+        htmlGraphics: HtmlGraphics = playN.graphics()
+        canvas: Canvas = htmlGraphics.get(canvasImage)
         canvas.translate(self.originalImage.getWidth() / 2, self.originalImage.getHeight() / 2)
         return canvas
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
@@ -82,6 +99,7 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def updateImage(self) -> None:
+        from playn.core.Canvas import Canvas
         canvasSurface: Canvas = self.canvasSurfaceArray[self.bufferedImageIndex]
         canvasSurface.save()
         self.imageRotationUtil.rotateImageCanvasSurfaceClear(self.originalImage, self.twoImages[self.bufferedImageIndex], canvasSurface, self.angleInfo.getAngle() + 90)
@@ -105,21 +123,22 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawImage(self.imageToShow, x, y, self.anchor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
-from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
-from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
-from playn.core.Canvas import Canvas
-from playn.core.ImageImpl import ImageImpl
-from playn.core.PlayN import PlayN
-from playn.html.HtmlGraphics import HtmlGraphics
-from playn.html.HtmlImage import HtmlImage
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
+# from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+# from playn.core.Canvas import Canvas
+# from playn.core.ImageImpl import ImageImpl
+# from playn.core.PlayN import PlayN
+# from playn.html.HtmlGraphics import HtmlGraphics
+# from playn.html.HtmlImage import HtmlImage
 from org.allbinary.animation.image.AlphaBaseProcessor import AlphaBaseProcessor
 
 

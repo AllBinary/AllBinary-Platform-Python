@@ -24,7 +24,8 @@ class Portion:
         self.total: int = None
     
 
-    def __init__(self, hashMap: dict) -> None:
+    def __init__(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.current = hashMap.get("current")
         self.total = hashMap.get("total")

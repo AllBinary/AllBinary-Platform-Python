@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SpecialItemsEntityFactory:
     instance: SpecialItemsEntityFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,16 +37,24 @@ class SpecialItemsEntityFactory:
 
     def getSpecialItemsEntityInstance(self) -> SpecialItemsEntity:
         from org.allbinary.data.tables.user.commerce.inventory.item.special.SpecialItemsEntity import SpecialItemsEntity
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return SpecialItemsEntity()
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-SpecialItemsEntityFactory.instance = SpecialItemsEntityFactory()
+def _SpecialItemsEntityFactory_instance() -> object:
+    return SpecialItemsEntityFactory()
+
+lazy_static(SpecialItemsEntityFactory, "instance", _SpecialItemsEntityFactory_instance)
 

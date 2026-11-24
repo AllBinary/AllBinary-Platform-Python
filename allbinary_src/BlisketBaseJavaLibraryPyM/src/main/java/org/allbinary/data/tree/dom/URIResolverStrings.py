@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class URIResolverStrings:
@@ -39,5 +40,8 @@ class URIResolverStrings:
         return URIResolverStrings.instance
 
 
-URIResolverStrings.instance = URIResolverStrings()
+def _URIResolverStrings_instance() -> object:
+    return URIResolverStrings()
+
+lazy_static(URIResolverStrings, "instance", _URIResolverStrings_instance)
 

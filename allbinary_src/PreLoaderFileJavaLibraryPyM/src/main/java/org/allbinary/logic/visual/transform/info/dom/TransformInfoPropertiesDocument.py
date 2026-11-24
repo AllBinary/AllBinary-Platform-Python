@@ -20,23 +20,40 @@ from __future__ import annotations
 class TransformInfoPropertiesDocument:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.document: Document = None
     
 
     def __init__(self, filePath: str) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
+        from org.allbinary.logic.io.file.AbFile import AbFile
         self._init_fields()
         xmlFile: AbFile = AbFile.createAbFile(filePath)
         self.document = DomDocumentFileHelper.createDocument(xmlFile)
     
 
-    def toTransformInfoPropertiesHashMap(self) -> dict:
+    def toTransformInfoPropertiesHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoProperties import TransformInfoProperties
+        from org.allbinary.logic.visual.transform.info.TransformInfoPropertiesFactory import TransformInfoPropertiesFactory
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            transformInfoPropertiesHashMap: dict = StdUtil.getInstance().createHashMap()
+            transformInfoPropertiesHashMap: HashMap = StdUtil.getInstance().createHashMap()
             transformInfosNode: Node = self.document.getElementsByTagName(TransformInfosData.getInstance().NAME).item(0)
             transformInfosChildNodeList: NodeList = transformInfosNode.getChildNodes()
             transformInfoNodeVector: BasicArrayList = DomSearchHelper.getAllNodes(TransformInfoData.getInstance().NAME, transformInfosChildNodeList)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Size: " + str(transformInfoNodeVector.size()), self, "toTransformInfoPropertiesHashMap()")
             size: int = transformInfoNodeVector.size()
             node: Node = None
@@ -47,25 +64,27 @@ class TransformInfoPropertiesDocument:
                 transformInfoPropertiesHashMap.put(transformInfoProperties.getName(), transformInfoProperties)
             return transformInfoPropertiesHashMap
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "toTransformInfoPropertiesHashMap()", e)
             return None
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfoProperties import TransformInfoProperties
-from org.allbinary.logic.visual.transform.info.TransformInfoPropertiesFactory import TransformInfoPropertiesFactory
-from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfoProperties import TransformInfoProperties
+# from org.allbinary.logic.visual.transform.info.TransformInfoPropertiesFactory import TransformInfoPropertiesFactory
+# from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

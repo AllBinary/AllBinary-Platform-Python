@@ -21,6 +21,7 @@ from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformI
 class BasicGenerator(TransformInfoObjectConfigGenerator):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,9 +31,13 @@ class BasicGenerator(TransformInfoObjectConfigGenerator):
     
 
     def process(self, input: str) -> str:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Processing", self, self.commonStrings.PROCESS)
         return input
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

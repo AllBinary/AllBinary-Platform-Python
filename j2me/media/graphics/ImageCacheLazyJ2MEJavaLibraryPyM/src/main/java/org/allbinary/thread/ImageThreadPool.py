@@ -16,7 +16,7 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.thread.ThreadPool import ThreadPool
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
@@ -26,6 +26,7 @@ class ImageThreadPool(ThreadPool):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -53,11 +54,14 @@ class ImageThreadPool(ThreadPool):
 
     def completedTask(self, task: object) -> None:
         pass
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-ImageThreadPool.instance = ImageThreadPool("ImageLoader", 1, ThreadPool.NORMAL_PRIORITY)
+def _ImageThreadPool_instance() -> object:
+    return ImageThreadPool("ImageLoader", 1, ThreadPool.NORMAL_PRIORITY)
+
+lazy_static(ImageThreadPool, "instance", _ImageThreadPool_instance)
 

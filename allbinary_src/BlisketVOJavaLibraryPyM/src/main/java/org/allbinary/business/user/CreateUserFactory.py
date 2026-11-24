@@ -26,7 +26,12 @@ class CreateUserFactory:
 
     # throws Exception
     @staticmethod
-    def getInstance(hashMap: dict) -> UserInterface:
+    def getInstance(hashMap: HashMap) -> UserInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.role.UserRole import UserRole
+        from org.allbinary.business.user.role.UserRoleB import UserRoleB
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if hashMap is not None:
             roleString: str = hashMap.get(str(UserRoleData.NAME))
             if not StringValidationUtil.getInstance().isEmpty(roleString):
@@ -37,9 +42,9 @@ class CreateUserFactory:
         else:
             raise Exception("Null HashMap")
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.role.UserRole import UserRole
-from org.allbinary.business.user.role.UserRoleB import UserRoleB
-from org.allbinary.business.user.role.UserRoleData import UserRoleData
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.business.user.role.UserRoleB import UserRoleB
+# from org.allbinary.business.user.role.UserRoleData import UserRoleData
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 
 

@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AcceptableResponseUtil:
     instance: AcceptableResponseUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.candidateVector: BasicArrayList = BasicArrayListD()
         self.tagNameVector: BasicArrayList = BasicArrayListD()
 
@@ -35,6 +38,7 @@ class AcceptableResponseUtil:
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.TsUtil import TsUtil
         TsUtil.getInstance().hashCode(AcceptableResponseFactory.getInstance().HTML)
     
 
@@ -48,14 +52,17 @@ class AcceptableResponseUtil:
 
     def size(self) -> int:
         return self.candidateVector.size()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.StdUtil import StdUtil
 from org.allbinary.logic.communication.http.AcceptableResponseFactory import AcceptableResponseFactory
 
 
-AcceptableResponseUtil.instance = AcceptableResponseUtil()
+def _AcceptableResponseUtil_instance() -> object:
+    return AcceptableResponseUtil()
+
+lazy_static(AcceptableResponseUtil, "instance", _AcceptableResponseUtil_instance)
 
 AcceptableResponseUtil._static_init()
 

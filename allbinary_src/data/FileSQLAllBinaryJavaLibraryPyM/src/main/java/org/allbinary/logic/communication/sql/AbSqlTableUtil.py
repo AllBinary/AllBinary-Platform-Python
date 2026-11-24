@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import datetime
 import threading
+from java.lang.StringBuffer import StringBuilder
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbSqlTableUtil:
@@ -24,6 +26,10 @@ class AbSqlTableUtil:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.EXTENSION: str = ".adb"
         self.END: str = "')\n"
@@ -65,9 +71,15 @@ class AbSqlTableUtil:
             return self._getOutputStream_unlocked(backupPath, tableName)
 
     def _getOutputStream_unlocked(self, backupPath: str, tableName: str) -> OutputStream:
+        from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             fileName: str = tableName + self.EXTENSION
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.SAVING + tableName, self, self.METHOD_GET_OUTPUT_STREAM)
             backupFilePath: AbPath = AbPath(backupPath, fileName)
             backupFile: AbFile = AbFile.createAbFile(backupFilePath)
@@ -78,7 +90,7 @@ class AbSqlTableUtil:
             outputStream: OutputStream = AbFileOutputStream(backupFile)
             return outputStream
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put("Create File", self, self.METHOD_GET_OUTPUT_STREAM, e)
             return None
     
@@ -88,6 +100,14 @@ class AbSqlTableUtil:
             return self._backupFile_unlocked(path, backupPath, tableName)
 
     def _backupFile_unlocked(self, path: AbPath, backupPath: str, tableName: str) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             calendar: datetime.datetime = datetime.datetime.now()
             timeLong: int = int(calendar.getTimeInMillis())
@@ -98,7 +118,7 @@ class AbSqlTableUtil:
             stringBuffer.append(AbPathData.getInstance().SEPARATOR)
             stringBuffer.append(time)
             backupAbPath: AbPath = AbPath(str(stringBuffer))
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 stringBuffer.delete(0, stringBuffer.length())
                 stringBuffer.append(self.SAVING_BACKUP_PATH)
                 stringBuffer.append(backupAbPath.toFileSystemString())
@@ -111,12 +131,13 @@ class AbSqlTableUtil:
             FileUtil.getInstance().copy(path, backupAbPath)
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.METHOD_BACKUP_FILE, e)
             return False
     
 
     def convertNewLines(self, value: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         index: int = 0
         lastIndex: int = 0
@@ -139,14 +160,22 @@ class AbSqlTableUtil:
             return self._backupTable_unlocked(abSqlTable)
 
     def _backupTable_unlocked(self, abSqlTable: AbSqlTable) -> str:
-        from org.allbinary.logic.communication.sql.StringBuilder import StringBuilder
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         tableName: str = abSqlTable.getTableName()
         try:
             count: int = 0
             sqlStatement: str = str(self.sqlStrings.SELECT_ALL_FROM) + tableName
-            path: str = org.allbinary.globals.URLGLOBALS.getMainPath() + self.PATH_GLOBALS.getInstance().BACKUP_PATH
+            path: str = URLGLOBALS.getMainPath() + PATH_GLOBALS.getInstance().BACKUP_PATH
             if not Directory.create(AbPath(path)):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     self.logUtil.putF(self.ERROR_CREATING + str(path), self, self.METHOD_BACKUP_TABLE)
             rset: ResultSet = abSqlTable.executeSQLStatement(sqlStatement)
             rsmd: ResultSetMetaData = rset.getMetaData()
@@ -164,13 +193,13 @@ class AbSqlTableUtil:
                 stringBuffer.append(rset.getString(colNum))
                 stringBuffer.append(self.END)
                 sqlStatementLine: str = str(stringBuffer)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     self.logUtil.putF(self.APPENDING + sqlStatementLine, self, self.METHOD_BACKUP_TABLE)
                 outputStream.write(list(sqlStatementLine.encode()))
             StreamUtil.getInstance().close(outputStream)
             return self.TABLE_LABEL + tableName + self.BACKUP_SUCCESS
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put("Backup Table Failed\nSQL Statement", self, self.METHOD_BACKUP_TABLE, e)
             return self.TABLE_LABEL + tableName + " Backup Failed"
     
@@ -180,13 +209,23 @@ class AbSqlTableUtil:
             return self._restoreTable_unlocked(abSqlTable, portion)
 
     def _restoreTable_unlocked(self, abSqlTable: AbSqlTable, portion: Portion) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.business.installer.Portion import Portion
+        from org.allbinary.logic.io.BufferedLineReader import BufferedLineReader
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         tableName: str = abSqlTable.getTableName()
         try:
-            path: str = org.allbinary.globals.URLGLOBALS.getMainPath() + self.PATH_GLOBALS.getInstance().BACKUP_PATH
+            path: str = URLGLOBALS.getMainPath() + PATH_GLOBALS.getInstance().BACKUP_PATH
             current: int = int(portion.getCurrent())
             if current == 0:
                 if Directory.create(AbPath(path)):
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                         self.logUtil.putF(self.ERROR_CREATING + str(path), self, self.METHOD_RESTORE_TABLE)
             backupFile: AbFile = AbFile.createAbFile(path, tableName + self.EXTENSION)
             bufferedLineReader: BufferedLineReader = BufferedLineReader(backupFile)
@@ -203,11 +242,12 @@ class AbSqlTableUtil:
             stringBuffer.append(start)
             stringBuffer.append(self.DASH)
             stringBuffer.append(end)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(str(stringBuffer), self, self.METHOD_RESTORE_TABLE)
             bufferedLineReader.readUpToLines(start)
             line: str = self.stringUtil.EMPTY_STRING
-            while bufferedLineReader.getCurrent() < end and ((line := bufferedLineReader.readLine())) is not None:
+            while bufferedLineReader.getCurrent() < end and bufferedLineReader.ready():
+                line = bufferedLineReader.readLine()
                 if len(line) > 1:
                     abSqlTable.executeSQLStatement(line)
             stringBuffer.append(self.commonSeps.SPACE)
@@ -216,34 +256,39 @@ class AbSqlTableUtil:
             stringBuffer.append(self.PORTION_RESTORED)
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put("Restore Table Failed\nSQL Statement", self, self.METHOD_RESTORE_TABLE, e)
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(self.TABLE_LABEL)
             stringBuffer.append(tableName)
             stringBuffer.append(" Restoration Failed")
             return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 # from java.sql.ResultSet import ResultSet
 # from java.sql.ResultSetMetaData import ResultSetMetaData
 # from java.util.Calendar import Calendar
-from org.allbinary.business.installer.Portion import Portion
-from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
-from org.allbinary.logic.io.BufferedLineReader import BufferedLineReader
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.business.installer.Portion import Portion
+# from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+# from org.allbinary.logic.io.BufferedLineReader import BufferedLineReader
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
 # from java.io.OutputStream import OutputStream
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-AbSqlTableUtil.instance = AbSqlTableUtil()
+def _AbSqlTableUtil_instance() -> object:
+    return AbSqlTableUtil()
+
+lazy_static(AbSqlTableUtil, "instance", _AbSqlTableUtil_instance)
 

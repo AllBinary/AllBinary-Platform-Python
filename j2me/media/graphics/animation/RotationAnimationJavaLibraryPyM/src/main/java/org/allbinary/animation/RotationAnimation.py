@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
 
 
-class RotationAnimation(IndexedAnimation, RotationAnimationInterface):
+class RotationAnimation(*java_bases(IndexedAnimation, RotationAnimationInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.direction.DirectionUtil import DirectionUtil

@@ -21,6 +21,7 @@ from org.allbinary.logic.visual.dhtml.html.HtmlTag import HtmlTag
 class HtmlSelect(HtmlTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.END: str = ">"
         self.STARTSELECT: str = "<SELECT "
         self.ENDSELECT: str = "</SELECT>"
@@ -40,6 +41,7 @@ class HtmlSelect(HtmlTag):
     
 
     def __init__(self, before: str, size: str, name: str, after: str) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
         self._init_fields()
         self.before = before
@@ -54,6 +56,7 @@ class HtmlSelect(HtmlTag):
     
 
     def addOptions(self, fileName: str) -> None:
+        from org.allbinary.logic.io.LineReader import LineReader
         try:
             lineReader: LineReader = LineReader(fileName)
             while lineReader.hasNext():
@@ -76,6 +79,7 @@ class HtmlSelect(HtmlTag):
     
 
     def getOptions(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
         result: str = stringUtil.EMPTY_STRING
         optionsArray: list[object] = self.options.toArray()
@@ -83,48 +87,49 @@ class HtmlSelect(HtmlTag):
         for i in range(0, optionsSize):
             value: str = optionsArray[i]
             if value is not None and value.compareTo(stringUtil.EMPTY_STRING) != 0:
-                result += self.STARTOPTION
-                result += self.END
-                result += value
-                result += self.ENDOPTION
+                result += str(self.STARTOPTION)
+                result += str(self.END)
+                result += str(value)
+                result += str(self.ENDOPTION)
         return result
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
         result: str = stringUtil.EMPTY_STRING
         attributeKeys: list[object] = self.otherAttributes.keySet().toArray()
         attributeSize: int = len(attributeKeys)
         result = self.before
-        result += self.STARTSELECT
-        result += self.NAME
-        result += self.name
+        result += str(self.STARTSELECT)
+        result += str(self.NAME)
+        result += str(self.name)
         result += "\" "
-        result += self.SIZE
-        result += self.size
+        result += str(self.SIZE)
+        result += str(self.size)
         result += "\" "
         for i in range(0, attributeSize):
             key: str = attributeKeys[i]
             value: str = self.otherAttributes.get(key)
             if value is not None and value.compareTo(stringUtil.EMPTY_STRING) != 0:
-                result += key
+                result += str(key)
                 result += "=\""
-                result += value
+                result += str(value)
                 result += "\" "
         if self.isMultiple():
             result += " " + self.multiple + " "
-        result += self.END
-        result += self.getOptions()
-        result += self.ENDSELECT
-        result += self.after
+        result += str(self.END)
+        result += str(self.getOptions())
+        result += str(self.ENDSELECT)
+        result += str(self.after)
         return result
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.io.LineReader import LineReader
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.io.LineReader import LineReader
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class DeleteCloud:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -28,10 +29,19 @@ class DeleteCloud:
     
 
     def delete(self, prePath: str, current: int, total: int) -> bool:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.http.file.upload.FileUploadData import FileUploadData
+        from org.allbinary.logic.io.AbIOSystem import AbIOSystem
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             if AbIOSystem.getInstance().isType("com.vobject.appengine.java.io"):
                 stringBuffer: StringMaker = StringMaker()
-                stringBuffer.append(self.URLGLOBALS.getWebappPath())
+                stringBuffer.append(URLGLOBALS.getWebappPath())
                 stringBuffer.append(prePath)
                 path: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
                 file: AbFile = AbFile.createAbFileFromAbPath(path)
@@ -65,15 +75,15 @@ class DeleteCloud:
         except Exception as e:
             self.logUtil.put("Unable to copy installer files into cloud", self, "initialize()", e)
             return False
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.http.file.upload.FileUploadData import FileUploadData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbIOSystem import AbIOSystem
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.http.file.upload.FileUploadData import FileUploadData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbIOSystem import AbIOSystem
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageScaleUtil:
     instance: ImageScaleUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.anchor: int = Anchor.TOP_LEFT
@@ -41,11 +47,15 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage2(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return self.createImage3(imageCache, originalImage, scaleNominatorX, scaleDenominatorX, scaleNominatorY, scaleDenominatorY, cached, True)
     
 
     # throws Exception
     def createImage3(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         scaleX: float = scaleNominatorX / scaleDenominatorX
         scaleY: float = scaleNominatorY / scaleDenominatorY
         return self.createImage(imageCache, originalImage, scaleX, scaleY, cached)
@@ -53,6 +63,10 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage(self, imageCache: ImageCache, originalImage: Image, scaleX: float, scaleY: float, cached: bool) -> Image:
+        from android.graphics.Bitmap import Bitmap
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
+        from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         originalAndroidImage: AndroidImageInterface = originalImage
         originalBitmap: Bitmap = originalAndroidImage.getBitmap()
         width: int = int((originalBitmap.getWidth() * scaleX))
@@ -79,6 +93,10 @@ class ImageScaleUtil:
 
     # throws Exception
     def getScaledImage(self, imageCache: ImageCache, originalImage: Image, scaleX: float, scaleY: float, width: int, height: int, cached: bool) -> Image:
+        from android.graphics.Matrix import Matrix
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.image.ImageCache import ImageCache
         image: Image = NullImage.NULL_IMAGE
         if cached:
             image = imageCache.get(type(self).__module__ + "." + type(self).__qualname__, width, height)
@@ -94,22 +112,29 @@ class ImageScaleUtil:
     
 
     def scale(self, image: Image, matrix: Matrix, scaleX: float, scaleY: float) -> None:
+        from android.graphics.Canvas import Canvas
+        from android.graphics.Matrix import Matrix
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         matrix.setScale(scaleX, scaleY)
         canvas: Canvas = (image).getCanvas()
         canvas.concat(matrix)
-from android.graphics.Bitmap import Bitmap
-from android.graphics.Canvas import Canvas
-from android.graphics.Matrix import Matrix
+# from android.graphics.Bitmap import Bitmap
+# from android.graphics.Canvas import Canvas
+# from android.graphics.Matrix import Matrix
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
 
 
-ImageScaleUtil.instance = ImageScaleUtil()
+def _ImageScaleUtil_instance() -> object:
+    return ImageScaleUtil()
+
+lazy_static(ImageScaleUtil, "instance", _ImageScaleUtil_instance)
 

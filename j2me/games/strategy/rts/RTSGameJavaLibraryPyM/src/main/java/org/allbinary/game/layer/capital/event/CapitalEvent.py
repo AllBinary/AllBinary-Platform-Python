@@ -29,6 +29,7 @@ class CapitalEvent(AllBinaryEventObject):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("CapitalEvent: Value: \n")
         stringBuffer.appendint(self.getValue())
@@ -44,6 +45,6 @@ class CapitalEvent(AllBinaryEventObject):
 
     def setValue(self, value: int) -> None:
         self.value = value
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

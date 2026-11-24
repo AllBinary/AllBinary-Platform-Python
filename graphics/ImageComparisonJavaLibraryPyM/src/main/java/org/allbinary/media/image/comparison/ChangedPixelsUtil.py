@@ -33,6 +33,13 @@ class ChangedPixelsUtil:
     # throws Exception
     @staticmethod
     def generateBufferedImageChacheables(imageComparisonInfo: ImageComparisonResult) -> list[BufferedImageCacheable]:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+        from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+        from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
+        from org.allbinary.media.image.cache.BufferedImageInfoFactory import BufferedImageInfoFactory
+        from org.allbinary.media.image.cache.BufferedImagePoolSingleton import BufferedImagePoolSingleton
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         bufferedImageCacheables: list[BufferedImageCacheable] = None
         originalBufferedImage: BufferedImage = imageComparisonInfo.getBufferedImages()[0]
         bufferedImageCacheables = [None] * (2)
@@ -53,13 +60,13 @@ class ChangedPixelsUtil:
             bufferedImageCacheables[1].getBufferedImage().setRGB(pixelDelta.getPoint().getX(), pixelDelta.getPoint().getY(), pixelDelta.getColorDelta().getRgb2())
         return bufferedImageCacheables
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
-from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
-from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
-from org.allbinary.media.image.cache.BufferedImageInfoFactory import BufferedImageInfoFactory
-from org.allbinary.media.image.cache.BufferedImagePoolSingleton import BufferedImagePoolSingleton
-from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+# from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+# from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
+# from org.allbinary.media.image.cache.BufferedImageInfoFactory import BufferedImageInfoFactory
+# from org.allbinary.media.image.cache.BufferedImagePoolSingleton import BufferedImagePoolSingleton
+# from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
 
 

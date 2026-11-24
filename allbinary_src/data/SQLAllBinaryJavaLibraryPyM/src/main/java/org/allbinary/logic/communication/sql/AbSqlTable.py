@@ -23,6 +23,7 @@ class AbSqlTable(AbSqlBasic):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = None
         self.METHOD_CREATED_TABLE: str = "createTable()"
@@ -32,6 +33,7 @@ class AbSqlTable(AbSqlBasic):
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
         self._init_fields()
     
@@ -49,13 +51,15 @@ class AbSqlTable(AbSqlBasic):
             return self._createTable_unlocked(data)
 
     def _createTable_unlocked(self, data: str) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.executeSQLStatement(data)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.TABLE_CREATION_SUCCESS + self.tableName + " with statement: " + data, self, self.METHOD_CREATED_TABLE)
             return self.tableName + str(self.sqlStrings.CREATE_RETURN)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put("Table Creation Failed: " + self.tableName + " with statement: " + data, self, self.METHOD_CREATED_TABLE, e)
             return "Failed to Create " + self.tableName + " table."
     
@@ -65,17 +69,21 @@ class AbSqlTable(AbSqlBasic):
             return self._dropTable_unlocked()
 
     def _dropTable_unlocked(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         sqlStatement: str = str(self.sqlStrings.DROP_TABLE) + self.tableName
         try:
             self.executeSQLStatement(sqlStatement)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(str(self.SUCCESS_SQL_STATEMENT) + sqlStatement, self, self.METHOD_DROP_TABLE)
             return self.tableName + self.DROPPED_SUCCESS
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(str(self.FAILED_SQL_STATEMENT) + sqlStatement, self, self.METHOD_DROP_TABLE, e)
             return "Failed to Drop " + self.tableName + " table."
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

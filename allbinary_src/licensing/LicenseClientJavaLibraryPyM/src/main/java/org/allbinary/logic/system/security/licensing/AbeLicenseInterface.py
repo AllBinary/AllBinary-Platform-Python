@@ -34,6 +34,7 @@ class AbeLicenseInterface:
     
 
     def getServers(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -54,6 +55,6 @@ class AbeLicenseInterface:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

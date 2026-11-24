@@ -14,19 +14,27 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 
 
 class UnitRTSFormInput(RTSFormInput):
-    DECAL_ID: int = SmallIntegerSingletonFactory.getInstance().getAt(23)
+    DECAL_ID: int = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         self.noMoneyGameNotificationEvent: GameNotificationEvent = None
         self.newUnitGameNotificationEvent: GameNotificationEvent = None
     
 
     def __init__(self, groupInterface: list[Group]) -> None:
+        from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+        from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
         self._init_fields()
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
@@ -38,6 +46,9 @@ class UnitRTSFormInput(RTSFormInput):
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -47,6 +58,18 @@ class UnitRTSFormInput(RTSFormInput):
 
     # throws Exception
     def processGameSpecific(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, item: ABCustomItem, itemIndex: int) -> None:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.layer.Layer import Layer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().process(layerManager)
         associatedRtsLayer2: RTSLayer = associatedRtsLayer
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = associatedRtsLayer2.geographicMapCellPositionAreaBase
@@ -56,12 +79,12 @@ class UnitRTSFormInput(RTSFormInput):
         if self.newUnconstructedRTSLayerInterfaceArray[itemIndex] == CollidableDestroyableDamageableLayer.getNullInstance():
             self.newUnconstructedRTSLayerInterfaceArray[itemIndex] = self.getInstance(layerManager, item, geographicMapCellPosition)
         else:
-            cellPoint: GPoint = geographicMapCellPosition.getPoint()
-            rtsLayer: RTSLayer = self.newUnconstructedRTSLayerInterfaceArray[itemIndex]
-            rtsLayer.setPosition(cellPoint.getX(), cellPoint.getY(), rtsLayer.getZP())
-            geographicMapCompositeInterface: GeographicMapCompositeInterface = rtsLayer.allBinaryGameLayerManagerP
+            selectedCellPoint: GPoint = geographicMapCellPosition.getPoint()
+            positionedLayer: RTSLayer = self.newUnconstructedRTSLayerInterfaceArray[itemIndex]
+            positionedLayer.setPosition(selectedCellPoint.getX(), selectedCellPoint.getY(), positionedLayer.getZP())
+            geographicMapCompositeInterface: GeographicMapCompositeInterface = positionedLayer.allBinaryGameLayerManagerP
             geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
-            rtsLayer.geographicMapCellPositionAreaBase.update(geographicMapInterface)
+            positionedLayer.geographicMapCellPositionAreaBase.update(geographicMapInterface)
         cellPoint: GPoint = geographicMapCellPosition.getMidPoint()
         rtsLayer: RTSLayer = self.newUnconstructedRTSLayerInterfaceArray[itemIndex]
         rtsLayer.setPosition(cellPoint.getX() - rtsLayer.getHalfWidth(), cellPoint.getY() - rtsLayer.getHalfHeight(), rtsLayer.getZP())
@@ -72,6 +95,19 @@ class UnitRTSFormInput(RTSFormInput):
     def attemptBuild(self, associatedRtsLayer: RTSLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, layerInterface: RTSLayer, itemIndex: int) -> None:
         from org.allbinary.game.input.form.AssignWaypointsUtil import AssignWaypointsUtil
         from org.allbinary.game.input.form.PlayersSingletonFactory import PlayersSingletonFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.game.layer.AdvancedPlayerOwnedRTSLayers import AdvancedPlayerOwnedRTSLayers
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.capital.Capital import Capital
+        from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+        from org.allbinary.media.audio.BuildingSound import BuildingSound
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.audio.ErrorSound import ErrorSound
         cost: int = layerInterface.getCost()
         capital: Capital = rtsPlayerLayerInterface.getCapital()
         stringBuffer: StringMaker = StringMaker()
@@ -98,32 +134,39 @@ class UnitRTSFormInput(RTSFormInput):
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
             if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
                 GameNotificationEventHandler.getInstance().fireEvent(self.noMoneyGameNotificationEvent)
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.game.layer.AdvancedPlayerOwnedRTSLayers import AdvancedPlayerOwnedRTSLayers
-from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
-from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
-from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.game.layer.capital.Capital import Capital
-from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
-from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
-from org.allbinary.media.audio.BuildingSound import BuildingSound
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
-from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
-from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.media.audio.ErrorSound import ErrorSound
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.game.layer.AdvancedPlayerOwnedRTSLayers import AdvancedPlayerOwnedRTSLayers
+# from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+# from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
+# from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.game.layer.capital.Capital import Capital
+# from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+# from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
+# from org.allbinary.media.audio.BuildingSound import BuildingSound
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+# from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+# from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.audio.ErrorSound import ErrorSound
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
 
+
+def _UnitRTSFormInput_DECAL_ID() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(23)
+
+lazy_static(UnitRTSFormInput, "DECAL_ID", _UnitRTSFormInput_DECAL_ID)
 

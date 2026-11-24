@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+# from java.io.Serializable import Serializable
 
 
 class PaymentGatewayPrimaryKey(object):
@@ -47,21 +48,24 @@ class PaymentGatewayPrimaryKey(object):
     
 
     def toString(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(PaymentGatewayPrimaryKey.getName())
-        stringBuffer.append(StoreFront.getName())
+        stringBuffer.append(PaymentGatewayPrimaryKey.__module__ + "." + PaymentGatewayPrimaryKey.__qualname__)
+        stringBuffer.append(StoreFront.__module__ + "." + StoreFront.__qualname__)
         stringBuffer.append(" =")
         stringBuffer.append(self.getStoreName())
         stringBuffer.append(CommonSeps.getInstance().SPACE)
-        stringBuffer.append(PaymentGateway.getName())
+        stringBuffer.append(PaymentGateway.__module__ + "." + PaymentGateway.__qualname__)
         stringBuffer.append("=")
         stringBuffer.append(self.getName())
         return str(stringBuffer)
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

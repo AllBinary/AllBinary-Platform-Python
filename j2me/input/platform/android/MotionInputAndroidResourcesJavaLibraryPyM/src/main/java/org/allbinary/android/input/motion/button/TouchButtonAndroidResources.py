@@ -25,8 +25,20 @@ class TouchButtonAndroidResources(Init):
     
 
     def init(self) -> None:
-        from org.allbinary.android.input.motion.button.RESOURCE_STRING_ARRAY import RESOURCE_STRING_ARRAY
-        from org.allbinary.android.input.motion.button.RESOURCE_ARRAY import RESOURCE_ARRAY
+        from org.allbinary.AndroidResources import AndroidResources
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+        from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
+        from org.allbinary.input.motion.button.TouchButtonDownResource import TouchButtonDownResource
+        from org.allbinary.input.motion.button.TouchButtonGenericActionResource import TouchButtonGenericActionResource
+        from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
+        from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
+        from org.allbinary.input.motion.button.TouchButtonStrafeLeftResource import TouchButtonStrafeLeftResource
+        from org.allbinary.input.motion.button.TouchButtonStrafeRightResource import TouchButtonStrafeRightResource
+        from org.allbinary.input.motion.button.TouchButtonTurnLeftResource import TouchButtonTurnLeftResource
+        from org.allbinary.input.motion.button.TouchButtonTurnRightResource import TouchButtonTurnRightResource
+        from org.allbinary.input.motion.button.TouchButtonUpResource import TouchButtonUpResource
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         resourceUtil: ResourceUtil = ResourceUtil.getInstance()
         androidResources: AndroidResources = AndroidResources.getInstance()
         RESOURCE_STRING_ARRAY: list[TouchButtonResource] = [TouchButtonBlankResource.getInstance(), TouchButtonGenericActionResource.getInstance(), TouchButtonStartResource.getInstance(), TouchButtonUpResource.getInstance(), TouchButtonDownResource.getInstance(), TouchButtonTurnLeftResource.getInstance(), TouchButtonTurnRightResource.getInstance(), TouchButtonStrafeLeftResource.getInstance(), TouchButtonStrafeRightResource.getInstance()]
@@ -55,19 +67,19 @@ class TouchButtonAndroidResources(Init):
             RESOURCE_ARRAY[8] = androidResources.raw.touch_button_strafe_right_arrow_64_by_64
         for index in range(0, len(RESOURCE_ARRAY)):
             resourceUtil.addResource(RESOURCE_STRING_ARRAY[index].RESOURCE, str(RESOURCE_ARRAY[index]))
-from org.allbinary.AndroidResources import AndroidResources
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.input.motion.button.CommonButtons import CommonButtons
-from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
-from org.allbinary.input.motion.button.TouchButtonDownResource import TouchButtonDownResource
-from org.allbinary.input.motion.button.TouchButtonGenericActionResource import TouchButtonGenericActionResource
-from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
-from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
-from org.allbinary.input.motion.button.TouchButtonStrafeLeftResource import TouchButtonStrafeLeftResource
-from org.allbinary.input.motion.button.TouchButtonStrafeRightResource import TouchButtonStrafeRightResource
-from org.allbinary.input.motion.button.TouchButtonTurnLeftResource import TouchButtonTurnLeftResource
-from org.allbinary.input.motion.button.TouchButtonTurnRightResource import TouchButtonTurnRightResource
-from org.allbinary.input.motion.button.TouchButtonUpResource import TouchButtonUpResource
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.AndroidResources import AndroidResources
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+# from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
+# from org.allbinary.input.motion.button.TouchButtonDownResource import TouchButtonDownResource
+# from org.allbinary.input.motion.button.TouchButtonGenericActionResource import TouchButtonGenericActionResource
+# from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
+# from org.allbinary.input.motion.button.TouchButtonStartResource import TouchButtonStartResource
+# from org.allbinary.input.motion.button.TouchButtonStrafeLeftResource import TouchButtonStrafeLeftResource
+# from org.allbinary.input.motion.button.TouchButtonStrafeRightResource import TouchButtonStrafeRightResource
+# from org.allbinary.input.motion.button.TouchButtonTurnLeftResource import TouchButtonTurnLeftResource
+# from org.allbinary.input.motion.button.TouchButtonTurnRightResource import TouchButtonTurnRightResource
+# from org.allbinary.input.motion.button.TouchButtonUpResource import TouchButtonUpResource
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
 
 

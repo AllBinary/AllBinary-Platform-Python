@@ -31,12 +31,14 @@ class AdvancedRTSPlayerLayerInterface(RTSPlayerLayerInterface):
     
 
     def getGameType(self) -> GameType:
+        from org.allbinary.game.GameType import GameType
         raise NotImplementedError()
     
 
     def getDecalBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise NotImplementedError()
-from org.allbinary.game.GameType import GameType
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.game.GameType import GameType
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

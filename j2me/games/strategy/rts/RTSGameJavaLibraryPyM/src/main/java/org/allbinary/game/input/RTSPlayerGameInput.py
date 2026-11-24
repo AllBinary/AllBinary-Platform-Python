@@ -21,6 +21,15 @@ from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 class RTSPlayerGameInput(PlayerGameInput):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
+        from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
         self.removeInputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
         self.inputList: BasicArrayList = None
@@ -37,7 +46,14 @@ class RTSPlayerGameInput(PlayerGameInput):
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas, inputList: BasicArrayList, playerInputId: int, towerInfoPaintable: RTSLayerInfoPaintable, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerPositionFinderInterface: LayerPositionFinderInterface, selectRTSLayerVisitorFactoryInterface: SelectRTSLayerVisitorFactoryInterface) -> None:
         from org.allbinary.game.input.SelectedRTSLayersPlayerGameInput import SelectedRTSLayersPlayerGameInput
-        from org.allbinary.game.input.ScrollMapPlayerGameInput import ScrollMapPlayerGameInput
+        from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().__init__(inputList, BasicArrayListD(), playerInputId)
         self._init_fields()
         self.initInputProcessors()
@@ -56,12 +72,15 @@ class RTSPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         self.selectedRTSLayerPlayerGameInput.setAllBinaryGameLayerManager(allBinaryGameLayerManager)
         if self.selectedRtsFormInput != NullRTSFormInputFactory.getInstance():
             self.selectedRtsFormInput.setAllBinaryGameLayerManager(allBinaryGameLayerManager)
     
 
     def onDisplayChangeEvent(self, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
         try:
             self.logUtil.putF(self.commonStrings.START, self, "onDisplayChangeEvent")
             self.getRTSLayerInfoPaintable().update()
@@ -71,11 +90,13 @@ class RTSPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def left(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         self.rtsPlayerLayerInterface.getCurrentScrollSelectionForm().processInputKey(Canvas.LEFT)
     
 
     # throws Exception
     def right(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         self.rtsPlayerLayerInterface.getCurrentScrollSelectionForm().processInputKey(Canvas.RIGHT)
     
 
@@ -83,8 +104,7 @@ class RTSPlayerGameInput(PlayerGameInput):
         from org.allbinary.game.input.RTSPlayerLeftGameInputProcessor import RTSPlayerLeftGameInputProcessor
         from org.allbinary.game.input.RTSPlayerRightGameInputProcessor import RTSPlayerRightGameInputProcessor
         from org.allbinary.game.input.RTSPlayerFireGameInputProcessor import RTSPlayerFireGameInputProcessor
-        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
-        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
+        from javax.microedition.lcdui.Canvas import Canvas
         self.inputProcessorArray[Canvas.LEFT] = RTSPlayerLeftGameInputProcessor(self)
         self.inputProcessorArray[Canvas.KEY_NUM0] = self.inputProcessorArray[Canvas.LEFT]
         self.inputProcessorArray[Canvas.RIGHT] = RTSPlayerRightGameInputProcessor(self)
@@ -102,6 +122,8 @@ class RTSPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def processInput(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         try:
             self.processMotionInput(layerManager)
             size: int = self.inputList.size()
@@ -123,11 +145,25 @@ class RTSPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def processMotionInput(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def select(self, motionGestureEvent: MotionGestureEvent) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+        from org.allbinary.media.audio.SelectSound import SelectSound
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.string.CommonLabels import CommonLabels
         point: GPoint = motionGestureEvent.getCurrentPoint()
         geographicMapCompositeInterface: GeographicMapCompositeInterface = self.gameCanvas.getLayerManager()
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -151,10 +187,22 @@ class RTSPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def setSelectedRTSLayer(self, rtsLayer: CollidableDestroyableDamageableLayer, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         self.getSelectedBuildingPlayerGameInput().setSelectedRTSLayer(rtsLayer)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         geographicMapCellPosition: GeographicMapCellPosition = self.getSelectedRtsFormInput().getSelectedGeographicCellPosition()
         geographicMapCompositeInterface: GeographicMapCompositeInterface = self.gameCanvas.getLayerManager()
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -185,27 +233,35 @@ class RTSPlayerGameInput(PlayerGameInput):
     
 
     def getSelectedRtsFormInput(self) -> RTSFormInput:
+        from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
         return self.selectedRtsFormInput
     
 
     def setSelectedRtsFormInput(self, selectedRtsFormInput: RTSFormInput) -> None:
+        from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append("RTSFormInput: ").append(StringUtil.getInstance().toString(selectedRtsFormInput))), self, "setSelectedRtsFormInput")
         self.selectedRtsFormInput = selectedRtsFormInput
     
 
     def getRtsPlayerLayerInterface(self) -> RTSPlayerLayerInterface:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
         return self.rtsPlayerLayerInterface
     
 
     def getRTSLayerInfoPaintable(self) -> RTSLayerInfoPaintable:
+        from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
         return self.towerInfoPaintable
     
 
     def getMotionGestureInputList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.motionGestureInputList
     
 
     def getGameCanvas(self) -> AllBinaryGameCanvas:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         return self.gameCanvas
     
 
@@ -217,36 +273,35 @@ class RTSPlayerGameInput(PlayerGameInput):
         return self.scrollPlayerGameInput
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-from org.allbinary.media.audio.SelectSound import SelectSound
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+# from org.allbinary.media.audio.SelectSound import SelectSound
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

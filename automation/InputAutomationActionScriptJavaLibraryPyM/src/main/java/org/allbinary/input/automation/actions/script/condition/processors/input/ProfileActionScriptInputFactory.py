@@ -31,6 +31,8 @@ class ProfileActionScriptInputFactory:
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInput import MouseActionScriptInput
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInput import KeyboardActionScriptInput
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
         profileActionScriptInputInterface: ProfileActionScriptInputInterface = None
         if DomSearchHelper.getNodeNoThrow(KeyboardActionScriptInputData.NAME, node.getChildNodes()) is not None:
             profileActionScriptInputInterface = KeyboardActionScriptInput(node)
@@ -39,7 +41,7 @@ class ProfileActionScriptInputFactory:
         else:
             raise Exception("No Such ActionScript Input")
         return profileActionScriptInputInterface
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.w3c.dom.Node import Node
 
 

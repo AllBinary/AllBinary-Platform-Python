@@ -21,6 +21,8 @@ from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface im
 class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.avoidVector: BasicArrayList = None
         self.maxNonMatchingPixelDeltas: int = 0
@@ -28,20 +30,26 @@ class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
     
 
     def __init__(self, doImageComparisonEveryNthFrame: int) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.doImageComparisonEveryNthFrame = doImageComparisonEveryNthFrame
         self.setAvoidVector(BasicArrayListD())
     
 
     def getAvoidVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.avoidVector
     
 
     def isColorAllowed(self, frame: int, point: GPoint, color: Color) -> bool:
+        from org.allbinary.graphics.GPoint import GPoint
         raise RuntimeError()
     
 
-    def isCollisionWithAvoidRectangles(self, rectangle: Rectangle) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def isCollisionWithAvoidRectangles_j1_1(self, rectangle: Rectangle) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.collision.RectangleCollisionUtil import RectangleCollisionUtil
         isCollsionWithAvoidRectangles: bool = False
         avoidVector: BasicArrayList = self.getAvoidVector()
         size: int = avoidVector.size()
@@ -52,8 +60,11 @@ class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
         return isCollsionWithAvoidRectangles
     
 
-    # Java overloaded method: Python keeps the last definition
-    def isCollisionWithAvoidRectangles(self, point: GPoint) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def isCollisionWithAvoidRectangles_j1_2(self, point: GPoint) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.collision.RectangleCollisionUtil import RectangleCollisionUtil
+        from org.allbinary.graphics.GPoint import GPoint
         isCollsionWithAvoidRectangles: bool = False
         avoidVector: BasicArrayList = self.getAvoidVector()
         size: int = avoidVector.size()
@@ -63,9 +74,17 @@ class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
                 isCollsionWithAvoidRectangles = True
                 break
         return isCollsionWithAvoidRectangles
+
+    def isCollisionWithAvoidRectangles(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.isCollisionWithAvoidRectangles_j1_1(*args)
+        if len(args) == 1:
+            return self.isCollisionWithAvoidRectangles_j1_2(*args)
+        return getattr(self, "isCollisionWithAvoidRectangles_j" + str(len(args)))(*args)
     
 
     def setAvoidVector(self, avoidVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.avoidVector = avoidVector
     
 
@@ -92,6 +111,7 @@ class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
     
 
     def log(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         avoidVector: BasicArrayList = self.getAvoidVector()
         size: int = avoidVector.size()
         for index in range(0, size):
@@ -100,10 +120,10 @@ class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
 # from java.awt.Color import Color
 # from java.awt.Rectangle import Rectangle
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.collision.RectangleCollisionUtil import RectangleCollisionUtil
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.collision.RectangleCollisionUtil import RectangleCollisionUtil
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

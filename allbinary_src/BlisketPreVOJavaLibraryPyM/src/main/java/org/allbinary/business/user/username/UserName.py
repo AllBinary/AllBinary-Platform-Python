@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class UserName:
     instance: UserName = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.userName: str = None
 
@@ -40,16 +42,20 @@ class UserName:
         self._init_fields()
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserData import UserData
         self._init_fields()
         self.userName = hashMap.get(UserData.USERNAME)
     
 
-    def isValid(self) -> bool:
+    def isValid_j0(self) -> bool:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.isValid(self.userName)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, "isUserNameValid()", e)
             return False
     
@@ -58,38 +64,54 @@ class UserName:
         return self.userName
     
 
-    # Java overloaded method: Python keeps the last definition
-    def isValid(self, aUserName: str) -> bool:
+    def isValid_j1(self, aUserName: str) -> bool:
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             booleanFactory: BooleanFactory = BooleanFactory.getInstance()
             valid: bool = booleanFactory.TRUE
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VALIDATION):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATION):
                 self.logUtil.putF("UserName: " + aUserName, self, commonStrings.IS_VALID)
             if not StringValidationUtil.getInstance().isValidRequired(aUserName, 5, UserData.MAXLEN):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VALIDATION):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATION):
                     self.logUtil.putF("UserName is invalid", self, commonStrings.IS_VALID)
                 valid = booleanFactory.FALSE
             return valid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, commonStrings.IS_VALID, e)
             return False
+
+    def isValid(self, *args):
+        return getattr(self, "isValid_j" + str(len(args)))(*args)
     
 
     @staticmethod
     def getValidationInfo(aUserName: str) -> str:
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if not StringValidationUtil.getInstance().isValidRequired(aUserName, 5, UserData.MAXLEN):
             return "Please enter a User Name with more than 5 characters.<br/>"
         return StringUtil.getInstance().EMPTY_STRING
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-UserName.instance = UserName()
+def _UserName_instance() -> object:
+    return UserName()
+
+lazy_static(UserName, "instance", _UserName_instance)
 

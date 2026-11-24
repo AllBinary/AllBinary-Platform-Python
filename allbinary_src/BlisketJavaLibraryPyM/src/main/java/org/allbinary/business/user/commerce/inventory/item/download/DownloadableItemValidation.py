@@ -21,6 +21,7 @@ from org.allbinary.logic.control.validate.Validation import Validation
 class DownloadableItemValidation(Validation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.downloadableItem: DownloadableItem = None
     
@@ -32,6 +33,10 @@ class DownloadableItemValidation(Validation):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.downloadableItem.getId() is None or self.downloadableItem.getId().length() < 1 or self.downloadableItem.getId().length() > AbSqlData.MAXNUM:
                 return False
@@ -67,12 +72,17 @@ class DownloadableItemValidation(Validation):
                     return False
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             if self.downloadableItem.getId() is None or self.downloadableItem.getId().length() < 1 or self.downloadableItem.getId().length() > AbSqlData.MAXNUM:
@@ -127,22 +137,27 @@ class DownloadableItemValidation(Validation):
                     stringBuffer.append(" and > 0 digits.<br/>")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

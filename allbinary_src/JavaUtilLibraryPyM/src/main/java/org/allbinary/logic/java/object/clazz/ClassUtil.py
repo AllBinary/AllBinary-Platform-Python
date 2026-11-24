@@ -24,23 +24,28 @@ class ClassUtil:
         pass
     
 
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def viewAll(anyType: object, lineBreak: str) -> str:
+    def viewAll_j2_1(anyType: object, lineBreak: str) -> str:
         if anyType is not None:
             return ClassUtil.viewAll(type(anyType), lineBreak)
         else:
             return "Object Null"
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def viewAll(myClass: type, lineBreak: str) -> str:
+    def viewAll_j2_2(myClass: type, lineBreak: str) -> str:
+        from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
+        from org.allbinary.logic.java.anyType.InterfaceUtil import InterfaceUtil
+        from org.allbinary.logic.java.anyType.MethodUtil import MethodUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if myClass is not None:
             stringBuffer: StringMaker = StringMaker()
             classes: list[type] = myClass.getClasses()
             stringBuffer.append(lineBreak)
             stringBuffer.append("Class: ")
-            stringBuffer.append(myClass.getName())
+            stringBuffer.append(myClass.__module__ + "." + myClass.__qualname__)
             stringBuffer.append(" uses ")
             stringBuffer.appendint(len(classes))
             stringBuffer.append(" other classes")
@@ -60,9 +65,17 @@ class ClassUtil:
             return str(stringBuffer)
         else:
             return "Class Null"
-from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
-from org.allbinary.logic.java.anyType.InterfaceUtil import InterfaceUtil
-from org.allbinary.logic.java.anyType.MethodUtil import MethodUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+
+    @staticmethod
+    def viewAll(*args):
+        if len(args) == 2 and True and (args[1] is None or isinstance(args[1], str)):
+            return ClassUtil.viewAll_j2_1(*args)
+        if len(args) == 2:
+            return ClassUtil.viewAll_j2_2(*args)
+        return getattr(ClassUtil, "viewAll_j" + str(len(args)))(*args)
+# from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
+# from org.allbinary.logic.java.anyType.InterfaceUtil import InterfaceUtil
+# from org.allbinary.logic.java.anyType.MethodUtil import MethodUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

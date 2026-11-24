@@ -18,7 +18,6 @@ from __future__ import annotations
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
-#Was a nested class of ProgressCanvas. It paints the gauge of its ProgressCanvas.
 class ProgressPaintable(Paintable):
 
     def _init_fields(self) -> None:

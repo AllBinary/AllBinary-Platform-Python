@@ -95,6 +95,7 @@ class BasicStoreFrontInterface:
 
     # throws Exception
     def getSubStores(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -148,6 +149,6 @@ class BasicStoreFrontInterface:
 
     def getLastModified(self) -> str:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GeographicMapDirectionUtil:
@@ -37,6 +38,8 @@ class GeographicMapDirectionUtil:
 
     # throws Exception
     def getDirectionFromCellPositionToAdjacentCellPosition(self, fromGeographicMapCellPosition: GeographicMapCellPosition, toGeographicMapCellPosition: GeographicMapCellPosition) -> Direction:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
         fromColumn: int = fromGeographicMapCellPosition.getColumn()
         fromRow: int = fromGeographicMapCellPosition.getRow()
         goColumn: int = toGeographicMapCellPosition.getColumn()
@@ -59,6 +62,8 @@ class GeographicMapDirectionUtil:
 
     # throws Exception
     def getEightDirectionFromCellPositionToAdjacentCellPosition(self, fromGeographicMapCellPosition: GeographicMapCellPosition, toGeographicMapCellPosition: GeographicMapCellPosition) -> Direction:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
         fromColumn: int = fromGeographicMapCellPosition.getColumn()
         fromRow: int = fromGeographicMapCellPosition.getRow()
         goColumn: int = toGeographicMapCellPosition.getColumn()
@@ -92,6 +97,10 @@ class GeographicMapDirectionUtil:
 
     # throws Exception
     def getDirectionFromCellPositionToCellPosition(self, fromGeographicMapCellPosition: GeographicMapCellPosition, toGeographicMapCellPosition: GeographicMapCellPosition) -> Direction:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.graphics.CellPosition import CellPosition
         fromColumn: int = fromGeographicMapCellPosition.getColumn()
         fromRow: int = fromGeographicMapCellPosition.getRow()
         goColumn: int = toGeographicMapCellPosition.getColumn()
@@ -113,6 +122,10 @@ class GeographicMapDirectionUtil:
 
     # throws Exception
     def getEightDirectionFromCellPositionToCellPosition(self, fromGeographicMapCellPosition: GeographicMapCellPosition, toGeographicMapCellPosition: GeographicMapCellPosition) -> Direction:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.graphics.CellPosition import CellPosition
         fromColumn: int = fromGeographicMapCellPosition.getColumn()
         fromRow: int = fromGeographicMapCellPosition.getRow()
         goColumn: int = toGeographicMapCellPosition.getColumn()
@@ -145,11 +158,14 @@ class GeographicMapDirectionUtil:
         stringBuffer.append(self.EQUAL)
         stringBuffer.append(CellPosition.toStringCellPosition(toGeographicMapCellPosition))
         raise Exception(str(stringBuffer))
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.graphics.CellPosition import CellPosition
 
 
-GeographicMapDirectionUtil.instance = GeographicMapDirectionUtil()
+def _GeographicMapDirectionUtil_instance() -> object:
+    return GeographicMapDirectionUtil()
+
+lazy_static(GeographicMapDirectionUtil, "instance", _GeographicMapDirectionUtil_instance)
 

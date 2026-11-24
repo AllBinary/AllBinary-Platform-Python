@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OrderProcessorUtil:
@@ -34,16 +35,22 @@ class OrderProcessorUtil:
 
     # throws Exception
     def process(self, userName: str, order: Order) -> str:
+        from org.allbinary.data.generator.OrderIdGenerator import OrderIdGenerator
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntity import OrderHistoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntity import OrderItemsEntity
         orderItems: OrderItemsEntity = OrderItemsEntity()
         orderHistory: OrderHistoryEntity = OrderHistoryEntity()
         order.setId(OrderIdGenerator().getNext())
         orderItems.insert(userName, order)
         orderHistory.insert(userName, order)
         return self.ORDER_PROCESSED
-from org.allbinary.data.generator.OrderIdGenerator import OrderIdGenerator
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntity import OrderHistoryEntity
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntity import OrderItemsEntity
+# from org.allbinary.data.generator.OrderIdGenerator import OrderIdGenerator
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntity import OrderHistoryEntity
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntity import OrderItemsEntity
 
 
-OrderProcessorUtil.instance = OrderProcessorUtil()
+def _OrderProcessorUtil_instance() -> object:
+    return OrderProcessorUtil()
+
+lazy_static(OrderProcessorUtil, "instance", _OrderProcessorUtil_instance)
 

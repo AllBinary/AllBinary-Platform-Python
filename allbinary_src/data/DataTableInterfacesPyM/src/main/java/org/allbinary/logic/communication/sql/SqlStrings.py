@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SqlStrings:
     instance: SqlStrings = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.CREATE_DATABASE: str = "CREATE DATABASE "
         self.DROP_TABLE: str = "DROP TABLE "
         self.CREATE_TABLE: str = "CREATE TABLE "
@@ -52,8 +54,11 @@ class SqlStrings:
     @staticmethod
     def getInstance() -> SqlStrings:
         return SqlStrings.instance
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-SqlStrings.instance = SqlStrings()
+def _SqlStrings_instance() -> object:
+    return SqlStrings()
+
+lazy_static(SqlStrings, "instance", _SqlStrings_instance)
 

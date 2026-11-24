@@ -21,16 +21,19 @@ from admin.tags.TableTag import TableTag
 class BasicOptionItemsTag(TableTag):
 
     def _init_fields(self) -> None:
-        self.propertiesHashMap: dict = None
+        from java.util.HashMap import HashMap
+        self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.BasicOptionItemsHelperFactory import BasicOptionItemsHelperFactory
+        from admin.taghelpers.BasicOptionItemsRequestHelperFactory import BasicOptionItemsRequestHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(BasicOptionItemsHelperFactory())
         self.setTagRequestHelperFactory(BasicOptionItemsRequestHelperFactory())
 # from java.util.HashMap import HashMap
-from admin.taghelpers.BasicOptionItemsHelperFactory import BasicOptionItemsHelperFactory
-from admin.taghelpers.BasicOptionItemsRequestHelperFactory import BasicOptionItemsRequestHelperFactory
+# from admin.taghelpers.BasicOptionItemsHelperFactory import BasicOptionItemsHelperFactory
+# from admin.taghelpers.BasicOptionItemsRequestHelperFactory import BasicOptionItemsRequestHelperFactory
 
 

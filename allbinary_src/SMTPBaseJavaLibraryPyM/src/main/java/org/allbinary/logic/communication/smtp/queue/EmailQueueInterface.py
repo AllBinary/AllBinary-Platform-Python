@@ -23,12 +23,14 @@ class EmailQueueInterface:
 
     # throws Exception
     def offer(self, emailInterface: EmailInterface) -> bool:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def remove(self) -> EmailInterface:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         raise NotImplementedError()
-from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+# from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
 
 

@@ -20,6 +20,9 @@ from __future__ import annotations
 class LineReader:
 
     def _init_fields(self) -> None:
+        from java.io.DataInputStream import DataInputStream
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.fileName: str = None
@@ -30,7 +33,6 @@ class LineReader:
     
 
     def __init__(self, fileName: str) -> None:
-        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
         self._init_fields()
         try:
             bytes: list[int] = [0] * (100000)
@@ -45,6 +47,7 @@ class LineReader:
     
 
     def hasNext(self) -> bool:
+        from org.allbinary.string.CommonSeps import CommonSeps
         try:
             nextIndex: int = self.string.find(CommonSeps.getInstance().NEW_LINE, self.index)
             if nextIndex == -1:
@@ -59,6 +62,7 @@ class LineReader:
 
     # throws Exception
     def next(self) -> str:
+        from org.allbinary.string.CommonSeps import CommonSeps
         try:
             nextIndex: int = self.string.find(CommonSeps.getInstance().NEW_LINE, self.index)
             if nextIndex == -1:
@@ -72,8 +76,8 @@ class LineReader:
                 pass
             raise e
 # from java.io.DataInputStream import DataInputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.animation.IndexedAnimationInterface import IndexedAnimationInterface
 
 
 # Java interface
-class VectorAnimationInterface(IndexedAnimationInterface, ColorCompositeInterface):
+class VectorAnimationInterface(*java_bases(IndexedAnimationInterface, ColorCompositeInterface)):
     
 
     def getPoints(self, frame: int) -> list[list[int]]:

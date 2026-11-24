@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.gui.swing.workers.SwingWorker import SwingWorker
+# from javax.swing.SwingWorker import SwingWorker
 
 
 class JListSwingWorker(SwingWorker):
@@ -54,6 +54,7 @@ class JListSwingWorker(SwingWorker):
 
     def setListModel(self, listModel: ListModel) -> None:
         self.listModel = listModel
-# from javax.swing import *
+# from javax.swing.JList import JList
+# from javax.swing.ListModel import ListModel
 
 

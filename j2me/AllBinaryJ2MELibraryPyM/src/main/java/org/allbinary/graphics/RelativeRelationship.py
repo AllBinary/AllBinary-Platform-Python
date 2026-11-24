@@ -63,7 +63,6 @@ class RelativeRelationship:
 
 
 def _RelativeRelationship_NULL_RELATIVE_RELATIONSHIP() -> object:
-    from org.allbinary.graphics.PointFactory import PointFactory
     from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
     return RelativeRelationship(PointFactory.getInstance().ZERO_ZERO, BasicArrayListUtil.getInstance().getImmutableInstance())
 

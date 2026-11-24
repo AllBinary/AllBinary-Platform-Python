@@ -22,6 +22,7 @@ class AutoSearchValidationInventoryView(InventorySearch):
     
 
     def __init__(self, searchRequest: SearchRequest) -> None:
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         super().__init__(searchRequest)
     
 
@@ -30,17 +31,20 @@ class AutoSearchValidationInventoryView(InventorySearch):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     def validationInfo(self) -> str:
         return None
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

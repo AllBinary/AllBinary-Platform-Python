@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LinePathAnimation:
@@ -27,11 +28,17 @@ class LinePathAnimation:
     
 
     def paint(self, graphics: Graphics, point: GPoint, nextPoint: GPoint, tiledLayer: Layer) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.Layer import Layer
         graphics.drawLine(nextPoint.getX(), nextPoint.getY(), point.getX(), point.getY())
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.layer.Layer import Layer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.layer.Layer import Layer
 
 
-LinePathAnimation.instance = LinePathAnimation()
+def _LinePathAnimation_instance() -> object:
+    return LinePathAnimation()
+
+lazy_static(LinePathAnimation, "instance", _LinePathAnimation_instance)
 

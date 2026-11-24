@@ -27,9 +27,10 @@ class InputAutomationGenericModuleBundleActivator(InputAutomationModuleBundleAct
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.input.automation.module.generic.InputAutomationGenericModuleServiceFactory import InputAutomationGenericModuleServiceFactory
         inputAutomationGenericModuleServiceFactory: InputAutomationGenericModuleServiceFactory = InputAutomationGenericModuleServiceFactory.getInstance()
         self.setInputAutomationModuleInterface(inputAutomationGenericModuleServiceFactory.getInputAutomationModuleInterfaceArray())
         self.setServiceFactory(inputAutomationGenericModuleServiceFactory)
-from org.allbinary.input.automation.module.generic.InputAutomationGenericModuleServiceFactory import InputAutomationGenericModuleServiceFactory
+# from org.allbinary.input.automation.module.generic.InputAutomationGenericModuleServiceFactory import InputAutomationGenericModuleServiceFactory
 
 

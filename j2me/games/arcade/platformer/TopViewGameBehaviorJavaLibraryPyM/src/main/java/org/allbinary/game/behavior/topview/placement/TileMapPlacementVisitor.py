@@ -21,7 +21,8 @@ class TileMapPlacementVisitor:
     
 
     def visit(self, lastMap: TiledMap, mapData: list[list[int]]) -> None:
+        from org.mapeditor.core.TiledMap import TiledMap
         pass
-from org.mapeditor.core.TiledMap import TiledMap
+# from org.mapeditor.core.TiledMap import TiledMap
 
 

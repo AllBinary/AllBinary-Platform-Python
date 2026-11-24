@@ -103,7 +103,6 @@ class BasicTouchInputFactory:
 # from org.allbinary.string.CommonLabels import CommonLabels
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
 
 
 def _BasicTouchInputFactory_instance() -> object:

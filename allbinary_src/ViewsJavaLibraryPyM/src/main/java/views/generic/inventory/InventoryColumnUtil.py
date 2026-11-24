@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InventoryColumnUtil:
     instance: InventoryColumnUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
 
@@ -34,24 +37,32 @@ class InventoryColumnUtil:
     
 
     def getColumnWhereLike(self, inventoryEntity: InventoryEntity, category: str, column: str) -> BasicArrayList:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self.logUtil.putF("Start Category: " + category, self, "getKeywords")
         keywords: BasicArrayList = BasicArrayListD()
         vectorOfHashMaps: BasicArrayList = inventoryEntity.getAllRows()
         size: int = vectorOfHashMaps.size()
         for index in range(0, size):
-            hashMap: dict = vectorOfHashMaps.get(index)
+            hashMap: HashMap = vectorOfHashMaps.get(index)
             categoryName: str = hashMap.get(self.basicItemData.CATEGORY)
             if not StringValidationUtil.getInstance().isEmpty(categoryName) and categoryName.startswith(category):
                 keywords.add(hashMap.get(column))
         return keywords
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 
 
-InventoryColumnUtil.instance = InventoryColumnUtil()
+def _InventoryColumnUtil_instance() -> object:
+    return InventoryColumnUtil()
+
+lazy_static(InventoryColumnUtil, "instance", _InventoryColumnUtil_instance)
 

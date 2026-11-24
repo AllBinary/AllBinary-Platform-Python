@@ -22,6 +22,9 @@ from admin.taghelpers.TagHelper import TagHelper
 class AuthenticationHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.role.UserRole import UserRole
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.weblisketSession: WeblisketSession = None
         self.authenticated: str = None
@@ -32,21 +35,30 @@ class AuthenticationHelper(TagHelper):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        else:
+            self._constructor2_2(*args)
     
 
-    def _constructor2(self, hashMap: dict, pageContext: PageContext) -> None:
-        self._constructor2(hashMap, pageContext.getRequest())
+    def _constructor2_1(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        self.__jconstructor2(hashMap, pageContext.getRequest())
     
 
-    def _constructor2(self, hashMap: dict, httpServletRequest: HttpServletRequest) -> None:
+    def _constructor2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
         self._init_fields()
         self.weblisketSession = WeblisketSession(hashMap, httpServletRequest)
         self.getFormData()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
             self.logUtil.putF(self.outputSessionInfo(), self, self.commonStrings.CONSTRUCTOR)
     
 
@@ -61,23 +73,28 @@ class AuthenticationHelper(TagHelper):
 
     # throws Exception
     def invalidateSession(self) -> int:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.weblisketSession.clear()
             return int(TagSupport.EVAL_BODY_INCLUDE)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "invalidateSession()", e)
             return None
     
 
     def isSessionOld(self) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if self.role is not None:
             timeCreated: int = self.weblisketSession.getCreationTime()
             sessionTimout: int = self.role.getSessionTimeout()
             calendar: datetime.datetime = datetime.datetime.now()
             timeFirst: int = calendar.getTimeInMillis() - sessionTimout
             if timeFirst > timeCreated:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("Session Is Old - Timeout: ")
                     stringBuffer.appendlong(sessionTimout)
@@ -88,19 +105,22 @@ class AuthenticationHelper(TagHelper):
                     self.logUtil.putF(str(stringBuffer), self, "isSessionOld()")
                 return True
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                 self.logUtil.putF("Role Is Not In Session", self, "isSessionOld()")
         return self.isRarelyUsedSession()
     
 
     def isRarelyUsedSession(self) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if self.role is not None:
             timeCreated: int = self.weblisketSession.getCreationTime()
             lastAccess: int = self.weblisketSession.getLastAccessedTime()
             inactivityAllowed: int = self.role.getSessionInactivityTimeout()
             calendar: datetime.datetime = datetime.datetime.now()
             timeFirst: int = calendar.getTimeInMillis() - lastAccess
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Session Is Rarely Used - Timeout: ")
                 stringBuffer.appendlong(lastAccess)
@@ -110,24 +130,30 @@ class AuthenticationHelper(TagHelper):
                 stringBuffer.appendlong(inactivityAllowed)
                 self.logUtil.putF(str(stringBuffer), self, "isRarelyUsedSession()")
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                 self.logUtil.putF("Role Is Not In Session", self, "isRarelyUsedSession()")
         return False
     
 
     def validRole(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Trying New login<p/>")
             return str(stringBuffer)
         except Exception as e:
             error: str = "Failed to set valid role"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "validRole()", e)
             return error
     
 
     def invalidRole(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.weblisketSession.setAuthenticated(False)
             stringBuffer: StringMaker = StringMaker()
@@ -136,13 +162,14 @@ class AuthenticationHelper(TagHelper):
             return str(stringBuffer)
         except Exception as e:
             error: str = "Failed to set role invalid"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "invalidRole()", e)
             return error
     
 
     # throws Exception
     def isAuthenticated(self) -> bool:
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
         if BooleanUtil.getInstance().getFromString(self.authenticated):
             return True
         else:
@@ -150,6 +177,14 @@ class AuthenticationHelper(TagHelper):
     
 
     def isAuthenticationSessionValid(self, roles: BasicArrayList) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+        from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.role is not None:
                 if self.isAuthenticated():
@@ -168,11 +203,11 @@ class AuthenticationHelper(TagHelper):
                                 return True
                     return False
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                     self.logUtil.putF("Role Is Not In Session", self, "isAuthenticationSessionValid()")
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isAuthenticatedSessionValid()", e)
             return False
     
@@ -185,14 +220,21 @@ class AuthenticationHelper(TagHelper):
     
 
     def processIfNewLogin(self, userName: str, password: str) -> bool:
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.putF("Starting: " + userName, self, "processIfNewLogin()")
             if userName is not None and ((userName > StringUtil.getInstance().EMPTY_STRING) - (userName < StringUtil.getInstance().EMPTY_STRING)) != 0 and password is not None and ((password > StringUtil.getInstance().EMPTY_STRING) - (password < StringUtil.getInstance().EMPTY_STRING)) != 0:
                 login: str = None
                 userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
                 login = userEntityInterface.login(userName, password)
-                if ((login > self.GLOBALS2.LOGINSUCCESS) - (login < self.GLOBALS2.LOGINSUCCESS)) == 0:
+                if ((login > GLOBALS2.LOGINSUCCESS) - (login < GLOBALS2.LOGINSUCCESS)) == 0:
                     userInterface: UserInterface = userEntityInterface.getUser(userName)
                     if userInterface.isSessionValid():
                         self.weblisketSession.setAttempts(int(0))
@@ -202,12 +244,16 @@ class AuthenticationHelper(TagHelper):
             self.nextAttempt()
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "processIfNewLogin()", e)
             return False
     
 
     def processInvalidation(self) -> bool:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if BooleanUtil.getInstance().getFromString(self.timeout):
                 self.invalidateSession()
@@ -216,12 +262,13 @@ class AuthenticationHelper(TagHelper):
                 self.weblisketSession.setTimeout(BooleanFactory.getInstance().TRUE_STRING)
                 return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATIONERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "processInvalidation()", e)
             return False
     
 
     def outputSessionInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             calendar: datetime.datetime = datetime.datetime.now()
             timeCreated: int = self.weblisketSession.getCreationTime()
@@ -253,26 +300,29 @@ class AuthenticationHelper(TagHelper):
     
 
     def getRole(self) -> UserRole:
+        from org.allbinary.business.user.role.UserRole import UserRole
         return self.role
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
 # from javax.servlet.jsp.tagext.TagSupport import TagSupport
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
-from org.allbinary.business.user.role.UserRole import UserRole
-from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
-from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
-from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+# from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
+# from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+# from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

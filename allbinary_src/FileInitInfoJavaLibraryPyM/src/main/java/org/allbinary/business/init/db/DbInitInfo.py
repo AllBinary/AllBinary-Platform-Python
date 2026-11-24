@@ -21,11 +21,15 @@ from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
 class DbInitInfo(DbConnectionInfo):
 
     def _init_fields(self) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.logic.communication.http.HttpData import HttpData
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.directory: Directory = Directory.getInstance()
         self.httpData: HttpData = HttpData.getInstance()
         self.GET_URL: str = "getUrl"
-        self.PACKAGE: str = self.FREEBLISKET_PATH_GLOBALS.getInstance().DBINITPATH
+        self.PACKAGE: str = FREEBLISKET_PATH_GLOBALS.getInstance().DBINITPATH
         self.initFileName: str = None
         self.hasRead: bool = False
     
@@ -41,6 +45,9 @@ class DbInitInfo(DbConnectionInfo):
     
 
     def getUrl(self) -> str:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         url: str = super().getUrl()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
             PreLogUtil.put(str(self.httpData.URL_LABEL) + url, self, self.GET_URL)
@@ -49,10 +56,21 @@ class DbInitInfo(DbConnectionInfo):
 
     # throws Exception
     def write(self) -> None:
-        from org.allbinary.business.init.db.FILEABPATH import FILEABPATH
-        PATH: AbPath = AbPath(str(self.URLGLOBALS.getWebappPath()) + self.PACKAGE, StringUtil.getInstance().EMPTY_STRING)
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+        PATH: AbPath = AbPath(str(URLGLOBALS.getWebappPath()) + self.PACKAGE, StringUtil.getInstance().EMPTY_STRING)
         self.directory.create(PATH)
-        FILEABPATH: AbPath = AbPath(str(self.URLGLOBALS.getWebappPath()) + self.PACKAGE, self.initFileName)
+        FILEABPATH: AbPath = AbPath(str(URLGLOBALS.getWebappPath()) + self.PACKAGE, self.initFileName)
         try:
             newFile: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
             newFile.createNewFile()
@@ -82,13 +100,23 @@ class DbInitInfo(DbConnectionInfo):
 
     # throws Exception
     def load(self) -> None:
-        from org.allbinary.business.init.db.FILEABPATH import FILEABPATH
-        from org.allbinary.business.init.db.FILEABPATH import FILEABPATH
-        FILEABPATH: AbPath = AbPath(str(self.URLGLOBALS.getWebappPath()) + self.PACKAGE, self.initFileName)
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+        FILEABPATH: AbPath = AbPath(str(URLGLOBALS.getWebappPath()) + self.PACKAGE, self.initFileName)
         try:
             file: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
             if file.isFile():
-                iFile: AbFileInputStream = AbFileInputStream(file)
+                iFile: AbFileInputStream = AbFileInputStream.createFromAbFile(file)
                 iData: AbDataInputStream = AbDataInputStream(iFile)
                 try:
                     decryptedJdbcDriver: str = str(DatabaseEncoder.decode(iData.readUTF()))
@@ -122,6 +150,9 @@ class DbInitInfo(DbConnectionInfo):
     
 
     def updateIfNeeded(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if not self.hasRead:
                 self.hasRead = True
@@ -132,6 +163,9 @@ class DbInitInfo(DbConnectionInfo):
     
 
     def getName(self) -> str:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.updateIfNeeded()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
             PreLogUtil.put("Name: " + super().getName(), self, "getName")
@@ -139,6 +173,9 @@ class DbInitInfo(DbConnectionInfo):
     
 
     def getUserName(self) -> str:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.updateIfNeeded()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
             PreLogUtil.put("Name: " + str(super().getUserName()), self, "getUserName")
@@ -163,23 +200,23 @@ class DbInitInfo(DbConnectionInfo):
     def getPort(self) -> str:
         self.updateIfNeeded()
         return super().getPort()
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.http.HttpData import HttpData
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
-from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.http.HttpData import HttpData
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+# from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

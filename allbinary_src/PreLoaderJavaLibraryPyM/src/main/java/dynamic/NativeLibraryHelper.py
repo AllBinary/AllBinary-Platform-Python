@@ -29,6 +29,6 @@ class NativeLibraryHelper:
     
 
     def load(self) -> None:
-        System.loadLibrary(self.library)
+        None
 
 

@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.CompleteMotionGestureInputEventListenerInterface import CompleteMotionGestureInputEventListenerInterface
 from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
 
 
-class TouchButtonsPaintableComposite(ProcessPaintable, CompleteMotionGestureInputEventListenerInterface):
+class TouchButtonsPaintableComposite(*java_bases(ProcessPaintable, CompleteMotionGestureInputEventListenerInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface

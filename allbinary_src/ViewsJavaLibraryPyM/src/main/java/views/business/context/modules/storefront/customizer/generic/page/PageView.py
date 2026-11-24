@@ -22,25 +22,33 @@ from views.business.context.modules.storefront.HttpStoreComponentView import Htt
 class PageView(HttpStoreComponentView):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, self.commonStrings.CONSTRUCTOR)
     
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return super().view()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

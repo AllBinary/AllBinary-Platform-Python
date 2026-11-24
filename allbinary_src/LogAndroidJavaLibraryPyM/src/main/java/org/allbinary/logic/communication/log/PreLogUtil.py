@@ -28,11 +28,13 @@ class PreLogUtil:
 
     @staticmethod
     def put(specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         PreLogUtil.putOE(specialMessage, anyType, functionName, NullUtil.getInstance().NULL_OBJECT)
     
 
     @staticmethod
     def putOE(specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         className: str = PreLogUtil.LABEL
         actualClassName: str = type(anyType).__module__ + "." + type(anyType).__qualname__
         if actualClassName is not None:
@@ -43,14 +45,16 @@ class PreLogUtil:
 
     @staticmethod
     def putS(specialMessage: str, className: str, functionName: str) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         PreLogUtil.putSE(specialMessage, className, functionName, NullUtil.getInstance().NULL_OBJECT)
     
 
     @staticmethod
     def putSE(specialMessage: str, className: str, functionName: str, exception: object) -> None:
+        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         message: str = LogFormatUtil.getInstance().get(className, functionName, specialMessage, exception)
         android.util.Log.i(className, message)
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 

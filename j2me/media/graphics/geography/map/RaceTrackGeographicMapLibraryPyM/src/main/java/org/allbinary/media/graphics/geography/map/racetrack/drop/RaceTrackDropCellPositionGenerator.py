@@ -21,6 +21,13 @@ from org.allbinary.media.graphics.geography.map.drop.BaseDropCellPositionGenerat
 class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.NullRaceTrackGeographicMap import NullRaceTrackGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterface import RaceTrackGeographicMapInterface
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.list_: BasicArrayList = BasicArrayListD()
         self.timeDelayHelper: TimeDelayHelper = None
         self.STRAIGHTAWAY: int = 4
@@ -30,6 +37,7 @@ class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
     
 
     def __init__(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         super().__init__()
         self._init_fields()
         self.timeDelayHelper = TimeDelayHelper(10000)
@@ -41,6 +49,9 @@ class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     # throws Exception
     def isDropAllowedAt(self, geographicMapCellPosition: GeographicMapCellPosition) -> bool:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
         raceTrackGeographicMapCellType: RaceTrackGeographicMapCellType = self.raceTrackGeographicMap.getCellTypeAt(geographicMapCellPosition)
         raceTrackGeographicMapCellTypeFactory: RaceTrackGeographicMapCellTypeFactory = self.raceTrackGeographicMapCellTypeFactory
         if raceTrackGeographicMapCellType == raceTrackGeographicMapCellTypeFactory.HORIZONTAL_STRAIGHT_ROAD_CELL_TYPE or raceTrackGeographicMapCellType == raceTrackGeographicMapCellTypeFactory.VERTICAL_STRAIGHT_ROAD_CELL_TYPE:
@@ -50,6 +61,14 @@ class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     # throws Exception
     def update(self, allBinaryGameLayerManager: AllBinaryGameLayerManager, geographicMapInterface: BasicGeographicMap) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
         self.init()
         baseRaceTrackGeographicMap: BaseRaceTrackGeographicMap = geographicMapInterface
         self.raceTrackGeographicMap = baseRaceTrackGeographicMap
@@ -79,6 +98,8 @@ class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     # throws Exception
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.timeDelayHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
             index: int = self.basicArrayListUtil.getRandomIndex(self.list_)
             self.drop(allBinaryLayerManager, index)
@@ -86,24 +107,26 @@ class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     # throws Exception
     def drop(self, allBinaryLayerManager: AllBinaryLayerManager, index: int) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
-from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
-from org.allbinary.media.graphics.geography.map.racetrack.NullRaceTrackGeographicMap import NullRaceTrackGeographicMap
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterface import RaceTrackGeographicMapInterface
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+# from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+# from org.allbinary.media.graphics.geography.map.racetrack.NullRaceTrackGeographicMap import NullRaceTrackGeographicMap
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterface import RaceTrackGeographicMapInterface
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

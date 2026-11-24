@@ -15,22 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.workflow.StoreWorkFlowInterface import StoreWorkFlowInterface
 from workflows.template.data.BasicWorkFlow import BasicWorkFlow
 
 
-class BasicStoreWorkFlow(BasicWorkFlow, StoreWorkFlowInterface):
+class BasicStoreWorkFlow(*java_bases(BasicWorkFlow, StoreWorkFlowInterface)):
     
 
-    def __init__(self, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
         super().__init__(propertiesHashMap, pageContext)
     
 
     # throws Exception
     def getStoreName(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         return self.getPropertiesHashMap().get(StoreFrontData.getInstance().NAME)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
 
 

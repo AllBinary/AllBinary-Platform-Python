@@ -21,6 +21,8 @@ from org.allbinary.media.graphics.geography.map.racetrack.CustomMapGeneratorBase
 class CustomMapGenerator(CustomMapGeneratorBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
         self.customMapArray: list[list[int]] = None
         self.raceTrackGeographicMap: RaceTrackGeographicMap = None
         self.geographicMapCellTypeFactory: GeographicMapCellTypeFactory = None
@@ -50,6 +52,11 @@ class CustomMapGenerator(CustomMapGeneratorBase):
 
     # throws Exception
     def getCustomType(self, column: int, row: int, currentType: int) -> int:
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
         emptyType: int = self.geographicMapCellTypeFactory.getEmptyType()
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = self.raceTrackGeographicMap.getGeographicMapCellPositionFactory()
         cellPosition: CellPosition = geographicMapCellPositionFactory.getAt(column, row)
@@ -58,19 +65,19 @@ class CustomMapGenerator(CustomMapGeneratorBase):
             if layer == AllBinaryLayer.NULL_ALLBINARY_LAYER:
                 return emptyType
             rtsLayer: AdvancedRTSGameLayer = layer
-            if not (rtsLayer.getType() == WaypointLayer.getStaticType()):
+            if not rtsLayer.getType() == WaypointLayer.getStaticType():
                 return emptyType
         return currentType
     
 
     def getCustomMapArray(self) -> list[list[int]]:
         return self.customMapArray
-from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
-from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+# from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
 
 

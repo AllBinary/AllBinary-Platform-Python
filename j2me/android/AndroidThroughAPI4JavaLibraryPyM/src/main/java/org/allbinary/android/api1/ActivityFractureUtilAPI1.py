@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.ActivityFractureUtil import ActivityFractureUtil
 
 
@@ -32,14 +33,20 @@ class ActivityFractureUtilAPI1(ActivityFractureUtil):
 
     # throws Exception
     def process(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
         pass
     
 
     def setFullScreen(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
+        from android.view.WindowManager import WindowManager
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-from android.app.Activity import Activity
-from android.view.WindowManager import WindowManager
+# from android.app.Activity import Activity
+# from android.view.WindowManager import WindowManager
 
 
-ActivityFractureUtilAPI1.instance = ActivityFractureUtilAPI1()
+def _ActivityFractureUtilAPI1_instance() -> object:
+    return ActivityFractureUtilAPI1()
+
+lazy_static(ActivityFractureUtilAPI1, "instance", _ActivityFractureUtilAPI1_instance)
 

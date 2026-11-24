@@ -41,6 +41,8 @@ class GeographicMapCellPositionTracking:
     # throws Exception
     def updateStart(self, gameCanvasInterface: AllBinaryGameCanvasInterface, layer: AllBinaryLayer) -> bool:
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvasInterface import AllBinaryGameCanvasInterface
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         if gameCanvasInterface != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             geographicMapCompositeInterface: GeographicMapCompositeInterface = gameCanvasInterface.getLayerManager()
             geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -64,8 +66,8 @@ class GeographicMapCellPositionTracking:
 
     def getCurrentGeographicMapCellPosition(self) -> GeographicMapCellPosition:
         return self.currentGeographicMapCellPosition
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvasInterface import AllBinaryGameCanvasInterface
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvasInterface import AllBinaryGameCanvasInterface
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
 from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
 

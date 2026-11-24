@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
 
 
@@ -22,6 +23,8 @@ class AbeNoLicense(AbeLicenseInterface):
     abeNoLicense: AbeNoLicense = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.serverVector: BasicArrayList = BasicArrayListD()
     
 
@@ -39,18 +42,22 @@ class AbeNoLicense(AbeLicenseInterface):
     
 
     def getKey(self, keyName: str) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     def getLicenseId(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     def getSpecial(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     def getServers(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.serverVector
     
 
@@ -61,10 +68,13 @@ class AbeNoLicense(AbeLicenseInterface):
     def getLicenseType(self) -> LicenseType:
         from org.allbinary.logic.system.security.licensing.LicenseTypeFactory import LicenseTypeFactory
         return LicenseTypeFactory.getInstance().UNKNOWN
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-AbeNoLicense.abeNoLicense = AbeNoLicense()
+def _AbeNoLicense_abeNoLicense() -> object:
+    return AbeNoLicense()
+
+lazy_static(AbeNoLicense, "abeNoLicense", _AbeNoLicense_abeNoLicense)
 

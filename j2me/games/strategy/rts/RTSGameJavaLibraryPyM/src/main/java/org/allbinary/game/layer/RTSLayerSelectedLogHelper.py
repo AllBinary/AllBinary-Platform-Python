@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
 
 
@@ -22,6 +23,9 @@ class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
     instanceC: RTSLayerSelectedLogHelper = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.math.PositionStrings import PositionStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.positionStrings: PositionStrings = PositionStrings.getInstance()
@@ -38,6 +42,10 @@ class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
     
 
     def setClosestGeographicMapCellHistory(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, pathsList: BasicArrayList) -> None:
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -49,6 +57,9 @@ class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
     
 
     def trackTo(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition, dx: int, dy: int, reason: str) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -64,6 +75,9 @@ class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
     
 
     def turnTo(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, dx: int, dy: int, angleInfo: AngleInfo, angle: int, movementAngle: NamedAngle, evading: bool, targetAngle: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.math.NamedAngle import NamedAngle
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" steering - ")
@@ -88,68 +102,90 @@ class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
     
 
     def doneMoving(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - done moving 0,0")), self, self.TRACKTO_TURNTO)
     
 
     def closeEnough(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - close enough")), self, self.TRACKTO_TURNTO)
     
 
     def movingLeft(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - allow movingLeft")), self, self.TRACKTO_TURNTO)
     
 
     def movingRight(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - allow movingRight")), self, self.TRACKTO_TURNTO)
     
 
     def movingUp(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - allow movingUp")), self, self.TRACKTO_TURNTO)
     
 
     def movingDown(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - allow movingDown")), self, self.TRACKTO_TURNTO)
     
 
     def currentMoveEnded(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - correct angle, but movement not needed for current deltas so reseting movement angle")), self, self.TRACKTO_TURNTO)
     
 
     def evade(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - evade")), self, self.TRACKTO_TURNTO)
     
 
     def rotateLeft(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - rotating left")), self, self.TRACKTO_TURNTO)
     
 
     def rotateRight(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - rotating right")), self, self.TRACKTO_TURNTO)
     
 
     def handle(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, movementAngle: NamedAngle) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.NamedAngle import NamedAngle
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - movementAngle: ").append(movementAngle.name).append(self.commonSeps.FORWARD_SLASH).appendshort(((int(movementAngle.getValue()) + 32768) % 65536 - 32768))), self, self.TRACKTO_TURNTO)
     
 
     def noRotation(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" steering - Do not rotate")), self, self.TRACKTO_TURNTO)
     
 
     def notOnPath(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, geographicMapCellHistory: GeographicMapCellHistory, currentGeographicMapCellPosition: GeographicMapCellPosition, pathList: BasicArrayList) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringUtil: StringUtil = StringUtil.getInstance()
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(CommonSeps.getInstance().SPACE).appendint(int(geographicMapCellHistory.getTotalVisited())).append(CommonSeps.getInstance().SPACE).append(stringUtil.toString(currentGeographicMapCellPosition)).append(" - trying to move but not on path: ").append(stringUtil.toString(pathList))), self, "turnTo")
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.math.NamedAngle import NamedAngle
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.math.NamedAngle import NamedAngle
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-RTSLayerSelectedLogHelper.instanceC = RTSLayerSelectedLogHelper()
+def _RTSLayerSelectedLogHelper_instanceC() -> object:
+    return RTSLayerSelectedLogHelper()
+
+lazy_static(RTSLayerSelectedLogHelper, "instanceC", _RTSLayerSelectedLogHelper_instanceC)
 

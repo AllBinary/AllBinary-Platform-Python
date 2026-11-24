@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
 from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
 
 
-class PacePatrolAI(BasePatrolAI, TrackingEventListenerInterface):
+class PacePatrolAI(*java_bases(BasePatrolAI, TrackingEventListenerInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList

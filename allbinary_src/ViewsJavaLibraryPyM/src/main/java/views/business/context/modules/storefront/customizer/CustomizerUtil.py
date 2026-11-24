@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CustomizerUtil:
     instance: CustomizerUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,7 +37,13 @@ class CustomizerUtil:
 
     # throws Exception
     def getTransformInfoInterfaceToCustomize(self, customizerTransformInfoInterface: TransformInfoInterface, transformInfoInterface: TransformInfoInterface) -> TransformInfoInterface:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + customizerTransformInfoInterface.getName(), self, "getTransformInfoInterfaceToCustomize()")
         transformInfoEntityInterface: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
         viewName: str = transformInfoInterface.getName()
@@ -46,7 +54,14 @@ class CustomizerUtil:
 
     # throws Exception
     def getTransformInfoObjectConfigComponentNodesToCustomize(self, customizerTransformInfoInterface: TransformInfoInterface, transformInfoInterface: TransformInfoInterface) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + customizerTransformInfoInterface.getName(), self, "getTransformInfoObjectConfigComponentNodesToCustomize()")
         transformInfoEntityInterface: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
         viewName: str = transformInfoInterface.getName()
@@ -57,7 +72,12 @@ class CustomizerUtil:
 
     # throws Exception
     def getTransformInfoObjectConfigComponentNodes(self, transformInfoInterface: TransformInfoInterface) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, "getTransformInfoObjectConfigComponentNodes()")
         transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface = transformInfoInterface.getObjectConfigInterface()
         return transformInfoObjectConfigInterface.getTransforms()
@@ -65,7 +85,12 @@ class CustomizerUtil:
 
     # throws Exception
     def getTransformInfoObjectConfigGroupComponentNodes(self, transformInfoInterface: TransformInfoInterface) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, "getTransformInfoObjectConfigComponentNodes()")
         transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface = transformInfoInterface.getObjectConfigInterface()
         return transformInfoObjectConfigInterface.getGroupTransforms()
@@ -73,7 +98,20 @@ class CustomizerUtil:
 
     # throws Exception
     def insert(self, transformInfoInterface: TransformInfoInterface, domNodeInterface: DomNodeInterface) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, "insert()")
         transformInfoEntityInterface: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
         allViewsToBeModified: BasicArrayList = self.getTransformInfoObjectConfigGroupComponentNodes(transformInfoInterface)
@@ -81,7 +119,7 @@ class CustomizerUtil:
         document.appendChild(domNodeInterface.toXmlNode(document))
         documentString: str = XmlDocumentHelper.toString(document)
         stringBuffer: StringMaker = StringMaker()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer.append("Total Views For Modification: ")
             stringBuffer.appendint(allViewsToBeModified.size())
             stringBuffer.append(" New Xml/Data: ")
@@ -92,7 +130,7 @@ class CustomizerUtil:
         for index in range(0, size):
             transformInfo: TransformInfo = allViewsToBeModified.get(index)
             viewNameOfViewToBeModified: str = transformInfo.getName()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 stringBuffer.delete(0, stringBuffer.length())
                 stringBuffer.append(transformInfoInterface.getName())
                 stringBuffer.append(" is modifying view: ")
@@ -101,7 +139,7 @@ class CustomizerUtil:
             httpTransformInfoInterface: TransformInfoHttpInterface = transformInfoInterface
             specifiedTransformInfoInterface: TransformInfoInterface = transformInfoEntityInterface.get(viewNameOfViewToBeModified, httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
             if specifiedTransformInfoInterface is None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append(transformInfoInterface.getName())
                     stringBuffer.append(" is unable to add data to view: ")
@@ -109,9 +147,9 @@ class CustomizerUtil:
                     stringBuffer.append(" since it does not exist")
                     self.logUtil.putF(str(stringBuffer), self, "insert()")
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF(transformInfoInterface.getName() + " is adding data to view: " + viewNameOfViewToBeModified, self, "insert()")
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append(viewNameOfViewToBeModified)
                     stringBuffer.append(" is changing data in ")
@@ -124,7 +162,12 @@ class CustomizerUtil:
 
     # throws Exception
     def write(self, specifiedTransformInfoInterface: TransformInfoInterface, documentString: str) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + specifiedTransformInfoInterface.getName(), self, "write()")
         transformInfoEntityInterface: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
         specifiedTransformInfoInterface.setData(documentString)
@@ -133,7 +176,17 @@ class CustomizerUtil:
 
     # throws Exception
     def getViewDataForComponentsInObjectConfig(self, transformInfoInterface: TransformInfoInterface) -> Document:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, "getViewDataForComponentsInObjectConfig()")
         transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface = transformInfoInterface.getObjectConfigInterface()
         allViewsToBeModified: BasicArrayList = transformInfoObjectConfigInterface.getGroupTransforms()
@@ -146,20 +199,25 @@ class CustomizerUtil:
             specifiedTransformInfoInterface: TransformInfoInterface = transformInfoEntityInterface.get(viewNameOfViewToBeModified, httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
             return specifiedTransformInfoInterface.getDataDocument()
         raise Exception("No Components Specified in ObjectConfig")
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
-from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
-from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
-from org.w3c.dom.Document import Document
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+# from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+# from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.w3c.dom.Document import Document
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-CustomizerUtil.instance = CustomizerUtil()
+def _CustomizerUtil_instance() -> object:
+    return CustomizerUtil()
+
+lazy_static(CustomizerUtil, "instance", _CustomizerUtil_instance)
 

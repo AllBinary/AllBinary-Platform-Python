@@ -27,7 +27,10 @@ class InitDbHelperFactory:
 
     # throws LicensingException
     @staticmethod
-    def getInstance(abeClientInformation: AbeClientInformationInterface, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> object:
+    def getInstance_j2(abeClientInformation: AbeClientInformationInterface, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> object:
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         params: list[object] = [None] * (1)
         classes: list[type] = [None] * (1)
         classes[0] = DatabaseConnectionInfoInterface
@@ -37,13 +40,19 @@ class InitDbHelperFactory:
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(abeClientInformation: AbeClientInformationInterface) -> object:
+    def getInstance_j1(abeClientInformation: AbeClientInformationInterface) -> object:
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         anyType: object = AbeFactory.getInstance().getInstance(abeClientInformation, InitDbHelperFactory.CLASSNAME, None, None)
         return anyType
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+
+    @staticmethod
+    def getInstance(*args):
+        return getattr(InitDbHelperFactory, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

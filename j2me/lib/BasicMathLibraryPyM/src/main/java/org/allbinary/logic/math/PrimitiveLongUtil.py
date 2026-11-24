@@ -44,7 +44,6 @@ class PrimitiveLongUtil:
     
 
     def __init__(self, powerOfTen: int, unused: object) -> None:
-        from org.allbinary.logic.math.MathUtil import MathUtil
         self._init_fields()
         self.maxDigits = MathUtil.getInstance().getTotalDigits(powerOfTen)
         self.powerOfTen = powerOfTen

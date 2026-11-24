@@ -25,13 +25,26 @@ class UserConfigurationView(DomNodeInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, node: Node) -> None:
+    def _constructor1_1(self, node: Node) -> None:
         from org.allbinary.business.user.modules.configuration.UserConfiguration import UserConfiguration
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.time.created.TimeCreatedView import TimeCreatedView
+        from org.allbinary.business.time.modified.TimeLastModifiedView import TimeLastModifiedView
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationData import UserEmailConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationView import UserEmailConfigurationView
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         self.userConfigurationInterface = UserConfiguration()
         childNodeList: NodeList = node.getChildNodes()
@@ -47,7 +60,7 @@ class UserConfigurationView(DomNodeInterface):
         self.userConfigurationInterface.setTimeLastModified(timeLastModifiedView.getTimeLastModified())
     
 
-    def _constructor1(self, userConfigurationInterface: UserConfigurationInterface) -> None:
+    def _constructor1_2(self, userConfigurationInterface: UserConfigurationInterface) -> None:
         self._init_fields()
         self.userConfigurationInterface = userConfigurationInterface
     
@@ -58,7 +71,11 @@ class UserConfigurationView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.user.modules.configuration.UserConfigurationData import UserConfigurationData
+        from org.allbinary.business.time.created.TimeCreatedView import TimeCreatedView
+        from org.allbinary.business.time.modified.TimeLastModifiedView import TimeLastModifiedView
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationView import UserEmailConfigurationView
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(UserConfigurationData.NAME)
         userEmailConfigurationView: UserEmailConfigurationView = UserEmailConfigurationView(self.userConfigurationInterface.getUserEmailConfigurationInterface())
         node.appendChild(userEmailConfigurationView.toXmlNode(document))
@@ -67,15 +84,15 @@ class UserConfigurationView(DomNodeInterface):
         timeLastModifiedView: TimeLastModifiedView = TimeLastModifiedView(self.userConfigurationInterface.getTimeLastModified())
         node.appendChild(timeLastModifiedView.toXmlNode(document))
         return node
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.time.created.TimeCreatedView import TimeCreatedView
-from org.allbinary.business.time.modified.TimeLastModifiedView import TimeLastModifiedView
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationData import UserEmailConfigurationData
-from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
-from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationView import UserEmailConfigurationView
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.time.created.TimeCreatedView import TimeCreatedView
+# from org.allbinary.business.time.modified.TimeLastModifiedView import TimeLastModifiedView
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationData import UserEmailConfigurationData
+# from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
+# from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationView import UserEmailConfigurationView
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

@@ -21,6 +21,9 @@ import datetime
 class BasicWorkFlow:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.workFlowDoc: Document = None
@@ -37,6 +40,10 @@ class BasicWorkFlow:
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.workFlowName = StringUtil.getInstance().EMPTY_STRING
         self.workFlowDoc = DomDocumentHelper.create()
@@ -44,16 +51,25 @@ class BasicWorkFlow:
         self.workFlowDoc.appendChild(workFlowNode)
     
 
-    def _constructor2(self, hashMap: dict, pageContext: PageContext) -> None:
+    def _constructor2(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
         self._init_fields()
         weblisketSession: WeblisketSession = WeblisketSession(hashMap, pageContext)
         self.storeName = weblisketSession.getStoreName()
-        requestHashMap: dict = RequestParams(pageContext).toHashMap()
+        requestHashMap: HashMap = RequestParams(pageContext).toHashMap()
         self.workFlowName = requestHashMap.get(WorkFlowData.getInstance().NAME)
         self.workFlowDoc = DomDocumentHelper.create(requestHashMap.get(WorkFlowData.getInstance().DATA))
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
         self._init_fields()
         self.workFlowName = hashMap.get(WorkFlowData.getInstance().NAME)
         self.storeName = hashMap.get(StoreFrontData.getInstance().NAME)
@@ -74,6 +90,9 @@ class BasicWorkFlow:
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
         values: BasicArrayList = BasicArrayListD()
         values.add(self.workFlowName)
         values.add(self.storeName)
@@ -86,8 +105,14 @@ class BasicWorkFlow:
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(WorkFlowData.getInstance().NAME, self.workFlowName)
         hashMap.put(StoreFrontData.getInstance().NAME, self.storeName)
         hashMap.put(WorkFlowData.getInstance().DATA, XmlDocumentHelper.toString(self.workFlowDoc))
@@ -98,8 +123,16 @@ class BasicWorkFlow:
     
 
     def toXmlNode(self, document: Document) -> Node:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            hashMap: dict = self.toHashMap()
+            hashMap: HashMap = self.toHashMap()
             keySet: Set = hashMap.keySet()
             node: Node = document.createElement(WorkFlowData.getInstance().WORKFLOW)
             nameArray: list[object] = keySet.toArray()
@@ -110,70 +143,83 @@ class BasicWorkFlow:
                 node.appendChild(ModDomHelper.createNameValueNodes(document, name, value))
             return node
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "toXmlNode()", e)
             return None
     
 
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.workFlowDoc
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "toXmlDoc()", e)
             return None
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             returnBoolean: bool = True
             if self.workFlowName is None:
                 returnBoolean = False
             return returnBoolean
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             if self.workFlowName is None:
                 stringBuffer.append("No WorkFlow name specified.")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Getting Validation Info"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

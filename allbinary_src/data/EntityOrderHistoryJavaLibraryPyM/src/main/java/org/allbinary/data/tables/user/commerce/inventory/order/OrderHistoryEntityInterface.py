@@ -23,6 +23,7 @@ class OrderHistoryEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, userName: str, order: Order) -> None:
+        from org.allbinary.business.user.commerce.inventory.order.Order import Order
         raise NotImplementedError()
     
 
@@ -36,33 +37,41 @@ class OrderHistoryEntityInterface(BasicDataTableInterface):
 
     # throws Exception
     def getStoreOrders(self, storeFrontInterface: StoreFrontInterface) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         raise NotImplementedError()
     
 
     # throws Exception
-    def getOrders(self, userName: str) -> BasicArrayList:
+    def getOrders_j1(self, userName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getOrders(self, status: str, fromDate: str, toDate: str) -> BasicArrayList:
+    def getOrders_j3(self, status: str, fromDate: str, toDate: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
+
+    def getOrders(self, *args):
+        return getattr(self, "getOrders_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def getOrder(self, id: str) -> OrderHistory:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
         raise NotImplementedError()
     
 
     # throws Exception
-    def update(self, whereHashMap: dict, orderHashMap: dict) -> None:
+    def update(self, whereHashMap: HashMap, orderHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.order.Order import Order
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.order.Order import Order
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
 
 

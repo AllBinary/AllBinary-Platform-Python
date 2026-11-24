@@ -21,6 +21,11 @@ from admin.taghelpers.TagHelper import TagHelper
 class InventoryHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
         self.weblisketSession: WeblisketSession = None
@@ -31,7 +36,15 @@ class InventoryHelper(TagHelper):
         self.searchRequest: SearchRequest = None
     
 
-    def __init__(self, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.logic.communication.http.AcceptableResponseGenerator import AcceptableResponseGenerator
+        from org.allbinary.logic.control.search.SearchParams import SearchParams
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         super().__init__()
         self._init_fields()
         self.response = pageContext.getResponse()
@@ -51,20 +64,29 @@ class InventoryHelper(TagHelper):
     
 
     def viewSummary(self) -> str:
+        from views.admin.inventory.listings.InventoryViewFactory import InventoryViewFactory
+        from views.admin.inventory.listings.InventoryViewSearchInterface import InventoryViewSearchInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             inventoryViewSearchInterface: InventoryViewSearchInterface = InventoryViewFactory.getInstance(self.searchRequest)
             result: str = inventoryViewSearchInterface.getProduct(self.id)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF("Successfull Inventory View Summary", self, "viewSummary()")
             return result
         except Exception as e:
             error: str = "Failed to View Summary"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "viewSummary()", e)
             return error + "<br>" + "Exception: " + str(e) + "<br>"
     
 
     def search(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from views.admin.inventory.listings.InventoryViewFactory import InventoryViewFactory
+        from views.admin.inventory.listings.InventoryViewSearchInterface import InventoryViewSearchInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringUtil: StringUtil = StringUtil.getInstance()
             keywords: str = self.searchRequest.getParams().get().get(self.basicItemData.KEYWORDS)
@@ -72,31 +94,33 @@ class InventoryHelper(TagHelper):
                 return "Please enter a keyword in the search field above the Search button."
             inventoryViewSearchInterface: InventoryViewSearchInterface = InventoryViewFactory.getInstance(self.searchRequest)
             result: str = inventoryViewSearchInterface.searchSingleDynamicPage()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF("Successful Inventory Dynamic Search", self, "searchSingleDynamicPage()")
             return result
         except Exception as e:
             error: str = "Failed to search Inventory by keyword"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "searchSingleDynamicPage()", e)
             return error + "<br>" + "Exception: " + str(e) + "<br>"
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.http.HttpServletResponse import HttpServletResponse
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.logic.communication.http.AcceptableResponseGenerator import AcceptableResponseGenerator
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchParams import SearchParams
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-from views.admin.inventory.listings.InventoryViewFactory import InventoryViewFactory
-from views.admin.inventory.listings.InventoryViewSearchInterface import InventoryViewSearchInterface
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.logic.communication.http.AcceptableResponseGenerator import AcceptableResponseGenerator
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchParams import SearchParams
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from views.admin.inventory.listings.InventoryViewFactory import InventoryViewFactory
+# from views.admin.inventory.listings.InventoryViewSearchInterface import InventoryViewSearchInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

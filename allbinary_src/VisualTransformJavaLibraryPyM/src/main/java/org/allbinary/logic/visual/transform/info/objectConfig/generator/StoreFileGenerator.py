@@ -21,6 +21,10 @@ from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformI
 class StoreFileGenerator(TransformInfoObjectConfigGenerator):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.output: str = None
@@ -29,12 +33,31 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreInterface import TransformInfoHttpStoreInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
         self._init_fields()
         httpTransformInfoInterface: TransformInfoHttpInterface = transformInfoInterface
         weblisketSession: WeblisketSession = WeblisketSession(httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(self.URLGLOBALS.getWebappPath())
+        stringBuffer.append(URLGLOBALS.getWebappPath())
         stringBuffer.append(weblisketSession.getStoreName())
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         abPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
@@ -43,7 +66,7 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
         if stringValidationUtil.isEmpty(fileName):
             transformInfoHttpStoreInterface: TransformInfoHttpStoreInterface = transformInfoInterface
             fileName = transformInfoInterface.getName().substring(transformInfoHttpStoreInterface.getStoreName().length() + 1)
-            outputMappingHashMap: dict = StdUtil.getInstance().createHashMap()
+            outputMappingHashMap: HashMap = StdUtil.getInstance().createHashMap()
             outputMappingHashMap.put(TransformInfosData.getInstance().PREVIEW, "Preview")
             outputMappingHashMap.put(TransformInfosData.getInstance().SMALL_PREVIEW, "SmallPreview")
             outputMappingHashMap.put(CommonSeps.getInstance().SPACE, StringUtil.getInstance().EMPTY_STRING)
@@ -64,13 +87,18 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
         abPath = AbPath(str(abPath), str(stringBuffer))
         self.fileAbPath = abPath
         self.file = AbFile.createAbFileFromAbPath(self.fileAbPath)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("File: " + str(self.fileAbPath), self, self.commonStrings.CONSTRUCTOR)
     
 
     # throws Exception
     def process(self, input: str) -> str:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Processing", self, self.commonStrings.PROCESS)
         if not self.file.exists():
             self.file.createNewFile()
@@ -79,30 +107,32 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
             FileUtil.getInstance().write(inputStream, self.file)
         else:
             raise Exception("Could Not Create: " + str(self.fileAbPath))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Processed", self, self.commonStrings.PROCESS)
         return StringUtil.getInstance().EMPTY_STRING
 # from java.io.ByteArrayInputStream import ByteArrayInputStream
 # from java.io.InputStream import InputStream
 # from java.util.HashMap import HashMap
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreInterface import TransformInfoHttpStoreInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreInterface import TransformInfoHttpStoreInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

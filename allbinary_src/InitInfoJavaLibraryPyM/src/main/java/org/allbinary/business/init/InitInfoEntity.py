@@ -37,6 +37,8 @@ class InitInfoEntity(InitSql):
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.InitInfo import InitInfo
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+        from org.allbinary.logic.string.StringMaker import StringMaker
         super().__init__(UserDbInitInfo())
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
@@ -60,10 +62,15 @@ class InitInfoEntity(InitSql):
 
     def get(self) -> bool:
         from org.allbinary.business.init.InitInfo import InitInfo
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            keyAndValue: dict = StdUtil.getInstance().createHashMap()
+            keyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             keyAndValue.put(self.NOTHING, self.NOTHING)
-            hashMap: dict = self.getRow(keyAndValue)
+            hashMap: HashMap = self.getRow(keyAndValue)
             if hashMap is not None:
                 InitInfo.getInstance().set(hashMap)
                 return True
@@ -78,10 +85,15 @@ class InitInfoEntity(InitSql):
     
 
     def is_(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            keyAndValue: dict = StdUtil.getInstance().createHashMap()
+            keyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             keyAndValue.put(self.NOTHING, self.NOTHING)
-            hashMap: dict = self.getRow(keyAndValue)
+            hashMap: HashMap = self.getRow(keyAndValue)
             if hashMap is not None:
                 return True
             else:
@@ -103,6 +115,11 @@ class InitInfoEntity(InitSql):
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.InitInfo import InitInfo
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             values: BasicArrayList = BasicArrayListD()
             values.add(self.NOTHING)
@@ -116,6 +133,8 @@ class InitInfoEntity(InitSql):
     
 
     def createTable(self) -> str:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if super().createTable(self.tableData):
             return self.tableName + self.CREATED_SUCCESS
         else:
@@ -125,14 +144,14 @@ class InitInfoEntity(InitSql):
             stringBuffer.append(AbPathData.getInstance().EXTENSION_SEP)
             return str(stringBuffer)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

@@ -21,16 +21,30 @@ from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeCl
 class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(clientInfo, "LicServ.getLicense")
         self._init_fields()
     
 
     # throws Exception
     def get(self, anyType: object, cryptInterface: CryptInterface) -> object:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
+        from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientLicense import AbeClientLicense
+        from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
+        from org.apache.xmlrpc.XmlRpcException import XmlRpcException
         try:
             server: str = self.getClientInfo().getLicenseServer(self.getServer())
             stringBuffer: StringMaker = StringMaker()
@@ -42,11 +56,11 @@ class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
             param: BasicArrayList = BasicArrayListD()
             xmlRpcClient: XmlRpcClient = XmlRpcClient(server)
             self.setClient(xmlRpcClient)
-            xmlRpcClient.setBasicAuthentication(None, None)
+            xmlRpcClient.setBasicAuthentication(StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING)
             hashtable: ABHashtable[object, object] = self.getClientInfo().toHashtable()
             self.logUtil.putF(str(self.CLIENT_INFO) + str(hashtable), self, self.commonStrings.GET)
             param.add(hashtable)
-            result: object = xmlRpcClient.execute(self.getRemoteMethod(), param, cryptInterface)
+            result: object = xmlRpcClient.executeWithCrypt(self.getRemoteMethod(), param, cryptInterface)
             self.logUtil.putF(str(self.RESULT) + str(result), self, self.commonStrings.GET)
             resultHashtable: ABHashtable[object, object] = result
             if not AbeClientLicense.hasRequiredKeys(resultHashtable):
@@ -70,19 +84,20 @@ class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
         except Exception as e:
             self.logUtil.put(self.UNKNOWN_ERROR, self, self.commonStrings.GET, e)
             return self.tryAnother(anyType)
+# from org.allbinary.logic.string.StringUtil import StringUtil
 # from java.io.IOException import IOException
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.AbeClientLicense import AbeClientLicense
-from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
-from org.apache.xmlrpc.XmlRpcException import XmlRpcException
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.AbeClientLicense import AbeClientLicense
+# from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.apache.xmlrpc.XmlRpcClient import XmlRpcClient
+# from org.apache.xmlrpc.XmlRpcException import XmlRpcException
 
 

@@ -24,6 +24,17 @@ class WaypointLayer(AdvancedRTSGameLayer):
     def __init__(self, remoteInfo: RemoteInfo, parentLayer: PathFindingLayerInterface, groupInterface: list[Group], rootName: str, name: str, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, x: int, y: int) -> None:
         from org.allbinary.game.layer.waypoint.CollidableWaypointBehavior import CollidableWaypointBehavior
         from org.allbinary.game.layer.waypoint.Waypoint import Waypoint
+        from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+        from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+        from org.allbinary.game.health.Health import Health
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
+        from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.view.TileLayerPositionIntoViewPosition import TileLayerPositionIntoViewPosition
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.media.audio.AttackSound import AttackSound
         super().__init__(remoteInfo, parentLayer, AdvancedRTSProperties.createProperties(), groupInterface, rootName, name, Health(1000), NullRTSFormInputFactory.getInstance(), animationInterfaceFactoryInterface, animationInterfaceFactoryInterface, animationInterfaceFactoryInterface, animationInterfaceFactoryInterface, animationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface, rectangle, x, y, TileLayerPositionIntoViewPosition())
         self.setCollidableInferface(CollidableWaypointBehavior(True))
         self.getWaypointBehavior().setWaypoint(Waypoint(self, AttackSound.getInstance()))
@@ -31,16 +42,19 @@ class WaypointLayer(AdvancedRTSGameLayer):
     
 
     def construct(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
         self.percentCompleteP = 100
         self.initVisibility(rtsPlayerLayerInterface)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         if self.isVisible():
             super().paint(graphics)
     
 
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         try:
             self.indexedButShouldBeRotationAnimationInterface.nextFrame()
         except Exception as e:
@@ -76,18 +90,18 @@ class WaypointLayer(AdvancedRTSGameLayer):
     def isSelfUpgradeable(self) -> bool:
         return False
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
-from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
-from org.allbinary.game.health.Health import Health
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
-from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.view.TileLayerPositionIntoViewPosition import TileLayerPositionIntoViewPosition
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.media.audio.AttackSound import AttackSound
+# from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+# from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+# from org.allbinary.game.health.Health import Health
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
+# from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.view.TileLayerPositionIntoViewPosition import TileLayerPositionIntoViewPosition
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.media.audio.AttackSound import AttackSound
 
 

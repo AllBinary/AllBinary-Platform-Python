@@ -27,13 +27,16 @@ class BasicFileFilterUtil:
     @staticmethod
     def getInstance(extension: str) -> FileFilter:
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
+        from org.allbinary.logic.io.file.visitor.IncludeFileExtensionsBooleanFileVisitor import IncludeFileExtensionsBooleanFileVisitor
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = BasicArrayListD()
         vector.add(extension)
         includeFileExtensionsBooleanFileVisitor: IncludeFileExtensionsBooleanFileVisitor = IncludeFileExtensionsBooleanFileVisitor(vector)
         return VisitorFileFilter(includeFileExtensionsBooleanFileVisitor)
 # from java.io.FileFilter import FileFilter
-from org.allbinary.logic.io.file.visitor.IncludeFileExtensionsBooleanFileVisitor import IncludeFileExtensionsBooleanFileVisitor
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.io.file.visitor.IncludeFileExtensionsBooleanFileVisitor import IncludeFileExtensionsBooleanFileVisitor
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

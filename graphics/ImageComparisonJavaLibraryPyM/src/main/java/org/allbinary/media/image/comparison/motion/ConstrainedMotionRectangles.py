@@ -22,6 +22,7 @@ class ConstrainedMotionRectangles(MotionRectangles):
     NAME: str = "constrainedMotionRectangles_"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface = None
     
@@ -34,6 +35,8 @@ class ConstrainedMotionRectangles(MotionRectangles):
 
     # throws Exception
     def applyMotionRectangleConstraints(self, motionRectangles: MotionRectangles) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil.putF("Start - Size Before: " + str(motionRectangles.getVector().size()), self, "applyMotionRectangleConstraints")
         bufferedImageArray: list[BufferedImage] = motionRectangles.getImageComparisonResult().getBufferedImages()
         bufferedImage: BufferedImage = bufferedImageArray[1]
@@ -68,9 +71,9 @@ class ConstrainedMotionRectangles(MotionRectangles):
         self.motionRectangleConstraintsInterface = motionRectangleConstraintsInterface
 # from java.awt.Rectangle import Rectangle
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

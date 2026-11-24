@@ -20,6 +20,8 @@ from __future__ import annotations
 class BasicEmailInfo:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.subject: str = None
         self.textBody: str = None
@@ -27,8 +29,11 @@ class BasicEmailInfo:
     
 
     def __init__(self, subject: str, textBody: str) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)
         self.subject = subject
@@ -44,14 +49,18 @@ class BasicEmailInfo:
     
 
     def getEmailServerConfigurationInterface(self) -> EmailServerConfigurationInterface:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         return self.emailServerConfigurationInterface
     
 
     def setEmailServerConfigurationInterface(self, emailServerConfigurationInterface: EmailServerConfigurationInterface) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         self.emailServerConfigurationInterface = emailServerConfigurationInterface
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(self.getEmailServerConfigurationInterface()))
         stringBuffer.append(CommonSeps.getInstance().NEW_LINE)
@@ -68,10 +77,12 @@ class BasicEmailInfo:
     # throws Exception
     def init(self) -> None:
         raise RuntimeError()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

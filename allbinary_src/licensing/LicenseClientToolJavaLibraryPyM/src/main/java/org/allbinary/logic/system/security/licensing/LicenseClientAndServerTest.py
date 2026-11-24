@@ -22,6 +22,8 @@ class LicenseClientAndServerTest:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.vector: BasicArrayList = BasicArrayListD()
     
@@ -29,20 +31,18 @@ class LicenseClientAndServerTest:
     def __init__(self, options: list[str]) -> None:
         from org.allbinary.logic.system.security.licensing.PrintLicenseInitInfo import PrintLicenseInitInfo
         from org.allbinary.logic.system.security.licensing.PrintLicenseInitInfo import PrintLicenseInitInfo
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
         self._init_fields()
-        LicenseInitInfoUtil.getInstance().setFilePath(PrintLicenseInitInfo.PATH + self.PATH_GLOBALS.getInstance().INIT_PATH)
+        LicenseInitInfoUtil.getInstance().setFilePath(PrintLicenseInitInfo.PATH + PATH_GLOBALS.getInstance().INIT_PATH)
         for index in range(1, len(options)):
             self.vector.add(options[index])
         if len(options) < 2:
             file: File = File(str(PrintLicenseInitInfo.PATH) + "testlicenseservers.txt")
             reader: FileReader = FileReader(file)
             lineNumberReader: LineNumberReader = LineNumberReader(reader)
-            while True:
-                line: str = lineNumberReader.readLine()
-                if line is not None:
-                    self.vector.add(line)
-                else:
-                    break
+            while lineNumberReader.ready():
+                self.vector.add(lineNumberReader.readLine())
     
 
     def test(self) -> None:
@@ -50,8 +50,11 @@ class LicenseClientAndServerTest:
             return self._test_unlocked()
 
     def _test_unlocked(self) -> None:
-        from org.allbinary.logic.system.security.licensing.BasicArrayListD import BasicArrayListD
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterfaceFactory import AbeClientInformationInterfaceFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.logic.system.security.licensing.client.XmlRpcAbeLicenseRetrievalClient import XmlRpcAbeLicenseRetrievalClient
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         try:
             list_: BasicArrayList = BasicArrayListD()
@@ -86,22 +89,24 @@ class LicenseClientAndServerTest:
 
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             licensingTest: LicenseClientAndServerTest = LicenseClientAndServerTest(args)
             licensingTest.test()
         except Exception as e:
             logUtil: LogUtil = LogUtil.getInstance()
-            self.logUtil.put(self.commonStrings.EXCEPTION, "main()", "main()", e)
+            logUtil.put(CommonStrings.getInstance().EXCEPTION, "main()", "main()", e)
 # from java.io.File import File
 # from java.io.FileReader import FileReader
 # from java.io.LineNumberReader import LineNumberReader
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
-from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.client.XmlRpcAbeLicenseRetrievalClient import XmlRpcAbeLicenseRetrievalClient
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.system.security.licensing.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+# from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.client.XmlRpcAbeLicenseRetrievalClient import XmlRpcAbeLicenseRetrievalClient
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

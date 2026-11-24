@@ -33,9 +33,12 @@ class PreGameLockableFormPaintableFactory(ItemPaintableFactory):
     # throws Exception
     def getInstanceItemPaintable(self, paintableForm: PaintableForm) -> ItemPaintable:
         from org.allbinary.game.displayable.canvas.PreGameLockablePaintable import PreGameLockablePaintable
+        from org.allbinary.graphics.form.ItemPaintable import ItemPaintable
+        from org.allbinary.graphics.form.PaintableForm import PaintableForm
+        from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
         return PreGameLockablePaintable(paintableForm, self.lockedIndex)
-from org.allbinary.graphics.form.ItemPaintable import ItemPaintable
-from org.allbinary.graphics.form.PaintableForm import PaintableForm
-from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
+# from org.allbinary.graphics.form.ItemPaintable import ItemPaintable
+# from org.allbinary.graphics.form.PaintableForm import PaintableForm
+# from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
 
 

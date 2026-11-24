@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class ActionScriptItemJPanel(JPanel):
@@ -75,18 +75,6 @@ class ActionScriptItemJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GridLayout import GridLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GridLayout import GridLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GridLayout import GridLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GridLayout import GridLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GroupLayout import GroupLayout
         self.newActionScriptInputJPanel = JPanel()
         self.childActionScriptConditionJPanel = JPanel()
         self.newActionScriptConditionJPanel = JPanel()
@@ -95,15 +83,19 @@ class ActionScriptItemJPanel(JPanel):
         self.newActionScriptInputJPanel.setLayout(GridLayout(1, 0))
         childActionScriptConditionJPanelLayout: GroupLayout = GroupLayout(self.childActionScriptConditionJPanel)
         self.childActionScriptConditionJPanel.setLayout(childActionScriptConditionJPanelLayout)
-        childActionScriptConditionJPanelLayout.setHorizontalGroup(childActionScriptConditionJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 229, Short.MAX_VALUE))
-        childActionScriptConditionJPanelLayout.setVerticalGroup(childActionScriptConditionJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 8, Short.MAX_VALUE))
+        childActionScriptConditionJPanelLayout.setHorizontalGroup(childActionScriptConditionJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 229, Short.MAX_VALUE))
+        childActionScriptConditionJPanelLayout.setVerticalGroup(childActionScriptConditionJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 8, Short.MAX_VALUE))
         self.newActionScriptConditionJPanel.setLayout(GridLayout(1, 0))
         self.scriptItemJPanel.setLayout(GridLayout(1, 1))
         self.removeJPanel.setLayout(GridLayout(1, 1))
         self.removeJPanel.setMinimumSize(Dimension(30, 20))
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.scriptItemJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.removeJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)).addComponent(self.newActionScriptInputJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE).addComponent(self.newActionScriptConditionJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE).addComponent(self.childActionScriptConditionJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.scriptItemJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE).addComponent(self.removeJPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.childActionScriptConditionJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newActionScriptConditionJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newActionScriptInputJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.scriptItemJPanel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.removeJPanel, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)).addComponent(self.newActionScriptInputJPanel, GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE).addComponent(self.newActionScriptConditionJPanel, GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE).addComponent(self.childActionScriptConditionJPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.scriptItemJPanel, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE).addComponent(self.removeJPanel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.childActionScriptConditionJPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newActionScriptConditionJPanel, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newActionScriptInputJPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+# from java.awt.Dimension import Dimension
+# from java.awt.GridLayout import GridLayout
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

@@ -29,9 +29,10 @@ class InputAutomationRobotUtil:
     def getChangeEvent(inputRobotInterface: InputRobotInterface) -> InputAutomationRobotChangeEvent:
         from org.allbinary.input.automation.robot.osgi.InputAutomationRobotInterfaceWrapper import InputAutomationRobotInterfaceWrapper
         from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         inputAutomationRobotInterfaceWrapper: InputAutomationRobotInterfaceWrapper = InputAutomationRobotInterfaceWrapper(inputRobotInterface)
         inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent = InputAutomationRobotChangeEvent(inputAutomationRobotInterfaceWrapper)
         return inputAutomationRobotChangeEvent
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 

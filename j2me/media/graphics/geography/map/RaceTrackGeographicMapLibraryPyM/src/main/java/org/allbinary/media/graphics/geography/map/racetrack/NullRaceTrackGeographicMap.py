@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterface import RaceTrackGeographicMapInterface
 
 
@@ -35,21 +36,26 @@ class NullRaceTrackGeographicMap(RaceTrackGeographicMapInterface):
     
 
     def getAllBinaryTiledLayer(self) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         raise RuntimeError()
     
 
     # throws Exception
     def getCellPositionsAt(self, layer: Layer, currentCellPositionArray: list[list[GeographicMapCellPosition]], cellPositionArray: list[list[GeographicMapCellPosition]]) -> bool:
+        from org.allbinary.layer.Layer import Layer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
     # throws Exception
     def getCellPositionAtXY(self, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
     # throws Exception
     def getCellPositionAtXYNoThrow(self, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
@@ -59,27 +65,34 @@ class NullRaceTrackGeographicMap(RaceTrackGeographicMapInterface):
 
     # throws Exception
     def getCellTypeAtXY(self, x: int, y: int) -> GeographicMapCellType:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         raise RuntimeError()
     
 
     # throws Exception
     def getCellTypeAt(self, geographicMapCellPosition: GeographicMapCellPosition) -> GeographicMapCellType:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         raise RuntimeError()
     
 
     def getGeographicMapCellPositionFactory(self) -> BasicGeographicMapCellPositionFactory:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
         raise RuntimeError()
     
 
     def getGeographicMapCellPositionFactoryInterface(self) -> GeographicMapCellPositionFactoryInterface:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
         raise RuntimeError()
     
 
     def getForegroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise RuntimeError()
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise RuntimeError()
     
 
@@ -97,14 +110,17 @@ class NullRaceTrackGeographicMap(RaceTrackGeographicMapInterface):
 
     def setRaceTrackData(self, raceTrackData: RaceTrackData) -> None:
         raise RuntimeError()
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
 
 
-NullRaceTrackGeographicMap.NULL_RACE_TRACK_GEOGRAPHIC_MAP = NullRaceTrackGeographicMap()
+def _NullRaceTrackGeographicMap_NULL_RACE_TRACK_GEOGRAPHIC_MAP() -> object:
+    return NullRaceTrackGeographicMap()
+
+lazy_static(NullRaceTrackGeographicMap, "NULL_RACE_TRACK_GEOGRAPHIC_MAP", _NullRaceTrackGeographicMap_NULL_RACE_TRACK_GEOGRAPHIC_MAP)
 

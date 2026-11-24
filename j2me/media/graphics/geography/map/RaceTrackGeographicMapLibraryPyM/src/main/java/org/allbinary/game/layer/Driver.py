@@ -15,14 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.game.layer.Aggression import Aggression
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class Driver:
     NULL_DRIVER: Driver = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.turnSpeed: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
         self.trackPathSelectionSkill: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
         self.aggression: Aggression = None
@@ -57,7 +57,13 @@ class Driver:
 
     def setAggression(self, aggression: Aggression) -> None:
         self.aggression = aggression
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 
-Driver.NULL_DRIVER = Driver(SmallIntegerSingletonFactory.getInstance().getAt(0), SmallIntegerSingletonFactory.getInstance().getAt(0), Aggression(SmallIntegerSingletonFactory.getInstance().getAt(0), SmallIntegerSingletonFactory.getInstance().getAt(0), SmallIntegerSingletonFactory.getInstance().getAt(0)))
+def _Driver_NULL_DRIVER() -> object:
+    from org.allbinary.game.layer.Aggression import Aggression
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return Driver(SmallIntegerSingletonFactory.getInstance().getAt(0), SmallIntegerSingletonFactory.getInstance().getAt(0), Aggression(SmallIntegerSingletonFactory.getInstance().getAt(0), SmallIntegerSingletonFactory.getInstance().getAt(0), SmallIntegerSingletonFactory.getInstance().getAt(0)))
+
+lazy_static(Driver, "NULL_DRIVER", _Driver_NULL_DRIVER)
 

@@ -24,31 +24,40 @@ class UserEntityInterface(BasicDataTableInterface):
 
     # throws Exception
     def getAdministrators(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getStoreManagers(self, storeFrontInterface: StoreFrontInterface) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def getCustomers(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getUsersWithRole(self, userRole: UserRole) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.role.UserRole import UserRole
         raise NotImplementedError()
     
 
     # throws Exception
     def getUsers(self, storeFrontInterface: StoreFrontInterface) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def getUser(self, userName: str) -> UserInterface:
+        from org.allbinary.business.user.UserInterface import UserInterface
         raise NotImplementedError()
     
 
@@ -61,16 +70,18 @@ class UserEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
-    def update(self, userName: str, updatedValues: dict) -> None:
+    def update(self, userName: str, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.role.UserRole import UserRole
 
 

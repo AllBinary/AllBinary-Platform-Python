@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static_block
 
 
 class BufferedImagePoolSingleton:
@@ -23,6 +24,11 @@ class BufferedImagePoolSingleton:
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+        from org.allbinary.logic.util.cache.PoolInterfaceFactory import PoolInterfaceFactory
+        from org.allbinary.logic.util.cache.PoolTypeFactory import PoolTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         STATIC_BLOCK: str = "Static Block"
@@ -41,15 +47,16 @@ class BufferedImagePoolSingleton:
 
     @staticmethod
     def getInstance() -> PoolInterface:
+        from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
         return BufferedImagePoolSingleton.poolInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
-from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
-from org.allbinary.logic.util.cache.PoolInterfaceFactory import PoolInterfaceFactory
-from org.allbinary.logic.util.cache.PoolTypeFactory import PoolTypeFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+# from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+# from org.allbinary.logic.util.cache.PoolInterfaceFactory import PoolInterfaceFactory
+# from org.allbinary.logic.util.cache.PoolTypeFactory import PoolTypeFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.image.cache.BufferedImageCacheableFactory import BufferedImageCacheableFactory
 
 
-BufferedImagePoolSingleton._static_init()
+lazy_static_block(BufferedImagePoolSingleton, ("poolInterface", ), BufferedImagePoolSingleton._static_init)
 

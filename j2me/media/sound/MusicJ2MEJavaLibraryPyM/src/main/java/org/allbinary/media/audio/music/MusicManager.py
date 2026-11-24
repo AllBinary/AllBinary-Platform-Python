@@ -5,26 +5,48 @@ from __future__ import annotations
 
 import time
 import threading
+from javax.microedition.media.PlayerListener import PlayerListener
 
 
 class MusicManager:
     #Handle Media ending for Avian
     class MusicManagerPlayerListener(PlayerListener):
+
+        def _init_fields(self) -> None:
+            self.musicManager: MusicManager = None
+        
+
+        def __init__(self, musicManager: MusicManager) -> None:
+            self._init_fields()
+            self.musicManager = musicManager
         
 
         def playerUpdate(self, player: Player, event: str, eventData: object) -> None:
-            PreLogUtil.put(event, self, self.commonStrings.PROCESS)
+            from javax.microedition.media.Player import Player
+            from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+            PreLogUtil.put(event, self, self.musicManager.commonStrings.PROCESS)
             if event == PlayerListener.END_OF_MEDIA or event == PlayerListener.STOPPED or event == PlayerListener.CLOSED:
-                self.reset()
+                self.musicManager.reset()
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.PlayerStateUtil import PlayerStateUtil
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.playerStateUtil: PlayerStateUtil = PlayerStateUtil.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(0)
-        self.playerListener: PlayerListener = MusicManagerPlayerListener()
+        self.playerListener: PlayerListener = MusicManagerPlayerListener(self)
         self.PLAY: str = "Play "
         self.SONG: str = " for: "
         self.NEXT_SONG: str = str(CommonLabels.getInstance().NEXT) + " Song: "
@@ -42,11 +64,14 @@ class MusicManager:
     
 
     def __init__(self, musicServiceClass: type, songList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.songList = songList
     
 
     def startNewSong(self) -> None:
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.Sound import Sound
         if self.nextSongSound == NoSound.getInstance():
             randomSongSound: Sound = self.basicArrayListUtil.getRandom(self.songList)
             self.nextSong(randomSongSound, 0, 0)
@@ -54,6 +79,9 @@ class MusicManager:
     
 
     def nextSong(self, nextSongSound: Sound, leftVolume: int, rightVolume: int) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.audio.Sound import Sound
         PreLogUtil.put(str(StringMaker().append(self.NEXT_SONG).append(nextSongSound.getResource())), self, self.commonStrings.PROCESS)
         self.nextSongSound = nextSongSound
         self.reset()
@@ -65,6 +93,14 @@ class MusicManager:
     
 
     def process(self) -> None:
+        from javax.microedition.media.Player import Player
+        from org.allbinary.AvianUtil import AvianUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         try:
             if self.stopped:
                 return
@@ -117,6 +153,10 @@ class MusicManager:
 
     # throws Exception
     def waitForStateChange(self, endingCurrentSongSound: Sound, startingCurrentSongSound: Sound) -> None:
+        from javax.microedition.media.Player import Player
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.audio.Sound import Sound
         while endingCurrentSongSound.getPlayerP().getState() == Player.STARTED:
             PreLogUtil.put(self.WAITING_FOR_MEDIA_TO_END, self, self.commonStrings.PROCESS)
             time.sleep((100) / 1000)
@@ -126,6 +166,11 @@ class MusicManager:
 
     # throws Exception
     def stop(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.Sound import Sound
         try:
             currentSongSound: Sound = self.currentSongSound
             if currentSongSound != NoSound.getInstance():
@@ -139,24 +184,22 @@ class MusicManager:
             if currentSongSound != NoSound.getInstance():
                 resource = currentSongSound.getResource()
             PreLogUtil.putOE(str(self.commonStrings.EXCEPTION_LABEL) + resource, self, self.commonStrings.END, e)
-from org.allbinary.thread.ARunnable import ARunnable
+# from org.allbinary.thread.ARunnable import ARunnable
 # from javax.microedition.media.Player import Player
-# from javax.microedition.media.PlayerListener import PlayerListener
-from org.allbinary.AvianUtil import AvianUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.audio.NoSound import NoSound
-from org.allbinary.media.audio.PlayerStateUtil import PlayerStateUtil
-from org.allbinary.media.audio.Sound import Sound
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
-from org.allbinary.media.audio.music.MusicManagerPlayerListener import MusicManagerPlayerListener
+# from org.allbinary.AvianUtil import AvianUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.audio.NoSound import NoSound
+# from org.allbinary.media.audio.PlayerStateUtil import PlayerStateUtil
+# from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DisposalUtil:
@@ -27,10 +28,14 @@ class DisposalUtil:
     
 
     def dispose(self, resource: Resource) -> None:
+        from org.eclipse.swt.graphics.Resource import Resource
         if not resource.isDisposed():
             resource.dispose()
-from org.eclipse.swt.graphics.Resource import Resource
+# from org.eclipse.swt.graphics.Resource import Resource
 
 
-DisposalUtil.instance = DisposalUtil()
+def _DisposalUtil_instance() -> object:
+    return DisposalUtil()
+
+lazy_static(DisposalUtil, "instance", _DisposalUtil_instance)
 

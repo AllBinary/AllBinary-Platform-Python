@@ -21,6 +21,8 @@ from org.allbinary.game.behavior.topview.placement.TileMapPlacementVisitor impor
 class PropsTileMapPlacementVisitor(TileMapPlacementVisitor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.randomFactory: MyRandomFactory = MyRandomFactory.getInstance()
 
@@ -30,6 +32,8 @@ class PropsTileMapPlacementVisitor(TileMapPlacementVisitor):
     
 
     def visit(self, lastMap: TiledMap, mapData: list[list[int]]) -> None:
+        from org.mapeditor.core.TileLayer import TileLayer
+        from org.mapeditor.core.TiledMap import TiledMap
         layerIndex: int = 0
         tileLayer: TileLayer = (lastMap.getLayer(layerIndex))
         mapArray: list[list[int]] = tileLayer.getMapArray()
@@ -72,6 +76,7 @@ class PropsTileMapPlacementVisitor(TileMapPlacementVisitor):
     
 
     def visit2(self, mapArray: list[list[int]], mapData: list[list[int]], index: int, index2: int) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         countX: int = 0
         countY: int = 0
@@ -93,10 +98,10 @@ class PropsTileMapPlacementVisitor(TileMapPlacementVisitor):
                 return
             countY += 1
             countX += 1
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.mapeditor.core.TileLayer import TileLayer
-from org.mapeditor.core.TiledMap import TiledMap
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.mapeditor.core.TileLayer import TileLayer
+# from org.mapeditor.core.TiledMap import TiledMap
 
 

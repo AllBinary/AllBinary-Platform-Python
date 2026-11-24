@@ -15,17 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicStoreFrontFactory:
     instance: BasicStoreFrontFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
-    def getInstance() -> BasicStoreFrontFactory:
+    def getInstance_j0() -> BasicStoreFrontFactory:
         return BasicStoreFrontFactory.instance
     
 
@@ -34,20 +36,30 @@ class BasicStoreFrontFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, storeName: str) -> BasicStoreFrontInterface:
+    def getInstance_j1(self, storeName: str) -> BasicStoreFrontInterface:
         from org.allbinary.business.context.modules.storefronts.BasicStoreFrontsEntity import BasicStoreFrontsEntity
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             storeFronts: BasicStoreFrontsEntity = BasicStoreFrontsEntity()
             return storeFronts.getStoreFrontInterface(storeName)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().FACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().FACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-BasicStoreFrontFactory.instance = BasicStoreFrontFactory()
+def _BasicStoreFrontFactory_instance() -> object:
+    return BasicStoreFrontFactory()
+
+lazy_static(BasicStoreFrontFactory, "instance", _BasicStoreFrontFactory_instance)
 

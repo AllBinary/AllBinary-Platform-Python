@@ -15,18 +15,20 @@
 
 from __future__ import annotations
 
-# from java.util.EventObject import EventObject
+from java.util.EventObject import EventObject
 
 
 class EmailEvent(EventObject):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
         self.emailInfo: EmailInfo = None
         self.userEmailEventNameData: UserEmailEventNameData = None
         self.attempts: int = 0
     
 
     def __init__(self, emailEventHandler: object, userEmailEventNameData: UserEmailEventNameData, emailInfo: EmailInfo, attempts: int) -> None:
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
         super().__init__(emailEventHandler)
         self._init_fields()
         self.userEmailEventNameData = userEmailEventNameData
@@ -34,6 +36,7 @@ class EmailEvent(EventObject):
     
 
     def getEmailInfo(self) -> EmailInfo:
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
         return self.emailInfo
     
 
@@ -46,6 +49,7 @@ class EmailEvent(EventObject):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("EmailEvent Log: \n")
         stringBuffer.append("Event Name: ")
@@ -57,7 +61,7 @@ class EmailEvent(EventObject):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

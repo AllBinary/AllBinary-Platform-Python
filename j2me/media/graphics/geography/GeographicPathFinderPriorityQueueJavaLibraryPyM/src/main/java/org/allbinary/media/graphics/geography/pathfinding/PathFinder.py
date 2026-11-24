@@ -21,11 +21,17 @@ from org.allbinary.media.graphics.geography.pathfinding.GeographicPathFinderBase
 class PathFinder(GeographicPathFinderBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.math.MathUtil import MathUtil
+        from org.allbinary.util.ABHashSet import ABHashSet
+        from org.allbinary.util.ABPriorityQueue import ABPriorityQueue
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
         self.mathUtil: MathUtil = MathUtil.getInstance()
-        self.openPriorityQueue: PriorityQueue[PathFindingNodeCost] = PriorityQueue()
-        self.closedSet: HashSet[PathFindingNodeCost] = HashSet()
+        self.openPriorityQueue: ABPriorityQueue[PathFindingNodeCost] = ABPriorityQueue()
+        self.closedSet: ABHashSet[PathFindingNodeCost] = ABHashSet()
         self.geographicMapInterface: object = NullUtil.getInstance().NULL_OBJECT
         self.costArray: list[list[PathFindingNodeCost]] = PathFindingNodeCost.NULL_PATH_FINDING_NODE_COST_ARRAY_ARRAY
 
@@ -36,8 +42,12 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def init(self, geographicMapInterface: BasicGeographicMap) -> None:
-        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCost import PathFindingNodeCost
-        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfo import PathFindingNodeCostInfo
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
         self.geographicMapInterface = geographicMapInterface
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
         self.costArray = [[None] * (tiledLayer.getRows()) for _ in range(tiledLayer.getColumns())]
@@ -54,6 +64,8 @@ class PathFinder(GeographicPathFinderBase):
     
 
     def searchTotalPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, totalPaths: int) -> BasicArrayList:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             return self.search(startPathFindingNodeList.get(0), endPathFindingNodeList.get(0))
         except Exception as e:
@@ -64,6 +76,7 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def searchTotalPathN(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, totalPaths: int, multipassState: MultipassState) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if multipassState.step == 0:
             multipassState.step += 1
         elif multipassState.step == 1:
@@ -75,6 +88,8 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def search(self, startPathFindingNode: PathFindingNode, endPathFindingNode: PathFindingNode) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = self.findPath(startPathFindingNode.geographicMapCellPosition, endPathFindingNode.geographicMapCellPosition)
         pathList: BasicArrayList = BasicArrayListD()
         pathList.add(list_)
@@ -88,6 +103,8 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def searchN(self, startPathFindingNode: PathFindingNode, endPathFindingNode: PathFindingNode, multipassState: MultipassState) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = self.findPathEnd(startPathFindingNode.geographicMapCellPosition, endPathFindingNode.geographicMapCellPosition, multipassState)
         if list_ is None:
             return self.basicArrayListUtil.getImmutableInstance()
@@ -100,6 +117,11 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def findPath(self, start: GeographicMapCellPosition, target: GeographicMapCellPosition) -> BasicArrayList:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.openPriorityQueue.clear()
         self.closedSet.clear()
         discoveryCalculation: int = 0
@@ -150,6 +172,7 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def findPathStart(self, start: GeographicMapCellPosition, target: GeographicMapCellPosition, multipassState: MultipassState) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         self.openPriorityQueue.clear()
         self.closedSet.clear()
         discoveryCalculation: int = 0
@@ -171,6 +194,11 @@ class PathFinder(GeographicPathFinderBase):
 
     # throws Exception
     def findPathEnd(self, start: GeographicMapCellPosition, target: GeographicMapCellPosition, multipassState: MultipassState) -> BasicArrayList:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         geographicMapInterface: BasicGeographicMap = self.geographicMapInterface
         basicGeographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         allBinaryTiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
@@ -208,6 +236,10 @@ class PathFinder(GeographicPathFinderBase):
     
 
     def extractPath(self, start: GeographicMapCellPosition, current: PathFindingNodeCost) -> BasicArrayList:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         path: BasicArrayList = BasicArrayListD()
         while current.parent != NullUtil.getInstance().NULL_OBJECT:
             path.add(current.geographicMapCellPosition)
@@ -215,21 +247,20 @@ class PathFinder(GeographicPathFinderBase):
         path.add(start)
         self.basicArrayListUtil.reverse(path)
         return path
-# from java.util.HashSet import HashSet
-# from java.util.PriorityQueue import PriorityQueue
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCost import PathFindingNodeCost
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+# from org.allbinary.util.ABHashSet import ABHashSet
+# from org.allbinary.util.ABPriorityQueue import ABPriorityQueue
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

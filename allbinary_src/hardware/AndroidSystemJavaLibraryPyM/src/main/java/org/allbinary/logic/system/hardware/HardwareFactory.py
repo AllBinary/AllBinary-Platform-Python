@@ -15,18 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HardwareFactory:
     instance: HardwareFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
     
 
     @staticmethod
-    def getInstance() -> HardwareFactory:
+    def getInstance_j0() -> HardwareFactory:
         return HardwareFactory.instance
     
 
@@ -35,9 +38,11 @@ class HardwareFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, os: GenericOperatingSystem) -> HardwareInterface:
-        from org.allbinary.logic.system.hardware.NoHardware import NoHardware
+    def getInstance_j1(self, os: GenericOperatingSystem) -> HardwareInterface:
+        from org.allbinary.logic.system.hardware.android.AndroidHardware import AndroidHardware
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             operatingSystems: OperatingSystems = OperatingSystems.getInstance()
             if ((os.getName() > operatingSystems.ANDROID) - (os.getName() < operatingSystems.ANDROID)) == 0:
@@ -49,13 +54,19 @@ class HardwareFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put("Ignoring Exception Returning NoHardware", self, commonStrings.GET_INSTANCE, e)
             return NoHardware()
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.hardware.android.AndroidHardware import AndroidHardware
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
-from org.allbinary.string.CommonStrings import CommonStrings
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.hardware.android.AndroidHardware import AndroidHardware
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-HardwareFactory.instance = HardwareFactory()
+def _HardwareFactory_instance() -> object:
+    return HardwareFactory()
+
+lazy_static(HardwareFactory, "instance", _HardwareFactory_instance)
 

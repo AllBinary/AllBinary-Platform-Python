@@ -22,18 +22,22 @@ class AdvertisementSearchInterface:
     
 
     def getWebSite(self) -> AdvertisementWebsiteInterface:
+        from org.allbinary.business.advertisement.search.website.AdvertisementWebsiteInterface import AdvertisementWebsiteInterface
         raise NotImplementedError()
     
 
     def getCategory(self) -> AdvertisementCategoryInterface:
+        from org.allbinary.business.advertisement.search.category.AdvertisementCategoryInterface import AdvertisementCategoryInterface
         raise NotImplementedError()
     
 
     def getSizeConstraints(self) -> TwoDimensionalConstraintInterface:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         raise NotImplementedError()
     
 
     def getPricingConstraints(self) -> PriceConstraintInterface:
+        from org.allbinary.logic.control.contraints.price.PriceConstraintInterface import PriceConstraintInterface
         raise NotImplementedError()
     
 
@@ -45,19 +49,23 @@ class AdvertisementSearchInterface:
         raise NotImplementedError()
     
 
-    def getSearchParams(self) -> dict:
+    def getSearchParams(self) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
     
 
     def setCategory(self, advertisementCategoryInterface: AdvertisementCategoryInterface) -> None:
+        from org.allbinary.business.advertisement.search.category.AdvertisementCategoryInterface import AdvertisementCategoryInterface
         raise NotImplementedError()
     
 
     def setSizeConstraints(self, twoDimensionConstraintsInterface: TwoDimensionalConstraintInterface) -> None:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         raise NotImplementedError()
     
 
     def setPricingConstraints(self, priceConstraintInterface: PriceConstraintInterface) -> None:
+        from org.allbinary.logic.control.contraints.price.PriceConstraintInterface import PriceConstraintInterface
         raise NotImplementedError()
     
 
@@ -69,12 +77,13 @@ class AdvertisementSearchInterface:
         raise NotImplementedError()
     
 
-    def setSearchParams(self, columnAndKeywordHashMap: dict) -> None:
+    def setSearchParams(self, columnAndKeywordHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.advertisement.search.category.AdvertisementCategoryInterface import AdvertisementCategoryInterface
-from org.allbinary.business.advertisement.search.website.AdvertisementWebsiteInterface import AdvertisementWebsiteInterface
-from org.allbinary.logic.control.contraints.price.PriceConstraintInterface import PriceConstraintInterface
-from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
+# from org.allbinary.business.advertisement.search.category.AdvertisementCategoryInterface import AdvertisementCategoryInterface
+# from org.allbinary.business.advertisement.search.website.AdvertisementWebsiteInterface import AdvertisementWebsiteInterface
+# from org.allbinary.logic.control.contraints.price.PriceConstraintInterface import PriceConstraintInterface
+# from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
 
 

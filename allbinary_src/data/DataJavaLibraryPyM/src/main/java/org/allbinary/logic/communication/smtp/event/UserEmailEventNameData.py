@@ -16,12 +16,11 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class UserEmailEventNameData:
-    userNameEvenNameHashMap: dict = StdUtil.getInstance().createHashMap()
+    userNameEvenNameHashMap: HashMap = None
     nextId: int = 0
     INSTALLER: UserEmailEventNameData = None
     EXCEPTION: UserEmailEventNameData = None
@@ -95,53 +94,139 @@ class UserEmailEventNameData:
     def __str__(self) -> str:
         return self.toString()
 # from java.util.HashMap import HashMap
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.logic.StdUtil import StdUtil
 
 
-UserEmailEventNameData.INSTALLER = UserEmailEventNameData("Installer")
+def _UserEmailEventNameData_userNameEvenNameHashMap() -> object:
+    from java.util.HashMap import HashMap
+    from org.allbinary.logic.StdUtil import StdUtil
+    return StdUtil.getInstance().createHashMap()
 
-UserEmailEventNameData.EXCEPTION = UserEmailEventNameData("Exception")
+lazy_static(UserEmailEventNameData, "userNameEvenNameHashMap", _UserEmailEventNameData_userNameEvenNameHashMap)
 
-UserEmailEventNameData.LOGGEDEXCEPTION = UserEmailEventNameData("Logged Exception")
+def _UserEmailEventNameData_INSTALLER() -> object:
+    return UserEmailEventNameData("Installer")
 
-UserEmailEventNameData.ERROR = UserEmailEventNameData("Error")
+lazy_static(UserEmailEventNameData, "INSTALLER", _UserEmailEventNameData_INSTALLER)
 
-UserEmailEventNameData.OUTOFMEMORY = UserEmailEventNameData("Out Of Memory Error")
+def _UserEmailEventNameData_EXCEPTION() -> object:
+    return UserEmailEventNameData("Exception")
 
-UserEmailEventNameData.ADMINGENERATINGSTATICPAGES = UserEmailEventNameData("Admin Generating Static Pages")
+lazy_static(UserEmailEventNameData, "EXCEPTION", _UserEmailEventNameData_EXCEPTION)
 
-UserEmailEventNameData.STOREERROROCCURRED = UserEmailEventNameData("Store Error Occurred")
+def _UserEmailEventNameData_LOGGEDEXCEPTION() -> object:
+    return UserEmailEventNameData("Logged Exception")
 
-UserEmailEventNameData.STOREOUTOFMEMORY = UserEmailEventNameData("Store Out Of Memory Error")
+lazy_static(UserEmailEventNameData, "LOGGEDEXCEPTION", _UserEmailEventNameData_LOGGEDEXCEPTION)
 
-UserEmailEventNameData.STORECREATED = UserEmailEventNameData("Store Created")
+def _UserEmailEventNameData_ERROR() -> object:
+    return UserEmailEventNameData("Error")
 
-UserEmailEventNameData.STOREOPENED = UserEmailEventNameData("Store Opened")
+lazy_static(UserEmailEventNameData, "ERROR", _UserEmailEventNameData_ERROR)
 
-UserEmailEventNameData.STORECLOSED = UserEmailEventNameData("Store Closed")
+def _UserEmailEventNameData_OUTOFMEMORY() -> object:
+    return UserEmailEventNameData("Out Of Memory Error")
 
-UserEmailEventNameData.STOREGENERATINGSTATICPAGES = UserEmailEventNameData("Store Generating Static Pages")
+lazy_static(UserEmailEventNameData, "OUTOFMEMORY", _UserEmailEventNameData_OUTOFMEMORY)
 
-UserEmailEventNameData.PRODUCTISOUT = UserEmailEventNameData("Product Is Out")
+def _UserEmailEventNameData_ADMINGENERATINGSTATICPAGES() -> object:
+    return UserEmailEventNameData("Admin Generating Static Pages")
 
-UserEmailEventNameData.PRODUCTISAVAILABLE = UserEmailEventNameData("Product Is Available")
+lazy_static(UserEmailEventNameData, "ADMINGENERATINGSTATICPAGES", _UserEmailEventNameData_ADMINGENERATINGSTATICPAGES)
 
-UserEmailEventNameData.PRODUCTISOLD = UserEmailEventNameData("Product Is Old")
+def _UserEmailEventNameData_STOREERROROCCURRED() -> object:
+    return UserEmailEventNameData("Store Error Occurred")
 
-UserEmailEventNameData.PRODUCTISONSALE = UserEmailEventNameData("Product Is On Sale")
+lazy_static(UserEmailEventNameData, "STOREERROROCCURRED", _UserEmailEventNameData_STOREERROROCCURRED)
 
-UserEmailEventNameData.PRODUCTSALEISOVER = UserEmailEventNameData("Product Sale Is Over")
+def _UserEmailEventNameData_STOREOUTOFMEMORY() -> object:
+    return UserEmailEventNameData("Store Out Of Memory Error")
 
-UserEmailEventNameData.ORDERPREPROCESSING = UserEmailEventNameData(OrderHistoryData.PREPROCESSING)
+lazy_static(UserEmailEventNameData, "STOREOUTOFMEMORY", _UserEmailEventNameData_STOREOUTOFMEMORY)
 
-UserEmailEventNameData.ORDERPROCESSING = UserEmailEventNameData(OrderHistoryData.PROCESSING)
+def _UserEmailEventNameData_STORECREATED() -> object:
+    return UserEmailEventNameData("Store Created")
 
-UserEmailEventNameData.ORDERCANCELLED = UserEmailEventNameData(OrderHistoryData.CANCELLED)
+lazy_static(UserEmailEventNameData, "STORECREATED", _UserEmailEventNameData_STORECREATED)
 
-UserEmailEventNameData.ORDERPARTIALLYSHIPPED = UserEmailEventNameData(OrderHistoryData.PARTIALLYSHIPPED)
+def _UserEmailEventNameData_STOREOPENED() -> object:
+    return UserEmailEventNameData("Store Opened")
 
-UserEmailEventNameData.ORDERSHIPPED = UserEmailEventNameData(OrderHistoryData.SHIPPED)
+lazy_static(UserEmailEventNameData, "STOREOPENED", _UserEmailEventNameData_STOREOPENED)
 
-UserEmailEventNameData.QUOTEREQUEST = UserEmailEventNameData("Quote Request")
+def _UserEmailEventNameData_STORECLOSED() -> object:
+    return UserEmailEventNameData("Store Closed")
 
-UserEmailEventNameData.NEWPASSWORD = UserEmailEventNameData("New Password")
+lazy_static(UserEmailEventNameData, "STORECLOSED", _UserEmailEventNameData_STORECLOSED)
+
+def _UserEmailEventNameData_STOREGENERATINGSTATICPAGES() -> object:
+    return UserEmailEventNameData("Store Generating Static Pages")
+
+lazy_static(UserEmailEventNameData, "STOREGENERATINGSTATICPAGES", _UserEmailEventNameData_STOREGENERATINGSTATICPAGES)
+
+def _UserEmailEventNameData_PRODUCTISOUT() -> object:
+    return UserEmailEventNameData("Product Is Out")
+
+lazy_static(UserEmailEventNameData, "PRODUCTISOUT", _UserEmailEventNameData_PRODUCTISOUT)
+
+def _UserEmailEventNameData_PRODUCTISAVAILABLE() -> object:
+    return UserEmailEventNameData("Product Is Available")
+
+lazy_static(UserEmailEventNameData, "PRODUCTISAVAILABLE", _UserEmailEventNameData_PRODUCTISAVAILABLE)
+
+def _UserEmailEventNameData_PRODUCTISOLD() -> object:
+    return UserEmailEventNameData("Product Is Old")
+
+lazy_static(UserEmailEventNameData, "PRODUCTISOLD", _UserEmailEventNameData_PRODUCTISOLD)
+
+def _UserEmailEventNameData_PRODUCTISONSALE() -> object:
+    return UserEmailEventNameData("Product Is On Sale")
+
+lazy_static(UserEmailEventNameData, "PRODUCTISONSALE", _UserEmailEventNameData_PRODUCTISONSALE)
+
+def _UserEmailEventNameData_PRODUCTSALEISOVER() -> object:
+    return UserEmailEventNameData("Product Sale Is Over")
+
+lazy_static(UserEmailEventNameData, "PRODUCTSALEISOVER", _UserEmailEventNameData_PRODUCTSALEISOVER)
+
+def _UserEmailEventNameData_ORDERPREPROCESSING() -> object:
+    from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+    return UserEmailEventNameData(OrderHistoryData.PREPROCESSING)
+
+lazy_static(UserEmailEventNameData, "ORDERPREPROCESSING", _UserEmailEventNameData_ORDERPREPROCESSING)
+
+def _UserEmailEventNameData_ORDERPROCESSING() -> object:
+    from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+    return UserEmailEventNameData(OrderHistoryData.PROCESSING)
+
+lazy_static(UserEmailEventNameData, "ORDERPROCESSING", _UserEmailEventNameData_ORDERPROCESSING)
+
+def _UserEmailEventNameData_ORDERCANCELLED() -> object:
+    from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+    return UserEmailEventNameData(OrderHistoryData.CANCELLED)
+
+lazy_static(UserEmailEventNameData, "ORDERCANCELLED", _UserEmailEventNameData_ORDERCANCELLED)
+
+def _UserEmailEventNameData_ORDERPARTIALLYSHIPPED() -> object:
+    from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+    return UserEmailEventNameData(OrderHistoryData.PARTIALLYSHIPPED)
+
+lazy_static(UserEmailEventNameData, "ORDERPARTIALLYSHIPPED", _UserEmailEventNameData_ORDERPARTIALLYSHIPPED)
+
+def _UserEmailEventNameData_ORDERSHIPPED() -> object:
+    from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+    return UserEmailEventNameData(OrderHistoryData.SHIPPED)
+
+lazy_static(UserEmailEventNameData, "ORDERSHIPPED", _UserEmailEventNameData_ORDERSHIPPED)
+
+def _UserEmailEventNameData_QUOTEREQUEST() -> object:
+    return UserEmailEventNameData("Quote Request")
+
+lazy_static(UserEmailEventNameData, "QUOTEREQUEST", _UserEmailEventNameData_QUOTEREQUEST)
+
+def _UserEmailEventNameData_NEWPASSWORD() -> object:
+    return UserEmailEventNameData("New Password")
+
+lazy_static(UserEmailEventNameData, "NEWPASSWORD", _UserEmailEventNameData_NEWPASSWORD)
 

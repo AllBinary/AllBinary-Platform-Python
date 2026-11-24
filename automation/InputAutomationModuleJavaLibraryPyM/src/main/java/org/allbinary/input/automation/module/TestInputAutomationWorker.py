@@ -20,6 +20,12 @@ from __future__ import annotations
 class TestInputAutomationWorker:
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
+        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
+        from org.allbinary.media.image.comparison.SaveImageComparisonWorker import SaveImageComparisonWorker
+        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
+        from org.allbinary.media.image.comparison.motion.SaveMotionRectanglesResultsWorker import SaveMotionRectanglesResultsWorker
+        from org.allbinary.media.image.comparison.motion.TestInputForMotionRectanglesResultsWorker import TestInputForMotionRectanglesResultsWorker
         self.captureWorker: ScreenCaptureImagesWorker = None
         self.imageComparisonWorker: ImageComparisonWorker = None
         self.motionRectanglesWorker: MotionRectanglesWorker = None
@@ -29,6 +35,10 @@ class TestInputAutomationWorker:
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
+        from org.allbinary.media.image.comparison.SaveImageComparisonWorker import SaveImageComparisonWorker
+        from org.allbinary.media.image.comparison.motion.SaveMotionRectanglesResultsWorker import SaveMotionRectanglesResultsWorker
+        from org.allbinary.media.image.comparison.motion.TestInputForMotionRectanglesResultsWorker import TestInputForMotionRectanglesResultsWorker
         self._init_fields()
         self.captureWorker = ScreenCaptureImagesWorker()
         self.changedPixelsImageComparisonResultsWorker = SaveImageComparisonWorker()
@@ -39,11 +49,11 @@ class TestInputAutomationWorker:
         self.imageComparisonWorker.addListenerInterface(self.changedPixelsImageComparisonResultsWorker)
         self.imageComparisonWorker.addListenerInterface(self.motionRectanglesWorker)
         self.captureWorker.addListenerInterface(self.imageComparisonWorker)
-from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
-from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
-from org.allbinary.media.image.comparison.SaveImageComparisonWorker import SaveImageComparisonWorker
-from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
-from org.allbinary.media.image.comparison.motion.SaveMotionRectanglesResultsWorker import SaveMotionRectanglesResultsWorker
-from org.allbinary.media.image.comparison.motion.TestInputForMotionRectanglesResultsWorker import TestInputForMotionRectanglesResultsWorker
+# from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
+# from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
+# from org.allbinary.media.image.comparison.SaveImageComparisonWorker import SaveImageComparisonWorker
+# from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
+# from org.allbinary.media.image.comparison.motion.SaveMotionRectanglesResultsWorker import SaveMotionRectanglesResultsWorker
+# from org.allbinary.media.image.comparison.motion.TestInputForMotionRectanglesResultsWorker import TestInputForMotionRectanglesResultsWorker
 
 

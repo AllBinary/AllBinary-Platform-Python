@@ -21,16 +21,22 @@ from views.business.context.modules.storefront.HttpStoreComponentView import Htt
 class PaymentProcessorComponent(HttpStoreComponentView):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
     
 
     # throws Exception
     def addDomNodeInterfaces(self) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterface import PaymentProcessorInterface
+        from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterfaceFactory import PaymentProcessorInterfaceFactory
+        from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
         paymentProcessorInterface: PaymentProcessorInterface = PaymentProcessorInterfaceFactory.getInstance().getInstance(self.getTransformInfoInterface())
         paymentProcessorInterface.process()
         httpTransformInfoInterface: TransformInfoHttpInterface = self.getTransformInfoInterface()
@@ -40,18 +46,22 @@ class PaymentProcessorComponent(HttpStoreComponentView):
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
-from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterface import PaymentProcessorInterface
-from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterfaceFactory import PaymentProcessorInterfaceFactory
-from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterface import PaymentProcessorInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterfaceFactory import PaymentProcessorInterfaceFactory
+# from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

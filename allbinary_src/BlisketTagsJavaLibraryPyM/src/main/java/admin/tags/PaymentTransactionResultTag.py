@@ -22,9 +22,10 @@ class PaymentTransactionResultTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.PaymentTransactionResultHelperFactory import PaymentTransactionResultHelperFactory
         super().__init__()
         self.setTagHelperFactory(PaymentTransactionResultHelperFactory())
         self.setTagRequestHelperFactory(PaymentTransactionResultHelperFactory())
-from admin.taghelpers.PaymentTransactionResultHelperFactory import PaymentTransactionResultHelperFactory
+# from admin.taghelpers.PaymentTransactionResultHelperFactory import PaymentTransactionResultHelperFactory
 
 

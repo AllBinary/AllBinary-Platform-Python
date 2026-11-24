@@ -3,12 +3,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SqlTypeStrings:
     instance: SqlTypeStrings = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.CHAR_COLUMN: str = "VARCHAR"
         self.INT_COLUMN: str = "VARCHAR"
         self.MAX_SIZE: str = "(255)"
@@ -48,9 +51,12 @@ class SqlTypeStrings:
     @staticmethod
     def getInstance() -> SqlTypeStrings:
         return SqlTypeStrings.instance
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-SqlTypeStrings.instance = SqlTypeStrings()
+def _SqlTypeStrings_instance() -> object:
+    return SqlTypeStrings()
+
+lazy_static(SqlTypeStrings, "instance", _SqlTypeStrings_instance)
 

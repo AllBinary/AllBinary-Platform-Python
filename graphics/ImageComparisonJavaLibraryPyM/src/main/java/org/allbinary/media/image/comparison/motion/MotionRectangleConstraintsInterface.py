@@ -52,7 +52,8 @@ class MotionRectangleConstraintsInterface:
     # throws Exception
     def isValid(self, frame: int, bufferedImage: BufferedImage, rectangle: Rectangle) -> bool:
         raise NotImplementedError()
-# from java.awt import *
+# from java.awt.Dimension import Dimension
+# from java.awt.Rectangle import Rectangle
 # from java.awt.image.BufferedImage import BufferedImage
 
 

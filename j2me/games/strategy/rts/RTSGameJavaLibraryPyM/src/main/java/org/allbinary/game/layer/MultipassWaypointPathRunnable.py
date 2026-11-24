@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from org.allbinary.thread.ARunnable import ARunnable
 from org.allbinary.game.layer.WaypointPathRunnableBase import WaypointPathRunnableBase
 
 
@@ -64,6 +65,11 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
             self.multipassWaypointPathRunnable.processEndRunnable()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.graphics.geography.pathfinding.MultipassState import MultipassState
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
         self.multipassState: MultipassState = MultipassState()
@@ -95,6 +101,8 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def run(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             self.currentPassRunnable.run()
@@ -105,6 +113,7 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def reset2(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         self.multipassState.step = 0
         self.multipassState.iteration = 0
         self.multipassState.iteration2 = 0
@@ -128,6 +137,9 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def processFirstRunnable(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         try:
             self.pathFindingLayer.getWaypointRunnableLogHelper().start(self.pathFindingLayer)
             self.reset2()
@@ -149,6 +161,9 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def processSecondRunnable(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         try:
             geographicMapCellPosition: GeographicMapCellPosition = self.pathFindingLayer.getCurrentGeographicMapCellPosition()
             localPathFindingInfo: PathFindingInfo = self.pathFindingInfo
@@ -163,6 +178,7 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def processEndRunnable(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             waypointBehavior: WaypointBehaviorBase = self.pathFindingLayer.getWaypointBehavior()
             waypointBehavior.setWaypointPathsList(self.list_)
@@ -172,17 +188,13 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
             self.setRunning(False)
         self.finish()
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.thread.ARunnable import ARunnable
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.pathfinding.MultipassState import MultipassState
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
-from org.allbinary.game.layer.FirstRunnable import FirstRunnable
-from org.allbinary.game.layer.SecondRunnable import SecondRunnable
-from org.allbinary.game.layer.EndRunnable import EndRunnable
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.pathfinding.MultipassState import MultipassState
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

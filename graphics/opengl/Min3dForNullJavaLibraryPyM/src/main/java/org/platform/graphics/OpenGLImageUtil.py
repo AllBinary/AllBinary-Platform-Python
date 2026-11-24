@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.opengles.OpenGLImageUtilBase import OpenGLImageUtilBase
 
 
@@ -18,5 +19,8 @@ class OpenGLImageUtil(OpenGLImageUtilBase):
         return OpenGLImageUtil.instance
 
 
-OpenGLImageUtil.instance = OpenGLImageUtil()
+def _OpenGLImageUtil_instance() -> object:
+    return OpenGLImageUtil()
+
+lazy_static(OpenGLImageUtil, "instance", _OpenGLImageUtil_instance)
 

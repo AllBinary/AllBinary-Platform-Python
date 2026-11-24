@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HtmlNameMathData:
@@ -37,5 +38,8 @@ class HtmlNameMathData:
         self._init_fields()
 
 
-HtmlNameMathData.instance = HtmlNameMathData()
+def _HtmlNameMathData_instance() -> object:
+    return HtmlNameMathData()
+
+lazy_static(HtmlNameMathData, "instance", _HtmlNameMathData_instance)
 

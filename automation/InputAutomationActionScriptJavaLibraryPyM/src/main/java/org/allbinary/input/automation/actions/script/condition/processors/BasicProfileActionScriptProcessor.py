@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItem import ProfileActionScriptItem
 from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
 
 
-class BasicProfileActionScriptProcessor(ProfileActionScriptItem, ProfileActionScriptProcessorInterface):
+class BasicProfileActionScriptProcessor(*java_bases(ProfileActionScriptItem, ProfileActionScriptProcessorInterface)):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
@@ -29,6 +30,7 @@ class BasicProfileActionScriptProcessor(ProfileActionScriptItem, ProfileActionSc
     
 
     def _constructor2(self, label: str, node: Node) -> None:
+        from org.w3c.dom.Node import Node
         super().__init__(label, node)
     
 
@@ -37,6 +39,8 @@ class BasicProfileActionScriptProcessor(ProfileActionScriptItem, ProfileActionSc
     
 
     def actionPerformed(self, actionEvent: ActionEvent) -> None:
+        from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
         super().actionPerformed(actionEvent)
         if actionEvent.getActionCommand().compareTo(self.DELETE) == 0:
             if isinstance(self.getParent(), ProfileActionScriptConditionInterface):
@@ -48,12 +52,14 @@ class BasicProfileActionScriptProcessor(ProfileActionScriptItem, ProfileActionSc
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.processors.GenericProfileActionScriptProcessorData import GenericProfileActionScriptProcessorData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(GenericProfileActionScriptProcessorData.NAME)
         return node
 # from java.awt.event.ActionEvent import ActionEvent
-from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
-from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
+# from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

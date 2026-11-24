@@ -16,16 +16,19 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.queue.BasicQueue import BasicQueue
 from org.allbinary.logic.communication.smtp.queue.EmailQueueInterface import EmailQueueInterface
 
 
-class BasicEmailQueue(BasicQueue, EmailQueueInterface):
+class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
     instance: BasicEmailQueue = None
     basicEmailQueue: BasicEmailQueue = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -52,26 +55,31 @@ class BasicEmailQueue(BasicQueue, EmailQueueInterface):
             return self._offer_unlocked(emailInterface)
 
     def _offer_unlocked(self, emailInterface: EmailInterface) -> bool:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         self.offer(emailInterface)
         self.post(emailInterface)
         return True
     
 
-    def remove(self, emailInterface: EmailInterface) -> None:
+    def remove_j1(self, emailInterface: EmailInterface) -> None:
         with self._lock:
-            return self._remove_unlocked(emailInterface)
+            return self._remove_j1_unlocked(emailInterface)
 
-    def _remove_unlocked(self, emailInterface: EmailInterface) -> None:
+    def _remove_j1_unlocked(self, emailInterface: EmailInterface) -> None:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         self.remove(emailInterface)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def remove(self) -> EmailInterface:
+    def remove_j0(self) -> EmailInterface:
         with self._lock:
-            return self._remove_unlocked()
+            return self._remove_j0_unlocked()
 
-    def _remove_unlocked(self) -> EmailInterface:
+    def _remove_j0_unlocked(self) -> EmailInterface:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         return None
+
+    def remove(self, *args):
+        return getattr(self, "remove_j" + str(len(args)))(*args)
     
 
     # throws Exception
@@ -80,6 +88,7 @@ class BasicEmailQueue(BasicQueue, EmailQueueInterface):
             return self._post_unlocked(emailInterface)
 
     def _post_unlocked(self, emailInterface: EmailInterface) -> None:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         if self.send(emailInterface):
             self.remove(emailInterface)
             self.processAllUnsent()
@@ -91,6 +100,7 @@ class BasicEmailQueue(BasicQueue, EmailQueueInterface):
             return self._processAllUnsent_unlocked()
 
     def _processAllUnsent_unlocked(self) -> None:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         size: int = self.queueVector.size()
         for index in range(0, size):
             emailInterface: EmailInterface = self.queueVector.get(index)
@@ -104,21 +114,29 @@ class BasicEmailQueue(BasicQueue, EmailQueueInterface):
             return self._send_unlocked(emailInterface)
 
     def _send_unlocked(self, emailInterface: EmailInterface) -> bool:
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.putF("Sending: " + str(emailInterface.log()), self, "send")
             Transport.send(emailInterface.getMimeMessage())
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.putF("Email Send Debug: " + str(emailInterface.getDebugInfo()), self, "send")
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.put("Failed Email Send Debug: " + str(emailInterface.getDebugInfo()), self, "send", e)
             return False
 # from javax.mail.Transport import Transport
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-BasicEmailQueue.instance = BasicEmailQueue()
+def _BasicEmailQueue_instance() -> object:
+    return BasicEmailQueue()
+
+lazy_static(BasicEmailQueue, "instance", _BasicEmailQueue_instance)
 

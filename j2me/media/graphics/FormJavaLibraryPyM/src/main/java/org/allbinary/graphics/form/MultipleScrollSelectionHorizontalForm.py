@@ -3,69 +3,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
-from org.allbinary.graphics.paint.Paintable import Paintable
 from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable
-from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable
 
 
-class MultipleScrollSelectionHorizontalForm(ScrollSelectionForm, UpdateMyFontInterface):
-    class MultipleScrollSelectionFormHorizontalPaintable(ItemIndexPaintable):
-
-        def _init_fields(self) -> None:
-            self.multipleScrollSelectionForm: MultipleScrollSelectionHorizontalForm = None
-        
-
-        def __init__(self, multipleScrollSelectionForm: MultipleScrollSelectionHorizontalForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.multipleScrollSelectionForm = multipleScrollSelectionForm
-        
-
-        # throws Exception
-        def paint(self, graphics: Graphics, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from javax.microedition.lcdui.Graphics import Graphics
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.multipleScrollSelectionForm.paintHorizontal(graphics, index, item, dx, dy)
-    class MultipleScrollSelectionFormVerticalPaintable(ItemIndexPaintable):
-
-        def _init_fields(self) -> None:
-            self.multipleScrollSelectionForm: MultipleScrollSelectionHorizontalForm = None
-        
-
-        def __init__(self, multipleScrollSelectionForm: MultipleScrollSelectionHorizontalForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.multipleScrollSelectionForm = multipleScrollSelectionForm
-        
-
-        # throws Exception
-        def paint(self, graphics: Graphics, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from javax.microedition.lcdui.Graphics import Graphics
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.multipleScrollSelectionForm.paintVertical(graphics, index, item, dx, dy)
-    class MultipleScrollSelectionFormRectPaintable(Paintable):
-
-        def _init_fields(self) -> None:
-            self.multipleScrollSelectionForm: MultipleScrollSelectionHorizontalForm = None
-        
-
-        def __init__(self, multipleScrollSelectionForm: MultipleScrollSelectionHorizontalForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.multipleScrollSelectionForm = multipleScrollSelectionForm
-        
-
-        def paint(self, graphics: Graphics) -> None:
-            from javax.microedition.lcdui.Graphics import Graphics
-            self.multipleScrollSelectionForm.fillRect(graphics)
+class MultipleScrollSelectionHorizontalForm(*java_bases(ScrollSelectionForm, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.rectPaintable: Paintable = NullPaintable.getInstance()
         self.multipleScrollSelectionHorizontalFormTypeItemIndexPaintable: ItemIndexPaintable = ItemIndexPaintable.getInstance()
         self.backgroundColor: int = int(BasicColorFactory.getInstance().TRANSPARENT_GREY)
@@ -87,6 +37,7 @@ class MultipleScrollSelectionHorizontalForm(ScrollSelectionForm, UpdateMyFontInt
     
 
     def __init__(self, title: str, items: list[ABCustomItem], formPaintableFactory: ItemPaintableFactory, border: int, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.form.MultipleScrollSelectionFormRectPaintable import MultipleScrollSelectionFormRectPaintable
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
@@ -107,6 +58,8 @@ class MultipleScrollSelectionHorizontalForm(ScrollSelectionForm, UpdateMyFontInt
     # throws Exception
     def init(self, rectangle: Rectangle, formType: FormType) -> None:
         from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from org.allbinary.graphics.form.MultipleScrollSelectionFormVerticalPaintable import MultipleScrollSelectionFormVerticalPaintable
+        from org.allbinary.graphics.form.MultipleScrollSelectionFormHorizontalPaintable import MultipleScrollSelectionFormHorizontalPaintable
         from org.allbinary.graphics.Rectangle import Rectangle
         super().init(rectangle, formType)
         formTypeFactory: FormTypeFactory = FormTypeFactory.getInstance()
@@ -187,6 +140,7 @@ class MultipleScrollSelectionHorizontalForm(ScrollSelectionForm, UpdateMyFontInt
 # from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
 # from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 # from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable

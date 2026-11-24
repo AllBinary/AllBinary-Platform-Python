@@ -20,11 +20,13 @@ from __future__ import annotations
 class MotionRectangle(object):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.rectangle: Rectangle = None
         self.pixelDeltaVector: BasicArrayList = None
     
 
     def __init__(self, rectangle: Rectangle) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.setRectangle(rectangle)
         self.setPixelDeltaVector(BasicArrayListD())
@@ -39,20 +41,23 @@ class MotionRectangle(object):
     
 
     def getPixelDeltaVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.pixelDeltaVector
     
 
     def setPixelDeltaVector(self, pixelDeltaVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pixelDeltaVector = pixelDeltaVector
     
 
     def clone(self) -> object:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         motionRectangle: MotionRectangle = MotionRectangle(self.getRectangle().clone())
         motionRectangle.setPixelDeltaVector(self.getPixelDeltaVector().clone())
         return motionRectangle
 # from java.awt.Rectangle import Rectangle
 # from java.util.Vector import Vector
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbCryptUtil:
     instance: AbCryptUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
         self.streamUtil: StreamUtil = StreamUtil.getInstance()
     
 
@@ -35,6 +37,9 @@ class AbCryptUtil:
 
     # throws Exception
     def decrypt(self, inputStream: InputStream, key: str) -> list[int]:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
+        from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
         outputStream: ByteArrayOutputStream = None
         try:
             outputStream = self.streamUtil.get(inputStream, ByteArrayOutputStream(), [0] * (16384))
@@ -46,10 +51,13 @@ class AbCryptUtil:
             self.streamUtil.close(inputStream)
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
-from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
+# from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
 
 
-AbCryptUtil.instance = AbCryptUtil()
+def _AbCryptUtil_instance() -> object:
+    return AbCryptUtil()
+
+lazy_static(AbCryptUtil, "instance", _AbCryptUtil_instance)
 

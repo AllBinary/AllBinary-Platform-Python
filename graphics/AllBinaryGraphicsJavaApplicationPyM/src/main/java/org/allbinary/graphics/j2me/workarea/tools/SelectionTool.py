@@ -23,6 +23,12 @@ class SelectionTool(GraphicItemInterface):
     NAME: str = "Selection Tool"
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasJPanel: CanvasJPanel = None
@@ -34,6 +40,7 @@ class SelectionTool(GraphicItemInterface):
     
 
     def __init__(self, canvasJPanel: CanvasJPanel) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         self._init_fields()
         self.canvasJPanel = canvasJPanel
     
@@ -71,6 +78,7 @@ class SelectionTool(GraphicItemInterface):
     
 
     def setFulcrumPoint(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         pass
     
 
@@ -101,13 +109,13 @@ class SelectionTool(GraphicItemInterface):
 
     def makeSelection(self) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
-        from org.allbinary.graphics.j2me.workarea.tools.Color import Color
-        from org.allbinary.graphics.j2me.workarea.tools.Color import Color
+        from java.util.HashMap import HashMap
+        from org.allbinary.math.RectangleCollisionPointUtil import RectangleCollisionPointUtil
         xRect: int = self.getXRect()
         xRect2: int = abs(self.endPoint.getX() - self.startPoint.getX()) + xRect
         yRect: int = self.getYRect()
         yRect2: int = abs(self.endPoint.getY() - self.startPoint.getY()) + yRect
-        hashMap: dict = self.canvasJPanel.getGraphicItemHashMap()
+        hashMap: HashMap = self.canvasJPanel.getGraphicItemHashMap()
         graphicItemArray: list[object] = hashMap.keySet().toArray()
         size: int = len(graphicItemArray)
         for index in range(0, size):
@@ -138,6 +146,7 @@ class SelectionTool(GraphicItemInterface):
     
 
     def paint(self, g: Graphics, canvasAngle: float, dimension: IntegerDimension, x: int, y: int) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
         g.setColor(self.rectColor)
         xRect: int = self.getXRect()
         width: int = abs(self.endPoint.getX() - self.startPoint.getX())
@@ -148,14 +157,18 @@ class SelectionTool(GraphicItemInterface):
 
     # throws Exception
     def toDom(self, canvasDom: CanvasDom) -> Node:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+        from org.w3c.dom.Node import Node
         return None
     
 
     def removePoint(self) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         return None
     
 
     def addPoint(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         pass
     
 
@@ -186,6 +199,7 @@ class SelectionTool(GraphicItemInterface):
 
     def mousePressed(self, mouseEvent: MouseEvent, xPixelsPerCell: int, yPixelsPerCell: int) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
+        from org.allbinary.graphics.PointFactory import PointFactory
         self.logUtil.putF(self.commonStrings.START, self, MouseStrings.getInstance().MOUSE_PRESSED)
         self.startPoint = PointFactory.getInstance().createXY(mouseEvent.getX(), mouseEvent.getY())
         self.endPoint = self.startPoint
@@ -193,6 +207,7 @@ class SelectionTool(GraphicItemInterface):
 
     def mouseReleased(self, mouseEvent: MouseEvent, xPixelsPerCell: int, yPixelsPerCell: int) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
+        from org.allbinary.graphics.PointFactory import PointFactory
         self.logUtil.putF(self.commonStrings.START, self, MouseStrings.getInstance().MOUSE_RELEASED)
         self.endPoint = PointFactory.getInstance().createXY(mouseEvent.getX(), mouseEvent.getY())
         self.active = False
@@ -200,6 +215,7 @@ class SelectionTool(GraphicItemInterface):
     
 
     def mouseDragged(self, mouseEvent: MouseEvent, xPixelsPerCell: int, yPixelsPerCell: int) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
         self.endPoint = PointFactory.getInstance().createXY(mouseEvent.getX(), mouseEvent.getY())
     
 
@@ -220,19 +236,21 @@ class SelectionTool(GraphicItemInterface):
     # throws Exception
     def duplicate(self) -> GraphicItemInterface:
         return None
-# from java.awt import *
+# from java.awt.Color import Color
+# from java.awt.Graphics import Graphics
 # from java.util.HashMap import HashMap
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
-from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.math.RectangleCollisionPointUtil import RectangleCollisionPointUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Node import Node
-from org.allbinary.graphics.j2me.workarea.tools.Color import Color
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+# from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.math.RectangleCollisionPointUtil import RectangleCollisionPointUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Node import Node
+# from java.awt.event.KeyEvent import KeyEvent
+# from java.awt.event.MouseEvent import MouseEvent
 
 

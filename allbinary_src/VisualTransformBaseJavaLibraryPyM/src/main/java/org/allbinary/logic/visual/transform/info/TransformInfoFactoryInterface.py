@@ -22,7 +22,8 @@ class TransformInfoFactoryInterface:
     
 
     # throws Exception
-    def getInstance(self, databaseHashMap: dict, propertiesHashMap: dict, pageContext: PageContext) -> TransformInfoInterface:
+    def getInstance(self, databaseHashMap: HashMap, propertiesHashMap: HashMap, pageContext: PageContext) -> TransformInfoInterface:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext

@@ -19,9 +19,18 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 
 
 class GeographicMapCellHistory(UpdateMyFontInterface):
-    NULL_GEOGRPAHIC_MAP_HISTORY_ARRAY: list[GeographicMapCellHistory] = None
+    NULL_GEOGRPAHIC_MAP_HISTORY_ARRAY: list[GeographicMapCellHistory] = [None] * (0)
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.animation.text.TextAnimation import TextAnimation
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.booleanFactory: BooleanFactory = BooleanFactory.getInstance()
         self.list_: BasicArrayList = None
@@ -36,6 +45,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.list_ = BasicArrayListD()
         self.visitedList = BasicArrayListD()
@@ -43,6 +53,9 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
         self.myFontProcessor = MyFontProcessor.getInstance()
@@ -61,6 +74,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def trackAll(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = list_.size()
         self.list_.ensureCapacity(size)
         self.visitedList.ensureCapacity(size)
@@ -77,14 +91,17 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def getTracked(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
     
 
     def getVisited(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.visitedList
     
 
     def getAfterIfNotLast(self, geographicMapCellPosition: GeographicMapCellPosition) -> GeographicMapCellPosition:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         localList: BasicArrayList = self.list_
         index: int = localList.indexOf(geographicMapCellPosition)
         if localList.size() > index + 1:
@@ -93,6 +110,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def getFirstUnvisited(self) -> GeographicMapCellPosition:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         localList: BasicArrayList = self.list_
         localVisitedList: BasicArrayList = self.visitedList
         size: int = localVisitedList.size()
@@ -105,6 +123,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def getFirstUnvisitedIndex(self) -> int:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         localVisitedList: BasicArrayList = self.visitedList
         size: int = localVisitedList.size()
         value: bool = None
@@ -116,6 +135,8 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def getInPathButNotTracked(self, pathList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         inPathButNotTrackedList: BasicArrayList = BasicArrayListD()
         localList: BasicArrayList = self.list_
         size: int = pathList.size()
@@ -171,6 +192,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
 
     # throws Exception
     def isPortionVisited(self, basicDecimal: BasicDecimal) -> bool:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         size: int = self.getSize()
         numberRequired: int = int((size << basicDecimal.getScaledFactor()) / int(basicDecimal.getUnscaled()))
         numberNotVisited: int = self.getSize() - 1 - self.totalVisited
@@ -182,6 +204,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
 
     # throws Exception
     def reset(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         localVisitedList: BasicArrayList = self.visitedList
         localFalseBoolean: bool = self.booleanFactory.FALSE
         size: int = localVisitedList.size()
@@ -191,6 +214,9 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def paintNotVisitedRelativeToPoint(self, graphics: Graphics, tiledLayer: AllBinaryTiledLayer, point: GPoint) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.GPoint import GPoint
         x: int = point.getX() - tiledLayer.getXP()
         y: int = point.getY() - tiledLayer.getYP()
         if self.halfWidth == 0:
@@ -200,6 +226,9 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def paintNotVisited(self, graphics: Graphics, geographicMapInterface: BasicGeographicMap) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.myFontProcessor.process(graphics)
             graphics.setColor(self.RED)
@@ -224,21 +253,19 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
         self.totalVisited = 0
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.text.TextAnimation import TextAnimation
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.text.TextAnimation import TextAnimation
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
-
-GeographicMapCellHistory.NULL_GEOGRPAHIC_MAP_HISTORY_ARRAY = [None] * (0)
 

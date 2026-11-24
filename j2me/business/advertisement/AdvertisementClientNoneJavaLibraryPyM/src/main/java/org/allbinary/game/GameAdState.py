@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.advertisement.GameAdStateBase import GameAdStateBase
 from org.allbinary.input.event.VirtualKeyboardEventListenerInterface import VirtualKeyboardEventListenerInterface
 
 
-class GameAdState(GameAdStateBase, VirtualKeyboardEventListenerInterface):
+class GameAdState(*java_bases(GameAdStateBase, VirtualKeyboardEventListenerInterface)):
     
 
     def __init__(self, adConfiguration: AdConfiguration) -> None:

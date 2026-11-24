@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TenderTypeFactory:
@@ -35,5 +36,8 @@ class TenderTypeFactory:
 from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
 
 
-TenderTypeFactory.instance = TenderTypeFactory()
+def _TenderTypeFactory_instance() -> object:
+    return TenderTypeFactory()
+
+lazy_static(TenderTypeFactory, "instance", _TenderTypeFactory_instance)
 

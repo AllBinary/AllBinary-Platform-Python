@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AdvancedRTSLayerUtil:
@@ -26,15 +27,21 @@ class AdvancedRTSLayerUtil:
     
 
     def createFakeRTSLayerHashtable(self, baseRaceTrackGeographicMap: BaseRaceTrackGeographicMap) -> ABHashtable[object, object]:
-        from org.allbinary.game.layer.RTSLayerUtil import RTSLayerUtil
+        from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = RTSLayerUtil.getInstance().createFakeRTSLayerHashtable(baseRaceTrackGeographicMap)
         hashtable.put(WorkWaypoint.ID, SmallIntegerSingletonFactory.getInstance().getAt(50))
         return hashtable
-from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-AdvancedRTSLayerUtil.instance = AdvancedRTSLayerUtil()
+def _AdvancedRTSLayerUtil_instance() -> object:
+    return AdvancedRTSLayerUtil()
+
+lazy_static(AdvancedRTSLayerUtil, "instance", _AdvancedRTSLayerUtil_instance)
 

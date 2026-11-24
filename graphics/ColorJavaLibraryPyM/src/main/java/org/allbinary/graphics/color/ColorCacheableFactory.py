@@ -27,7 +27,8 @@ class ColorCacheableFactory(CacheableInterfaceFactoryInterface):
 
     def getInstance(self, key: object) -> CacheableInterface:
         from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+        from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
         return ColorCacheable(key)
-from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
+# from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 
 

@@ -21,6 +21,7 @@ from admin.taghelpers.TagHelperFactory import TagHelperFactory
 class CustomItemsHelperFactory(TagHelperFactory):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,17 +31,22 @@ class CustomItemsHelperFactory(TagHelperFactory):
     
 
     # throws LicensingException
-    def getInstance(self, hashMap: dict, pageContext: PageContext) -> object:
-        from admin.taghelpers.CustomItemsHelper import CustomItemsHelper
+    def getInstance(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return CustomItemsHelper(hashMap, pageContext)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_INSTANCE, e)
             return None
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

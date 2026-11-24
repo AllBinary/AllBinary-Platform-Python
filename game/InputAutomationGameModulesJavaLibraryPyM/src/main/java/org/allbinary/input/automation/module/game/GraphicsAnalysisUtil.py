@@ -28,6 +28,9 @@ class GraphicsAnalysisUtil:
     # throws Exception
     @staticmethod
     def getNominator(bufferedImage: BufferedImage, min_x: int, max_x: int, y: int) -> float:
+        from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+        from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
         for index in range(int(max_x), int(min_x), -1):
             colorInteger: int = str(bufferedImage.getRGB(index, int(y)))
             automaticCacheInterface: AutomaticCacheInterface = ColorCacheFactory.getInstance()
@@ -38,10 +41,10 @@ class GraphicsAnalysisUtil:
             else:
                 return index - int(min_x)
         return 0.0
-# from java.awt import *
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
-from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+# from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
 
 

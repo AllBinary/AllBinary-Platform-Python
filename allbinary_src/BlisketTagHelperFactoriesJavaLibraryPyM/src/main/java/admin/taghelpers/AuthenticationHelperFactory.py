@@ -21,6 +21,7 @@ from admin.taghelpers.TagHelperFactory import TagHelperFactory
 class AuthenticationHelperFactory(TagHelperFactory):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,30 +31,46 @@ class AuthenticationHelperFactory(TagHelperFactory):
     
 
     # throws LicensingException
-    def getInstance(self, hashMap: dict, pageContext: PageContext) -> object:
-        from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j2_1(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return AuthenticationHelper(hashMap, pageContext)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_INSTANCE, e)
             return None
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, hashMap: dict, httpServletRequest: HttpServletRequest) -> object:
-        from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return AuthenticationHelper(hashMap, httpServletRequest)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.GET_INSTANCE, e)
             return None
+
+    def getInstance(self, *args):
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            return self.getInstance_j2_1(*args)
+        if len(args) == 2:
+            return self.getInstance_j2_2(*args)
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

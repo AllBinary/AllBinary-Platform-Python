@@ -21,12 +21,15 @@ from admin.tags.TableTag import TableTag
 class PaymentTag(TableTag):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.storeName: str = None
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.PaymentHelperFactory import PaymentHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(PaymentHelperFactory())
@@ -39,6 +42,10 @@ class PaymentTag(TableTag):
 
     # throws LicensingException
     def select(self) -> str:
+        from admin.taghelpers.PaymentHelperFactory import PaymentHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = PaymentHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -49,13 +56,20 @@ class PaymentTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to select Payment"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "selectPayment()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.isEnabled():
                 self.propertiesHashMap = StdUtil.getInstance().createHashMap()
@@ -63,7 +77,7 @@ class PaymentTag(TableTag):
                 if self.getCommand() is not None:
                     if self.getCommand().compareTo(PaymentData.SELECT) == 0:
                         output: str = self.select()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output + "<br />")
                         return self.EVAL_BODY_INCLUDE
                     else:
@@ -78,12 +92,14 @@ class PaymentTag(TableTag):
 # from java.lang.reflect.Method import Method
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.PaymentHelperFactory import PaymentHelperFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.PaymentHelperFactory import PaymentHelperFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -21,6 +21,8 @@ from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import Ab
 class AbeClientLicense(AbeLicenseInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.hashtable: ABHashtable[object, object] = None
         self.id: str = None
         self.servers: BasicArrayList = None
@@ -29,8 +31,12 @@ class AbeClientLicense(AbeLicenseInterface):
     
 
     def __init__(self, hashtable: ABHashtable[object, object]) -> None:
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
         from org.allbinary.logic.system.security.licensing.LicenseTypeFactory import LicenseTypeFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.hashtable = StdUtil.getInstance().createHashtable()
         abeClientInformationData: AbeClientInformationData = AbeClientInformationData.getInstance()
@@ -52,7 +58,7 @@ class AbeClientLicense(AbeLicenseInterface):
 
     @staticmethod
     def hasRequiredKeys(resultHashtable: ABHashtable[object, object]) -> bool:
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
+        from org.allbinary.util.ABHashtable import ABHashtable
         abeClientInformationData: AbeClientInformationData = AbeClientInformationData.getInstance()
         if resultHashtable.containsKey(abeClientInformationData.LICENSEID) and resultHashtable.containsKey(abeClientInformationData.LICENSESERVERS) and resultHashtable.containsKey(abeClientInformationData.KEY) and resultHashtable.containsKey(abeClientInformationData.LICENSE_TYPE):
             return True
@@ -73,11 +79,12 @@ class AbeClientLicense(AbeLicenseInterface):
     
 
     def getServers(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.servers
     
 
     def isValid(self) -> bool:
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if not stringValidationUtil.isEmpty(self.getKey(AbeClientInformationData.getInstance().KEY)):
             return True
@@ -85,6 +92,8 @@ class AbeClientLicense(AbeLicenseInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         BREAK: str = "<br/>"
         stringBuffer.append("License Id: ")
@@ -119,12 +128,12 @@ class AbeClientLicense(AbeLicenseInterface):
 
     def getLicenseType(self) -> LicenseType:
         return self.licenseType
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

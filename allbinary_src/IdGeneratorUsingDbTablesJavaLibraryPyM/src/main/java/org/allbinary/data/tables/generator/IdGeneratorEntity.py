@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.generator.IdGeneratorEntityInterface import IdGeneratorEntityInterface
 
 
-class IdGeneratorEntity(AbSqlBean, IdGeneratorEntityInterface):
+class IdGeneratorEntity(*java_bases(AbSqlBean, IdGeneratorEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "idgenerator"
         self.tableData: str = None
@@ -30,6 +32,8 @@ class IdGeneratorEntity(AbSqlBean, IdGeneratorEntityInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+        from org.allbinary.logic.string.StringMaker import StringMaker
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.tableData = str(StringMaker().append(self.sqlStrings.CREATE_TABLE).append(self.tableName).append(self.sqlStrings.START).append(self.NAME).append(self.sqlTypeStrings.MAX_CHAR_COLUMN_NOT_NULL).append(self.VALUE).append(self.sqlTypeStrings.MAX_BIG_INT_UNSIGNED_NOT_NULL).append(self.sqlStrings.PRIMARY_KEY).append(self.NAME).append(self.sqlStrings.END))
@@ -38,9 +42,11 @@ class IdGeneratorEntity(AbSqlBean, IdGeneratorEntityInterface):
 
     # throws Exception
     def get(self, name: str) -> int:
-        keysAndValues: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(self.NAME, name)
-        hashMap: dict = super().getRow(keysAndValues)
+        hashMap: HashMap = super().getRow(keysAndValues)
         if (hashMap.get(self.NAME)).compareTo(name) != 0:
             raise Exception("results do not match")
         value: str = hashMap.get(self.VALUE)
@@ -48,6 +54,7 @@ class IdGeneratorEntity(AbSqlBean, IdGeneratorEntityInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             super().insert(values)
             self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
@@ -63,16 +70,21 @@ class IdGeneratorEntity(AbSqlBean, IdGeneratorEntityInterface):
             self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.delete, e)
     
 
-    def update(self, name: str, value: int) -> None:
-        map: dict = StdUtil.getInstance().createHashMap()
+    def update_j2(self, name: str, value: int) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        map: HashMap = StdUtil.getInstance().createHashMap()
         map.put(self.NAME, name)
         map.put(self.VALUE, value)
         self.update(map)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def update(self, hashMap: dict) -> None:
+    def update_j1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         super().updateWhere(self.NAME, hashMap.get(self.NAME), hashMap)
+
+    def update(self, *args):
+        return getattr(self, "update_j" + str(len(args)))(*args)
     
 
     def createTable(self) -> str:
@@ -82,12 +94,16 @@ class IdGeneratorEntity(AbSqlBean, IdGeneratorEntityInterface):
 
     def dropTable(self) -> str:
         return super().dropTable()
+    
+
+    def deleteWhere(self, key: str, value: str) -> None:
+        super().deleteWhere(key, value)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

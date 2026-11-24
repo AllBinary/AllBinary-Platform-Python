@@ -26,9 +26,11 @@ class CapitalEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         capitalEventListenerInterface: CapitalEventListenerInterface = (eventListenerInterface)
         capitalEventListenerInterface.onCapitalChangeEvent(eventObject)
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 

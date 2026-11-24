@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CustomMapGeneratorBaseFactory:
@@ -36,5 +37,8 @@ class CustomMapGeneratorBaseFactory:
         return CustomMapGeneratorBase()
 
 
-CustomMapGeneratorBaseFactory.instance = CustomMapGeneratorBaseFactory()
+def _CustomMapGeneratorBaseFactory_instance() -> object:
+    return CustomMapGeneratorBaseFactory()
+
+lazy_static(CustomMapGeneratorBaseFactory, "instance", _CustomMapGeneratorBaseFactory_instance)
 

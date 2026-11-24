@@ -20,10 +20,15 @@ from __future__ import annotations
 class UniqueTokens:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.specialCharacters: BasicArrayList = BasicArrayListD()
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         self._init_fields()
         self.specialCharacters.add("!")
         self.specialCharacters.add("@")
@@ -53,8 +58,11 @@ class UniqueTokens:
 
     # throws Exception
     def getWhithoutDashesAndSkipNumberOnlyTokens(self, stringVector: BasicArrayList) -> HashSet:
-        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
-        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from java.util.HashSet import HashSet
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         try:
             hashSet: HashSet = HashSet()
             index: int = 0
@@ -96,11 +104,11 @@ class UniqueTokens:
                 return True
         return False
 # from java.util.HashSet import HashSet
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

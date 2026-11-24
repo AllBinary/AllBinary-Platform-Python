@@ -21,6 +21,7 @@ from org.allbinary.business.advertisement.product.AdvertisementProductInterface 
 class AdvertisementProduct(AdvertisementProductInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         self.type_: str = None
         self.link: str = None
         self.number: int = 0
@@ -44,7 +45,8 @@ class AdvertisementProduct(AdvertisementProductInterface):
     
 
     def getTwoDimensionalConstraint(self) -> TwoDimensionalConstraintInterface:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         return self.constraint
-from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
+# from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
 
 

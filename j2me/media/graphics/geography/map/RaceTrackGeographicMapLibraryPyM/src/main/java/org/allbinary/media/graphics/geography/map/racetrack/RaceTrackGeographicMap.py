@@ -26,6 +26,9 @@ class RaceTrackGeographicMap(BaseRaceTrackGeographicMap):
 
     def __init__(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData, tiledLayerFactoryInterface: AllBinaryTiledLayerFactoryInterface, geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory: GeographicMapCellPositionBaseFactory, geographicMapCellTypeFactory: GeographicMapCellTypeFactory, customMapGeneratorBaseFactory: CustomMapGeneratorBaseFactory) -> None:
         from org.allbinary.media.graphics.geography.map.racetrack.BasicGeographicMapFactory import BasicGeographicMapFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionBaseFactory import GeographicMapCellPositionBaseFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
         super().__init__(raceTrackInfo, raceTrackData, tiledLayerFactoryInterface.getInstance(raceTrackInfo, raceTrackData), BasicGeographicMapFactory().getInstance(raceTrackInfo, raceTrackData, tiledLayerFactoryInterface, geographicMapCellPositionFactoryInterface, geographicMapCellTypeFactory), geographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory, geographicMapCellTypeFactory)
         self._init_fields()
         self.customMapGenerator = customMapGeneratorBaseFactory.create(self)
@@ -37,6 +40,8 @@ class RaceTrackGeographicMap(BaseRaceTrackGeographicMap):
 
     # throws Exception
     def isValid(self, geographicMapCellPosition: GeographicMapCellPosition) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         customMapArray: list[list[int]] = self.customMapGenerator.getCustomMapArray()
         if geographicMapCellPosition.getColumn() >= len(customMapArray[0]):
             stringBuffer: StringMaker = StringMaker()
@@ -61,10 +66,10 @@ class RaceTrackGeographicMap(BaseRaceTrackGeographicMap):
             else:
                 return False
         return True
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionBaseFactory import GeographicMapCellPositionBaseFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
-from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionBaseFactory import GeographicMapCellPositionBaseFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
 
 

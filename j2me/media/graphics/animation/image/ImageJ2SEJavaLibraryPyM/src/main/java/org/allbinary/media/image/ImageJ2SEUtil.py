@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageJ2SEUtil:
@@ -33,5 +34,8 @@ class ImageJ2SEUtil:
 # from java.awt.Color import Color
 
 
-ImageJ2SEUtil.instance = ImageJ2SEUtil()
+def _ImageJ2SEUtil_instance() -> object:
+    return ImageJ2SEUtil()
+
+lazy_static(ImageJ2SEUtil, "instance", _ImageJ2SEUtil_instance)
 

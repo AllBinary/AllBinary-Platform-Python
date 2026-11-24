@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.threed.min3d.renderer.processor.ObjectThreedOpenGLProcessor import ObjectThreedOpenGLProcessor
 
 
@@ -20,9 +21,13 @@ class EnableFacesShaderOpenGLProcessor(ObjectThreedOpenGLProcessor):
     
 
     def process(self, gl: GL10, anyType: object) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-EnableFacesShaderOpenGLProcessor.instance = EnableFacesShaderOpenGLProcessor()
+def _EnableFacesShaderOpenGLProcessor_instance() -> object:
+    return EnableFacesShaderOpenGLProcessor()
+
+lazy_static(EnableFacesShaderOpenGLProcessor, "instance", _EnableFacesShaderOpenGLProcessor_instance)
 

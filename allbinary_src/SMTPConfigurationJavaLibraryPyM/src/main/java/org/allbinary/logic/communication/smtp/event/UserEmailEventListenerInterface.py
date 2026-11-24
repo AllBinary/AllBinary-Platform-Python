@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from java.util.EventListener import EventListener
+from java.util.EventListener import EventListener
 
 
 # Java interface

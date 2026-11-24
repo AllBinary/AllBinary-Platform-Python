@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.ClassLoader import ClassLoader
 
 
 class NoLicense:
@@ -27,7 +28,8 @@ class NoLicense:
     # throws Exception
     @staticmethod
     def init(classLoader: ClassLoader, pathString: str) -> None:
+        from org.allbinary.globals.Globals import Globals
         Globals.init(classLoader, pathString)
-from org.allbinary.globals.Globals import Globals
+# from org.allbinary.globals.Globals import Globals
 
 

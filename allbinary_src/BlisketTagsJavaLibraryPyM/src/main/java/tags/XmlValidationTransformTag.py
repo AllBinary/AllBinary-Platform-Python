@@ -21,6 +21,7 @@ from tags.TransformTag import TransformTag
 class XmlValidationTransformTag(TransformTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -31,19 +32,23 @@ class XmlValidationTransformTag(TransformTag):
 
     # throws Exception
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.getHelper())
             method: Method = helperClass.getMethod(self.commonStrings.IS_VALID, None)
             result: bool = method.invoke(self.getHelper(), None)
             return result
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.IS_VALID, e)
             raise e
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
             self.setHelper()
             if self.isValid():
@@ -60,8 +65,10 @@ class XmlValidationTransformTag(TransformTag):
             return self.SKIP_BODY
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

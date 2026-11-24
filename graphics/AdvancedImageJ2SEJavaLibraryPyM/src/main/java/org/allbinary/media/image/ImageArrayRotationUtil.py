@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageArrayRotationUtil:
     instance: ImageArrayRotationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.TOTAL_ANGLE: str = "totalAngle: "
@@ -36,7 +39,6 @@ class ImageArrayRotationUtil:
 
     # throws IOException
     def process(self, imageProcessorInput: ImageProcessorInput, input: str, visitor: ImageProcessedVisitor) -> None:
-        from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
         totalAngle: int = None
         if input == self.commonStrings.UP:
             totalAngle = str(-90)
@@ -52,9 +54,12 @@ class ImageArrayRotationUtil:
             visitor.visit(generatedBufferedImage, input, index)
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.IOException import IOException
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ImageArrayRotationUtil.instance = ImageArrayRotationUtil()
+def _ImageArrayRotationUtil_instance() -> object:
+    return ImageArrayRotationUtil()
+
+lazy_static(ImageArrayRotationUtil, "instance", _ImageArrayRotationUtil_instance)
 

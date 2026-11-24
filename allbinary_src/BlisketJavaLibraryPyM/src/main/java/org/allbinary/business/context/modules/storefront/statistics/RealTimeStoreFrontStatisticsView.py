@@ -21,11 +21,13 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class RealTimeStoreFrontStatisticsView(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.role.UserRole import UserRole
         self.storeFrontStatisticsInterface: StoreFrontStatisticsInterface = None
         self.userRole: UserRole = None
     
 
     def __init__(self, storeFrontStatisticsInterface: StoreFrontStatisticsInterface, userRole: UserRole) -> None:
+        from org.allbinary.business.user.role.UserRole import UserRole
         self._init_fields()
         self.storeFrontStatisticsInterface = storeFrontStatisticsInterface
         self.userRole = userRole
@@ -33,7 +35,17 @@ class RealTimeStoreFrontStatisticsView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.context.modules.storefront.statistics.StoreFrontStatisticsData import StoreFrontStatisticsData
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsView import StoreFrontAdvertisementsStatisticsView
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsView import StoreFrontInventoryStatisticsView
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsView import StoreFrontOrdersHistoryStatisticsView
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsView import StoreFrontUsersStatisticsView
+        from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(StoreFrontStatisticsData.getInstance().NAME)
         storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface = self.storeFrontStatisticsInterface.getAdvertisements()
         storeFrontAdvertisementsStatisticsDomNodeInterface: DomNodeInterface = StoreFrontAdvertisementsStatisticsView(storeFrontAdvertisementsStatisticsInterface)
@@ -49,17 +61,17 @@ class RealTimeStoreFrontStatisticsView(DomNodeInterface):
             storeFrontUsersStatisticsDomNodeInterface: DomNodeInterface = StoreFrontUsersStatisticsView(storeFrontUsersStatisticsInterface)
             node.appendChild(storeFrontUsersStatisticsDomNodeInterface.toXmlNode(document))
         return node
-from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsView import StoreFrontAdvertisementsStatisticsView
-from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsView import StoreFrontInventoryStatisticsView
-from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsView import StoreFrontOrdersHistoryStatisticsView
-from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsView import StoreFrontUsersStatisticsView
-from org.allbinary.business.user.role.UserRole import UserRole
-from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsView import StoreFrontAdvertisementsStatisticsView
+# from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsView import StoreFrontInventoryStatisticsView
+# from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsView import StoreFrontOrdersHistoryStatisticsView
+# from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsView import StoreFrontUsersStatisticsView
+# from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

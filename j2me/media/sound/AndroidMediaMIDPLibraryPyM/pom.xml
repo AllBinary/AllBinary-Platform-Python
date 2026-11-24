@@ -112,7 +112,7 @@
         
         <dependency>
             <groupId>org.microemu</groupId>
-            <artifactId>microemu-jsr-135Py</artifactId>
+            <artifactId>microemu-jsr-135-for-polyglotPy</artifactId>
             <version>2.0.4</version>
             <optional>true</optional>
         </dependency>
@@ -120,7 +120,7 @@
         Public microemu
         <dependency>
             <groupId>org.microemu</groupId>
-            <artifactId>microemu-jsr-135Py</artifactId>
+            <artifactId>microemu-jsr-135-for-polyglotPy</artifactId>
             <version>2.0.4</version>
             <optional>true</optional>
         </dependency>

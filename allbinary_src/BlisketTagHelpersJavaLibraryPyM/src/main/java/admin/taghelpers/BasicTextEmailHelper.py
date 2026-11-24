@@ -21,12 +21,16 @@ from admin.taghelpers.TagHelper import TagHelper
 class BasicTextEmailHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.hashMap: dict = None
+        self.hashMap: HashMap = None
         self.pageContext: PageContext = None
     
 
-    def __init__(self, hashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
         super().__init__()
         self._init_fields()
         self.pageContext = pageContext
@@ -35,6 +39,12 @@ class BasicTextEmailHelper(TagHelper):
 
     # throws Exception
     def send(self) -> None:
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+        from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
         adminEmailSubject: str = self.hashMap.get("Subject")
         adminEmailTextBody: str = self.hashMap.get("Body")
         adminBasicEmailInfo: BasicEmailInfo = AdminEmailInfo(adminEmailSubject, adminEmailTextBody)
@@ -43,13 +53,13 @@ class BasicTextEmailHelper(TagHelper):
         adminUserEmailEventHandler.receiveEmailInfo(UserEmailEventNameData.INSTALLER, adminEmailInfo)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
-from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
-from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
-from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
-from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+# from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+# from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+# from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+# from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
 
 

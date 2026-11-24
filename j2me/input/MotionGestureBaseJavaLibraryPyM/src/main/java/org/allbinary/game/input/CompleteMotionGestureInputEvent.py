@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 from org.allbinary.game.input.CompleteMotionGestureInputInterface import CompleteMotionGestureInputInterface
 
 
-class CompleteMotionGestureInputEvent(AllBinaryEventObject, CompleteMotionGestureInputInterface):
+class CompleteMotionGestureInputEvent(*java_bases(AllBinaryEventObject, CompleteMotionGestureInputInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput

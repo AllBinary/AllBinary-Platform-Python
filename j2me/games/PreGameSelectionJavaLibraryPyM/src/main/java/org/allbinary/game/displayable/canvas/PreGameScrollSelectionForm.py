@@ -22,16 +22,21 @@ class PreGameScrollSelectionForm(ScrollCurrentSelectionForm):
     
 
     def __init__(self, title: str, items: list[ABCustomItem], formPaintableFactory: ItemPaintableFactory, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.form.ItemPaintableFactory import ItemPaintableFactory
         super().__init__(title, items, formPaintableFactory, 0, 3, False, backgroundBasicColor, foregroundBasicColor)
     
 
     # throws Exception
     def init(self, rectangle: Rectangle) -> None:
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
         super().init(rectangle, FormTypeFactory.getInstance().TEMP_HORIZONTAL_FORM)
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
-from org.allbinary.graphics.form.ItemPaintableFactory import ItemPaintableFactory
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+# from org.allbinary.graphics.form.ItemPaintableFactory import ItemPaintableFactory
 
 

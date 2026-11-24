@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransformInfoDataData:
     instance: TransformInfoDataData = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
         self.UNCRYPTED_EXTENSION: str = CommonDataFileStrings.getInstance().UNCRYPTED_EXTENSION
         self.ENCRYPTED_EXTENSION: str = CommonDataFileStrings.getInstance().ENCRYPTED_EXTENSION
     
@@ -32,8 +34,11 @@ class TransformInfoDataData:
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+# from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
 
 
-TransformInfoDataData.instance = TransformInfoDataData()
+def _TransformInfoDataData_instance() -> object:
+    return TransformInfoDataData()
+
+lazy_static(TransformInfoDataData, "instance", _TransformInfoDataData_instance)
 

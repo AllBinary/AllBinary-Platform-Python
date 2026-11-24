@@ -23,7 +23,8 @@ class InputAutomationModuleServiceInterface(OSGIServiceInterface):
     
 
     def getInputAutomationModuleInterfaceArray(self) -> list[InputAutomationModuleFactoryInterface]:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         raise NotImplementedError()
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
 
 

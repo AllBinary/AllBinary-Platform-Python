@@ -22,23 +22,38 @@ class TransformInfoObjectConfigAndManipulatorFactoryInterface:
     
 
     # throws Exception
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, objectConfigFileAbPath: AbPath) -> TransformInfoObjectConfigInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j3_1(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, objectConfigFileAbPath: AbPath) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         raise NotImplementedError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> TransformInfoObjectConfigInterface:
+    def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         raise NotImplementedError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, document: Document) -> TransformInfoObjectConfigInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j3_2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, document: Document) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
+
+    def getInstance(self, *args):
+        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)):
+            return self.getInstance_j3_1(*args)
+        if len(args) == 3:
+            return self.getInstance_j3_2(*args)
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
 
 

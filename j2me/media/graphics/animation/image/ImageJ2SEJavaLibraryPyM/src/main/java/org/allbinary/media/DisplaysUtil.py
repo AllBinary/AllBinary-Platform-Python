@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DisplaysUtil:
@@ -27,11 +28,15 @@ class DisplaysUtil:
     
 
     def getPrimaryScreenSize(self) -> Rectangle:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
         dimension: Dimension = Toolkit.getDefaultToolkit().getScreenSize()
         return Rectangle(PointFactory.getInstance().ZERO_ZERO, dimension.width, dimension.height)
     
 
     def getScreenSizesAsRectangleArray(self) -> list[Rectangle]:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
         graphicsEnvironment: GraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment()
         graphicsDeviceArray: list[GraphicsDevice] = graphicsEnvironment.getScreenDevices()
         graphicsDevice: GraphicsDevice = None
@@ -50,9 +55,12 @@ class DisplaysUtil:
 # from java.awt.GraphicsDevice import GraphicsDevice
 # from java.awt.GraphicsEnvironment import GraphicsEnvironment
 # from java.awt.Toolkit import Toolkit
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
 
 
-DisplaysUtil.instance = DisplaysUtil()
+def _DisplaysUtil_instance() -> object:
+    return DisplaysUtil()
+
+lazy_static(DisplaysUtil, "instance", _DisplaysUtil_instance)
 

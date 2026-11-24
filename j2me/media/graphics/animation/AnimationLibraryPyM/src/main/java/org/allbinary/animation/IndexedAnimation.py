@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.animation.IndexedAnimationInterface import IndexedAnimationInterface
 
 
-class IndexedAnimation(Animation, IndexedAnimationInterface):
+class IndexedAnimation(*java_bases(Animation, IndexedAnimationInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil

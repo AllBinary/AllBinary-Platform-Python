@@ -21,6 +21,10 @@ from views.admin.inventory.listings.InventoryViewSearchInterface import Inventor
 class InventorySearch(InventoryViewSearchInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
@@ -28,6 +32,7 @@ class InventorySearch(InventoryViewSearchInterface):
     
 
     def __init__(self, searchRequest: SearchRequest) -> None:
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         super().__init__()
         self._init_fields()
         self.searchRequest = searchRequest
@@ -35,10 +40,22 @@ class InventorySearch(InventoryViewSearchInterface):
 
     # throws Exception
     def searchSingleStaticPage(self) -> str:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
+        from org.allbinary.logic.control.search.SearchParams import SearchParams
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             storeFront: StoreFrontInterface = self.searchRequest.getStoreFront()
             searchParams: SearchParams = self.searchRequest.getParams()
-            columnValueHashMap: dict = searchParams.get()
+            columnValueHashMap: HashMap = searchParams.get()
             file: str = StaticPagesEntity().getFile(storeFront.getName(), Replace("-", CommonSeps.getInstance().SPACE).all(columnValueHashMap.get(self.basicItemData.KEYWORDS)))
             if StringValidationUtil.getInstance().isEmpty(file):
                 return None
@@ -54,18 +71,20 @@ class InventorySearch(InventoryViewSearchInterface):
                 filePath: str = Replace(CommonSeps.getInstance().SPACE, "%20").all(str(stringBuffer))
                 return filePath
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "searchSingleStaticPage", e)
             raise Exception("Failed retrieve Single Product Page Static")
     
 
     # throws Exception
     def searchSingleDynamicPage(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             str_: list[str] = self.search()
             return str_[int(self.searchRequest.getParams().getStartPageInt())]
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "searchSingleDynamicPage", e)
             raise Exception("Failed retrieve Single Product Page Dynamically")
     
@@ -73,6 +92,9 @@ class InventorySearch(InventoryViewSearchInterface):
     # throws Exception
     def search(self) -> list[str]:
         from views.generic.inventory.InventorySearchUtil import InventorySearchUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
         inventorySearchUtil: InventorySearchUtil = InventorySearchUtil.getInstance()
         vector: BasicArrayList = inventorySearchUtil.getBasicItemIdColumn(self.searchRequest)
@@ -82,25 +104,29 @@ class InventorySearch(InventoryViewSearchInterface):
     # throws Exception
     def getProduct(self, product: str) -> str:
         from views.generic.inventory.InventorySearchProductUtil import InventorySearchProductUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
         return InventorySearchProductUtil.getInstance().getProduct(abeClientInformation, self.searchRequest, product)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchParams import SearchParams
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchParams import SearchParams
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

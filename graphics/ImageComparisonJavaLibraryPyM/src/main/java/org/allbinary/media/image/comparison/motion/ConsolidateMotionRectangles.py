@@ -22,10 +22,12 @@ class ConsolidateMotionRectangles(MotionRectangles):
     NAME: str = "consolidatedMotionRectangles_"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, motionRectangles: MotionRectangles) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(ConsolidateMotionRectangles.NAME, motionRectangles.getImageComparisonResult())
         self._init_fields()
         vector: BasicArrayList = motionRectangles.getVector()
@@ -37,6 +39,8 @@ class ConsolidateMotionRectangles(MotionRectangles):
     
 
     def consolidateMotionRectangles(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = self.getVector()
         self.logUtil.putF("Start - Size Before: " + str(vector.size()), self, "consolidateMotionRectangleConstraints")
         removeVector: BasicArrayList = BasicArrayListD()
@@ -57,14 +61,15 @@ class ConsolidateMotionRectangles(MotionRectangles):
     
 
     def remove(self, removeVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         vector: BasicArrayList = self.getVector()
         size: int = removeVector.size()
         for index in range(0, size):
             vector.remove(removeVector.get(index))
-# from java.awt import *
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from java.awt.Rectangle import Rectangle
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

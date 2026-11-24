@@ -15,13 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
-class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
+class SelectionHudPaintable(*java_bases(InitUpdatePaintable, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.y: int = CommonButtons.getInstance().STANDARD_BUTTON_SIZE + 17
         self.primitiveLongUtil: PrimitiveLongUtil = None
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
@@ -39,6 +49,7 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__()
         self._init_fields()
         self.update()
@@ -46,6 +57,10 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
         commonButtons: CommonButtons = CommonButtons.getInstance()
         font: Font = graphics.getFont()
         self.setHeight(commonButtons.STANDARD_BUTTON_SIZE + font.getHeight())
@@ -53,6 +68,9 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
     
 
     def update(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+        from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
         commonButtons: CommonButtons = CommonButtons.getInstance()
         touchButtonLocationHelper: TouchButtonLocationHelper = TouchButtonLocationHelper()
         displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
@@ -72,14 +90,17 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
     
 
     def getPrimitiveLongUtil(self) -> PrimitiveLongUtil:
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         return self.primitiveLongUtil
     
 
     def setAnimationInterface(self, animationInterface: Animation) -> None:
+        from org.allbinary.animation.Animation import Animation
         self.animationInterface = animationInterface
     
 
     def getAnimationInterface(self) -> Animation:
+        from org.allbinary.animation.Animation import Animation
         return self.animationInterface
     
 
@@ -92,11 +113,13 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
         self.setColor(int(basicColor))
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
@@ -125,6 +148,7 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         graphics.setColor(self.backgroundColor)
         graphics.drawRect(self.getX(), self.y, self.getWidth(), self.getHeight())
@@ -132,16 +156,16 @@ class SelectionHudPaintable(InitUpdatePaintable, UpdateMyFontInterface):
         graphics.drawString(self.getName(), self.textX, self.y, 0)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.input.motion.button.CommonButtons import CommonButtons
-from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+# from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
 
 

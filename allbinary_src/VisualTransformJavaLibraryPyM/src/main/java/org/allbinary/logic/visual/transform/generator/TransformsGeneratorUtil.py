@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransformsGeneratorUtil:
     instance: TransformsGeneratorUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -34,24 +36,36 @@ class TransformsGeneratorUtil:
     
 
     # throws Exception
-    def generateComponentsFromObjectConfig(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, group: str) -> str:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+    def generateComponentsFromObjectConfig_j3(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, group: str) -> str:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Started Group: " + group, self, "generateComponentsFromObjectConfig(2)")
         transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface = transformInfoInterface.getObjectConfigInterface()
         result: str = self.generateComponentsFromObjectConfig(abeClientInformation, transformInfoObjectConfigInterface, transformInfoInterface, group)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("End Group: " + group, self, "generateComponentsFromObjectConfig(2)")
         return result
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def generateComponentsFromObjectConfig(self, abeClientInformation: AbeClientInformationInterface, transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface, transformInfoInterface: TransformInfoInterface, group: str) -> str:
+    def generateComponentsFromObjectConfig_j4(self, abeClientInformation: AbeClientInformationInterface, transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface, transformInfoInterface: TransformInfoInterface, group: str) -> str:
         from org.allbinary.logic.visual.transform.generator.TransformGeneratorUtil import TransformGeneratorUtil
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Started Group: " + group, self, "generateComponentsFromObjectConfig()")
         transformInfoObjectConfigComponentVector: BasicArrayList = transformInfoObjectConfigInterface.getTransformsGroup(group)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Processing ")
             stringBuffer.appendint(transformInfoObjectConfigComponentVector.size())
@@ -64,22 +78,30 @@ class TransformsGeneratorUtil:
         for index in range(0, size):
             transformInfoObjectConfigComponent: TransformInfoDomNode = transformInfoObjectConfigComponentVector.get(index)
             TransformGeneratorUtil.getInstance().generate(abeClientInformation, transformInfoObjectConfigComponent, transformInfoInterface)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Done Group: " + group, self, "generateComponentsFromObjectConfig()")
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("<!-- Generated all template views successfully for View: ")
         stringBuffer.append(transformInfoInterface.getName())
         stringBuffer.append("-->")
         return str(stringBuffer)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+
+    def generateComponentsFromObjectConfig(self, *args):
+        return getattr(self, "generateComponentsFromObjectConfig_j" + str(len(args)))(*args)
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-TransformsGeneratorUtil.instance = TransformsGeneratorUtil()
+def _TransformsGeneratorUtil_instance() -> object:
+    return TransformsGeneratorUtil()
+
+lazy_static(TransformsGeneratorUtil, "instance", _TransformsGeneratorUtil_instance)
 

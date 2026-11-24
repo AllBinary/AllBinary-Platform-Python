@@ -32,6 +32,7 @@ class WebAppUrlGlobals(UrlGlobalsInterface):
     
 
     def isTestingMode(self) -> bool:
+        from org.allbinary.business.init.InitInfo import InitInfo
         return InitInfo.getInstance().isTesting()
     
 
@@ -49,11 +50,14 @@ class WebAppUrlGlobals(UrlGlobalsInterface):
     
 
     def getTestHtmlPath(self) -> str:
+        from org.allbinary.business.init.InitInfo import InitInfo
         return InitInfo.getInstance().getTestHtmlPath()
     
 
     # throws Exception
     def getMainPath(self) -> str:
+        from org.allbinary.business.init.InitInfo import InitInfo
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         mainPath: str = InitInfo.getInstance().getMainPath()
         if not StringValidationUtil.getInstance().isEmpty(mainPath):
             return mainPath
@@ -61,7 +65,7 @@ class WebAppUrlGlobals(UrlGlobalsInterface):
             return self.getWebappPath()
         else:
             raise Exception("Webapp Path is not set")
-from org.allbinary.business.init.InitInfo import InitInfo
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.business.init.InitInfo import InitInfo
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 
 

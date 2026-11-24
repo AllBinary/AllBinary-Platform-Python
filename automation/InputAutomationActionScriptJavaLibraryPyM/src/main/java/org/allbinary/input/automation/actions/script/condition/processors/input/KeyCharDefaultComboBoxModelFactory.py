@@ -26,8 +26,8 @@ class KeyCharDefaultComboBoxModelFactory:
 
     @staticmethod
     def getInstance() -> DefaultComboBoxModel:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.DefaultComboBoxModel import DefaultComboBoxModel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.KeyStroke import KeyStroke
+        from abbot.tester.KeyStrokeMap import KeyStrokeMap
+        from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
         defaultComboBoxModel: DefaultComboBoxModel = DefaultComboBoxModel()
         keyArray: list[int] = KeySingletonFactory.getArray()
         for index in range(0, len(keyArray)):
@@ -36,8 +36,9 @@ class KeyCharDefaultComboBoxModelFactory:
             keyChar: str = KeyStrokeMap.getChar(keyStroke)
             defaultComboBoxModel.addElement(str(keyChar))
         return defaultComboBoxModel
-# from javax.swing import *
-from abbot.tester.KeyStrokeMap import KeyStrokeMap
-from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from javax.swing.KeyStroke import KeyStroke
+# from abbot.tester.KeyStrokeMap import KeyStrokeMap
+# from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
 
 

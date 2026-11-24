@@ -27,7 +27,6 @@ class FilePathUtil:
 
     @staticmethod
     def adjust(path: str) -> str:
-        from org.allbinary.logic.io.file.FilePathData import FilePathData
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         abPathData: AbPathData = AbPathData.getInstance()

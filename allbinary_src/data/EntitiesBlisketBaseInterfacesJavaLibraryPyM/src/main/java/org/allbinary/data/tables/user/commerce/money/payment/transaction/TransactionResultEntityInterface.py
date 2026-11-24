@@ -23,6 +23,7 @@ class TransactionResultEntityInterface(BasicDataTableInterface):
     
 
     def getTransactionResultInterface(self, orderNumber: str) -> TransactionResultInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.TransactionResultInterface import TransactionResultInterface
         raise NotImplementedError()
     
 
@@ -31,7 +32,8 @@ class TransactionResultEntityInterface(BasicDataTableInterface):
     
 
     def add(self, userName: str, orderNumber: str, resultInterface: TransactionResultInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.TransactionResultInterface import TransactionResultInterface
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.TransactionResultInterface import TransactionResultInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.TransactionResultInterface import TransactionResultInterface
 
 

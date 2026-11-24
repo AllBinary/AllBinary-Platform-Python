@@ -16,16 +16,17 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.business.user.role.UserRole import UserRole
 
 
 class UserRoleB(UserRole):
-    roleVector: BasicArrayList = BasicArrayListD()
+    roleVector: BasicArrayList = None
     _lock = threading.RLock()
     
 
     def __init__(self, aBasicUserRole: BasicUserRole, aUserFactoryInterface: UserFactoryInterface) -> None:
+        from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
         super().__init__(aBasicUserRole, aUserFactoryInterface)
         UserRoleB.roleVector.add(self)
     
@@ -39,6 +40,8 @@ class UserRoleB(UserRole):
     @staticmethod
     def _getRole_unlocked(role: str) -> UserRole:
         from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         UserRoleFactory.getInstance()
         if not StringValidationUtil.getInstance().isEmpty(role):
             roleVector: BasicArrayList = UserRoleB.getAll()
@@ -53,11 +56,20 @@ class UserRoleB(UserRole):
     @staticmethod
     def getAll() -> BasicArrayList:
         from org.allbinary.business.user.role.UserRoleFactory import UserRoleFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         UserRoleFactory.getInstance()
         return UserRoleB.roleVector
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 
+
+def _UserRoleB_roleVector() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(UserRoleB, "roleVector", _UserRoleB_roleVector)
 

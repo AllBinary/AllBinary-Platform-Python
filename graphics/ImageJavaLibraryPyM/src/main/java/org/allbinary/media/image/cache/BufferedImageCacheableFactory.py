@@ -27,7 +27,8 @@ class BufferedImageCacheableFactory(CacheableInterfaceFactoryInterface):
 
     def getInstance(self, key: object) -> CacheableInterface:
         from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+        from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
         return BufferedImageCacheable(key)
-from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
+# from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 
 

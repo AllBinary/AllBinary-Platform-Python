@@ -22,15 +22,17 @@ class ViewCompositeInterface:
     
 
     def getRootView(self) -> View:
+        from android.view.View import View
         raise NotImplementedError()
     
 
     def getView(self) -> View:
+        from android.view.View import View
         raise NotImplementedError()
     
 
     def runOnUiThread(self, action: object) -> None:
         raise NotImplementedError()
-from android.view.View import View
+# from android.view.View import View
 
 

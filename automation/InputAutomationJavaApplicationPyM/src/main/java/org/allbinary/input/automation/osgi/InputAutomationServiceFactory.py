@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.osgi.framework.ServiceFactory import ServiceFactory
 
 
@@ -22,6 +23,8 @@ class InputAutomationServiceFactory(ServiceFactory):
     inputAutomationServiceFactory: InputAutomationServiceFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
@@ -36,18 +39,26 @@ class InputAutomationServiceFactory(ServiceFactory):
     
 
     def getService(self, bundle: Bundle, registration: ServiceRegistration) -> object:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
+        from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
         self.logUtil.putF(self.commonStrings.START, self, "getService")
         return InputAutomationJFrame.getInstance()
     
 
     def ungetService(self, bundle: Bundle, registration: ServiceRegistration, service: object) -> None:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
         pass
-from org.osgi.framework.Bundle import Bundle
-from org.osgi.framework.ServiceRegistration import ServiceRegistration
-from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.osgi.framework.Bundle import Bundle
+# from org.osgi.framework.ServiceRegistration import ServiceRegistration
+# from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-InputAutomationServiceFactory.inputAutomationServiceFactory = InputAutomationServiceFactory()
+def _InputAutomationServiceFactory_inputAutomationServiceFactory() -> object:
+    return InputAutomationServiceFactory()
+
+lazy_static(InputAutomationServiceFactory, "inputAutomationServiceFactory", _InputAutomationServiceFactory_inputAutomationServiceFactory)
 

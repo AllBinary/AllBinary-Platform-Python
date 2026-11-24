@@ -21,6 +21,8 @@ from __future__ import annotations
 class DownloadFileServlet(HttpServlet):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.DOWNLOAD: str = "download"
@@ -33,6 +35,22 @@ class DownloadFileServlet(HttpServlet):
 
     # throws ServletException, IOException
     def processRequest(self, request: HttpServletRequest, response: HttpServletResponse) -> None:
+        from java.io.InputStream import InputStream
+        from java.util.HashMap import HashMap
+        from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
+        from admin.taghelpers.AuthenticationHelperFactory import AuthenticationHelperFactory
+        from admin.taghelpers.AuthenticationHelperUtil import AuthenticationHelperUtil
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.servlet.BlisketServletUtil import BlisketServletUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         inputStream: InputStream = None
         try:
             BlisketServletUtil.getInstance().init(request)
@@ -46,11 +64,11 @@ class DownloadFileServlet(HttpServlet):
                 filePath = requestPath[beginIndex + len(self.DOWNLOAD):]
             else:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND)
-            file: AbFile = AbFile.createAbFile(str(self.URLGLOBALS.getWebappPath()) + filePath)
+            file: AbFile = AbFile.createAbFile(str(URLGLOBALS.getWebappPath()) + filePath)
             if not file.exists():
                 response.sendError(HttpServletResponse.SC_NOT_FOUND)
                 return
-            hashMap: dict = StdUtil.getInstance().createHashMap()
+            hashMap: HashMap = StdUtil.getInstance().createHashMap()
             authenticationHelper: AuthenticationHelper = AuthenticationHelperFactory().getInstance(hashMap, request)
             if authenticationHelper.isAuthenticated():
                 if AuthenticationHelperUtil.getInstance().isAuthorized(authenticationHelper, filePath):
@@ -73,7 +91,7 @@ class DownloadFileServlet(HttpServlet):
             else:
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Please Login")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "processRequest()", e)
             response.sendError(HttpServletResponse.SC_NOT_FOUND)
         finally:
@@ -100,19 +118,21 @@ class DownloadFileServlet(HttpServlet):
 # from javax.servlet.ServletException import ServletException
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.http.HttpServletResponse import HttpServletResponse
-from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
-from admin.taghelpers.AuthenticationHelperFactory import AuthenticationHelperFactory
-from admin.taghelpers.AuthenticationHelperUtil import AuthenticationHelperUtil
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.servlet.BlisketServletUtil import BlisketServletUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
+# from admin.taghelpers.AuthenticationHelperFactory import AuthenticationHelperFactory
+# from admin.taghelpers.AuthenticationHelperUtil import AuthenticationHelperUtil
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.servlet.BlisketServletUtil import BlisketServletUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

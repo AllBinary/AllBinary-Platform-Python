@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
 
 
@@ -35,5 +36,8 @@ class CloseLoopRaceTrackGeographicMapCellTypeFactory(RaceTrackGeographicMapCellT
         self.FINISH_LINE_ROAD_CELL_TYPE = self.START_LINE_ROAD_CELL_TYPE
 
 
-CloseLoopRaceTrackGeographicMapCellTypeFactory.instanceC = CloseLoopRaceTrackGeographicMapCellTypeFactory()
+def _CloseLoopRaceTrackGeographicMapCellTypeFactory_instanceC() -> object:
+    return CloseLoopRaceTrackGeographicMapCellTypeFactory()
+
+lazy_static(CloseLoopRaceTrackGeographicMapCellTypeFactory, "instanceC", _CloseLoopRaceTrackGeographicMapCellTypeFactory_instanceC)
 

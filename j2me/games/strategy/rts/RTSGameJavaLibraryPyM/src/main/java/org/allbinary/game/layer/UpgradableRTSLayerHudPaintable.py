@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
@@ -22,6 +23,8 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     instance: UpgradableRTSLayerHudPaintable = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
         self.PERCENT: str = "%"
         self.rtsLayer: CollidableDestroyableDamageableLayer = CollidableDestroyableDamageableLayer.getNullInstance()
         self.costY: int = 0
@@ -47,6 +50,9 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         super().updateMeasurement(graphics)
         font: Font = graphics.getFont()
         self.charHeight = font.getHeight()
@@ -56,6 +62,8 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     def update(self) -> None:
         from org.allbinary.game.layer.RTSLayerCompositePaintable import RTSLayerCompositePaintable
         from org.allbinary.game.layer.UpgradableWideRTSLayerPaintable import UpgradableWideRTSLayerPaintable
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
         super().update()
         commonButtons: CommonButtons = CommonButtons.getInstance()
         self.costY = (self.y + commonButtons.STANDARD_BUTTON_SIZE)
@@ -89,6 +97,7 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paint(graphics)
         self.rtsLayerCompositePaintableLateInit.paint(graphics)
         graphics.drawChars(self.percentCompleteArray, 0, self.currentTotalDigits, self.imageX + self.percentCompleteX, self.costY, 0)
@@ -101,15 +110,19 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     
 
     def getRtsLayer(self) -> CollidableDestroyableDamageableLayer:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         return self.rtsLayer
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.input.motion.button.CommonButtons import CommonButtons
 
 
-UpgradableRTSLayerHudPaintable.instance = UpgradableRTSLayerHudPaintable()
+def _UpgradableRTSLayerHudPaintable_instance() -> object:
+    return UpgradableRTSLayerHudPaintable()
+
+lazy_static(UpgradableRTSLayerHudPaintable, "instance", _UpgradableRTSLayerHudPaintable_instance)
 

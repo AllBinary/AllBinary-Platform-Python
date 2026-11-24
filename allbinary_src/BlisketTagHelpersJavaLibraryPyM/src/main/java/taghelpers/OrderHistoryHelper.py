@@ -21,10 +21,15 @@ from admin.taghelpers.TagHelper import TagHelper
 class OrderHistoryHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.weblisketSession: WeblisketSession = None
         self.storeFrontInterface: StoreFrontInterface = None
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
         self.pageContext: PageContext = None
         self.request: HttpServletRequest = None
         self.streetAddress: StreetAddress = None
@@ -34,7 +39,11 @@ class OrderHistoryHelper(TagHelper):
         self.newStatus: str = None
     
 
-    def __init__(self, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         super().__init__()
         self._init_fields()
         self.propertiesHashMap = propertiesHashMap
@@ -48,6 +57,9 @@ class OrderHistoryHelper(TagHelper):
     
 
     def getFormData(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
         self.id = self.request.getParameter(OrderData.ID)
         self.groupId = self.request.getParameter(ShippingMethodData.GROUP)
         if self.newStatus is None:
@@ -55,6 +67,13 @@ class OrderHistoryHelper(TagHelper):
     
 
     def setOrderStatus(self) -> str:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryFactory import OrderHistoryFactory
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             success: str = "Status successfully set to: " + self.status
             orderReviewInterface: OrderHistoryInterface = OrderHistoryFactory.getInstance(self.id)
@@ -71,29 +90,31 @@ class OrderHistoryHelper(TagHelper):
                 orderHistoryEntityInterface: OrderHistoryEntityInterface = OrderHistoryEntityFactory.getInstance()
                 orderHistoryEntityInterface.setStatus(self.id, self.newStatus)
                 return "Order " + self.id + " has been cancelled.<br/>"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF(success, self, "setOrderStatus()")
             return "Error Setting Order Status"
         except Exception as e:
             error: str = "Failed to set order status"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "setOrderStatus()", e)
             return error + "<br/>" + "Exception: " + str(e) + "<br/>"
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryFactory import OrderHistoryFactory
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
-from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryFactory import OrderHistoryFactory
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

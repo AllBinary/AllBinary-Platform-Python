@@ -9,15 +9,18 @@ from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
 class XmlRpcClient(XmlRpcHandler):
 
     def _init_fields(self) -> None:
+        from java.net.URL import URL
         self.url: URL = None
     
 
     def __init__(self, url: str) -> None:
+        from java.net.URL import URL
         self._init_fields()
         self.url = URL(url)
     
 
     def getURL(self) -> URL:
+        from java.net.URL import URL
         return self.url
     
 

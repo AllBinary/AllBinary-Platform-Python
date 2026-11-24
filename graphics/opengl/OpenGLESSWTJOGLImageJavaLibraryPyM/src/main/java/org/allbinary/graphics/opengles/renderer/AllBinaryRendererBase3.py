@@ -20,6 +20,8 @@ from __future__ import annotations
 class AllBinaryRendererBase3:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -28,6 +30,8 @@ class AllBinaryRendererBase3:
 
     # throws Exception
     def update(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         while self.list_.size() > 0:
             openGLESImage: OpenGLESImage = self.list_.removeAt(0)
             if openGLESImage is not None:
@@ -35,11 +39,12 @@ class AllBinaryRendererBase3:
     
 
     def add(self, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.list_.add(image)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

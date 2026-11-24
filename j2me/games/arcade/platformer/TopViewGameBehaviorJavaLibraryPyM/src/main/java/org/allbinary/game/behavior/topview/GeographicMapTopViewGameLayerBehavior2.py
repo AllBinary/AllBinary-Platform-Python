@@ -21,6 +21,10 @@ from org.allbinary.game.behavior.topview.GeographicMapTopViewLayerBehavior impor
 class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
+        from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         self.gravityUtil: GravityUtil = GravityUtil.getInstance()
         self.geographicMapBehavior: MultiGeographicMapBehavior = MultiGeographicMapBehavior()
         self.autoStepBlocks: bool = None
@@ -37,6 +41,11 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def gravity(self, velocityProperties: VelocityProperties, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             self.geographicMapBehavior.getCellTypeAt(geographicMapInterfaceArray, geographicMapCellTypeArray, geographicMapCellPosition)
             hasSolidBlock: bool = self.hasSolidBlock(geographicMapInterfaceArray, geographicMapCellTypeArray)
@@ -50,6 +59,9 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getPositionTopLeft(self, geographicMapInterfaceArray: list[BasicGeographicMap], layer: AllBinaryLayer, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         xCellPosition: int = layer.getXP() + -x
         yCellPosition: int = layer.getYP() + -y
         return geographicMapInterfaceArray[0].getCellPositionAtXYNoThrow(xCellPosition, yCellPosition)
@@ -57,6 +69,9 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getPositionTopRight(self, geographicMapInterfaceArray: list[BasicGeographicMap], layer: AllBinaryLayer, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         xCellPosition: int = layer.getXP() + -x + layer.getWidth()
         yCellPosition: int = layer.getYP() + -y
         return geographicMapInterfaceArray[0].getCellPositionAtXYNoThrow(xCellPosition, yCellPosition)
@@ -64,6 +79,9 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getPositionBottomLeft(self, geographicMapInterfaceArray: list[BasicGeographicMap], layer: AllBinaryLayer, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         xCellPosition: int = layer.getXP() + -x
         yCellPosition: int = layer.getYP() + -y + layer.getHeight()
         return geographicMapInterfaceArray[0].getCellPositionAtXYNoThrow(xCellPosition, yCellPosition)
@@ -71,6 +89,9 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getPositionBottomRight(self, geographicMapInterfaceArray: list[BasicGeographicMap], layer: AllBinaryLayer, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         xCellPosition: int = layer.getXP() + -x + layer.getWidth()
         yCellPosition: int = layer.getYP() + -y + layer.getHeight()
         return geographicMapInterfaceArray[0].getCellPositionAtXYNoThrow(xCellPosition, yCellPosition)
@@ -78,6 +99,9 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getLeftPosition(self, geographicMapInterfaceArray: list[BasicGeographicMap], layer: AllBinaryLayer) -> GeographicMapCellPosition:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         xCellPosition: int = layer.getXP()
         yCellPosition: int = layer.getYP() + layer.getHeight()
         return geographicMapInterfaceArray[0].getCellPositionAtXYNoThrow(xCellPosition, yCellPosition)
@@ -85,6 +109,9 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getRightPosition(self, geographicMapInterfaceArray: list[BasicGeographicMap], layer: AllBinaryLayer) -> GeographicMapCellPosition:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         xCellPosition: int = layer.getXP() + layer.getWidth()
         yCellPosition: int = layer.getYP() + layer.getHeight()
         return geographicMapInterfaceArray[0].getCellPositionAtXYNoThrow(xCellPosition, yCellPosition)
@@ -92,6 +119,12 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getGeographicMapCellPositionIfNotSolidBlockOrOffMapLocation(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], velocityProperties: VelocityProperties, layer: AllBinaryLayer, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         geographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         topLeftGeographicMapCellPosition: GeographicMapCellPosition = self.getPositionTopLeft(geographicMapInterfaceArray, layer, x, y)
         geographicMapCellPosition = self.getGeographicMapCellPositionIfNotSolidBlockOrOffMap(geographicMapInterfaceArray, geographicMapCellTypeArray, topLeftGeographicMapCellPosition, velocityProperties, layer)
@@ -116,6 +149,13 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def getGeographicMapCellPositionIfNotSolidBlockOrOffMap(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], geographicMapCellPosition: GeographicMapCellPosition, velocityProperties: VelocityProperties, layer: AllBinaryLayer) -> GeographicMapCellPosition:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             possibleStepGeographicMapCellPosition: GeographicMapCellPosition = geographicMapCellPosition
             tiledLayer: AllBinaryTiledLayer = geographicMapInterfaceArray[0].getAllBinaryTiledLayer()
@@ -137,6 +177,12 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def moveAndLand(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], geographicMapCellPosition: GeographicMapCellPosition, velocityProperties: VelocityProperties, layer: AllBinaryLayer, x: int, y: int) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             topViewCharacterInterface: TopViewCharacterInterface = (layer)
             topViewCharacterInterface.terrainMove(geographicMapInterfaceArray, geographicMapCellTypeArray, x, y)
@@ -146,6 +192,12 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def move(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], velocityProperties: VelocityProperties, layer: AllBinaryLayer, x: int, y: int) -> bool:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         geographicMapCellPosition: GeographicMapCellPosition = self.getGeographicMapCellPositionIfNotSolidBlockOrOffMapLocation(geographicMapInterfaceArray, geographicMapCellTypeArray, velocityProperties, layer, x, y)
         self.moveAndLand(geographicMapInterfaceArray, geographicMapCellTypeArray, geographicMapCellPosition, velocityProperties, layer, x, y)
         if geographicMapCellPosition == SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
@@ -156,6 +208,12 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def left(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], velocityProperties: VelocityProperties, layer: AllBinaryLayer) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         geographicMapCellPosition: GeographicMapCellPosition = self.getLeftPosition(geographicMapInterfaceArray, layer)
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             possibleStepGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterfaceArray[0].getGeographicMapCellPositionFactory().getAt(geographicMapCellPosition.getColumn(), geographicMapCellPosition.getRow() - 1)
@@ -174,6 +232,12 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
 
     # throws Exception
     def right(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], velocityProperties: VelocityProperties, layer: AllBinaryLayer) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         geographicMapCellPosition: GeographicMapCellPosition = self.getRightPosition(geographicMapInterfaceArray, layer)
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             possibleStepGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterfaceArray[0].getGeographicMapCellPositionFactory().getAt(geographicMapCellPosition.getColumn(), geographicMapCellPosition.getRow() - 1)
@@ -188,14 +252,14 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
             else:
                 topViewCharacterInterface: TopViewCharacterInterface = (layer)
                 topViewCharacterInterface.rightp()
-from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
 
 

@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
 
 
 # Java interface
-class EmailInterface(DomNodeInterface, DomDocumentMappingInterface):
+class EmailInterface(*java_bases(DomNodeInterface, DomDocumentMappingInterface)):
     
 
     def getDebugInfo(self) -> str:

@@ -28,8 +28,10 @@ class CssElementValidationFactory:
     @staticmethod
     def getInstance(node: Node) -> ValidationInterface:
         from org.allbinary.logic.visual.dhtml.style.css.CssElementValidation import CssElementValidation
+        from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
+        from org.w3c.dom.Node import Node
         return CssElementValidation(node)
-from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
+# from org.w3c.dom.Node import Node
 
 

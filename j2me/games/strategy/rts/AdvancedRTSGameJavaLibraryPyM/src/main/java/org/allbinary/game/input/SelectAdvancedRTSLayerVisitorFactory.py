@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.SelectRTSLayerVisitorFactoryInterface import SelectRTSLayerVisitorFactoryInterface
 
 
@@ -33,9 +34,13 @@ class SelectAdvancedRTSLayerVisitorFactory(SelectRTSLayerVisitorFactoryInterface
 
     def create(self, selectedRTSLayersPlayerGameInput: SelectedRTSLayersPlayerGameInput) -> Visitor:
         from org.allbinary.game.input.SelectAdvancedRTSLayerVisitor import SelectAdvancedRTSLayerVisitor
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         return SelectAdvancedRTSLayerVisitor(selectedRTSLayersPlayerGameInput)
-from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 
-SelectAdvancedRTSLayerVisitorFactory.instance = SelectAdvancedRTSLayerVisitorFactory()
+def _SelectAdvancedRTSLayerVisitorFactory_instance() -> object:
+    return SelectAdvancedRTSLayerVisitorFactory()
+
+lazy_static(SelectAdvancedRTSLayerVisitorFactory, "instance", _SelectAdvancedRTSLayerVisitorFactory_instance)
 

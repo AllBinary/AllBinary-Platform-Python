@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class PaymentGatewaysView(HttpStoreComponentView, DomNodeInterface):
+class PaymentGatewaysView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.paymentGatewayVector: BasicArrayList = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface, gatewayVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.paymentGatewayVector = gatewayVector
@@ -34,19 +39,30 @@ class PaymentGatewaysView(HttpStoreComponentView, DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewaysData import PaymentGatewaysData
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             storeName: str = self.getTransformInfoInterface().getStoreName()
             paymentGatewaysNode: Node = document.createElement(PaymentGatewaysData.NAME)
             size: int = self.paymentGatewayVector.size()
             for index in range(0, size):
                 paymentType: BasicPaymentType = self.paymentGatewayVector.get(index)
-                hashMap: dict = paymentType.toHashMap()
+                hashMap: HashMap = paymentType.toHashMap()
                 hashMap.put(EntryData.getInstance().DEFAULT, PaymentTypeUtil.getInstance().getDefault(storeName).getBasicPaymentType().getName())
                 paymentGatewayNode: Node = ModDomHelper.createNodeWithValueNodes(document, str(PaymentGatewayData.NAME), hashMap)
                 paymentGatewaysNode.appendChild(paymentGatewayNode)
             return paymentGatewaysNode
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().XSLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().XSLLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "toXmlNode", e)
             raise e
     
@@ -56,26 +72,30 @@ class PaymentGatewaysView(HttpStoreComponentView, DomNodeInterface):
     
 
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
             error: str = "Failed to view payment gateways"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             return error
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewaysData import PaymentGatewaysData
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
-from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewaysData import PaymentGatewaysData
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+# from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

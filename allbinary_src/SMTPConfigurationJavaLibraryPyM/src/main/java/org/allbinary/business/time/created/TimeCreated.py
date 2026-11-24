@@ -22,16 +22,20 @@ class TimeCreated(Time):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, time: str) -> None:
-        super().__init__(time)
+    def _constructor1_1(self, time: str) -> None:
+        super().__init__(int(time))
     
 
-    def _constructor1(self, time: int) -> None:
+    def _constructor1_2(self, time: int) -> None:
         super().__init__(time)
 
 

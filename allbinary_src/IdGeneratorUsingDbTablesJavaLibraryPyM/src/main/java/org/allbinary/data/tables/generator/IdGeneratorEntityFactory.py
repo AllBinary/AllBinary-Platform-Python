@@ -27,6 +27,8 @@ class IdGeneratorEntityFactory:
     @staticmethod
     def getInstance() -> IdGeneratorEntityInterface:
         from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             return IdGeneratorEntity()
         except Exception as e:
@@ -34,7 +36,7 @@ class IdGeneratorEntityFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             logUtil.put(commonStrings.EXCEPTION, "ServerLicenseRequestEntityFactory", commonStrings.GET_INSTANCE, e)
             return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

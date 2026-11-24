@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.actions.script.condition.processors.input.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class KeyboardActionScriptInputJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.keyActionScriptInputInterface: KeyboardActionScriptInputInterface = None
@@ -49,9 +51,10 @@ class KeyboardActionScriptInputJPanel(JPanel):
     
 
     def __init__(self, keyActionScriptInputInterface: KeyboardActionScriptInputInterface) -> None:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.DefaultComboBoxModel import DefaultComboBoxModel
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyNameDefaultComboBoxModelFactory import KeyNameDefaultComboBoxModelFactory
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyCharDefaultComboBoxModelFactory import KeyCharDefaultComboBoxModelFactory
+        from org.allbinary.input.automation.robot.InputRobot import InputRobot
+        from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
         super().__init__()
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -89,6 +92,8 @@ class KeyboardActionScriptInputJPanel(JPanel):
 
     # throws Exception
     def updateInputType(self) -> None:
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         comboBoxModel: ComboBoxModel = self.inputAutomationTypeJComboBox.getModel()
         selectedItem: str = comboBoxModel.getSelectedItem()
         if not StringValidationUtil.getInstance().isEmpty(selectedItem):
@@ -96,6 +101,8 @@ class KeyboardActionScriptInputJPanel(JPanel):
     
 
     def getSelectedKey(self) -> int:
+        from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         comboBoxModel: ComboBoxModel = self.keyNameJComboBox.getModel()
         selectedItem: str = comboBoxModel.getSelectedItem()
         if not StringValidationUtil.getInstance().isEmpty(selectedItem):
@@ -125,46 +132,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JDialog import JDialog
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JComboBox import JComboBox
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JComboBox import JComboBox
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JRadioButton import JRadioButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JRadioButton import JRadioButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JRadioButton import JRadioButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JRadioButton import JRadioButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JRadioButton import JRadioButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JPanel import JPanel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JComboBox import JComboBox
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.GroupLayout import GroupLayout
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.keyActionJDialog = JDialog()
         self.titleJLabel = JLabel()
         self.addKeyJLabel = JLabel()
@@ -188,7 +156,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
         self.keyActionJButton = JButton()
         self.jLabel1 = JLabel()
         self.keyActionJDialog.setMinimumSize(Dimension(255, 280))
-        self.titleJLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER)
+        self.titleJLabel.setHorizontalAlignment(SwingConstants.CENTER)
         self.titleJLabel.setText("Keyboard Input Options")
         self.addKeyJLabel.setText("Add Key:")
         self.keyNameJComboBox.addActionListener((ActionListener()  # Java anonymous class body:
@@ -205,7 +173,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
         self.testJLabel.setText("Text:")
         self.textJTextField.setText(CommonPhoneStrings.getInstance().ZERO)
         self.pressJRadioButton.setText("Press")
-        self.pressJRadioButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.pressJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.pressJRadioButton.setMargin(Insets(0, 0, 0, 0))
         self.pressJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -214,7 +182,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
 #                 self.pressJRadioButtonActionPerformed(evt)
 ))
         self.releaseJRadioButton.setText("Release")
-        self.releaseJRadioButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.releaseJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.releaseJRadioButton.setMargin(Insets(0, 0, 0, 0))
         self.releaseJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -224,7 +192,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
 ))
         self.normalJRadioButton.setSelected(True)
         self.normalJRadioButton.setText("Normal")
-        self.normalJRadioButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.normalJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.normalJRadioButton.setMargin(Insets(0, 0, 0, 0))
         self.normalJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -234,7 +202,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
 ))
         self.simultaneousJRadioButton.setSelected(True)
         self.simultaneousJRadioButton.setText("Simultaneous")
-        self.simultaneousJRadioButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.simultaneousJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.simultaneousJRadioButton.setMargin(Insets(0, 0, 0, 0))
         self.simultaneousJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -243,7 +211,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
 #                 self.simultaneousJRadioButtonActionPerformed(evt)
 ))
         self.sequenceJRadioButton.setText("Sequence")
-        self.sequenceJRadioButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.sequenceJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.sequenceJRadioButton.setMargin(Insets(0, 0, 0, 0))
         self.sequenceJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -252,7 +220,7 @@ class KeyboardActionScriptInputJPanel(JPanel):
 #                 self.sequenceJRadioButtonActionPerformed(evt)
 ))
         self.okJButton.setText("OK")
-        self.okJButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER)
+        self.okJButton.setHorizontalTextPosition(SwingConstants.CENTER)
         self.okJButton.addActionListener((ActionListener()  # Java anonymous class body:
 #             
 # 
@@ -268,8 +236,8 @@ class KeyboardActionScriptInputJPanel(JPanel):
 ))
         keyActionJDialogLayout: GroupLayout = GroupLayout(self.keyActionJDialog.getContentPane())
         self.keyActionJDialog.getContentPane().setLayout(keyActionJDialogLayout)
-        keyActionJDialogLayout.setHorizontalGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(keyActionJDialogLayout.createSequentialGroup().addContainerGap().addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(keyActionJDialogLayout.createSequentialGroup().addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, False).addComponent(self.addKeyJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.inputTypeJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(self.inputAutomationTypeJComboBox, 0, 148, Short.MAX_VALUE).addComponent(self.textJTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.keyNameJComboBox, 0, 101, Short.MAX_VALUE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.keyIntegerJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))).addComponent(self.testJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.normalJRadioButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.pressJRadioButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.releaseJRadioButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, javax.swing.GroupLayout.PREFERRED_SIZE)).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, keyActionJDialogLayout.createSequentialGroup().addComponent(self.holdTimeJLabel).addGap(22, 22, 22).addComponent(self.timeJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.delayBetweenJLabel).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE).addComponent(self.delayJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.simultaneousJRadioButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.sequenceJRadioButton))).addContainerGap()).addComponent(self.titleJLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE).addComponent(self.jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
-        keyActionJDialogLayout.setVerticalGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.inputTypeJLabel).addComponent(self.inputAutomationTypeJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.addKeyJLabel).addComponent(self.keyIntegerJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.keyNameJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.testJLabel).addComponent(self.textJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.pressJRadioButton).addComponent(self.normalJRadioButton).addComponent(self.releaseJRadioButton)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.holdTimeJLabel).addComponent(self.timeJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.delayBetweenJLabel).addComponent(self.delayJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.simultaneousJRadioButton).addComponent(self.sequenceJRadioButton)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()))
+        keyActionJDialogLayout.setHorizontalGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyActionJDialogLayout.createSequentialGroup().addContainerGap().addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyActionJDialogLayout.createSequentialGroup().addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING, False).addComponent(self.addKeyJLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.inputTypeJLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(self.inputAutomationTypeJComboBox, 0, 148, Short.MAX_VALUE).addComponent(self.textJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.keyNameJComboBox, 0, 101, Short.MAX_VALUE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.keyIntegerJComboBox, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))).addComponent(self.testJLabel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.normalJRadioButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.pressJRadioButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.releaseJRadioButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 48, GroupLayout.PREFERRED_SIZE)).addGroup(GroupLayout.Alignment.TRAILING, keyActionJDialogLayout.createSequentialGroup().addComponent(self.holdTimeJLabel).addGap(22, 22, 22).addComponent(self.timeJTextField, GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.delayBetweenJLabel).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE).addComponent(self.delayJTextField, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.simultaneousJRadioButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.sequenceJRadioButton))).addContainerGap()).addComponent(self.titleJLabel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE).addComponent(self.jPanel1, GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+        keyActionJDialogLayout.setVerticalGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.inputTypeJLabel).addComponent(self.inputAutomationTypeJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.addKeyJLabel).addComponent(self.keyIntegerJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.keyNameJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.testJLabel).addComponent(self.textJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.pressJRadioButton).addComponent(self.normalJRadioButton).addComponent(self.releaseJRadioButton)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.holdTimeJLabel).addComponent(self.timeJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.delayBetweenJLabel).addComponent(self.delayJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(keyActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.simultaneousJRadioButton).addComponent(self.sequenceJRadioButton)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.keyActionJButton.setText("Edit")
         self.keyActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
@@ -281,8 +249,8 @@ class KeyboardActionScriptInputJPanel(JPanel):
         self.jLabel1.setText("Key:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE).addComponent(self.keyActionJButton)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.keyActionJButton)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE).addComponent(self.keyActionJButton)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.keyActionJButton)))
     
 
     def prependText(self, integer: int) -> None:
@@ -297,12 +265,14 @@ class KeyboardActionScriptInputJPanel(JPanel):
     
 
     def sequenceJRadioButtonActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         if self.sequenceJRadioButton.isSelected():
             self.delayJTextField.setText(CommonPhoneStrings.getInstance().ONE)
             self.simultaneousJRadioButton.setSelected(False)
     
 
     def simultaneousJRadioButtonActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         if self.simultaneousJRadioButton.isSelected():
             self.delayJTextField.setText(CommonPhoneStrings.getInstance().ZERO)
             self.sequenceJRadioButton.setSelected(False)
@@ -347,14 +317,29 @@ class KeyboardActionScriptInputJPanel(JPanel):
             self.keyActionScriptInputInterface.setRelease(False)
             self.releaseJRadioButton.setSelected(False)
             self.normalJRadioButton.setSelected(False)
-# from javax.swing import *
-from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
-from org.allbinary.input.automation.robot.InputRobot import InputRobot
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonStrings import CommonStrings
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from javax.swing.ComboBoxModel import ComboBoxModel
+# from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
+# from org.allbinary.input.automation.robot.InputRobot import InputRobot
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.Insets import Insets
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.BorderFactory import BorderFactory
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JComboBox import JComboBox
+# from javax.swing.JDialog import JDialog
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JRadioButton import JRadioButton
+# from javax.swing.JTextField import JTextField
+# from javax.swing.LayoutStyle import LayoutStyle
+# from javax.swing.SwingConstants import SwingConstants
 
 

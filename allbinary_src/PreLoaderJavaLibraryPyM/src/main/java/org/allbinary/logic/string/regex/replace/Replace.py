@@ -20,35 +20,45 @@ from __future__ import annotations
 class Replace:
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.J2SEUtil import J2SEUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.j2seUtil: J2SEUtil = J2SEUtil.getInstance()
         self.REPLACERS_: str = "Replacers: "
         self.ALL: str = "all"
         self.FOUND_KEY: str = "found key total: "
-        self.hashMap: dict = None
+        self.hashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
         elif len(args) == 1:
             self._constructor1(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or isinstance(args[1], str)):
+            self._constructor2_1(*args)
+        else:
+            self._constructor2_2(*args)
     
 
-    def _constructor2(self, key: str, value: str) -> None:
+    def _constructor2_1(self, key: str, value: str) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
         self._init_fields()
         self.hashMap = StdUtil.getInstance().createHashMap()
         self.hashMap.put([key], [value])
     
 
-    def _constructor2(self, keys: list[str], values: list[str]) -> None:
+    def _constructor2_2(self, keys: list[str], values: list[str]) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
         self._init_fields()
         self.hashMap = StdUtil.getInstance().createHashMap()
         self.hashMap.put(keys, values)
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.hashMap = hashMap
     
@@ -58,6 +68,9 @@ class Replace:
     
 
     def upTo(self, replace: str, total: int) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         newStringBuffer: StringMaker = StringMaker()
         totalNumberOfReplaces: int = 0
         keys: list[str] = None
@@ -104,12 +117,15 @@ class Replace:
                 else:
                     break
         if totalNumberOfReplaces > 0:
-            if LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().REPLACE):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().REPLACE):
                 self.logUtil.putF("Total Number Of Replaces: " + str(totalNumberOfReplaces), self, self.ALL)
         return replace
     
 
     def line(self, replace: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         newStringBuffer: StringMaker = StringMaker()
         totalNumberOfReplaces: int = 0
         key: str = None
@@ -134,18 +150,21 @@ class Replace:
                         totalNumberOfReplaces += 1
                 else:
                     break
-        if LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().REPLACE):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().REPLACE):
             self.logUtil.putF("Total Number Of Replaces: " + str(totalNumberOfReplaces), self, self.ALL)
         return replace
     
 
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             stringUtil: StringUtil = StringUtil.getInstance()
             appUrlGlobals: AppUrlGlobals = AppUrlGlobals()
             appUrlGlobals.setWebappPath("G:/mnt/bc/mydev/work/allbinary_src/ToolsJavaLibrary/tools")
-            self.URLGLOBALS.init(appUrlGlobals)
+            URLGLOBALS.init(appUrlGlobals)
             testString: str = "\"super gun\" big tank \"goodgunriflegun"
             replace: Replace = Replace("gun", "abcdefghijklmnopqrstuxwxyzabcdefghijklmnopqrstuxwxyz")
             print("Old String: " + testString)
@@ -157,13 +176,14 @@ class Replace:
         except Exception as e:
             pass
 # from java.util.HashMap import HashMap
-from org.allbinary.J2SEUtil import J2SEUtil
-from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.J2SEUtil import J2SEUtil
+# from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
 
 

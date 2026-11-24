@@ -29,11 +29,12 @@ class GraphicItemBuilder:
     def getInstance(node: Node) -> GraphicItemInterface:
         from org.allbinary.graphics.j2me.workarea.tools.PointsDomUtil import PointsDomUtil
         from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+        from org.w3c.dom.Node import Node
         graphicItemName: str = node.getNodeName()
         if ((graphicItemName > PointsDomUtil.getInstance().LINES) - (graphicItemName < PointsDomUtil.getInstance().LINES)) == 0:
             return LinesGraphicItem(node)
         else:
             raise Exception("Graphic Item Does Not Exist: " + graphicItemName)
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Node import Node
 
 

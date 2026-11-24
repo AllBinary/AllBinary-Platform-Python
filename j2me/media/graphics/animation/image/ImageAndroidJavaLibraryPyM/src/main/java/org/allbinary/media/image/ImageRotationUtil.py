@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageRotationUtil:
     instance: ImageRotationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from android.graphics.Matrix import Matrix
         self.matrix: Matrix = Matrix()
         self.anchor: int = Anchor.TOP_LEFT
     
@@ -37,6 +40,10 @@ class ImageRotationUtil:
     # throws Exception
     def createRotatedImage(self, originalImage: Image, rotationInDegrees: int) -> Image:
         from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
+        from javax.microedition.lcdui.Image import Image
+        from android.graphics.Bitmap import Bitmap
+        from android.graphics.Canvas import Canvas
+        from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         image: Image = ImageCreationUtil.getInstance().createImageWH(originalImage.getWidth(), originalImage.getHeight())
         if image.isMutable():
             bitmap: Bitmap = (image).getBitmap()
@@ -50,12 +57,15 @@ class ImageRotationUtil:
         else:
             raise Exception("Not Mutable")
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.Anchor import Anchor
-from android.graphics.Bitmap import Bitmap
-from android.graphics.Canvas import Canvas
-from android.graphics.Matrix import Matrix
-from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
+# from org.allbinary.graphics.Anchor import Anchor
+# from android.graphics.Bitmap import Bitmap
+# from android.graphics.Canvas import Canvas
+# from android.graphics.Matrix import Matrix
+# from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
 
 
-ImageRotationUtil.instance = ImageRotationUtil()
+def _ImageRotationUtil_instance() -> object:
+    return ImageRotationUtil()
+
+lazy_static(ImageRotationUtil, "instance", _ImageRotationUtil_instance)
 

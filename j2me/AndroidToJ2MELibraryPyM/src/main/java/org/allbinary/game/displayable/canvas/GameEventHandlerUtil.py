@@ -22,11 +22,14 @@ class GameEventHandlerUtil:
 
     @staticmethod
     def removeAllListeners() -> None:
+        from org.allbinary.android.input.motion.GameInputMotionEventProcessorFactory import GameInputMotionEventProcessorFactory
+        from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         BasicMotionGesturesHandler.getInstance().removeAllListeners()
         GameKeyEventHandler.getInstance().removeAllListeners()
         GameInputMotionEventProcessorFactory.getInstance().addListener()
-from org.allbinary.android.input.motion.GameInputMotionEventProcessorFactory import GameInputMotionEventProcessorFactory
-from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
-from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+# from org.allbinary.android.input.motion.GameInputMotionEventProcessorFactory import GameInputMotionEventProcessorFactory
+# from org.allbinary.game.input.event.GameKeyEventHandler import GameKeyEventHandler
+# from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
 
 

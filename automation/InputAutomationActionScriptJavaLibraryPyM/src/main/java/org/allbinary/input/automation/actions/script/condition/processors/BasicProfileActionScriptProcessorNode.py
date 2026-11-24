@@ -28,6 +28,8 @@ class BasicProfileActionScriptProcessorNode:
 
     def _constructor1(self, node: Node) -> None:
         from org.allbinary.input.automation.actions.script.condition.processors.GenericProfileActionScriptProcessorData import GenericProfileActionScriptProcessorData
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
         actionNode: Node = DomSearchHelper.getNode(GenericProfileActionScriptProcessorData.NAME, node.getChildNodes())
     
 
@@ -38,10 +40,12 @@ class BasicProfileActionScriptProcessorNode:
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.processors.GenericProfileActionScriptProcessorData import GenericProfileActionScriptProcessorData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(GenericProfileActionScriptProcessorData.NAME)
         return node
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

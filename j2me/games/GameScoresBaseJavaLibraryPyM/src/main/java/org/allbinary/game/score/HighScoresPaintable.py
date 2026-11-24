@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorChangeListener import ColorChangeListener
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
-class HighScoresPaintable(Paintable, ColorChangeListener, UpdateMyFontInterface):
+class HighScoresPaintable(*java_bases(Paintable, ColorChangeListener, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor

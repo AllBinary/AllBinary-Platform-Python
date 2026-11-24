@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItem import ProfileActionScriptItem
 from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
 
 
-class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionScriptConditionInterface):
+class BasicProfileActionScriptCondition(*java_bases(ProfileActionScriptItem, ProfileActionScriptConditionInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.profileActionProcessorInterfaceVector: BasicArrayList = None
         self.profileActionConditionInterfaceVector: BasicArrayList = None
@@ -36,6 +39,12 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     def _constructor2(self, label: str, node: Node) -> None:
         from org.allbinary.input.automation.actions.script.condition.GenericProfileActionScriptConditionData import GenericProfileActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionFactory import ProfileActionScriptConditionFactory
+        from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
+        from org.allbinary.input.automation.actions.script.condition.processors.input.ProfileActionScriptInputFactory import ProfileActionScriptInputFactory
+        from org.allbinary.input.automation.module.actions.script.condition.processors.output.GenericProfileActionScriptOutputData import GenericProfileActionScriptOutputData
+        from org.allbinary.input.automation.module.actions.script.condition.processors.output.ProfileActionScriptOutputFactory import ProfileActionScriptOutputFactory
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(label, node)
         self._init_fields()
         self.init()
@@ -53,6 +62,12 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
 
     # throws Exception
     def addProcessorNodes(self, node: Node) -> None:
+        from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
+        from org.allbinary.input.automation.actions.script.condition.processors.input.ProfileActionScriptInputFactory import ProfileActionScriptInputFactory
+        from org.allbinary.input.automation.module.actions.script.condition.processors.output.GenericProfileActionScriptOutputData import GenericProfileActionScriptOutputData
+        from org.allbinary.input.automation.module.actions.script.condition.processors.output.ProfileActionScriptOutputFactory import ProfileActionScriptOutputFactory
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         nodeList: NodeList = node.getChildNodes()
         for index in range(0, nodeList.getLength()):
             processorActionItemNode: Node = nodeList.item(index)
@@ -69,6 +84,7 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def init(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.setProfileActionProcessorInterfaceVector(BasicArrayListD())
         self.setProfileActionConditionInterfaceVector(BasicArrayListD())
         self.getJPopupMenu().add(self.getConditionJPopupMenu())
@@ -77,10 +93,6 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def getConditionJPopupMenu(self) -> JMenu:
-        from org.allbinary.input.automation.actions.script.condition.JMenu import JMenu
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
         jMenu: JMenu = JMenu(self.NEW_CONDITION)
         jMenuItemColorAt: JMenuItem = JMenuItem(self.NEW_COLOR_AT)
         jMenuItemAlways: JMenuItem = JMenuItem(self.NEW_ALWAYS)
@@ -95,10 +107,6 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def getInputJPopupMenu(self) -> JMenu:
-        from org.allbinary.input.automation.actions.script.condition.JMenu import JMenu
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
         jMenu: JMenu = JMenu(self.NEW_INPUT)
         jMenuItemKey: JMenuItem = JMenuItem(self.NEW_KEY_INPUT)
         jMenuItemMouse: JMenuItem = JMenuItem(self.NEW_MOUSE_INPUT)
@@ -113,8 +121,6 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def getOutputJPopupMenu(self) -> JMenu:
-        from org.allbinary.input.automation.actions.script.condition.JMenu import JMenu
-        from org.allbinary.input.automation.actions.script.condition.JMenuItem import JMenuItem
         jMenu: JMenu = JMenu(self.NEW_OUTPUT)
         jMenuItemImage: JMenuItem = JMenuItem(self.NEW_IMAGE_OUTPUT)
         jMenuItemImage.addActionListener(self)
@@ -123,24 +129,28 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def addProcessor(self, profileActionProcessorInterface: ProfileActionScriptProcessorInterface) -> None:
+        from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
         self.logUtil.putF(self.commonStrings.START, self, "addInput")
         self.getProfileActionProcessorInterfaceVector().add(profileActionProcessorInterface)
         self.add(profileActionProcessorInterface)
     
 
     def removeProcessor(self, profileActionProcessorInterface: ProfileActionScriptProcessorInterface) -> None:
+        from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
         self.logUtil.putF(self.commonStrings.START, self, "removeInput")
         self.getProfileActionProcessorInterfaceVector().remove(profileActionProcessorInterface)
         self.remove(profileActionProcessorInterface)
     
 
     def removeCondition(self, profileActionScriptNodeInterface: ProfileActionScriptNodeInterface) -> None:
+        from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
         self.logUtil.putF(self.commonStrings.START, self, "removeCondition")
         self.getProfileActionConditionInterfaceVector().remove(profileActionScriptNodeInterface)
         self.remove(profileActionScriptNodeInterface)
     
 
     def addCondition(self, profileActionScriptNodeInterface: ProfileActionScriptNodeInterface) -> None:
+        from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
         self.logUtil.putF(self.commonStrings.START, self, "addCondition")
         self.getProfileActionConditionInterfaceVector().add(profileActionScriptNodeInterface)
         self.add(profileActionScriptNodeInterface)
@@ -149,6 +159,10 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.GenericProfileActionScriptConditionData import GenericProfileActionScriptConditionData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(GenericProfileActionScriptConditionData.NAME)
         profileActionConditionInterfaceVector: BasicArrayList = self.getProfileActionConditionInterfaceVector()
         size: int = profileActionConditionInterfaceVector.size()
@@ -164,10 +178,12 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def getProfileActionConditionInterfaceVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.profileActionConditionInterfaceVector
     
 
     def setProfileActionConditionInterfaceVector(self, profileActionConditionInterfaceVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.profileActionConditionInterfaceVector = profileActionConditionInterfaceVector
     
 
@@ -175,6 +191,11 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
         from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptCondition import TimeIntervalActionScriptCondition
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptCondition import AlwaysActionScriptCondition
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptCondition import ColorAtActionScriptCondition
+        from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
+        from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
+        from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInput import KeyboardActionScriptInput
+        from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInput import MouseActionScriptInput
+        from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutput import ImageActionScriptOutput
         try:
             super().actionPerformed(actionEvent)
             if actionEvent.getActionCommand().compareTo(self.DELETE) == 0:
@@ -205,14 +226,17 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
     
 
     def getProfileActionProcessorInterfaceVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.profileActionProcessorInterfaceVector
     
 
     def setProfileActionProcessorInterfaceVector(self, profileActionProcessorInterfaceVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.profileActionProcessorInterfaceVector = profileActionProcessorInterfaceVector
     
 
     def updateTree(self) -> None:
+        from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
         JTreeInterfaceFactory.getInstance().getJTreeInterface().updateJTree()
         treePath: TreePath = TreePath(self)
         JTreeInterfaceFactory.getInstance().getJTreeInterface().getActionScriptJTree().expandPath(treePath)
@@ -220,6 +244,7 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
 
     # throws Exception
     def shouldProcess(self, frame: int) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         profileActionConditionInterfaceVector: BasicArrayList = self.getProfileActionConditionInterfaceVector()
         size: int = profileActionConditionInterfaceVector.size()
         for index in range(0, size):
@@ -231,6 +256,9 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
 
     # throws Exception
     def process(self, frame: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append("Start - Processing ").appendint(self.getProfileActionProcessorInterfaceVector().size()).append(" inputs")), self, self.commonStrings.PROCESS)
         profileActionProcessorInterfaceVector: BasicArrayList = self.getProfileActionProcessorInterfaceVector()
         size: int = profileActionProcessorInterfaceVector.size()
@@ -238,24 +266,25 @@ class BasicProfileActionScriptCondition(ProfileActionScriptItem, ProfileActionSc
             profileActionScriptProcessorInterface: ProfileActionScriptProcessorInterface = profileActionProcessorInterfaceVector.get(index)
             profileActionScriptProcessorInterface.process(frame)
 # from java.awt.event.ActionEvent import ActionEvent
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-# from javax.swing import *
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from javax.swing.JMenu import JMenu
+# from javax.swing.JMenuItem import JMenuItem
 # from javax.swing.tree.TreePath import TreePath
-from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
-from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
-from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
-from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
-from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInput import KeyboardActionScriptInput
-from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInput import MouseActionScriptInput
-from org.allbinary.input.automation.actions.script.condition.processors.input.ProfileActionScriptInputFactory import ProfileActionScriptInputFactory
-from org.allbinary.input.automation.module.actions.script.condition.processors.output.GenericProfileActionScriptOutputData import GenericProfileActionScriptOutputData
-from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutput import ImageActionScriptOutput
-from org.allbinary.input.automation.module.actions.script.condition.processors.output.ProfileActionScriptOutputFactory import ProfileActionScriptOutputFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
+# from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
+# from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
+# from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
+# from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInput import KeyboardActionScriptInput
+# from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInput import MouseActionScriptInput
+# from org.allbinary.input.automation.actions.script.condition.processors.input.ProfileActionScriptInputFactory import ProfileActionScriptInputFactory
+# from org.allbinary.input.automation.module.actions.script.condition.processors.output.GenericProfileActionScriptOutputData import GenericProfileActionScriptOutputData
+# from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutput import ImageActionScriptOutput
+# from org.allbinary.input.automation.module.actions.script.condition.processors.output.ProfileActionScriptOutputFactory import ProfileActionScriptOutputFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

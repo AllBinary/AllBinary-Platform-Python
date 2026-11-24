@@ -21,6 +21,8 @@ from org.osgi.framework.ServiceFactory import ServiceFactory
 class CryptServiceFactory(ServiceFactory):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.cryptService: CryptService = CryptService()
@@ -31,16 +33,20 @@ class CryptServiceFactory(ServiceFactory):
     
 
     def getService(self, bundle: Bundle, registration: ServiceRegistration) -> object:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
         self.logUtil.putF(self.commonStrings.START, self, "getService")
         return self.cryptService
     
 
     def ungetService(self, bundle: Bundle, registration: ServiceRegistration, service: object) -> None:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
         pass
-from org.osgi.framework.Bundle import Bundle
-from org.osgi.framework.ServiceRegistration import ServiceRegistration
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.osgi.framework.Bundle import Bundle
+# from org.osgi.framework.ServiceRegistration import ServiceRegistration
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.bundle.logic.system.loader.CryptService import CryptService
 
 

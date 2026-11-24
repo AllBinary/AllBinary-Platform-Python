@@ -21,6 +21,7 @@ from __future__ import annotations
 class CustomUriResolver(URIResolver):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.uriResolverStrings: URIResolverStrings = URIResolverStrings.getInstance()
         self.path: str = None
@@ -35,13 +36,22 @@ class CustomUriResolver(URIResolver):
 
     # throws TransformerException
     def resolve(self, href: str, base: str) -> Source:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.template.TransformInfoTemplateData import TransformInfoTemplateData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(self.path)
             stringBuffer.append(AbPathData.getInstance().SEPARATOR)
             stringBuffer.append(href)
             fileAbPath: AbPath = AbFilePath(str(stringBuffer))
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().XMLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().XMLLOGGING):
                 stringBuffer.delete(0, stringBuffer.length())
                 stringBuffer.append(self.uriResolverStrings.ATTEMPT)
                 stringBuffer.append(href)
@@ -50,7 +60,7 @@ class CustomUriResolver(URIResolver):
                 stringBuffer.append(self.uriResolverStrings.NEW_PATH)
                 stringBuffer.append(str(fileAbPath))
                 stringBuffer.append(self.uriResolverStrings.NOTE)
-                stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+                stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
                 stringBuffer.append(self.uriResolverStrings.URL_GLOBAL)
                 stringBuffer.append(self.uriResolverStrings.REQUIRED_EXTENSION)
                 stringBuffer.append(self.basicURIResolver.getExtension())
@@ -69,15 +79,17 @@ class CustomUriResolver(URIResolver):
 # from javax.xml.transform.Source import Source
 # from javax.xml.transform.TransformerException import TransformerException
 # from javax.xml.transform.stream.StreamSource import StreamSource
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.path.AbFilePath import AbFilePath
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.transform.info.template.TransformInfoTemplateData import TransformInfoTemplateData
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.transform.info.template.TransformInfoTemplateData import TransformInfoTemplateData
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 from org.allbinary.data.tree.dom.URIResolverStrings import URIResolverStrings
 
 

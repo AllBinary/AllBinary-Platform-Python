@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.cache.BaseBasicArrayListCache import BaseBasicArrayListCache
 from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
 
 
-class IndexedBasicArrayListCache(BaseBasicArrayListCache, CacheInterface):
+class IndexedBasicArrayListCache(*java_bases(BaseBasicArrayListCache, CacheInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings

@@ -22,11 +22,13 @@ class ContextConfigurationInterface:
     
 
     def getEmailServerConfigurationInterface(self) -> EmailServerConfigurationInterface:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         raise NotImplementedError()
     
 
     def setEmailServerConfigurationInterface(self, emailServerConfigurationInterface: EmailServerConfigurationInterface) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         raise NotImplementedError()
-from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
+# from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
 
 

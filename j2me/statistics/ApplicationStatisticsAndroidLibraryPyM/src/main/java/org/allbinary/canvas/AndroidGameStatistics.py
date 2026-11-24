@@ -21,6 +21,7 @@ from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
 class AndroidGameStatistics(BaseGameStatistics):
 
     def _init_fields(self) -> None:
+        from org.allbinary.android.view.BaseViewWrapper import BaseViewWrapper
         self.view: BaseViewWrapper = BaseViewWrapper.NULL_VIEW_WRAPPER
         self.totalOnDraws: int = 0
         self.ANDROID_STRING_ARRAY: list[str] = [None] * (14)
@@ -29,6 +30,7 @@ class AndroidGameStatistics(BaseGameStatistics):
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__()
         self._init_fields()
         stringUtil: StringUtil = StringUtil.getInstance()
@@ -37,6 +39,8 @@ class AndroidGameStatistics(BaseGameStatistics):
     
 
     def initView(self, view: View) -> None:
+        from android.view.View import View
+        from org.allbinary.android.view.ViewWrapper import ViewWrapper
         super().init()
         self.view = ViewWrapper(view)
         self.totalOnDraws = 0
@@ -64,6 +68,7 @@ class AndroidGameStatistics(BaseGameStatistics):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         totalTime: int = self.getTimeDelayHelper().getElapsed(self.gameTickTimeDelayHelper.startTime)
         totalTime = (int(totalTime / 1000))
         if totalTime > 0:
@@ -81,10 +86,10 @@ class AndroidGameStatistics(BaseGameStatistics):
 
     def __str__(self) -> str:
         return self.toString()
-from android.view.View import View
-from org.allbinary.android.view.BaseViewWrapper import BaseViewWrapper
-from org.allbinary.android.view.ViewWrapper import ViewWrapper
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from android.view.View import View
+# from org.allbinary.android.view.BaseViewWrapper import BaseViewWrapper
+# from org.allbinary.android.view.ViewWrapper import ViewWrapper
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

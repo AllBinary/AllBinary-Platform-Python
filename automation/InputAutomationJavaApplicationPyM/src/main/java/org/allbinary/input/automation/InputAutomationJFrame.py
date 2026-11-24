@@ -16,16 +16,23 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 # from javax.help.event.HelpSetListener import HelpSetListener
 from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
 from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
-from org.allbinary.input.automation.JFrame import JFrame
+# from javax.swing.JFrame import JFrame
 
 
-class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeListener, InputAutomationRobotChangeListener, HelpSetListener):
+class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModuleChangeListener, InputAutomationRobotChangeListener, HelpSetListener)):
     INPUTAUTOMATION_JFRAME: InputAutomationJFrame = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryFactory import InputAutomationModuleFactoryFactory
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.thread.RunnableInterface import RunnableInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.inputAutomationModuleConfigurations: InputAutomationModuleConfigurations = InputAutomationModuleConfigurations()
@@ -57,6 +64,8 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
     
 
     def __init__(self) -> None:
+        from java.net.URL import URL
+        from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -79,6 +88,13 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
 
     # throws Exception
     def init(self) -> None:
+        from java.util.List import List
+        from org.allbinary.gui.swing.workers.JListSwingWorker import JListSwingWorker
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationFactory import InputAutomationConfigurationFactory
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryFactory import InputAutomationModuleFactoryFactory
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
+        from org.allbinary.logic.system.security.licensing.InputAutomationClientInformationFactory import InputAutomationClientInformationFactory
         inputAutomationConfigurationFactory: InputAutomationConfigurationFactory = InputAutomationConfigurationFactory.getInstance()
         inputAutomationConfigurationFactory.init(InputAutomationClientInformationFactory.getInstance())
         inputAutomationModuleConfigurationList: List[InputAutomationModuleConfiguration] = inputAutomationConfigurationFactory.inputAutomationConfiguration.getInputAutomationModuleConfigurationList()
@@ -93,44 +109,6 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.JLabel import JLabel
-        from org.allbinary.input.automation.JTabbedPane import JTabbedPane
-        from org.allbinary.input.automation.JPanel import JPanel
-        from org.allbinary.input.automation.JScrollPane import JScrollPane
-        from org.allbinary.input.automation.JList import JList
-        from org.allbinary.input.automation.JPanel import JPanel
-        from org.allbinary.input.automation.JMenuBar import JMenuBar
-        from org.allbinary.input.automation.JMenu import JMenu
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.JMenu import JMenu
-        from org.allbinary.input.automation.JCheckBoxMenuItem import JCheckBoxMenuItem
-        from org.allbinary.input.automation.JMenu import JMenu
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.Dimension import Dimension
-        from org.allbinary.input.automation.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.Dimension import Dimension
-        from org.allbinary.input.automation.WindowFocusListener import WindowFocusListener
-        from org.allbinary.input.automation.FocusAdapter import FocusAdapter
-        from org.allbinary.input.automation.Dimension import Dimension
-        from org.allbinary.input.automation.Dimension import Dimension
-        from org.allbinary.input.automation.ListSelectionListener import ListSelectionListener
-        from org.allbinary.input.automation.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.ActionListener import ActionListener
-        from org.allbinary.input.automation.GroupLayout import GroupLayout
         self.noModuleSelectedJDialog = JDialog()
         self.noModuleSelectedJLabel = JLabel()
         self.gameRobotJTabbedPane = JTabbedPane()
@@ -154,9 +132,9 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
         self.noModuleSelectedJLabel.setText("Please Select A Module")
         noModuleSelectedJDialogLayout: GroupLayout = GroupLayout(self.noModuleSelectedJDialog.getContentPane())
         self.noModuleSelectedJDialog.getContentPane().setLayout(noModuleSelectedJDialogLayout)
-        noModuleSelectedJDialogLayout.setHorizontalGroup(noModuleSelectedJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(noModuleSelectedJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.noModuleSelectedJLabel).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        noModuleSelectedJDialogLayout.setVerticalGroup(noModuleSelectedJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.noModuleSelectedJLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
-        self.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE)
+        noModuleSelectedJDialogLayout.setHorizontalGroup(noModuleSelectedJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(noModuleSelectedJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.noModuleSelectedJLabel).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        noModuleSelectedJDialogLayout.setVerticalGroup(noModuleSelectedJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.noModuleSelectedJLabel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+        self.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
         self.setMinimumSize(Dimension(325, 215))
         self.setResizable(False)
         self.addWindowFocusListener((WindowFocusListener()  # Java anonymous class body:
@@ -190,13 +168,13 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
         self.jScrollPane1.setViewportView(self.inputAutomationModuleJList)
         inputAutomationModuleJPanelLayout: GroupLayout = GroupLayout(self.inputAutomationModuleJPanel)
         self.inputAutomationModuleJPanel.setLayout(inputAutomationModuleJPanelLayout)
-        inputAutomationModuleJPanelLayout.setHorizontalGroup(inputAutomationModuleJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(inputAutomationModuleJPanelLayout.createSequentialGroup().addComponent(self.jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap(367, Short.MAX_VALUE)))
-        inputAutomationModuleJPanelLayout.setVerticalGroup(inputAutomationModuleJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(inputAutomationModuleJPanelLayout.createSequentialGroup().addComponent(self.jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        inputAutomationModuleJPanelLayout.setHorizontalGroup(inputAutomationModuleJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(inputAutomationModuleJPanelLayout.createSequentialGroup().addComponent(self.jScrollPane1, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE).addContainerGap(367, Short.MAX_VALUE)))
+        inputAutomationModuleJPanelLayout.setVerticalGroup(inputAutomationModuleJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(inputAutomationModuleJPanelLayout.createSequentialGroup().addComponent(self.jScrollPane1, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         self.gameRobotJTabbedPane.addTab("Modules", self.inputAutomationModuleJPanel)
         automationModuleConfigurationJPanelLayout: GroupLayout = GroupLayout(self.automationModuleConfigurationJPanel)
         self.automationModuleConfigurationJPanel.setLayout(automationModuleConfigurationJPanelLayout)
-        automationModuleConfigurationJPanelLayout.setHorizontalGroup(automationModuleConfigurationJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 566, Short.MAX_VALUE))
-        automationModuleConfigurationJPanelLayout.setVerticalGroup(automationModuleConfigurationJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 334, Short.MAX_VALUE))
+        automationModuleConfigurationJPanelLayout.setHorizontalGroup(automationModuleConfigurationJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 566, Short.MAX_VALUE))
+        automationModuleConfigurationJPanelLayout.setVerticalGroup(automationModuleConfigurationJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 334, Short.MAX_VALUE))
         self.gameRobotJTabbedPane.addTab("Configuration", self.automationModuleConfigurationJPanel)
         self.processingJMenu.setText("Processing")
         self.processingJMenu.setToolTipText("Set module processing state")
@@ -280,8 +258,8 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
         self.setJMenuBar(self.mainJMenuBar)
         layout: GroupLayout = GroupLayout(self.getContentPane())
         self.getContentPane().setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.gameRobotJTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.gameRobotJTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.gameRobotJTabbedPane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.gameRobotJTabbedPane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))
         self.pack()
     
 
@@ -300,12 +278,14 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
     
 
     def aboutJMenuItemActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.gui.dialog.BasicTextJDialog import BasicTextJDialog
         textJDialog: JDialog = BasicTextJDialog("Copyright (c) 2002-2007 AllBinary")
         textJDialog.setVisible(True)
         textJDialog.setLocationRelativeTo(self)
     
 
     def modulesJMenuItemActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.input.automation.osgi.DesktopBundle import DesktopBundle
         try:
             DesktopBundle().start()
         except Exception as e:
@@ -313,6 +293,7 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
     
 
     def helpJMenuItemActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
         JavaHelpUtil.getInstance().show(self.helpSet)
     
 
@@ -350,8 +331,8 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
                 self.inputAutomationModuleInterface = self.inputAutomationModuleFactory.getInstance(gameAutomationRobotModuleNameString)
                 self.getAutomationModuleConfigurationJPanel().removeAll()
                 layout: GroupLayout = self.getAutomationModuleConfigurationJPanel().getLayout()
-                layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 395, Short.MAX_VALUE).addComponent(self.inputAutomationModuleInterface.getConfigurationJPanel(), javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 256, Short.MAX_VALUE).addComponent(self.inputAutomationModuleInterface.getConfigurationJPanel(), javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 395, Short.MAX_VALUE).addComponent(self.inputAutomationModuleInterface.getConfigurationJPanel(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 256, Short.MAX_VALUE).addComponent(self.inputAutomationModuleInterface.getConfigurationJPanel(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 self.gameRobotJTabbedPane.setEnabledAt(1, True)
                 self.logUtil.putF("Setting Module: " + gameAutomationRobotModuleNameString + " and Configuration JPanel", self, "gameAutomationRobotModuleJListValueChanged")
             else:
@@ -402,17 +383,27 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
 
     @staticmethod
     def create(inputAutomationBundleActivatorListenerInterface: InputAutomationBundleActivatorListenerInterface) -> None:
-        from org.allbinary.input.automation.INPUTAUTOMATION_JFRAME import INPUTAUTOMATION_JFRAME
+        from org.allbinary.thread.ARunnable import ARunnable
+        from bundle.input.automation.InputAutomationBundleActivatorListenerInterface import InputAutomationBundleActivatorListenerInterface
+        from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
+        from org.allbinary.string.CommonStrings import CommonStrings
         LogConfigTypeFactory.getInstance()
         appUrlGlobals: AppUrlGlobals = AppUrlGlobals()
         appUrlGlobals.setWebappPath("G:/mnt/bc/mydev/work_automation/automation/run/")
-        self.URLGLOBALS.init(appUrlGlobals)
+        URLGLOBALS.init(appUrlGlobals)
         WebappClassLoaderInfo.setLoader(type(appUrlGlobals).getClassLoader())
-        java.awt.EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
+        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
-#                 from org.allbinary.input.automation.INPUTAUTOMATION_JFRAME import INPUTAUTOMATION_JFRAME
+#                 from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.string.CommonStrings import CommonStrings
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 commonStrings: CommonStrings = CommonStrings.getInstance()
 #                 try:
@@ -442,7 +433,10 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
         self.automationModuleConfigurationJPanel = automationModuleConfigurationJPanel
     
 
-    def onAdd(self, inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def onAdd_j1_1(self, inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent) -> None:
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
         try:
             self.logUtil.putF(self.commonStrings.START, self, "onAdd")
             InputRobotFactory.getInstance().add(inputAutomationRobotChangeEvent.getInputAutomationRobotInterfaceWrapper().getInputRobotInterface())
@@ -450,7 +444,10 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onAdd", e)
     
 
-    def onRemove(self, inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def onRemove_j1_1(self, inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent) -> None:
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
         try:
             self.logUtil.putF(self.commonStrings.START, self, "onRemove")
             InputRobotFactory.getInstance().add(inputAutomationRobotChangeEvent.getInputAutomationRobotInterfaceWrapper().getInputRobotInterface())
@@ -458,18 +455,34 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onRemove", e)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def onAdd(self, inputAutomationConfigurationChangeEvent: InputAutomationConfigurationModuleChangeEvent) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def onAdd_j1_2(self, inputAutomationConfigurationChangeEvent: InputAutomationConfigurationModuleChangeEvent) -> None:
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
         try:
             self.logUtil.putF(self.commonStrings.START, self, "onAdd")
             self.inputAutomationModuleConfigurations.add(inputAutomationConfigurationChangeEvent.getInputAutomationModuleConfiguration())
             self.init()
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onAdd", e)
+
+    def onAdd(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.onAdd_j1_1(*args)
+        if len(args) == 1:
+            return self.onAdd_j1_2(*args)
+        return getattr(self, "onAdd_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def onRemove(self, inputAutomationConfigurationChangeEvent: InputAutomationConfigurationModuleChangeEvent) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def onRemove_j1_2(self, inputAutomationConfigurationChangeEvent: InputAutomationConfigurationModuleChangeEvent) -> None:
+        from java.util.List import List
+        from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationFactory import InputAutomationConfigurationFactory
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             self.logUtil.putF(self.commonStrings.START, self, "onRemove")
             inputAutomationConfiguration: InputAutomationConfiguration = InputAutomationConfigurationFactory.getInstance().inputAutomationConfiguration
@@ -484,7 +497,14 @@ class InputAutomationJFrame(JFrame, InputAutomationConfigurationModuleChangeList
             self.init()
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onRemove", e)
-from org.allbinary.thread.ARunnable import ARunnable
+
+    def onRemove(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.onRemove_j1_1(*args)
+        if len(args) == 1:
+            return self.onRemove_j1_2(*args)
+        return getattr(self, "onRemove_j" + str(len(args)))(*args)
+# from org.allbinary.thread.ARunnable import ARunnable
 # from java.net.URI import URI
 # from java.net.URL import URL
 # from java.awt.Desktop import Desktop
@@ -493,27 +513,48 @@ from org.allbinary.thread.ARunnable import ARunnable
 # from javax.swing.JDialog import JDialog
 # from javax.help.HelpSet import HelpSet
 # from javax.help.event.HelpSetEvent import HelpSetEvent
-from bundle.input.automation.InputAutomationBundleActivatorListenerInterface import InputAutomationBundleActivatorListenerInterface
-from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.gui.dialog.BasicTextJDialog import BasicTextJDialog
-from org.allbinary.gui.swing.workers.JListSwingWorker import JListSwingWorker
-from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
-from org.allbinary.input.automation.configuration.InputAutomationConfigurationFactory import InputAutomationConfigurationFactory
-from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryFactory import InputAutomationModuleFactoryFactory
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
-from org.allbinary.input.automation.osgi.DesktopBundle import DesktopBundle
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
-from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
-from org.allbinary.logic.system.security.licensing.InputAutomationClientInformationFactory import InputAutomationClientInformationFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.RunnableInterface import RunnableInterface
+# from bundle.input.automation.InputAutomationBundleActivatorListenerInterface import InputAutomationBundleActivatorListenerInterface
+# from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.gui.dialog.BasicTextJDialog import BasicTextJDialog
+# from org.allbinary.gui.swing.workers.JListSwingWorker import JListSwingWorker
+# from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
+# from org.allbinary.input.automation.configuration.InputAutomationConfigurationFactory import InputAutomationConfigurationFactory
+# from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryFactory import InputAutomationModuleFactoryFactory
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
+# from org.allbinary.input.automation.osgi.DesktopBundle import DesktopBundle
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
+# from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
+# from org.allbinary.logic.system.security.licensing.InputAutomationClientInformationFactory import InputAutomationClientInformationFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.RunnableInterface import RunnableInterface
+# from java.awt.Dimension import Dimension
+# from java.awt.EventQueue import EventQueue
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from java.awt.event.FocusAdapter import FocusAdapter
+# from java.awt.event.FocusEvent import FocusEvent
+# from java.awt.event.WindowEvent import WindowEvent
+# from java.awt.event.WindowFocusListener import WindowFocusListener
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JCheckBoxMenuItem import JCheckBoxMenuItem
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JList import JList
+# from javax.swing.JMenu import JMenu
+# from javax.swing.JMenuBar import JMenuBar
+# from javax.swing.JMenuItem import JMenuItem
+# from javax.swing.JPanel import JPanel
+# from javax.swing.JScrollPane import JScrollPane
+# from javax.swing.JTabbedPane import JTabbedPane
+# from javax.swing.WindowConstants import WindowConstants
+# from javax.swing.event.ListSelectionEvent import ListSelectionEvent
+# from javax.swing.event.ListSelectionListener import ListSelectionListener
 
 

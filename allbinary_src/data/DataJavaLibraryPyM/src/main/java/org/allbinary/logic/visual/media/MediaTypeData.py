@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MediaTypeData:
@@ -34,5 +35,8 @@ class MediaTypeData:
         self._init_fields()
 
 
-MediaTypeData.instance = MediaTypeData()
+def _MediaTypeData_instance() -> object:
+    return MediaTypeData()
+
+lazy_static(MediaTypeData, "instance", _MediaTypeData_instance)
 

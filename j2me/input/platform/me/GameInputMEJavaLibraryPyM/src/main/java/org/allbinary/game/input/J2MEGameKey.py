@@ -22,7 +22,6 @@ class J2MEGameKey(Input):
     
 
     def __init__(self, key: int, keyName: str) -> None:
-        from org.allbinary.game.input.InputFactory import InputFactory
         super().__init__(key, keyName)
         id: int = self.getId()
         if id >= 0:
@@ -40,7 +39,6 @@ class J2MEGameKey(Input):
 
     @staticmethod
     def getString(keyCode: int) -> str:
-        from org.allbinary.game.input.InputFactory import InputFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
         input: Input = InputFactory.getInstance().getInstanceById(keyCode)
         if input is not None:

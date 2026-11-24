@@ -15,25 +15,42 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntityInterface import OrderItemsEntityInterface
 
 
-class OrderItemsEntity(AbSqlBean, OrderItemsEntityInterface):
+class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
         self.tableName: str = "orderitems"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
         super().__init__(HistoryDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
-    def insert(self, userName: str, order: OrderInterface) -> None:
+    def insert_j2(self, userName: str, order: OrderInterface) -> None:
+        from java.util.Set import Set
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.data.generator.OrderItemIdGenerator import OrderItemIdGenerator
+        from org.allbinary.data.tables.TableDataFactory import TableDataFactory
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         vector: BasicArrayList = BasicArrayListD()
         try:
             basket: BasketInterface = order.getBasket()
@@ -91,27 +108,39 @@ class OrderItemsEntity(AbSqlBean, OrderItemsEntityInterface):
                 vector.add(ZERO_STRING)
                 vector.add(ZERO_STRING)
                 self.insert(vector)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF("Command Success Added: " + str(items.size()), self, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put("Command Failed: " + str(vector), self, self.INSERT, e)
     
 
     def setStatus(self, orderId: str, groupId: str, status: str) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            whereHashMap: dict = StdUtil.getInstance().createHashMap()
-            updateHashMap: dict = StdUtil.getInstance().createHashMap()
+            whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
+            updateHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(OrderData.ID, orderId)
             whereHashMap.put(ShippingMethodData.GROUP, groupId)
             updateHashMap.put(OrderHistoryData.STATUS, status)
             super().updateWhere(whereHashMap, updateHashMap)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "setStatus", e)
     
 
     def isEverythingShipped(self, orderId: str) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             itemStatusVector: BasicArrayList = super().getColumnWhere(OrderHistoryData.STATUS, OrderData.ID, orderId)
             size: int = itemStatusVector.size()
@@ -121,15 +150,25 @@ class OrderItemsEntity(AbSqlBean, OrderItemsEntityInterface):
                     return False
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "isEverythingShipped", e)
             return False
     
 
     def getBasketReview(self, orderId: str) -> BasketReview:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.business.user.commerce.inventory.basket.BasketReview import BasketReview
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             basketReview: BasketReview = BasketReview()
-            keyValues: dict = StdUtil.getInstance().createHashMap()
+            keyValues: HashMap = StdUtil.getInstance().createHashMap()
             keyValues.put(OrderData.ID, orderId)
             items: BasicArrayList = super().getRows(keyValues)
             entryData: EntryData = EntryData.getInstance()
@@ -138,7 +177,7 @@ class OrderItemsEntity(AbSqlBean, OrderItemsEntityInterface):
                 itemsArray: list[object] = items.toArray()
                 itemsSize: int = len(itemsArray)
                 for i in range(0, itemsSize):
-                    itemHashMap: dict = itemsArray[i]
+                    itemHashMap: HashMap = itemsArray[i]
                     itemHashMap.put(self.basicItemData.INBASKETS, EMPTY_STRING)
                     itemHashMap.put(entryData.ENABLE, EMPTY_STRING)
                     itemHashMap.put(entryData.TIMECREATED, EMPTY_STRING)
@@ -153,12 +192,20 @@ class OrderItemsEntity(AbSqlBean, OrderItemsEntityInterface):
             else:
                 return None
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "getBasketReview", e)
             return None
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         entryData: EntryData = EntryData.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("CREATE TABLE ")
@@ -262,32 +309,42 @@ class OrderItemsEntity(AbSqlBean, OrderItemsEntityInterface):
 
     def dropTable(self) -> str:
         return super().dropTable()
+    
+
+    def insert_j1(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        super().insert(values)
+
+    def insert(self, *args):
+        return getattr(self, "insert_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from java.util.ListIterator import ListIterator
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
-from org.allbinary.business.user.commerce.inventory.basket.BasketReview import BasketReview
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.Item import Item
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-from org.allbinary.data.generator.OrderItemIdGenerator import OrderItemIdGenerator
-from org.allbinary.data.tables.TableDataFactory import TableDataFactory
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+# from org.allbinary.business.user.commerce.inventory.basket.BasketReview import BasketReview
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.Item import Item
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+# from org.allbinary.data.generator.OrderItemIdGenerator import OrderItemIdGenerator
+# from org.allbinary.data.tables.TableDataFactory import TableDataFactory
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

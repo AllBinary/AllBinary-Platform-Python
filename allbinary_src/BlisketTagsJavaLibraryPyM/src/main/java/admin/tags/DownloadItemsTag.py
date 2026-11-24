@@ -22,6 +22,8 @@ class DownloadItemsTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.DownloadItemsHelperFactory import DownloadItemsHelperFactory
+        from admin.taghelpers.DownloadItemsRequestHelperFactory import DownloadItemsRequestHelperFactory
         super().__init__()
         self.setTagHelperFactory(DownloadItemsHelperFactory())
         self.setTagRequestHelperFactory(DownloadItemsRequestHelperFactory())
@@ -30,11 +32,12 @@ class DownloadItemsTag(TableTag):
     # throws JspTagException
     def doStartTag(self) -> int:
         from admin.tags.ParentInventoryTagHelper import ParentInventoryTagHelper
-        from admin.tags.AbTagData import AbTagData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.isEnabled():
                 if self.getCommand() is not None:
-                    if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.BACKUP) != 0 and self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.RESTORE) != 0 and self.getCommand().compareTo(self.commonStrings.CREATE) != 0 and self.getCommand().compareTo(self.commonStrings.DROP) != 0:
+                    if self.getCommand().compareTo(GLOBALS2.BACKUP) != 0 and self.getCommand().compareTo(GLOBALS2.RESTORE) != 0 and self.getCommand().compareTo(self.commonStrings.CREATE) != 0 and self.getCommand().compareTo(self.commonStrings.DROP) != 0:
                         parentTag: Tag = self.getParent()
                         ParentInventoryTagHelper.getInstance().isValid(self, parentTag)
                         self.getPropertiesHashMap().put(AbTagData.PARENT, parentTag)
@@ -45,8 +48,9 @@ class DownloadItemsTag(TableTag):
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.tagext.Tag import Tag
-from admin.taghelpers.DownloadItemsHelperFactory import DownloadItemsHelperFactory
-from admin.taghelpers.DownloadItemsRequestHelperFactory import DownloadItemsRequestHelperFactory
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from admin.taghelpers.DownloadItemsHelperFactory import DownloadItemsHelperFactory
+# from admin.taghelpers.DownloadItemsRequestHelperFactory import DownloadItemsRequestHelperFactory
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

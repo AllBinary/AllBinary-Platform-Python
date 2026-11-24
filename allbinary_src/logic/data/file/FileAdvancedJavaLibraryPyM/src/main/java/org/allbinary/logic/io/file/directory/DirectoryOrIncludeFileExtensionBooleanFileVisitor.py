@@ -31,25 +31,28 @@ class DirectoryOrIncludeFileExtensionBooleanFileVisitor(IncludeFileExtensionsBoo
     
 
     def _constructor1(self, filterStringBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
         self._init_fields()
         self.includesString = None
     
 
     def _constructor2(self, filterStringBasicArrayList: BasicArrayList, includesString: str) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
         self._init_fields()
         self.includesString = includesString
     
 
     def visit(self, file: AbFile) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         if file.isDirectory():
             return True
         if self.includesString is None or file.getAbsolutePath().indexOf(self.includesString) >= 0:
             return super().visit(file)
         else:
             return False
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

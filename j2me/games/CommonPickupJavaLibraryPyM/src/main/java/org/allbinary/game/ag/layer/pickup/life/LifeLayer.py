@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.life.LifeVisitorInterface import LifeVisitorInterface
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 
-class LifeLayer(AllBinaryLayer, LifeVisitorInterface):
+class LifeLayer(*java_bases(AllBinaryLayer, LifeVisitorInterface)):
     
 
     def __init__(self) -> None:

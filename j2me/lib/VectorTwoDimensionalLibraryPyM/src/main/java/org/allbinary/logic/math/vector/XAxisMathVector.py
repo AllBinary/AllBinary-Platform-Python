@@ -22,14 +22,15 @@ class XAxisMathVector(MathVector):
     
 
     def __init__(self, magnitudeBasicDecimal: BasicDecimal, direction: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(magnitudeBasicDecimal, direction)
         self.calculate()
     
 
     def calculate(self) -> None:
-        from org.allbinary.logic.math.vector.YAxisMathVectorUtil import YAxisMathVectorUtil
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         result: int = YAxisMathVectorUtil.calculate(self.getMagnitude().getUnscaled(), self.getDirection())
         self.resultBasicDecimal = BasicDecimal(result)
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

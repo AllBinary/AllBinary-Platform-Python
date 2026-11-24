@@ -23,6 +23,12 @@ class StoreFrontsRequestHelper(ModifyTable):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.installer.Portion import Portion
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
         self.pageContext: PageContext = None
@@ -33,7 +39,10 @@ class StoreFrontsRequestHelper(ModifyTable):
         self.portion: Portion = None
     
 
-    def __init__(self, hashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.installer.Portion import Portion
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
         self._init_fields()
         self.pageContext = pageContext
@@ -45,27 +54,42 @@ class StoreFrontsRequestHelper(ModifyTable):
 
     # throws Exception
     def getFormData(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         self.storeName = self.weblisketSession.getStoreName()
         self.modifyingStoreFrontInterface = StoreFront(self.request)
     
 
     def update(self) -> str:
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             success: str = "Updated Successfully"
-            hashMapData: dict = self.modifyingStoreFrontInterface.toHashMap()
+            hashMapData: HashMap = self.modifyingStoreFrontInterface.toHashMap()
             StoreFrontsEntityFactory.getInstance().getStoreFrontsEntityInstance().update(hashMapData)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF(success, self, "update()")
             return success
         except Exception as e:
             error: str = "Failed to update storefronts table"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "update()", e)
             return error
     
 
     # throws Exception
     def sendStoreCreatedEmails(self) -> None:
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+        from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.event.handler.factory.StoreAdminUserEmailEventHandlerSingletons import StoreAdminUserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+        from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
+        from org.allbinary.logic.string.StringMaker import StringMaker
         storeManagerEmailSubject: str = "Store Manager Nofification For Store: " + self.modifyingStoreFrontInterface.getName()
         adminEmailSubject: str = "Admin Notification For Store: " + self.modifyingStoreFrontInterface.getName()
         stringBuffer: StringMaker = StringMaker()
@@ -98,6 +122,9 @@ class StoreFrontsRequestHelper(ModifyTable):
             return self._install_unlocked()
 
     def _install_unlocked(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Intall StoreFront Successfully: ")
@@ -106,12 +133,12 @@ class StoreFrontsRequestHelper(ModifyTable):
             stringBuffer.appendint(int(int(self.portion.getTotal())))
             success: str = str(stringBuffer)
             self.modifyingStoreFrontInterface.install(int(self.portion.getCurrent()), int(self.portion.getTotal()))
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF(success, self, "install()")
             return success
         except Exception as e:
             error: str = "Failed to Install storefront"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "install()", e)
             return error
     
@@ -121,53 +148,62 @@ class StoreFrontsRequestHelper(ModifyTable):
             return self._insert_unlocked()
 
     def _insert_unlocked(self) -> str:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             success: str = "Added Successfully"
             values: BasicArrayList = self.modifyingStoreFrontInterface.toVector()
             StoreFrontsEntityFactory.getInstance().getStoreFrontsEntityInstance().insert(values)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF(success, self, "insert()")
             return success
         except Exception as e:
             error: str = "Failed to add storefront"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "insert()", e)
             return error
     
 
     def delete(self) -> str:
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             success: str = "Delete Successfully"
             StoreFrontsEntityFactory.getInstance().getStoreFrontsEntityInstance().delete(self.storeName)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGS):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGS):
                 self.logUtil.putF(success, self, "delete()")
             return success
         except Exception as e:
             error: str = "Failed to delete storefronts table"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "delete()", e)
             return error
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.installer.Portion import Portion
-from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
-from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
-from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.event.handler.factory.StoreAdminUserEmailEventHandlerSingletons import StoreAdminUserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
-from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
-from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.installer.Portion import Portion
+# from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+# from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+# from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.event.handler.factory.StoreAdminUserEmailEventHandlerSingletons import StoreAdminUserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+# from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+# from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+# from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -20,10 +20,12 @@ from __future__ import annotations
 class HtmlTag:
 
     def _init_fields(self) -> None:
-        self.otherAttributes: dict = None
+        from java.util.HashMap import HashMap
+        self.otherAttributes: HashMap = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
         self._init_fields()
         self.otherAttributes = StdUtil.getInstance().createHashMap()
     
@@ -31,6 +33,6 @@ class HtmlTag:
     def addAttribute(self, key: str, value: str) -> None:
         self.otherAttributes.put(key, value)
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

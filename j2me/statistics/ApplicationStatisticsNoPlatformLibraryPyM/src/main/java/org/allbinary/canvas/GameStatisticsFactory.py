@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
 
 
@@ -42,5 +43,8 @@ class GameStatisticsFactory(BaseGameStatistics):
         return self.toString()
 
 
-GameStatisticsFactory.instance = GameStatisticsFactory()
+def _GameStatisticsFactory_instance() -> object:
+    return GameStatisticsFactory()
+
+lazy_static(GameStatisticsFactory, "instance", _GameStatisticsFactory_instance)
 

@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
 # Java interface
-class ProfileActionScriptNodeInterface(DomNodeInterface, MutableTreeNode):
+class ProfileActionScriptNodeInterface(*java_bases(DomNodeInterface, MutableTreeNode)):
     
 
     def addCondition(self, profileActionConditionInterface: ProfileActionScriptNodeInterface) -> None:

@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
-class LevelHudWidget(BasicHud, PaintableInterface):
+class LevelHudWidget(*java_bases(BasicHud, PaintableInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
@@ -40,7 +41,6 @@ class LevelHudWidget(BasicHud, PaintableInterface):
     
 
     def __init__(self, maxlevel: int, location: int, direction: int) -> None:
-        from org.allbinary.game.ag.layer.hud.basic.level.LEVEL import LEVEL
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__(location, direction, 2, BasicColorFactory.getInstance().GREY)

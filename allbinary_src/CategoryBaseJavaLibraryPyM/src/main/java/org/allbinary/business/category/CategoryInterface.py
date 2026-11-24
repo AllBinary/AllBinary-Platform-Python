@@ -15,19 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 
 
 # Java interface
-class CategoryInterface(TableMappingInterface, ValidationInterface):
+class CategoryInterface(*java_bases(TableMappingInterface, ValidationInterface)):
     
 
     def getChildNodes(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def addChildProperty(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> bool:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         raise NotImplementedError()
     
 
@@ -45,48 +48,56 @@ class CategoryInterface(TableMappingInterface, ValidationInterface):
     
 
     def getProperties(self) -> CategoryPropertiesInterface:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         raise NotImplementedError()
     
 
     def setProperties(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> None:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         raise NotImplementedError()
     
 
     def getHierarchy(self) -> CategoryHierarchyInterface:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         raise NotImplementedError()
     
 
     def setHierarchy(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> None:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def getPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     # throws Exception
     def getFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     # throws Exception
     def getWebAppPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     # throws Exception
     def getRootFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     # throws Exception
     def log(self) -> None:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+# from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 

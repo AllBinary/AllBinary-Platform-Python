@@ -22,13 +22,16 @@ class GameInputMotionEventProcessorFactory:
 
     @staticmethod
     def getInstance() -> BaseGameInputMotionEventProcessor:
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+        from org.allbinary.android.input.motion.api1.GameInputMotionEventProcessorAPI1 import GameInputMotionEventProcessorAPI1
+        from org.allbinary.android.input.motion.api5.GameInputMotionEventProcessorAPI5 import GameInputMotionEventProcessorAPI5
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION <= 4:
             return GameInputMotionEventProcessorAPI1.getInstance()
         else:
             return GameInputMotionEventProcessorAPI5.getInstance()
-from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
-from org.allbinary.android.input.motion.api1.GameInputMotionEventProcessorAPI1 import GameInputMotionEventProcessorAPI1
-from org.allbinary.android.input.motion.api5.GameInputMotionEventProcessorAPI5 import GameInputMotionEventProcessorAPI5
+# from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+# from org.allbinary.android.input.motion.api1.GameInputMotionEventProcessorAPI1 import GameInputMotionEventProcessorAPI1
+# from org.allbinary.android.input.motion.api5.GameInputMotionEventProcessorAPI5 import GameInputMotionEventProcessorAPI5
 
 

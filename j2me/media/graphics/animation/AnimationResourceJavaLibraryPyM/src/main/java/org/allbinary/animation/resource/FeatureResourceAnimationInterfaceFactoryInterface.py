@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
 from org.allbinary.game.resource.RectangleResourceFactoryInterface import RectangleResourceFactoryInterface
 from org.allbinary.animation.resource.ResourceAnimationInterfaceFactoryInterface import ResourceAnimationInterfaceFactoryInterface
 
 
 # Java interface
-class FeatureResourceAnimationInterfaceFactoryInterface(ResourceAnimationInterfaceFactoryInterface, RectangleResourceFactoryInterface, GameFeatureControlledInterface):
+class FeatureResourceAnimationInterfaceFactoryInterface(*java_bases(ResourceAnimationInterfaceFactoryInterface, RectangleResourceFactoryInterface, GameFeatureControlledInterface)):
     
 
     def getHashtable(self) -> ABHashtable[object, object]:

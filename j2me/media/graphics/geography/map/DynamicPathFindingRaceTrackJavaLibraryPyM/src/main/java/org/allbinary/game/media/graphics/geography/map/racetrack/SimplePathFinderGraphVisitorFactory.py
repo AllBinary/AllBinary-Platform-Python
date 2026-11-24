@@ -36,8 +36,10 @@ class SimplePathFinderGraphVisitorFactory(PathFinderGraphVisitorFactoryBase):
 
     def getInstance(self, geographicMapInterface: BasicGeographicMap) -> PathFinderGraphVisitorBase:
         from org.allbinary.game.media.graphics.geography.map.racetrack.BasePathFinderGraphVisitor import BasePathFinderGraphVisitor
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorBase import PathFinderGraphVisitorBase
         return BasePathFinderGraphVisitor(geographicMapInterface, self.edgeMinimum, self.minPathWeight, self.maxPathWeight)
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorBase import PathFinderGraphVisitorBase
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorBase import PathFinderGraphVisitorBase
 
 

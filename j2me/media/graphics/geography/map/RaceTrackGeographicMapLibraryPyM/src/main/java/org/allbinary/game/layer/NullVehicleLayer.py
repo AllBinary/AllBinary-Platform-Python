@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.VehicleLayerInterface import VehicleLayerInterface
 
 
@@ -27,6 +28,7 @@ class NullVehicleLayer(VehicleLayerInterface):
     
 
     def getGroupInterface(self) -> list[Group]:
+        from org.allbinary.game.identification.Group import Group
         raise RuntimeError()
     
 
@@ -111,10 +113,12 @@ class NullVehicleLayer(VehicleLayerInterface):
     
 
     def getGameKeyEventList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     def getSpeedBasicDecimal(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise RuntimeError()
     
 
@@ -123,10 +127,12 @@ class NullVehicleLayer(VehicleLayerInterface):
     
 
     def getRotationAnimationInterface(self) -> RotationAnimation:
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         raise RuntimeError()
     
 
     def setRotationAnimationInterface(self, animationInterface: RotationAnimation) -> None:
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         raise RuntimeError()
     
 
@@ -148,31 +154,39 @@ class NullVehicleLayer(VehicleLayerInterface):
     
 
     def getGeographicMapCellPositionTracking(self) -> GeographicMapCellPositionTracking:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
         raise RuntimeError()
     
 
     def getGeographicMapCellHistoryArray(self) -> list[GeographicMapCellHistory]:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         raise RuntimeError()
     
 
     def setGeographicMapCellHistoryArray(self, geographicMapCellHistory: list[GeographicMapCellHistory]) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         raise RuntimeError()
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
     
 
     def paintThreed(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.animation.RotationAnimation import RotationAnimation
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.animation.RotationAnimation import RotationAnimation
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-NullVehicleLayer.NULL_VEHICLE_LAYER = NullVehicleLayer()
+def _NullVehicleLayer_NULL_VEHICLE_LAYER() -> object:
+    return NullVehicleLayer()
+
+lazy_static(NullVehicleLayer, "NULL_VEHICLE_LAYER", _NullVehicleLayer_NULL_VEHICLE_LAYER)
 

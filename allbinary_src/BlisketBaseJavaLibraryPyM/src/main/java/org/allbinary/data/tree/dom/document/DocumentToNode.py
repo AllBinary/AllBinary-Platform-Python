@@ -33,6 +33,8 @@ class DocumentToNode:
     # throws Exception
     @staticmethod
     def convertDocumentToNodeString(documentString: str) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
         documentString = DocumentToNode.remove(documentString, DocumentToNode.XMLJSPROOTSTART, DocumentToNode.XMLEND)
         documentString = DocumentToNode.remove(documentString, DocumentToNode.XMLJSPROOTENDSTART, DocumentToNode.XMLEND)
         replaceXmlRoot: Replace = Replace(DocumentToNode.XMLROOT, StringUtil.getInstance().EMPTY_STRING)
@@ -55,7 +57,7 @@ class DocumentToNode:
                     resultString: str = documentString[endIndex + 1:]
                     return startString + resultString
         return documentString
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
 
 

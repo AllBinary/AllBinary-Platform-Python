@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCompleteUtil:
     instance: ImageCompleteUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(18000)
         self.allTimeDelayHelper: TimeDelayHelper = TimeDelayHelper(120000)
 
@@ -35,12 +37,16 @@ class ImageCompleteUtil:
 
     # throws Exception
     def waitForImage(self, image: Image, name: str) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.timeDelayHelper.setStartTime()
         self.waitForATime(image, name, self.timeDelayHelper)
     
 
     # throws Exception
     def isReady(self, image: Image, name: str, timeDelayHelper: TimeDelayHelper) -> bool:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.microemu.device.playn.PlaynImage import PlaynImage
         playnImage: PlaynImage = image
         if not playnImage.getImage().isReady() and playnImage.getImage().width() + playnImage.getImage().height() == 0:
             if timeDelayHelper.isTime():
@@ -51,6 +57,9 @@ class ImageCompleteUtil:
 
     # throws Exception
     def waitForATime(self, image: Image, name: str, timeDelayHelper: TimeDelayHelper) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.microemu.device.playn.PlaynImage import PlaynImage
         playnImage: PlaynImage = image
         while not playnImage.getImage().isReady() and playnImage.getImage().width() + playnImage.getImage().height() == 0:
             if timeDelayHelper.isTime():
@@ -59,20 +68,27 @@ class ImageCompleteUtil:
 
     # throws Exception
     def waitForAll(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         self.allTimeDelayHelper.setStartTime()
-        hashtable: dict = GameFeatureImageCacheFactory.getInstance().getHashtable()
+        hashtable: Hashtable = GameFeatureImageCacheFactory.getInstance().getHashtable()
         objectArray: list[object] = HashtableUtil.getInstance().getKeysAsArray(hashtable)
         size: int = len(objectArray)
         PreLogUtil.put("Total: " + str(size), self, "waitForAll")
         for index in range(0, size):
             self.waitForATime(hashtable.get(objectArray[index]), objectArray[index], self.allTimeDelayHelper)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.HashtableUtil import HashtableUtil
-from org.microemu.device.playn.PlaynImage import PlaynImage
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.microemu.device.playn.PlaynImage import PlaynImage
 
 
-ImageCompleteUtil.instance = ImageCompleteUtil()
+def _ImageCompleteUtil_instance() -> object:
+    return ImageCompleteUtil()
+
+lazy_static(ImageCompleteUtil, "instance", _ImageCompleteUtil_instance)
 

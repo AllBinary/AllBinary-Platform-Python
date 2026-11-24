@@ -20,6 +20,7 @@ from __future__ import annotations
 class Grid:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         self.grid: GPoint = None
         self.isGridOn: bool = True
         self.isGridPossible: bool = False
@@ -54,6 +55,7 @@ class Grid:
     
 
     def getGrid(self) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         return self.grid
     
 
@@ -70,6 +72,6 @@ class Grid:
         if self.zoom < 1:
             zoom = 1
         self.isChanged = True
-from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.GPoint import GPoint
 
 

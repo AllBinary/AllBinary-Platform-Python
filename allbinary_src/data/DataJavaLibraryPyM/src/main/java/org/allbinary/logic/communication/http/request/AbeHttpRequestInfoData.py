@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbeHttpRequestInfoData:
@@ -38,5 +39,8 @@ class AbeHttpRequestInfoData:
         self._init_fields()
 
 
-AbeHttpRequestInfoData.instance = AbeHttpRequestInfoData()
+def _AbeHttpRequestInfoData_instance() -> object:
+    return AbeHttpRequestInfoData()
+
+lazy_static(AbeHttpRequestInfoData, "instance", _AbeHttpRequestInfoData_instance)
 

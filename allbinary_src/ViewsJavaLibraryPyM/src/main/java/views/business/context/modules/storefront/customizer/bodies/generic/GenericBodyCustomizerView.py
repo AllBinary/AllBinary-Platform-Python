@@ -15,19 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class GenericBodyCustomizerView(HttpStoreComponentView, DomNodeInterface):
+class GenericBodyCustomizerView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
     NAME: str = "None"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.visual.transform.template.customizer.bodies.GenericBodyValidation import GenericBodyValidation
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.body: GenericBodyValidation = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
     
@@ -40,6 +44,12 @@ class GenericBodyCustomizerView(HttpStoreComponentView, DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.page.PageData import PageData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.template.util.TransformTemplateCustomizerUtil import TransformTemplateCustomizerUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         pageName: str = TransformTemplateCustomizerUtil.getInstance().getPageNameHack(self.getTransformInfoInterface().getName(), self.getWeblisketSession().getStoreName())
         if StringValidationUtil.getInstance().isEmpty(pageName):
             pageName = GenericBodyCustomizerView.NAME
@@ -48,26 +58,33 @@ class GenericBodyCustomizerView(HttpStoreComponentView, DomNodeInterface):
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.visual.transform.StoreTransformer import StoreTransformer
+        from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             success: str = XmlDocumentHelper.toString(self.getDoc())
             result: str = StoreTransformer(self.abeClientInformation, self.getTransformInfoInterface()).translate(success)
             return StringEscapeUtils.unescapeHtml3(result)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
-from org.allbinary.business.page.PageData import PageData
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.StoreTransformer import StoreTransformer
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.template.customizer.bodies.GenericBodyValidation import GenericBodyValidation
-from org.allbinary.logic.visual.transform.template.util.TransformTemplateCustomizerUtil import TransformTemplateCustomizerUtil
-from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.page.PageData import PageData
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.StoreTransformer import StoreTransformer
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.template.customizer.bodies.GenericBodyValidation import GenericBodyValidation
+# from org.allbinary.logic.visual.transform.template.util.TransformTemplateCustomizerUtil import TransformTemplateCustomizerUtil
+# from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

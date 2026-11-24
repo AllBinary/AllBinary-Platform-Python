@@ -21,6 +21,7 @@ from tags.transform.info.TransformInfoTag import TransformInfoTag
 class TransformTag(TransformInfoTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self, *args) -> None:
@@ -31,36 +32,49 @@ class TransformTag(TransformInfoTag):
     
 
     def _constructor0(self) -> None:
+        from taghelpers.ViewHelperFactory import ViewHelperFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(ViewHelperFactory())
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
 
     def _constructor1(self, tagHelperFactoryInterface: TagHelperFactoryInterface) -> None:
+        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(tagHelperFactoryInterface)
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             result: str = type(self.getHelper()).getMethod("view", None).invoke(self.getHelper(), None)
             return result
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF("Creating with: \n" + str(self.getPropertiesHashMap()), self, self.tagStrings.DO_START_TAG)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("ViewTag Start For: ")
                 stringBuffer.append(self.getName())
@@ -69,7 +83,7 @@ class TransformTag(TransformInfoTag):
                 self.logUtil.putF(str(stringBuffer), self, self.tagStrings.DO_START_TAG)
             self.setHelper()
             self.pageContext.getOut().print_(self.view())
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF("Tag End", self, self.tagStrings.DO_START_TAG)
             return self.SKIP_BODY
         except LicensingException as e:
@@ -79,11 +93,13 @@ class TransformTag(TransformInfoTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from taghelpers.ViewHelperFactory import ViewHelperFactory
+# from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from taghelpers.ViewHelperFactory import ViewHelperFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

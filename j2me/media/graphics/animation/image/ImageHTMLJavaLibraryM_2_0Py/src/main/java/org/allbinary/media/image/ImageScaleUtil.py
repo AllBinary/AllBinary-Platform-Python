@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageScaleUtil:
     instance: ImageScaleUtil = None
 
     def _init_fields(self) -> None:
+        from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
         self.playnUtil: HTMLPlaynUtil = HTMLPlaynUtil.getInstance()
     
 
@@ -35,11 +37,15 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage2(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return self.createImage3(imageCache, originalImage, scaleNominatorX, scaleDenominatorX, scaleNominatorY, scaleDenominatorY, cached, True)
     
 
     # throws Exception
     def createImage3(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         scaleX: float = scaleNominatorX / scaleDenominatorX
         scaleY: float = scaleNominatorY / scaleDenominatorY
         return self.createImage(imageCache, originalImage, scaleX, scaleY, cached)
@@ -47,12 +53,20 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage(self, imageCache: ImageCache, originalImage: Image, scaleX: float, scaleY: float, cached: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return self.createImageInternal(originalImage, scaleX, scaleY)
     
 
     # throws Exception
     def createImageInternal(self, originalImage: Image, scaleX: float, scaleY: float) -> Image:
         from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
+        from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+        from playn.core.Canvas import Canvas
+        from playn.core.CoreImage import CoreImage
+        from playn.core.ImageImpl import ImageImpl
         image: Image = ImageCreationUtil.getInstance().createImageWH(int((originalImage.getWidth() * scaleX)), int((originalImage.getHeight() * scaleY)))
         if image.isMutable():
             originalPlayNImage: CoreImage = None
@@ -70,14 +84,17 @@ class ImageScaleUtil:
         else:
             raise Exception("Not Mutable")
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.ImageCache import ImageCache
-from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
-from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
-from playn.core.Canvas import Canvas
-from playn.core.CoreImage import CoreImage
-from playn.core.ImageImpl import ImageImpl
-from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
+# from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+# from playn.core.Canvas import Canvas
+# from playn.core.CoreImage import CoreImage
+# from playn.core.ImageImpl import ImageImpl
+# from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
 
 
-ImageScaleUtil.instance = ImageScaleUtil()
+def _ImageScaleUtil_instance() -> object:
+    return ImageScaleUtil()
+
+lazy_static(ImageScaleUtil, "instance", _ImageScaleUtil_instance)
 

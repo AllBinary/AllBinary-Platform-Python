@@ -26,6 +26,7 @@ class TwoDimensionalConstraint(TwoDimensionalConstraintInterface):
     
 
     def __init__(self, node: Node) -> None:
+        from org.w3c.dom.Node import Node
         self._init_fields()
     
 
@@ -43,6 +44,6 @@ class TwoDimensionalConstraint(TwoDimensionalConstraintInterface):
 
     def setWidth(self, widthSizeConstraintInterface: SizeConstraintInterface) -> None:
         self.widthSizeConstraintInterface = widthSizeConstraintInterface
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Node import Node
 
 

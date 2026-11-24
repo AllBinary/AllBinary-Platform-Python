@@ -20,6 +20,15 @@ from __future__ import annotations
 class RTSFormInput:
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
@@ -32,6 +41,9 @@ class RTSFormInput:
     
 
     def __init__(self, groupInterfaceArray: list[Group]) -> None:
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         self._init_fields()
         size: int = len(self.newUnconstructedRTSLayerInterfaceArray)
         for index in range(0, size):
@@ -44,11 +56,18 @@ class RTSFormInput:
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         pass
     
 
     # throws Exception
     def processAtPoint(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, point: GPoint) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         index: int = self.getIndexAt(rtsPlayerLayerInterface, point)
         if index < 0:
             return
@@ -61,16 +80,28 @@ class RTSFormInput:
 
     # throws Exception
     def process(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.setAllBinaryGameLayerManager(layerManager)
     
 
     # throws Exception
     def processGameSpecific(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, item: ABCustomItem, index: int) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def processSticky(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, point: GPoint) -> bool:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         index: int = self.getIndexAt(rtsPlayerLayerInterface, point)
         if index < 0:
             return False
@@ -84,11 +115,21 @@ class RTSFormInput:
 
     # throws Exception
     def processStickyGameSpecific(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, item: ABCustomItem, index: int) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
     
 
     # throws Exception
     def getItemAt(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, point: GPoint) -> ABCustomItem:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append("Point: ").append(StringUtil.getInstance().toString(point))), self, "getItemAt")
         scrollSelectionForm: ScrollSelectionForm = rtsPlayerLayerInterface.getCurrentScrollSelectionForm()
         return scrollSelectionForm.getSelectedItem(point)
@@ -96,6 +137,11 @@ class RTSFormInput:
 
     # throws Exception
     def getIndexAt(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, point: GPoint) -> int:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append("Point: ").append(StringUtil.getInstance().toString(point))), self, "getItemAt")
         scrollSelectionForm: ScrollSelectionForm = rtsPlayerLayerInterface.getCurrentScrollSelectionForm()
         return scrollSelectionForm.getSelectedIndexForPoint(point)
@@ -103,6 +149,15 @@ class RTSFormInput:
 
     # throws Exception
     def getInstance(self, layerManager: AllBinaryLayerManager, aItem: ABCustomItem, geographicMapCellPosition: GeographicMapCellPosition) -> CollidableDestroyableDamageableLayer:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         item: LayerInterfaceFactoryImageItem = aItem
         layerInterfaceFactoryInterface: LayerInterfaceFactoryInterface = item.getLayerInterfaceFactoryInterface()
         cellPoint: GPoint = geographicMapCellPosition.getPoint()
@@ -113,10 +168,13 @@ class RTSFormInput:
     
 
     def getSelectedGeographicCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         return self.selectedGeographicCellPosition
     
 
     def setSelectedGeographicCellPosition(self, selectedGeographicCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         self.logUtil.putF(str(StringMaker().append("Selected GeographicMapCellPosition: ").append(str(selectedGeographicCellPosition))), self, "setSelectedGeographicCellPosition")
         self.selectedGeographicCellPosition = selectedGeographicCellPosition
     
@@ -130,10 +188,12 @@ class RTSFormInput:
     
 
     def getSelectedStickyItem(self) -> ABCustomItem:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return self.selectedStickyItem
     
 
     def setSelectedStickyItem(self, selectedStickyItem: ABCustomItem) -> None:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         self.selectedStickyItem = selectedStickyItem
     
 
@@ -146,26 +206,27 @@ class RTSFormInput:
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.util.ABHashtable import ABHashtable
         return self.hashtable
-from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

@@ -30,6 +30,8 @@ class UspsShippingModule(ShippingInterface):
     
 
     def getCost(self, order: OrderInterface) -> Money:
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
         return Money()
     
 
@@ -39,7 +41,7 @@ class UspsShippingModule(ShippingInterface):
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
 
 

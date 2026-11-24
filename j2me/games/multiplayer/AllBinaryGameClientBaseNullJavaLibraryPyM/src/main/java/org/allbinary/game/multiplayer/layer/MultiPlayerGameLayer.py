@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayerInterface import MultiPlayerGameLayerInterface
 
 
-class MultiPlayerGameLayer(CollidableDestroyableDamageableLayer, MultiPlayerGameLayerInterface):
+class MultiPlayerGameLayer(*java_bases(CollidableDestroyableDamageableLayer, MultiPlayerGameLayerInterface)):
     
 
     def __init__(self, remoteInfo: RemoteInfo, groupInterface: list[Group], name: str, layerInfo: Rectangle, viewPosition: ViewPositionBase) -> None:

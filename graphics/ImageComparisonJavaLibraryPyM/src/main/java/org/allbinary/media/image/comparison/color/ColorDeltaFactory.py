@@ -15,17 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static_block
 
 
 class ColorDeltaFactory:
     cacheInterface: AutomaticCacheInterface = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+        from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
+        from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+        from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         STATIC_BLOCK: str = "Static Block"
@@ -51,13 +59,13 @@ class ColorDeltaFactory:
         if colorDelta is None:
             colorDelta = ColorDelta(rgb1, rgb2)
         return colorDelta
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
-from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
-from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
+# from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+# from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ColorDeltaFactory._static_init()
+lazy_static_block(ColorDeltaFactory, ("cacheInterface", ), ColorDeltaFactory._static_init)
 

@@ -28,7 +28,6 @@ class SpecialMessageUtil:
     
 
     def get(self) -> str:
-        from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.logic.string.StringMaker import StringMaker

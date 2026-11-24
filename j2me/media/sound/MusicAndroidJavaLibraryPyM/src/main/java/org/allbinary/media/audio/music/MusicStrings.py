@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MusicStrings:
@@ -34,5 +35,8 @@ class MusicStrings:
         return MusicStrings.instance
 
 
-MusicStrings.instance = MusicStrings()
+def _MusicStrings_instance() -> object:
+    return MusicStrings()
+
+lazy_static(MusicStrings, "instance", _MusicStrings_instance)
 

@@ -33,6 +33,8 @@ class ProfileActionScriptConditionFactory:
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptCondition import AlwaysActionScriptCondition
         from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptCondition import TimeIntervalActionScriptCondition
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptCondition import ColorAtActionScriptCondition
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
         profileActionScriptConditionInterface: ProfileActionScriptConditionInterface = None
         if DomSearchHelper.getNodeNoThrow(ColorAtActionScriptConditionData.NAME, node.getChildNodes()) is not None:
             profileActionScriptConditionInterface = ColorAtActionScriptCondition(node)
@@ -41,7 +43,7 @@ class ProfileActionScriptConditionFactory:
         elif DomSearchHelper.getNodeNoThrow(AlwaysActionScriptConditionData.NAME, node.getChildNodes()) is not None:
             profileActionScriptConditionInterface = AlwaysActionScriptCondition(node)
         return profileActionScriptConditionInterface
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.w3c.dom.Node import Node
 
 

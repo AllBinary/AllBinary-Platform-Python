@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MouseStrings:
     instance: MouseStrings = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.MOUSE_PRESSED: str = "mousePressed"
         self.MOUSE_RELEASED: str = "mouseReleased"
         self.MOUSE_CLICKED: str = "mouseClicked"
@@ -39,8 +41,11 @@ class MouseStrings:
     @staticmethod
     def getInstance() -> MouseStrings:
         return MouseStrings.instance
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-MouseStrings.instance = MouseStrings()
+def _MouseStrings_instance() -> object:
+    return MouseStrings()
+
+lazy_static(MouseStrings, "instance", _MouseStrings_instance)
 

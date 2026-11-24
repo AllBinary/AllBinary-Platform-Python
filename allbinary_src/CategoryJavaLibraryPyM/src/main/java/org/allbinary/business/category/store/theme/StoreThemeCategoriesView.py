@@ -32,6 +32,9 @@ class StoreThemeCategoriesView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.business.category.store.theme.StoreThemeCategoryView import StoreThemeCategoryView
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = StoreThemeCategoryView(self.categoryInterface).toXmlNode(document)
         childArray: list[object] = self.categoryInterface.getChildNodes().toArray()
         size: int = len(childArray)
@@ -40,8 +43,8 @@ class StoreThemeCategoriesView(DomNodeInterface):
             childCategoryNode: Node = StoreThemeCategoriesView(childCategoryInterface).toXmlNode(document)
             node.appendChild(childCategoryNode)
         return node
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

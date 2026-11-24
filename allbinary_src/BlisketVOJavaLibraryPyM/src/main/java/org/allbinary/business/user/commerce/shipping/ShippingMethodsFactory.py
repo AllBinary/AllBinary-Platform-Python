@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static_block
 
 
 class ShippingMethodsFactory:
@@ -22,6 +23,9 @@ class ShippingMethodsFactory:
     SHIPPINGMETHODSFILENAME: str = "shippingMethods.xml"
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+        from org.w3c.dom.Document import Document
         self.defaultShippingMethodInterface: ShippingInterface = None
         self.document: Document = None
         self.shippingVector: BasicArrayList = None
@@ -29,6 +33,8 @@ class ShippingMethodsFactory:
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         sep: str = AbPathData.getInstance().SEPARATOR
         stringBuffer.append(sep)
@@ -40,15 +46,31 @@ class ShippingMethodsFactory:
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, storeFrontInterface: StoreFrontInterface) -> None:
-        from org.allbinary.business.user.commerce.shipping.ShippingMethodsData import ShippingMethodsData
-        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.shipping.modules.BasicWeightShippingModuleView import BasicWeightShippingModuleView
+        from org.allbinary.business.user.commerce.shipping.modules.NoShippingModuleView import NoShippingModuleView
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
         sep: str = AbPathData.getInstance().SEPARATOR
-        stringBuffer.append(self.URLGLOBALS.getMainPath())
-        stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+        stringBuffer.append(URLGLOBALS.getMainPath())
+        stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
         stringBuffer.append(storeFrontInterface.getName())
         stringBuffer.append(sep)
         stringBuffer.append(ShippingMethodsFactory.SHIPPINGMETHODSFILEPATHSTRING)
@@ -77,35 +99,37 @@ class ShippingMethodsFactory:
 
     # throws Exception
     def getInstance(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.shippingVector
     
 
     def getDefaultInstance(self) -> ShippingInterface:
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
         return self.defaultShippingMethodInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.shipping.modules.BasicWeightShippingModuleView import BasicWeightShippingModuleView
-from org.allbinary.business.user.commerce.shipping.modules.NoShippingModuleView import NoShippingModuleView
-from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.shipping.modules.BasicWeightShippingModuleView import BasicWeightShippingModuleView
+# from org.allbinary.business.user.commerce.shipping.modules.NoShippingModuleView import NoShippingModuleView
+# from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 
-ShippingMethodsFactory._static_init()
+lazy_static_block(ShippingMethodsFactory, ("SHIPPINGMETHODSFILEPATHSTRING", ), ShippingMethodsFactory._static_init)
 

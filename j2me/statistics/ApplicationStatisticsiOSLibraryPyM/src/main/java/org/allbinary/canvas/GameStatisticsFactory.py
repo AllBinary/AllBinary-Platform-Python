@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
 
 
@@ -23,6 +24,7 @@ class GameStatisticsFactory(BaseGameStatistics):
     instance: GameStatisticsFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.stringBuffer: StringMaker = StringMaker()
 
     def __init__(self) -> None:
@@ -43,12 +45,16 @@ class GameStatisticsFactory(BaseGameStatistics):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(str(super())).append(str(self.stringBuffer)))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-GameStatisticsFactory.instance = GameStatisticsFactory()
+def _GameStatisticsFactory_instance() -> object:
+    return GameStatisticsFactory()
+
+lazy_static(GameStatisticsFactory, "instance", _GameStatisticsFactory_instance)
 

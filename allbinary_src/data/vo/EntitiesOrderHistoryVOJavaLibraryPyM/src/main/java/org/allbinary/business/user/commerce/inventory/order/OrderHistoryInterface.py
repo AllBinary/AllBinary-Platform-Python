@@ -26,14 +26,17 @@ class OrderHistoryInterface:
     
 
     def setDefaultShippingAddress(self, shippingAddress: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def setBillingAddress(self, billingAddress: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def setPaymentInfo(self, payment: Payment) -> None:
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
         raise NotImplementedError()
     
 
@@ -58,18 +61,22 @@ class OrderHistoryInterface:
     
 
     def setSubTotal(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def setShippingCost(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def setTaxes(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def setTotal(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
@@ -78,14 +85,17 @@ class OrderHistoryInterface:
     
 
     def getShippingAddress(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def getBillingAddress(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def getPaymentInfo(self) -> Payment:
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
         raise NotImplementedError()
     
 
@@ -110,25 +120,29 @@ class OrderHistoryInterface:
     
 
     def getSubTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def getShippingCost(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def getTaxes(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def getTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def getPaymentMethod(self) -> str:
         raise NotImplementedError()
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.payment.Payment import Payment
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.payment.Payment import Payment
 
 

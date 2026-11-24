@@ -21,6 +21,7 @@ from org.allbinary.business.context.AbContext import AbContext
 class SearchRequest(AbContext):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         self.xslFile: str = None
         self.pageName: str = None
         self.contentType: str = None
@@ -28,7 +29,9 @@ class SearchRequest(AbContext):
         self.storeFront: StoreFrontInterface = None
     
 
-    def __init__(self, storeFront: StoreFrontInterface, searchParams: SearchParams, xslFile: str, contentType: str, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, storeFront: StoreFrontInterface, searchParams: SearchParams, xslFile: str, contentType: str, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         super().__init__(propertiesHashMap, pageContext)
         self._init_fields()
         self.storeFront = storeFront
@@ -39,6 +42,7 @@ class SearchRequest(AbContext):
     
 
     def setStoreFront(self, storeFront: StoreFrontInterface) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         self.storeFront = storeFront
     
 
@@ -59,6 +63,7 @@ class SearchRequest(AbContext):
     
 
     def getStoreFront(self) -> StoreFrontInterface:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         return self.storeFront
     
 
@@ -80,13 +85,15 @@ class SearchRequest(AbContext):
 
     # throws Exception
     def getFileBaseNameNode(self, document: Document) -> Node:
-        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return ModDomHelper.createNameValueNodes(document, SearchData.FILENAME, self.getFileBaseName())
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

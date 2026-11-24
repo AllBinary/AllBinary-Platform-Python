@@ -25,6 +25,8 @@ class InventoryTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.InventoryHelperFactory import InventoryHelperFactory
+        from admin.taghelpers.InventoryRequestHelperFactory import InventoryRequestHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(InventoryHelperFactory())
@@ -38,11 +40,13 @@ class InventoryTag(TableTag):
     # throws JspTagException
     def doStartTag(self) -> int:
         from admin.tags.ParentInventoryTagHelper import ParentInventoryTagHelper
-        from admin.tags.AbTagData import AbTagData
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.isEnabled():
                 if self.getCommand() is not None:
-                    if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.BACKUP) != 0 and self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.RESTORE) != 0 and self.getCommand().compareTo(self.commonStrings.CREATE) != 0 and self.getCommand().compareTo(self.commonStrings.DROP) != 0:
+                    if self.getCommand().compareTo(GLOBALS2.BACKUP) != 0 and self.getCommand().compareTo(GLOBALS2.RESTORE) != 0 and self.getCommand().compareTo(self.commonStrings.CREATE) != 0 and self.getCommand().compareTo(self.commonStrings.DROP) != 0:
                         parentTag: Tag = self.getParent()
                         ParentInventoryTagHelper.getInstance().isValid(self, parentTag)
                         self.getPropertiesHashMap().put(AbTagData.PARENT, parentTag)
@@ -54,9 +58,10 @@ class InventoryTag(TableTag):
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.tagext.Tag import Tag
-from admin.taghelpers.InventoryHelperFactory import InventoryHelperFactory
-from admin.taghelpers.InventoryRequestHelperFactory import InventoryRequestHelperFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from admin.taghelpers.InventoryHelperFactory import InventoryHelperFactory
+# from admin.taghelpers.InventoryRequestHelperFactory import InventoryRequestHelperFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

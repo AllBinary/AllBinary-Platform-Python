@@ -20,6 +20,8 @@ from __future__ import annotations
 class SmallDelete:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.fileName: str = None
@@ -27,12 +29,17 @@ class SmallDelete:
     
 
     def __init__(self, fileName: str) -> None:
+        from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
         self._init_fields()
         self.fileName = fileName
         self.string = AbFileSystem.getInstance().readAsString(fileName)
     
 
     def deleteAtStart(self, start: str, end: str) -> bool:
+        from java.io.DataOutputStream import DataOutputStream
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             beginIndex: int = 0
             endIndex: int = 0
@@ -46,12 +53,16 @@ class SmallDelete:
                 return True
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "deleteAtStart", e)
             return False
     
 
     def deleteBetween(self, start: str, end: str, newText: str) -> bool:
+        from java.io.DataOutputStream import DataOutputStream
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             beginIndex: int = 0
             endIndex: int = 0
@@ -66,13 +77,15 @@ class SmallDelete:
                 return True
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "deleteAtStart", e)
             return False
 # from java.io.DataOutputStream import DataOutputStream
 # from java.io.FileOutputStream import FileOutputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

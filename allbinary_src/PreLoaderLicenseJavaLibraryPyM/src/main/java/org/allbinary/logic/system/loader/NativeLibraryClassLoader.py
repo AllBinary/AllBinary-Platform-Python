@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.system.loader.ClassLoader import ClassLoader
+from java.lang.ClassLoader import ClassLoader
 
 
 class NativeLibraryClassLoader(ClassLoader):

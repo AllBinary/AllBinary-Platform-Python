@@ -22,29 +22,38 @@ class CategoryProperties(CategoryPropertiesInterface):
     MAXDEPTH: int = 100
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.category: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)):
+            self._constructor1_1(*args)
+        elif True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_2(*args)
+        else:
+            self._constructor1_3(*args)
     
 
-    def _constructor1(self, name: str) -> None:
+    def _constructor1_1(self, name: str) -> None:
         self._init_fields()
         self.category = name
     
 
-    def _constructor1(self, node: Node) -> None:
+    def _constructor1_2(self, node: Node) -> None:
+        from org.allbinary.business.category.CategoryUtil import CategoryUtil
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.category = CategoryUtil.getNameFromNode(node)
     
 
-    def _constructor1(self, categoryPropertiesHashMap: dict) -> None:
+    def _constructor1_3(self, categoryPropertiesHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.CategoryData import CategoryData
         self._init_fields()
         self.category = str(categoryPropertiesHashMap.get(CategoryData.getInstance().NAME))
     
@@ -67,6 +76,16 @@ class CategoryProperties(CategoryPropertiesInterface):
 
     # throws Exception
     def getPath(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> AbPath:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         abPathData: AbPathData = AbPathData.getInstance()
         pathStringBuffer: StringMaker = StringMaker()
         list_: BasicArrayList = BasicArrayListD()
@@ -93,17 +112,20 @@ class CategoryProperties(CategoryPropertiesInterface):
         for index in range(0, size):
             pathStringBuffer.append(list_.get(index))
         pathStringBuffer.append(abPathData.SEPARATOR)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF("path = " + str(pathStringBuffer), self, "getPath")
         return AbPath(str(pathStringBuffer), StringUtil.getInstance().EMPTY_STRING)
     
 
     def getFileName(self) -> str:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         return self.getValue() + AbPathData.getInstance().EXTENSION_SEP + CategoryData.getInstance().UNCRYPTED_EXTENSION
     
 
     # throws Exception
     def getWebAppPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise Exception("Not Root")
     
 
@@ -112,19 +134,26 @@ class CategoryProperties(CategoryPropertiesInterface):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         returnBoolean: bool = False
         if StringValidationUtil.getInstance().isValidRequired(self.category, 1, AbSqlData.MAXSTRING):
             returnBoolean = True
         return returnBoolean
     
 
-    def toHashMap(self) -> dict:
-        categoryHashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        categoryHashMap: HashMap = StdUtil.getInstance().createHashMap()
         categoryHashMap.put(CategoryData.getInstance().NAME, self.category)
         return categoryHashMap
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         categoryVector: BasicArrayList = BasicArrayListD()
         categoryVector.add(self.category)
         return categoryVector
@@ -132,11 +161,14 @@ class CategoryProperties(CategoryPropertiesInterface):
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -144,21 +176,23 @@ class CategoryProperties(CategoryPropertiesInterface):
     def validationInfo(self) -> str:
         return None
 # from java.util.HashMap import HashMap
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
-from org.allbinary.business.category.CategoryUtil import CategoryUtil
-from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.allbinary.business.category.CategoryUtil import CategoryUtil
+# from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

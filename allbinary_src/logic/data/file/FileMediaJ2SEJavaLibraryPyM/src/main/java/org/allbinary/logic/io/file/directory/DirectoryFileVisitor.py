@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 # from java.io.FileFilter import FileFilter
 from org.allbinary.logic.util.visitor.VisitorInterface import VisitorInterface
 
 
-class DirectoryFileVisitor(VisitorInterface, FileFilter):
+class DirectoryFileVisitor(*java_bases(VisitorInterface, FileFilter)):
     
 
     def __init__(self) -> None:

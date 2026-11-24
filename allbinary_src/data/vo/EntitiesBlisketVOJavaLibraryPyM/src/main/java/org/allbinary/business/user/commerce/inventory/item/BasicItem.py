@@ -22,6 +22,9 @@ from org.allbinary.business.user.commerce.inventory.item.ItemInterface import It
 class BasicItem(ItemInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
@@ -63,9 +66,15 @@ class BasicItem(ItemInterface):
             self._constructor0(*args)
     
 
-    def _constructor1(self, itemHashMap: dict) -> None:
+    def _constructor1(self, itemHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF(self.commonStrings.START, self, "Constructor(HashMap)")
         self.itemId = itemHashMap.get(self.basicItemData.ID)
         self.number = itemHashMap.get(self.basicItemData.NUMBER)
@@ -99,8 +108,14 @@ class BasicItem(ItemInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.data.generator.ProductIdGenerator import ProductIdGenerator
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         EMPTY: str = StringUtil.getInstance().EMPTY_STRING
         self.itemId = ProductIdGenerator().getNext()
@@ -215,6 +230,7 @@ class BasicItem(ItemInterface):
     
 
     def setPrice(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.price = value
     
 
@@ -227,6 +243,7 @@ class BasicItem(ItemInterface):
     
 
     def setDownloads(self, value: str) -> None:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self.downloads = value
         if not StringValidationUtil.getInstance().isEmpty(self.downloads):
             downloadInteger: int = str(self.downloads)
@@ -335,6 +352,7 @@ class BasicItem(ItemInterface):
     
 
     def getPrice(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.price
     
 
@@ -379,15 +397,21 @@ class BasicItem(ItemInterface):
     
 
     def getTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         itemTotal: Money = Money(self.price)
         itemTotal.multiply(int(int(self.number)))
         return itemTotal
     
 
-    def toHashMap(self) -> dict:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF(self.commonStrings.START, self, "toHashMap")
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(self.basicItemData.ID, self.itemId)
         hashMap.put(self.basicItemData.NUMBER, self.number)
         hashMap.put(self.basicItemData.INBASKETS, self.inBaskets)
@@ -422,7 +446,11 @@ class BasicItem(ItemInterface):
     
 
     def toVector(self) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF(self.commonStrings.START, self, "toVector")
         values: BasicArrayList = BasicArrayListD()
         values.add(self.itemId)
@@ -464,18 +492,19 @@ class BasicItem(ItemInterface):
         return self.getId()
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.data.generator.ProductIdGenerator import ProductIdGenerator
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.data.generator.ProductIdGenerator import ProductIdGenerator
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

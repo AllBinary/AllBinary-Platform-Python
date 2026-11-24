@@ -21,6 +21,7 @@ from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterf
 class AdvertisementThumbnail(AdvertisementThumbnailInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         self.imageFileName: str = None
         self.imageUrl: str = None
         self.constraint: TwoDimensionalConstraintInterface = None
@@ -39,7 +40,8 @@ class AdvertisementThumbnail(AdvertisementThumbnailInterface):
     
 
     def getTwoDimensionalConstraint(self) -> TwoDimensionalConstraintInterface:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         return self.constraint
-from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
+# from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
 
 

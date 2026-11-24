@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.direction.DirectionalInterface import DirectionalInterface
 from org.allbinary.animation.IndexedAnimationInterface import IndexedAnimationInterface
 
 
 # Java interface
-class RotationAnimationInterface(IndexedAnimationInterface, DirectionalInterface):
+class RotationAnimationInterface(*java_bases(IndexedAnimationInterface, DirectionalInterface)):
     
 
     def getAngleInfoP(self) -> AngleInfo:

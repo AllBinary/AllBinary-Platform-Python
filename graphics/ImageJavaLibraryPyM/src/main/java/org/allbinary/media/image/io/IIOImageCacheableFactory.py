@@ -27,7 +27,8 @@ class IIOImageCacheableFactory(CacheableInterfaceFactoryInterface):
 
     def getInstance(self, key: object) -> CacheableInterface:
         from org.allbinary.media.image.io.IIOImageCacheable import IIOImageCacheable
+        from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
         return IIOImageCacheable(key)
-from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
+# from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 
 

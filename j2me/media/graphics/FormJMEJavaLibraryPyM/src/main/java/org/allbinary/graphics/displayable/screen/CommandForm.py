@@ -16,12 +16,13 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Form import Form
 from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 from org.allbinary.graphics.displayable.command.MyCommandInterface import MyCommandInterface
 
 
-class CommandForm(Form, MyCommandInterface, MenuListener):
+class CommandForm(*java_bases(Form, MyCommandInterface, MenuListener)):
     NULL_COMMAND_FORM: object = None
 
     def _init_fields(self) -> None:
@@ -105,7 +106,6 @@ class CommandForm(Form, MyCommandInterface, MenuListener):
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.logic.StdUtil import StdUtil
 # from org.allbinary.util.ABStack import ABStack
-from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
 
 
 def _CommandForm_NULL_COMMAND_FORM() -> object:

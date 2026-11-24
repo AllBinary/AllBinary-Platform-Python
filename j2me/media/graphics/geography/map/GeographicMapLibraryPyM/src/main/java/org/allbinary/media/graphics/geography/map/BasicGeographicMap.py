@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.graphics.geography.map.SimpleGeographicMap import SimpleGeographicMap
 from org.allbinary.media.graphics.geography.map.GeographicMapInterface import GeographicMapInterface
 
 
-class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
-    NULL_BASIC_GEOGRAPHIC_MAP_ARRAY: list[BasicGeographicMap] = None
+class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface)):
+    NULL_BASIC_GEOGRAPHIC_MAP_ARRAY: list[BasicGeographicMap] = [None] * (0)
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
         self.geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = None
         self.geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface = None
@@ -30,6 +32,8 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
     
 
     def __init__(self, id: int, name: str, cellTypeIdToGeographicMapCellType: list[int], tiledLayer: AllBinaryTiledLayer, foregroundBasicColor: BasicColor, backgroundBasicColor: BasicColor, geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory: GeographicMapCellPositionBaseFactory, geographicMapCellTypeFactory: GeographicMapCellTypeFactory) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(id, name, cellTypeIdToGeographicMapCellType, tiledLayer, foregroundBasicColor, backgroundBasicColor)
         self._init_fields()
         self.geographicMapCellPositionFactoryInterface = geographicMapCellPositionFactoryInterface
@@ -65,21 +69,49 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
                     return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn() - 1, oldGeographicMapCellPosition.getRow())
                 else:
                     return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                if oldGeographicMapCellPosition.getColumn() + 1 < self.getAllBinaryTiledLayer().getColumns():
+                    return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn() + 1, oldGeographicMapCellPosition.getRow())
+                else:
+                    return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                if oldGeographicMapCellPosition.getRow() - 1 >= 0:
+                    return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() - 1)
+                else:
+                    return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                if oldGeographicMapCellPosition.getRow() + 1 < self.getAllBinaryTiledLayer().getRows():
+                    return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() + 1)
+                else:
+                    return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         elif switch_value in (1,):
                 if oldGeographicMapCellPosition.getColumn() + 1 < self.getAllBinaryTiledLayer().getColumns():
                     return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn() + 1, oldGeographicMapCellPosition.getRow())
                 else:
                     return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                if oldGeographicMapCellPosition.getRow() - 1 >= 0:
+                    return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() - 1)
+                else:
+                    return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                if oldGeographicMapCellPosition.getRow() + 1 < self.getAllBinaryTiledLayer().getRows():
+                    return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() + 1)
+                else:
+                    return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         elif switch_value in (2,):
                 if oldGeographicMapCellPosition.getRow() - 1 >= 0:
                     return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() - 1)
                 else:
                     return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                if oldGeographicMapCellPosition.getRow() + 1 < self.getAllBinaryTiledLayer().getRows():
+                    return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() + 1)
+                else:
+                    return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         elif switch_value in (3,):
                 if oldGeographicMapCellPosition.getRow() + 1 < self.getAllBinaryTiledLayer().getRows():
                     return self.geographicMapCellPositionFactory.getAt(oldGeographicMapCellPosition.getColumn(), oldGeographicMapCellPosition.getRow() + 1)
                 else:
                     return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
+                return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         else:
                 return SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
     
@@ -94,6 +126,7 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
 
     # throws Exception
     def getCellPositionAtXY(self, x: int, y: int) -> GeographicMapCellPosition:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
         i_column: int = self.mathUtil.abs(x / allBinaryTiledLayer.getCellHeight())
         i_row: int = self.mathUtil.abs(y / allBinaryTiledLayer.getCellWidth())
@@ -103,6 +136,7 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
     def getCellPositionAtXYNoThrow(self, x: int, y: int) -> GeographicMapCellPosition:
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
         i_column: int = self.mathUtil.abs(x / allBinaryTiledLayer.getCellHeight())
         i_row: int = self.mathUtil.abs(y / allBinaryTiledLayer.getCellWidth())
@@ -117,6 +151,7 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
 
     # throws Exception
     def isOnMap(self, geographicMapCellPosition: GeographicMapCellPosition) -> bool:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
         i_column: int = geographicMapCellPosition.getColumn()
         i_row: int = geographicMapCellPosition.getRow()
@@ -128,6 +163,8 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
 
     # throws Exception
     def getCellPositionAtNoThrow(self, x: int, y: int, x2: int, y2: int, geographicMapCellPositionList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         geographicMapCellPositionList.clear()
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
         i_columnMin: int = self.mathUtil.abs(x / allBinaryTiledLayer.getCellHeight())
@@ -143,6 +180,7 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
 
     # throws Exception
     def getCellPositionsAt(self, layer: Layer, currentCellPositionArray: list[list[GeographicMapCellPosition]], cellPositionArray: list[list[GeographicMapCellPosition]]) -> bool:
+        from org.allbinary.layer.Layer import Layer
         hasChanged: bool = False
         size: int = len(cellPositionArray)
         size2: int = len(cellPositionArray[0])
@@ -174,12 +212,46 @@ class BasicGeographicMap(SimpleGeographicMap, GeographicMapInterface):
 
     def getGeographicMapCellTypeFactory(self) -> GeographicMapCellTypeFactory:
         return self.geographicMapCellTypeFactory
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+    
 
+    def getId(self) -> int:
+        return super().getId()
+    
 
-BasicGeographicMap.NULL_BASIC_GEOGRAPHIC_MAP_ARRAY = [None] * (0)
+    def getName(self) -> str:
+        return super().getName()
+    
+
+    def reset(self) -> None:
+        super().reset()
+    
+
+    def getAllBinaryTiledLayer(self) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        return super().getAllBinaryTiledLayer()
+    
+
+    def getCellTypeFromMapCellTypeInt(self, cellTypeId: int) -> int:
+        return super().getCellTypeFromMapCellTypeInt(cellTypeId)
+    
+
+    # throws Exception
+    def getCellTypeAt(self, cellPosition: GeographicMapCellPosition) -> GeographicMapCellType:
+        return super().getCellTypeAt(cellPosition)
+    
+
+    def getForegroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getForegroundBasicColor()
+    
+
+    def getBackgroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        return super().getBackgroundBasicColor()
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+
 

@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageUtil:
     instance: ImageUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -42,13 +46,17 @@ class ImageUtil:
     
 
     def create(self, width: int, height: int) -> Image:
-        from org.allbinary.media.image.Image import Image
+        from org.eclipse.swt.widgets.Display import Display
+        from org.microemu.app.BareMain import BareMain
+        from org.eclipse.swt.graphics.Image import Image
         display: Display = BareMain.shell.getDisplay()
         return Image(display, width, height)
     
 
     # throws Exception
     def createBufferedImage(self, bufferedImageArray: list[Image], percent: int, scale: bool) -> list[Image]:
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.eclipse.swt.graphics.Image import Image
         size: int = len(bufferedImageArray)
         scaledBufferedImageArray: list[Image] = [None] * (size)
         bufferedImage: Image = None
@@ -64,6 +72,8 @@ class ImageUtil:
 
     # throws Exception
     def createBufferedImage2(self, bufferedImageArray: list[Image], percent: float, scale: bool) -> list[Image]:
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.eclipse.swt.graphics.Image import Image
         size: int = len(bufferedImageArray)
         scaledBufferedImageArray: list[Image] = [None] * (size)
         bufferedImage: Image = None
@@ -79,6 +89,7 @@ class ImageUtil:
 
     # throws Exception
     def createBufferedImage3(self, bufferedImageArray: list[Image], width: int, height: int, scale: bool) -> list[Image]:
+        from org.eclipse.swt.graphics.Image import Image
         size: int = len(bufferedImageArray)
         scaledBufferedImageArray: list[Image] = [None] * (size)
         for index in range(0, size):
@@ -88,17 +99,25 @@ class ImageUtil:
 
     # throws Exception
     def createBufferedImage4(self, bufferedImage: Image, newWidth: int, newHeight: int) -> Image:
+        from org.eclipse.swt.graphics.Image import Image
         return self.createBufferedImage5(bufferedImage, newWidth, newHeight, True)
     
 
     # throws Exception
     def createBufferedImage5(self, bufferedImage: Image, newWidth: int, newHeight: int, scale: bool) -> Image:
+        from org.eclipse.swt.graphics.Image import Image
         return self.createBufferedImage6(bufferedImage, newWidth, newHeight, scale, False)
     
 
     # throws Exception
     def createBufferedImage6(self, bufferedImage: Image, newWidth: int, newHeight: int, scale: bool, allowTranslate: bool) -> Image:
-        from org.allbinary.media.image.Image import Image
+        from org.eclipse.swt.SWT import SWT
+        from org.eclipse.swt.graphics.GC import GC
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.eclipse.swt.graphics.Transform import Transform
+        from org.microemu.app.BareMain import BareMain
+        from org.eclipse.swt.graphics.Image import Image
         imageData: ImageData = bufferedImage.getImageData()
         width: float = imageData.width
         height: float = imageData.height
@@ -132,11 +151,23 @@ class ImageUtil:
     
 
     def drawTransformedImage(self, image: Image, parent: Composite, dx: int, dy: int, width: int, height: int) -> Canvas:
+        from org.eclipse.swt.SWT import SWT
+        from org.eclipse.swt.widgets.Canvas import Canvas
+        from org.eclipse.swt.widgets.Composite import Composite
+        from org.eclipse.swt.graphics.GC import GC
+        from org.eclipse.swt.events.PaintEvent import PaintEvent
+        from org.eclipse.swt.events.PaintListener import PaintListener
+        from org.eclipse.swt.graphics.Transform import Transform
+        from org.eclipse.swt.graphics.Image import Image
         imageCanvas: Canvas = Canvas(parent, SWT.NONE)
         imageCanvas.addPaintListener((PaintListener()  # Java anonymous class body:
 #             
 # 
 #             def paintControl(self, event: PaintEvent) -> None:
+#                 from org.eclipse.swt.SWT import SWT
+#                 from org.eclipse.swt.graphics.GC import GC
+#                 from org.eclipse.swt.events.PaintEvent import PaintEvent
+#                 from org.eclipse.swt.graphics.Transform import Transform
 #                 gc: GC = event.gc
 #                 affineTransform: Transform = Transform(gc.getDevice())
 #                 affineTransform.translate(dx, dy)
@@ -148,6 +179,10 @@ class ImageUtil:
     
 
     def toString(self, bufferedImage: Image) -> str:
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.eclipse.swt.graphics.Image import Image
         commonLabels: CommonLabels = CommonLabels.getInstance()
         stringBuffer: StringMaker = StringMaker()
         imageData: ImageData = bufferedImage.getImageData()
@@ -159,22 +194,26 @@ class ImageUtil:
         stringBuffer.append(" Type: ")
         stringBuffer.appendint(int(imageData.type_))
         return str(stringBuffer)
-from org.eclipse.swt.SWT import SWT
-from org.eclipse.swt.widgets.Canvas import Canvas
-from org.eclipse.swt.widgets.Composite import Composite
-from org.eclipse.swt.graphics.GC import GC
-from org.eclipse.swt.graphics.ImageData import ImageData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.eclipse.swt.events.PaintEvent import PaintEvent
-from org.eclipse.swt.events.PaintListener import PaintListener
-from org.eclipse.swt.graphics.Transform import Transform
-from org.eclipse.swt.widgets.Display import Display
-from org.microemu.app.BareMain import BareMain
+# from org.eclipse.swt.SWT import SWT
+# from org.eclipse.swt.widgets.Canvas import Canvas
+# from org.eclipse.swt.widgets.Composite import Composite
+# from org.eclipse.swt.graphics.GC import GC
+# from org.eclipse.swt.graphics.ImageData import ImageData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.eclipse.swt.events.PaintEvent import PaintEvent
+# from org.eclipse.swt.events.PaintListener import PaintListener
+# from org.eclipse.swt.graphics.Transform import Transform
+# from org.eclipse.swt.widgets.Display import Display
+# from org.microemu.app.BareMain import BareMain
+# from org.eclipse.swt.graphics.Image import Image
 
 
-ImageUtil.instance = ImageUtil()
+def _ImageUtil_instance() -> object:
+    return ImageUtil()
+
+lazy_static(ImageUtil, "instance", _ImageUtil_instance)
 

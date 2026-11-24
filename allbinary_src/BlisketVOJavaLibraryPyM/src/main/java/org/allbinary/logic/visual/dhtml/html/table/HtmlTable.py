@@ -21,6 +21,7 @@ from org.allbinary.logic.visual.dhtml.html.HtmlTag import HtmlTag
 class HtmlTable(HtmlTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.END: str = ">"
         self.START: str = "<table "
         self.ENDTAG: str = "</table>"
@@ -50,6 +51,8 @@ class HtmlTable(HtmlTag):
     
 
     def __init__(self, before: str, cellpadding: str, cellspacing: str, after: str) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         super().__init__()
         self._init_fields()
         self.before = before
@@ -70,35 +73,36 @@ class HtmlTable(HtmlTag):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
         result: str = stringUtil.EMPTY_STRING
         attributeKeys: list[object] = self.otherAttributes.keySet().toArray()
         result = self.before
-        result += self.START
+        result += str(self.START)
         result += " "
         for i in range(0, len(attributeKeys)):
             key: str = attributeKeys[i]
             value: str = self.otherAttributes.get(key)
             if value is not None and ((value > stringUtil.EMPTY_STRING) - (value < stringUtil.EMPTY_STRING)) != 0:
-                result += key
+                result += str(key)
                 result += "=\""
-                result += value
+                result += str(value)
                 result += "\" "
-        result += self.END
+        result += str(self.END)
         size: int = self.htmlRowsVector.size()
         for i in range(0, size):
-            result += str(self.htmlRowsVector.get(i))
+            result += str(str(self.htmlRowsVector.get(i)))
             result += " "
-        result += self.ENDTAG
-        result += self.after
+        result += str(self.ENDTAG)
+        result += str(self.after)
         return result
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
 
 

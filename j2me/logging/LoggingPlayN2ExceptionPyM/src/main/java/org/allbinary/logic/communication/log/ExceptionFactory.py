@@ -23,6 +23,6 @@ class ExceptionFactory:
     @staticmethod
     def createThrowable(message: str) -> BaseException:
         return BaseException(message)
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

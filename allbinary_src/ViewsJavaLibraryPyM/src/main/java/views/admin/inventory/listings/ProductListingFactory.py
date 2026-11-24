@@ -27,16 +27,23 @@ class ProductListingFactory:
     @staticmethod
     def getInstance(searchRequest: SearchRequest) -> ProductListingInterface:
         from views.admin.inventory.listings.ProductListing import ProductListing
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             return ProductListing(searchRequest)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().FACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().FACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, "ProductListingFactory", commonStrings.GET_INSTANCE, e)
             return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class DataOutputStreamFactory:
@@ -22,30 +23,34 @@ class DataOutputStreamFactory:
     
 
     @staticmethod
-    def getInstance() -> DataOutputStreamFactory:
+    def getInstance_j0() -> DataOutputStreamFactory:
         return DataOutputStreamFactory.instance
     
 
     # throws Exception
     def getInstanceForAbFile(self, file: AbFile) -> AbDataOutputStream:
         from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
-        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
         idFileOutputStream: AbFileOutputStream = AbFileOutputStream.createFromAbFile(file)
         idOutData: AbDataOutputStream = AbDataOutputStream(idFileOutputStream)
         return idOutData
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, filePath: str, fileName: str) -> AbDataOutputStream:
+    def getInstance_j2(self, filePath: str, fileName: str) -> AbDataOutputStream:
         from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
         fileStreamFactory: FileStreamFactory = FileStreamFactory.getInstance()
         fileOutputStream: AbFileOutputStream = fileStreamFactory.getFileOutputStreamInstance(filePath, fileName)
         idOutData: AbDataOutputStream = AbDataOutputStream(fileOutputStream)
         return idOutData
-from org.allbinary.logic.io.file.AbFile import AbFile
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.logic.io.file.AbFile import AbFile
 
 
-DataOutputStreamFactory.instance = DataOutputStreamFactory()
+def _DataOutputStreamFactory_instance() -> object:
+    return DataOutputStreamFactory()
+
+lazy_static(DataOutputStreamFactory, "instance", _DataOutputStreamFactory_instance)
 

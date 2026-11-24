@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbSqlTableUtil:
@@ -23,6 +24,9 @@ class AbSqlTableUtil:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.TABLE_LABEL: str = "Table: "
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -52,19 +56,23 @@ class AbSqlTableUtil:
             return self._restoreTable_unlocked(abSqlTable, portion)
 
     def _restoreTable_unlocked(self, abSqlTable: AbSqlTable, portion: Portion) -> str:
+        from org.allbinary.business.installer.Portion import Portion
+        from org.allbinary.logic.string.StringMaker import StringMaker
         tableName: str = abSqlTable.getTableName()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.TABLE_LABEL)
         stringBuffer.append(tableName)
         stringBuffer.append(" Restoration Failed")
         return str(stringBuffer)
-from org.allbinary.business.installer.Portion import Portion
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.business.installer.Portion import Portion
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AbSqlTableUtil.instance = AbSqlTableUtil()
+def _AbSqlTableUtil_instance() -> object:
+    return AbSqlTableUtil()
+
+lazy_static(AbSqlTableUtil, "instance", _AbSqlTableUtil_instance)
 

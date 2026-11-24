@@ -15,13 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
-class LogoValidation(Validation, DomNodeInterface):
+class LogoValidation(*java_bases(Validation, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.apache.commons.fileupload.FileItem import FileItem
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.logoFileItem: FileItem = None
         self.logoAbPath: AbPath = None
@@ -32,9 +36,13 @@ class LogoValidation(Validation, DomNodeInterface):
         if len(args) == 0:
             self._constructor0(*args)
         elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
     def _constructor0(self) -> None:
@@ -45,9 +53,11 @@ class LogoValidation(Validation, DomNodeInterface):
         self.logoFile = None
     
 
-    def _constructor1(self, node: Node) -> None:
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+    def _constructor1_1(self, node: Node) -> None:
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Node import Node
         super().__init__()
         self._init_fields()
         self.isFile = False
@@ -55,7 +65,8 @@ class LogoValidation(Validation, DomNodeInterface):
         self.logoFile = DomSearchHelper.getNode(LogoData.getInstance().IMAGEFILENAME, node.getChildNodes()).getNodeValue()
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1_2(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         super().__init__()
         self._init_fields()
         self.isFile = True
@@ -63,14 +74,20 @@ class LogoValidation(Validation, DomNodeInterface):
     
 
     # throws Exception
-    def getFormData(self, hashMap: dict) -> None:
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+    def getFormData(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.logoFileItem = hashMap.get(LogoData.getInstance().IMAGE)
         self.logoAbPath = AbPath(hashMap.get(LogoData.getInstance().IMAGEPATH), StringUtil.getInstance().EMPTY_STRING)
         if self.logoFileItem is not None:
             self.logoFile = HttpRequestUtil.getInstance().generateFileName(self.logoFileItem.getName())
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("HashMap: ")
             stringBuffer.append(str(hashMap))
@@ -80,62 +97,70 @@ class LogoValidation(Validation, DomNodeInterface):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.io.file.FileData import FileData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
             fileData: FileData = FileData.getInstance()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("LogoValidation", self, self.commonStrings.IS_VALID)
             if not StringValidationUtil.getInstance().isValidRequired(str(self.logoAbPath), 0, 512):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("logoPath is invalid: " + str(self.logoAbPath), self, self.commonStrings.IS_VALID)
                 return False
             if not StringValidationUtil.getInstance().isValidRequired(self.logoFile, fileData.MINLEN, fileData.MAXLEN):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("logoFile is invalid: " + self.logoFile, self, self.commonStrings.IS_VALID)
                 return False
             if self.isFile:
                 if self.logoFileItem is None:
                     return False
                 if self.logoFileItem.getSize() > fileData.MAXIMAGEFILESIZE or self.logoFileItem.getSize() < fileData.MINIMAGEFILESIZE:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         self.logUtil.putF("Image File Is Not The Right Size. " + str(fileData.MINIMAGEFILESIZE) + "< > " + str(fileData.MAXIMAGEFILESIZE), self, self.commonStrings.IS_VALID)
                     return False
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Logo Validation: " + str(valid), self, self.commonStrings.IS_VALID)
             return valid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Logo is not valid.")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(LogoData.getInstance().IMAGE, stringUtil.EMPTY_STRING)
         if self.logoFile is not None:
             hashMap.put(LogoData.getInstance().IMAGEPATH, str(self.logoAbPath))
@@ -148,15 +173,21 @@ class LogoValidation(Validation, DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
-        hashMap: dict = self.toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        hashMap: HashMap = self.toHashMap()
         return ModDomHelper.createNameValueNodes(document, LogoData.getInstance().NAME, hashMap)
     
 
     # throws Exception
     def processLogoFile(self) -> None:
         from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoImageFileUtil import LogoImageFileUtil
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Processing logoFile: ")
             stringBuffer.append(str(self.logoAbPath))
@@ -164,18 +195,20 @@ class LogoValidation(Validation, DomNodeInterface):
             self.logUtil.putF(str(stringBuffer), self, "processLogoFile()")
         LogoImageFileUtil(self.logoAbPath, self.logoFile).saveFiles(self.logoFileItem)
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.FileData import FileData
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.apache.commons.fileupload.FileItem import FileItem
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.FileData import FileData
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

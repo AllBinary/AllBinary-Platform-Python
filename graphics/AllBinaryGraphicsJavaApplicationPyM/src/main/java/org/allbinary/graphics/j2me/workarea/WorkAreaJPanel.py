@@ -17,17 +17,20 @@ from __future__ import annotations
 
 import time
 import threading
-# from java.util.EventListener import EventListener
+from java.lang.JavaRuntimeStatic import java_bases
+from java.util.EventListener import EventListener
 from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventListener import MyCanvasEventListener
-from org.allbinary.graphics.j2me.workarea.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
 
 
-class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, EventListener, object):
+class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, EventListener, object)):
     document: Document = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.j2me.workarea.properties.PropertiesJPanel import PropertiesJPanel
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.canvasJPanelList: LinkedList = None
         self.canvasHolderJPanel: JPanel = None
@@ -47,6 +50,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
 
     def _constructor4(self, name: str, dimension: Dimension, x: int, y: int) -> None:
         from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         super().__init__()
         self._init_fields()
         try:
@@ -64,6 +68,11 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def _constructor2(self, workAreaDom: WorkAreaDom, dimension: Dimension) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+        from org.allbinary.log.LOGGING import LOGGING
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Node import Node
         super().__init__()
         self._init_fields()
         try:
@@ -80,19 +89,16 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
             self.canvasHolderJPanel.add(self.getCurrentFrame())
             self.propertiesJPanel.set(self.workAreaJTreeJPanel)
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.LOADINGERROR):
+            if LOGGING.contains(LOGGING.LOADINGERROR):
                 self.logUtil.put("Constructor Error", self, "WorkAreaJPanel", e)
             raise e
     
 
     def initMyComponents(self, dimension: Dimension) -> None:
         from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
-        from org.allbinary.graphics.j2me.workarea.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.GridBagLayout import GridBagLayout
-        from org.allbinary.graphics.j2me.workarea.GridBagConstraints import GridBagConstraints
-        from org.allbinary.graphics.j2me.workarea.GridBagConstraints import GridBagConstraints
-        from org.allbinary.graphics.j2me.workarea.GridBagConstraints import GridBagConstraints
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.properties.PropertiesJPanel import PropertiesJPanel
+        from org.allbinary.graphics.j2me.workarea.tools.ToolJPanel import ToolJPanel
         self.workAreaJTreeJPanel = WorkAreaJTreeJPanel(self.name)
         self.canvasHolderJPanel = JPanel()
         self.canvasHolderJPanel.setSize(dimension)
@@ -105,7 +111,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
         gridBagConstraints.gridx = 0
         gridBagConstraints.gridy = 0
         gridBagConstraints.gridwidth = 1
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH
+        gridBagConstraints.fill = GridBagConstraints.BOTH
         gridBagConstraints.weightx = .05
         gridBagConstraints.weighty = .05
         toolJPanel: ToolJPanel = ToolJPanel()
@@ -115,7 +121,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
         gridBagConstraints.gridx = 1
         gridBagConstraints.gridy = 0
         gridBagConstraints.gridwidth = 6
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH
+        gridBagConstraints.fill = GridBagConstraints.BOTH
         gridBagConstraints.weightx = 1
         gridBagConstraints.weighty = 1
         gridBagLayout.setConstraints(self.canvasHolderJPanel, gridBagConstraints)
@@ -123,8 +129,8 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
         gridBagConstraints = GridBagConstraints()
         gridBagConstraints.gridx = 8
         gridBagConstraints.gridy = 0
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER
+        gridBagConstraints.fill = GridBagConstraints.BOTH
         gridBagConstraints.weightx = .1
         gridBagConstraints.weighty = .1
         self.propertiesJPanel = PropertiesJPanel()
@@ -133,8 +139,11 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
         MyCanvasEventService.addListener(self)
     
 
-    def getCanvasHashMap(self) -> dict:
-        canvasJPanelHashMap: dict = StdUtil.getInstance().createHashMap()
+    def getCanvasHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+        from org.allbinary.logic.StdUtil import StdUtil
+        canvasJPanelHashMap: HashMap = StdUtil.getInstance().createHashMap()
         size: int = self.canvasJPanelList.size()
         for index in range(0, size):
             canvasJPanel: CanvasJPanel = self.canvasJPanelList.get(index)
@@ -186,7 +195,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
         super().setVisible(False)
     
 
-    def select(self) -> None:
+    def select_j0(self) -> None:
         super().setVisible(True)
         if self.canvasHolderJPanel.getComponentCount() == 1:
             component: Component = self.canvasHolderJPanel.getComponent(0)
@@ -195,6 +204,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def changeZoom(self, factor: int) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         size: int = self.canvasJPanelList.size()
         for index in range(0, size):
             canvasJPanel: CanvasJPanel = self.canvasJPanelList.get(index)
@@ -202,18 +212,23 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def getCurrentFrame(self) -> CanvasJPanel:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         return self.canvasJPanelList.get(self.selectedFrame)
     
 
     def initDuplicate(self, newCanvasJPanel: CanvasJPanel) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         if newCanvasJPanel is not None:
             self.canvasJPanelList.add(newCanvasJPanel)
             self.select(self.canvasJPanelList.size() - 1)
     
 
     # throws Exception
-    def duplicate(self, treeNode: MutableTreeNode) -> None:
-        canvasJPanelHashMap: dict = self.getCanvasHashMap()
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def duplicate_j1_1(self, treeNode: MutableTreeNode) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+        canvasJPanelHashMap: HashMap = self.getCanvasHashMap()
         if canvasJPanelHashMap.containsKey(treeNode):
             frameInteger: int = canvasJPanelHashMap.get(treeNode)
             canvasJPanel: CanvasJPanel = self.canvasJPanelList.get(int(frameInteger))
@@ -222,6 +237,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
 
     # throws Exception
     def autoRotate(self, increments: int, totalAngle: int) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         incrementAngle: int = (int(totalAngle / increments))
         for index in range(1, increments):
             canvasJPanel: CanvasJPanel = self.getCurrentFrame()
@@ -231,12 +247,14 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def explodeAll(self) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         canvasJPanel: CanvasJPanel = self.getCurrentFrame()
         canvasJPanel.explodeAll()
     
 
     # throws Exception
-    def autoExplode(self, numberOfFrames: int, explodeType: int) -> None:
+    def autoExplode_j2(self, numberOfFrames: int, explodeType: int) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         for index in range(1, numberOfFrames):
             canvasJPanel: CanvasJPanel = self.getCurrentFrame()
             newCanvasJPanel: CanvasJPanel = canvasJPanel.duplicate()
@@ -246,18 +264,20 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
 
     # throws Exception
     def autoMirror(self) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         canvasJPanel: CanvasJPanel = self.getCurrentFrame()
         newCanvasJPanel: CanvasJPanel = canvasJPanel.duplicate()
         newCanvasJPanel.mirror()
         self.initDuplicate(newCanvasJPanel)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def select(self, index: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def select_j1_1(self, index: int) -> None:
         with self._lock:
-            return self._select_unlocked(index)
+            return self._select_j1_1_unlocked(index)
 
-    def _select_unlocked(self, index: int) -> None:
+    def _select_j1_1_unlocked(self, index: int) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         if index < self.canvasJPanelList.size():
             canvasJPanel: CanvasJPanel = self.canvasJPanelList.get(index)
             if canvasJPanel is not None:
@@ -269,9 +289,10 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
                 canvasJPanel.repaint()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def select(self, treeNode: MutableTreeNode) -> None:
-        canvasJPanelHashMap: dict = self.getCanvasHashMap()
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def select_j1_2(self, treeNode: MutableTreeNode) -> None:
+        from java.util.HashMap import HashMap
+        canvasJPanelHashMap: HashMap = self.getCanvasHashMap()
         frameInteger: int = canvasJPanelHashMap.get(treeNode)
         if frameInteger is not None:
             self.select(int(frameInteger))
@@ -279,6 +300,7 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
 
     @staticmethod
     def getDocument() -> Document:
+        from org.w3c.dom.Document import Document
         return WorkAreaJPanel.document
     
 
@@ -287,6 +309,10 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
         from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
         from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
         from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         WorkAreaJPanel.document = DomHelper.getInstance().createDocument()
         workAreaNode: Node = WorkAreaJPanel.document.createElement(WorkAreaDom.WORKAREA)
         nameNode: Node = WorkAreaJPanel.document.createElement(WorkAreaDom.NAME)
@@ -304,9 +330,6 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.KeyAdapter import KeyAdapter
         self.innerJPanel = JPanel()
         self.setLayout(GridLayout(1, 1))
         self.innerJPanel.addKeyListener((KeyAdapter()  # Java anonymous class body:
@@ -327,14 +350,17 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def innerJPanelKeyReleased(self, evt: KeyEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         StatusFactory.getInstance().setStatus("Key Pressed1")
     
 
     def innerJPanelKeyPressed(self, evt: KeyEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         StatusFactory.getInstance().setStatus("Key Pressed2")
     
 
     def innerJPanelKeyTyped(self, evt: KeyEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         StatusFactory.getInstance().setStatus("Key Pressed3")
     
 
@@ -351,7 +377,9 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def delete(self, evt: MyCanvasEvent) -> None:
-        canvasJPanelHashMap: dict = self.getCanvasHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        canvasJPanelHashMap: HashMap = self.getCanvasHashMap()
         if canvasJPanelHashMap.containsKey(evt.getTreeNode()):
             self.canvasHolderJPanel.removeAll()
             frameInt: int = canvasJPanelHashMap.get(evt.getTreeNode())
@@ -360,19 +388,42 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def duplicate(self, evt: MyCanvasEvent) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def duplicate_j1_2(self, evt: MyCanvasEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
         self.duplicate(evt.getTreeNode())
+
+    def duplicate(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.duplicate_j1_1(*args)
+        if len(args) == 1:
+            return self.duplicate_j1_2(*args)
+        return getattr(self, "duplicate_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def select(self, evt: MyCanvasEvent) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def select_j1_3(self, evt: MyCanvasEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
         self.select(evt.getTreeNode())
         StatusFactory.getInstance().setStatus("Frame Selected")
+
+    def select(self, *args):
+        if len(args) == 1 and True and isinstance(args[0], int) and not isinstance(args[0], bool):
+            return self.select_j1_1(*args)
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.select_j1_2(*args)
+        if len(args) == 1:
+            return self.select_j1_3(*args)
+        return getattr(self, "select_j" + str(len(args)))(*args)
     
 
     def rotate(self, evt: MyCanvasEvent) -> None:
-        canvasJPanelHashMap: dict = self.getCanvasHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        canvasJPanelHashMap: HashMap = self.getCanvasHashMap()
         treeNode: MutableTreeNode = evt.getTreeNode()
         frameInt: int = canvasJPanelHashMap.get(evt.getTreeNode())
         canvasJPanel: CanvasJPanel = self.canvasJPanelList.get(int(frameInt))
@@ -383,25 +434,33 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
     
 
     def explode(self, evt: MyCanvasEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
         self.explodeAll()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def autoExplode(self, evt: MyCanvasEvent) -> None:
+    def autoExplode_j1(self, evt: MyCanvasEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
         self.autoExplode(10, 0)
+
+    def autoExplode(self, *args):
+        return getattr(self, "autoExplode_j" + str(len(args)))(*args)
     
 
     # throws Exception
-    def center(self) -> None:
+    def center_j0(self) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         canvasJPanel: CanvasJPanel = self.getCurrentFrame()
         canvasJPanel.center()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def center(self, evt: MyCanvasEvent) -> None:
+    def center_j1(self, evt: MyCanvasEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
         self.center()
+
+    def center(self, *args):
+        return getattr(self, "center_j" + str(len(args)))(*args)
     
 
     def run(self) -> None:
@@ -419,24 +478,30 @@ class WorkAreaJPanel(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, Eve
                 time.sleep((250) / 1000)
         except Exception as e:
             pass
-# from java.awt import *
+# from java.awt.Component import Component
+# from java.awt.Dimension import Dimension
+# from java.awt.GridBagLayout import GridBagLayout
 # from java.util.HashMap import HashMap
 # from java.util.LinkedList import LinkedList
 # from javax.swing import *
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
-from org.allbinary.dom.DomHelper import DomHelper
-from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
-from org.allbinary.graphics.j2me.workarea.properties.PropertiesJPanel import PropertiesJPanel
-from org.allbinary.graphics.j2me.workarea.tools.ToolJPanel import ToolJPanel
-from org.allbinary.log.LOGGING import LOGGING
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.dom.DomHelper import DomHelper
+# from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+# from org.allbinary.graphics.j2me.workarea.properties.PropertiesJPanel import PropertiesJPanel
+# from org.allbinary.graphics.j2me.workarea.tools.ToolJPanel import ToolJPanel
+# from org.allbinary.log.LOGGING import LOGGING
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from java.awt.GridBagConstraints import GridBagConstraints
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.KeyAdapter import KeyAdapter
+# from java.awt.event.KeyEvent import KeyEvent
 
 

@@ -15,15 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.AbstractInputRobot import AbstractInputRobot
 from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 
-class NullInputRobot(AbstractInputRobot, InputRobotInterface):
+class NullInputRobot(*java_bases(AbstractInputRobot, InputRobotInterface)):
     LIBRARY_NAME: str = "null"
     NAME: str = "NULL"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -41,6 +43,7 @@ class NullInputRobot(AbstractInputRobot, InputRobotInterface):
     
 
     def getMousePoint(self) -> Point:
+        from org.allbinary.input.automation.PointFactory import PointFactory
         return PointFactory.getInstance(0, 0)
     
 
@@ -52,7 +55,7 @@ class NullInputRobot(AbstractInputRobot, InputRobotInterface):
         self.logUtil.putF("KeyCode: " + str(keycode), self, "keyRelease")
     
 
-    def mouseMove(self, x: int, y: int) -> None:
+    def mouseMove_j2(self, x: int, y: int) -> None:
         self.logUtil.putF("X: " + str(x) + " Y: " + str(y), self, "mouseMove")
     
 
@@ -105,10 +108,32 @@ class NullInputRobot(AbstractInputRobot, InputRobotInterface):
 
     def waitForIdle(self) -> None:
         pass
-# from java.awt import *
+    
+
+    def mouseMove_j1(self, point: Point) -> None:
+        super().mouseMove(point)
+
+    def mouseMove(self, *args):
+        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
+    
+
+    # throws Exception
+    def mouseMoveToTarget_j1(self, rectangle: Rectangle) -> None:
+        super().mouseMoveToTarget(rectangle)
+    
+
+    # throws Exception
+    def mouseMoveToTarget_j3(self, rectangle: Rectangle, x: int, y: int) -> None:
+        super().mouseMoveToTarget(rectangle, x, y)
+
+    def mouseMoveToTarget(self, *args):
+        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
+# from java.awt.Point import Point
+# from java.awt.Rectangle import Rectangle
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.help.HelpSet import HelpSet
-from org.allbinary.input.automation.PointFactory import PointFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.input.automation.PointFactory import PointFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

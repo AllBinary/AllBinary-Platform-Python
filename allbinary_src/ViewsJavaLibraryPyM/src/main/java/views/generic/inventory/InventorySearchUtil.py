@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InventorySearchUtil:
     instance: InventorySearchUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
@@ -38,11 +43,18 @@ class InventorySearchUtil:
     # throws Exception
     def getBasicItemIdColumn(self, searchRequest: SearchRequest) -> BasicArrayList:
         from views.generic.inventory.InventoryColumnUtil import InventoryColumnUtil
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         inventoryEntityInterface: InventoryEntity = InventoryEntityFactory.getInstance().getInventoryEntityInstance()
         storeFrontInterface: StoreFrontInterface = searchRequest.getStoreFront()
         inventorySearchUtil: InventoryColumnUtil = InventoryColumnUtil.getInstance()
         column: BasicArrayList = inventorySearchUtil.getColumnWhereLike(inventoryEntityInterface, storeFrontInterface.getCategoryPath(), self.basicItemData.ID)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF("Number Of Items Found: " + str(column.size()), self, "search")
         subStoreVector: BasicArrayList = storeFrontInterface.getSubStores()
         size: int = subStoreVector.size()
@@ -50,22 +62,57 @@ class InventorySearchUtil:
             subStore: str = subStoreVector.get(index)
             substoreIdColumn: BasicArrayList = inventorySearchUtil.getColumnWhereLike(inventoryEntityInterface, subStore, self.basicItemData.ID)
             column.addAllList(substoreIdColumn)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF("Number Of Items Found Including SubStores: " + str(column.size()), self, "search")
         return column
     
 
     # throws Exception
     def getNoResults(self, viewDocumentInterface: TransformDocumentInterface, inventoryNode: Node) -> str:
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         inventoryNode.appendChild(ModDomHelper.createNameValueNodes(viewDocumentInterface.getDoc(), SearchData.TOTAL_NUMBER_PAGES, self.commonPhoneStrings.ZERO))
         inventoryNode.appendChild(ModDomHelper.createNameValueNodes(viewDocumentInterface.getDoc(), SearchData.TOTAL_NUMBER_ITEMS, self.commonPhoneStrings.ZERO))
         success: str = XmlDocumentHelper.toString(viewDocumentInterface.getDoc())
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF("No Results Xml: " + success, self, "search")
         return success
     
 
     def search(self, abeClientInformation: AbeClientInformationInterface, searchRequest: SearchRequest, column: BasicArrayList) -> list[str]:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.InventoryData import InventoryData
+        from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchParams import SearchParams
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.StoreTransformer import StoreTransformer
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+        from org.allbinary.logic.visual.transform.data.TransformStoreDocumentFactory import TransformStoreDocumentFactory
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpSearch import TransformInfoHttpSearch
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             inventoryEntityInterface: InventoryEntity = InventoryEntityFactory.getInstance().getInventoryEntityInstance()
             searchParams: SearchParams = searchRequest.getParams()
@@ -73,7 +120,7 @@ class InventorySearchUtil:
             endPage: int = int(searchParams.getEndPageInt())
             pageLength: int = int(searchParams.getLengthInt())
             savedPagesInRange: int = 0
-            columnValueHashMap: dict = searchParams.get()
+            columnValueHashMap: HashMap = searchParams.get()
             keyword: str = Replace("-", CommonSeps.getInstance().SPACE).all(columnValueHashMap.get(self.basicItemData.KEYWORDS))
             if StringValidationUtil.getInstance().isEmpty(keyword):
                 return None
@@ -158,41 +205,46 @@ class InventorySearchUtil:
             else:
                 return None
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "search", e)
             return None
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.InventoryData import InventoryData
-from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchData import SearchData
-from org.allbinary.logic.control.search.SearchParams import SearchParams
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.StoreTransformer import StoreTransformer
-from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
-from org.allbinary.logic.visual.transform.data.TransformStoreDocumentFactory import TransformStoreDocumentFactory
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpSearch import TransformInfoHttpSearch
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.InventoryData import InventoryData
+# from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchData import SearchData
+# from org.allbinary.logic.control.search.SearchParams import SearchParams
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.StoreTransformer import StoreTransformer
+# from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+# from org.allbinary.logic.visual.transform.data.TransformStoreDocumentFactory import TransformStoreDocumentFactory
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpSearch import TransformInfoHttpSearch
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-InventorySearchUtil.instance = InventorySearchUtil()
+def _InventorySearchUtil_instance() -> object:
+    return InventorySearchUtil()
+
+lazy_static(InventorySearchUtil, "instance", _InventorySearchUtil_instance)
 

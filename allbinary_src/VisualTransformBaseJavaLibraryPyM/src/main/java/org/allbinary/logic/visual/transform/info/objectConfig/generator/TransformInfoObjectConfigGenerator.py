@@ -21,6 +21,7 @@ from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformI
 class TransformInfoObjectConfigGenerator(TransformInfoObjectConfigGeneratorInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -30,6 +31,6 @@ class TransformInfoObjectConfigGenerator(TransformInfoObjectConfigGeneratorInter
     # throws Exception
     def process(self, input: str) -> str:
         raise RuntimeError()
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

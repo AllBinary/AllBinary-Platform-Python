@@ -56,8 +56,8 @@ class Log:
         from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         clazz: type = type(self.anyType)
-        if clazz.getName() is not None:
-            className = clazz.getName()
+        if clazz.__module__ + "." + clazz.__qualname__ is not None:
+            className = clazz.__module__ + "." + clazz.__qualname__
         return self.logFormatUtil.get(className, self.functionName, self.specialMessage, self.exception)
 
     def __str__(self) -> str:

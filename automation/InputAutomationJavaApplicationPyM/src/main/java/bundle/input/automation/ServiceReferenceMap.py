@@ -15,16 +15,18 @@
 
 from __future__ import annotations
 
-# from java.util.Map import Map
+from java.util.Map import Map
 
 
 class ServiceReferenceMap(Map):
 
     def _init_fields(self) -> None:
+        from org.osgi.framework.ServiceReference import ServiceReference
         self.serviceReference: ServiceReference = None
     
 
     def __init__(self, serviceReference: ServiceReference) -> None:
+        from org.osgi.framework.ServiceReference import ServiceReference
         self._init_fields()
         self.serviceReference = serviceReference
     
@@ -57,7 +59,7 @@ class ServiceReferenceMap(Map):
         return None
     
 
-    def putAll(self, m: Map) -> None:
+    def putAll(self, m: Map[object, object]) -> None:
         pass
     
 
@@ -65,26 +67,30 @@ class ServiceReferenceMap(Map):
         pass
     
 
-    def keySet(self) -> Set:
+    def keySet(self) -> Set[object]:
+        from java.util.Set import Set
         keyStringArray: list[str] = self.serviceReference.getPropertyKeys()
         return None
     
 
     def values(self) -> Collection[object]:
+        from java.util.Collection import Collection
         return None
     
 
-    def entrySet(self) -> Set:
+    def entrySet(self) -> Set[Entry[object, object]]:
+        from java.util.Set import Set
         return None
     
 
     @staticmethod
-    def toString(map: Map) -> str:
+    def toString(map: Map[object, object]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         return str(stringBuffer)
 # from java.util.Collection import Collection
 # from java.util.Set import Set
-from org.osgi.framework.ServiceReference import ServiceReference
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.osgi.framework.ServiceReference import ServiceReference
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

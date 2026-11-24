@@ -20,6 +20,12 @@ from __future__ import annotations
 class OrderStatusEmail:
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = None
@@ -29,6 +35,10 @@ class OrderStatusEmail:
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, orderHistory: OrderHistory) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         self.abeClientInformation = abeClientInformation
         self.orderHistory = orderHistory
@@ -45,8 +55,18 @@ class OrderStatusEmail:
 
     # throws Exception
     def notifyStoreAdmin(self) -> None:
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+        from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.event.handler.factory.StoreAdminUserEmailEventHandlerSingletons import StoreAdminUserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+        from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.putF("Order Email", self, "emailStoreAdmin")
             adminEmailSubject: str = "Order " + str(self.orderHistory.getStatus()) + " Attempt"
             adminEmailTextBody: str = "Order attempt: " + str(self.orderHistory.getId()) + " Preprocessing by: " + str(self.user.getUserName())
@@ -60,14 +80,22 @@ class OrderStatusEmail:
             storeAdminUserEmailEventHandler.receiveEmailInfo(userEmailEventNameData, storeAdminEmailInfo)
             adminUserEmailEventHandler.receiveEmailInfo(userEmailEventNameData, adminEmailInfo)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "emailAdmin", e)
     
 
     # throws Exception
     def notifyUser(self) -> None:
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+        from org.allbinary.logic.communication.smtp.event.handler.factory.UserEmailEventHandlerSingletons import UserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+        from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.putF("Email User", self, "notifyUser()")
             subject: str = "Order " + str(self.orderHistory.getStatus()) + " Attempt"
             textBody: str = "Order attempt: " + str(self.orderHistory.getId()) + " Preprocessing by: " + str(self.user.getUserName())
@@ -77,25 +105,27 @@ class OrderStatusEmail:
             userEmailEventHandler: UserEmailEventHandler = UserEmailEventHandlerSingletons.getInstance().getInstance(self.abeClientInformation, userEmailEventNameData, self.user)
             userEmailEventHandler.receiveEmailInfo(userEmailEventNameData, emailInfo)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "notifyUser", e)
             raise e
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
-from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
-from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
-from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.event.handler.factory.StoreAdminUserEmailEventHandlerSingletons import StoreAdminUserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.event.handler.factory.UserEmailEventHandlerSingletons import UserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
-from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
-from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+# from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+# from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.event.handler.factory.StoreAdminUserEmailEventHandlerSingletons import StoreAdminUserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.event.handler.factory.UserEmailEventHandlerSingletons import UserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+# from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+# from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+# from org.allbinary.logic.communication.smtp.info.StoreEmailInfo import StoreEmailInfo
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

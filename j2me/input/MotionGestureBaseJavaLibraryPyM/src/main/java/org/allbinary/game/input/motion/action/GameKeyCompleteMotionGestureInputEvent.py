@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 
 
-class GameKeyCompleteMotionGestureInputEvent(CompleteMotionGestureInputEvent, GameKeyEventSourceInterface):
+class GameKeyCompleteMotionGestureInputEvent(*java_bases(CompleteMotionGestureInputEvent, GameKeyEventSourceInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameKey import GameKey

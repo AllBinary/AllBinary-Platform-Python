@@ -28,21 +28,29 @@ class CustomLoaderHelperFactory(TagHelperFactoryInterface):
     
 
     # throws LicensingException
-    def getInstance(self, hashMap: dict, pageContext: PageContext) -> object:
+    def getInstance_j2(self, hashMap: HashMap, pageContext: PageContext) -> object:
         from admin.taghelpers.HelperFactory import HelperFactory
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
         return HelperFactory.getInstance(abeClientInformation, CustomLoaderHelperFactory.FACTORYNAME, CustomLoaderHelperFactory.CLASSNAME, hashMap, pageContext)
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface) -> object:
+    def getInstance_j1(self, abeClientInformation: AbeClientInformationInterface) -> object:
         from admin.taghelpers.HelperFactory import HelperFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         return HelperFactory.getInstance(abeClientInformation, CustomLoaderHelperFactory.FACTORYNAME, CustomLoaderHelperFactory.CLASSNAME)
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
 
 

@@ -15,26 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItemInterface import ProfileActionScriptItemInterface
 from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
 from org.allbinary.input.automation.actions.script.condition.CustomTreeNodeInterface import CustomTreeNodeInterface
 
 
 # Java interface
-class ProfileActionScriptConditionInterface(ProfileActionScriptNodeInterface, CustomTreeNodeInterface, ProfileActionScriptItemInterface):
+class ProfileActionScriptConditionInterface(*java_bases(ProfileActionScriptNodeInterface, CustomTreeNodeInterface, ProfileActionScriptItemInterface)):
     
 
     def addProcessor(self, profileActionProcessorInterface: ProfileActionScriptProcessorInterface) -> None:
+        from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
         raise NotImplementedError()
     
 
     def removeProcessor(self, profileActionProcessorInterface: ProfileActionScriptProcessorInterface) -> None:
+        from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def shouldProcess(self, frame: int) -> bool:
         raise NotImplementedError()
-from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
+# from org.allbinary.input.automation.actions.script.condition.processors.ProfileActionScriptProcessorInterface import ProfileActionScriptProcessorInterface
 
 

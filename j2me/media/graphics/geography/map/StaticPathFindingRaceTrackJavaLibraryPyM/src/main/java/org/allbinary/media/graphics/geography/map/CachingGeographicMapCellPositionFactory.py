@@ -28,6 +28,8 @@ class CachingGeographicMapCellPositionFactory(BasicGeographicMapCellPositionFact
     # throws Exception
     def createInstance(self, i_column: int, i_row: int, width: int, height: int) -> GeographicMapCellPosition:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactory import GeographicMapCellPositionFactory
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = GeographicMapCellPositionFactory.getHashtable()
         cellPositionKey: str = CellPosition.toStringColRow(i_column, i_row)
         cellPositionCanBeNull: object = hashtable.get(cellPositionKey)
@@ -36,7 +38,7 @@ class CachingGeographicMapCellPositionFactory(BasicGeographicMapCellPositionFact
             self.geographicMapCellPositionArray[i_row][i_column] = cellPositionCanBeNull
             hashtable.put(cellPositionKey, cellPositionCanBeNull)
         return cellPositionCanBeNull
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

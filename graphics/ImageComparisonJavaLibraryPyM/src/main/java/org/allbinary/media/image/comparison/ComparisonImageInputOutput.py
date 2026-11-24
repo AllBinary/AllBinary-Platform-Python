@@ -22,6 +22,7 @@ class ComparisonImageInputOutput(ImageIOInterface):
     ROOT_NAME: str = "_Changed_"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,8 +31,10 @@ class ComparisonImageInputOutput(ImageIOInterface):
     
 
     # throws Exception
-    def save(self, frame: int) -> None:
+    def save_j1(self, frame: int) -> None:
         from org.allbinary.media.image.comparison.ImageComparisonResultCacheSingleton import ImageComparisonResultCacheSingleton
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         if frame > 0:
             imageComparisonResultFrameCacheable: ImageComparisonResultFrameCacheable = (ImageComparisonResultCacheSingleton.getInstance()).get(frame)
@@ -45,9 +48,15 @@ class ComparisonImageInputOutput(ImageIOInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def save(self, imageComparisonResult: ImageComparisonResult, frame: int) -> None:
+    def save_j2(self, imageComparisonResult: ImageComparisonResult, frame: int) -> None:
         from org.allbinary.media.image.comparison.ChangedPixelsUtil import ChangedPixelsUtil
+        from org.allbinary.input.automation.ImageOutputData import ImageOutputData
+        from org.allbinary.logic.java.number.LongUtil import LongUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
+        from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+        from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         filePathStringBuffer: StringMaker = StringMaker()
         filePathStringBuffer.append(ImageOutputData.SAVE_PATH)
@@ -72,15 +81,18 @@ class ComparisonImageInputOutput(ImageIOInterface):
         imagePersistanceUtil: ImagePersistanceUtil = ImagePersistanceUtil.getInstance()
         imagePersistanceUtil.saveWithImageIO(filePath1, bufferedImageArray[0])
         imagePersistanceUtil.saveWithImageIO(filePath2, bufferedImageArray[1])
+
+    def save(self, *args):
+        return getattr(self, "save_j" + str(len(args)))(*args)
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.input.automation.ImageOutputData import ImageOutputData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.number.LongUtil import LongUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
-from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
-from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.automation.ImageOutputData import ImageOutputData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.number.LongUtil import LongUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
+# from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+# from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

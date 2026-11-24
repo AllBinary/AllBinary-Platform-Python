@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.api1.ActivityFractureUtilAPI1 import ActivityFractureUtilAPI1
 
 
@@ -37,6 +38,11 @@ class ActivityFractureUtilAPI5(ActivityFractureUtilAPI1):
     
 
     def process(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
+        from org.allbinary.input.motion.button.TouchScreenTypeFactory import TouchScreenTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
         touchScreenFactory: TouchScreenFactory = TouchScreenFactory.getInstance()
         touchScreenTypeFactory: TouchScreenTypeFactory = TouchScreenTypeFactory.getInstance()
         touchScreenFactory.setTouch(self.isTouch(activity))
@@ -48,25 +54,32 @@ class ActivityFractureUtilAPI5(ActivityFractureUtilAPI1):
     
 
     def isTouch(self, activity: Activity) -> bool:
+        from android.app.Activity import Activity
         return self.isFeature(activity, self.FEATURE_TOUCHSCREEN)
     
 
     def isMultiTouch(self, activity: Activity) -> bool:
+        from android.app.Activity import Activity
         return self.isFeature(activity, self.FEATURE_TOUCHSCREEN_MULTITOUCH)
     
 
     def isMultiTouchDistinct(self, activity: Activity) -> bool:
+        from android.app.Activity import Activity
         return self.isFeature(activity, self.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT)
     
 
     def isFeature(self, activity: Activity, property: str) -> bool:
+        from android.app.Activity import Activity
         return activity.getPackageManager().hasSystemFeature(property)
-from android.app.Activity import Activity
-from org.allbinary.input.motion.button.TouchScreenTypeFactory import TouchScreenTypeFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
+# from android.app.Activity import Activity
+# from org.allbinary.input.motion.button.TouchScreenTypeFactory import TouchScreenTypeFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
 
 
-ActivityFractureUtilAPI5.instance5 = ActivityFractureUtilAPI5()
+def _ActivityFractureUtilAPI5_instance5() -> object:
+    return ActivityFractureUtilAPI5()
+
+lazy_static(ActivityFractureUtilAPI5, "instance5", _ActivityFractureUtilAPI5_instance5)
 

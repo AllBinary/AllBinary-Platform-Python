@@ -21,6 +21,7 @@ from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatin
 class AndroidOS(GenericOperatingSystem):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.stringBuffer: StringMaker = StringMaker()
         self.DEVICE_ID: str = "DeviceId"
         self.DEVICE_SOFTWARE_VERSION: str = "DeviceSoftwareVersion"
@@ -30,6 +31,8 @@ class AndroidOS(GenericOperatingSystem):
 
     def __init__(self) -> None:
         from org.allbinary.logic.system.os.android.AndroidSystemProperties import AndroidSystemProperties
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+        from org.allbinary.string.CommonSeps import CommonSeps
         super().__init__()
         self._init_fields()
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
@@ -116,6 +119,8 @@ class AndroidOS(GenericOperatingSystem):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         osBuffer: StringMaker = StringMaker()
         osBuffer.append(str(super()))
         osBuffer.append(CommonSeps.getInstance().SPACE)
@@ -125,8 +130,8 @@ class AndroidOS(GenericOperatingSystem):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

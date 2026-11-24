@@ -20,6 +20,8 @@ from __future__ import annotations
 class BasicGeographicMapCellPositionFactory:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.geographicMapCellPositionArray: list[list[GeographicMapCellPosition]] = None
         self.geographicMapInterface: BasicGeographicMap = None
@@ -42,6 +44,7 @@ class BasicGeographicMapCellPositionFactory:
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         tiledLayer: AllBinaryTiledLayer = self.tiledLayer
         columns: int = self.getColumns()
         rows: int = self.getRows()
@@ -54,6 +57,9 @@ class BasicGeographicMapCellPositionFactory:
 
     # throws Exception
     def visit(self, geographicMapCelPositionFactoryInitVisitorInterface: GeographicMapCellPositionFactoryInitVisitorInterface) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         tiledLayer: AllBinaryTiledLayer = self.tiledLayer
         columns: int = self.getColumns()
         rows: int = self.getRows()
@@ -94,9 +100,9 @@ class BasicGeographicMapCellPositionFactory:
 
     def getRows(self) -> int:
         return self.rows
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

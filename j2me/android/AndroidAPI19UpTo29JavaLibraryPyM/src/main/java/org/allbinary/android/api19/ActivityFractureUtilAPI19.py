@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.api5.ActivityFractureUtilAPI5 import ActivityFractureUtilAPI5
 
 
@@ -31,12 +32,17 @@ class ActivityFractureUtilAPI19(ActivityFractureUtilAPI5):
     
 
     def setFullScreen(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
+        from android.view.View import View
         decorView: View = activity.getWindow().getDecorView()
         visibility: int = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
         decorView.setSystemUiVisibility(visibility)
-from android.app.Activity import Activity
-from android.view.View import View
+# from android.app.Activity import Activity
+# from android.view.View import View
 
 
-ActivityFractureUtilAPI19.instance19 = ActivityFractureUtilAPI19()
+def _ActivityFractureUtilAPI19_instance19() -> object:
+    return ActivityFractureUtilAPI19()
+
+lazy_static(ActivityFractureUtilAPI19, "instance19", _ActivityFractureUtilAPI19_instance19)
 

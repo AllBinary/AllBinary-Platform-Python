@@ -22,11 +22,13 @@ from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 class PositionWidget(BasicHud):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.position: int = 0
         self.positionString: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, position: int, location: int, direction: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, 2, basicColor)
         self._init_fields()
         self.updateMaxHeight = 10
@@ -43,11 +45,13 @@ class PositionWidget(BasicHud):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintString(graphics, self.positionString)
     
 
     @staticmethod
     def toString(position: int) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(position))
         if position == 1:
@@ -60,8 +64,8 @@ class PositionWidget(BasicHud):
             stringBuffer.append("th")
         return str(stringBuffer)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

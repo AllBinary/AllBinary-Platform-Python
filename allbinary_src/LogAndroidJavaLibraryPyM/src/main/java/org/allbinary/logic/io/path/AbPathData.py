@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbPathData:
     instance: AbPathData = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.EXTENSION_SEP: str = CommonSeps.getInstance().PERIOD
         self.SEPARATORCHAR: str = '/'
         self.SEPARATOR: str = CommonSeps.getInstance().FORWARD_SLASH
@@ -46,6 +48,7 @@ class AbPathData:
     
 
     def getExtensionWithDot(self, filePath: str) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         indexOfFileExtensionDelmiter: int = self.getExtensionIndex(filePath)
         extension: str = StringUtil.getInstance().EMPTY_STRING
         if indexOfFileExtensionDelmiter >= 0:
@@ -54,6 +57,7 @@ class AbPathData:
     
 
     def getExtension(self, filePath: str) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         indexOfFileExtensionDelmiter: int = self.getExtensionIndex(filePath)
         extension: str = StringUtil.getInstance().EMPTY_STRING
         if indexOfFileExtensionDelmiter >= 0:
@@ -62,6 +66,7 @@ class AbPathData:
     
 
     def getNameFromPath(self, path: str) -> str:
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
         endIndex: int = path.rfind(self.SEPARATORCHAR)
         if endIndex < 0:
             endIndex = path.rfind(FilePathData.getInstance().SEPARATORCHAR)
@@ -76,6 +81,8 @@ class AbPathData:
     
 
     def removeNameFromPath(self, path: str) -> str:
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.string.StringUtil import StringUtil
         endIndex: int = path.rfind(self.SEPARATORCHAR)
         if endIndex < 0:
             endIndex = path.rfind(FilePathData.getInstance().SEPARATORCHAR)
@@ -86,10 +93,13 @@ class AbPathData:
         else:
             pathWithoutName: str = path[0:endIndex]
             return pathWithoutName
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-AbPathData.instance = AbPathData()
+def _AbPathData_instance() -> object:
+    return AbPathData()
+
+lazy_static(AbPathData, "instance", _AbPathData_instance)
 

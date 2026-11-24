@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.workarea.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class WorkAreaJTreeJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.rootTreeNode: DefaultMutableTreeNode = None
@@ -35,6 +38,7 @@ class WorkAreaJTreeJPanel(JPanel):
     
 
     def __init__(self, workAreaName: str) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -49,8 +53,6 @@ class WorkAreaJTreeJPanel(JPanel):
     
 
     def updateTree(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.JTree import JTree
-        from org.allbinary.graphics.j2me.workarea.MouseAdapter import MouseAdapter
         self.workAreaJTree = JTree(self.rootTreeNode)
         self.workAreaJTree.addMouseListener((MouseAdapter()  # Java anonymous class body:
 #             
@@ -62,7 +64,10 @@ class WorkAreaJTreeJPanel(JPanel):
         self.workAreaPropertiesJPanel.add(self.workAreaJTree)
     
 
-    def getNode(self, treePathArray: list[TreePath]) -> BasicArrayList:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getNode_j1_1(self, treePathArray: list[TreePath]) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         basicArrayList: BasicArrayList = BasicArrayListD()
         if treePathArray is not None:
             for index in range(0, len(treePathArray)):
@@ -70,18 +75,28 @@ class WorkAreaJTreeJPanel(JPanel):
         return basicArrayList
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getNode(self, treePath: TreePath) -> DefaultMutableTreeNode:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getNode_j1_2(self, treePath: TreePath) -> DefaultMutableTreeNode:
         if treePath is not None:
             obj: list[object] = treePath.getPath()
             if obj is not None:
                 node: DefaultMutableTreeNode = obj[len(obj) - 1]
                 return node
         return None
+
+    def getNode(self, *args):
+        if len(args) == 1 and True and (args[0] is None or isinstance(args[0], list)):
+            return self.getNode_j1_1(*args)
+        if len(args) == 1:
+            return self.getNode_j1_2(*args)
+        return getattr(self, "getNode_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def deselectAll(self) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
         size: int = self.highlightedBasicArrayList.size()
         self.logUtil.putF("size: " + str(size), self, "deselectAll")
         for index in range(0, size):
@@ -92,22 +107,32 @@ class WorkAreaJTreeJPanel(JPanel):
 
     # throws Exception
     def selectGraphicItem(self, node: DefaultMutableTreeNode) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
         self.highlightedBasicArrayList.add(node)
         MyGraphicItemEventService.fire(MyGraphicItemEvent(MyGraphicItemEventSource(MyGraphicItemEventService.SELECT, node)))
     
 
     # throws Exception
     def removeGraphicItem(self, node: DefaultMutableTreeNode) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
         MyGraphicItemEventService.fire(MyGraphicItemEvent(MyGraphicItemEventSource(MyGraphicItemEventService.DELETE, node)))
     
 
     # throws Exception
     def removeCanvas(self, node: DefaultMutableTreeNode) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
         MyCanvasEventService.fire(MyCanvasEvent(MyCanvasEventSource(MyCanvasEventService.DELETE, node)))
     
 
     # throws Exception
     def remove(self, treePath: TreePath) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
         node: DefaultMutableTreeNode = self.getNode(treePath)
         if node is not None:
             if isinstance(node.getUserObject(), CanvasTreeLabel):
@@ -119,7 +144,7 @@ class WorkAreaJTreeJPanel(JPanel):
     
 
     # throws Exception
-    def copy(self) -> None:
+    def copy_j0(self) -> None:
         treePath: TreePath = self.workAreaJTree.getSelectionPath()
         self.copy(treePath)
         self.updateTree()
@@ -128,18 +153,34 @@ class WorkAreaJTreeJPanel(JPanel):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def copy(self, treePath: TreePath) -> None:
+    def copy_j1(self, treePath: TreePath) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
         node: DefaultMutableTreeNode = self.getNode(treePath)
         if node is not None:
             if isinstance(node.getUserObject(), CanvasTreeLabel):
                 MyCanvasEventService.fire(MyCanvasEvent(MyCanvasEventSource(MyCanvasEventService.DUPLICATE, node)))
             else:
                 MyGraphicItemEventService.fire(MyGraphicItemEvent(MyGraphicItemEventSource(MyGraphicItemEventService.DUPLICATE, node)))
+
+    def copy(self, *args):
+        return getattr(self, "copy_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def rotate(self, treePath: TreePath, angle: float) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
         node: DefaultMutableTreeNode = self.getNode(treePath)
         if node is not None:
             if isinstance(node.getUserObject(), CanvasTreeLabel):
@@ -152,30 +193,19 @@ class WorkAreaJTreeJPanel(JPanel):
         return self.rootTreeNode
     
 
-    def expand(self) -> None:
+    def expand_j0(self) -> None:
         self.workAreaJTree.expandRow(0)
         self.workAreaJTree.expandRow(1)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def expand(self, treePath: TreePath) -> None:
+    def expand_j1(self, treePath: TreePath) -> None:
         self.workAreaJTree.expandPath(treePath)
+
+    def expand(self, *args):
+        return getattr(self, "expand_j" + str(len(args)))(*args)
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.JPopupMenu import JPopupMenu
-        from org.allbinary.graphics.j2me.workarea.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.workarea.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.workarea.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.workarea.JScrollPane import JScrollPane
-        from org.allbinary.graphics.j2me.workarea.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.PopupMenuListener import PopupMenuListener
-        from org.allbinary.graphics.j2me.workarea.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.GridLayout import GridLayout
         self.itemJPopupMenu = JPopupMenu()
         self.deleteJMenuItem = JMenuItem()
         self.copyJMenuItem = JMenuItem()
@@ -244,6 +274,11 @@ class WorkAreaJTreeJPanel(JPanel):
     
 
     def workAreaJTreeMousePressed(self, evt: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             selectedTreePathArray: list[TreePath] = self.workAreaJTree.getSelectionPaths()
             list_: BasicArrayList = self.getNode(selectedTreePathArray)
@@ -297,20 +332,28 @@ class WorkAreaJTreeJPanel(JPanel):
 
     def workAreaPropertiesJPanelMousePressed(self, evt: MouseEvent) -> None:
         pass
-# from javax.swing import *
+# from javax.swing.JTree import JTree
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
 # from javax.swing.tree.TreePath import TreePath
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
-from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
-from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
-from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
+# from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+# from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+# from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventSource import MyGraphicItemEventSource
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.MouseAdapter import MouseAdapter
+# from java.awt.event.MouseEvent import MouseEvent
+# from javax.swing.JMenuItem import JMenuItem
+# from javax.swing.JPopupMenu import JPopupMenu
+# from javax.swing.JScrollPane import JScrollPane
+# from javax.swing.event.PopupMenuEvent import PopupMenuEvent
+# from javax.swing.event.PopupMenuListener import PopupMenuListener
 
 

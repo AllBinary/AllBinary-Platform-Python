@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageAnalysis:
     instance: ImageAnalysis = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -34,7 +36,10 @@ class ImageAnalysis:
     
 
     # throws Exception
-    def process(self, bufferedImageArray: list[BufferedImage], colorRangeInterface: ColorRangeInterface) -> list[ImageAnalysisResults]:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def process_j2_1(self, bufferedImageArray: list[BufferedImage], colorRangeInterface: ColorRangeInterface) -> list[ImageAnalysisResults]:
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(str(CommonLabels.getInstance().START) + str(colorRangeInterface), self, commonStrings.PROCESS)
         imageAnalysisResultsArray: list[ImageAnalysisResults] = [None] * (len(bufferedImageArray))
@@ -44,10 +49,12 @@ class ImageAnalysis:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def process(bufferedImage: BufferedImage, colorRangeInterface: ColorRangeInterface) -> ImageAnalysisResults:
+    def process_j2_2(bufferedImage: BufferedImage, colorRangeInterface: ColorRangeInterface) -> ImageAnalysisResults:
         from org.allbinary.media.image.analysis.ImageAnalysisResults import ImageAnalysisResults
+        from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+        from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
         imageAnalysisResults: ImageAnalysisResults = ImageAnalysisResults()
         redTotal: int = 0
         greenTotal: int = 0
@@ -68,6 +75,13 @@ class ImageAnalysis:
         colorAverage.setAvgGreen(float(greenTotal) / float(totalPixels))
         colorAverage.setAvgBlue(float(blueTotal) / float(totalPixels))
         return imageAnalysisResults
+
+    def process(self, *args):
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], list)) and not isinstance(args[1], (str, list, int, float)):
+            return self.process_j2_1(*args)
+        if len(args) == 2:
+            return self.process_j2_2(*args)
+        return getattr(self, "process_j" + str(len(args)))(*args)
     
 
     @staticmethod
@@ -93,14 +107,17 @@ class ImageAnalysis:
             imageColorResults.getColorRange().setMaxGreen(color.getGreen())
         if color.getBlue() > imageColorResults.getColorRange().getMaxBlue():
             imageColorResults.getColorRange().setMaxBlue(color.getBlue())
-# from java.awt import *
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
-from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+# from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ImageAnalysis.instance = ImageAnalysis()
+def _ImageAnalysis_instance() -> object:
+    return ImageAnalysis()
+
+lazy_static(ImageAnalysis, "instance", _ImageAnalysis_instance)
 

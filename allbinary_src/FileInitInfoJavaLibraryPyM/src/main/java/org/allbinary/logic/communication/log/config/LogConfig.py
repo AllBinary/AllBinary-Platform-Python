@@ -43,7 +43,11 @@ class LogConfig:
     
 
     def _constructor1(self, node: Node) -> None:
-        from org.allbinary.logic.communication.log.config.LogConfigData import LogConfigData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+        from org.w3c.dom.Node import Node
         self._init_fields()
         enabledValueNode: Node = DomSearchHelper.getNode(EntryData.getInstance().ENABLE, node.getChildNodes())
         isEnabledString: str = DomNodeHelper.getTextNodeValue(enabledValueNode)
@@ -99,9 +103,16 @@ class LogConfig:
 
     # throws Exception
     def getDoc(self) -> Document:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.w3c.dom.Document import Document
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(self.URLGLOBALS.getWebappPath())
-        stringBuffer.append(self.PATH_GLOBALS.getInstance().INIT_PATH)
+        stringBuffer.append(URLGLOBALS.getWebappPath())
+        stringBuffer.append(PATH_GLOBALS.getInstance().INIT_PATH)
         stringBuffer.append(self.getFileName())
         file: AbFile = AbFile.createAbFile(str(stringBuffer))
         document: Document = DomDocumentHelper.create(AbFileLocalInputStream(file))
@@ -110,6 +121,16 @@ class LogConfig:
 
     # throws Exception
     def getTypeVector(self) -> BasicArrayList:
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypesData import LogConfigTypesData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         logKeyVector: BasicArrayList = BasicArrayListD()
         document: Document = self.getDoc()
         logConfigTypesNodeList: NodeList = document.getElementsByTagName(LogConfigTypesData.getInstance().NAME)
@@ -121,24 +142,24 @@ class LogConfig:
             logType: LogConfigType = LogConfigTypes.getInstance(node)
             logKeyVector.add(logType)
         return logKeyVector
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.communication.log.config.type.LogConfigTypesData import LogConfigTypesData
-from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypesData import LogConfigTypesData
+# from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

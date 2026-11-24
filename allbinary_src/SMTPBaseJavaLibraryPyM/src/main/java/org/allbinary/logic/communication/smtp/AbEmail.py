@@ -27,8 +27,10 @@ class AbEmail(EmailInterface):
     def __init__(self, server: str, from_: str, to: str, subject: str, textBody: str, htmlAttachment: str, contentBase: str) -> None:
         from org.allbinary.logic.communication.smtp.Email import Email
         from org.allbinary.logic.communication.smtp.Email import Email
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
             self.email = Email(from_, to, subject, server, textBody, htmlAttachment, contentBase, True)
         else:
             self.email = Email(from_, to, subject, server, textBody, htmlAttachment, contentBase)
@@ -48,12 +50,15 @@ class AbEmail(EmailInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.email.toHashMap()
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return self.email.toXmlNode(document)
     
 
@@ -63,10 +68,13 @@ class AbEmail(EmailInterface):
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return self.email.toXmlDoc()
 # from java.util.HashMap import HashMap
 # from javax.mail.internet.MimeMessage import MimeMessage
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

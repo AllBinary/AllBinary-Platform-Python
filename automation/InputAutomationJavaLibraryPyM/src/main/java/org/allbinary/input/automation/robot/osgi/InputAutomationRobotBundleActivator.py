@@ -21,6 +21,10 @@ from org.osgi.framework.BundleActivator import BundleActivator
 class InputAutomationRobotBundleActivator(BundleActivator):
 
     def _init_fields(self) -> None:
+        from org.osgi.framework.ServiceFactory import ServiceFactory
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.inputRobotInterface: list[InputRobotInterface] = None
@@ -39,24 +43,32 @@ class InputAutomationRobotBundleActivator(BundleActivator):
 
     # throws Exception
     def registerAsService(self, bundleContext: BundleContext) -> None:
-        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), InputAutomationRobotServiceInterface.getName())
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
+        from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
+        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), InputAutomationRobotServiceInterface.__module__ + "." + InputAutomationRobotServiceInterface.__qualname__)
     
 
     # throws Exception
     def getInputAutomationRobotChangeListener(self, context: BundleContext) -> InputAutomationRobotChangeListener:
-        serviceReference: ServiceReference = context.getServiceReference(InputAutomationRobotChangeListener.getName())
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.osgi.framework.ServiceReference import ServiceReference
+        from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
+        serviceReference: ServiceReference = context.getServiceReference(InputAutomationRobotChangeListener.__module__ + "." + InputAutomationRobotChangeListener.__qualname__)
         if serviceReference is not None:
             inputAutomationRobotChangeListener: InputAutomationRobotChangeListener = context.getService(serviceReference)
             if inputAutomationRobotChangeListener is None:
                 raise Exception("No Service For ServiceReference")
             return inputAutomationRobotChangeListener
         else:
-            self.logUtil.putF("No ServiceReference: " + InputAutomationRobotChangeListener.getName(), self, "getInputAutomationRobotChangeListener")
+            self.logUtil.putF("No ServiceReference: " + InputAutomationRobotChangeListener.__module__ + "." + InputAutomationRobotChangeListener.__qualname__, self, "getInputAutomationRobotChangeListener")
             return None
     
 
     def addRobots(self, context: BundleContext) -> None:
         from org.allbinary.input.automation.robot.osgi.InputAutomationRobotUtil import InputAutomationRobotUtil
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
         try:
             self.logUtil.putF(self.commonStrings.START, self, "addRobots")
             inputAutomationRobotChangeListener: InputAutomationRobotChangeListener = self.getInputAutomationRobotChangeListener(context)
@@ -70,6 +82,8 @@ class InputAutomationRobotBundleActivator(BundleActivator):
 
     def removeRobots(self, context: BundleContext) -> None:
         from org.allbinary.input.automation.robot.osgi.InputAutomationRobotUtil import InputAutomationRobotUtil
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
         try:
             self.logUtil.putF(self.commonStrings.START, self, "removeRobots")
             inputAutomationRobotChangeListener: InputAutomationRobotChangeListener = self.getInputAutomationRobotChangeListener(context)
@@ -83,6 +97,7 @@ class InputAutomationRobotBundleActivator(BundleActivator):
 
     # throws Exception
     def start(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.START)
         self.addRobots(context)
         self.registerAsService(context)
@@ -90,6 +105,7 @@ class InputAutomationRobotBundleActivator(BundleActivator):
 
     # throws Exception
     def stop(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         self.logUtil.putF("Stop", self, self.commonStrings.START)
         self.removeRobots(context)
     
@@ -99,23 +115,26 @@ class InputAutomationRobotBundleActivator(BundleActivator):
     
 
     def setServiceFactory(self, serviceObject: ServiceFactory) -> None:
+        from org.osgi.framework.ServiceFactory import ServiceFactory
         self.serviceFactory = serviceObject
     
 
     def getInputRobotInterface(self) -> list[InputRobotInterface]:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         return self.inputRobotInterface
     
 
     def setInputRobotInterface(self, inputRobotInterface: list[InputRobotInterface]) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         self.inputRobotInterface = inputRobotInterface
-from org.osgi.framework.BundleContext import BundleContext
-from org.osgi.framework.ServiceFactory import ServiceFactory
-from org.osgi.framework.ServiceReference import ServiceReference
-from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
-from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.ServiceFactory import ServiceFactory
+# from org.osgi.framework.ServiceReference import ServiceReference
+# from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
+# from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

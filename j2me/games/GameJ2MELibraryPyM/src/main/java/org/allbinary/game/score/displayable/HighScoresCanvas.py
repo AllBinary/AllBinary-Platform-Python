@@ -15,54 +15,13 @@
 
 from __future__ import annotations
 
-import time
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 from org.allbinary.game.score.HighScoresResultsListener import HighScoresResultsListener
-from org.allbinary.thread.ARunnable import ARunnable
 
 
-class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
+class HighScoresCanvas(*java_bases(GameCommandCanvas, HighScoresResultsListener)):
     NAME: str = "HighScoresCanvas"
-    class HighScoreRunnable(ARunnable):
-
-        def _init_fields(self) -> None:
-            self.highScoresCanvas: HighScoresCanvas = None
-        
-
-        def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
-            super().__init__()
-            self._init_fields()
-            self.highScoresCanvas = highScoresCanvas
-        
-
-        def run(self) -> None:
-            from org.allbinary.J2MEUtil import J2MEUtil
-            from org.allbinary.logic.communication.log.LogUtil import LogUtil
-            from org.allbinary.logic.string.StringMaker import StringMaker
-            from org.allbinary.string.CommonStrings import CommonStrings
-            from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-            commonStrings: CommonStrings = CommonStrings.getInstance()
-            logUtil: LogUtil = LogUtil.getInstance()
-            highScoresCanvas: HighScoresCanvas = self.highScoresCanvas
-            try:
-                isHTML: bool = J2MEUtil.isHTML()
-                if not isHTML:
-                    while not highScoresCanvas.hasPainted:
-                        pass
-                    highScoresCanvas.hasPainted = False
-                stringMaker: StringMaker = StringMaker()
-                systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
-                currentTimeMillis: int = systemWrapper.currentTimeMillis()
-                logUtil.putF(str(stringMaker.append("HighScoresCanvas - Request repaint to be sure: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
-                highScoresCanvas.repaintBehavior.onChangeRepaint(highScoresCanvas)
-                if not isHTML:
-                    while not highScoresCanvas.hasPainted:
-                        pass
-                stringMaker.delete(0, stringMaker.length())
-                logUtil.putF(str(stringMaker.append("HighScoresCanvas - Now that the canvas has completed repaint go ahead and fetch the scores: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
-                highScoresCanvas.executeUpdate()
-            except Exception as e:
-                logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Command import Command
@@ -91,6 +50,7 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
     
 
     def __init__(self, commandListener: CommandListener, allBinaryGameLayerManager: AllBinaryGameLayerManager, gameInfo: GameInfo, paintable: HighScoresPaintable, highScoresFactoryInterface: HighScoresFactoryInterface, highScoresCanvasInputProcessorFactoryInterface: HighScoresCanvasInputProcessorFactoryInterface) -> None:
+        from org.allbinary.game.score.displayable.HighScoreRunnable import HighScoreRunnable
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
@@ -217,7 +177,6 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
-# from org.allbinary.J2MEUtil import J2MEUtil
 # from org.allbinary.game.GameInfo import GameInfo
 # from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
 # from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
@@ -240,6 +199,5 @@ class HighScoresCanvas(GameCommandCanvas, HighScoresResultsListener):
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
-# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
 
 

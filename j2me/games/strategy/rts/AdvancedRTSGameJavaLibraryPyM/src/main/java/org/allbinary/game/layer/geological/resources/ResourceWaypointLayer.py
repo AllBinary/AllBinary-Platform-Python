@@ -22,11 +22,18 @@ class ResourceWaypointLayer(WaypointLayer):
     
 
     def __init__(self, remoteInfo: RemoteInfo, parentLayer: PathFindingLayerInterface, groupInterface: list[Group], rootName: str, name: str, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, x: int, y: int) -> None:
+        from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+        from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
         super().__init__(remoteInfo, parentLayer, groupInterface, rootName, name, animationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface, rectangle, x, y)
     
 
     def createHudPaintable(self) -> SelectionHudPaintable:
         from org.allbinary.game.layer.geological.resources.GeologicalResourceInfoHudPaintableSingleton import GeologicalResourceInfoHudPaintableSingleton
+        from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
         rtsLayerHudPaintable: GeologicalResourceInfoHudPaintable = GeologicalResourceInfoHudPaintableSingleton.getInstance()
         rtsLayerHudPaintable.setBasicColorP(self.allBinaryGameLayerManagerP.getForegroundBasicColor())
         rtsLayerHudPaintable.setRtsLayer(self)
@@ -35,14 +42,15 @@ class ResourceWaypointLayer(WaypointLayer):
 
     def getHudPaintable(self) -> SelectionHudPaintable:
         from org.allbinary.game.layer.geological.resources.GeologicalResourceInfoHudPaintableSingleton import GeologicalResourceInfoHudPaintableSingleton
+        from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
         rtsLayerHudPaintable: GeologicalResourceInfoHudPaintable = GeologicalResourceInfoHudPaintableSingleton.getInstance()
         return rtsLayerHudPaintable
-from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
-from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
-from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
+# from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+# from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
 
 

@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.CommandListener import CommandListener
 from org.allbinary.midlet.ProgressMidlet import ProgressMidlet
 
 
-class GameMidlet(ProgressMidlet, CommandListener):
+class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:

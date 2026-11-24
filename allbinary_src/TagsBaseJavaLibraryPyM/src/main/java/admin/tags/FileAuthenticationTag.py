@@ -22,6 +22,10 @@ from tags.CustomTagSupport import CustomTagSupport
 class FileAuthenticationTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+        from org.allbinary.logic.communication.http.request.session.BasicWeblisketSession import BasicWeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.attemptsInteger: int = None
         self.weblisketSession: BasicWeblisketSession = None
@@ -59,10 +63,13 @@ class FileAuthenticationTag(CustomTagSupport):
     
 
     def setRoles(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.roles = values
     
 
     def makeSessionValid(self, storedRole: BasicUserRole, userName: str) -> None:
+        from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         self.weblisketSession.setAuthenticated()
         self.weblisketSession.setRole(storedRole)
         self.weblisketSession.setUserName(userName)
@@ -87,6 +94,11 @@ class FileAuthenticationTag(CustomTagSupport):
 
     # throws LicensingException
     def changePassword(self) -> bool:
+        from org.allbinary.business.init.InstallerInfo import InstallerInfo
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             userName: str = self.request.getParameter(WeblisketSessionData.REMOVABLEUSERNAME)
             password: str = self.request.getParameter(WeblisketSessionData.REMOVABLEPASSWORD)
@@ -105,23 +117,29 @@ class FileAuthenticationTag(CustomTagSupport):
         except LicensingException as e:
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "invalidateSession()", e)
             return False
     
 
     def invalidateSession(self) -> int:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.weblisketSession.clear()
             return int(int(TagSupport.EVAL_BODY_INCLUDE))
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "invalidateSession()", e)
             return TagSupport.SKIP_BODY
     
 
     # throws LicensingException
     def isSessionOld(self) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.role is not None:
                 timeCreated: int = self.weblisketSession.getCreationTime()
@@ -129,7 +147,7 @@ class FileAuthenticationTag(CustomTagSupport):
                 calendar: datetime.datetime = datetime.datetime.now()
                 timeFirst: int = calendar.getTimeInMillis() - sessionTimout
                 if timeFirst > timeCreated:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("Session Is Old - Timeout: ")
                         stringBuffer.appendlong(sessionTimout)
@@ -140,23 +158,26 @@ class FileAuthenticationTag(CustomTagSupport):
                         self.logUtil.putF(str(stringBuffer), self, "isSessionOld()")
                     return True
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                     self.logUtil.putF("Role Is Not In Session", self, "isSessionOld()")
             return self.isRarelyUsedSession()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isSessionOld()", e)
             return False
     
 
     def isRarelyUsedSession(self) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if self.role is not None:
             timeCreated: int = self.weblisketSession.getCreationTime()
             lastAccess: int = self.weblisketSession.getLastAccessedTime()
             timePassed: int = self.role.getSessionInactivityTimeout()
             calendar: datetime.datetime = datetime.datetime.now()
             timeFirst: int = calendar.getTimeInMillis() - lastAccess
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Session Is Rarely Used - Timeout: ")
                 stringBuffer.appendlong(lastAccess)
@@ -166,37 +187,49 @@ class FileAuthenticationTag(CustomTagSupport):
                 stringBuffer.appendlong(timePassed)
                 self.logUtil.putF(str(stringBuffer), self, "isRarelyUsedSession()")
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().AUTHENTICATION):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                 self.logUtil.putF("Role Is Not In Session", self, "isRarelyUsedSession()")
         return False
     
 
     # throws LicensingException
     def isRoleValid(self) -> bool:
+        from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.makeSessionValid(BasicUserRoleFactory.getInstance().INSTALLER, self.userName)
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isRoleValid()", e)
             return False
     
 
     # throws LicensingException
     def validRole(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Trying New login<p>")
             return str(stringBuffer)
         except Exception as e:
             error: str = "Failed to set valid role"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "validRole()", e)
             return error
     
 
     # throws LicensingException
     def invalidRole(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.weblisketSession.setAuthenticated(False)
             stringBuffer: StringMaker = StringMaker()
@@ -205,13 +238,18 @@ class FileAuthenticationTag(CustomTagSupport):
             return str(stringBuffer)
         except Exception as e:
             error: str = "Failed to set role invalid"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "invalidRole()", e)
             return error
     
 
     # throws LicensingException
     def isAuthenticationSessionValid(self) -> bool:
+        from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if BooleanUtil.getInstance().getFromString(self.authenticated):
                 size: int = self.roles.size()
@@ -222,24 +260,30 @@ class FileAuthenticationTag(CustomTagSupport):
                 return False
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isAuthenticationSessionValid()", e)
             return False
     
 
     # throws LicensingException
     def processIfNewLogin(self) -> bool:
+        from org.allbinary.business.init.InstallerInfo import InstallerInfo
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.putF("Starting for User: " + self.userName + " Attempt: " + str(self.weblisketSession.getAttempts()), self, "processIfNewLogin()")
             if self.userName is not None and ((self.userName > StringUtil.getInstance().EMPTY_STRING) - (self.userName < StringUtil.getInstance().EMPTY_STRING)) != 0 and self.password is not None and ((self.password > StringUtil.getInstance().EMPTY_STRING) - (self.password < StringUtil.getInstance().EMPTY_STRING)) != 0:
                 login: str = None
                 installerInfo: InstallerInfo = InstallerInfo()
                 if installerInfo.isValid(self.userName, self.password):
-                    login = org.allbinary.globals.GLOBALS2.LOGINSUCCESS
+                    login = GLOBALS2.LOGINSUCCESS
                 else:
-                    login = org.allbinary.globals.GLOBALS2.LOGINFAILED
-                if ((login > org.allbinary.globals.GLOBALS2.LOGINSUCCESS) - (login < org.allbinary.globals.GLOBALS2.LOGINSUCCESS)) == 0:
+                    login = GLOBALS2.LOGINFAILED
+                if ((login > GLOBALS2.LOGINSUCCESS) - (login < GLOBALS2.LOGINSUCCESS)) == 0:
                     self.weblisketSession.setAttempts(int(0))
                     return True
                 self.nextAttempt()
@@ -247,13 +291,18 @@ class FileAuthenticationTag(CustomTagSupport):
             self.nextAttempt()
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "processIfNewLogin()", e)
             return False
     
 
     # throws LicensingException
     def processInvalidation(self) -> bool:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if BooleanUtil.getInstance().getFromString(self.timeout):
                 self.invalidateSession()
@@ -262,23 +311,32 @@ class FileAuthenticationTag(CustomTagSupport):
                 self.weblisketSession.setTimeout(BooleanFactory.getInstance().TRUE_STRING)
                 return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isSetToInvalidate()", e)
             return False
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.communication.http.request.session.BasicWeblisketSession import BasicWeblisketSession
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringUtil: StringUtil = StringUtil.getInstance()
             self.request = self.pageContext.getRequest()
             self.weblisketSession = BasicWeblisketSession(self.pageContext)
             self.getFormData()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF("Started", self, self.tagStrings.DO_START_TAG)
             if self.command is not None:
-                if ((self.command > org.allbinary.globals.GLOBALS2.CHANGEPASSWORD) - (self.command < org.allbinary.globals.GLOBALS2.CHANGEPASSWORD)) == 0:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                if ((self.command > GLOBALS2.CHANGEPASSWORD) - (self.command < GLOBALS2.CHANGEPASSWORD)) == 0:
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                         self.logUtil.putF("Change Password", self, self.tagStrings.DO_START_TAG)
                     if not self.changePassword():
                         self.pageContext.getOut().print_("Password Change Attempt Failed.<p>")
@@ -287,58 +345,58 @@ class FileAuthenticationTag(CustomTagSupport):
                         self.pageContext.getOut().print_("Password Changed Successfully.<p>")
                         return self.SKIP_BODY
                 elif ((self.command > WeblisketSessionData.INVALIDATESESSION) - (self.command < WeblisketSessionData.INVALIDATESESSION)) == 0:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                         self.logUtil.putF("INVALIDATESESSION", self, self.tagStrings.DO_START_TAG)
                     return self.invalidateSession()
                 else:
                     if self.isSessionOld():
                         if self.processInvalidation():
-                            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Processing Invalidation", self, self.tagStrings.DO_START_TAG)
                             self.pageContext.getOut().print_("Please login again.<p>")
-                            if ((self.command > org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
+                            if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
                                 return TagSupport.SKIP_BODY
                             else:
                                 return TagSupport.EVAL_BODY_INCLUDE
                         else:
-                            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Preparing session for invalidation", self, self.tagStrings.DO_START_TAG)
-                            if ((self.command > org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
+                            if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
                                 return TagSupport.SKIP_BODY
                             else:
                                 return TagSupport.EVAL_BODY_INCLUDE
                     if (self.userName is None or ((self.userName > stringUtil.EMPTY_STRING) - (self.userName < stringUtil.EMPTY_STRING)) == 0) and (self.password is None or ((self.password > stringUtil.EMPTY_STRING) - (self.password < stringUtil.EMPTY_STRING)) == 0) and self.roles is not None and self.isAuthenticationSessionValid():
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Authenticated session is valid", self, self.tagStrings.DO_START_TAG)
-                        if ((self.command > org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
+                        if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
                             return TagSupport.EVAL_BODY_INCLUDE
                         else:
                             return TagSupport.SKIP_BODY
                     if self.userName is not None and self.password is not None and self.processIfNewLogin():
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Processing new login.", self, self.tagStrings.DO_START_TAG)
                         if self.isRoleValid():
-                            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Role is valid - Processing new login", self, self.tagStrings.DO_START_TAG)
                             self.pageContext.getOut().print_(self.validRole())
-                            if ((self.command > org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
+                            if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
                                 return self.EVAL_BODY_INCLUDE
                             else:
                                 return self.SKIP_BODY
                         else:
-                            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Role is not valid - Processing new login", self, self.tagStrings.DO_START_TAG)
                             self.pageContext.getOut().print_(self.invalidRole())
-                            if ((self.command > org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
+                            if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
                                 return self.SKIP_BODY
                             else:
                                 return self.EVAL_BODY_INCLUDE
                     else:
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Invalid Login", self, self.tagStrings.DO_START_TAG)
                         if self.userName is not None and ((self.userName > StringUtil.getInstance().EMPTY_STRING) - (self.userName < StringUtil.getInstance().EMPTY_STRING)) != 0 and self.password is not None and ((self.password > StringUtil.getInstance().EMPTY_STRING) - (self.password < StringUtil.getInstance().EMPTY_STRING)) != 0:
                             self.pageContext.getOut().print_("Sorry your username and/or password is invalid.<p>")
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("Major authentication error - userName: ")
                         stringBuffer.append(self.userName)
@@ -347,7 +405,7 @@ class FileAuthenticationTag(CustomTagSupport):
                         stringBuffer.append(" Command: ")
                         stringBuffer.append(self.command)
                         self.logUtil.putF(str(stringBuffer), self, self.tagStrings.DO_START_TAG)
-                    if ((self.command > org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < org.allbinary.globals.GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
+                    if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
                         return TagSupport.SKIP_BODY
                     else:
                         return TagSupport.EVAL_BODY_INCLUDE
@@ -359,22 +417,25 @@ class FileAuthenticationTag(CustomTagSupport):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from java.util.Calendar import Calendar
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.tagext.TagSupport import TagSupport
-from org.allbinary.business.init.InstallerInfo import InstallerInfo
-from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
-from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.http.request.session.BasicWeblisketSession import BasicWeblisketSession
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.business.init.InstallerInfo import InstallerInfo
+# from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+# from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.http.request.session.BasicWeblisketSession import BasicWeblisketSession
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

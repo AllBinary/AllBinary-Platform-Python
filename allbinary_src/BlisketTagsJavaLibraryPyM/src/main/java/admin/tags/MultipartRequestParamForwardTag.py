@@ -21,6 +21,7 @@ from tags.CustomTagSupport import CustomTagSupport
 class MultipartRequestParamForwardTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.page: str = None
         self.command: str = None
         self.paramVector: BasicArrayList = None
@@ -39,17 +40,23 @@ class MultipartRequestParamForwardTag(CustomTagSupport):
     
 
     def setParamVector(self, paramVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.paramVector = paramVector
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
         from admin.tags.ParentInventoryTagHelper import ParentInventoryTagHelper
-        from admin.tags.AbTagData import AbTagData
+        from java.util.HashMap import HashMap
+        from admin.taghelpers.MultipartRequestParamForwardHelper import MultipartRequestParamForwardHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from tags.HelperTag import HelperTag
         try:
             parentTag: HelperTag = self.getParent()
             ParentInventoryTagHelper.getInstance().isValid(self, parentTag)
-            hashMap: dict = StdUtil.getInstance().createHashMap()
+            hashMap: HashMap = StdUtil.getInstance().createHashMap()
             hashMap.put(AbTagData.PARENT, parentTag)
             multipartRequestParamForwardHelper: MultipartRequestParamForwardHelper = MultipartRequestParamForwardHelper(parentTag, self.page, self.command, self.paramVector, self.pageContext)
             multipartRequestParamForwardHelper.forward()
@@ -61,14 +68,14 @@ class MultipartRequestParamForwardTag(CustomTagSupport):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return Tag.SKIP_BODY
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.tagext.Tag import Tag
-from admin.taghelpers.MultipartRequestParamForwardHelper import MultipartRequestParamForwardHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from tags.HelperTag import HelperTag
+# from admin.taghelpers.MultipartRequestParamForwardHelper import MultipartRequestParamForwardHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from tags.HelperTag import HelperTag
 
 

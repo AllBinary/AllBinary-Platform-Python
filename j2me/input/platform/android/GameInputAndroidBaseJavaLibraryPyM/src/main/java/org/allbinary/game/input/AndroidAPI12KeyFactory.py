@@ -3,16 +3,17 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.AndroidAPI9KeyFactory import AndroidAPI9KeyFactory
 
 
 class AndroidAPI12KeyFactory(AndroidAPI9KeyFactory):
-    instance12: object = NullUtil.getInstance().NULL_OBJECT
+    instance12: object = None
     
 
     @staticmethod
     def getAPI12Instance() -> AndroidAPI12KeyFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if AndroidAPI12KeyFactory.instance12 == NullUtil.getInstance().NULL_OBJECT:
             AndroidAPI12KeyFactory.instance12 = AndroidAPI12KeyFactory()
         return AndroidAPI12KeyFactory.instance12
@@ -35,6 +36,7 @@ class AndroidAPI12KeyFactory(AndroidAPI9KeyFactory):
         from org.allbinary.game.input.AndroidGameKey import AndroidGameKey
         from org.allbinary.game.input.AndroidGameKey import AndroidGameKey
         from org.allbinary.game.input.AndroidGameKey import AndroidGameKey
+        from android.view.KeyEvent import KeyEvent
         super().__init__()
         self.KEYCODE_BUTTON_1 = AndroidGameKey(KeyEvent.KEYCODE_BUTTON_1, "BUTTON 1")
         self.KEYCODE_BUTTON_10 = AndroidGameKey(KeyEvent.KEYCODE_BUTTON_10, "BUTTON 10")
@@ -52,6 +54,13 @@ class AndroidAPI12KeyFactory(AndroidAPI9KeyFactory):
         self.KEYCODE_BUTTON_7 = AndroidGameKey(KeyEvent.KEYCODE_BUTTON_7, "BUTTON 7")
         self.KEYCODE_BUTTON_8 = AndroidGameKey(KeyEvent.KEYCODE_BUTTON_8, "BUTTON 8")
         self.KEYCODE_BUTTON_9 = AndroidGameKey(KeyEvent.KEYCODE_BUTTON_9, "BUTTON 9")
-from android.view.KeyEvent import KeyEvent
+# from android.view.KeyEvent import KeyEvent
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _AndroidAPI12KeyFactory_instance12() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(AndroidAPI12KeyFactory, "instance12", _AndroidAPI12KeyFactory_instance12)
 

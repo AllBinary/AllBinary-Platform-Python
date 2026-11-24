@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
-class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
+class TextAnimation(*java_bases(IndexedAnimation, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor
@@ -50,7 +51,7 @@ class TextAnimation(IndexedAnimation, UpdateMyFontInterface):
         from org.allbinary.graphics.threed.SWTJOGLProcessor import SWTJOGLProcessor
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
-        adjustedFontHeight: int = int(-(float(self.fontHeight) * 2.00))
+        adjustedFontHeight: int = int(-float(self.fontHeight) * 2.00)
         self.offsetY = (adjustedFontHeight if SWTJOGLProcessor.getInstance().isJOGL() else 0)
         self.textChangeListener.onMeasure()
         self.textChangeListener = TextChangeListener.getInstance()

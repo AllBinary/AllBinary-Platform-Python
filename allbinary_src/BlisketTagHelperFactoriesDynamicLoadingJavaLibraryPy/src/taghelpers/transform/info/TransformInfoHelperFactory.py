@@ -28,11 +28,14 @@ class TransformInfoHelperFactory(TagHelperFactoryInterface):
     
 
     # throws LicensingException
-    def getInstance(self, hashMap: dict, pageContext: PageContext) -> object:
+    def getInstance(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from admin.taghelpers.HelperFactory import HelperFactory
         return HelperFactory.getInstance(TransformInfoHelperFactory.FACTORYNAME, TransformInfoHelperFactory.CLASSNAME, hashMap, pageContext)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from admin.taghelpers.HelperFactory import HelperFactory
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.HelperFactory import HelperFactory
 
 

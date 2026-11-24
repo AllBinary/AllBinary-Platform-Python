@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.building.BuildingPropertiesFactory import BuildingPropertiesFactory
 
 
@@ -35,6 +36,7 @@ class SimulatedBuildingPropertiesFactory(BuildingPropertiesFactory):
     
 
     def getDamageFloaters(self, buildingLayer: BuildingLayer) -> DamageFloaters:
+        from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
         damageFloaters: DamageFloaters = DamageFloaters.getInstance()
         self.damageFloatersPaintableInterface = damageFloaters
         return damageFloaters
@@ -42,23 +44,32 @@ class SimulatedBuildingPropertiesFactory(BuildingPropertiesFactory):
 
     # throws Exception
     def getHealthBar(self, buildingLayer: BuildingLayer) -> Paintable:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         return NullPaintable.getInstance()
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
     
 
     def getTrackingEvent(self, buildingLayer: BuildingLayer) -> TrackingEvent:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         return TrackingEvent(TrackingEventHandler.getInstance())
-from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-SimulatedBuildingPropertiesFactory.instanceC = SimulatedBuildingPropertiesFactory()
+def _SimulatedBuildingPropertiesFactory_instanceC() -> object:
+    return SimulatedBuildingPropertiesFactory()
+
+lazy_static(SimulatedBuildingPropertiesFactory, "instanceC", _SimulatedBuildingPropertiesFactory_instanceC)
 

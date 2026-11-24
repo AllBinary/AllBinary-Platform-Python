@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.actions.script.condition.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class AlwaysActionScriptConditionJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.alwaysActionScriptConditionInterface: AlwaysActionScriptConditionInterface = None
@@ -67,20 +69,6 @@ class AlwaysActionScriptConditionJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.actions.script.condition.JDialog import JDialog
-        from org.allbinary.input.automation.actions.script.condition.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.JComboBox import JComboBox
-        from org.allbinary.input.automation.actions.script.condition.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.DefaultComboBoxModel import DefaultComboBoxModel
-        from org.allbinary.input.automation.actions.script.condition.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.actions.script.condition.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.GroupLayout import GroupLayout
         self.alwaysActionJDialog = JDialog()
         self.titleJLabel = JLabel()
         self.okJButton = JButton()
@@ -101,8 +89,8 @@ class AlwaysActionScriptConditionJPanel(JPanel):
         self.alwaysJComboBox.setModel(DefaultComboBoxModel(["true", "false"]))
         alwaysActionJDialogLayout: GroupLayout = GroupLayout(self.alwaysActionJDialog.getContentPane())
         self.alwaysActionJDialog.getContentPane().setLayout(alwaysActionJDialogLayout)
-        alwaysActionJDialogLayout.setHorizontalGroup(alwaysActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addGroup(alwaysActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addGap(47, 47, 47).addGroup(alwaysActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, False).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alwaysActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel2).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.alwaysJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addComponent(self.titleJLabel))).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addGap(79, 79, 79).addComponent(self.okJButton))).addContainerGap(45, Short.MAX_VALUE)))
-        alwaysActionJDialogLayout.setVerticalGroup(alwaysActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.titleJLabel).addGap(20, 20, 20).addGroup(alwaysActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.alwaysJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.jLabel2)).addGap(15, 15, 15).addComponent(self.okJButton).addContainerGap()))
+        alwaysActionJDialogLayout.setHorizontalGroup(alwaysActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addGroup(alwaysActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addGap(47, 47, 47).addGroup(alwaysActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING, False).addGroup(GroupLayout.Alignment.TRAILING, alwaysActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.alwaysJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addComponent(self.titleJLabel))).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addGap(79, 79, 79).addComponent(self.okJButton))).addContainerGap(45, Short.MAX_VALUE)))
+        alwaysActionJDialogLayout.setVerticalGroup(alwaysActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(alwaysActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.titleJLabel).addGap(20, 20, 20).addGroup(alwaysActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.alwaysJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.jLabel2)).addGap(15, 15, 15).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.alwaysActionJButton.setText("Edit")
         self.alwaysActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
@@ -114,8 +102,8 @@ class AlwaysActionScriptConditionJPanel(JPanel):
         self.jLabel1.setText("Always:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE).addComponent(self.alwaysActionJButton)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.alwaysActionJButton)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE).addComponent(self.alwaysActionJButton)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.alwaysActionJButton)))
     
 
     def okJButtonActionPerformed(self, evt: ActionEvent) -> None:
@@ -125,7 +113,17 @@ class AlwaysActionScriptConditionJPanel(JPanel):
 
     def alwaysActionJButtonActionPerformed(self, evt: ActionEvent) -> None:
         self.getAlwaysActionJDialog().setVisible(True)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JComboBox import JComboBox
+# from javax.swing.JDialog import JDialog
+# from javax.swing.JLabel import JLabel
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

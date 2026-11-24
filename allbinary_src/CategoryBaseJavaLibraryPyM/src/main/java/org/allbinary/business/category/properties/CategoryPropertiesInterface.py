@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 
 
 # Java interface
-class CategoryPropertiesInterface(TableMappingInterface, ValidationInterface):
+class CategoryPropertiesInterface(*java_bases(TableMappingInterface, ValidationInterface)):
     
 
     def setValue(self, value: str) -> None:
@@ -33,11 +34,14 @@ class CategoryPropertiesInterface(TableMappingInterface, ValidationInterface):
 
     # throws Exception
     def getWebAppPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     # throws Exception
     def getPath(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> AbPath:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
@@ -54,7 +58,7 @@ class CategoryPropertiesInterface(TableMappingInterface, ValidationInterface):
     # throws Exception
     def isRealRoot(self) -> bool:
         raise NotImplementedError()
-from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 

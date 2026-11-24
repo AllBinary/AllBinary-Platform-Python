@@ -29,6 +29,7 @@ class TransactionResultInterface:
     
 
     def getValues(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -114,7 +115,7 @@ class TransactionResultInterface:
 
     def getException7(self) -> str:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

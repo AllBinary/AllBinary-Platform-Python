@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GLUtil:
@@ -23,6 +24,7 @@ class GLUtil:
 
     def _init_fields(self) -> None:
         self.BYTES_PER_FLOAT: int = 4
+        self.NULL_FLOAT_BUFFER: FloatBuffer = ByteBuffer.allocateDirect(0).asFloatBuffer()
 
     def __init__(self) -> None:
         self._init_fields()
@@ -63,7 +65,7 @@ class GLUtil:
         unsigned: int = 0
         v: float = 0.0
         while byteBuffer.hasRemaining():
-            unsigned = byteBuffer.get() & 0xFF
+            unsigned = (int(byteBuffer.get())) & 0xFF
             v = (float(unsigned)) / 255.0
             buffer.put(v)
         self.position(buffer, 0)
@@ -93,5 +95,8 @@ class GLUtil:
 # from java.nio.FloatBuffer import FloatBuffer
 
 
-GLUtil.instance = GLUtil()
+def _GLUtil_instance() -> object:
+    return GLUtil()
+
+lazy_static(GLUtil, "instance", _GLUtil_instance)
 

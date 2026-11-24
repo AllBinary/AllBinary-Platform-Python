@@ -21,11 +21,19 @@ from org.allbinary.business.context.modules.storefront.statistics.users.StoreFro
 class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
         self.totalNumberOfUsers: int = None
-        self.totalUsersByRoleHashMap: dict = None
+        self.totalUsersByRoleHashMap: HashMap = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.business.user.role.UserRole import UserRole
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+        from org.allbinary.logic.StdUtil import StdUtil
         self._init_fields()
         self.totalUsersByRoleHashMap = StdUtil.getInstance().createHashMap()
         userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
@@ -40,6 +48,7 @@ class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
     
 
     def getNewTotal(self, userRole: UserRole) -> int:
+        from org.allbinary.business.user.role.UserRole import UserRole
         numberOfUsersForRoleLong: int = self.totalUsersByRoleHashMap.get(userRole)
         if numberOfUsersForRoleLong is None:
             numberOfUsersForRoleLong = int(0)
@@ -55,9 +64,12 @@ class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
         return totalForRole
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsData import StoreFrontUsersStatisticsData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.business.user.role.UserRole import UserRole
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(StoreFrontUsersStatisticsData.getInstance().NUMBEROFUSERS, str(self.getNumberOfUsers()))
         setOfUserRoles: Set = self.totalUsersByRoleHashMap.keySet()
         nextUserRole: UserRole = None
@@ -71,6 +83,7 @@ class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return None
     
 
@@ -78,13 +91,13 @@ class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
         return None
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.business.user.role.UserRole import UserRole
-from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
-from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+# from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

@@ -23,11 +23,13 @@ class PathFinderGraphVisitorBase:
 
     # throws Exception
     def visit(self, graph: object, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     # throws Exception
     def fixPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, pathList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
@@ -37,6 +39,6 @@ class PathFinderGraphVisitorBase:
 
     def getInvalidReason(self, graphPath: object) -> str:
         raise RuntimeError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

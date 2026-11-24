@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.GameInputMotionInfo import GameInputMotionInfo
 
 
@@ -31,5 +32,8 @@ class GameInputMotionInfoAPI5(GameInputMotionInfo):
         super().__init__(2147483647, 10)
 
 
-GameInputMotionInfoAPI5.instance = GameInputMotionInfoAPI5()
+def _GameInputMotionInfoAPI5_instance() -> object:
+    return GameInputMotionInfoAPI5()
+
+lazy_static(GameInputMotionInfoAPI5, "instance", _GameInputMotionInfoAPI5_instance)
 

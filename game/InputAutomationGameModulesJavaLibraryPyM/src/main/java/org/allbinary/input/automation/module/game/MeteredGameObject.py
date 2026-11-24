@@ -75,6 +75,8 @@ class MeteredGameObject(MeteredGameObjectInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer.append(commonSeps.NEW_LINE)
@@ -130,7 +132,7 @@ class MeteredGameObject(MeteredGameObjectInterface):
     def setSize(self, size: int) -> None:
         self.size = size
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

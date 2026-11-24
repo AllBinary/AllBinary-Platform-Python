@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from javax.sound.sampled.Control import Control
+from javax.sound.sampled.Control import Control
 
 
 class NullJ2SEControl(Control):

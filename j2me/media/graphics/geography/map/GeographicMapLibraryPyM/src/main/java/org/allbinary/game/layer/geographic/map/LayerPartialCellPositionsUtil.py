@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LayerPartialCellPositionsUtil:
@@ -23,6 +24,11 @@ class LayerPartialCellPositionsUtil:
 
     # throws Exception
     def getAll(self, geographicMapInterface: BasicGeographicMap, layerInterface: AllBinaryLayer, reusableList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         reusableList.clear()
         topLeftGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXYNoThrow(layerInterface.getXP(), layerInterface.getYP())
         topRightGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXYNoThrow(layerInterface.getXP() + layerInterface.getWidth(), layerInterface.getYP())
@@ -41,6 +47,11 @@ class LayerPartialCellPositionsUtil:
 
     # throws Exception
     def getAllDXY(self, geographicMapInterface: BasicGeographicMap, layerInterface: AllBinaryLayer, dx: int, dy: int, reusableList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         reusableList.clear()
         topLeftGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXYNoThrow(layerInterface.getXP() + dx, layerInterface.getYP() + dy)
         topRightGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXYNoThrow(layerInterface.getXP() + layerInterface.getWidth() + dx, layerInterface.getYP() + dy)
@@ -60,12 +71,15 @@ class LayerPartialCellPositionsUtil:
     @staticmethod
     def getInstance() -> LayerPartialCellPositionsUtil:
         return LayerPartialCellPositionsUtil.instance
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
 
 
-LayerPartialCellPositionsUtil.instance = LayerPartialCellPositionsUtil()
+def _LayerPartialCellPositionsUtil_instance() -> object:
+    return LayerPartialCellPositionsUtil()
+
+lazy_static(LayerPartialCellPositionsUtil, "instance", _LayerPartialCellPositionsUtil_instance)
 

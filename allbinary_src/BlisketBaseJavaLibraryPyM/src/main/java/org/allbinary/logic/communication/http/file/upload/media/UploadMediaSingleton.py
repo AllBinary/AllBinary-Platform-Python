@@ -23,17 +23,29 @@ class UploadMediaSingleton:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.readerFileTypesHashMap: dict = None
-        self.writerFileTypesHashMap: dict = None
+        self.readerFileTypesHashMap: HashMap = None
+        self.writerFileTypesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.media.MediaData import MediaData
+        from org.allbinary.logic.visual.media.MediaIOUtil import MediaIOUtil
+        from org.allbinary.logic.visual.media.MediaTypeData import MediaTypeData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.readerFileTypesHashMap = StdUtil.getInstance().createHashMap()
         self.writerFileTypesHashMap = StdUtil.getInstance().createHashMap()
-        hashMap: dict = MediaData.toHashMap()
+        hashMap: HashMap = MediaData.toHashMap()
         set: Set = hashMap.keySet()
         mediaDataNameArray: list[object] = set.toArray()
         size: int = len(mediaDataNameArray)
@@ -49,7 +61,7 @@ class UploadMediaSingleton:
         writerFileTypes: list[str] = mediaIOUtil.getWriterFormatNames()
         for index in range(0, len(writerFileTypes)):
             self.writerFileTypesHashMap.put(writerFileTypes[index], RESIZABLE_MEDIA)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Supported Media Readers: ")
             stringBuffer.append(str(self.readerFileTypesHashMap))
@@ -82,7 +94,7 @@ class UploadMediaSingleton:
         return self.isReaderSupported(mediaFileType) and self.isWriterSupported(mediaFileType)
     
 
-    def isMedia(self, mediaFileType: str, aMediaType: str) -> bool:
+    def isMedia_j2(self, mediaFileType: str, aMediaType: str) -> bool:
         return self.isReaderMedia(mediaFileType, aMediaType) and self.isWriterMedia(mediaFileType, aMediaType)
     
 
@@ -94,8 +106,8 @@ class UploadMediaSingleton:
         return self.isMedia(mediaFileType, aMediaType, self.writerFileTypesHashMap)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def isMedia(self, mediaFileType: str, aMediaType: str, hashMap: dict) -> bool:
+    def isMedia_j3(self, mediaFileType: str, aMediaType: str, hashMap: HashMap) -> bool:
+        from java.util.HashMap import HashMap
         if hashMap.containsKey(mediaFileType):
             mediaType: str = hashMap.get(mediaFileType)
             if ((mediaType > aMediaType) - (mediaType < aMediaType)) == 0:
@@ -104,14 +116,19 @@ class UploadMediaSingleton:
                 return False
         else:
             return False
+
+    def isMedia(self, *args):
+        return getattr(self, "isMedia_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.media.MediaData import MediaData
-from org.allbinary.logic.visual.media.MediaIOUtil import MediaIOUtil
-from org.allbinary.logic.visual.media.MediaTypeData import MediaTypeData
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.media.MediaData import MediaData
+# from org.allbinary.logic.visual.media.MediaIOUtil import MediaIOUtil
+# from org.allbinary.logic.visual.media.MediaTypeData import MediaTypeData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

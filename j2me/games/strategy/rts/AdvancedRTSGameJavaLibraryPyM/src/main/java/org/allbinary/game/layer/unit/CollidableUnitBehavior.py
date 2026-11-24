@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
 from org.allbinary.game.layer.CollidableRTSBehavior import CollidableRTSBehavior
 
 
@@ -26,6 +27,11 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
         
 
         def visit(self, anyType: object) -> object:
+            from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+            from org.allbinary.logic.NullUtil import NullUtil
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             try:
                 ownerLayer: CollidableCompositeLayer = anyType
@@ -43,6 +49,7 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
                 return NullUtil.getInstance().NULL_OBJECT
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
         self.layerPartialCellPositionsUtil: LayerPartialCellPositionsUtil = LayerPartialCellPositionsUtil.getInstance()
         self.simpleSteeringVisitor: SimpleSteeringVisitor = SimpleSteeringVisitor()
     
@@ -55,6 +62,8 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
     # throws Exception
     def collideNone(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
         from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         self.chase(ownerLayer, collidableInterfaceCompositeInterface)
         rtsLayer: AdvancedRTSGameLayer = collidableInterfaceCompositeInterface
         if rtsLayer.getType() == UnitLayer.getStaticType():
@@ -63,6 +72,10 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
 
     # throws Exception
     def steer(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> bool:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
         ownerUnitLayer: UnitLayer = ownerLayer
         unitLayer: UnitLayer = collidableInterfaceCompositeInterface
         angleInfo2: AngleInfo = unitLayer.getRotationAnimationInterface().getAngleInfoP()
@@ -79,6 +92,9 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
     # throws Exception
     def chase(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
         from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         rtsLayer: AdvancedRTSGameLayer = collidableInterfaceCompositeInterface
         if rtsLayer.getType() == UnitLayer.getStaticType():
             if not self.simpleSteeringVisitor.getList().contains(collidableInterfaceCompositeInterface):
@@ -92,6 +108,13 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
     # throws Exception
     def collideUnit(self, ownerLayer: CollidableCompositeLayer, unitLayer: UnitLayer) -> None:
         from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.layer.TiledLayerUtil import TiledLayerUtil
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
         ownerUnitLayer: UnitLayer = ownerLayer
         partialPositionList: BasicArrayList = UnitLayer.getPartialpositionlist()
         geographicMapCompositeInterface: GeographicMapCompositeInterface = ownerUnitLayer.allBinaryGameLayerManagerP
@@ -133,22 +156,20 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
                 y = tiledLayerUtil.keepOnMapY(tiledLayer, y, unitLayer.getHeight())
                 unitLayer.setPosition(x, y, unitLayer.getZP())
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
-from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.layer.TiledLayerUtil import TiledLayerUtil
-from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.game.layer.unit.SimpleSteeringVisitor import SimpleSteeringVisitor
+# from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.TiledLayerUtil import TiledLayerUtil
+# from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

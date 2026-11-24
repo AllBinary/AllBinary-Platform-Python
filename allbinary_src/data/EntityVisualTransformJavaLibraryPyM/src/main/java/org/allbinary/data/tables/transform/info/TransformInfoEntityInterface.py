@@ -23,17 +23,21 @@ class TransformInfoEntityInterface(BasicDataTableInterface):
     
 
     # throws Exception
-    def get(self, name: str, propertiesHashMap: dict, pageContext: PageContext) -> TransformInfoInterface:
+    def get(self, name: str, propertiesHashMap: HashMap, pageContext: PageContext) -> TransformInfoInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def getObjectConfigs(self, storeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getNames(self, storeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -42,15 +46,17 @@ class TransformInfoEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

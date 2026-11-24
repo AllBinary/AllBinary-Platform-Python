@@ -20,6 +20,8 @@ from __future__ import annotations
 class ScreenScavangerRobot:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
@@ -30,6 +32,9 @@ class ScreenScavangerRobot:
 
     # throws Exception
     def getScreenAsBufferedImages(self) -> list[BufferedImage]:
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil.putF(self.commonStrings.START, self, "getScreenAsBufferedImages")
         dimScreenSize: Dimension = Toolkit.getDefaultToolkit().getScreenSize()
         rectScreenSize: Rectangle = Rectangle(dimScreenSize)
@@ -44,10 +49,10 @@ class ScreenScavangerRobot:
 # from java.awt.Rectangle import Rectangle
 # from java.awt.Toolkit import Toolkit
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

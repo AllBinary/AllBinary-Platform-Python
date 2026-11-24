@@ -11,12 +11,14 @@ class AllBinaryTiledLayerFactoryInterface:
 
     # throws Exception
     def getInstance(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         raise NotImplementedError()
     
 
     # throws Exception
     def getMiniInstance(self, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         raise NotImplementedError()
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
 
 

@@ -23,6 +23,7 @@ from org.allbinary.game.layer.WaypointPathRunnableBase import WaypointPathRunnab
 class WaypointPathRunnable(WaypointPathRunnableBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -32,6 +33,8 @@ class WaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         try:
             self.pathFindingLayer.getWaypointRunnableLogHelper().start(self.pathFindingLayer)
             waypointBehavior: WaypointBehaviorBase = self.pathFindingLayer.getWaypointBehavior()
@@ -49,8 +52,8 @@ class WaypointPathRunnable(WaypointPathRunnableBase):
 
     def isDone(self) -> bool:
         return True
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
 
 

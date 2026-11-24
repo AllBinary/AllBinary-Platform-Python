@@ -22,8 +22,8 @@ class MusicManagerFactory:
 
     @staticmethod
     def createMusicManager(soundList: BasicArrayList) -> MusicManager:
-        from org.allbinary.media.audio.music.MusicManager import MusicManager
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return MusicManager(MusicService, soundList)
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

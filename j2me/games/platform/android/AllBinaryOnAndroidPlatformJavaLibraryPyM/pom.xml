@@ -324,7 +324,7 @@ input\android\MotionInputThroughAPI4AndroidJavaLibrary
             </plugin>
 
             <plugin>
-                <artifactId>maven-assembly-pluginPy</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
                         <phase>package</phase>

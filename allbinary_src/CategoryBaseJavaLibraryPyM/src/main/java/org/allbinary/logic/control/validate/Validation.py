@@ -21,6 +21,7 @@ from org.allbinary.logic.control.validate.ValidationInterface import ValidationI
 class Validation(ValidationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -34,19 +35,22 @@ class Validation(ValidationInterface):
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         raise RuntimeError()
     
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise RuntimeError()
     
 
     # throws Exception
     def validationInfo(self) -> str:
         raise RuntimeError()
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

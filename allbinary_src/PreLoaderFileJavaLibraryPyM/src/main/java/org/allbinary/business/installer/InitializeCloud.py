@@ -22,6 +22,7 @@ class InitializeCloud:
     CLOUD_UPDATE: str = "cloudupdate/"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,15 +31,25 @@ class InitializeCloud:
     
 
     def initialize(self, cloud: str, overwriteNewer: bool, overwriteAll: bool, current: int, total: int) -> bool:
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbIOSystem import AbIOSystem
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             if AbIOSystem.getInstance().isType("com.vobject.appengine.java.io"):
                 stringBuffer: StringMaker = StringMaker()
-                stringBuffer.append(self.URLGLOBALS.getWebappPath())
+                stringBuffer.append(URLGLOBALS.getWebappPath())
                 stringBuffer.append(cloud)
-                stringBuffer.append(self.PATH_GLOBALS.getInstance().DATA_PATH)
+                stringBuffer.append(PATH_GLOBALS.getInstance().DATA_PATH)
                 path: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
                 stringBuffer.delete(0, stringBuffer.length())
-                stringBuffer.append(self.URLGLOBALS.getWebappPath())
+                stringBuffer.append(URLGLOBALS.getWebappPath())
                 realPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
                 file: AbFile = AbFile.createAbFileFromAbPath(path)
                 fileBasicArrayList: BasicArrayList = Directory.getInstance().search(file, True)
@@ -70,16 +81,16 @@ class InitializeCloud:
         except Exception as e:
             self.logUtil.put("Unable to copy installer files into cloud", self, "initialize()", e)
             return False
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbIOSystem import AbIOSystem
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbIOSystem import AbIOSystem
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

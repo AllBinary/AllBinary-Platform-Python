@@ -15,12 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class UserRoleFactory:
     instance: UserRoleFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.modules.UserFactory import UserFactory
+        from org.allbinary.business.user.modules.admin.AdminUserFactory import AdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.StoreAdminUserFactory import StoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.customer.CustomerStoreAdminUserFactory import CustomerStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.order.OrderStoreAdminUserFactory import OrderStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.order.adjust.AdjustOrderStoreAdminUserFactory import AdjustOrderStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.order.review.ReviewOrderStoreAdminUserFactory import ReviewOrderStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.order.ship.ShipOrderStoreAdminUserFactory import ShipOrderStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.payment.PaymentStoreAdminUserFactory import PaymentStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.product.ProductStoreAdminUserFactory import ProductStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.web.WebStoreAdminUserFactory import WebStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.web.view.editor.ViewEditorWebStoreAdminUserFactory import ViewEditorWebStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.web.wizard.WizardWebStoreAdminUserFactory import WizardWebStoreAdminUserFactory
+        from org.allbinary.business.user.modules.admin.store.web.workflow.editor.WorkflowEditorWebStoreAdminUserFactory import WorkflowEditorWebStoreAdminUserFactory
+        from org.allbinary.business.user.modules.customer.subscriber.SubscriberUserFactory import SubscriberUserFactory
+        from org.allbinary.business.user.modules.customer.wholesale.WholesaleUserFactory import WholesaleUserFactory
         self.basicUserRoleFactory: BasicUserRoleFactory = BasicUserRoleFactory.getInstance()
         self.INSTALLER: UserRole = UserRoleB(self.basicUserRoleFactory.INSTALLER, None)
         self.ADMINISTRATOR: UserRole = UserRoleB(self.basicUserRoleFactory.ADMINISTRATOR, AdminUserFactory())
@@ -47,25 +64,27 @@ class UserRoleFactory:
     @staticmethod
     def getInstance() -> UserRoleFactory:
         return UserRoleFactory.instance
-from org.allbinary.business.user.modules.UserFactory import UserFactory
-from org.allbinary.business.user.modules.admin.AdminUserFactory import AdminUserFactory
-from org.allbinary.business.user.modules.admin.store.StoreAdminUserFactory import StoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.customer.CustomerStoreAdminUserFactory import CustomerStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.order.OrderStoreAdminUserFactory import OrderStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.order.adjust.AdjustOrderStoreAdminUserFactory import AdjustOrderStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.order.review.ReviewOrderStoreAdminUserFactory import ReviewOrderStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.order.ship.ShipOrderStoreAdminUserFactory import ShipOrderStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.payment.PaymentStoreAdminUserFactory import PaymentStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.product.ProductStoreAdminUserFactory import ProductStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.web.WebStoreAdminUserFactory import WebStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.web.view.editor.ViewEditorWebStoreAdminUserFactory import ViewEditorWebStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.web.wizard.WizardWebStoreAdminUserFactory import WizardWebStoreAdminUserFactory
-from org.allbinary.business.user.modules.admin.store.web.workflow.editor.WorkflowEditorWebStoreAdminUserFactory import WorkflowEditorWebStoreAdminUserFactory
-from org.allbinary.business.user.modules.customer.subscriber.SubscriberUserFactory import SubscriberUserFactory
-from org.allbinary.business.user.modules.customer.wholesale.WholesaleUserFactory import WholesaleUserFactory
-from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
+# from org.allbinary.business.user.modules.UserFactory import UserFactory
+# from org.allbinary.business.user.modules.admin.AdminUserFactory import AdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.StoreAdminUserFactory import StoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.customer.CustomerStoreAdminUserFactory import CustomerStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.order.OrderStoreAdminUserFactory import OrderStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.order.adjust.AdjustOrderStoreAdminUserFactory import AdjustOrderStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.order.review.ReviewOrderStoreAdminUserFactory import ReviewOrderStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.order.ship.ShipOrderStoreAdminUserFactory import ShipOrderStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.payment.PaymentStoreAdminUserFactory import PaymentStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.product.ProductStoreAdminUserFactory import ProductStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.web.WebStoreAdminUserFactory import WebStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.web.view.editor.ViewEditorWebStoreAdminUserFactory import ViewEditorWebStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.web.wizard.WizardWebStoreAdminUserFactory import WizardWebStoreAdminUserFactory
+# from org.allbinary.business.user.modules.admin.store.web.workflow.editor.WorkflowEditorWebStoreAdminUserFactory import WorkflowEditorWebStoreAdminUserFactory
+# from org.allbinary.business.user.modules.customer.subscriber.SubscriberUserFactory import SubscriberUserFactory
+# from org.allbinary.business.user.modules.customer.wholesale.WholesaleUserFactory import WholesaleUserFactory
 from org.allbinary.business.user.role.UserRoleB import UserRoleB
 
 
-UserRoleFactory.instance = UserRoleFactory()
+def _UserRoleFactory_instance() -> object:
+    return UserRoleFactory()
+
+lazy_static(UserRoleFactory, "instance", _UserRoleFactory_instance)
 

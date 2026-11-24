@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinaryMediaManagerShutdown:
@@ -25,13 +26,18 @@ class AllBinaryMediaManagerShutdown:
     @staticmethod
     def shutdown(soundsFactoryInterface: SoundsFactoryInterface) -> None:
         from org.allbinary.media.audio.AllBinaryMediaManager import AllBinaryMediaManager
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonStrings.START, AllBinaryMediaManagerShutdown.instance, "shutdown")
         AllBinaryMediaManager.shutdown(soundsFactoryInterface)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AllBinaryMediaManagerShutdown.instance = AllBinaryMediaManagerShutdown()
+def _AllBinaryMediaManagerShutdown_instance() -> object:
+    return AllBinaryMediaManagerShutdown()
+
+lazy_static(AllBinaryMediaManagerShutdown, "instance", _AllBinaryMediaManagerShutdown_instance)
 

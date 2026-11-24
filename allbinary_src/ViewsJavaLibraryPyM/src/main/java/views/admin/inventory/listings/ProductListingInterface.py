@@ -22,13 +22,15 @@ class ProductListingInterface:
     
 
     # throws Exception
-    def generateAll(self) -> str:
+    def generateAll_j0(self) -> str:
         raise NotImplementedError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def generateAll(self, storeName: str) -> str:
+    def generateAll_j1(self, storeName: str) -> str:
         raise NotImplementedError()
+
+    def generateAll(self, *args):
+        return getattr(self, "generateAll_j" + str(len(args)))(*args)
 
 

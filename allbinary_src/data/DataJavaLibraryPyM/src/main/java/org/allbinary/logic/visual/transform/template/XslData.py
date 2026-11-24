@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class XslData:
@@ -34,5 +35,8 @@ class XslData:
         self._init_fields()
 
 
-XslData.instance = XslData()
+def _XslData_instance() -> object:
+    return XslData()
+
+lazy_static(XslData, "instance", _XslData_instance)
 

@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.workarea.color.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class ColorChooser(JPanel):
@@ -31,10 +31,10 @@ class ColorChooser(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.color.JColorChooser import JColorChooser
-        from org.allbinary.graphics.j2me.workarea.color.BorderLayout import BorderLayout
         self.jColorChooser1 = JColorChooser()
         self.setLayout(BorderLayout())
-        self.add(self.jColorChooser1, java.awt.BorderLayout.CENTER)
+        self.add(self.jColorChooser1, BorderLayout.CENTER)
+# from java.awt.BorderLayout import BorderLayout
+# from javax.swing.JColorChooser import JColorChooser
 
 

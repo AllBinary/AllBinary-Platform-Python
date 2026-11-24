@@ -23,6 +23,6 @@ class ABCharacter:
     @staticmethod
     def toString(ch: str) -> str:
         return str(ch)
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

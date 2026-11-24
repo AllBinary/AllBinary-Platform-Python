@@ -25,16 +25,26 @@ class ImageComparatorConstraintsInterface:
         raise NotImplementedError()
     
 
-    def isCollisionWithAvoidRectangles(self, rectangle: Rectangle) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def isCollisionWithAvoidRectangles_j1_1(self, rectangle: Rectangle) -> bool:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def isCollisionWithAvoidRectangles(self, point: GPoint) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def isCollisionWithAvoidRectangles_j1_2(self, point: GPoint) -> bool:
+        from org.allbinary.graphics.GPoint import GPoint
         raise NotImplementedError()
+
+    def isCollisionWithAvoidRectangles(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.isCollisionWithAvoidRectangles_j1_1(*args)
+        if len(args) == 1:
+            return self.isCollisionWithAvoidRectangles_j1_2(*args)
+        return getattr(self, "isCollisionWithAvoidRectangles_j" + str(len(args)))(*args)
     
 
     def isColorAllowed(self, frame: int, point: GPoint, color: Color) -> bool:
+        from org.allbinary.graphics.GPoint import GPoint
         raise NotImplementedError()
     
 
@@ -45,8 +55,9 @@ class ImageComparatorConstraintsInterface:
 
     def isFrameAllowed(self, frame: int) -> bool:
         raise NotImplementedError()
-# from java.awt import *
+# from java.awt.Rectangle import Rectangle
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.GPoint import GPoint
 
 

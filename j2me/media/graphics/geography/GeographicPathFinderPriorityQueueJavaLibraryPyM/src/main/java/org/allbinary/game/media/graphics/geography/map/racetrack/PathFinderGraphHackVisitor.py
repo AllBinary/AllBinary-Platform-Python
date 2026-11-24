@@ -23,11 +23,13 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, edgeMinimum: int, minPathWeight: int, maxPathWeight: int) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         super().__init__(geographicMapInterface, edgeMinimum, minPathWeight, maxPathWeight)
     
 
     # throws Exception
     def visit(self, graph: object, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.fixStart(graph, startPathFindingNodeList)
         self.fixEnd(graph, endPathFindingNodeList)
         self.fixOverPassEdges(graph)
@@ -35,11 +37,13 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def fixStart(self, graph: object, startPathFindingNodeList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
     # throws Exception
     def fixEnd(self, graph: object, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
@@ -50,17 +54,19 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def fixPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, pathList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
     # throws Exception
     def removeOverPassEdges(self, pathList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
     def isValid(self, graphPath: object) -> bool:
         return False
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
 
 

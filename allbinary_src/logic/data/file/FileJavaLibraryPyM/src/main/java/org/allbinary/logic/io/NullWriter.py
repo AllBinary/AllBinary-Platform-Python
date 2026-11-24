@@ -27,26 +27,38 @@ class NullWriter(Writer):
     
 
     # throws IOException
-    def write(self, c: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j1_1(self, c: int) -> None:
         pass
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def write(self, cbuf: list[str], off: int, len_: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j3_1(self, cbuf: list[str], off: int, len_: int) -> None:
         pass
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def write(self, str_: str) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j1_2(self, str_: str) -> None:
         pass
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def write(self, str_: str, off: int, len_: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j3_2(self, str_: str, off: int, len_: int) -> None:
         pass
+
+    def write(self, *args):
+        if len(args) == 1 and True and isinstance(args[0], int) and not isinstance(args[0], bool):
+            return self.write_j1_1(*args)
+        if len(args) == 3 and True and (args[0] is None or isinstance(args[0], list)) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool):
+            return self.write_j3_1(*args)
+        if len(args) == 1:
+            return self.write_j1_2(*args)
+        if len(args) == 3:
+            return self.write_j3_2(*args)
+        return getattr(self, "write_j" + str(len(args)))(*args)
     
 
     # throws IOException

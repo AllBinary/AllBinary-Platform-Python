@@ -15,12 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCopyUtil:
     instance: ImageCopyUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
+        from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameFeatureFactory: GameFeatureFactory = GameFeatureFactory.getInstance()
@@ -45,9 +53,10 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImageForRotation(self, originalImage: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         if self.features.isFeature(self.openGLFeatureFactory.OPENGL):
             image: Image = originalImage
-            image = self.openGLUtil.addImage(image)
+            image = SwtOpenGLESImageBridge.addImage(self.openGLUtil, image)
             return image
         else:
             return self.createImage(originalImage)
@@ -55,14 +64,19 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImage(self, originalImage: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.microemu.app.ui.swt.SwtDeviceComponent import SwtDeviceComponent
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         originalImage2: Image = originalImage
         if self.features.isFeature(self.openGLFeatureFactory.OPENGL):
             if originalImage.getType() >= OpenGLESImage.TYPE:
-                openGLESImage: OpenGLESImage = (originalImage)
-                originalImage2 = openGLESImage.openGLBitmap.getImage()
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(originalImage)
+                originalImage2 = SwtOpenGLESImageBridge.getBitmapImage(openGLESImage)
         image: Image = None
         if originalImage2.isMutable():
             originalMutableImage: SwtMutableImage = originalImage2
@@ -70,22 +84,30 @@ class ImageCopyUtil:
         else:
             originalImmutableImage: SwtImmutableImage = originalImage2
             image = SwtMutableImage(SwtDeviceComponent.createImage(originalImmutableImage.image.getImageData()))
-        image = self.openGLUtil.addImage(image)
+        image = SwtOpenGLESImageBridge.addImage(self.openGLUtil, image)
         return image
     
 
     # throws Exception
     def createImageWH(self, originalImage: Image, width: int, height: int, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.microemu.app.ui.swt.SwtDeviceComponent import SwtDeviceComponent
+        from org.microemu.device.swt.PostLoadSwtImmutableImageProcessor import PostLoadSwtImmutableImageProcessor
+        from org.microemu.device.swt.PostLoadSwtMutableImageProcessor import PostLoadSwtMutableImageProcessor
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         originalImage2: Image = originalImage
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         if self.features.isFeature(self.openGLFeatureFactory.OPENGL):
-            if self.openGLESImageExclusionUtil.isCustomScaling(originalImage):
+            if SwtOpenGLESImageBridge.isCustomScaling(self.openGLESImageExclusionUtil, originalImage):
                 return self.createImage2(originalImage, width, height, mutable)
             if originalImage.getType() >= OpenGLESImage.TYPE:
-                openGLESImage: OpenGLESImage = (originalImage)
-                originalImage2 = openGLESImage.openGLBitmap.getImage()
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(originalImage)
+                originalImage2 = SwtOpenGLESImageBridge.getBitmapImage(openGLESImage)
         image: Image = None
         if originalImage2.isMutable() and mutable:
             originalMutableImage: SwtMutableImage = originalImage2
@@ -107,12 +129,23 @@ class ImageCopyUtil:
                     image = SwtImmutableImage(originalImmutableImage.getName(), PostLoadSwtImmutableImageProcessor(originalImmutableImage))
             else:
                 image = SwtImmutableImage(originalImmutableImage.getName(), PostLoadSwtImmutableImageProcessor(originalImmutableImage))
-        image = self.openGLUtil.addImage(image)
+        image = SwtOpenGLESImageBridge.addImage(self.openGLUtil, image)
         return image
     
 
     # throws Exception
     def createImage2(self, originalImage: Image, width: int, height: int, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.image.opengles.OpenGLESDeviceImageTranslate import OpenGLESDeviceImageTranslate
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.microemu.app.ui.swt.SwtDeviceComponent import SwtDeviceComponent
+        from org.microemu.device.swt.PostLoadSwtImmutableImageProcessor import PostLoadSwtImmutableImageProcessor
+        from org.microemu.device.swt.PostLoadSwtMutableImageProcessor import PostLoadSwtMutableImageProcessor
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         originalImage2: Image = originalImage
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
@@ -121,7 +154,7 @@ class ImageCopyUtil:
         if self.features.isFeature(self.openGLFeatureFactory.OPENGL):
             displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
             if originalImage.getType() >= OpenGLESImage.TYPE:
-                openGLESImage: OpenGLESImage = (originalImage)
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(originalImage)
                 openGLESImageProperties: OpenGLESImageProperties = openGLESImage.openGLESImageProperties
                 openGLWidth: int = openGLESImage.openGLBitmap.getWidth()
                 openGLHeight: int = openGLESImage.openGLBitmap.getHeight()
@@ -134,10 +167,10 @@ class ImageCopyUtil:
                 if originalImage.getHeight() % 2 != 0:
                     openGLESImageProperties.scaleX2 += 1.0 / float(openGLWidth)
                     openGLESImageProperties.scaleY2 += 1.0 / float(openGLHeight)
-                image = openGLESImage
+                image = SwtOpenGLESImageBridge.asImage(openGLESImage)
             else:
                 image = originalImage
-                openGLESImage: OpenGLESImage = self.openGLUtil.addImage(image)
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(SwtOpenGLESImageBridge.addImage(self.openGLUtil, image))
                 openGLESImageProperties: OpenGLESImageProperties = openGLESImage.openGLESImageProperties
                 openGLESImageProperties.scaleX2 = float(((float(width)) / openGLESImage.getWidth()))
                 openGLESImageProperties.scaleX = openGLESImageProperties.scaleX2
@@ -162,7 +195,7 @@ class ImageCopyUtil:
                     else:
                         openGLESImageProperties.scaleX = 1.0
                         openGLESImageProperties.scaleY = 1.0
-                image = openGLESImage
+                image = SwtOpenGLESImageBridge.asImage(openGLESImage)
         else:
             if originalImage2.isMutable() and mutable:
                 originalMutableImage: SwtMutableImage = originalImage2
@@ -180,12 +213,16 @@ class ImageCopyUtil:
                     image = SwtImmutableImage(originalImage.getName(), SwtDeviceComponent.createImage(imageData))
                 else:
                     image = SwtImmutableImage(originalImmutableImage.getName(), PostLoadSwtImmutableImageProcessor(originalImmutableImage))
-            image = self.openGLUtil.addImage(image)
+            image = SwtOpenGLESImageBridge.addImage(self.openGLUtil, image)
         return image
     
 
     # throws Exception
     def createImageScale(self, originalImage: Image, canvasScale: float, resize: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
@@ -230,24 +267,27 @@ class ImageCopyUtil:
             (originalImmutableImage.getImage()).getImageData().setPixels(0, 0, image.getWidth(), newPixelArray, 0)
             return image
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
-from org.allbinary.image.opengles.OpenGLESDeviceImageTranslate import OpenGLESDeviceImageTranslate
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
-from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
-from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.eclipse.swt.graphics.ImageData import ImageData
-from org.microemu.app.ui.swt.SwtDeviceComponent import SwtDeviceComponent
-from org.microemu.device.swt.PostLoadSwtImmutableImageProcessor import PostLoadSwtImmutableImageProcessor
-from org.microemu.device.swt.PostLoadSwtMutableImageProcessor import PostLoadSwtMutableImageProcessor
-from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
-from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
+# from org.allbinary.image.opengles.OpenGLESDeviceImageTranslate import OpenGLESDeviceImageTranslate
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
+# from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.eclipse.swt.graphics.ImageData import ImageData
+# from org.microemu.app.ui.swt.SwtDeviceComponent import SwtDeviceComponent
+# from org.microemu.device.swt.PostLoadSwtImmutableImageProcessor import PostLoadSwtImmutableImageProcessor
+# from org.microemu.device.swt.PostLoadSwtMutableImageProcessor import PostLoadSwtMutableImageProcessor
+# from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+# from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
 
 
-ImageCopyUtil.instance = ImageCopyUtil()
+def _ImageCopyUtil_instance() -> object:
+    return ImageCopyUtil()
+
+lazy_static(ImageCopyUtil, "instance", _ImageCopyUtil_instance)
 

@@ -27,7 +27,8 @@ class TransformInfoInterface(TableMappingInterface):
     
 
     # throws Exception
-    def override(self, hashMap: dict) -> None:
+    def override(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
     
 
@@ -53,6 +54,7 @@ class TransformInfoInterface(TableMappingInterface):
 
     # throws Exception
     def getTemplateFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
@@ -66,6 +68,7 @@ class TransformInfoInterface(TableMappingInterface):
 
     # throws Exception
     def getDataFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
@@ -75,6 +78,7 @@ class TransformInfoInterface(TableMappingInterface):
 
     # throws Exception
     def getDataDocument(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
     
 
@@ -92,11 +96,13 @@ class TransformInfoInterface(TableMappingInterface):
 
     # throws Exception
     def setObjectConfigInterface(self, transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def getObjectConfigInterface(self) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         raise NotImplementedError()
     
 
@@ -123,8 +129,8 @@ class TransformInfoInterface(TableMappingInterface):
     def isChild(self) -> bool:
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
-from org.w3c.dom.Document import Document
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.w3c.dom.Document import Document
 
 

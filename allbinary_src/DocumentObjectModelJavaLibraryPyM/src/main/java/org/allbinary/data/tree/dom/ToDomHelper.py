@@ -26,9 +26,10 @@ class ToDomHelper:
 
     @staticmethod
     def convertNull(value: str) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         if value is None:
             value = StringUtil.getInstance().NULL_STRING
         return value
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

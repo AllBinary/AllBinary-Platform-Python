@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 
 
-class NullAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface):
+class NullAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface)):
     NULL_NOT_FOR_USE_ANIMATION_FACTORY: NullAnimationFactory = None
     NULL_ANIMATION_FACTORY: NullAnimationFactory = None
 

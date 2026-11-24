@@ -47,10 +47,6 @@ class TouchButtonsMappingPaintable(Paintable):
 
     # throws Exception
     def createPaintableTable(self) -> list[list[Paintable]]:
-        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
-        from org.allbinary.input.motion.button.TouchButton import TouchButton
-        from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-        from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
         from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
         totalColumns: int = self.touchButtonLocationHelper.getTotalColumns()
         totalRows: int = self.touchButtonLocationHelper.getTotalRows()
@@ -75,6 +71,5 @@ class TouchButtonsMappingPaintable(Paintable):
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
 
 

@@ -33,6 +33,7 @@ class InventorySearchLoopInfo:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.CURRENT)
         stringBuffer.appendint(self.currentPage)
@@ -44,6 +45,6 @@ class InventorySearchLoopInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

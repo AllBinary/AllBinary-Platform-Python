@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLESImageDraw:
@@ -27,13 +28,18 @@ class OpenGLESImageDraw:
     
 
     def drawRegion(self, gl: GL10, viewHeight: int, x_src: float, y_src: float, width: float, height: float, x: int, y: int, z: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def draw(self, gl: GL10, x: int, y: int, z: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-OpenGLESImageDraw.instance = OpenGLESImageDraw()
+def _OpenGLESImageDraw_instance() -> object:
+    return OpenGLESImageDraw()
+
+lazy_static(OpenGLESImageDraw, "instance", _OpenGLESImageDraw_instance)
 

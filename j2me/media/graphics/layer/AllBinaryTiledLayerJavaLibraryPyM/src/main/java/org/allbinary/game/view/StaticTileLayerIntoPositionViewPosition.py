@@ -15,14 +15,13 @@
 
 from __future__ import annotations
 
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.NullLayer import NullLayer
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.view.ViewPosition import ViewPosition
 
 
 class StaticTileLayerIntoPositionViewPosition(ViewPosition):
-    tiledLayer: Layer = NullLayer.getInstance()
-    layer: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
+    tiledLayer: Layer = None
+    layer: AllBinaryLayer = None
     
 
     def __init__(self) -> None:
@@ -43,8 +42,24 @@ class StaticTileLayerIntoPositionViewPosition(ViewPosition):
 
     @staticmethod
     def setTiledLayer(tiledLayer: AllBinaryTiledLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         StaticTileLayerIntoPositionViewPosition.tiledLayer = tiledLayer
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.layer.Layer import Layer
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.layer.NullLayer import NullLayer
 
+
+def _StaticTileLayerIntoPositionViewPosition_tiledLayer() -> object:
+    from org.allbinary.layer.Layer import Layer
+    from org.allbinary.layer.NullLayer import NullLayer
+    return NullLayer.getInstance()
+
+lazy_static(StaticTileLayerIntoPositionViewPosition, "tiledLayer", _StaticTileLayerIntoPositionViewPosition_tiledLayer)
+
+def _StaticTileLayerIntoPositionViewPosition_layer() -> object:
+    from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+    return AllBinaryLayer.NULL_ALLBINARY_LAYER
+
+lazy_static(StaticTileLayerIntoPositionViewPosition, "layer", _StaticTileLayerIntoPositionViewPosition_layer)
 

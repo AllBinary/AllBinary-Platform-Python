@@ -26,12 +26,13 @@ class CustomMapGeneratorBase:
     
 
     def getCustomMapArray(self) -> list[list[int]]:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
     
 
     # throws Exception
     def getCustomType(self, column: int, row: int, currentType: int) -> int:
         return -1
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 

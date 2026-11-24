@@ -32,9 +32,12 @@ class SecuredNativeLibraryHelperWrapper(NativeLibraryHelperWrapper):
 
     # throws LicensingException
     def unlock(self, abeClientInformation: AbeClientInformationInterface) -> bool:
+        from org.allbinary.logic.system.security.AbKeys import AbKeys
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         return self.securedNativeLibraryInterface.unlock(AbKeys.getInstance().getKey(abeClientInformation, self.securedNativeLibraryInterface.getName()))
-from org.allbinary.logic.system.security.AbKeys import AbKeys
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.system.security.AbKeys import AbKeys
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

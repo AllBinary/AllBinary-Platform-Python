@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 
 
-class GameCommandCanvas(MyCanvas, MenuListener, DisplayChangeEventListener, UpdateMyFontInterface):
+class GameCommandCanvas(*java_bases(MyCanvas, MenuListener, DisplayChangeEventListener, UpdateMyFontInterface)):
     id: int = 0
 
     def _init_fields(self) -> None:

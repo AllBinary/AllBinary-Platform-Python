@@ -273,23 +273,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <artifactId>maven-assembly-pluginPy</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <attach>true</attach>
-                    <descriptors>
-                        <descriptor>assembly.xml</descriptor>
-                    </descriptors>
-                </configuration>
-            </plugin>
+            <!-- The Java jar-with-dependencies assembly is not used for Python (like workinglua, where the pom tools remove it) -->
 
         </plugins>
 

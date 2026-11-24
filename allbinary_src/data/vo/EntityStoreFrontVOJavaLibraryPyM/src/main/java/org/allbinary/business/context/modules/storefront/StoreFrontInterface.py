@@ -108,6 +108,7 @@ class StoreFrontInterface(TableMappingInterface):
 
     # throws Exception
     def getSubStores(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -124,10 +125,12 @@ class StoreFrontInterface(TableMappingInterface):
     
 
     def getContextConfigurationInterface(self) -> ContextConfigurationInterface:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         raise NotImplementedError()
     
 
     def setContextConfigurationInterface(self, contextConfigurationInterface: ContextConfigurationInterface) -> None:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         raise NotImplementedError()
     
 
@@ -283,7 +286,7 @@ class StoreFrontInterface(TableMappingInterface):
     # throws Exception
     def install(self, current: int, total: int) -> None:
         raise NotImplementedError()
-from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

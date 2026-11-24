@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CloudStreamUtil:
     instance: CloudStreamUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -34,46 +36,59 @@ class CloudStreamUtil:
 
     # throws Exception
     def getFile(self, file: AbFile) -> InputStream:
-        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-        inputStream: InputStream = AbFileInputStream(file)
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        inputStream: InputStream = AbFileInputStream.createFromAbFile(file)
         available: int = inputStream.available()
         if available > 0:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Cloud File Bytes: " + str(available), self, "processRequest()")
         return inputStream
     
 
     # throws Exception
     def getFileAnyWhere(self, file: AbFile) -> InputStream:
-        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
-        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         inputStream: InputStream = AbFileLocalInputStream(file)
         available: int = inputStream.available()
         if available > 0:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Local File Bytes: " + str(available), self, "processRequest()")
         else:
-            inputStream = AbFileInputStream(file)
+            inputStream = AbFileInputStream.createFromAbFile(file)
             available = inputStream.available()
             if available > 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     self.logUtil.putF("Cloud File Bytes: " + str(available), self, "processRequest()")
         return inputStream
     
 
     # throws Exception
     def getFileLocal(self, file: AbFile) -> InputStream:
-        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         inputStream: InputStream = AbFileLocalInputStream(file)
         available: int = inputStream.available()
         if available > 0:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Local File Bytes: " + str(available), self, "processRequest()")
         return inputStream
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-CloudStreamUtil.instance = CloudStreamUtil()
+def _CloudStreamUtil_instance() -> object:
+    return CloudStreamUtil()
+
+lazy_static(CloudStreamUtil, "instance", _CloudStreamUtil_instance)
 

@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.CompositeSound import CompositeSound
 
 
@@ -27,9 +28,14 @@ class SelectBuildingSound(CompositeSound):
 
     @staticmethod
     def getInstance() -> Sound:
+        from org.allbinary.media.audio.Sound import Sound
         return SelectBuildingSound.soundInterface
-from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.media.audio.Sound import Sound
 
 
-SelectBuildingSound.soundInterface = SelectBuildingSound()
+def _SelectBuildingSound_soundInterface() -> object:
+    from org.allbinary.media.audio.Sound import Sound
+    return SelectBuildingSound()
+
+lazy_static(SelectBuildingSound, "soundInterface", _SelectBuildingSound_soundInterface)
 

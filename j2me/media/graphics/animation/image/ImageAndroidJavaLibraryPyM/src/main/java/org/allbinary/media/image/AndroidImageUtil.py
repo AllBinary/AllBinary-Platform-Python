@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidImageUtil:
@@ -27,6 +28,10 @@ class AndroidImageUtil:
     
 
     def paintBitmap(self, bitmap: Bitmap, originalBitmap: Bitmap, paint: Paint) -> None:
+        from android.graphics.Bitmap import Bitmap
+        from android.graphics.Canvas import Canvas
+        from android.graphics.Color import Color
+        from android.graphics.Paint import Paint
         bitmap.eraseColor(Color.TRANSPARENT)
         canvas: Canvas = Canvas()
         canvas.setBitmap(bitmap)
@@ -34,6 +39,11 @@ class AndroidImageUtil:
     
 
     def paint(self, image: Image, originalImage: Image, paint: Paint) -> None:
+        from android.graphics.Canvas import Canvas
+        from android.graphics.Color import Color
+        from android.graphics.Paint import Paint
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         androidImage: AndroidImageInterface = image
         androidImage.getBitmap().eraseColor(Color.TRANSPARENT)
         canvas: Canvas = androidImage.getCanvas()
@@ -42,20 +52,29 @@ class AndroidImageUtil:
     
 
     def rotate(self, image: Image, originalImage: Image, matrix: Matrix, paint: Paint) -> None:
+        from android.graphics.Canvas import Canvas
+        from android.graphics.Color import Color
+        from android.graphics.Matrix import Matrix
+        from android.graphics.Paint import Paint
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         androidImage: AndroidImageInterface = image
         androidImage.getBitmap().eraseColor(Color.TRANSPARENT)
         canvas: Canvas = androidImage.getCanvas()
         canvas.concat(matrix)
         originalAndroidImage: AndroidImageInterface = originalImage
         canvas.drawBitmap(originalAndroidImage.getBitmap(), 0.0, 0.0, paint)
-from android.graphics.Bitmap import Bitmap
-from android.graphics.Canvas import Canvas
-from android.graphics.Color import Color
-from android.graphics.Matrix import Matrix
-from android.graphics.Paint import Paint
+# from android.graphics.Bitmap import Bitmap
+# from android.graphics.Canvas import Canvas
+# from android.graphics.Color import Color
+# from android.graphics.Matrix import Matrix
+# from android.graphics.Paint import Paint
 # from javax.microedition.lcdui.Image import Image
-from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
+# from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
 
 
-AndroidImageUtil.instance = AndroidImageUtil()
+def _AndroidImageUtil_instance() -> object:
+    return AndroidImageUtil()
+
+lazy_static(AndroidImageUtil, "instance", _AndroidImageUtil_instance)
 

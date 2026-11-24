@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.workarea.KeyListener import KeyListener
+# from java.awt.event.KeyListener import KeyListener
 
 
 # Java interface
@@ -71,7 +71,8 @@ class WorkAreaJPanelInterface(KeyListener):
 
     # throws Exception
     def toDocument(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
-from org.w3c.dom.Document import Document
+# from org.w3c.dom.Document import Document
 
 

@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterface import AnimationInterface
 from org.allbinary.animation.SequenceInterface import SequenceInterface
 
 
 # Java interface
-class SequentialAnimationInterface(AnimationInterface, SequenceInterface):
+class SequentialAnimationInterface(*java_bases(AnimationInterface, SequenceInterface)):
     
 
     def getSize(self) -> int:

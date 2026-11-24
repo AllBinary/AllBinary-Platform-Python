@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #Used to correct user input for paths
@@ -25,6 +26,9 @@ class AbPathUtilOld:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abPathData: AbPathData = AbPathData.getInstance()
         self.filePathData: FilePathData = FilePathData.getInstance()
@@ -40,49 +44,77 @@ class AbPathUtilOld:
     
 
     # throws Exception
-    def getExtension(self, abFilePath: AbFilePath) -> str:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getExtension_j1_1(self, abFilePath: AbFilePath) -> str:
+        from org.allbinary.logic.io.path.AbFilePath import AbFilePath
         return self.getExtension(str(abFilePath))
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getExtension(self, abPath: AbPath) -> str:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getExtension_j1_2(self, abPath: AbPath) -> str:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.getExtension(str(abPath))
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getExtension(self, filePath: str) -> str:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getExtension_j1_3(self, filePath: str) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if len(filePath) < AbPathUtilOld.MIN:
             raise Exception("Could not be a file path since its less that 4 characters")
         beginIndex: int = len(filePath) - AbPathUtilOld.MIN
         extension: str = filePath[beginIndex + 1:]
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("FileExtension: " + extension, self, "getExtension()")
         return extension
+
+    def getExtension(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getExtension_j1_1(*args)
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getExtension_j1_2(*args)
+        if len(args) == 1:
+            return self.getExtension_j1_3(*args)
+        return getattr(self, "getExtension_j" + str(len(args)))(*args)
     
 
     # throws Exception
-    def getWithoutExtension(self, abFilePath: AbFilePath) -> str:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getWithoutExtension_j1_1(self, abFilePath: AbFilePath) -> str:
+        from org.allbinary.logic.io.path.AbFilePath import AbFilePath
         return self.getWithoutExtension(str(abFilePath))
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getWithoutExtension(self, abPath: AbPath) -> str:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getWithoutExtension_j1_2(self, abPath: AbPath) -> str:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.getWithoutExtension(str(abPath))
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getWithoutExtension(self, filePath: str) -> str:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getWithoutExtension_j1_3(self, filePath: str) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if len(filePath) < AbPathUtilOld.MIN:
             raise Exception("Could not be a file path since its less that 4 characters")
         endIndex: int = len(filePath) - AbPathUtilOld.MIN
         pathWithoutExtension: str = filePath[0:endIndex]
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("FileWithoutExtension: " + pathWithoutExtension, self, "getWithoutExtension()")
         return pathWithoutExtension
+
+    def getWithoutExtension(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getWithoutExtension_j1_1(*args)
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getWithoutExtension_j1_2(*args)
+        if len(args) == 1:
+            return self.getWithoutExtension_j1_3(*args)
+        return getattr(self, "getWithoutExtension_j" + str(len(args)))(*args)
     
 
     def isValid(self, path: str) -> bool:
@@ -100,6 +132,7 @@ class AbPathUtilOld:
     
 
     def isValidEnd(self, path: str) -> bool:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if StringValidationUtil.getInstance().isEmpty(path):
             return False
         if path[len(path) - 1] == self.abPathData.SEPARATORCHAR:
@@ -121,6 +154,7 @@ class AbPathUtilOld:
     
 
     def adjust(self, path: str) -> str:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if StringValidationUtil.getInstance().isEmpty(path):
             return self.abPathData.SEPARATOR
         if path.find("\\") >= 0:
@@ -152,6 +186,8 @@ class AbPathUtilOld:
             return self._removeNameFromPath_unlocked(categoryPath)
 
     def _removeNameFromPath_unlocked(self, categoryPath: str) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         endIndex: int = categoryPath.rfind(self.abPathData.SEPARATOR)
         if endIndex < 0:
             endIndex = categoryPath.rfind(self.filePathData.SEPARATORCHAR)
@@ -162,14 +198,19 @@ class AbPathUtilOld:
         else:
             categoryName: str = categoryPath[0:endIndex]
             return AbPath(categoryName, StringUtil.getInstance().EMPTY_STRING)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.io.path.AbFilePath import AbFilePath
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-AbPathUtilOld.instance = AbPathUtilOld()
+def _AbPathUtilOld_instance() -> object:
+    return AbPathUtilOld()
+
+lazy_static(AbPathUtilOld, "instance", _AbPathUtilOld_instance)
 

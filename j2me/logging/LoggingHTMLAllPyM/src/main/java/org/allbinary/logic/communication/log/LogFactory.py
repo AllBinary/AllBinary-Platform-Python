@@ -22,14 +22,13 @@ class LogFactory:
 
     @staticmethod
     def getInstance(specialMessage: str, anyType: object, functionName: str, exception: object) -> Log:
-        from org.allbinary.logic.communication.log.Log import Log
         return Log(specialMessage, anyType, functionName, exception)
     
 
     @staticmethod
     def getInstanceF(specialMessage: str, anyType: object, functionName: str) -> Log:
-        from org.allbinary.logic.communication.log.Log import Log
+        from org.allbinary.logic.NullUtil import NullUtil
         return Log(specialMessage, anyType, functionName, NullUtil.getInstance().NULL_OBJECT)
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 
 

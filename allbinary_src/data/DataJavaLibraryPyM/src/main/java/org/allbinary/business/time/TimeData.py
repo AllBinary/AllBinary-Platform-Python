@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TimeData:
@@ -35,5 +36,8 @@ class TimeData:
         self._init_fields()
 
 
-TimeData.instance = TimeData()
+def _TimeData_instance() -> object:
+    return TimeData()
+
+lazy_static(TimeData, "instance", _TimeData_instance)
 

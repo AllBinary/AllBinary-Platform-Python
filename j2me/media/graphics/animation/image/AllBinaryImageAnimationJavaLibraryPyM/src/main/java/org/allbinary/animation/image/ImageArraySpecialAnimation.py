@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.special.SpecialAnimationInterface import SpecialAnimationInterface
 from org.allbinary.animation.image.ImageArrayAnimation import ImageArrayAnimation
 
 
-class ImageArraySpecialAnimation(ImageArrayAnimation, SpecialAnimationInterface):
+class ImageArraySpecialAnimation(*java_bases(ImageArrayAnimation, SpecialAnimationInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper

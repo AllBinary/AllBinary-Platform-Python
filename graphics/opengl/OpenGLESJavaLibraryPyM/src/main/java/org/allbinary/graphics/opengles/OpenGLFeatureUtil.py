@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLFeatureUtil:
@@ -30,8 +31,7 @@ class OpenGLFeatureUtil:
     
 
     def __init__(self) -> None:
-        from org.allbinary.graphics.opengles.OpenGLConfiguration import OpenGLConfiguration
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.game.configuration.feature.Features import Features
         self._init_fields()
         openGLConfiguration: OpenGLConfiguration = OpenGLConfiguration.getInstance()
         features: Features = Features.getInstance()
@@ -41,8 +41,11 @@ class OpenGLFeatureUtil:
 
     def isAnyThreed(self) -> bool:
         return self.anyThreed
-from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.Features import Features
 
 
-OpenGLFeatureUtil.instance = OpenGLFeatureUtil()
+def _OpenGLFeatureUtil_instance() -> object:
+    return OpenGLFeatureUtil()
+
+lazy_static(OpenGLFeatureUtil, "instance", _OpenGLFeatureUtil_instance)
 

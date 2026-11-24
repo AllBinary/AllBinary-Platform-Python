@@ -21,29 +21,40 @@ from tags.CommandTag import CommandTag
 class PropertiesTag(CommandTag):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.propertiesHashMap = StdUtil.getInstance().createHashMap()
     
 
-    def getPropertiesHashMap(self) -> dict:
+    def getPropertiesHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.propertiesHashMap
     
 
     def doEndTag(self) -> int:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF("Tag Ended", self, "doEndTag")
         self.propertiesHashMap = StdUtil.getInstance().createHashMap()
         return self.EVAL_PAGE
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -56,7 +56,6 @@ class OperatingSystemFactory:
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
 
 
 def _OperatingSystemFactory_instance() -> object:

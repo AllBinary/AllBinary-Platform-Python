@@ -66,7 +66,9 @@ class TableSearchRequest:
 
     # throws Exception
     def getXslFile(self) -> str:
-        path: str = str(self.URLGLOBALS.getMainPath() + self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH) + self.xslFile
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        path: str = str(URLGLOBALS.getMainPath() + FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH) + self.xslFile
         return path
     
 
@@ -80,12 +82,14 @@ class TableSearchRequest:
 
     # throws Exception
     def getFileBaseNameNode(self, document: Document) -> Node:
-        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return ModDomHelper.createNameValueNodes(document, SearchData.FILENAME, self.getFileBaseName())
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

@@ -15,14 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
 #SwtToJ2ME
-class FullScreenPaintable(Paintable, UpdateMyFontInterface):
+class FullScreenPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.FULLSCREEN_TEXT: str = "F11 - Toggle Fullscreen"
@@ -42,6 +47,9 @@ class FullScreenPaintable(Paintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.Y = 4 * font.getHeight()
         self.beginWidth = (font.stringWidth(self.FULLSCREEN_TEXT) >> 1)
@@ -49,15 +57,16 @@ class FullScreenPaintable(Paintable, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         halfWidth: int = self.displayInfo.getLastHalfWidth()
         height: int = self.displayInfo.getLastHeight()
         graphics.drawString(self.FULLSCREEN_TEXT, halfWidth - self.beginWidth, height - self.Y, self.anchor)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
 
 

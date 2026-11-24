@@ -22,17 +22,19 @@ class IncludeFileExtensionsBooleanFileVisitor(BooleanFileVisitor):
     
 
     def __init__(self, filterStringBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
     
 
-    def visit(self, file: AbFile) -> bool:
+    def visit_j1(self, file: AbFile) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         if self.getFilterStringBasicArrayList().size() == 0:
             return False
         return super().visit(file)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def visit(self, file: AbFile, fileNameString: str) -> bool:
+    def visit_j2(self, file: AbFile, fileNameString: str) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         fileNameAndExtension: str = file.getPath()
         if len(fileNameAndExtension) > len(fileNameString):
             startIndex: int = len(fileNameAndExtension) - len(fileNameString)
@@ -40,7 +42,10 @@ class IncludeFileExtensionsBooleanFileVisitor(BooleanFileVisitor):
             if ((fileName > fileNameString) - (fileName < fileNameString)) == 0:
                 return True
         return False
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.util.BasicArrayList import BasicArrayList
+
+    def visit(self, *args):
+        return getattr(self, "visit_j" + str(len(args)))(*args)
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

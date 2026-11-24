@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryInterface import PickedUpLayerInterfaceFactoryInterface
 
 
 # Java interface
-class CountedPickedUpLayerInterfaceFactoryInterface(PickedUpLayerInterfaceFactoryInterface, LayerInterfaceFactoryInterface):
+class CountedPickedUpLayerInterfaceFactoryInterface(*java_bases(PickedUpLayerInterfaceFactoryInterface, LayerInterfaceFactoryInterface)):
     
 
     def getId(self) -> int:

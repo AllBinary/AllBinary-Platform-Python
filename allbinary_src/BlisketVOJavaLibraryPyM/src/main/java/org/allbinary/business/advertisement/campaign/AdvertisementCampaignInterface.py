@@ -38,8 +38,10 @@ class AdvertisementCampaignInterface:
     
 
     def search(self, advertisementSearchInterface: AdvertisementSearchInterface) -> AdvertisementsInterface:
+        from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
+        from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
         raise NotImplementedError()
-from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
-from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
+# from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
+# from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
 
 

@@ -55,6 +55,5 @@ class TouchButtonsPaintable(Paintable):
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
 # from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.input.motion.button.TouchButtonFactory import TouchButtonFactory
 
 

@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.gui.dialog.JDialog import JDialog
+# from javax.swing.JDialog import JDialog
 
 
 class BasicTextJDialog(JDialog):
@@ -55,13 +55,9 @@ class BasicTextJDialog(JDialog):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.gui.dialog.JButton import JButton
-        from org.allbinary.gui.dialog.JLabel import JLabel
-        from org.allbinary.gui.dialog.ActionListener import ActionListener
-        from org.allbinary.gui.dialog.GroupLayout import GroupLayout
         self.jButton1 = JButton()
         self.textJLabel = JLabel()
-        self.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE)
+        self.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
         self.jButton1.setText("OK")
         self.jButton1.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -72,8 +68,8 @@ class BasicTextJDialog(JDialog):
         self.textJLabel.setText("No Text Set")
         layout: GroupLayout = GroupLayout(self.getContentPane())
         self.getContentPane().setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(80, 80, 80).addComponent(self.jButton1)).addGroup(layout.createSequentialGroup().addContainerGap().addComponent(self.textJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))).addContainerGap()))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(20, 20, 20).addComponent(self.textJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(30, 30, 30).addComponent(self.jButton1)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(80, 80, 80).addComponent(self.jButton1)).addGroup(layout.createSequentialGroup().addContainerGap().addComponent(self.textJLabel, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))).addContainerGap()))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(20, 20, 20).addComponent(self.textJLabel, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE).addGap(30, 30, 30).addComponent(self.jButton1)))
         self.pack()
     
 
@@ -85,14 +81,22 @@ class BasicTextJDialog(JDialog):
 
     @staticmethod
     def main(args: list[str]) -> None:
-        from org.allbinary.gui.dialog.JFrame import JFrame
-        java.awt.EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
+        from org.allbinary.thread.ARunnable import ARunnable
+        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
-#                 from org.allbinary.gui.dialog.JFrame import JFrame
 #                 BasicTextJDialog(JFrame(), True, "Test").setVisible(True)
 ))
-from org.allbinary.thread.ARunnable import ARunnable
+# from org.allbinary.thread.ARunnable import ARunnable
+# from java.awt.EventQueue import EventQueue
+# from java.awt.Frame import Frame
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JFrame import JFrame
+# from javax.swing.JLabel import JLabel
+# from javax.swing.WindowConstants import WindowConstants
 
 

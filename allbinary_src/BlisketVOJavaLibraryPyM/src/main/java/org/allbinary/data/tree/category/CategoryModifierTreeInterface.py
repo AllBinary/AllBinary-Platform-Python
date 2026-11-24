@@ -22,11 +22,13 @@ class CategoryModifierTreeInterface:
     
 
     def insert(self, parentCategoryInterface: CategoryInterface, newChildCategoryInterface: CategoryInterface) -> None:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
     
 
     def delete(self, parentCategoryInterface: CategoryInterface, newChildCategoryInterface: CategoryInterface) -> None:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
 
 

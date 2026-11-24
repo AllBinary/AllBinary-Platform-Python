@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.image.ModifierBaseProcessor import ModifierBaseProcessor
 
 
@@ -31,10 +32,15 @@ class AlphaProcessor(ModifierBaseProcessor):
     
 
     def updateAlpha(self, imageModifierUtil: ImageModifierUtil, originalImage: Image, imageToShow: Image, index: int, alpha: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         imageModifierUtil.setAlpha(originalImage, imageToShow, index, alpha)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
 
 
-AlphaProcessor.instanceC = AlphaProcessor()
+def _AlphaProcessor_instanceC() -> object:
+    return AlphaProcessor()
+
+lazy_static(AlphaProcessor, "instanceC", _AlphaProcessor_instanceC)
 

@@ -23,7 +23,8 @@ class InputAutomationRobotServiceInterface(OSGIServiceInterface):
     
 
     def getInputRobotInterfaceArray(self) -> list[InputRobotInterface]:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         raise NotImplementedError()
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 

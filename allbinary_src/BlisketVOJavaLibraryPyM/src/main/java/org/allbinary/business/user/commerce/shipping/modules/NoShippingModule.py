@@ -21,6 +21,7 @@ from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface imp
 class NoShippingModule(ShippingInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.name: str = "No Shipping"
         self.description: str = "This shipping method is for items that are not shipped."
@@ -31,6 +32,8 @@ class NoShippingModule(ShippingInterface):
     
 
     def getCost(self, order: OrderInterface) -> Money:
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
         return Money()
     
 
@@ -40,8 +43,8 @@ class NoShippingModule(ShippingInterface):
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

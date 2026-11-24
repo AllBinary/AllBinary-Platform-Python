@@ -16,25 +16,14 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
-from org.allbinary.animation.NullIndexedAnimation import NullIndexedAnimation
 
 
-class NullIndexedAnimationFactory(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface):
+class NullIndexedAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface)):
     NULL_INDEXED_ANIMATION_ARRAY: list[IndexedAnimation] = [None] * (0)
     NULL_INDEXED_ANIMATION_FACTORY: NullIndexedAnimationFactory = None
-    class NullIndexedAnimationInner(NullIndexedAnimation):
-        
-
-        def __init__(self) -> None:
-            from org.allbinary.animation.IndexedAnimationBehavior import IndexedAnimationBehavior
-            super().__init__(IndexedAnimationBehavior(1, 250))
-        
-
-        def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
-            from javax.microedition.lcdui.Graphics import Graphics
-            pass
 
     def _init_fields(self) -> None:
         self.NULL_ANIMATION: Animation = NullIndexedAnimationInner()
@@ -62,8 +51,8 @@ class NullIndexedAnimationFactory(AnimationInterfaceFactoryInterface, Procedural
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
         from org.allbinary.media.ScaleProperties import ScaleProperties
         pass
-# from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.media.ScaleProperties import ScaleProperties
+from org.allbinary.animation.NullIndexedAnimationInner import NullIndexedAnimationInner
 
 
 def _NullIndexedAnimationFactory_NULL_INDEXED_ANIMATION_FACTORY() -> object:

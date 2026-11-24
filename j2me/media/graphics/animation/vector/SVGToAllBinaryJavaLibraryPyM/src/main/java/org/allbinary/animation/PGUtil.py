@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PGUtil:
@@ -33,5 +34,8 @@ class PGUtil:
                 count[0] += 1
 
 
-PGUtil.instance = PGUtil()
+def _PGUtil_instance() -> object:
+    return PGUtil()
+
+lazy_static(PGUtil, "instance", _PGUtil_instance)
 

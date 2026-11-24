@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static_block
 
 
 class ColorCacheFactory:
@@ -23,6 +24,11 @@ class ColorCacheFactory:
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.util.cache.AutomaticCacheInterfaceFactory import AutomaticCacheInterfaceFactory
+        from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+        from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         STATIC_BLOCK: str = "Static Block"
@@ -40,15 +46,16 @@ class ColorCacheFactory:
 
     @staticmethod
     def getInstance() -> AutomaticCacheInterface:
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
         return ColorCacheFactory.cacheInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.logic.util.cache.AutomaticCacheInterfaceFactory import AutomaticCacheInterfaceFactory
-from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
-from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.logic.util.cache.AutomaticCacheInterfaceFactory import AutomaticCacheInterfaceFactory
+# from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+# from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.graphics.color.ColorCacheableFactory import ColorCacheableFactory
 
 
-ColorCacheFactory._static_init()
+lazy_static_block(ColorCacheFactory, ("cacheInterface", ), ColorCacheFactory._static_init)
 

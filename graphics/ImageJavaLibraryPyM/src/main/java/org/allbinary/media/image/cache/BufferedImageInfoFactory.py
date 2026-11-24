@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BufferedImageInfoFactory:
-    hashMap: dict = StdUtil.getInstance().createHashMap()
+    hashMap: HashMap = None
     
 
     def __init__(self) -> None:
@@ -29,6 +29,7 @@ class BufferedImageInfoFactory:
     @staticmethod
     def getInstance(width: int, height: int, type_: int) -> BufferedImageInfo:
         from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringbuffer: StringMaker = StringMaker()
         stringbuffer.appendint(width)
         stringbuffer.appendint(height)
@@ -40,6 +41,14 @@ class BufferedImageInfoFactory:
             BufferedImageInfoFactory.hashMap.put(key, bufferedImageInfo)
         return bufferedImageInfo
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
+
+def _BufferedImageInfoFactory_hashMap() -> object:
+    from java.util.HashMap import HashMap
+    from org.allbinary.logic.StdUtil import StdUtil
+    return StdUtil.getInstance().createHashMap()
+
+lazy_static(BufferedImageInfoFactory, "hashMap", _BufferedImageInfoFactory_hashMap)
 

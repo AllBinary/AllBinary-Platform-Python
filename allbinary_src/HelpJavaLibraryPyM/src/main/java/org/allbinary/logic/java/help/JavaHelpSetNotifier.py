@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class JavaHelpSetNotifier:
-    vector: BasicArrayList = BasicArrayListD()
+    vector: BasicArrayList = None
     
 
     def __init__(self) -> None:
@@ -28,11 +28,13 @@ class JavaHelpSetNotifier:
 
     @staticmethod
     def get() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return JavaHelpSetNotifier.vector
     
 
     @staticmethod
     def isNotified(helpSet: HelpSet) -> bool:
+        from java.net.URL import URL
         isNotified: bool = False
         url: URL = helpSet.getHelpSetURL()
         size: int = JavaHelpSetNotifier.vector.size()
@@ -44,7 +46,15 @@ class JavaHelpSetNotifier:
         JavaHelpSetNotifier.vector.add(url)
         return isNotified
 # from java.net.URL import URL
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.help.HelpSet import HelpSet
 
+
+def _JavaHelpSetNotifier_vector() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(JavaHelpSetNotifier, "vector", _JavaHelpSetNotifier_vector)
 

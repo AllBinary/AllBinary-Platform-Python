@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.layer.Layer import Layer
 from org.allbinary.layer.LayerInterface import LayerInterface
 
 
-class AllBinaryLayer(Layer, LayerInterface):
+class AllBinaryLayer(*java_bases(Layer, LayerInterface)):
     NULL_ALLBINARY_LAYER: AllBinaryLayer = None
     TYPE: str = "Type: "
 

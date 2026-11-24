@@ -21,6 +21,10 @@ from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterf
 class AndroidHardware(HardwareInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.componentInterfaceVector: BasicArrayList = BasicArrayListD()
@@ -39,6 +43,8 @@ class AndroidHardware(HardwareInterface):
 
     # throws Exception
     def init(self, filePath: str) -> None:
+        from java.io.Closeable import Closeable
+        from org.allbinary.logic.io.NullCloseable import NullCloseable
         lineNumberReader: Closeable = NullCloseable.NULL_CLOSEABLE
         try:
             lineNumberReader = self.get(filePath)
@@ -52,6 +58,8 @@ class AndroidHardware(HardwareInterface):
 
     # throws Exception
     def get(self, filePath: str) -> LineNumberReader:
+        from org.allbinary.logic.system.hardware.components.android.UnknownHardware import UnknownHardware
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.componentInterfaceVector = BasicArrayListD()
         pciFile: FileReader = FileReader(filePath)
         lineNumberReader: LineNumberReader = LineNumberReader(pciFile)
@@ -64,10 +72,14 @@ class AndroidHardware(HardwareInterface):
     
 
     def getComponent(self, index: int) -> HardwareComponentInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
         return self.componentInterfaceVector.get(index)
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuilder: StringMaker = StringMaker()
         size: int = self.componentInterfaceVector.size()
         for index in range(0, size):
@@ -85,20 +97,22 @@ class AndroidHardware(HardwareInterface):
     
 
     def difference(self, hardwareInterface: HardwareInterface) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
 # from java.io.Closeable import Closeable
 # from java.io.FileReader import FileReader
 # from java.io.LineNumberReader import LineNumberReader
-from org.allbinary.logic.io.NullCloseable import NullCloseable
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.hardware.components.android.UnknownHardware import UnknownHardware
-from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.io.NullCloseable import NullCloseable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.hardware.components.android.UnknownHardware import UnknownHardware
+# from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

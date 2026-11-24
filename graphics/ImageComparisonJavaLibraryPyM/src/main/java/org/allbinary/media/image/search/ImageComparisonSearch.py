@@ -20,6 +20,9 @@ from __future__ import annotations
 class ImageComparisonSearch:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.isSameHeight: bool = False
@@ -35,6 +38,8 @@ class ImageComparisonSearch:
     
 
     def __init__(self, bufferedImage: BufferedImage, bufferedImage2: BufferedImage, tolerance: int) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         self._init_fields()
         self.nonMatchingPixelVector = BasicArrayListD()
         self.setBufferedImages([None] * (2))
@@ -68,10 +73,12 @@ class ImageComparisonSearch:
     
 
     def add(self, pixel: PixelDelta) -> None:
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         self.nonMatchingPixelVector.add(pixel)
     
 
     def getNonMatchingPixelVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.nonMatchingPixelVector
     
 
@@ -97,12 +104,12 @@ class ImageComparisonSearch:
     def setTolerance(self, tolerance: int) -> None:
         self.tolerance = tolerance
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.ImageUtil import ImageUtil
-from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

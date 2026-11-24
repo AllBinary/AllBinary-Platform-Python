@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -22,6 +23,8 @@ class GeographicMapEventHandler(BasicEventHandler):
     instance: GeographicMapEventHandler = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -36,6 +39,7 @@ class GeographicMapEventHandler(BasicEventHandler):
     
 
     def addListener(self, gameLayer: AllBinaryGameLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         if not self.list_.contains(gameLayer):
             self.list_.add(gameLayer)
     
@@ -46,11 +50,14 @@ class GeographicMapEventHandler(BasicEventHandler):
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     def fireEvent(self) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -58,12 +65,15 @@ class GeographicMapEventHandler(BasicEventHandler):
                 gameLayer.move()
             except Exception as e:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, EventStrings.getInstance().FIRE_EVENT, e)
-from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-GeographicMapEventHandler.instance = GeographicMapEventHandler()
+def _GeographicMapEventHandler_instance() -> object:
+    return GeographicMapEventHandler()
+
+lazy_static(GeographicMapEventHandler, "instance", _GeographicMapEventHandler_instance)
 

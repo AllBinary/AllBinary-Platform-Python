@@ -14,8 +14,10 @@ class CryptFileWriter:
 
     # throws Exception
     def write(self, fileAbPath: AbPath, document: Document) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.w3c.dom.Document import Document
         pass
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.w3c.dom.Document import Document
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.w3c.dom.Document import Document
 
 

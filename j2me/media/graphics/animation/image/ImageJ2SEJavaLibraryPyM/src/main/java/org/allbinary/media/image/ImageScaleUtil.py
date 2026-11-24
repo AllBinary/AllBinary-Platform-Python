@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageScaleUtil:
@@ -37,11 +38,15 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage2(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return self.createImage3(imageCache, originalImage, scaleNominatorX, scaleDenominatorX, scaleNominatorY, scaleDenominatorY, cached, True)
     
 
     # throws Exception
     def createImage3(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         width: int = originalImage.getWidth()
         height: int = originalImage.getHeight()
         scaleX: float = scaleNominatorX / scaleDenominatorX
@@ -57,12 +62,14 @@ class ImageScaleUtil:
 
     # throws Exception
     def scale2(self, originalImage: Image, originalImageArray: list[Image], ximageToShowArray: list[Image], unused: int, scaleX: float, scaleY: float, maxScaleX: float, maxScaleY: float) -> None:
+        from javax.microedition.lcdui.Image import Image
         if maxScaleX * originalImage.getWidth() > originalImageArray[0].getWidth() or maxScaleY * originalImage.getHeight() > originalImageArray[0].getHeight():
             originalImageArray[0] = self.imageCreationUtil.createImage(originalImage.getWidth(), originalImage.getHeight(), maxScaleX, maxScaleY)
         self.scale(originalImage, originalImageArray[0], scaleX, scaleY, False)
     
 
     def scale(self, originalImage: Image, newMaxSizeImage: Image, scaleX: float, scaleY: float, clear: bool) -> None:
+        from javax.microedition.lcdui.Image import Image
         bufferedImage: BufferedImage = self.imageUtil.getBufferedImage(originalImage)
         newBufferedImage: BufferedImage = self.imageUtil.getBufferedImage(newMaxSizeImage)
         at: AffineTransform = AffineTransform.getScaleInstance(scaleX, scaleY)
@@ -76,11 +83,14 @@ class ImageScaleUtil:
 # from java.awt.geom.AffineTransform import AffineTransform
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.image.ImageCache import ImageCache
 from org.allbinary.media.image.ImageUtil import ImageUtil
 from org.allbinary.media.image.ImageJ2SEUtil import ImageJ2SEUtil
 from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
 
 
-ImageScaleUtil.instance = ImageScaleUtil()
+def _ImageScaleUtil_instance() -> object:
+    return ImageScaleUtil()
+
+lazy_static(ImageScaleUtil, "instance", _ImageScaleUtil_instance)
 

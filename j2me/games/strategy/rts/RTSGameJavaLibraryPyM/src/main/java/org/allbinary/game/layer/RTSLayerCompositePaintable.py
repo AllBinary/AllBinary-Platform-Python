@@ -21,6 +21,7 @@ from org.allbinary.graphics.paint.Paintable import Paintable
 class RTSLayerCompositePaintable(Paintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.upgradeCost: str = StringUtil.getInstance().EMPTY_STRING
         self.downGradeCost: str = StringUtil.getInstance().EMPTY_STRING
         self.UPGRADE: str = "Up: $"
@@ -35,6 +36,8 @@ class RTSLayerCompositePaintable(Paintable):
     
 
     def update(self, rtsLayer: RTSLayer) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if rtsLayer.isUpgradeable():
             self.setUpgradeCost(str(StringMaker().append(self.UPGRADE).appendint(int(rtsLayer.getUpgradeCost()))))
         else:
@@ -46,6 +49,7 @@ class RTSLayerCompositePaintable(Paintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawString(self.getDownGradeCost(), self.upgradableRTSLayerHudPaintable.textX, self.upgradableRTSLayerHudPaintable.costY1, 0)
         graphics.drawString(self.getUpgradeCost(), self.upgradableRTSLayerHudPaintable.textX, self.upgradableRTSLayerHudPaintable.costY, 0)
     
@@ -65,7 +69,7 @@ class RTSLayerCompositePaintable(Paintable):
     def getDownGradeCost(self) -> str:
         return self.downGradeCost
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

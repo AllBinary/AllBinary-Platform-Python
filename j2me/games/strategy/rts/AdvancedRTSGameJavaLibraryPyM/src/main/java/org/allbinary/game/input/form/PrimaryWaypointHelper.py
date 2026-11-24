@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PrimaryWaypointHelper:
     instance: PrimaryWaypointHelper = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.waypointLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
     
 
@@ -34,15 +37,20 @@ class PrimaryWaypointHelper:
     
 
     def getWaypointLayer(self) -> PathFindingLayerInterface:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         return self.waypointLayer
     
 
     def setWaypointLayer(self, waypointLayer: WaypointLayer) -> None:
+        from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
         self.waypointLayer = waypointLayer
-from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
+# from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
 
 
-PrimaryWaypointHelper.instance = PrimaryWaypointHelper()
+def _PrimaryWaypointHelper_instance() -> object:
+    return PrimaryWaypointHelper()
+
+lazy_static(PrimaryWaypointHelper, "instance", _PrimaryWaypointHelper_instance)
 

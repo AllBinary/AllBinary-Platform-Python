@@ -21,6 +21,8 @@ from org.allbinary.logic.util.visitor.Visitor import Visitor
 class SteeringVisitor(Visitor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -29,8 +31,9 @@ class SteeringVisitor(Visitor):
     
 
     def getList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.list_
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

@@ -22,11 +22,13 @@ class ActivityFractureUtil:
 
     # throws Exception
     def process(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
         pass
     
 
     def setFullScreen(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
         pass
-from android.app.Activity import Activity
+# from android.app.Activity import Activity
 
 

@@ -22,10 +22,12 @@ class XmlOptionItemsTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.XmlOptionItemsHelperFactory import XmlOptionItemsHelperFactory
+        from admin.taghelpers.XmlOptionItemsRequestHelperFactory import XmlOptionItemsRequestHelperFactory
         super().__init__()
         self.setTagHelperFactory(XmlOptionItemsHelperFactory())
         self.setTagRequestHelperFactory(XmlOptionItemsRequestHelperFactory())
-from admin.taghelpers.XmlOptionItemsHelperFactory import XmlOptionItemsHelperFactory
-from admin.taghelpers.XmlOptionItemsRequestHelperFactory import XmlOptionItemsRequestHelperFactory
+# from admin.taghelpers.XmlOptionItemsHelperFactory import XmlOptionItemsHelperFactory
+# from admin.taghelpers.XmlOptionItemsRequestHelperFactory import XmlOptionItemsRequestHelperFactory
 
 

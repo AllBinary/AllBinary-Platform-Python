@@ -16,12 +16,12 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigTypes:
     JSP_ERROR_NO_FUNCTION: str = "in JSP Not In Function"
-    LOGGING: BasicArrayList = BasicArrayListD()
+    LOGGING: BasicArrayList = None
     _lock = threading.RLock()
     
 
@@ -41,8 +41,9 @@ class LogConfigTypes:
 
     @staticmethod
     def _init_unlocked() -> None:
-        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.LoggingInitInfo import LoggingInitInfo
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             PreLogUtil.put("Initialize LogconfigTypes", "LogConfigTypes", "init()")
             LogConfigTypeFactory.getInstance()
@@ -59,9 +60,10 @@ class LogConfigTypes:
     # throws Exception
     @staticmethod
     def getInstance(node: Node) -> LogConfigType:
-        from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
-        from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
-        from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Node import Node
         nameValueNode: Node = DomSearchHelper.getNode(LogConfigTypeData.getInstance().NAME, node.getChildNodes())
         name: str = DomNodeHelper.getTextNodeValue(nameValueNode)
         descriptionValueNode: Node = DomSearchHelper.getNodeNoThrow(LogConfigTypeData.getInstance().DESCRIPTION, node.getChildNodes())
@@ -75,13 +77,21 @@ class LogConfigTypes:
             if logConfigType.getName().compareTo(name) == 0:
                 return logConfigType
         raise Exception("No Such LogConfigType: " + name)
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.communication.log.config.LoggingInitInfo import LoggingInitInfo
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.config.LoggingInitInfo import LoggingInitInfo
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Node import Node
 
+
+def _LogConfigTypes_LOGGING() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(LogConfigTypes, "LOGGING", _LogConfigTypes_LOGGING)
 
 LogConfigTypes._static_init()
 

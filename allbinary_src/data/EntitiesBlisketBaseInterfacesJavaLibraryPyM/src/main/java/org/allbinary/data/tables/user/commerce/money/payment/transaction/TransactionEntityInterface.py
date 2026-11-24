@@ -27,7 +27,8 @@ class TransactionEntityInterface(BasicDataTableInterface):
     
 
     def add(self, userName: str, orderNumber: str, paymentTransactionInterface: PaymentTransactionInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
 
 

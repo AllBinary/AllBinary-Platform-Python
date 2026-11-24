@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GenericConfigData:
@@ -30,9 +31,18 @@ class GenericConfigData:
         pass
 
 
-GenericConfigData.MODULE_RELATIVE_PATH = str(GenericConfigData.RELATIVE_PATH + GenericConfigData.CONFIG_PATH) + "allbinary/input/automation/module/"
+def _GenericConfigData_MODULE_RELATIVE_PATH() -> object:
+    return str(GenericConfigData.RELATIVE_PATH + GenericConfigData.CONFIG_PATH) + "allbinary/input/automation/module/"
 
-GenericConfigData.GAME_MODULE_RELATIVE_PATH = str(GenericConfigData.MODULE_RELATIVE_PATH) + "game/"
+lazy_static(GenericConfigData, "MODULE_RELATIVE_PATH", _GenericConfigData_MODULE_RELATIVE_PATH)
 
-GenericConfigData.MMO_GAME_MODULE_RELATIVE_PATH = str(GenericConfigData.GAME_MODULE_RELATIVE_PATH) + "mmog/"
+def _GenericConfigData_GAME_MODULE_RELATIVE_PATH() -> object:
+    return str(GenericConfigData.MODULE_RELATIVE_PATH) + "game/"
+
+lazy_static(GenericConfigData, "GAME_MODULE_RELATIVE_PATH", _GenericConfigData_GAME_MODULE_RELATIVE_PATH)
+
+def _GenericConfigData_MMO_GAME_MODULE_RELATIVE_PATH() -> object:
+    return str(GenericConfigData.GAME_MODULE_RELATIVE_PATH) + "mmog/"
+
+lazy_static(GenericConfigData, "MMO_GAME_MODULE_RELATIVE_PATH", _GenericConfigData_MMO_GAME_MODULE_RELATIVE_PATH)
 

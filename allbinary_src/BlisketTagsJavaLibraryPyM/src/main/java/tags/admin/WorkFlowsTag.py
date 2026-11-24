@@ -27,18 +27,20 @@ class WorkFlowsTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.getCommand() is not None:
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.NEW) == 0:
+                if self.getCommand().compareTo(GLOBALS2.NEW) == 0:
                     self.setName("New WorkFlow View")
                     self.setObjectFile("views.admin.workflow.NewView")
                 elif self.getCommand().compareTo(self.commonStrings.INSERT) == 0:
                     self.setName("Add Validation WorkFlow View")
                     self.setObjectFile("views.admin.workflow.AddValidationView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     self.setName("Validation WorkFlow View")
                     self.setObjectFile("views.admin.workflow.WorkflowsValidationView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.EDIT) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.EDIT) == 0:
                     self.setName("Validation WorkFlow View")
                     self.setObjectFile("views.admin.workflow.EditValidationView")
                 elif self.getCommand().compareTo(self.commonStrings.UPDATE) == 0:
@@ -47,9 +49,9 @@ class WorkFlowsTag(StoreValidationTransformTag):
                 elif self.getCommand().compareTo(self.commonStrings.DELETE) == 0:
                     self.setName("Delete Validation WorkFlow View")
                     self.setObjectFile("views.admin.workflow.DeleteValidationView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.BACKUP) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.BACKUP) == 0:
                     raise Exception("View not implemented")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.RESTORE) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.RESTORE) == 0:
                     raise Exception("View not implemented")
                 elif self.getCommand().compareTo(self.commonStrings.DROP) == 0:
                     raise Exception("View not implemented")
@@ -63,6 +65,7 @@ class WorkFlowsTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

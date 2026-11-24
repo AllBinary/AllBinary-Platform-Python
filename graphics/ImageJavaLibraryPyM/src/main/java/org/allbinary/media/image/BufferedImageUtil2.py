@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BufferedImageUtil2:
@@ -41,10 +42,12 @@ class BufferedImageUtil2:
             columnIndex += 1
         g.dispose()
         return bufferedImage
-# from java.awt import *
+# from java.awt.Graphics2D import Graphics2D
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
-BufferedImageUtil2.instance = BufferedImageUtil2()
+def _BufferedImageUtil2_instance() -> object:
+    return BufferedImageUtil2()
+
+lazy_static(BufferedImageUtil2, "instance", _BufferedImageUtil2_instance)
 

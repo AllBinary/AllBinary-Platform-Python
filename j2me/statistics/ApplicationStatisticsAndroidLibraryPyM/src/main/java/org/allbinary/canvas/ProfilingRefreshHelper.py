@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.AndroidGameStatistics import AndroidGameStatistics
 
 
@@ -40,6 +41,7 @@ class ProfilingRefreshHelper(AndroidGameStatistics):
     
 
     def initView(self, view: View) -> None:
+        from android.view.View import View
         super().initView(view)
         self.frameProcessingTimeElapsed = self.getTimeDelayHelper().getStartTime()
         self.bestFrameProcessingTime = 2147483647
@@ -59,13 +61,17 @@ class ProfilingRefreshHelper(AndroidGameStatistics):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append(str(super())).append(" Worst: ").appendint(self.worstFrameProcessingTime).append(" Best: ").appendint(self.bestFrameProcessingTime))
 
     def __str__(self) -> str:
         return self.toString()
-from android.view.View import View
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from android.view.View import View
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-ProfilingRefreshHelper.instance = ProfilingRefreshHelper()
+def _ProfilingRefreshHelper_instance() -> object:
+    return ProfilingRefreshHelper()
+
+lazy_static(ProfilingRefreshHelper, "instance", _ProfilingRefreshHelper_instance)
 

@@ -25,6 +25,9 @@ class BasicPlatormGeographicMapCellType:
 
     @staticmethod
     def createType(type_: int) -> BasicPlatormGeographicMapCellType:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         types: BasicArrayList = BasicArrayListS(1)
         types.add(SmallIntegerSingletonFactory.getInstance().getAt(type_))
         basicPlatormGeographicMapCellType: BasicPlatormGeographicMapCellType = BasicPlatormGeographicMapCellType(types)
@@ -32,6 +35,8 @@ class BasicPlatormGeographicMapCellType:
     
 
     def __init__(self, types: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         size: int = types.size()
         typeArray: list[int] = [0] * (size)
@@ -46,6 +51,7 @@ class BasicPlatormGeographicMapCellType:
     
 
     def isType(self, type_: GeographicMapCellType) -> bool:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         return self.hasType(type_.getType())
     
 
@@ -55,9 +61,9 @@ class BasicPlatormGeographicMapCellType:
             if self.types[index] == type_:
                 return True
         return False
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 

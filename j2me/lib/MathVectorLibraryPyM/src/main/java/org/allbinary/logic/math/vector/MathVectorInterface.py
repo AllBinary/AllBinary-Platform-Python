@@ -26,11 +26,13 @@ class MathVectorInterface:
     
 
     def getMagnitude(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
     def getResult(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

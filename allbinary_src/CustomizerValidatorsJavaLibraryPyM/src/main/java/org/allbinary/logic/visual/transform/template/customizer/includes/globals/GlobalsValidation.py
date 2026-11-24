@@ -15,76 +15,98 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
-class GlobalsValidation(Validation, DomNodeInterface):
+class GlobalsValidation(*java_bases(Validation, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.storeFrontInterface: StoreFrontInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, storeName: str) -> None:
+    def _constructor1_1(self, storeName: str) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
         super().__init__()
         self._init_fields()
         self.storeFrontInterface = StoreFrontFactory.getInstance(storeName)
     
 
-    def _constructor1(self, document: Document) -> None:
+    def _constructor1_2(self, document: Document) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.w3c.dom.Document import Document
         super().__init__()
         self._init_fields()
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
             return valid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.transform.template.customizer.includes.globals.GlobalsData import GlobalsData
+        from org.allbinary.business.context.modules.storefront.StoreFrontView import StoreFrontView
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(GlobalsData.NAME)
         node.appendChild(StoreFrontView(self.storeFrontInterface).toXmlNode(document))
         return node
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.context.modules.storefront.StoreFrontView import StoreFrontView
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.context.modules.storefront.StoreFrontView import StoreFrontView
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

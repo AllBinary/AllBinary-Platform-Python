@@ -31,6 +31,14 @@ class SelectAdvancedRTSLayerVisitor(Visitor):
     
 
     def visit(self, anyType: object) -> object:
+        from org.allbinary.game.input.form.AssignWaypointsUtil import AssignWaypointsUtil
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.building.BuildingLayer import BuildingLayer
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         selectedLayer: CollidableDestroyableDamageableLayer = anyType
         if selectedLayer != CollidableDestroyableDamageableLayer.getNullInstance() and selectedLayer.getType() == BuildingLayer.getStaticType():
             rtsGameLayer: AdvancedRTSGameLayer = selectedLayer
@@ -45,13 +53,13 @@ class SelectAdvancedRTSLayerVisitor(Visitor):
                     unitLayer.setParentLayer(rtsGameLayer)
                     assignWaypointsUtil.set(unitLayer, rtsGameLayer)
         return NullUtil.getInstance().NULL_OBJECT
-from org.allbinary.game.input.form.AssignWaypointsUtil import AssignWaypointsUtil
-from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.building.BuildingLayer import BuildingLayer
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.input.form.AssignWaypointsUtil import AssignWaypointsUtil
+# from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.building.BuildingLayer import BuildingLayer
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

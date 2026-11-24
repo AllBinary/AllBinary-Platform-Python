@@ -27,11 +27,13 @@ class AdminConfigurationInterface:
     
 
     def getContextConfigurationInterface(self) -> ContextConfigurationInterface:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         raise NotImplementedError()
     
 
     def setContextConfigurationInterface(self, contextConfigurationInterface: ContextConfigurationInterface) -> None:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         raise NotImplementedError()
-from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
+# from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
 
 

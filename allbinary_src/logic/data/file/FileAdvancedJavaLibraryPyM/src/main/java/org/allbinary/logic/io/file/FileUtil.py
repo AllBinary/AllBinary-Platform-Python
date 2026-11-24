@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import os
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #data/init/views/TestStore/template/type/genericTemplateObjectConfig.xml
@@ -25,6 +26,11 @@ class FileUtil:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.directory: Directory = Directory.getInstance()
         self.logConfigTypeFactory: LogConfigTypeFactory = LogConfigTypeFactory.getInstance()
@@ -45,14 +51,21 @@ class FileUtil:
     
 
     # throws Exception
-    def write(self, inputStream: InputStream, file: AbFile) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j2_1(self, inputStream: InputStream, file: AbFile) -> None:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
         dataOutputStream: AbDataOutputStream = DataOutputStreamFactory.getInstance().getInstanceForAbFile(file)
         self.write(inputStream, dataOutputStream)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def write(self, inputStream: InputStream, dataOutputStream: AbDataOutputStream) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j2_2(self, inputStream: InputStream, dataOutputStream: AbDataOutputStream) -> None:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
         try:
             dataOutputStream = StreamUtil.getInstance().get(inputStream, dataOutputStream, [0] * (16384))
             dataOutputStream.flush()
@@ -61,8 +74,10 @@ class FileUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def write(self, inputStream: InputStream, dataOutputStream: AbDataOutputStream, buffer: list[int]) -> None:
+    def write_j3(self, inputStream: InputStream, dataOutputStream: AbDataOutputStream, buffer: list[int]) -> None:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
         try:
             dataOutputStream = StreamUtil.getInstance().get(inputStream, dataOutputStream, buffer)
             dataOutputStream.flush()
@@ -71,7 +86,11 @@ class FileUtil:
     
 
     # throws Exception
-    def copy(self, dataInputStream: AbFileInputStream, dataOutputStream: AbDataOutputStream) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def copy_j2_1(self, dataInputStream: AbFileInputStream, dataOutputStream: AbDataOutputStream) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
         try:
             dataOutputStream = StreamUtil.getInstance().get(dataInputStream, dataOutputStream, [0] * (16384))
             dataOutputStream.flush()
@@ -82,34 +101,44 @@ class FileUtil:
 
     # throws Exception
     def fixPath(self, file: AbFile, path: AbPath, realPath: AbPath, cloud: str) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         beginIndex: int = file.getPath().indexOf(cloud) + len(cloud)
         endIndex: int = file.getPath().indexOf(file.getName())
         fixedPathString: str = str(realPath.toFileSystemString()) + file.getPath().substring(beginIndex, endIndex)
         fixedPath: AbPath = AbPath(fixedPathString, StringUtil.getInstance().EMPTY_STRING)
         self.directory.create(fixedPath)
         string: str = fixedPath.toFileSystemString()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+        if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
             self.logUtil.putF(string, self, "fixPath")
         outPath: AbPath = AbPath(string, file.getName())
         return outPath
     
 
     # throws Exception
-    def copyToCloud(self, file: AbFile, path: AbPath, realPath: AbPath, cloud: str) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def copyToCloud_j4_1(self, file: AbFile, path: AbPath, realPath: AbPath, cloud: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.copyToCloud(file, path, realPath, cloud, False, False)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def copyToCloud(self, file: AbFile, path: AbPath, realPath: AbPath, cloud: str, overwriteNewer: bool, overwriteAll: bool) -> None:
-        from org.allbinary.logic.io.file.AbFile import AbFile
+    def copyToCloud_j6(self, file: AbFile, path: AbPath, realPath: AbPath, cloud: str, overwriteNewer: bool, overwriteAll: bool) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             outPath: AbPath = self.fixPath(file, path, realPath, cloud)
             outFile: AbFile = AbFile.createAbFileFromAbPath(outPath)
             if not self.copyPrepare(file, outFile, overwriteNewer, overwriteAll):
                 return
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("Out File: ")
                     stringBuffer.append(outFile.getPath())
@@ -121,7 +150,7 @@ class FileUtil:
             fileInputStream: AbFileInputStream = AbFileLocalInputStream(file)
             self.copy(fileInputStream, dataOutputStream)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Error Copying File File: ")
                 stringBuffer.append(str(file))
@@ -131,20 +160,25 @@ class FileUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def copyToCloud(self, file: AbFile, outFile: AbFile) -> None:
+    def copyToCloud_j2(self, file: AbFile, outFile: AbFile) -> None:
         self.copyToCloud(file, outFile, False, False)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def copyToCloud(self, file: AbFile, outFile: AbFile, overwriteNewer: bool, overwriteAll: bool) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def copyToCloud_j4_2(self, file: AbFile, outFile: AbFile, overwriteNewer: bool, overwriteAll: bool) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             if not self.copyPrepare(file, outFile, overwriteNewer, overwriteAll):
                 return
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append("Out File: ")
                     stringBuffer.append(outFile.getPath())
@@ -156,21 +190,31 @@ class FileUtil:
             fileInputStream: AbFileInputStream = AbFileLocalInputStream(file)
             self.copy(fileInputStream, dataOutputStream)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Error Copying File File: ")
                 stringBuffer.append(str(file))
                 stringBuffer.append(" to cloud.")
                 self.logUtil.put(str(stringBuffer), FileUtil.getInstance(), "copyToCloud", e)
             raise e
+
+    def copyToCloud(self, *args):
+        if len(args) == 4 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)) and (args[3] is None or isinstance(args[3], str)):
+            return self.copyToCloud_j4_1(*args)
+        if len(args) == 4:
+            return self.copyToCloud_j4_2(*args)
+        return getattr(self, "copyToCloud_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def copyPrepare(self, fromFile: AbFile, toFile: AbFile, overwriteNewer: bool, overwriteAll: bool) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if toFile.exists():
             stringBuffer: StringMaker = StringMaker()
             if overwriteAll:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append("Overwriting File: ")
                     stringBuffer.append(toFile.getPath())
@@ -178,7 +222,7 @@ class FileUtil:
                 toFile.delete()
                 toFile.createNewFile()
             elif toFile.lastModified() < fromFile.lastModified() and overwriteNewer:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append("Newer by: ")
                     stringBuffer.appendlong(int(fromFile.lastModified() - toFile.lastModified()))
@@ -189,7 +233,7 @@ class FileUtil:
                 toFile.delete()
                 toFile.createNewFile()
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append("File Already Exists")
                     if overwriteNewer:
@@ -206,15 +250,19 @@ class FileUtil:
     
 
     # throws Exception
-    def copyFile(self, fromFile: AbFile, toFile: AbFile) -> None:
+    def copyFile_j2(self, fromFile: AbFile, toFile: AbFile) -> None:
         self.copyFile(fromFile, toFile, False, False)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def copyFile(self, fromFile: AbFile, toFile: AbFile, overwriteNewer: bool, overwriteAll: bool) -> None:
+    def copyFile_j4(self, fromFile: AbFile, toFile: AbFile, overwriteNewer: bool, overwriteAll: bool) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Copying ")
                 stringBuffer.appendlong(fromFile.length())
@@ -226,10 +274,10 @@ class FileUtil:
             if not self.copyPrepare(fromFile, toFile, overwriteNewer, overwriteAll):
                 return
             dataOutputStream: AbDataOutputStream = DataOutputStreamFactory.getInstance().getInstanceForAbFile(toFile)
-            fileInputStream: AbFileInputStream = AbFileInputStream(fromFile)
+            fileInputStream: AbFileInputStream = AbFileInputStream.createFromAbFile(fromFile)
             self.copy(fileInputStream, dataOutputStream)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Error Copying File fromFile: ")
                 stringBuffer.append(str(fromFile))
@@ -237,11 +285,15 @@ class FileUtil:
                 stringBuffer.append(str(toFile))
                 self.logUtil.put(str(stringBuffer), FileUtil.getInstance(), "copyFile", e)
             raise e
+
+    def copyFile(self, *args):
+        return getattr(self, "copyFile_j" + str(len(args)))(*args)
     
 
     @staticmethod
     def getNewDirectory(fromFile: AbFile) -> str:
-        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.io.AbIOSystem import AbIOSystem
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         newDirectory: str = fromFile.getPath()
         separatorChar: str = FilePathData.getInstance().PATH_START
         if AbIOSystem.getInstance().isType("com.vobject.appengine.java.io"):
@@ -255,8 +307,12 @@ class FileUtil:
 
     # throws Exception
     def copyDirectoryPortion(self, fromDirectoryAbPath: AbPath, toDirectoryAbPath: AbPath, overwriteNewer: bool, overwriteAll: bool, current: int, total: int) -> None:
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         file: AbFile = AbFile.createAbFileFromAbPath(fromDirectoryAbPath)
         if not file.isDirectory():
             raise Exception("Not a directory: " + str(file.getPath()))
@@ -276,7 +332,7 @@ class FileUtil:
         stringBuffer.appendint(start)
         stringBuffer.append(" - ")
         stringBuffer.appendint(end)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+        if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
             self.logUtil.putF(str(stringBuffer), FileUtil.getInstance(), "copySomeFilesToDirectory()")
         nextFile: AbFile = None
         for index in range(start, end):
@@ -286,8 +342,8 @@ class FileUtil:
             else:
                 path: str = AbPath(nextFile.getPath(), StringUtil.getInstance().EMPTY_STRING).getPath()
                 beginIndex: int = fromDirectoryAbPath.getPath().length()
-                if path.indexOf(self.URLGLOBALS.getWebappPath()) < 0:
-                    beginIndex -= AbPath(self.URLGLOBALS.getWebappPath(), StringUtil.getInstance().EMPTY_STRING).getPath().length()
+                if path.indexOf(URLGLOBALS.getWebappPath()) < 0:
+                    beginIndex -= AbPath(URLGLOBALS.getWebappPath(), StringUtil.getInstance().EMPTY_STRING).getPath().length()
                 newPath: str = str(toDirectoryAbPath.toFileSystemString()) + path.substring(beginIndex)
                 toFile: AbFile = AbFile.createAbFileFromAbPath(AbPath(newPath, StringUtil.getInstance().EMPTY_STRING))
                 self.copyFile(nextFile, toFile, overwriteNewer, overwriteAll)
@@ -295,11 +351,13 @@ class FileUtil:
 
     # throws Exception
     def copyDirectory(self, fromFile: AbFile, to: AbFile) -> None:
-        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Copying Directory from: ")
                 stringBuffer.append(fromFile.getPath())
@@ -312,7 +370,7 @@ class FileUtil:
                 raise Exception("Failed to create directory: " + str(newDirectoryAbPath))
             fileArray: list[AbFile] = FileWrapperUtil.wrapFiles(fromFile.listFiles())
             size: int = len(fileArray)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Copying ")
                 stringBuffer.appendint(size)
@@ -331,7 +389,7 @@ class FileUtil:
                 else:
                     raise Exception("File Copy Error")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Error Copying Directory fromFile: ")
                 stringBuffer.append(str(fromFile))
@@ -342,20 +400,18 @@ class FileUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def copy(self, fromAbPath: AbPath, to: AbPath) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def copy_j2_2(self, fromAbPath: AbPath, to: AbPath) -> bool:
         with self._lock:
-            return self._copy_unlocked(fromAbPath, to)
+            return self._copy_j2_2_unlocked(fromAbPath, to)
 
-    def _copy_unlocked(self, fromAbPath: AbPath, to: AbPath) -> bool:
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        from org.allbinary.logic.io.file.AbFile import AbFile
+    def _copy_j2_2_unlocked(self, fromAbPath: AbPath, to: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         COPY: str = "copy"
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Copying AbPaths from: ")
                 stringBuffer.append(str(fromAbPath))
@@ -372,7 +428,7 @@ class FileUtil:
                 if toLocationFile.isDirectory():
                     file: AbFile = AbFile.createAbFileWithChild(toLocationFile, fromLocationFile.getName())
                     self.copyFile(fromLocationFile, file)
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                    if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("Copied file=")
                         stringBuffer.append(fromLocationFile.getName())
@@ -383,7 +439,7 @@ class FileUtil:
                         self.logUtil.putF(str(stringBuffer), FileUtil.getInstance(), COPY)
                 else:
                     self.copyFile(fromLocationFile, toLocationFile)
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                    if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("Copied file with new name ")
                         stringBuffer.append(" from: ")
@@ -393,7 +449,7 @@ class FileUtil:
                         self.logUtil.putF(str(stringBuffer), FileUtil.getInstance(), COPY)
             elif fromLocationFile.isDirectory() and toLocationFile.isDirectory():
                 if fromAbPath.toFileSystemString().charAt(fromAbPath.toFileSystemString().length() - 1) == os.sep:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                    if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         self.logUtil.putF("Copying subdirectories", FileUtil.getInstance(), COPY)
                     fileArray: list[AbFile] = FileWrapperUtil.wrapFiles(fromLocationFile.listFiles())
                     for index in range(0, len(fileArray)):
@@ -405,17 +461,17 @@ class FileUtil:
                             self.copyDirectory(file, toLocationFile)
                         else:
                             raise Exception("File Copy Error")
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                    if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         self.logUtil.putF("Copied subdirectories", FileUtil.getInstance(), COPY)
                 else:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                    if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         self.logUtil.putF("Copyinhg directory", FileUtil.getInstance(), COPY)
                     self.copyDirectory(fromLocationFile, toLocationFile)
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
+                    if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         self.logUtil.putF("Copied directory", FileUtil.getInstance(), COPY)
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
+            if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILEERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Error Copying fromAbPath: ")
                 stringBuffer.append(str(fromAbPath))
@@ -423,6 +479,13 @@ class FileUtil:
                 stringBuffer.append(str(to))
                 self.logUtil.put(str(stringBuffer), FileUtil.getInstance(), COPY, e)
             raise e
+
+    def copy(self, *args):
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            return self.copy_j2_1(*args)
+        if len(args) == 2:
+            return self.copy_j2_2(*args)
+        return getattr(self, "copy_j" + str(len(args)))(*args)
     
 
     def shouldSkip(self, file: AbFile, skipFiles: list[str]) -> bool:
@@ -436,8 +499,15 @@ class FileUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def write(self, filePath: str, string: str) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def write_j2_3(self, filePath: str, string: str) -> None:
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         dataOutputStream: AbDataOutputStream = None
         try:
             PreLogUtil.put(str(StringMaker().append(self.WRITE_LABEL).append(filePath).append(self.DATA_LABEL).append(string)), self, self.WRITE_METHOD)
@@ -448,33 +518,48 @@ class FileUtil:
             dataOutputStream.flush()
         finally:
             StreamUtil.getInstance().close(dataOutputStream)
+
+    def write(self, *args):
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            return self.write_j2_1(*args)
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            return self.write_j2_2(*args)
+        if len(args) == 2:
+            return self.write_j2_3(*args)
+        return getattr(self, "write_j" + str(len(args)))(*args)
     
 
     def loadFileAsList(self, file: AbFile, max: int, byteArray1: list[int]) -> BasicArrayList:
         from org.allbinary.logic.io.file.FileUtil2 import FileUtil2
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return FileUtil2.getInstance().loadFileAsList(file, max, byteArray1)
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
-from org.allbinary.logic.io.AbIOSystem import AbIOSystem
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+# from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+# from org.allbinary.logic.io.AbIOSystem import AbIOSystem
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from java.io.File import File
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-FileUtil.instance = FileUtil()
+def _FileUtil_instance() -> object:
+    return FileUtil()
+
+lazy_static(FileUtil, "instance", _FileUtil_instance)
 

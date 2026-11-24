@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CssPropertyValueData:
@@ -33,5 +34,8 @@ class CssPropertyValueData:
         self._init_fields()
 
 
-CssPropertyValueData.instance = CssPropertyValueData()
+def _CssPropertyValueData_instance() -> object:
+    return CssPropertyValueData()
+
+lazy_static(CssPropertyValueData, "instance", _CssPropertyValueData_instance)
 

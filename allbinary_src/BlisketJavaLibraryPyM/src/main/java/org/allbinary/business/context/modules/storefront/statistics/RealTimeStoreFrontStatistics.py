@@ -21,6 +21,10 @@ from org.allbinary.business.context.modules.storefront.statistics.StoreFrontStat
 class RealTimeStoreFrontStatistics(StoreFrontStatisticsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
         self.storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface = None
         self.storeFrontUsersStatisticsInterface: StoreFrontUsersStatisticsInterface = None
         self.storeFrontInventoryStatisticsInterface: StoreFrontInventoryStatisticsInterface = None
@@ -28,6 +32,15 @@ class RealTimeStoreFrontStatistics(StoreFrontStatisticsInterface):
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatistics import StoreFrontAdvertisementsStatistics
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatistics import StoreFrontInventoryStatistics
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatistics import StoreFrontOrdersHistoryStatistics
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatistics import StoreFrontUsersStatistics
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
         self._init_fields()
         self.storeFrontAdvertisementsStatisticsInterface = StoreFrontAdvertisementsStatistics(storeFrontInterface)
         self.storeFrontUsersStatisticsInterface = StoreFrontUsersStatistics(storeFrontInterface)
@@ -36,27 +49,31 @@ class RealTimeStoreFrontStatistics(StoreFrontStatisticsInterface):
     
 
     def getAdvertisements(self) -> StoreFrontAdvertisementsStatisticsInterface:
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
         return self.storeFrontAdvertisementsStatisticsInterface
     
 
     def getUsers(self) -> StoreFrontUsersStatisticsInterface:
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
         return self.storeFrontUsersStatisticsInterface
     
 
     def getInventory(self) -> StoreFrontInventoryStatisticsInterface:
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
         return self.storeFrontInventoryStatisticsInterface
     
 
     def getOrders(self) -> StoreFrontOrdersHistoryStatisticsInterface:
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
         return self.storeFrontOrderHistoryStatisticsInterface
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatistics import StoreFrontAdvertisementsStatistics
-from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatistics import StoreFrontInventoryStatistics
-from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatistics import StoreFrontOrdersHistoryStatistics
-from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
-from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatistics import StoreFrontUsersStatistics
-from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatistics import StoreFrontAdvertisementsStatistics
+# from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatistics import StoreFrontInventoryStatistics
+# from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatistics import StoreFrontOrdersHistoryStatistics
+# from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
+# from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatistics import StoreFrontUsersStatistics
+# from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
 
 

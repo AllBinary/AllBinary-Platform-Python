@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidServicesUtil:
     instance: AndroidServicesUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.resourceUtil: ResourceUtil = ResourceUtil.getInstance()
         self.SERVICE_LIMIT_MAX: int = 1000
@@ -37,6 +40,11 @@ class AndroidServicesUtil:
     
 
     def isServiceRunning(self, name: str) -> bool:
+        from java.util.List import List
+        from android.app.ActivityManager import ActivityManager
+        from android.app.ActivityManager.RunningServiceInfo import RunningServiceInfo
+        from android.content.ComponentName import ComponentName
+        from android.content.Context import Context
         activityManager: ActivityManager = self.resourceUtil.getContext().getSystemService(Context.ACTIVITY_SERVICE)
         runningServicesList: List[RunningServiceInfo] = activityManager.getRunningServices(self.SERVICE_LIMIT_MAX)
         runningServiceInfo: RunningServiceInfo = None
@@ -52,13 +60,16 @@ class AndroidServicesUtil:
         self.logUtil.putF(self.SERVICE_NOT_FOUND_RUNNING + name, self, self.IS_SERVICE_RUNNING)
         return False
 # from java.util.List import List
-from android.app.ActivityManager import ActivityManager
-from android.app.ActivityManager.RunningServiceInfo import RunningServiceInfo
-from android.content.ComponentName import ComponentName
-from android.content.Context import Context
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from android.app.ActivityManager import ActivityManager
+# from android.app.ActivityManager.RunningServiceInfo import RunningServiceInfo
+# from android.content.ComponentName import ComponentName
+# from android.content.Context import Context
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-AndroidServicesUtil.instance = AndroidServicesUtil()
+def _AndroidServicesUtil_instance() -> object:
+    return AndroidServicesUtil()
+
+lazy_static(AndroidServicesUtil, "instance", _AndroidServicesUtil_instance)
 

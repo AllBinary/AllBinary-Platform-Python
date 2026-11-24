@@ -3,11 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.form.item.CustomCustomItem import CustomCustomItem
 from org.allbinary.graphics.form.item.ABCustomItemInterface import ABCustomItemInterface
 
 
-class ABTextItem(CustomCustomItem, ABCustomItemInterface):
+class ABTextItem(*java_bases(CustomCustomItem, ABCustomItemInterface)):
     
 
     def __init__(self, label: str, layout: int, altText: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
@@ -25,7 +26,6 @@ class ABTextItem(CustomCustomItem, ABCustomItemInterface):
     
 
     def getLabelStringComponent(self) -> ABStringComponent:
-        from org.allbinary.graphics.form.item.ABStringComponent import ABStringComponent
         return ABStringComponent.NULL_STRING_COMPONENT
     
 

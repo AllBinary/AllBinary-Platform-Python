@@ -22,6 +22,9 @@ class LinuxHardware(HardwareInterface):
     PCIFILE: str = "/proc/pci"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.componentInterfaceVector: BasicArrayList = None
@@ -52,6 +55,9 @@ class LinuxHardware(HardwareInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.system.hardware.components.linux.Cpu import Cpu
         self._init_fields()
         self.init(LinuxHardware.PCIFILE)
         if self.componentInterfaceVector.size() < self.MINHARDWARE:
@@ -65,7 +71,9 @@ class LinuxHardware(HardwareInterface):
     
 
     # throws Exception
-    def init(self, filePath: str) -> None:
+    def init_j1(self, filePath: str) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         lineNumberReader: LineNumberReader = None
         try:
             self.init(lineNumberReader, filePath)
@@ -76,10 +84,19 @@ class LinuxHardware(HardwareInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def init(self, lineNumberReader: LineNumberReader, filePath: str) -> None:
+    def init_j2(self, lineNumberReader: LineNumberReader, filePath: str) -> None:
         from org.allbinary.logic.system.hardware.linux.PCComponentFactory import PCComponentFactory
         from org.allbinary.logic.system.hardware.linux.PCComponentFactory import PCComponentFactory
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             self.componentInterfaceVector = BasicArrayListD()
             self.videoInterfaceVector = BasicArrayListD()
@@ -106,7 +123,7 @@ class LinuxHardware(HardwareInterface):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OS):
                     self.logUtil.putF("PCI File Found", self, self.commonStrings.CONSTRUCTOR)
                 nextLine: str = lineNumberReader.readLine()
-                while lineNumberReader is not None and nextLine is not None:
+                while nextLine is not None:
                     if self.isNextHardware(nextLine):
                         break
                     nextLine = lineNumberReader.readLine()
@@ -118,7 +135,7 @@ class LinuxHardware(HardwareInterface):
                     componentData.append(CommonSeps.getInstance().NEW_LINE)
                     nextLine = lineNumberReader.readLine()
                     componentType: str = PCComponentFactory.getInstance().getComponentType(nextLine)
-                    while lineNumberReader is not None:
+                    while True:
                         componentData.append(nextLine)
                         componentData.append(CommonSeps.getInstance().NEW_LINE)
                         nextLine = lineNumberReader.readLine()
@@ -134,57 +151,75 @@ class LinuxHardware(HardwareInterface):
         finally:
             if lineNumberReader is not None:
                 lineNumberReader.close()
+
+    def init(self, *args):
+        return getattr(self, "init_j" + str(len(args)))(*args)
     
 
     def getMultimedia(self, index: int) -> MediaInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
         return self.multimediaInterfaceVector.get(index)
     
 
     def getBridge(self, index: int) -> BridgeInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
         return self.bridgeInterfaceVector.get(index)
     
 
     def getCpu(self, index: int) -> CpuInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
         return self.cpuInterfaceVector.get(index)
     
 
     def getEthernet(self, index: int) -> EthernetInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
         return self.ethernetInterfaceVector.get(index)
     
 
     def getFireWire(self, index: int) -> FireWireInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.FireWireInterface import FireWireInterface
         return self.fireWireInterfaceVector.get(index)
     
 
     def getHardDriveController(self, index: int) -> HardDriveControllerInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
         return self.hardDriveControllerInterfaceVector.get(index)
     
 
     def getHardDrive(self, index: int) -> HardDriveInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardDriveInterface import HardDriveInterface
         return self.hardDriveInterfaceVector.get(index)
     
 
     def getMachineAccessControlAddress(self, index: int) -> MachineAccessControlAddressInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
         return self.macInterfaceVector.get(index)
     
 
     def getMonitor(self, index: int) -> MonitorInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.MonitorInterface import MonitorInterface
         return self.monitorInterfaceVector.get(index)
     
 
     def getUsb(self, index: int) -> UsbInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.UsbInterface import UsbInterface
         return self.usbInterfaceVector.get(index)
     
 
     def getVideo(self, index: int) -> VideoInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.VideoInterface import VideoInterface
         return self.videoInterfaceVector.get(index)
     
 
     def getComponent(self, index: int) -> HardwareComponentInterface:
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
         return self.componentInterfaceVector.get(index)
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
         hardwareBuffer: StringMaker = StringMaker()
         size: int = self.componentInterfaceVector.size()
         for index in range(0, size):
@@ -205,6 +240,8 @@ class LinuxHardware(HardwareInterface):
     
 
     def difference(self, hardwareInterface: HardwareInterface) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().NULL_TABLE
     
 
@@ -216,31 +253,31 @@ class LinuxHardware(HardwareInterface):
         return False
 # from java.io.FileReader import FileReader
 # from java.io.LineNumberReader import LineNumberReader
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
-from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
-from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
-from org.allbinary.logic.system.hardware.components.interfaces.FireWireInterface import FireWireInterface
-from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
-from org.allbinary.logic.system.hardware.components.interfaces.HardDriveInterface import HardDriveInterface
-from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
-from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
-from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
-from org.allbinary.logic.system.hardware.components.interfaces.MonitorInterface import MonitorInterface
-from org.allbinary.logic.system.hardware.components.interfaces.UsbInterface import UsbInterface
-from org.allbinary.logic.system.hardware.components.interfaces.VideoInterface import VideoInterface
-from org.allbinary.logic.system.hardware.components.linux.Cpu import Cpu
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.FireWireInterface import FireWireInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.HardDriveInterface import HardDriveInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.MonitorInterface import MonitorInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.UsbInterface import UsbInterface
+# from org.allbinary.logic.system.hardware.components.interfaces.VideoInterface import VideoInterface
+# from org.allbinary.logic.system.hardware.components.linux.Cpu import Cpu
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

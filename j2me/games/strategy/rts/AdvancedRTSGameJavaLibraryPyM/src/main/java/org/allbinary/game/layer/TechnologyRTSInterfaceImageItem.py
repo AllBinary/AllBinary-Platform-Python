@@ -15,13 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.form.item.ABCustomImageItem import ABCustomImageItem
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
-class TechnologyRTSInterfaceImageItem(ABCustomImageItem, UpdateMyFontInterface):
+class TechnologyRTSInterfaceImageItem(*java_bases(ABCustomImageItem, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.rtsInterface: RTSInterface = None
         self.primitiveLongUtil: PrimitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(10000)
         self.LEVEL: str = "Level"
@@ -40,6 +45,8 @@ class TechnologyRTSInterfaceImageItem(ABCustomImageItem, UpdateMyFontInterface):
     
 
     def __init__(self, label: str, img: Image, layout: int, altText: str, basicColor: BasicColor, rtsInterface: RTSInterface) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(label, img, layout, altText, basicColor, 0)
         self._init_fields()
         self.rtsInterface = rtsInterface
@@ -47,6 +54,11 @@ class TechnologyRTSInterfaceImageItem(ABCustomImageItem, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         fontHeight: int = font.getHeight()
         imageHeight: int = 0
@@ -71,6 +83,7 @@ class TechnologyRTSInterfaceImageItem(ABCustomImageItem, UpdateMyFontInterface):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         super().paintXY(graphics, x, y)
         xa: int = x + 2
@@ -83,10 +96,10 @@ class TechnologyRTSInterfaceImageItem(ABCustomImageItem, UpdateMyFontInterface):
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
 
 

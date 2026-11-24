@@ -15,62 +15,90 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.advertisement.campaign.internal.AdvertisementCampaignInternalEntityInterface import AdvertisementCampaignInternalEntityInterface
 
 
-class AdvertisementCampaignInternalEntity(AbSqlBean, AdvertisementCampaignInternalEntityInterface):
+class AdvertisementCampaignInternalEntity(*java_bases(AbSqlBean, AdvertisementCampaignInternalEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "adCampaignInternal"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
     def delete(self, value: str) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().deleteWhere(StoreFrontData.getInstance().NAME, value)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.delete, e)
     
 
     def getCampaignsInStore(self, storeName: str) -> AdvertisementCampaignsInterface:
-        keysAndValues: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaign import AdvertisementCampaign
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignInterface import AdvertisementCampaignInterface
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaigns import AdvertisementCampaigns
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignsInterface import AdvertisementCampaignsInterface
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.StdUtil import StdUtil
+        keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
         hashMapVector: BasicArrayList = super().getRows(keysAndValues)
         vector: BasicArrayList = BasicArrayListD()
         size: int = hashMapVector.size()
         for index in range(0, size):
-            hashMap: dict = hashMapVector.get(index)
+            hashMap: HashMap = hashMapVector.get(index)
             if hashMap is not None:
                 vector.add(AdvertisementCampaign(hashMap))
         return AdvertisementCampaigns(vector)
     
 
     def get(self, storeName: str, name: str) -> AdvertisementCampaignInterface:
-        keysAndValues: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaign import AdvertisementCampaign
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignInterface import AdvertisementCampaignInterface
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.StdUtil import StdUtil
+        keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
         keysAndValues.put(AdvertisementCampaignData.getInstance().NAME, name)
-        hashMap: dict = super().getRow(keysAndValues)
+        hashMap: HashMap = super().getRow(keysAndValues)
         if hashMap is not None:
             return AdvertisementCampaign(hashMap)
         else:
             return None
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
         super().updateWhere(EntryData.getInstance().getInstance().ID, updatedValues.get(EntryData.getInstance().getInstance().ID), updatedValues)
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.time.TimeData import TimeData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         entryData: EntryData = EntryData.getInstance().getInstance()
         advertisementCampaignData: AdvertisementCampaignData = AdvertisementCampaignData.getInstance()
         stringBuffer: StringMaker = StringMaker()
@@ -88,20 +116,27 @@ class AdvertisementCampaignInternalEntity(AbSqlBean, AdvertisementCampaignIntern
 
     def dropTable(self) -> str:
         return super().dropTable()
+    
+
+    def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        super().insert(values)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.advertisement.campaign.AdvertisementCampaign import AdvertisementCampaign
-from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
-from org.allbinary.business.advertisement.campaign.AdvertisementCampaignInterface import AdvertisementCampaignInterface
-from org.allbinary.business.advertisement.campaign.AdvertisementCampaigns import AdvertisementCampaigns
-from org.allbinary.business.advertisement.campaign.AdvertisementCampaignsInterface import AdvertisementCampaignsInterface
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.business.time.TimeData import TimeData
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.advertisement.campaign.AdvertisementCampaign import AdvertisementCampaign
+# from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
+# from org.allbinary.business.advertisement.campaign.AdvertisementCampaignInterface import AdvertisementCampaignInterface
+# from org.allbinary.business.advertisement.campaign.AdvertisementCampaigns import AdvertisementCampaigns
+# from org.allbinary.business.advertisement.campaign.AdvertisementCampaignsInterface import AdvertisementCampaignsInterface
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.business.time.TimeData import TimeData
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

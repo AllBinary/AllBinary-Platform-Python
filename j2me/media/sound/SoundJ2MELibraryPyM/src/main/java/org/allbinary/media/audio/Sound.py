@@ -15,10 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.audio.SoundInterface import SoundInterface
 
 
-class Sound(SoundInterface, object):
+class Sound(*java_bases(SoundInterface, object)):
 
     def _init_fields(self) -> None:
         from javax.microedition.media.Player import Player
@@ -65,6 +66,5 @@ class Sound(SoundInterface, object):
 # from javax.microedition.media.Player import Player
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 # from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.media.audio.NoPlayer import NoPlayer
 
 

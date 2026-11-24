@@ -27,6 +27,7 @@ class CharacterFrictionProperties(FrictionProperties):
     
 
     def __init__(self, airFriction: int, waterFriction: int, collisionFriction: int) -> None:
+        from org.allbinary.game.physics.friction.FrictionData import FrictionData
         super().__init__()
         self._init_fields()
         self.AIR_FRICTION_NOMINATOR = FrictionData.getFrictionDenominator() - airFriction
@@ -44,6 +45,6 @@ class CharacterFrictionProperties(FrictionProperties):
 
     def getCOLLISION_FRICTION_NOMINATOR(self) -> int:
         return self.COLLISION_FRICTION_NOMINATOR
-from org.allbinary.game.physics.friction.FrictionData import FrictionData
+# from org.allbinary.game.physics.friction.FrictionData import FrictionData
 
 

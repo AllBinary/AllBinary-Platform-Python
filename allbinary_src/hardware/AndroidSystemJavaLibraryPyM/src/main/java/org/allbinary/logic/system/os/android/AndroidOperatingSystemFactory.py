@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidOperatingSystemFactory:
     instance: AndroidOperatingSystemFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
     
@@ -38,6 +41,11 @@ class AndroidOperatingSystemFactory:
     def getOperatingSystemInstance(self) -> GenericOperatingSystem:
         from org.allbinary.logic.system.os.android.AndroidOS import AndroidOS
         from org.allbinary.logic.system.os.android.AndroidOS import AndroidOS
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             GenericOperatingSystem: GenericOperatingSystem = None
             systemProperties: SystemProperties = SystemProperties.getInstance()
@@ -54,14 +62,17 @@ class AndroidOperatingSystemFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put("Failed to get OperatingSystem returning NoOperatingSystem", self, commonStrings.GET_INSTANCE, e)
             return NoOperatingSystem.NO_OPERATING_SYSTEM
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
-from org.allbinary.logic.system.os.SystemProperties import SystemProperties
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+# from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AndroidOperatingSystemFactory.instance = AndroidOperatingSystemFactory()
+def _AndroidOperatingSystemFactory_instance() -> object:
+    return AndroidOperatingSystemFactory()
+
+lazy_static(AndroidOperatingSystemFactory, "instance", _AndroidOperatingSystemFactory_instance)
 

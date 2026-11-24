@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.Vector import Vector
+from java.util.Vector import Vector
 
 
-class ABVector(list):
+class ABVector(Vector):
 
     def __init__(self) -> None:
         super().__init__()
@@ -100,22 +100,32 @@ class ABVector(list):
         return super().set(index, element)
     
 
-    def add(self, element: E) -> bool:
+    def add_j1(self, element: E) -> bool:
         return super().add(element)
     
 
-    def remove(self, obj: object) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def remove_j1_1(self, obj: object) -> bool:
         return super().remove(obj)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def add(self, index: int, element: E) -> None:
+    def add_j2(self, index: int, element: E) -> None:
         super().add(index, element)
+
+    def add(self, *args):
+        return getattr(self, "add_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def remove(self, index: int) -> E:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def remove_j1_2(self, index: int) -> E:
         return super().remove(index)
+
+    def remove(self, *args):
+        if len(args) == 1 and True:
+            return self.remove_j1_1(*args)
+        if len(args) == 1:
+            return self.remove_j1_2(*args)
+        return getattr(self, "remove_j" + str(len(args)))(*args)
     
 
     def clear(self) -> None:
@@ -145,6 +155,6 @@ class ABVector(list):
 
     def removeRange(self, fromIndex: int, toIndex: int) -> None:
         super().removeRange(fromIndex, toIndex)
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

@@ -21,6 +21,7 @@ from tags.CustomTagSupport import CustomTagSupport
 class CustomLoaderTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.command: str = None
         self.webappPath: str = None
@@ -41,22 +42,32 @@ class CustomLoaderTag(CustomTagSupport):
 
     # throws LicensingException
     def setCustomLoaderWebappPath(self) -> None:
+        from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             urlGlobals: AppUrlGlobals = AppUrlGlobals()
             urlGlobals.setWebappPath(self.webappPath)
-            self.URLGLOBALS.init(urlGlobals)
+            URLGLOBALS.init(urlGlobals)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "setCustomLoaderWebappPath()", e)
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF(self.commonStrings.START, self, self.tagStrings.DO_START_TAG)
             if self.command is not None:
-                if ((self.command > self.GLOBALS2.SET) - (self.command < self.GLOBALS2.SET)) == 0:
+                if ((self.command > GLOBALS2.SET) - (self.command < GLOBALS2.SET)) == 0:
                     self.setCustomLoaderWebappPath()
             return self.SKIP_BODY
         except LicensingException as e:
@@ -66,11 +77,13 @@ class CustomLoaderTag(CustomTagSupport):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

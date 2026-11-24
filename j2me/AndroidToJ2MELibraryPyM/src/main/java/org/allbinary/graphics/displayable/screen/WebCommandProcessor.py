@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WebCommandProcessor:
     instance: WebCommandProcessor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.aboutCommandProcessor: AboutCommandProcessor = AboutCommandProcessor.getInstance()
         self.WEB_VIEW_ACTIVITY: str = "org.allbinary.android.activity.WebViewActivity"
@@ -36,27 +40,36 @@ class WebCommandProcessor:
     
 
     def process(self, midletCommandListener: CommandListener, command: Command, canvas: Canvas) -> None:
+        from android.content.Context import Context
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.Command import Command
+        from javax.microedition.lcdui.CommandListener import CommandListener
+        from android.content.Intent import Intent
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             context: Context = self.aboutCommandProcessor.getContext()
             intent: Intent = Intent(context, TsUtil.getInstance().getClassClassLoader(self).loadClass(self.WEB_VIEW_ACTIVITY))
             intent.putExtra(self.aboutCommandProcessor.URL, self.list_.removeAt(0))
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
-        except ClassNotFoundException as e:
+        except ImportError as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, "process", e)
-from android.content.Context import Context
+# from android.content.Context import Context
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
-from android.content.Intent import Intent
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.graphics.displayable.screen.AboutCommandProcessor import AboutCommandProcessor
+# from android.content.Intent import Intent
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-WebCommandProcessor.instance = WebCommandProcessor()
+def _WebCommandProcessor_instance() -> object:
+    return WebCommandProcessor()
+
+lazy_static(WebCommandProcessor, "instance", _WebCommandProcessor_instance)
 

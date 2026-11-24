@@ -27,13 +27,14 @@ class NoImageComparatorConstraints(ImageComparatorConstraints):
     
 
     def isColorAllowed(self, frame: int, point: GPoint, color: Color) -> bool:
+        from org.allbinary.graphics.GPoint import GPoint
         return True
     
 
     def isImageValid(self, bufferedImage: BufferedImage) -> bool:
         return True
-# from java.awt import *
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.GPoint import GPoint
 
 

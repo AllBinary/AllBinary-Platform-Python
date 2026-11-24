@@ -22,13 +22,19 @@ class CategoryPrivateTree:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.categoryFactoryInterface: CategoryFactoryInterface = None
     
 
     def __init__(self, categoryFactoryInterface: CategoryFactoryInterface) -> None:
+        from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, "CategoryPrivateTree(CategoryFactoryInterface categoryFactoryInterface)")
         self.categoryFactoryInterface = categoryFactoryInterface
@@ -40,12 +46,19 @@ class CategoryPrivateTree:
             return self._save_unlocked(categoryInterface)
 
     def _save_unlocked(self, categoryInterface: CategoryInterface) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+        from org.allbinary.business.category.CategoryComponent import CategoryComponent
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.logic.control.crypt.file.CryptFileWriter import CryptFileWriter
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
             self.logUtil.putF("Saving Category File: " + str(categoryInterface.getFilePath()), self, "save()")
         document: Document = CategoryComponent(categoryInterface).toXmlDoc()
         cryptFileWriter: CryptFileWriter = CryptFileWriter(CategoryData.getInstance().UNCRYPTED_EXTENSION, CategoryData.getInstance().ENCRYPTED_EXTENSION)
         cryptFileWriter.write(categoryInterface.getFilePath(), document)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
             self.logUtil.putF("end", self, "save()")
     
 
@@ -55,22 +68,28 @@ class CategoryPrivateTree:
             return self._delete_unlocked(categoryInterface)
 
     def _delete_unlocked(self, categoryInterface: CategoryInterface) -> None:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if categoryInterface.isLeaf():
             categoryFile: AbFile = AbFile.createAbFileFromAbPath(categoryInterface.getFilePath())
             if categoryFile.delete():
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     self.logUtil.putF("Removed: " + str(categoryInterface.getFilePath()), self, "delete(CategoryInterface)")
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF("Not a leaf unable to remove", self, "delete(CategoryInterface)")
-from org.allbinary.business.category.CategoryComponent import CategoryComponent
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.file.CryptFileWriter import CryptFileWriter
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
+# from org.allbinary.business.category.CategoryComponent import CategoryComponent
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.file.CryptFileWriter import CryptFileWriter
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

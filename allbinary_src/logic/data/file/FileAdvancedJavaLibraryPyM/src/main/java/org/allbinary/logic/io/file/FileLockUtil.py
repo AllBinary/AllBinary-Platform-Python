@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileLockUtil:
     instance: FileLockUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,6 +37,8 @@ class FileLockUtil:
 
     # throws Exception
     def getAll(self, vector: BasicArrayList, isReturnOnFailure: bool) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         fileLockVector: BasicArrayList = BasicArrayListD()
         size: int = vector.size()
         for index in range(0, size):
@@ -52,11 +56,14 @@ class FileLockUtil:
 
     # throws Exception
     def getAllPossible(self, vector: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.getAll(vector, False)
     
 
     # throws Exception
     def getAllOrNone(self, vector: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         fileLockVector: BasicArrayList = self.getAll(vector, True)
         if vector.size() != fileLockVector.size():
             return BasicArrayListD()
@@ -65,7 +72,9 @@ class FileLockUtil:
     
 
     # throws Exception
-    def getLock(self, file: AbFile) -> FileLock:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getLock_j1_1(self, file: AbFile) -> FileLock:
+        from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
         try:
             return self.getLock(AbFileOutputStream.createFromAbFileAppend(file, True))
         except Exception as e:
@@ -76,8 +85,10 @@ class FileLockUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getLock(self, fileOutputStream: AbFileOutputStream) -> FileLock:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getLock_j1_2(self, fileOutputStream: AbFileOutputStream) -> FileLock:
+        from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
         try:
             fileLock: FileLock = self.getLock(fileOutputStream.getChannel())
             return fileLock
@@ -90,8 +101,8 @@ class FileLockUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getLock(self, fileChannel: FileChannel) -> FileLock:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getLock_j1_3(self, fileChannel: FileChannel) -> FileLock:
         try:
             fileLock: FileLock = fileChannel.tryLock()
             return fileLock
@@ -101,15 +112,27 @@ class FileLockUtil:
         finally:
             self.logUtil.putF("Finally - Closing FileChannel", self, "getLock")
             fileChannel.close()
+
+    def getLock(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getLock_j1_1(*args)
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getLock_j1_2(*args)
+        if len(args) == 1:
+            return self.getLock_j1_3(*args)
+        return getattr(self, "getLock_j" + str(len(args)))(*args)
 # from java.nio.channels.FileChannel import FileChannel
 # from java.nio.channels.FileLock import FileLock
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
-from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
 
 
-FileLockUtil.instance = FileLockUtil()
+def _FileLockUtil_instance() -> object:
+    return FileLockUtil()
+
+lazy_static(FileLockUtil, "instance", _FileLockUtil_instance)
 

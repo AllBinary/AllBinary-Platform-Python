@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HttpRequestUtil:
@@ -31,6 +32,7 @@ class HttpRequestUtil:
     
 
     def getLastSeparatorIndex(self, requestPath: str) -> int:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         beginIndex: int = requestPath.rfind(AbPathData.getInstance().SEPARATOR)
         if beginIndex < 0:
             beginIndex = requestPath.rfind("\\")
@@ -44,8 +46,11 @@ class HttpRequestUtil:
             return requestPath
         else:
             return requestPath[beginIndex + 1:]
-from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
 
 
-HttpRequestUtil.instance = HttpRequestUtil()
+def _HttpRequestUtil_instance() -> object:
+    return HttpRequestUtil()
+
+lazy_static(HttpRequestUtil, "instance", _HttpRequestUtil_instance)
 

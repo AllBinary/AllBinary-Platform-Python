@@ -29,6 +29,11 @@ class KeyboardInputAutomationProcessor:
     # throws Exception
     @staticmethod
     def process(keyActionScriptInputInterface: KeyboardActionScriptInputInterface) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(str(CommonLabels.getInstance().START) + str(keyActionScriptInputInterface), "KeyInputAutomationProcessor", commonStrings.PROCESS)
@@ -54,10 +59,10 @@ class KeyboardInputAutomationProcessor:
                 while not timeHelper.isTimeTNT() or toLong > 6000:
                     toLong += 1
                     time.sleep((50) / 1000)
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

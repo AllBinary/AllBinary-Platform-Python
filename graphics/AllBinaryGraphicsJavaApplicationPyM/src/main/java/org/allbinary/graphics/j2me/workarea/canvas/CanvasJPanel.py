@@ -15,26 +15,32 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventListener import MyGraphicItemEventListener
-from org.allbinary.graphics.j2me.workarea.canvas.JPanel import JPanel
-from org.allbinary.graphics.j2me.workarea.canvas.MouseListener import MouseListener
-from org.allbinary.graphics.j2me.workarea.canvas.MouseMotionListener import MouseMotionListener
-from org.allbinary.graphics.j2me.workarea.canvas.KeyListener import KeyListener
-from org.allbinary.graphics.j2me.workarea.canvas.Color import Color
+# from java.awt.event.KeyListener import KeyListener
+# from java.awt.event.MouseListener import MouseListener
+# from java.awt.event.MouseMotionListener import MouseMotionListener
+# from javax.swing.JPanel import JPanel
 
 
-class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGraphicItemEventListener):
+class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGraphicItemEventListener)):
     frame: int = 0
-    gridColor: Color = Color(int(BasicColorFactory.getInstance().WHITE))
-    backgroundColor: Color = Color(int(BasicColorFactory.getInstance().CLEAR_COLOR))
+    gridColor: Color = None
+    backgroundColor: Color = None
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.game.input.GameInputStrings import GameInputStrings
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.logic.communication.log.GuiLog import GuiLog
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.guiLog: GuiLog = GuiLog.getInstance()
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
         self.selectedTool: GraphicItemInterface = None
-        self.graphicItemHashMap: dict = None
+        self.graphicItemHashMap: HashMap = None
         self.canvasDimension: IntegerDimension = None
         self.angle: float = 0.0
         self.canvasTreeNode: DefaultMutableTreeNode = None
@@ -51,6 +57,8 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
 
     def _constructor4(self, workAreaJTreeJPanel: WorkAreaJTreeJPanel, dimension: Dimension, x: int, y: int) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
+        from org.allbinary.log.LOGGING import LOGGING
         super().__init__()
         self._init_fields()
         self.grid = Grid()
@@ -61,12 +69,14 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
             self.setSize(dimension)
             self.setCanvasSize(x, y)
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.GRAPHICSCREATION):
+            if LOGGING.contains(LOGGING.GRAPHICSCREATION):
                 self.guiLog.put("Constructor Error", self, "contructor", e)
     
 
     def _constructor3(self, workAreaJTreeJPanel: WorkAreaJTreeJPanel, dimension: Dimension, canvasDom: CanvasDom) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
+        from org.allbinary.log.LOGGING import LOGGING
         super().__init__()
         self._init_fields()
         self.grid = Grid(canvasDom.getGrid())
@@ -88,7 +98,7 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
             self.workAreaJTreeJPanel.expand()
             self.workAreaJTreeJPanel.repaint()
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.GRAPHICSCREATION):
+            if LOGGING.contains(LOGGING.GRAPHICSCREATION):
                 self.guiLog.put("Constructor Error", self, "contructor", e)
     
 
@@ -96,6 +106,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     def initMyComponents(self) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasTreeLabel import CanvasTreeLabel
         from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+        from org.allbinary.logic.StdUtil import StdUtil
         self.frameLabel = CanvasTreeLabel("FrameLabel" + str(int(CanvasJPanel.frame)))
         self.canvasTreeNode = DefaultMutableTreeNode(self.frameLabel)
         CanvasJPanel.frame += 1
@@ -115,13 +128,13 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.canvas.GridLayout import GridLayout
         self.setLayout(GridLayout(1, 1))
     
 
     # throws Exception
     def setCanvasSize(self, x: int, y: int) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+        from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
         self.grid.isGridPossible = True
         if x <= 0:
             self.grid.isGridPossible = False
@@ -137,12 +150,14 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
         self.grid.isChanged = True
     
 
-    def setGrid(self, point: GPoint) -> None:
+    def setGrid_j1(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         self.setGrid(point.getX(), point.getY())
     
 
-    # Java overloaded method: Python keeps the last definition
-    def setGrid(self, xSize: int, ySize: int) -> None:
+    def setGrid_j2(self, xSize: int, ySize: int) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
         try:
             if xSize >= self.getCanvasDimension().getWidth() / 2 or xSize < 1:
                 raise GraphicsException("X Size Error: " + str(xSize) + " WorkArea X: " + str(self.getCanvasDimension().getWidth()), self, "setGrid")
@@ -152,6 +167,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
             self.grid.isChanged = True
         except Exception as e:
             pass
+
+    def setGrid(self, *args):
+        return getattr(self, "setGrid_j" + str(len(args)))(*args)
     
 
     # throws Exception
@@ -175,6 +193,12 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def explodeAll(self) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         newPoints: BasicArrayList = BasicArrayListD()
         graphicItemArray: list[object] = self.getGraphicItemHashMap().keySet().toArray()
         size: int = len(graphicItemArray)
@@ -202,6 +226,11 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
 
     # throws Exception
     def explode(self, howMuch: int, explosionType: int) -> None:
+        from org.allbinary.animation.VectorExplosionGenerator import VectorExplosionGenerator
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.Points import Points
+        from org.allbinary.graphics.pipeline.RandomRotationFactory import RandomRotationFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicItemArray: list[object] = self.getGraphicItemHashMap().keySet().toArray()
         size: int = len(graphicItemArray)
         for index in range(0, size):
@@ -217,6 +246,10 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
 
     # throws Exception
     def mirror(self) -> None:
+        from org.allbinary.animation.VectorMirrorGenerator import VectorMirrorGenerator
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.Points import Points
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         width: int = self.getCanvasDimension().getWidth()
         graphicItemArray: list[object] = self.getGraphicItemHashMap().keySet().toArray()
         size: int = len(graphicItemArray)
@@ -231,11 +264,15 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
 
     # throws Exception
     def center(self) -> None:
+        from org.allbinary.animation.vector.VectorCenterGenerator import VectorCenterGenerator
         VectorCenterGenerator().transform(self.getGraphicItemHashMap())
         self.repaint()
     
 
     def setNewTool(self) -> None:
+        from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.ToolFactory import ToolFactory
         try:
             StatusFactory.getInstance().setStatus("Tool Selected")
             self.selectedTool = ToolFactory.getInstance().getSelectedToolFactory().getInstance(self)
@@ -250,13 +287,16 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
 
     # throws Exception
     def duplicateGraphicItem(self, graphicItem: GraphicItemInterface) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         graphicItemClone: GraphicItemInterface = graphicItem.duplicate()
         self.getGraphicItemHashMap().put(graphicItemClone.getTreeNode(), graphicItemClone)
         self.canvasTreeNode.add(graphicItemClone.getTreeNode())
     
 
     # throws Exception
-    def duplicateGraphicItemHashMap(self, hashMap: dict) -> None:
+    def duplicateGraphicItemHashMap(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         mutableTreeNodeArray: list[object] = hashMap.keySet().toArray()
         size: int = len(mutableTreeNodeArray)
         for index in range(0, size):
@@ -265,7 +305,8 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
             self.duplicateGraphicItem(graphicItem)
     
 
-    def getGraphicItemHashMap(self) -> dict:
+    def getGraphicItemHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.graphicItemHashMap
     
 
@@ -286,10 +327,12 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def getSelectedTool(self) -> GraphicItemInterface:
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         return self.selectedTool
     
 
     def drawItems(self, graphics: Graphics) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         angleDouble: float = float(self.angle)
         graphicItemArray: list[object] = self.getGraphicItemHashMap().keySet().toArray()
         size: int = len(graphicItemArray)
@@ -336,6 +379,7 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     # throws Exception
     def toDom(self) -> Node:
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+        from org.w3c.dom.Node import Node
         return CanvasDom(self).toDom()
     
 
@@ -344,6 +388,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def mouseClicked(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_CLICKED_LABEL + self.logMouseEvent(mouseEvent))
         if self.getSelectedTool() is not None and self.getSelectedTool().isActive():
             graphicItem: GraphicItemInterface = self.getSelectedTool()
@@ -361,14 +408,19 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def mouseEntered(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         StatusFactory.getInstance().setStatusNoLog(self.logMouseEvent(mouseEvent))
     
 
     def mouseExited(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         StatusFactory.getInstance().setStatusNoLog(self.logMouseEvent(mouseEvent))
     
 
     def mousePressed(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_PRESSED_LABEL + self.logMouseEvent(mouseEvent))
         if self.getSelectedTool() is not None:
             graphicItem: GraphicItemInterface = self.getSelectedTool()
@@ -379,6 +431,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def mouseReleased(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_RELEASED_LABEL + self.logMouseEvent(mouseEvent))
         graphicItem: GraphicItemInterface = self.getSelectedTool()
         if graphicItem is not None:
@@ -389,6 +444,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def mouseDragged(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_DRAGGED_LABEL + self.logMouseEvent(mouseEvent))
         graphicItem: GraphicItemInterface = self.getSelectedTool()
         if graphicItem is not None:
@@ -399,6 +457,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def mouseMoved(self, mouseEvent: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_MOVED_LABEL + self.logMouseEvent(mouseEvent))
         if self.getSelectedTool() is not None and self.getSelectedTool().isActive():
             graphicItem: GraphicItemInterface = self.getSelectedTool()
@@ -409,6 +470,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def logMouseEvent(self, mouseEvent: MouseEvent) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(PositionStrings.getInstance().X_LABEL)
         stringBuffer.appendint(int(mouseEvent.getX() / self.getXPixelsPerWorkAreaPixel()))
@@ -419,6 +483,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def keyPressed(self, keyEvent: KeyEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         StatusFactory.getInstance().setStatus("Key Pressed")
         try:
             graphicItemArray: list[object] = self.graphicItemHashMap.keySet().toArray()
@@ -457,6 +524,7 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def delete(self, evt: MyGraphicItemEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
         self.getGraphicItemHashMap().remove(evt.getTreeNode())
         self.workAreaJTreeJPanel.updateTree()
         self.workAreaJTreeJPanel.expand()
@@ -464,7 +532,8 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def deselect(self, evt: MyGraphicItemEvent) -> None:
-        from org.allbinary.graphics.j2me.workarea.canvas.Color import Color
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
         graphicItemInterface: GraphicItemInterface = self.getGraphicItemHashMap().get(evt.getTreeNode())
         if graphicItemInterface is not None:
             graphicItemInterface.setColor(Color.WHITE)
@@ -473,7 +542,8 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     def highlight(self, evt: MyGraphicItemEvent) -> None:
-        from org.allbinary.graphics.j2me.workarea.canvas.Color import Color
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
         graphicItemInterface: GraphicItemInterface = self.getGraphicItemHashMap().get(evt.getTreeNode())
         if graphicItemInterface is not None:
             graphicItemInterface.setColor(Color.YELLOW)
@@ -482,7 +552,7 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     # throws Exception
-    def duplicate(self) -> CanvasJPanel:
+    def duplicate_j0(self) -> CanvasJPanel:
         newCanvasJPanel: CanvasJPanel = CanvasJPanel(self.workAreaJTreeJPanel, self.getSize(), self.getCanvasDimension().getWidth(), self.getCanvasDimension().getHeight())
         newCanvasJPanel.setGrid(self.getGrid().getGrid())
         newCanvasJPanel.setAngle(self.getAngle())
@@ -494,8 +564,9 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def duplicate(self, event: MyGraphicItemEvent) -> None:
+    def duplicate_j1(self, event: MyGraphicItemEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
         treeNode: MutableTreeNode = event.getTreeNode()
         graphicItem: GraphicItemInterface = self.getGraphicItemHashMap().get(treeNode)
         if graphicItem is not None:
@@ -503,9 +574,14 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
             self.workAreaJTreeJPanel.updateTree()
             self.workAreaJTreeJPanel.expand()
             self.workAreaJTreeJPanel.repaint()
+
+    def duplicate(self, *args):
+        return getattr(self, "duplicate_j" + str(len(args)))(*args)
     
 
     def rotate(self, event: MyGraphicItemEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
         treeNode: MutableTreeNode = event.getTreeNode()
         graphicItem: GraphicItemInterface = self.getGraphicItemHashMap().get(treeNode)
         if graphicItem is not None:
@@ -522,38 +598,56 @@ class CanvasJPanel(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGr
 
     def getGrid(self) -> Grid:
         return self.grid
-# from java.awt import *
+# from java.awt.Color import Color
+# from java.awt.Dimension import Dimension
+# from java.awt.Graphics import Graphics
 # from java.util.HashMap import HashMap
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
-from org.allbinary.animation.VectorExplosionGenerator import VectorExplosionGenerator
-from org.allbinary.animation.VectorMirrorGenerator import VectorMirrorGenerator
-from org.allbinary.animation.vector.VectorCenterGenerator import VectorCenterGenerator
-from org.allbinary.game.input.GameInputStrings import GameInputStrings
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
-from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
-from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
-from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
-from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
-from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
-from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
-from org.allbinary.graphics.j2me.workarea.tools.Points import Points
-from org.allbinary.graphics.j2me.workarea.tools.ToolFactory import ToolFactory
-from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
-from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
-from org.allbinary.graphics.pipeline.RandomRotationFactory import RandomRotationFactory
-from org.allbinary.log.LOGGING import LOGGING
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.GuiLog import GuiLog
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.w3c.dom.Node import Node
+# from org.allbinary.animation.VectorExplosionGenerator import VectorExplosionGenerator
+# from org.allbinary.animation.VectorMirrorGenerator import VectorMirrorGenerator
+# from org.allbinary.animation.vector.VectorCenterGenerator import VectorCenterGenerator
+# from org.allbinary.game.input.GameInputStrings import GameInputStrings
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
+# from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
+# from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
+# from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+# from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+# from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
+# from org.allbinary.graphics.j2me.workarea.tools.Points import Points
+# from org.allbinary.graphics.j2me.workarea.tools.ToolFactory import ToolFactory
+# from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEvent import MyGraphicItemEvent
+# from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventService import MyGraphicItemEventService
+# from org.allbinary.graphics.pipeline.RandomRotationFactory import RandomRotationFactory
+# from org.allbinary.log.LOGGING import LOGGING
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.GuiLog import GuiLog
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Node import Node
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.KeyEvent import KeyEvent
+# from java.awt.event.MouseEvent import MouseEvent
 
+
+def _CanvasJPanel_gridColor() -> object:
+    from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+    return Color(int(BasicColorFactory.getInstance().WHITE))
+
+lazy_static(CanvasJPanel, "gridColor", _CanvasJPanel_gridColor)
+
+def _CanvasJPanel_backgroundColor() -> object:
+    from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+    return Color(int(BasicColorFactory.getInstance().CLEAR_COLOR))
+
+lazy_static(CanvasJPanel, "backgroundColor", _CanvasJPanel_backgroundColor)
 

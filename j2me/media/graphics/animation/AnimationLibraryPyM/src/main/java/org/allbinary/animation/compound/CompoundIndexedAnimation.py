@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.compound.CompoundAnimationInterface import CompoundAnimationInterface
 
 
-class CompoundIndexedAnimation(IndexedAnimation, CompoundAnimationInterface):
+class CompoundIndexedAnimation(*java_bases(IndexedAnimation, CompoundAnimationInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation

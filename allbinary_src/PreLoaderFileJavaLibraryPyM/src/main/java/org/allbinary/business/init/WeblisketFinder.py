@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WeblisketFinder:
@@ -22,6 +23,9 @@ class WeblisketFinder:
     KEY: str = "installerdata.dat"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.subDirectory: SubDirectory = SubDirectory.getInstance()
@@ -37,6 +41,10 @@ class WeblisketFinder:
     
 
     def findAll(self, path: str) -> BasicArrayList:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             self.logUtil.putF(self.commonStrings.START, self, "findAll")
             return self.subDirectory.search(WeblisketFinder.KEY, AbFile.createAbFile(path))
@@ -48,6 +56,9 @@ class WeblisketFinder:
     
 
     def getInstallationPath(self, file: AbFile) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.file.AbFile import AbFile
         try:
             filePath: str = file.getPath()
             end: int = filePath.find(WeblisketFinder.KEY)
@@ -55,7 +66,7 @@ class WeblisketFinder:
                 return None
             return filePath[0:end]
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRELOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getInstallationPath", e)
             return None
     
@@ -63,19 +74,24 @@ class WeblisketFinder:
     # throws Exception
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringUtil: StringUtil = StringUtil.getInstance()
         vector: BasicArrayList = WeblisketFinder.getInstance().findAll(stringUtil.EMPTY_STRING)
         print(vector.size())
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-WeblisketFinder.instance = WeblisketFinder()
+def _WeblisketFinder_instance() -> object:
+    return WeblisketFinder()
+
+lazy_static(WeblisketFinder, "instance", _WeblisketFinder_instance)
 

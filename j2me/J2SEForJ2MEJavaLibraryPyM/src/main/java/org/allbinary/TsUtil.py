@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import gc
 import threading
+from java.lang.ClassLoader import ClassLoader
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,11 +33,11 @@ class TsUtil:
     
 
     def longBitsToDouble(self, bits: int) -> float:
-        return java.lang.Double.longBitsToDouble(bits)
+        return Double.longBitsToDouble(bits)
     
 
     def intBitsToFloat(self, bits: int) -> float:
-        return java.lang.Float.intBitsToFloat(bits)
+        return Float.intBitsToFloat(bits)
     
 
     def hashCode(self, anyType: object) -> int:

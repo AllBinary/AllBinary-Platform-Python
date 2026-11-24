@@ -16,13 +16,17 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
-from org.allbinary.image.gui.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
-class CreateIconImagesJPanel(JPanel, ImageProcessorInputCompositeInterface):
+class CreateIconImagesJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageProcessorInput: ImageProcessorInput = None
@@ -30,6 +34,7 @@ class CreateIconImagesJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -46,10 +51,28 @@ class CreateIconImagesJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def process(self) -> None:
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.ImageUtil import ImageUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.logic.io.file.AbFile import AbFile
+#                 from org.allbinary.logic.string.StringMaker import StringMaker
+#                 from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+#                 from org.allbinary.media.image.ImageUtil import ImageUtil
+#                 from org.allbinary.util.BasicArrayList import BasicArrayList
+#                 from org.allbinary.util.BasicArrayListD import BasicArrayListD
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     imageUtil: ImageUtil = ImageUtil.getInstance()
@@ -89,17 +112,16 @@ class CreateIconImagesJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def getImageProcessorInput(self) -> ImageProcessorInput:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         return self.imageProcessorInput
     
 
     def setImageProcessorInput(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         self.imageProcessorInput = imageProcessorInput
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
         self.aboveJButton = JButton()
         self.aboveJButton.setText("Process")
         self.aboveJButton.addActionListener((ActionListener()  # Java anonymous class body:
@@ -110,8 +132,8 @@ class CreateIconImagesJPanel(JPanel, ImageProcessorInputCompositeInterface):
 ))
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.aboveJButton).addGap(0, 335, Short.MAX_VALUE)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addComponent(self.aboveJButton).addContainerGap(286, Short.MAX_VALUE)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.aboveJButton).addGap(0, 335, Short.MAX_VALUE)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addComponent(self.aboveJButton).addContainerGap(286, Short.MAX_VALUE)))
     
 
     def aboveJButtonActionPerformed(self, evt: ActionEvent) -> None:
@@ -119,15 +141,19 @@ class CreateIconImagesJPanel(JPanel, ImageProcessorInputCompositeInterface):
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.awt.image.Raster import Raster
 # from java.io.File import File
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
-from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
-from org.allbinary.media.image.ImageUtil import ImageUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+# from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+# from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
 
 

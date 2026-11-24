@@ -31,15 +31,19 @@ class ShippingAddressTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.getCommand() is not None:
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                if self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     self.setName("Basic Shipping Address View")
                     self.setObjectFile("views.generic.address.shipping.ViewShippingAddressesView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.EDIT) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.EDIT) == 0:
                     self.setName("Basic Shipping Address View")
                     self.setObjectFile("views.generic.address.shipping.EditShippingAddressesView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.NEW) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.NEW) == 0:
                     self.setName("Basic Shipping Address View")
                     self.setObjectFile("views.generic.address.shipping.NewShippingAddressesView")
                 elif self.getCommand().compareTo(self.commonStrings.INSERT) == 0:
@@ -65,8 +69,9 @@ class ShippingAddressTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

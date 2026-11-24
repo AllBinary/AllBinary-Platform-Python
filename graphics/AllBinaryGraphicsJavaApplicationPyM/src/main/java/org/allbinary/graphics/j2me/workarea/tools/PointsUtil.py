@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PointsUtil:
@@ -28,12 +29,19 @@ class PointsUtil:
 
     # throws Exception
     def doTransforms(self, pointVector: BasicArrayList, angle: float, fulcrumPoint: GPoint) -> BasicArrayList:
+        from org.allbinary.animation.VectorRotationGenerator import VectorRotationGenerator
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return VectorRotationGenerator.getInstance().getListAtAngle(fulcrumPoint.getX(), fulcrumPoint.getY(), pointVector, AngleFactory.getInstance().getAt(int(angle)))
-from org.allbinary.animation.VectorRotationGenerator import VectorRotationGenerator
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.animation.VectorRotationGenerator import VectorRotationGenerator
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-PointsUtil.instance = PointsUtil()
+def _PointsUtil_instance() -> object:
+    return PointsUtil()
+
+lazy_static(PointsUtil, "instance", _PointsUtil_instance)
 

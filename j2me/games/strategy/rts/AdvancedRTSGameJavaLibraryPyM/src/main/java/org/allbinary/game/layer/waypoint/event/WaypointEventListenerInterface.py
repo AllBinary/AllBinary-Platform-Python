@@ -23,7 +23,8 @@ class WaypointEventListenerInterface(EventListenerInterface):
 
     # throws Exception
     def onWaypointEvent(self, event: RTSLayerEvent) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
         raise NotImplementedError()
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
 
 

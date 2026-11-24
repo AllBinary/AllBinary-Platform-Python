@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ColorUtil:
@@ -37,8 +38,11 @@ class ColorUtil:
         if color.getRed() < 0x77 and color.getRed() < 0x77 and color.getRed() < 0x77:
             return True
         return False
-# from java.awt import *
+# from java.awt.Color import Color
 
 
-ColorUtil.instance = ColorUtil()
+def _ColorUtil_instance() -> object:
+    return ColorUtil()
+
+lazy_static(ColorUtil, "instance", _ColorUtil_instance)
 

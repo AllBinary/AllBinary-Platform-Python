@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransactionTypeFactory:
@@ -38,5 +39,8 @@ class TransactionTypeFactory:
 from org.allbinary.business.user.commerce.money.payment.types.TransactionType import TransactionType
 
 
-TransactionTypeFactory.instance = TransactionTypeFactory()
+def _TransactionTypeFactory_instance() -> object:
+    return TransactionTypeFactory()
+
+lazy_static(TransactionTypeFactory, "instance", _TransactionTypeFactory_instance)
 

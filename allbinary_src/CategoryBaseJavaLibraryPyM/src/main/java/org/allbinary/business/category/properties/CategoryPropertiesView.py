@@ -31,13 +31,17 @@ class CategoryPropertiesView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Element import Element
+        from org.w3c.dom.Node import Node
         categoryNode: Node = document.createElement(CategoryData.getInstance().NAME)
         newCategoryNode: Element = categoryNode
         newCategoryNode.setAttribute(CategoryData.getInstance().LABEL, self.categoryPropertiesInterface.getValue())
         return categoryNode
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Element import Element
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Element import Element
+# from org.w3c.dom.Node import Node
 
 

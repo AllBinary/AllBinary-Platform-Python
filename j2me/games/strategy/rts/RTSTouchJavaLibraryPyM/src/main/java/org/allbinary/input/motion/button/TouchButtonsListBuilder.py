@@ -21,6 +21,8 @@ from org.allbinary.input.motion.button.BaseTouchInput import BaseTouchInput
 class TouchButtonsListBuilder(BaseTouchInput):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.baseTouchInputList: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -29,6 +31,7 @@ class TouchButtonsListBuilder(BaseTouchInput):
     
 
     def addList(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = self.baseTouchInputList.size()
         baseTouchInput: BaseTouchInput = None
         for index in range(0, size):
@@ -38,7 +41,7 @@ class TouchButtonsListBuilder(BaseTouchInput):
 
     def add(self, baseTouchInput: BaseTouchInput) -> None:
         self.baseTouchInputList.add(baseTouchInput)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

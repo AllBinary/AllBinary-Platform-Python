@@ -30,25 +30,33 @@ class OverrideStoreTransformInfoObjectConfig(GenericStoreTransformInfoObjectConf
     
 
     def _constructor2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(abeClientInformation, transformInfoInterface)
     
 
     def _constructor3(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, document: Document) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Document import Document
         super().__init__(abeClientInformation, transformInfoInterface, document)
         self.setDocument(self.generate(self.toXmlDoc()))
     
 
     def _constructor4(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, name: str, type_: str) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(abeClientInformation, transformInfoInterface, name, type_)
         self.setDocument(self.generate(self.toXmlDoc()))
     
 
     # throws Exception
     def generate(self, objectConfigDocument: Document) -> Document:
+        from org.w3c.dom.Document import Document
         newObjectConfigDocument: Document = super().generate(objectConfigDocument)
         return newObjectConfigDocument
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
 
 

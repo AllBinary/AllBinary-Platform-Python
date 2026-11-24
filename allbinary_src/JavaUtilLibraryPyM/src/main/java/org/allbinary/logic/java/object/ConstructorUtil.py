@@ -26,6 +26,7 @@ class ConstructorUtil:
 
     @staticmethod
     def viewAll(myClass: type, lineBreak: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         constructor: list[Constructor] = myClass.getConstructors()
         stringBuffer.append("Constructors: ")
@@ -37,6 +38,8 @@ class ConstructorUtil:
 
     @staticmethod
     def view(constructor: Constructor, lineBreak: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         if constructor is not None:
             commonSeps: CommonSeps = CommonSeps.getInstance()
             stringBuffer: StringMaker = StringMaker()
@@ -52,7 +55,7 @@ class ConstructorUtil:
         else:
             return "Constructor Null"
 # from java.lang.reflect.Constructor import Constructor
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

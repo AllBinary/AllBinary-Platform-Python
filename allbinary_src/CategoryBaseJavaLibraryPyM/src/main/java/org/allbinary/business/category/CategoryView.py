@@ -21,6 +21,7 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class CategoryView(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.categoryInterface: CategoryInterface = None
     
@@ -36,10 +37,18 @@ class CategoryView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.business.category.properties.CategoryPropertiesView import CategoryPropertiesView
+        from org.allbinary.logic.java.anyType.InterfaceUtil import InterfaceUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         node: Node = document.createElement(CategoryData.getInstance().NAME)
         childCategoryVector: BasicArrayList = self.categoryInterface.getChildNodes()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF("Number Of Children: " + str(childCategoryVector.size()), self, "toXmlNode")
         size: int = childCategoryVector.size()
         for i in range(0, size):
@@ -56,14 +65,16 @@ class CategoryView(DomNodeInterface):
             childCategoryNode: Node = CategoryPropertiesView(categoryPropertiesInterface).toXmlNode(document)
             node.appendChild(childCategoryNode)
         return node
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-from org.allbinary.business.category.properties.CategoryPropertiesView import CategoryPropertiesView
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.anyType.InterfaceUtil import InterfaceUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+# from org.allbinary.business.category.properties.CategoryPropertiesView import CategoryPropertiesView
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.anyType.InterfaceUtil import InterfaceUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

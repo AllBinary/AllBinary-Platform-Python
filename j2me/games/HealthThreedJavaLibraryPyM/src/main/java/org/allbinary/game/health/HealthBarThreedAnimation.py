@@ -21,12 +21,18 @@ from org.allbinary.game.health.HealthBarAnimation import HealthBarAnimation
 class HealthBarThreedAnimation(HealthBarAnimation):
 
     def _init_fields(self) -> None:
+        from min3d.objectPrimitives.Rectangle import Rectangle
+        from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessor import Object3dProcessor
+        from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessorUtil import Object3dProcessorUtil
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.rectangle: Rectangle = None
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.object3dProcessor: Object3dProcessor = Object3dProcessorUtil.getInstance().getInstanceObject3dProcessor()
     
 
     def __init__(self, layerInterface: AllBinaryLayer, location: int) -> None:
+        from min3d.objectPrimitives.Rectangle import Rectangle
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(layerInterface, location)
         self._init_fields()
         self.basicColor = self.basicColorFactory.GREEN
@@ -38,6 +44,7 @@ class HealthBarThreedAnimation(HealthBarAnimation):
     
 
     def updateColor(self) -> None:
+        from min3d.core.ColorBufferList import ColorBufferList
         colorBufferList: ColorBufferList = self.rectangle.getVertices().getColor4BufferList()
         size: int = colorBufferList.size()
         index = size
@@ -46,6 +53,7 @@ class HealthBarThreedAnimation(HealthBarAnimation):
     
 
     def updateSize(self) -> None:
+        from min3d.core.Number3dBufferList import Number3dBufferList
         number3dBufferList: Number3dBufferList = self.rectangle.getVertices().getPointsOnFacesNumber3dBufferList()
         width: int = self.x2
         height: int = self.thickness * 2
@@ -70,25 +78,30 @@ class HealthBarThreedAnimation(HealthBarAnimation):
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Graphics import Graphics
+        from min3d.vos.Number3d import Number3d
+        from org.allbinary.device.OpenGLESGraphics import OpenGLESGraphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         openGLESGraphics: OpenGLESGraphics = graphics
         gl: GL10 = openGLESGraphics.getGl10()
         viewPosition: ViewPositionBase = self.allbinaryLayer.getViewPosition()
         positionNumber3d: Number3d = self.rectangle.getPosition()
-        positionNumber3d.x = -(float(viewPosition.getX()))
-        positionNumber3d.z = -(float(viewPosition.getY()))
+        positionNumber3d.x = -float(viewPosition.getX())
+        positionNumber3d.z = -float(viewPosition.getY())
         positionNumber3d.y = viewPosition.getZ() + self.allbinaryLayer.getHeight()
         self.object3dProcessor.drawObject(gl, self.rectangle)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Graphics import Graphics
-from min3d.core.ColorBufferList import ColorBufferList
-from min3d.core.Number3dBufferList import Number3dBufferList
-from min3d.objectPrimitives.Rectangle import Rectangle
-from min3d.vos.Number3d import Number3d
-from org.allbinary.device.OpenGLESGraphics import OpenGLESGraphics
-from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessor import Object3dProcessor
-from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessorUtil import Object3dProcessorUtil
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from min3d.core.ColorBufferList import ColorBufferList
+# from min3d.core.Number3dBufferList import Number3dBufferList
+# from min3d.objectPrimitives.Rectangle import Rectangle
+# from min3d.vos.Number3d import Number3d
+# from org.allbinary.device.OpenGLESGraphics import OpenGLESGraphics
+# from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessor import Object3dProcessor
+# from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessorUtil import Object3dProcessorUtil
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

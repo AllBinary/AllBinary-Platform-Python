@@ -37,7 +37,6 @@ class NoPlayer(BasicPlayer):
     
 
     def getControl(self, controlType: str) -> Control:
-        from org.allbinary.media.audio.NullControl import NullControl
         from javax.microedition.media.Control import Control
         return NullControl()
     

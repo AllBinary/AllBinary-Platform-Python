@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SqlConnectionPool:
@@ -23,9 +24,12 @@ class SqlConnectionPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stdUtil: StdUtil = StdUtil.getInstance()
-        self.connectionHashMap: dict = None
+        self.connectionHashMap: HashMap = None
         self.FIRST_NEW_CONNECTION_CREATED: str = "First New Connection Created: "
         self.FIRST: str = "First "
         self.NEW_CONNECTION_FOR: str = "New Connection For "
@@ -53,16 +57,21 @@ class SqlConnectionPool:
             return self._get_unlocked(url)
 
     def _get_unlocked(self, url: str) -> Connection:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if self.connectionHashMap is None:
             self.connectionHashMap = self.stdUtil.createHashMap()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
                 self.logUtil.putF(self.FIRST_NEW_CONNECTION_CREATED + url, self, self.METHOD_GET)
             return DriverManager.getConnection(url)
         else:
             connectionVector: BasicArrayList = self.connectionHashMap.get(url)
             if connectionVector is None:
                 connectionVector = BasicArrayListD()
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append(self.FIRST)
                     stringBuffer.append(self.NEW_CONNECTION_FOR)
@@ -71,7 +80,7 @@ class SqlConnectionPool:
                     self.logUtil.putF(str(stringBuffer), self, self.METHOD_GET)
                 return DriverManager.getConnection(url)
             elif connectionVector.size() == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
                     self.logUtil.putF(str(StringMaker().append(self.NEW_CONNECTION_FOR).append(url).append(self.CREATED)), self, self.METHOD_GET)
                 return DriverManager.getConnection(url)
             else:
@@ -82,7 +91,7 @@ class SqlConnectionPool:
                     if not sqlConnection.isClosed():
                         connectionVector.remove(sqlConnection)
                         self.connectionHashMap.put(url, connectionVector)
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
                             stringBuffer.delete(0, stringBuffer.length())
                             stringBuffer.append(self.NUMBER_OF_SQL_CONNECTIONS_FOR)
                             stringBuffer.append(url)
@@ -91,7 +100,7 @@ class SqlConnectionPool:
                             self.logUtil.putF(self.NUMBER_OF_SQL_CONNECTION_VECTORS + str(self.connectionHashMap.size()), self, self.METHOD_GET)
                             self.logUtil.putF(str(stringBuffer), self, self.METHOD_GET)
                         return sqlConnection
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(self.NEW_CONNECTION_FOR)
             stringBuffer.append(url)
@@ -106,6 +115,11 @@ class SqlConnectionPool:
             return self._add_unlocked(url, sqlConnection)
 
     def _add_unlocked(self, url: str, sqlConnection: Connection) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if not sqlConnection.isClosed():
             connectionVector: BasicArrayList = None
             if self.connectionHashMap is None:
@@ -118,7 +132,7 @@ class SqlConnectionPool:
                     connectionVector = BasicArrayListD()
                 connectionVector.add(sqlConnection)
                 self.connectionHashMap.put(url, connectionVector)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append(self.NUMBER_OF_SQL_CONNECTIONS_FOR)
                 stringBuffer.append(url)
@@ -126,18 +140,23 @@ class SqlConnectionPool:
                 stringBuffer.appendint(connectionVector.size())
                 self.logUtil.putF(self.NUMBER_OF_SQL_CONNECTION_VECTORS + str(self.connectionHashMap.size()), self, self.METHOD_ADD)
                 self.logUtil.putF(str(stringBuffer), self, self.METHOD_ADD)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
             self.logUtil.putF(self.CONNECTION_ALLREADY_CLOSED, self, self.METHOD_ADD)
 # from java.sql.Connection import Connection
 # from java.sql.DriverManager import DriverManager
 # from java.sql.SQLException import SQLException
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-SqlConnectionPool.instance = SqlConnectionPool()
+def _SqlConnectionPool_instance() -> object:
+    return SqlConnectionPool()
+
+lazy_static(SqlConnectionPool, "instance", _SqlConnectionPool_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FullScreenUtil:
@@ -28,10 +29,13 @@ class FullScreenUtil:
 
     # throws Exception
     def initOnRun(self, fullScreenInterface: Canvas, commandListener: CommandListener) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.CommandListener import CommandListener
         pass
     
 
     def init(self, fullScreenInterface: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
         pass
     
 
@@ -40,10 +44,14 @@ class FullScreenUtil:
     
 
     def isScreenChangeCanvas(self, fullScreenInterface: Canvas) -> bool:
+        from javax.microedition.lcdui.Canvas import Canvas
         return self.isScreenChange(fullScreenInterface.isFullScreenMode())
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.CommandListener import CommandListener
 
 
-FullScreenUtil.instance = FullScreenUtil()
+def _FullScreenUtil_instance() -> object:
+    return FullScreenUtil()
+
+lazy_static(FullScreenUtil, "instance", _FullScreenUtil_instance)
 

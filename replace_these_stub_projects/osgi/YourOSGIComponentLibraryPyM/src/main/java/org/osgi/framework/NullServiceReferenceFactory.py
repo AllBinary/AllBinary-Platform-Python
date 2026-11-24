@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullServiceReferenceFactory:
@@ -33,5 +34,8 @@ class NullServiceReferenceFactory:
 from org.osgi.framework.NullServiceReference import NullServiceReference
 
 
-NullServiceReferenceFactory.instance = NullServiceReferenceFactory()
+def _NullServiceReferenceFactory_instance() -> object:
+    return NullServiceReferenceFactory()
+
+lazy_static(NullServiceReferenceFactory, "instance", _NullServiceReferenceFactory_instance)
 

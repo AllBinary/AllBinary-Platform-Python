@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import traceback
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -46,5 +47,8 @@ class ExceptionUtil:
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 
 
-ExceptionUtil.instance = ExceptionUtil()
+def _ExceptionUtil_instance() -> object:
+    return ExceptionUtil()
+
+lazy_static(ExceptionUtil, "instance", _ExceptionUtil_instance)
 

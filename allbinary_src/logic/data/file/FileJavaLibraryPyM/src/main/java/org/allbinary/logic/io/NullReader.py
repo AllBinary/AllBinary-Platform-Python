@@ -27,14 +27,16 @@ class NullReader(Reader):
     
 
     # throws IOException
-    def read(self) -> int:
+    def read_j0(self) -> int:
         return -1
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def read(self, cbuf: list[str], off: int, len_: int) -> int:
+    def read_j3(self, cbuf: list[str], off: int, len_: int) -> int:
         return -1
+
+    def read(self, *args):
+        return getattr(self, "read_j" + str(len(args)))(*args)
     
 
     # throws IOException

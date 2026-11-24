@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PageData:
@@ -33,5 +34,8 @@ class PageData:
         self._init_fields()
 
 
-PageData.instance = PageData()
+def _PageData_instance() -> object:
+    return PageData()
+
+lazy_static(PageData, "instance", _PageData_instance)
 

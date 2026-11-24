@@ -26,7 +26,8 @@ class MotionEventProcessor:
 
     # throws Exception
     def process(self, motionEvent: MotionEvent) -> None:
+        from android.view.MotionEvent import MotionEvent
         pass
-from android.view.MotionEvent import MotionEvent
+# from android.view.MotionEvent import MotionEvent
 
 

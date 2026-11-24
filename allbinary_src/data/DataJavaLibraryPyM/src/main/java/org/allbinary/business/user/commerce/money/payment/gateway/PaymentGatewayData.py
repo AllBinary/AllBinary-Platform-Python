@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaymentGatewayData:
@@ -67,65 +68,158 @@ class PaymentGatewayData:
         return self.toString()
 
 
-PaymentGatewayData.ID = PaymentGatewayData("PAYMENTGATEWAY_ID")
+def _PaymentGatewayData_ID() -> object:
+    return PaymentGatewayData("PAYMENTGATEWAY_ID")
 
-PaymentGatewayData.NAME = PaymentGatewayData("PAYMENTGATEWAY_NAME")
+lazy_static(PaymentGatewayData, "ID", _PaymentGatewayData_ID)
 
-PaymentGatewayData.VALUE = PaymentGatewayData("PAYMENTGATEWAY_VALUE")
+def _PaymentGatewayData_NAME() -> object:
+    return PaymentGatewayData("PAYMENTGATEWAY_NAME")
 
-PaymentGatewayData.PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE = PaymentGatewayData("PAYMENTGATEWAY_PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE")
+lazy_static(PaymentGatewayData, "NAME", _PaymentGatewayData_NAME)
 
-PaymentGatewayData.PAYMENTPROCESSORINTERFACEFACTORYINTERFACE = PaymentGatewayData("PAYMENTGATEWAY_PAYMENTPROCESSORINTERFACEFACTORYINTERFACE")
+def _PaymentGatewayData_VALUE() -> object:
+    return PaymentGatewayData("PAYMENTGATEWAY_VALUE")
 
-PaymentGatewayData.MODE = PaymentGatewayData("MODE")
+lazy_static(PaymentGatewayData, "VALUE", _PaymentGatewayData_VALUE)
 
-PaymentGatewayData.SERVERPROTOCOL = PaymentGatewayData("SERVERPROTOCOL")
+def _PaymentGatewayData_PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE() -> object:
+    return PaymentGatewayData("PAYMENTGATEWAY_PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE")
 
-PaymentGatewayData.SERVER = PaymentGatewayData("SERVER")
+lazy_static(PaymentGatewayData, "PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE", _PaymentGatewayData_PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE)
 
-PaymentGatewayData.SERVERPORT = PaymentGatewayData("SERVERPORT")
+def _PaymentGatewayData_PAYMENTPROCESSORINTERFACEFACTORYINTERFACE() -> object:
+    return PaymentGatewayData("PAYMENTGATEWAY_PAYMENTPROCESSORINTERFACEFACTORYINTERFACE")
 
-PaymentGatewayData.SERVERPATH = PaymentGatewayData("SERVERPATH")
+lazy_static(PaymentGatewayData, "PAYMENTPROCESSORINTERFACEFACTORYINTERFACE", _PaymentGatewayData_PAYMENTPROCESSORINTERFACEFACTORYINTERFACE)
 
-PaymentGatewayData.TESTPROTOCOL = PaymentGatewayData("TESTSERVERPROTOCOL")
+def _PaymentGatewayData_MODE() -> object:
+    return PaymentGatewayData("MODE")
 
-PaymentGatewayData.TESTSERVER = PaymentGatewayData("TESTSERVER")
+lazy_static(PaymentGatewayData, "MODE", _PaymentGatewayData_MODE)
 
-PaymentGatewayData.TESTPORT = PaymentGatewayData("TESTPORT")
+def _PaymentGatewayData_SERVERPROTOCOL() -> object:
+    return PaymentGatewayData("SERVERPROTOCOL")
 
-PaymentGatewayData.TESTPATH = PaymentGatewayData("TESTSERVERPATH")
+lazy_static(PaymentGatewayData, "SERVERPROTOCOL", _PaymentGatewayData_SERVERPROTOCOL)
 
-PaymentGatewayData.TIMEOUT = PaymentGatewayData("TIMEOUT")
+def _PaymentGatewayData_SERVER() -> object:
+    return PaymentGatewayData("SERVER")
 
-PaymentGatewayData.PROXYPROTOCOL = PaymentGatewayData("PROXYPROTOCOL")
+lazy_static(PaymentGatewayData, "SERVER", _PaymentGatewayData_SERVER)
 
-PaymentGatewayData.PROXYSERVER = PaymentGatewayData("PROXYSERVER")
+def _PaymentGatewayData_SERVERPORT() -> object:
+    return PaymentGatewayData("SERVERPORT")
 
-PaymentGatewayData.PROXYPATH = PaymentGatewayData("PROXYPATH")
+lazy_static(PaymentGatewayData, "SERVERPORT", _PaymentGatewayData_SERVERPORT)
 
-PaymentGatewayData.PROXYUSERNAME = PaymentGatewayData("PROXYUSERNAME")
+def _PaymentGatewayData_SERVERPATH() -> object:
+    return PaymentGatewayData("SERVERPATH")
 
-PaymentGatewayData.PROXYPASSWORD = PaymentGatewayData("PROXYPASSWORD")
+lazy_static(PaymentGatewayData, "SERVERPATH", _PaymentGatewayData_SERVERPATH)
 
-PaymentGatewayData.PROXYPORT = PaymentGatewayData("PROXYPORT")
+def _PaymentGatewayData_TESTPROTOCOL() -> object:
+    return PaymentGatewayData("TESTSERVERPROTOCOL")
 
-PaymentGatewayData.PROXYTIMEOUT = PaymentGatewayData("PROXYTIMEOUT")
+lazy_static(PaymentGatewayData, "TESTPROTOCOL", _PaymentGatewayData_TESTPROTOCOL)
 
-PaymentGatewayData.SPECIAL1 = PaymentGatewayData("SPECIAL1")
+def _PaymentGatewayData_TESTSERVER() -> object:
+    return PaymentGatewayData("TESTSERVER")
 
-PaymentGatewayData.SPECIAL2 = PaymentGatewayData("SPECIAL2")
+lazy_static(PaymentGatewayData, "TESTSERVER", _PaymentGatewayData_TESTSERVER)
 
-PaymentGatewayData.SPECIAL3 = PaymentGatewayData("SPECIAL3")
+def _PaymentGatewayData_TESTPORT() -> object:
+    return PaymentGatewayData("TESTPORT")
 
-PaymentGatewayData.SPECIAL4 = PaymentGatewayData("SPECIAL4")
+lazy_static(PaymentGatewayData, "TESTPORT", _PaymentGatewayData_TESTPORT)
 
-PaymentGatewayData.SPECIAL5 = PaymentGatewayData("SPECIAL5")
+def _PaymentGatewayData_TESTPATH() -> object:
+    return PaymentGatewayData("TESTSERVERPATH")
 
-PaymentGatewayData.SPECIAL6 = PaymentGatewayData("SPECIAL6")
+lazy_static(PaymentGatewayData, "TESTPATH", _PaymentGatewayData_TESTPATH)
 
-PaymentGatewayData.SPECIAL7 = PaymentGatewayData("SPECIAL7")
+def _PaymentGatewayData_TIMEOUT() -> object:
+    return PaymentGatewayData("TIMEOUT")
 
-PaymentGatewayData.SPECIAL8 = PaymentGatewayData("SPECIAL8")
+lazy_static(PaymentGatewayData, "TIMEOUT", _PaymentGatewayData_TIMEOUT)
 
-PaymentGatewayData.SPECIAL9 = PaymentGatewayData("SPECIAL9")
+def _PaymentGatewayData_PROXYPROTOCOL() -> object:
+    return PaymentGatewayData("PROXYPROTOCOL")
+
+lazy_static(PaymentGatewayData, "PROXYPROTOCOL", _PaymentGatewayData_PROXYPROTOCOL)
+
+def _PaymentGatewayData_PROXYSERVER() -> object:
+    return PaymentGatewayData("PROXYSERVER")
+
+lazy_static(PaymentGatewayData, "PROXYSERVER", _PaymentGatewayData_PROXYSERVER)
+
+def _PaymentGatewayData_PROXYPATH() -> object:
+    return PaymentGatewayData("PROXYPATH")
+
+lazy_static(PaymentGatewayData, "PROXYPATH", _PaymentGatewayData_PROXYPATH)
+
+def _PaymentGatewayData_PROXYUSERNAME() -> object:
+    return PaymentGatewayData("PROXYUSERNAME")
+
+lazy_static(PaymentGatewayData, "PROXYUSERNAME", _PaymentGatewayData_PROXYUSERNAME)
+
+def _PaymentGatewayData_PROXYPASSWORD() -> object:
+    return PaymentGatewayData("PROXYPASSWORD")
+
+lazy_static(PaymentGatewayData, "PROXYPASSWORD", _PaymentGatewayData_PROXYPASSWORD)
+
+def _PaymentGatewayData_PROXYPORT() -> object:
+    return PaymentGatewayData("PROXYPORT")
+
+lazy_static(PaymentGatewayData, "PROXYPORT", _PaymentGatewayData_PROXYPORT)
+
+def _PaymentGatewayData_PROXYTIMEOUT() -> object:
+    return PaymentGatewayData("PROXYTIMEOUT")
+
+lazy_static(PaymentGatewayData, "PROXYTIMEOUT", _PaymentGatewayData_PROXYTIMEOUT)
+
+def _PaymentGatewayData_SPECIAL1() -> object:
+    return PaymentGatewayData("SPECIAL1")
+
+lazy_static(PaymentGatewayData, "SPECIAL1", _PaymentGatewayData_SPECIAL1)
+
+def _PaymentGatewayData_SPECIAL2() -> object:
+    return PaymentGatewayData("SPECIAL2")
+
+lazy_static(PaymentGatewayData, "SPECIAL2", _PaymentGatewayData_SPECIAL2)
+
+def _PaymentGatewayData_SPECIAL3() -> object:
+    return PaymentGatewayData("SPECIAL3")
+
+lazy_static(PaymentGatewayData, "SPECIAL3", _PaymentGatewayData_SPECIAL3)
+
+def _PaymentGatewayData_SPECIAL4() -> object:
+    return PaymentGatewayData("SPECIAL4")
+
+lazy_static(PaymentGatewayData, "SPECIAL4", _PaymentGatewayData_SPECIAL4)
+
+def _PaymentGatewayData_SPECIAL5() -> object:
+    return PaymentGatewayData("SPECIAL5")
+
+lazy_static(PaymentGatewayData, "SPECIAL5", _PaymentGatewayData_SPECIAL5)
+
+def _PaymentGatewayData_SPECIAL6() -> object:
+    return PaymentGatewayData("SPECIAL6")
+
+lazy_static(PaymentGatewayData, "SPECIAL6", _PaymentGatewayData_SPECIAL6)
+
+def _PaymentGatewayData_SPECIAL7() -> object:
+    return PaymentGatewayData("SPECIAL7")
+
+lazy_static(PaymentGatewayData, "SPECIAL7", _PaymentGatewayData_SPECIAL7)
+
+def _PaymentGatewayData_SPECIAL8() -> object:
+    return PaymentGatewayData("SPECIAL8")
+
+lazy_static(PaymentGatewayData, "SPECIAL8", _PaymentGatewayData_SPECIAL8)
+
+def _PaymentGatewayData_SPECIAL9() -> object:
+    return PaymentGatewayData("SPECIAL9")
+
+lazy_static(PaymentGatewayData, "SPECIAL9", _PaymentGatewayData_SPECIAL9)
 

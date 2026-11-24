@@ -17,11 +17,12 @@ from __future__ import annotations
 
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 from org.allbinary.game.input.GameInputInterface import GameInputInterface
 
 
-class TestingInputSingleton(AllBinaryGameLayer, GameInputInterface):
+class TestingInputSingleton(*java_bases(AllBinaryGameLayer, GameInputInterface)):
     instance: TestingInputSingleton = None
     _lock = threading.RLock()
 
@@ -29,7 +30,7 @@ class TestingInputSingleton(AllBinaryGameLayer, GameInputInterface):
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
-        self.paintable: PaintableInterface = NullPaintable.getInstance()
+        self.testInputPaintable: PaintableInterface = NullPaintable.getInstance()
     
 
     @staticmethod
@@ -38,7 +39,6 @@ class TestingInputSingleton(AllBinaryGameLayer, GameInputInterface):
     
 
     def __init__(self) -> None:
-        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
         from org.allbinary.graphics.RectangleFactory import RectangleFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.view.ViewPosition import ViewPosition
@@ -52,18 +52,11 @@ class TestingInputSingleton(AllBinaryGameLayer, GameInputInterface):
     
 
     def initInputProcessorsForTestInput(self, aTestInputInterface: TestInputInterface) -> None:
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
-        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
         from javax.microedition.lcdui.Canvas import Canvas
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         testInputInterface: TestInputInterface = aTestInputInterface
-        self.paintable = testInputInterface
+        self.testInputPaintable = testInputInterface
         self.inputProcessorArray[Canvas.UP] = (GameInputProcessor()  # Java anonymous class body:
 #             
 # 
@@ -152,7 +145,7 @@ class TestingInputSingleton(AllBinaryGameLayer, GameInputInterface):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        self.paintable.paint(graphics)
+        self.testInputPaintable.paint(graphics)
     
 
     def implmentsGameInputInterface(self) -> bool:
@@ -167,7 +160,6 @@ class TestingInputSingleton(AllBinaryGameLayer, GameInputInterface):
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.view.ViewPosition import ViewPosition
-from org.allbinary.game.input.InputFactory import InputFactory
 
 
 def _TestingInputSingleton_instance() -> object:

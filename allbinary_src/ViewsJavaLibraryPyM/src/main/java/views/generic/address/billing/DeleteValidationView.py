@@ -15,17 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.address.billing.BillingAddressView import BillingAddressView
 
 
-class DeleteValidationView(BillingAddressView, ValidationComponentInterface):
+class DeleteValidationView(*java_bases(BillingAddressView, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
         self.value: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         httpTransformInfoInterface: TransformInfoHttpInterface = self.getTransformInfoInterface()
@@ -33,6 +37,7 @@ class DeleteValidationView(BillingAddressView, ValidationComponentInterface):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.data.tables.user.address.billing.BillingAddressesEntity import BillingAddressesEntity
         if self.getWeblisketSession().getUserName() is not None:
             return False
         billingAddressesEntity: BillingAddressesEntity = BillingAddressesEntity(self.getWeblisketSession().getUserName())
@@ -47,16 +52,25 @@ class DeleteValidationView(BillingAddressView, ValidationComponentInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
-from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
-from org.allbinary.data.tables.user.address.billing.BillingAddressesEntity import BillingAddressesEntity
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
+# from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+# from org.allbinary.data.tables.user.address.billing.BillingAddressesEntity import BillingAddressesEntity
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

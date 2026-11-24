@@ -44,6 +44,7 @@ class MotionRectanglesResultsFrameCacheable(CacheableInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
         stringBuffer.append(" Frame: ")
@@ -52,6 +53,6 @@ class MotionRectanglesResultsFrameCacheable(CacheableInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

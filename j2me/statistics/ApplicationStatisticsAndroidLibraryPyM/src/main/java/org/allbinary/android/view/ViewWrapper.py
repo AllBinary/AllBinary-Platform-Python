@@ -21,10 +21,12 @@ from org.allbinary.android.view.BaseViewWrapper import BaseViewWrapper
 class ViewWrapper(BaseViewWrapper):
 
     def _init_fields(self) -> None:
+        from android.view.View import View
         self.view: View = None
     
 
     def __init__(self, view: View) -> None:
+        from android.view.View import View
         super().__init__()
         self._init_fields()
         self.view = view
@@ -36,6 +38,6 @@ class ViewWrapper(BaseViewWrapper):
 
     def postInvalidate(self) -> None:
         self.view.postInvalidate()
-from android.view.View import View
+# from android.view.View import View
 
 

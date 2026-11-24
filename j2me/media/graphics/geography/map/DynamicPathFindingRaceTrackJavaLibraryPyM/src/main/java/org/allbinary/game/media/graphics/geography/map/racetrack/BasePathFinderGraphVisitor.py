@@ -21,6 +21,7 @@ from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorBa
 class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.geographicMapInterface: BasicGeographicMap = None
         self.edgeMinimum: int = None
         self.minPathWeight: int = None
@@ -28,6 +29,7 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, edgeMinimum: int, minPathWeight: int, maxPathWeight: int) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         super().__init__()
         self._init_fields()
         self.geographicMapInterface = geographicMapInterface
@@ -38,11 +40,15 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
 
     # throws Exception
     def visit(self, graph: SimpleWeightedGraph, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
     # throws Exception
     def fixPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, pathList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         for index in range(startPathFindingNodeList.size() - 1, 0 - 1, -1):
             startPathFindingNode: PathFindingNode = startPathFindingNodeList.get(index)
             pathList.remove(startPathFindingNode.geographicMapCellPosition)
@@ -50,6 +56,7 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
     
 
     def isValid(self, graphPath: GraphPath) -> bool:
+        from org.jgrapht.GraphPath import GraphPath
         if graphPath.getEdgeList().size() > self.edgeMinimum and graphPath.getWeight() < self.maxPathWeight and graphPath.getWeight() > self.minPathWeight:
             return True
         else:
@@ -57,6 +64,8 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
     
 
     def getInvalidReason(self, graphPath: GraphPath) -> str:
+        from org.jgrapht.GraphPath import GraphPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         if graphPath.getEdgeList().size() < self.edgeMinimum:
             stringBuffer.append("Ignoring Small: " + str(graphPath.getEdgeList().size()))
@@ -65,11 +74,11 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
         if graphPath.getWeight() >= self.maxPathWeight:
             stringBuffer.append(" To High Weighted Path: " + str(graphPath.getWeight()))
         return str(stringBuffer)
-from org.jgrapht.GraphPath import GraphPath
-from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.jgrapht.GraphPath import GraphPath
+# from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

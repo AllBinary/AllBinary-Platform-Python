@@ -22,12 +22,14 @@ class AdvertisementAreaConstraintsInterface:
     
 
     def getDisplayInBrowserContraints(self) -> DisplayInBrowserContraintsInterface:
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
         raise NotImplementedError()
     
 
     def getTwoDimensionContraints(self) -> TwoDimensionalConstraintInterface:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         raise NotImplementedError()
-from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
-from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
+# from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
+# from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
 
 

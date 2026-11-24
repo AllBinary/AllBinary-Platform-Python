@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TimeTypeUtil:
@@ -22,39 +23,48 @@ class TimeTypeUtil:
         return TimeTypeUtil.instance
     
 
-    def isNight(self) -> bool:
+    def isNight_j0(self) -> bool:
         hoursOfDay: int = self.getHourOfDay()
         return hoursOfDay < 6 or hoursOfDay > 18
     
 
-    def getHourOfDay(self) -> int:
+    def getHourOfDay_j0(self) -> int:
         calendar: datetime.datetime = datetime.datetime.now()
         return calendar.get(Calendar.HOUR_OF_DAY)
     
 
-    def getNightOrDay(self) -> str:
+    def getNightOrDay_j0(self) -> str:
         return (self.NIGHT if self.isNight() else self.DAY)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getHourOfDay(self, timeInMillis: int) -> int:
+    def getHourOfDay_j1(self, timeInMillis: int) -> int:
         calendar: datetime.datetime = datetime.datetime.now()
         calendar.setTimeInMillis(timeInMillis)
         return calendar.get(Calendar.HOUR_OF_DAY)
+
+    def getHourOfDay(self, *args):
+        return getattr(self, "getHourOfDay_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def isNight(self, timeInMillis: int) -> bool:
+    def isNight_j1(self, timeInMillis: int) -> bool:
         hoursOfDay: int = self.getHourOfDay(timeInMillis)
         return hoursOfDay < 6 or hoursOfDay > 18
+
+    def isNight(self, *args):
+        return getattr(self, "isNight_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getNightOrDay(self, timeInMillis: int) -> str:
+    def getNightOrDay_j1(self, timeInMillis: int) -> str:
         return (self.NIGHT if self.isNight(timeInMillis) else self.DAY)
+
+    def getNightOrDay(self, *args):
+        return getattr(self, "getNightOrDay_j" + str(len(args)))(*args)
 # from java.util.Calendar import Calendar
 # from java.util.TimeZone import TimeZone
 
 
-TimeTypeUtil.instance = TimeTypeUtil()
+def _TimeTypeUtil_instance() -> object:
+    return TimeTypeUtil()
+
+lazy_static(TimeTypeUtil, "instance", _TimeTypeUtil_instance)
 

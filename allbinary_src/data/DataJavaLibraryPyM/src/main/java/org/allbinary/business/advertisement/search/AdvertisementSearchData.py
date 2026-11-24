@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AdvertisementSearchData:
@@ -36,5 +37,8 @@ class AdvertisementSearchData:
         self._init_fields()
 
 
-AdvertisementSearchData.instance = AdvertisementSearchData()
+def _AdvertisementSearchData_instance() -> object:
+    return AdvertisementSearchData()
+
+lazy_static(AdvertisementSearchData, "instance", _AdvertisementSearchData_instance)
 

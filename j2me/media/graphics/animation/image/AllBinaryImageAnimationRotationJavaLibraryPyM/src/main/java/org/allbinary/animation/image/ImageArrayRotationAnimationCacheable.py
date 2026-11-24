@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 from org.allbinary.animation.image.AdjustedImageArrayRotationAnimation import AdjustedImageArrayRotationAnimation
 
 
-class ImageArrayRotationAnimationCacheable(AdjustedImageArrayRotationAnimation, CacheableInterface):
+class ImageArrayRotationAnimationCacheable(*java_bases(AdjustedImageArrayRotationAnimation, CacheableInterface)):
     
 
     def __init__(self, anyType: object, animationBehavior: AnimationBehavior) -> None:

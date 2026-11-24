@@ -23,26 +23,32 @@ class PaymentGatewayEntityInterface(BasicDataTableInterface):
     
 
     def getPaymentGatewayInterface(self, storeName: str, paymentType: BasicPaymentType) -> PaymentGatewayInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
         raise NotImplementedError()
     
 
     def findPaymentTypeVectorByStore(self, storeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def remove(self, storeName: str, paymentType: BasicPaymentType) -> None:
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
         raise NotImplementedError()
     
 
     def add(self, paymentGatewayInterface: PaymentGatewayInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
         raise NotImplementedError()
     
 
     def update(self, paymentGatewayInterface: PaymentGatewayInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
 
 

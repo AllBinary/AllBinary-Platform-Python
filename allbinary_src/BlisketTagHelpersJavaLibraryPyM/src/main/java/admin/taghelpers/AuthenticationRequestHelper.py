@@ -21,6 +21,10 @@ from admin.taghelpers.TagHelper import TagHelper
 class AuthenticationRequestHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
         self.weblisketSession: WeblisketSession = None
@@ -28,19 +32,27 @@ class AuthenticationRequestHelper(TagHelper):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        else:
+            self._constructor2_2(*args)
     
 
-    def _constructor2(self, hashMap: dict, pageContext: PageContext) -> None:
+    def _constructor2_1(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
         self._init_fields()
         self.weblisketSession = WeblisketSession(hashMap, pageContext)
         self.request = pageContext.getRequest()
     
 
-    def _constructor2(self, hashMap: dict, httpServletRequest: HttpServletRequest) -> None:
+    def _constructor2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
         self._init_fields()
         self.weblisketSession = WeblisketSession(hashMap, httpServletRequest)
@@ -60,75 +72,104 @@ class AuthenticationRequestHelper(TagHelper):
     
 
     def newPassword(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.communication.smtp.email.NewPasswordEmail import NewPasswordEmail
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             userName: str = self.request.getParameter(WeblisketSessionData.REMOVABLEUSERNAME)
             email: str = self.request.getParameter(UserData.MAINEMAIL)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 self.logUtil.putF("Generating New Password For: " + userName, self, "newPassword()")
             userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
             userInterface: UserInterface = userEntityInterface.getUser(userName)
             if userInterface.getMainEmail().compareTo(email) != 0:
                 if userInterface.getSecondaryEmail() is not None and userInterface.getSecondaryEmail().compareTo(email) != 0:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                         self.logUtil.putF("Requested Email Is Not In User Profile", self, "newPassword()")
                     return False
             newPassword: str = self.generateNewPassword()
             userInterface.setPassword(newPassword)
-            newPasswordHashMap: dict = userInterface.toPasswordHashMap()
+            newPasswordHashMap: HashMap = userInterface.toPasswordHashMap()
             UserEntityFactory.getInstance().update(userName, newPasswordHashMap)
             NewPasswordEmail(self.abeClientInformation, userInterface, newPassword).process()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 self.logUtil.putF("Generated New Password For: " + userName, self, "newPassword()")
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "newPassword()", e)
             return False
     
 
     def changePassword(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.business.user.password.Password import Password
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.communication.smtp.email.NewPasswordEmail import NewPasswordEmail
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             userName: str = self.request.getParameter(WeblisketSessionData.REMOVABLEUSERNAME)
             passwordString: str = self.request.getParameter(WeblisketSessionData.REMOVABLEPASSWORD)
             newPassword: str = self.request.getParameter(WeblisketSessionData.REMOVABLENEWPASSWORD)
             newReenteredPassword: str = self.request.getParameter(WeblisketSessionData.REMOVABLEREENTERNEWPASSWORD)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 self.logUtil.putF("Changing Password For User: " + userName, self, "changePassword()")
             password: Password = Password(newPassword)
             if not password.isValid():
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                     self.logUtil.putF("New Password Is Not Valid", self, "changePassword()")
                 return False
             if ((newPassword > newReenteredPassword) - (newPassword < newReenteredPassword)) != 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                     self.logUtil.putF("New Password Fields Do Not Match", self, "changePassword()")
                 return False
             sessionPassword: str = self.weblisketSession.getPassword()
             userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
             userInterface: UserInterface = userEntityInterface.getUser(userName)
             login: str = userEntityInterface.login(userName, passwordString)
-            if ((login > self.GLOBALS2.LOGINSUCCESS) - (login < self.GLOBALS2.LOGINSUCCESS)) == 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if ((login > GLOBALS2.LOGINSUCCESS) - (login < GLOBALS2.LOGINSUCCESS)) == 0:
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                     self.logUtil.putF("Authentication Successful", self, "changePassword()")
-                newPasswordHashMap: dict = password.toHashMap(None)
+                newPasswordHashMap: HashMap = password.toHashMap(None)
                 UserEntityFactory.getInstance().update(userName, newPasswordHashMap)
                 NewPasswordEmail(self.abeClientInformation, userInterface, newPassword).process()
                 return True
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 self.logUtil.putF("Authentication Failed", self, "changePassword()")
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put("Authentication Failed", self, "changePassword()", e)
             return False
     
 
     def isRoleValid(self, userName: str, password: str, roles: BasicArrayList) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
             userInterface: UserInterface = userEntityInterface.getUser(userName)
             if userInterface.getRole() is None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                     self.logUtil.putF("Role is null: " + str(userInterface.getRole()) + " Valid Roles: " + str(roles), self, "isRoleValid()")
                 return False
             basicUserRoleArray: list[object] = roles.toArray()
@@ -140,7 +181,7 @@ class AuthenticationRequestHelper(TagHelper):
                     self.request.removeAttribute(WeblisketSessionData.REMOVABLEUSERNAME)
                     self.request.removeAttribute(WeblisketSessionData.REMOVABLEPASSWORD)
                     return True
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Role is not valid: ")
                 stringBuffer.append(str(userInterface.getRole()))
@@ -149,28 +190,30 @@ class AuthenticationRequestHelper(TagHelper):
                 self.logUtil.putF(str(stringBuffer), self, "isRoleValid()")
             return False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isRoleValid()", e)
             return False
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.business.user.password.Password import Password
-from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
-from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
-from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.email.NewPasswordEmail import NewPasswordEmail
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.password.Password import Password
+# from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
+# from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+# from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.email.NewPasswordEmail import NewPasswordEmail
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

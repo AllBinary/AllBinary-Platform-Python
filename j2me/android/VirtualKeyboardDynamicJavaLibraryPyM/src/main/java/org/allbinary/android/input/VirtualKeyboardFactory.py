@@ -15,15 +15,19 @@
 
 from __future__ import annotations
 
-from org.allbinary.android.input.VirtualKeyboard import VirtualKeyboard
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class VirtualKeyboardFactory:
-    virtualKeyboard: VirtualKeyboard = VirtualKeyboard.NULL_VIRTUAL_KEYBOARD
+    virtualKeyboard: VirtualKeyboard = None
     
 
     @staticmethod
     def init(activity: Activity) -> None:
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+        from org.allbinary.android.input.api1.VirtualKeyboardAPI1 import VirtualKeyboardAPI1
+        from org.allbinary.android.input.api3.VirtualKeyboardAPI3 import VirtualKeyboardAPI3
+        from android.app.Activity import Activity
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION <= 2:
             VirtualKeyboardFactory.virtualKeyboard = VirtualKeyboardAPI1(activity)
@@ -34,9 +38,14 @@ class VirtualKeyboardFactory:
     @staticmethod
     def getInstance() -> VirtualKeyboard:
         return VirtualKeyboardFactory.virtualKeyboard
-from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
-from org.allbinary.android.input.api1.VirtualKeyboardAPI1 import VirtualKeyboardAPI1
-from org.allbinary.android.input.api3.VirtualKeyboardAPI3 import VirtualKeyboardAPI3
-from android.app.Activity import Activity
+# from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+# from org.allbinary.android.input.api1.VirtualKeyboardAPI1 import VirtualKeyboardAPI1
+# from org.allbinary.android.input.api3.VirtualKeyboardAPI3 import VirtualKeyboardAPI3
+# from android.app.Activity import Activity
 
+
+def _VirtualKeyboardFactory_virtualKeyboard() -> object:
+    return VirtualKeyboard.NULL_VIRTUAL_KEYBOARD
+
+lazy_static(VirtualKeyboardFactory, "virtualKeyboard", _VirtualKeyboardFactory_virtualKeyboard)
 

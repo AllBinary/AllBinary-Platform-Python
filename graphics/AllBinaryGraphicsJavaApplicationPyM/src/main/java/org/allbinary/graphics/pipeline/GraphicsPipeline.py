@@ -23,11 +23,16 @@ class GraphicsPipeline(BasicGraphicsPipeline):
     
 
     def __init__(self, points: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(points)
     
 
     # throws Exception
     def rotateTheta(self, aTheta: float) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         newVector: BasicArrayList = BasicArrayListD()
         size: int = self.pointBasicArrayList.size()
         for index in range(0, size):
@@ -37,9 +42,9 @@ class GraphicsPipeline(BasicGraphicsPipeline):
             point: GPoint = PointFactory.getInstance().createXY((int(secondX)), (int(secondY)))
             newVector.add(point)
         self.pointBasicArrayList = newVector
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

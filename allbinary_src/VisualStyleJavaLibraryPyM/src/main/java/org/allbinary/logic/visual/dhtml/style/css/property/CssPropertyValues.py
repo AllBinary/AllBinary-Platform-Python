@@ -21,6 +21,8 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class CssPropertyValues(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.propertyValueVector: BasicArrayList = None
 
@@ -32,24 +34,34 @@ class CssPropertyValues(DomNodeInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.propertyValueVector = BasicArrayListD()
     
 
     def _constructor1(self, node: Node) -> None:
-        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValueData import CssPropertyValueData
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tree.dom.DomData import DomData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        indexPropertyValueHashMap: dict = StdUtil.getInstance().createHashMap()
+        indexPropertyValueHashMap: HashMap = StdUtil.getInstance().createHashMap()
         self.propertyValueVector = BasicArrayListD()
         cssPropertyNodeVector: BasicArrayList = DomSearchHelper.getAllNodes(CssPropertyValueData.getInstance().NAME, node.getChildNodes())
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().STYLE):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STYLE):
             self.logUtil.putF("Number Of Properties: " + str(cssPropertyNodeVector.size()), self, "CssProperties()")
         size: int = cssPropertyNodeVector.size()
         for index in range(0, size):
             cssPropertyValueNode: Node = cssPropertyNodeVector.get(index)
             valueNode: Node = DomSearchHelper.getNode(DomData.VALUE, cssPropertyValueNode.getChildNodes())
             propertyValue: str = DomNodeHelper.getTextNodeValue(valueNode)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().STYLE):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STYLE):
                 self.logUtil.putF("Property Value: " + propertyValue, self, "CssProperties()")
             indexNode: Node = DomSearchHelper.getNode(DomData.INDEX, cssPropertyValueNode.getChildNodes())
             indexValue: str = DomNodeHelper.getTextNodeValue(indexNode)
@@ -61,11 +73,14 @@ class CssPropertyValues(DomNodeInterface):
             self.propertyValueVector.add(propertyValue)
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValueData import CssPropertyValueData
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         cssPropertyValueData: CssPropertyValueData = CssPropertyValueData.getInstance()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         stringBuffer: StringMaker = StringMaker()
         size: int = self.propertyValueVector.size()
         index = 0
@@ -84,24 +99,30 @@ class CssPropertyValues(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyData import CssPropertyData
-        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValueData import CssPropertyValueData
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
-            hashMap: dict = self.toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
+            hashMap: HashMap = self.toHashMap()
             self.logUtil.putF("CssPropertyValues HashMap: " + str(hashMap), self, "toXmlNode()")
         return ModDomHelper.createNameValueIndexNodes(document, CssPropertyData.getInstance().VALUES, CssPropertyValueData.getInstance().NAME, self.propertyValueVector)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.DomData import DomData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.DomData import DomData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

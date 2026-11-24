@@ -21,6 +21,11 @@ from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 class MultiSelectPaintable(SelectionHudPaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.NullUtil import NullUtil
         self.rootNameList: BasicArrayList = BasicArrayListD()
         self.totalCharArray: list[str] = NullUtil.getInstance().NULL_CHAR_ARRAY
         self.rootNamesString: str = StringUtil.getInstance().EMPTY_STRING
@@ -36,6 +41,8 @@ class MultiSelectPaintable(SelectionHudPaintable):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         super().updateMeasurement(graphics)
         font: Font = graphics.getFont()
         self.totalWidth = font.stringWidth(self.TOTAL)
@@ -43,6 +50,9 @@ class MultiSelectPaintable(SelectionHudPaintable):
     
 
     def update(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.clear()
         size: int = list_.size()
         self.totalCharArray = self.getPrimitiveLongUtil().getCharArray(size)
@@ -65,6 +75,7 @@ class MultiSelectPaintable(SelectionHudPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.setColor(self.backgroundColor)
         graphics.drawRect(self.getX(), self.y, self.getWidth(), self.getHeight())
         graphics.setColor(self.getColor())
@@ -73,12 +84,12 @@ class MultiSelectPaintable(SelectionHudPaintable):
         graphics.drawString(self.rootNamesString, self.textX, self.textLine2Y, 0)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
 

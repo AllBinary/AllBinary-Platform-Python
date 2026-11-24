@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.BasicProfileActionScriptProcessor import BasicProfileActionScriptProcessor
 from org.allbinary.input.automation.actions.script.condition.processors.input.ProfileActionScriptInputInterface import ProfileActionScriptInputInterface
 
 
-class BasicProfileActionScriptInput(BasicProfileActionScriptProcessor, ProfileActionScriptInputInterface):
+class BasicProfileActionScriptInput(*java_bases(BasicProfileActionScriptProcessor, ProfileActionScriptInputInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.inputRobotInterface: InputRobotInterface = None
         self.time: int = 0
@@ -36,6 +39,10 @@ class BasicProfileActionScriptInput(BasicProfileActionScriptProcessor, ProfileAc
     def _constructor2(self, label: str, node: Node) -> None:
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.w3c.dom.Node import Node
         super().__init__(label, node)
         self._init_fields()
         self.logUtil.putF(str(self.commonStrings.START) + label, self, self.commonStrings.CONSTRUCTOR)
@@ -51,6 +58,10 @@ class BasicProfileActionScriptInput(BasicProfileActionScriptProcessor, ProfileAc
     
 
     def _constructor1(self, label: str) -> None:
+        from java.util.Iterator import Iterator
+        from java.util.Set import Set
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(label)
         self._init_fields()
         self.logUtil.putF(str(self.commonStrings.START) + label, self, self.commonStrings.CONSTRUCTOR)
@@ -70,10 +81,12 @@ class BasicProfileActionScriptInput(BasicProfileActionScriptProcessor, ProfileAc
         self.time = time
     
 
-    def BasicProfileActionScriptInput_toHashMap(self) -> dict:
+    def BasicProfileActionScriptInput_toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(GenericProfileActionScriptInputData.TYPE, self.getInputRobotInterface().getName())
         hashMap.put(GenericProfileActionScriptInputData.DELAY, str(self.getTime()))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
@@ -83,19 +96,26 @@ class BasicProfileActionScriptInput(BasicProfileActionScriptProcessor, ProfileAc
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createNodeWithValueNodes(document, GenericProfileActionScriptInputData.NAME, self.BasicProfileActionScriptInput_toHashMap())
         return node
     
 
     def setInputRobotInterface(self, inputRobotInterface: InputRobotInterface) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         self.inputRobotInterface = inputRobotInterface
     
 
     def getInputRobotInterface(self) -> InputRobotInterface:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         return self.inputRobotInterface
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(" Input Type: ")
@@ -112,17 +132,17 @@ class BasicProfileActionScriptInput(BasicProfileActionScriptProcessor, ProfileAc
 # from java.util.HashMap import HashMap
 # from java.util.Iterator import Iterator
 # from java.util.Set import Set
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.init.InitInterface import InitInterface
 from org.allbinary.init.UpdateInterface import UpdateInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
 # Java interface
-class InitUpdatePaintableInterface(InitInterface, UpdateInterface, PaintableInterface):
+class InitUpdatePaintableInterface(*java_bases(InitInterface, UpdateInterface, PaintableInterface)):
     pass
 
 

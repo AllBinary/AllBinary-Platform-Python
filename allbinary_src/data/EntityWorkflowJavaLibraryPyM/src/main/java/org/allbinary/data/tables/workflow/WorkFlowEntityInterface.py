@@ -22,14 +22,19 @@ from org.allbinary.data.tables.BasicDataTableInterface import BasicDataTableInte
 class WorkFlowEntityInterface(BasicDataTableInterface):
     
 
-    def get(self, storeName: str) -> BasicArrayList:
+    def get_j1(self, storeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception, LicensingException
-    # Java overloaded method: Python keeps the last definition
-    def get(self, name: str, storeName: str) -> WorkFlowInterface:
+    def get_j2(self, name: str, storeName: str) -> WorkFlowInterface:
+        from org.allbinary.logic.control.workflow.WorkFlowInterface import WorkFlowInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         raise NotImplementedError()
+
+    def get(self, *args):
+        return getattr(self, "get_j" + str(len(args)))(*args)
     
 
     def delete(self, name: str, storeName: str) -> None:
@@ -37,15 +42,17 @@ class WorkFlowEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.control.workflow.WorkFlowInterface import WorkFlowInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.control.workflow.WorkFlowInterface import WorkFlowInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

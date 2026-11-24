@@ -27,6 +27,7 @@ class ViewCustomizersTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         try:
             self.setName("Add Validation Customizers View")
             self.setObjectFile("views.admin.customizers.CustomizersValidationView")
@@ -35,6 +36,6 @@ class ViewCustomizersTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
 
 

@@ -16,12 +16,13 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Image import Image
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 
 
 #OpenGLESNullImageJavaLibrary
-class OpenGLESImage(Image, OpenGLSurfaceChangedInterface):
+class OpenGLESImage(*java_bases(Image, OpenGLSurfaceChangedInterface)):
     NULL_OPENGL_IMAGE: OpenGLESImage = None
     texture2dList: BasicArrayList = None
     TYPE: int = 4
@@ -79,7 +80,6 @@ class OpenGLESImage(Image, OpenGLSurfaceChangedInterface):
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
 from org.allbinary.image.opengles.OpenGLESImageProcessor import OpenGLESImageProcessor
 from org.allbinary.image.opengles.OpenGLESImageTranslate import OpenGLESImageTranslate
 

@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.health.HealthVisitorInterface import HealthVisitorInterface
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 
-class HealLayer(AllBinaryLayer, HealthVisitorInterface):
+class HealLayer(*java_bases(AllBinaryLayer, HealthVisitorInterface)):
     
 
     def __init__(self) -> None:

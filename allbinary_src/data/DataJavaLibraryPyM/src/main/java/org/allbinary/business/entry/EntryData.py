@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class EntryData:
@@ -41,5 +42,8 @@ class EntryData:
         self._init_fields()
 
 
-EntryData.instance = EntryData()
+def _EntryData_instance() -> object:
+    return EntryData()
+
+lazy_static(EntryData, "instance", _EntryData_instance)
 

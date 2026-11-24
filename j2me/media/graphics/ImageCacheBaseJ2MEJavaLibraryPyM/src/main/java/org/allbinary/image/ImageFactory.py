@@ -42,7 +42,7 @@ class ImageFactory:
     
 
     # throws Exception
-    def createImageFromInputStream(self, key: object, inputStream: InputStream) -> Image:
+    def createImageFromInputStream_j2(self, key: object, inputStream: InputStream) -> Image:
         from java.io.InputStream import InputStream
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.MIDPUtil import MIDPUtil
@@ -51,12 +51,14 @@ class ImageFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def createImageFromInputStream(self, inputStream: InputStream) -> Image:
+    def createImageFromInputStream_j1(self, inputStream: InputStream) -> Image:
         from java.io.InputStream import InputStream
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.MIDPUtil import MIDPUtil
         return MIDPUtil.getInstance().createImageFromInputStream(inputStream)
+
+    def createImageFromInputStream(self, *args):
+        return getattr(self, "createImageFromInputStream_j" + str(len(args)))(*args)
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 # from org.allbinary.MIDPUtil import MIDPUtil

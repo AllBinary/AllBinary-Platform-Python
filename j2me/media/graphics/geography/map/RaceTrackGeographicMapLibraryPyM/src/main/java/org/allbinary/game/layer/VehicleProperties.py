@@ -20,11 +20,13 @@ from __future__ import annotations
 class VehicleProperties:
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         self.velocityProperties: VelocityProperties = None
         self.vehicleFrictionProperties: VehicleFrictionProperties = None
     
 
     def __init__(self, velocityProperties: VelocityProperties, vehicleFrictionProperties: VehicleFrictionProperties) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         self._init_fields()
         self.velocityProperties = velocityProperties
         self.vehicleFrictionProperties = vehicleFrictionProperties
@@ -39,7 +41,8 @@ class VehicleProperties:
     
 
     def getVelocityProperties(self) -> VelocityProperties:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         return self.velocityProperties
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
 
 

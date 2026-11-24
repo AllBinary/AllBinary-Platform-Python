@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.game.part.PartInterface import PartInterface
 
 
-class CountedLayerInterfaceFactoryPart(PartInterface, UpdateMyFontInterface):
+class CountedLayerInterfaceFactoryPart(*java_bases(PartInterface, UpdateMyFontInterface)):
     NULL_COUNTED_LAYER_INTERFACE_FACTORY: CountedLayerInterfaceFactoryPart = None
 
     def _init_fields(self) -> None:

@@ -31,7 +31,8 @@ class HtmlRadioInput(HtmlValueInput):
     
 
     def setSelected(self) -> None:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         super().addAttribute(self.CHECKED, BooleanFactory.getInstance().TRUE_STRING)
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
 
 

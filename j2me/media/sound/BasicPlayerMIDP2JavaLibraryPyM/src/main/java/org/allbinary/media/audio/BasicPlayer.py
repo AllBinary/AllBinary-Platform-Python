@@ -16,13 +16,14 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.media.Player import Player
 from org.allbinary.media.audio.TimeBaseInterface import TimeBaseInterface
 from org.allbinary.media.audio.Controllable2 import Controllable2
 
 
 #BasicPlayerMIDP2JavaLibrary
-class BasicPlayer(Player, TimeBaseInterface, Controllable2):
+class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
     CONTROL_TYPE: str = "ToneControl"
     _lock = threading.RLock()
 

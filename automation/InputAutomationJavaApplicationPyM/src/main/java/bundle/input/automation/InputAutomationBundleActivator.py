@@ -16,15 +16,18 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.osgi.framework.BundleActivator import BundleActivator
 from bundle.input.automation.InputAutomationBundleActivatorListenerInterface import InputAutomationBundleActivatorListenerInterface
 
 
-class InputAutomationBundleActivator(BundleActivator, InputAutomationBundleActivatorListenerInterface):
+class InputAutomationBundleActivator(*java_bases(BundleActivator, InputAutomationBundleActivatorListenerInterface)):
     moduleManagementThread: threading.Thread = None
     bundleContext: BundleContext = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
@@ -34,11 +37,15 @@ class InputAutomationBundleActivator(BundleActivator, InputAutomationBundleActiv
 
     @staticmethod
     def getBundleContext() -> BundleContext:
+        from org.osgi.framework.BundleContext import BundleContext
         return InputAutomationBundleActivator.bundleContext
     
 
     # throws Exception
     def start(self, bundleContext: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
+        from org.allbinary.input.automation.module.osgi.InputAutomationNewBundleRunnable import InputAutomationNewBundleRunnable
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.START)
             self.bundleContext = bundleContext
@@ -52,33 +59,41 @@ class InputAutomationBundleActivator(BundleActivator, InputAutomationBundleActiv
 
     # throws Exception
     def registerAsService(self) -> None:
-        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), InputAutomationConfigurationModuleChangeListener.getName())
-        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), InputAutomationRobotChangeListener.getName())
+        from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
+        from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
+        from org.allbinary.input.automation.osgi.InputAutomationServiceFactory import InputAutomationServiceFactory
+        from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
+        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), InputAutomationConfigurationModuleChangeListener.__module__ + "." + InputAutomationConfigurationModuleChangeListener.__qualname__)
+        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), InputAutomationRobotChangeListener.__module__ + "." + InputAutomationRobotChangeListener.__qualname__)
     
 
     # throws Exception
     def useServices(self) -> None:
+        from org.allbinary.input.automation.module.osgi.InputAutomationModuleServiceConsumer import InputAutomationModuleServiceConsumer
+        from org.allbinary.input.automation.robot.osgi.InputAutomationRobotServiceConsumer import InputAutomationRobotServiceConsumer
         InputAutomationRobotServiceConsumer(self.getBundleContext()).process()
         InputAutomationModuleServiceConsumer(self.getBundleContext()).process()
     
 
     # throws Exception
     def stop(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
         self.logUtil.putF(self.commonStrings.START, self, "stop")
         if InputAutomationJFrame.getInstance() is not None:
             InputAutomationJFrame.destroy()
         else:
             self.logUtil.putF("Nothing to stop", self, "stop")
-from org.osgi.framework.BundleContext import BundleContext
-from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
-from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
-from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
-from org.allbinary.input.automation.module.osgi.InputAutomationModuleServiceConsumer import InputAutomationModuleServiceConsumer
-from org.allbinary.input.automation.module.osgi.InputAutomationNewBundleRunnable import InputAutomationNewBundleRunnable
-from org.allbinary.input.automation.osgi.InputAutomationServiceFactory import InputAutomationServiceFactory
-from org.allbinary.input.automation.robot.osgi.InputAutomationRobotServiceConsumer import InputAutomationRobotServiceConsumer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.osgi.framework.BundleContext import BundleContext
+# from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
+# from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
+# from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
+# from org.allbinary.input.automation.module.osgi.InputAutomationModuleServiceConsumer import InputAutomationModuleServiceConsumer
+# from org.allbinary.input.automation.module.osgi.InputAutomationNewBundleRunnable import InputAutomationNewBundleRunnable
+# from org.allbinary.input.automation.osgi.InputAutomationServiceFactory import InputAutomationServiceFactory
+# from org.allbinary.input.automation.robot.osgi.InputAutomationRobotServiceConsumer import InputAutomationRobotServiceConsumer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

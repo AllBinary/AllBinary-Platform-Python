@@ -27,6 +27,9 @@ class PaymentTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
             self.setName("Basic Payment View")
             self.setObjectFile("views.generic.payment.ValidationView")
@@ -50,8 +53,8 @@ class PaymentTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

@@ -23,7 +23,8 @@ class DomDocumentMappingInterface:
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
-from org.w3c.dom.Document import Document
+# from org.w3c.dom.Document import Document
 
 

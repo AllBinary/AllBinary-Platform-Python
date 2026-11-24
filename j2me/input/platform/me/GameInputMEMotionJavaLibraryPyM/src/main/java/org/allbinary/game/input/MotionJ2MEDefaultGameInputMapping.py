@@ -22,7 +22,6 @@ class MotionJ2MEDefaultGameInputMapping(PersistentInputMapping):
     
 
     def __init__(self) -> None:
-        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory

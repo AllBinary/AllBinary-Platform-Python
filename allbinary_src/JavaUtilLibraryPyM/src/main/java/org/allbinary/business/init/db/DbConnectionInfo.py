@@ -40,6 +40,7 @@ class DbConnectionInfo(DatabaseConnectionInfoInterface):
     
 
     def updateUrl(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.updateHost()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.getHost())
@@ -72,6 +73,9 @@ class DbConnectionInfo(DatabaseConnectionInfoInterface):
     
 
     def updateHost(self) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.getSchema())
         stringBuffer.append(self.SCHEMA_SEP)
@@ -139,8 +143,8 @@ class DbConnectionInfo(DatabaseConnectionInfoInterface):
 
     def getPasswordKey(self) -> str:
         return self.PASSWORD_KEY
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

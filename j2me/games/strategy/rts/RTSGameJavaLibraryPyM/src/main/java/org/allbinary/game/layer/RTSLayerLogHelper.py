@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RTSLayerLogHelper:
@@ -27,14 +28,18 @@ class RTSLayerLogHelper:
     
 
     def setClosestGeographicMapCellHistory(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, pathsList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
     def trackTo(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition, dx: int, dy: int, reason: str) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         pass
     
 
     def turnTo(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, dx: int, dy: int, angleInfo: AngleInfo, angle: int, movementAngle: NamedAngle, evading: bool, targetAngle: int) -> None:
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.math.NamedAngle import NamedAngle
         pass
     
 
@@ -79,6 +84,7 @@ class RTSLayerLogHelper:
     
 
     def handle(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, movementAngle: NamedAngle) -> None:
+        from org.allbinary.math.NamedAngle import NamedAngle
         pass
     
 
@@ -87,13 +93,19 @@ class RTSLayerLogHelper:
     
 
     def notOnPath(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, geographicMapCellHistory: GeographicMapCellHistory, currentGeographicMapCellPosition: GeographicMapCellPosition, pathList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.math.NamedAngle import NamedAngle
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.math.NamedAngle import NamedAngle
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-RTSLayerLogHelper.instance = RTSLayerLogHelper()
+def _RTSLayerLogHelper_instance() -> object:
+    return RTSLayerLogHelper()
+
+lazy_static(RTSLayerLogHelper, "instance", _RTSLayerLogHelper_instance)
 

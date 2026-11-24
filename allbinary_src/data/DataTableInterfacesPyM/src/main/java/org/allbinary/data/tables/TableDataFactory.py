@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TableDataFactory:
     instance: TableDataFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.INTEGER_MAX_VALUE_STRING: str = str(2147483647)
         self.ZERO_STRING: str = CommonPhoneStrings.getInstance().ZERO
 
@@ -31,8 +33,11 @@ class TableDataFactory:
     @staticmethod
     def getInstance() -> TableDataFactory:
         return TableDataFactory.instance
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
 
 
-TableDataFactory.instance = TableDataFactory()
+def _TableDataFactory_instance() -> object:
+    return TableDataFactory()
+
+lazy_static(TableDataFactory, "instance", _TableDataFactory_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigTypeFactory:
@@ -98,12 +99,17 @@ class LogConfigTypeFactory:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         PreLogUtil.put("FreeBlisket", self, CommonStrings.getInstance().CONSTRUCTOR)
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
 
 
-LogConfigTypeFactory.instance = LogConfigTypeFactory()
+def _LogConfigTypeFactory_instance() -> object:
+    return LogConfigTypeFactory()
+
+lazy_static(LogConfigTypeFactory, "instance", _LogConfigTypeFactory_instance)
 

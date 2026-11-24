@@ -22,15 +22,18 @@ class BuildMenuCompositeInterface:
     
 
     def getCurrentScrollSelectionForm(self) -> ScrollSelectionForm:
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         raise NotImplementedError()
     
 
     def setCurrentScrollSelectionForm(self, currentScrollSelectionForm: ScrollSelectionForm) -> None:
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         raise NotImplementedError()
     
 
     def getBuildingScrollSelectionForm(self) -> ScrollSelectionForm:
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         raise NotImplementedError()
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
 
 

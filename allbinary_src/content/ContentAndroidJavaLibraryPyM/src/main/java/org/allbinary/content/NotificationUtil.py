@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NotificationUtil:
     SINGLETON: NotificationUtil = None
 
     def _init_fields(self) -> None:
+        from android.app.NotificationManager import NotificationManager
+        from android.content.Context import Context
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.notificationManager: NotificationManager = ResourceUtil.getInstance().getContext().getSystemService(Context.NOTIFICATION_SERVICE)
         self.notificationBuilder: NotificationBuilder = None
@@ -34,6 +39,7 @@ class NotificationUtil:
     def __init__(self) -> None:
         from org.allbinary.content.NotificationBuilder import NotificationBuilder
         from org.allbinary.content.NotificationBuilderAPI23 import NotificationBuilderAPI23
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
         self._init_fields()
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION > 22:
@@ -44,6 +50,13 @@ class NotificationUtil:
 
     def notify(self, command: Command, resource: str, message: str) -> None:
         from org.allbinary.content.CommandUriAction import CommandUriAction
+        from javax.microedition.lcdui.Command import Command
+        from android.app.PendingIntent import PendingIntent
+        from android.content.Context import Context
+        from android.content.Intent import Intent
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         context: Context = ResourceUtil.getInstance().getContext()
         intent: Intent = CommandUriAction.getInstance().getIntent(command)
         integer: int = ResourceUtil.getInstance().getResourceId(resource)
@@ -56,16 +69,19 @@ class NotificationUtil:
             return
         self.notificationBuilder.build(context, command, message, integer, pendingIntent)
 # from javax.microedition.lcdui.Command import Command
-from android.app.Notification import Notification
-from android.app.NotificationManager import NotificationManager
-from android.app.PendingIntent import PendingIntent
-from android.content.Context import Context
-from android.content.Intent import Intent
-from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from android.app.Notification import Notification
+# from android.app.NotificationManager import NotificationManager
+# from android.app.PendingIntent import PendingIntent
+# from android.content.Context import Context
+# from android.content.Intent import Intent
+# from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-NotificationUtil.SINGLETON = NotificationUtil()
+def _NotificationUtil_SINGLETON() -> object:
+    return NotificationUtil()
+
+lazy_static(NotificationUtil, "SINGLETON", _NotificationUtil_SINGLETON)
 

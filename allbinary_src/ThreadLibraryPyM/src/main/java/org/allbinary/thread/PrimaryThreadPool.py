@@ -55,8 +55,6 @@ class PrimaryThreadPool(ThreadPool):
 
 
 def _PrimaryThreadPool_THREAD_POOL() -> object:
-    from org.allbinary.thread.ThreadPool import ThreadPool
-    from org.allbinary.thread.ThreadPool import ThreadPool
     return ThreadPool("Primary", 1, ThreadPool.NORMAL_PRIORITY)
 
 lazy_static(PrimaryThreadPool, "THREAD_POOL", _PrimaryThreadPool_THREAD_POOL)

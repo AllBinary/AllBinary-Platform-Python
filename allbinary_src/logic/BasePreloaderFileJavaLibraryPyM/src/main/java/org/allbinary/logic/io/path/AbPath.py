@@ -148,7 +148,6 @@ class AbPath:
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
 # from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.io.path.AbPathData import AbPathData
 from org.allbinary.logic.io.path.PathUtil import PathUtil
 
 

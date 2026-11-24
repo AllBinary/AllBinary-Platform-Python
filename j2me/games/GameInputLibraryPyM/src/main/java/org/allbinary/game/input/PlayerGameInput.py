@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.event.GameKeyEventListenerInterface import GameKeyEventListenerInterface
 from org.allbinary.game.input.GameInput import GameInput
 
 
-class PlayerGameInput(GameInput, GameKeyEventListenerInterface):
+class PlayerGameInput(*java_bases(GameInput, GameKeyEventListenerInterface)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:

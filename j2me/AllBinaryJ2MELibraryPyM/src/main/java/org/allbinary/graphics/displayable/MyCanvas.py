@@ -16,12 +16,13 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Canvas import Canvas
 from org.allbinary.graphics.displayable.command.MyCommandInterface import MyCommandInterface
 from org.allbinary.graphics.displayable.DisplayableInterface import DisplayableInterface
 
 
-class MyCanvas(Canvas, DisplayableInterface, MyCommandInterface):
+class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:

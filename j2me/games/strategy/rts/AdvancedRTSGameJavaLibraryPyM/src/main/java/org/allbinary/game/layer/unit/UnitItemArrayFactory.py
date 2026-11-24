@@ -15,26 +15,34 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.form.item.CustomItemUtil import CustomItemUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.form.item.ItemArraySingletonFactoryInterface import ItemArraySingletonFactoryInterface
 
 
 class UnitItemArrayFactory(ItemArraySingletonFactoryInterface):
-    ITEMS: list[ABCustomItem] = CustomItemUtil.getInstance().CUSTOM_ITEM_ARRAY
+    ITEMS: list[ABCustomItem] = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.resources: list[BasicGameResources] = None
     
 
     def __init__(self, resources: list[BasicGameResources]) -> None:
+        from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
         self._init_fields()
         self.resources = resources
     
 
     # throws Exception
     def createFlagItem(self, flagResources: FlagGameResources, layerInterfaceFactoryInterface: LayerInterfaceFactoryInterface) -> ABCustomItem:
+        from org.allbinary.game.layer.waypoint.FlagGameResources import FlagGameResources
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
         name: str = flagResources.NAME
         index: int = name.find(self.commonSeps.SPACE)
         if index >= 0:
@@ -44,7 +52,17 @@ class UnitItemArrayFactory(ItemArraySingletonFactoryInterface):
 
     # throws Exception
     def createNamedFlagItem(self, flagResources: FlagGameResources, name: str, layerInterfaceFactoryInterface: LayerInterfaceFactoryInterface) -> ABCustomItem:
-        from org.allbinary.game.layer.unit.IMAGE_CACHE import IMAGE_CACHE
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.ImageItem import ImageItem
+        from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+        from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
+        from org.allbinary.game.layer.item.RTSLayerTextAnimation import RTSLayerTextAnimation
+        from org.allbinary.game.layer.waypoint.FlagGameResources import FlagGameResources
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.image.ImageCache import ImageCache
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
         IMAGE_CACHE: ImageCache = GameFeatureImageCacheFactory.getInstance()
         image: Image = IMAGE_CACHE.getWithKey(flagResources.RESOURCE_ICON)
         item: ABCustomItem = LayerInterfaceFactoryImageItem(name, image, ImageItem.LAYOUT_DEFAULT, flagResources.NAME, self.basicColor, [RTSLayerTextAnimation(RTSGameStrings.getInstance().DRAGGABLE, image)], layerInterfaceFactoryInterface)
@@ -53,32 +71,43 @@ class UnitItemArrayFactory(ItemArraySingletonFactoryInterface):
 
     # throws Exception
     def getItems(self) -> list[ABCustomItem]:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         return UnitItemArrayFactory.ITEMS
     
 
     def getResources(self) -> list[BasicGameResources]:
+        from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
         return self.resources
     
 
     def indexOf(self, basicGameResources: BasicGameResources) -> int:
+        from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
         for index in range(len(self.resources) - 1, 0 - 1, -1):
             if self.resources[index] == basicGameResources:
                 return index
         return -1
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.ImageItem import ImageItem
-from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
-from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
-from org.allbinary.game.layer.item.RTSLayerTextAnimation import RTSLayerTextAnimation
-from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
-from org.allbinary.game.layer.waypoint.FlagGameResources import FlagGameResources
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+# from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+# from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
+# from org.allbinary.game.layer.item.RTSLayerTextAnimation import RTSLayerTextAnimation
+# from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
+# from org.allbinary.game.layer.waypoint.FlagGameResources import FlagGameResources
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.form.item.CustomItemUtil import CustomItemUtil
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
 
+
+def _UnitItemArrayFactory_ITEMS() -> object:
+    from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+    from org.allbinary.graphics.form.item.CustomItemUtil import CustomItemUtil
+    return CustomItemUtil.getInstance().CUSTOM_ITEM_ARRAY
+
+lazy_static(UnitItemArrayFactory, "ITEMS", _UnitItemArrayFactory_ITEMS)
 

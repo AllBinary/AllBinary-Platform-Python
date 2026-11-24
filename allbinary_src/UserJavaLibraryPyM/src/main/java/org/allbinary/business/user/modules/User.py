@@ -22,6 +22,10 @@ from org.allbinary.business.user.UserInterface import UserInterface
 class User(UserInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
+        from org.allbinary.business.user.password.Password import Password
+        from org.allbinary.business.user.role.UserRole import UserRole
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.userName: str = None
         self.prefixName: str = None
@@ -51,31 +55,53 @@ class User(UserInterface):
         if len(args) == 0:
             self._constructor0(*args)
         elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
+        from org.allbinary.business.user.password.Password import Password
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self._init_fields()
         self.userConfigurationInterface = UserConfigurationInterfaceFactory.getInstance()
         self.password = Password(StringUtil.getInstance().EMPTY_STRING)
     
 
-    def _constructor1(self, request: HttpServletRequest) -> None:
+    def _constructor1_1(self, request: HttpServletRequest) -> None:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         self._init_fields()
         self.getFormData(RequestParams(request).toHashMap())
         self.userConfigurationInterface = UserConfigurationInterfaceFactory.getInstance(self.getRole())
     
 
-    def _constructor1(self, userHashMap: dict) -> None:
+    def _constructor1_2(self, userHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
         self._init_fields()
         self.getFormData(userHashMap)
         self.userConfigurationInterface = UserConfigurationInterfaceFactory.getInstance(self.getRole())
     
 
     # throws Exception
-    def getFormData(self, userHashMap: dict) -> None:
+    def getFormData(self, userHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.password.Password import Password
+        from org.allbinary.business.user.role.UserRoleB import UserRoleB
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
+        from org.allbinary.business.user.username.UserName import UserName
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self.userName = UserName(userHashMap).get()
         stringUtil: StringUtil = StringUtil.getInstance()
         passwordString: str = stringUtil.getNonNull(userHashMap.get(UserData.PASSWORD))
@@ -111,6 +137,12 @@ class User(UserInterface):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.username.UserName import UserName
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
             if not UserName.getInstance().isValid(self.userName):
@@ -126,13 +158,19 @@ class User(UserInterface):
                 valid = False
             return valid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VALIDATIONERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATIONERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put("Failed to validate form", self, commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.username.UserName import UserName
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
             stringBuffer: StringMaker = StringMaker()
@@ -146,7 +184,7 @@ class User(UserInterface):
                 stringBuffer.append("Please enter a valid email address.<br />")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
@@ -216,6 +254,7 @@ class User(UserInterface):
     
 
     def setRole(self, role: UserRole) -> None:
+        from org.allbinary.business.user.role.UserRole import UserRole
         self.role = role
     
 
@@ -312,6 +351,7 @@ class User(UserInterface):
     
 
     def getRole(self) -> UserRole:
+        from org.allbinary.business.user.role.UserRole import UserRole
         return self.role
     
 
@@ -333,6 +373,9 @@ class User(UserInterface):
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.modules.configuration.UserConfigurationDomDocumentMapping import UserConfigurationDomDocumentMapping
         values: BasicArrayList = BasicArrayListD()
         values.add(self.userName)
         values.add(self.prefixName)
@@ -364,8 +407,14 @@ class User(UserInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        values: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.modules.configuration.UserConfigurationDomDocumentMapping import UserConfigurationDomDocumentMapping
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
+        from org.allbinary.logic.StdUtil import StdUtil
+        values: HashMap = StdUtil.getInstance().createHashMap()
         values.put(UserData.USERNAME, self.userName)
         values.put(UserData.PREFIXNAME, self.prefixName)
         values.put(UserData.FIRSTNAME, self.firstName)
@@ -395,17 +444,20 @@ class User(UserInterface):
         return values
     
 
-    def toPasswordHashMap(self) -> dict:
+    def toPasswordHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.password.toHashMap(self.secret)
     
 
     def validateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         weblisketSession.setAuthenticated()
         weblisketSession.setRole(self.getRole())
         weblisketSession.setUserName(self.getUserName())
     
 
     def updateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         pass
     
 
@@ -419,45 +471,52 @@ class User(UserInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     def getUserConfigurationInterface(self) -> UserConfigurationInterface:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
         return self.userConfigurationInterface
     
 
     def setUserConfigurationInterface(self, userConfigurationInterface: UserConfigurationInterface) -> None:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
         self.userConfigurationInterface = userConfigurationInterface
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.modules.configuration.UserConfigurationDomDocumentMapping import UserConfigurationDomDocumentMapping
-from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
-from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
-from org.allbinary.business.user.password.Password import Password
-from org.allbinary.business.user.role.UserRole import UserRole
-from org.allbinary.business.user.role.UserRoleB import UserRoleB
-from org.allbinary.business.user.role.UserRoleData import UserRoleData
-from org.allbinary.business.user.username.UserName import UserName
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.modules.configuration.UserConfigurationDomDocumentMapping import UserConfigurationDomDocumentMapping
+# from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
+# from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
+# from org.allbinary.business.user.password.Password import Password
+# from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.business.user.role.UserRoleB import UserRoleB
+# from org.allbinary.business.user.role.UserRoleData import UserRoleData
+# from org.allbinary.business.user.username.UserName import UserName
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

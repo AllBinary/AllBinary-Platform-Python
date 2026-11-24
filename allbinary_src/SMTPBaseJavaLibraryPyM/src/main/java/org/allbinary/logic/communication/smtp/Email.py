@@ -27,6 +27,9 @@ class Email(EmailInterface):
     SMTP_LOCAL_HOST: str = "mail.smtp.localhost"
 
     def _init_fields(self) -> None:
+        from java.util.Properties import Properties
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.msg: MimeMessage = None
@@ -54,7 +57,11 @@ class Email(EmailInterface):
     
 
     # throws Exception
-    def init(self, from_: str, to: str, subject: str, server: str, textBody: str, htmlAttachment: str, contentBase: str) -> None:
+    def init_j7(self, from_: str, to: str, subject: str, server: str, textBody: str, htmlAttachment: str, contentBase: str) -> None:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
             mimeBodyParts: list[MimeBodyPart] = [None] * ((2 if not stringValidationUtil.isEmpty(htmlAttachment) else 1))
@@ -68,25 +75,30 @@ class Email(EmailInterface):
                 mimeBodyParts[1] = MimeBodyPart(internetHeaders, list(htmlAttachment.encode()))
             self.init(server, None, [InternetAddress(from_)], [InternetAddress(to)], None, None, subject, mimeBodyParts)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "emailConstructor", e)
             raise e
     
 
     # throws MessagingException
-    # Java overloaded method: Python keeps the last definition
-    def init(self, server: str, authenticator: Authenticator, addresses_from: list[InternetAddress], addresses_to: list[InternetAddress], addresses_cc: list[InternetAddress], addresses_bcc: list[InternetAddress], subject: str, mimeBodyParts: list[MimeBodyPart]) -> None:
+    def init_j8(self, server: str, authenticator: Authenticator, addresses_from: list[InternetAddress], addresses_to: list[InternetAddress], addresses_cc: list[InternetAddress], addresses_bcc: list[InternetAddress], subject: str, mimeBodyParts: list[MimeBodyPart]) -> None:
+        from java.io.PrintStream import PrintStream
+        from java.util.Properties import Properties
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.properties = Properties()
         self.properties.put(Email.SMTP_HOST, server)
         try:
             hostName: str = StringUtil.getInstance().EMPTY_STRING
             if StringValidationUtil.getInstance().isEmpty(hostName):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                     self.logUtil.putF("Unable to get HostName so using fake", self, "init()")
                 self.properties.put(Email.SMTP_LOCAL_HOST, "FakeHostName")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put("Continuing on Exception: Unable to get HostName", self, "init()", e)
             self.properties.put(Email.SMTP_LOCAL_HOST, "FakeHostName")
         if self.isDebug:
@@ -107,6 +119,9 @@ class Email(EmailInterface):
         for i in range(0, len(mimeBodyParts)):
             mimeMultipart.addBodyPart(mimeBodyParts[i])
         self.msg.setContent(mimeMultipart)
+
+    def init(self, *args):
+        return getattr(self, "init_j" + str(len(args)))(*args)
     
 
     def getMimeMessage(self) -> MimeMessage:
@@ -126,16 +141,13 @@ class Email(EmailInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            hashMap: dict = StdUtil.getInstance().createHashMap()
+            hashMap: HashMap = StdUtil.getInstance().createHashMap()
             hashMap.put(EmailData.SERVER, self.properties.get(Email.SMTP_HOST))
             addresses: list[Address] = self.msg.getFrom()
             if addresses is not None:
@@ -161,20 +173,24 @@ class Email(EmailInterface):
                     hashMap.put(EmailData.CONTENT, content)
             return hashMap
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "toHashMap()", e)
             raise e
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createNameValueNodes(document, EmailData.NAME, self.toHashMap())
         return node
     
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.w3c.dom.Document import Document
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.PrintStream import PrintStream
@@ -190,13 +206,15 @@ class Email(EmailInterface):
 # from javax.mail.internet.MimeBodyPart import MimeBodyPart
 # from javax.mail.internet.MimeMessage import MimeMessage
 # from javax.mail.internet.MimeMultipart import MimeMultipart
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

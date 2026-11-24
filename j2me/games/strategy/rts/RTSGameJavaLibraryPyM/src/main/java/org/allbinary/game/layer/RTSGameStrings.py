@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RTSGameStrings:
@@ -47,5 +48,8 @@ class RTSGameStrings:
         return RTSGameStrings.instance
 
 
-RTSGameStrings.instance = RTSGameStrings()
+def _RTSGameStrings_instance() -> object:
+    return RTSGameStrings()
+
+lazy_static(RTSGameStrings, "instance", _RTSGameStrings_instance)
 

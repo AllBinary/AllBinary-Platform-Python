@@ -54,6 +54,7 @@ class OrderInterface:
     
 
     def getBasket(self) -> BasketInterface:
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
         raise NotImplementedError()
     
 
@@ -91,6 +92,6 @@ class OrderInterface:
 
     def getStoreCancelComments(self) -> str:
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+# from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
 
 

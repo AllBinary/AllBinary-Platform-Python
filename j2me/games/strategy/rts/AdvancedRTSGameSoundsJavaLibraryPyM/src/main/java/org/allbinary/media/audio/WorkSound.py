@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.CompositeSound import CompositeSound
 
 
@@ -30,5 +31,8 @@ class WorkSound(CompositeSound):
         return WorkSound.soundInterface
 
 
-WorkSound.soundInterface = WorkSound()
+def _WorkSound_soundInterface() -> object:
+    return WorkSound()
+
+lazy_static(WorkSound, "soundInterface", _WorkSound_soundInterface)
 

@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PathCacheFactory:
     pathFactory: PathCacheFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
     
@@ -39,6 +43,7 @@ class PathCacheFactory:
     
 
     def add(self, pathId: int, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.hashtable.put(pathId, list_)
     
 
@@ -55,15 +60,19 @@ class PathCacheFactory:
 
     # throws Exception
     def getOrCreate(self, pathIdInteger: int) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         listCanBeNull: object = self.hashtable.get(pathIdInteger)
         if listCanBeNull is None:
             listCanBeNull = self.basicArrayListUtil.getImmutableInstance()
         return listCanBeNull
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 
-PathCacheFactory.pathFactory = PathCacheFactory()
+def _PathCacheFactory_pathFactory() -> object:
+    return PathCacheFactory()
+
+lazy_static(PathCacheFactory, "pathFactory", _PathCacheFactory_pathFactory)
 

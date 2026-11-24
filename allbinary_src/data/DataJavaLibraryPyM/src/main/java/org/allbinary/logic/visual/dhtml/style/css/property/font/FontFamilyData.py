@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FontFamilyData:
@@ -34,5 +35,8 @@ class FontFamilyData:
         self._init_fields()
 
 
-FontFamilyData.instance = FontFamilyData()
+def _FontFamilyData_instance() -> object:
+    return FontFamilyData()
+
+lazy_static(FontFamilyData, "instance", _FontFamilyData_instance)
 

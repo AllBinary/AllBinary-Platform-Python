@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameSkill:
-    hashMap: dict = StdUtil.getInstance().createHashMap()
+    hashMap: HashMap = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.gameSkillType: GameSkillType = None
         self.extra: str = None
         self.time: int = 0
@@ -32,6 +33,9 @@ class GameSkill:
     
 
     def __init__(self, gameSkillType: GameSkillType, extra: str, time: int) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         self._init_fields()
         self.setGameSkillType(gameSkillType)
         self.setExtra(extra)
@@ -69,15 +73,20 @@ class GameSkill:
     
 
     def getProperties(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.vector
     
 
     @staticmethod
     def getInstance(gameSkillType: GameSkillType, extra: str) -> GameSkill:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         return GameSkill.hashMap.get(str(StringMaker().append(gameSkillType.getName()).append(CommonSeps.getInstance().SPACE).append(extra)))
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.GAME_SKILL_LABEL)
@@ -93,9 +102,17 @@ class GameSkill:
     def __str__(self) -> str:
         return self.toString()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
+
+def _GameSkill_hashMap() -> object:
+    from java.util.HashMap import HashMap
+    from org.allbinary.logic.StdUtil import StdUtil
+    return StdUtil.getInstance().createHashMap()
+
+lazy_static(GameSkill, "hashMap", _GameSkill_hashMap)
 

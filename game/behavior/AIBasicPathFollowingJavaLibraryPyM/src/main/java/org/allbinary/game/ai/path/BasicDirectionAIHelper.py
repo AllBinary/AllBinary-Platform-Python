@@ -21,17 +21,20 @@ import math
 class BasicDirectionAIHelper:
 
     def _init_fields(self) -> None:
+        from org.allbinary.math.AngleInfo import AngleInfo
         self.name: str = None
         self.angleInfo: AngleInfo = None
     
 
     def __init__(self, name: str, angleInfo: AngleInfo) -> None:
+        from org.allbinary.math.AngleInfo import AngleInfo
         self._init_fields()
         self.name = name
         self.angleInfo = angleInfo
     
 
     def turnAI(self, frame: int) -> int:
+        from javax.microedition.lcdui.Canvas import Canvas
         keyDirection: int = -1
         directionAngle: int = self.angleInfo.getAngleIncrementInfo().getFrameAngle(frame)
         angle: int = self.angleInfo.getAngle()
@@ -50,6 +53,7 @@ class BasicDirectionAIHelper:
     
 
     def getAIKeyPressed(self, frame: int) -> int:
+        from javax.microedition.lcdui.Canvas import Canvas
         angle: int = ((int(self.angleInfo.getAngleIncrementInfo().getFrameAngle(int(frame))) + 32768) % 65536 - 32768)
         if self.angleInfo.getAngle() != angle:
             return self.turnAI(int(frame))
@@ -58,6 +62,9 @@ class BasicDirectionAIHelper:
     
 
     def getAIKeyPressedFromDirection(self, geographicMapDirectionData: Direction) -> int:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         keyDirection: int = -1
         angleIncrementInfo: AngleIncrementInfo = self.angleInfo.getAngleIncrementInfo()
         directionFactory: DirectionFactory = DirectionFactory.getInstance()
@@ -73,15 +80,16 @@ class BasicDirectionAIHelper:
     
 
     def getAngleInfoP(self) -> AngleInfo:
+        from org.allbinary.math.AngleInfo import AngleInfo
         return self.angleInfo
     
 
     def getName(self) -> str:
         return self.name
 # from javax.microedition.lcdui.Canvas import Canvas
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

@@ -22,7 +22,6 @@ class PCGameKey(Input):
     
 
     def __init__(self, keyCode: int, name: str) -> None:
-        from org.allbinary.game.input.InputFactory import InputFactory
         super().__init__(keyCode, name)
         id: int = self.getId()
         if id >= 0:
@@ -38,7 +37,6 @@ class PCGameKey(Input):
 
     @staticmethod
     def getString(keyCode: int) -> str:
-        from org.allbinary.game.input.InputFactory import InputFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
         input: Input = InputFactory.getInstance().getInstanceById(keyCode)
         if input is not None:

@@ -15,25 +15,42 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class InventoryView(HttpStoreComponentView, DomNodeInterface):
+class InventoryView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.user.commerce.inventory.InventoryData import InventoryData
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Starting", self, "toXmlNode")
             inventoryEntityInterface: InventoryEntity = InventoryEntityFactory.getInstance().getInventoryEntityInstance()
             inventoryNode: Node = document.createElement(InventoryData.INVENTORY)
@@ -49,7 +66,7 @@ class InventoryView(HttpStoreComponentView, DomNodeInterface):
                     self.logUtil.putF("Inventory", self, "toXmlNode")
             return inventoryNode
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "toXmlNode", e)
             raise e
     
@@ -59,27 +76,31 @@ class InventoryView(HttpStoreComponentView, DomNodeInterface):
     
 
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
             error: str = "Failed to view Inventory"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             return error
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.user.commerce.inventory.InventoryData import InventoryData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchData import SearchData
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.user.commerce.inventory.InventoryData import InventoryData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchData import SearchData
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -27,13 +27,15 @@ class QueueInterface:
     
 
     # throws Exception
-    def remove(self, anyType: object) -> None:
+    def remove_j1(self, anyType: object) -> None:
         raise NotImplementedError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def remove(self) -> object:
+    def remove_j0(self) -> object:
         raise NotImplementedError()
+
+    def remove(self, *args):
+        return getattr(self, "remove_j" + str(len(args)))(*args)
 
 

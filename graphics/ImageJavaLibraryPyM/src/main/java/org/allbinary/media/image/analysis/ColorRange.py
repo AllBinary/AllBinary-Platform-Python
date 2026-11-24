@@ -95,6 +95,8 @@ class ColorRange(ColorRangeInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("getMinRed(): ")
         stringBuffer.appendint(self.getMinRed())
@@ -117,8 +119,8 @@ class ColorRange(ColorRangeInterface):
 
     def __str__(self) -> str:
         return self.toString()
-# from java.awt import *
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from java.awt.Color import Color
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

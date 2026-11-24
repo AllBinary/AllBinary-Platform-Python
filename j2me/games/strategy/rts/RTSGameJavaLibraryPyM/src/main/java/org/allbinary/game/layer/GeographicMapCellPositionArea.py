@@ -21,6 +21,13 @@ from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import Geographi
 class GeographicMapCellPositionArea(GeographicMapCellPositionAreaBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+        from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.cellPositionsUtil: CellPositionsUtil = CellPositionsUtil.getInstance()
         self.layerCoveringCellPositionsUtil: LayerCoveringCellPositionsUtil = LayerCoveringCellPositionsUtil.getInstance()
         self.reusableOccupyingGeographicMapCellPositionList: BasicArrayList = BasicArrayListS(4)
@@ -33,6 +40,7 @@ class GeographicMapCellPositionArea(GeographicMapCellPositionAreaBase):
     
 
     def __init__(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
         self._init_fields()
         self.layerInterface = layerInterface
@@ -40,31 +48,35 @@ class GeographicMapCellPositionArea(GeographicMapCellPositionAreaBase):
 
     # throws Exception
     def update(self, geographicMapInterface: BasicGeographicMap) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.occupyingGeographicMapCellPositionList = self.layerCoveringCellPositionsUtil.getAllXY(geographicMapInterface, self.layerInterface, self.layerInterface.getXP(), self.layerInterface.getYP(), self.reusableOccupyingGeographicMapCellPositionList)
         self.surroundingGeographicMapCellPositionList = self.cellPositionsUtil.getAllSurrounding(geographicMapInterface, self.occupyingGeographicMapCellPositionList, self.reusableSurroundingGeographicMapCellPositionList)
         self.surroundingCircularIndexUtil.setSize(self.surroundingGeographicMapCellPositionList.size())
     
 
     def getOccupyingGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.occupyingGeographicMapCellPositionList
     
 
     def getSurroundingGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.surroundingGeographicMapCellPositionList
     
 
     def getNextSurroundingGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         geographicMapCellPosition: GeographicMapCellPosition = self.surroundingGeographicMapCellPositionList.get(self.surroundingCircularIndexUtil.getIndex())
         self.surroundingCircularIndexUtil.next()
         return geographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 
 

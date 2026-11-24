@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StatusFactory:
     instance: StatusFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.SETSTATUS: str = "setStatus"
         self.STATUS_LABEL: str = "Status: "
@@ -42,8 +44,11 @@ class StatusFactory:
     def setStatus(self, status: str) -> None:
         self.setStatusNoLog(status)
         self.logUtil.putF(self.STATUS_LABEL + status, self, self.SETSTATUS)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-StatusFactory.instance = StatusFactory()
+def _StatusFactory_instance() -> object:
+    return StatusFactory()
+
+lazy_static(StatusFactory, "instance", _StatusFactory_instance)
 

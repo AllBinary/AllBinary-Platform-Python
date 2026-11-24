@@ -23,6 +23,10 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
     local: str = "US"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.baseNode: Node = None
@@ -36,6 +40,12 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
     
 
     def _constructor2(self, pageContext: PageContext, weblisketSession: WeblisketSession) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.communication.http.AcceptableResponseGenerator import AcceptableResponseGenerator
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         try:
             contentType: str = AcceptableResponseGenerator.getInstance().get(pageContext.getRequest())
@@ -47,15 +57,20 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
             languageTypeNode.appendChild(localTypeNode)
             contentTypeNode.appendChild(languageTypeNode)
             self.document.appendChild(contentTypeNode)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.putF(self.log(), self, self.commonStrings.CONSTRUCTOR)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.CONSTRUCTOR, e)
             raise e
     
 
     def _constructor1(self, searchRequest: SearchRequest) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         try:
             contentType: str = searchRequest.getContentType()
@@ -68,21 +83,25 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
             contentTypeNode.appendChild(languageTypeNode)
             self.document.appendChild(contentTypeNode)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.CONSTRUCTOR, e)
             raise e
     
 
     def getBaseNode(self) -> Node:
+        from org.w3c.dom.Node import Node
         return self.baseNode
     
 
     def getDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return self.document
     
 
     # throws Exception
     def log(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         if self.baseNode is not None:
             stringBuffer.append("BaseNode: ")
@@ -94,15 +113,17 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
         return str(stringBuffer)
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.communication.http.AcceptableResponseGenerator import AcceptableResponseGenerator
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.communication.http.AcceptableResponseGenerator import AcceptableResponseGenerator
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -24,7 +24,6 @@ class ProgressCanvasFactory:
 
     @staticmethod
     def getInstance() -> ProgressCanvas:
-        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.string.StringUtil import StringUtil

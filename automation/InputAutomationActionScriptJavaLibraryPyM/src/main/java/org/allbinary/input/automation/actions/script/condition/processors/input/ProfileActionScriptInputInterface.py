@@ -23,10 +23,12 @@ class ProfileActionScriptInputInterface(ProfileActionScriptProcessorInterface):
     
 
     def setInputRobotInterface(self, inputRobotInterface: InputRobotInterface) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         raise NotImplementedError()
     
 
     def getInputRobotInterface(self) -> InputRobotInterface:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         raise NotImplementedError()
     
 
@@ -36,6 +38,6 @@ class ProfileActionScriptInputInterface(ProfileActionScriptProcessorInterface):
 
     def setTime(self, time: int) -> None:
         raise NotImplementedError()
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 

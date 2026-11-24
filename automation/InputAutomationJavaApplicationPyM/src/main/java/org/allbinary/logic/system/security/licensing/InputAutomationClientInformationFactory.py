@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.system.security.licensing.InputAutomationClientInformation import InputAutomationClientInformation
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputAutomationClientInformationFactory:
-    instance: InputAutomationClientInformation = InputAutomationClientInformation()
+    instance: InputAutomationClientInformation = None
     
 
     @staticmethod
     def getInstance() -> InputAutomationClientInformation:
         return InputAutomationClientInformationFactory.instance
 
+
+def _InputAutomationClientInformationFactory_instance() -> object:
+    from org.allbinary.logic.system.security.licensing.InputAutomationClientInformation import InputAutomationClientInformation
+    return InputAutomationClientInformation()
+
+lazy_static(InputAutomationClientInformationFactory, "instance", _InputAutomationClientInformationFactory_instance)
 

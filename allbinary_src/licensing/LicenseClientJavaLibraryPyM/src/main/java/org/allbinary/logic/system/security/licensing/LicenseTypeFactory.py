@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseTypeFactory:
     instance: LicenseTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.UNKNOWN: LicenseType = LicenseType(CommonStrings.getInstance().UNKNOWN)
         self.DEMO: LicenseType = LicenseType("Demo")
         self.NORMAL: LicenseType = LicenseType("Normal")
@@ -30,20 +32,25 @@ class LicenseTypeFactory:
     
 
     @staticmethod
-    def getInstance() -> LicenseTypeFactory:
+    def getInstance_j0() -> LicenseTypeFactory:
         return LicenseTypeFactory.instance
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, name: str) -> LicenseType:
+    def getInstance_j1(self, name: str) -> LicenseType:
         if self.DEMO.getName().compareTo(name) == 0:
             return self.DEMO
         elif self.NORMAL.getName().compareTo(name) == 0:
             return self.NORMAL
         return self.UNKNOWN
-from org.allbinary.string.CommonStrings import CommonStrings
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.logic.system.security.licensing.LicenseType import LicenseType
 
 
-LicenseTypeFactory.instance = LicenseTypeFactory()
+def _LicenseTypeFactory_instance() -> object:
+    return LicenseTypeFactory()
+
+lazy_static(LicenseTypeFactory, "instance", _LicenseTypeFactory_instance)
 

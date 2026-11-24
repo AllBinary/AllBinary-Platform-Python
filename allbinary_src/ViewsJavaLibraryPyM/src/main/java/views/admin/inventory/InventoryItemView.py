@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
+class InventoryItemView(*java_bases(HttpStoreComponentView, RequestMapInterface)):
     TYPE_ID: int = 10
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.visual.media.MediaData import MediaData
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
         self.request: HttpServletRequest = None
@@ -30,7 +37,7 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
         self.mediaData: MediaData = None
         self.itemInterface: ItemInterface = None
         self.downloadableItemVector: BasicArrayList = None
-        self.requestHashMap: dict = None
+        self.requestHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
@@ -40,6 +47,7 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.request = self.getPageContext().getRequest()
@@ -47,6 +55,7 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
     
 
     def _constructor2(self, transformInfoInterface: TransformInfoInterface, empty: str) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.request = self.getPageContext().getRequest()
@@ -58,6 +67,18 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
 
     # throws Exception
     def getFormData(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+        from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
+        from org.allbinary.logic.communication.http.request.MultipartRequestParams import MultipartRequestParams
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.io.path.PathUtil import PathUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.media.MediaData import MediaData
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.setRequestHashMap(MultipartRequestParams(self.request).toHashMap())
         imageFileItemObject: object = self.getRequestHashMap().get(self.basicItemData.IMAGE)
         if HttpFileUploadUtil.getInstance().isValid(imageFileItemObject):
@@ -68,7 +89,7 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
                 pathUtil: PathUtil = PathUtil.getInstance()
                 self.mediaData = MediaData.get(pathData.getExtension(self.imageFileName))
                 self.imageFileName = pathUtil.getWithoutExtension(self.imageFileName)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("Uploaded File Data: ")
                     stringBuffer.append(self.imageFileName)
@@ -79,6 +100,11 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
     
 
     def addDomNodeInterfaces(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemView import DownloadableItemView
         vector: BasicArrayList = BasicArrayListD()
         downloadableItem: DownloadableItem = None
         size: int = self.downloadableItemVector.size()
@@ -89,16 +115,19 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
     
 
     def getItemInterface(self) -> ItemInterface:
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
         return self.itemInterface
     
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
     
@@ -106,6 +135,10 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
     # throws Exception
     def processImageFiles(self) -> None:
         from views.admin.inventory.InventoryUploadMediaUtil import InventoryUploadMediaUtil
+        from java.util.Set import Set
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.apache.commons.fileupload.FileItem import FileItem
         set: Set = self.getRequestHashMap().keySet()
         fieldNameArray: list[object] = set.toArray()
         size: int = len(fieldNameArray)
@@ -118,35 +151,39 @@ class InventoryItemView(HttpStoreComponentView, RequestMapInterface):
                 self.itemInterface = inventoryUploadMediaUtil.saveFiles(fileItem.get(), self.imageFileName, self.mediaData)
     
 
-    def setRequestHashMap(self, requestHashMap: dict) -> None:
+    def setRequestHashMap(self, requestHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self.requestHashMap = requestHashMap
     
 
-    def getRequestHashMap(self) -> dict:
+    def getRequestHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.requestHashMap
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemView import DownloadableItemView
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
-from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
-from org.allbinary.logic.communication.http.request.MultipartRequestParams import MultipartRequestParams
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.io.path.PathUtil import PathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.media.MediaData import MediaData
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.apache.commons.fileupload.FileItem import FileItem
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemView import DownloadableItemView
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+# from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
+# from org.allbinary.logic.communication.http.request.MultipartRequestParams import MultipartRequestParams
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.io.path.PathUtil import PathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.media.MediaData import MediaData
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

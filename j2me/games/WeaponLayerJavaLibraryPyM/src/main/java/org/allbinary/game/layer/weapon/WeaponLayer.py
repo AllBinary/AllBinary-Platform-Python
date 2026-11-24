@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayer import MultiPlayerGameLayer
 from org.allbinary.game.tick.TickableInterface import TickableInterface
 
 
-class WeaponLayer(MultiPlayerGameLayer, TickableInterface):
+class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation

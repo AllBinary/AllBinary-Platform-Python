@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
 #HTMLForJ2ME
-class OwnershipPaintable(Paintable, UpdateMyFontInterface):
+class OwnershipPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.COPYRIGHT: str = "AllBinary Copyright (c) 2011"
@@ -44,6 +51,9 @@ class OwnershipPaintable(Paintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.COPYRIGHT_Y = 2 * font.getHeight()
         self.beginWidth = (font.stringWidth(self.COPYRIGHT) >> 1)
@@ -51,15 +61,18 @@ class OwnershipPaintable(Paintable, UpdateMyFontInterface):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.basicColor = basicColor
         self.color = int(basicColor)
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.basicColor
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         graphics.setColor(self.color)
         halfWidth: int = self.displayInfo.getLastHalfWidth()
@@ -67,12 +80,12 @@ class OwnershipPaintable(Paintable, UpdateMyFontInterface):
         graphics.drawString(self.COPYRIGHT, halfWidth - self.beginWidth, height - self.COPYRIGHT_Y, self.anchor)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

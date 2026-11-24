@@ -37,10 +37,13 @@ class InitDb:
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         self._init_fields()
     
 
     def _constructor1(self, dbConnectionInfo: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         self._init_fields()
     
 
@@ -111,7 +114,7 @@ class InitDb:
         except Exception as e:
             return False
 # from java.lang.reflect.Method import Method
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

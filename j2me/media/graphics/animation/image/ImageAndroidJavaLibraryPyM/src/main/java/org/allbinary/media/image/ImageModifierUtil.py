@@ -20,6 +20,7 @@ from __future__ import annotations
 class ImageModifierUtil:
 
     def _init_fields(self) -> None:
+        from android.graphics.Paint import Paint
         self.paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     def __init__(self) -> None:
@@ -32,32 +33,43 @@ class ImageModifierUtil:
     
 
     def setColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from android.graphics.PorterDuff import PorterDuff
+        from android.graphics.PorterDuffColorFilter import PorterDuffColorFilter
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.paint.setColorFilter(PorterDuffColorFilter(int(basicColor), PorterDuff.Mode.SRC_IN))
     
 
     def changeColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from android.graphics.PorterDuff import PorterDuff
+        from android.graphics.PorterDuffColorFilter import PorterDuffColorFilter
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.paint.setColorFilter(PorterDuffColorFilter(int(basicColor), PorterDuff.Mode.SRC_IN))
     
 
     def setAlpha(self, originalImage: Image, image: Image, imageIndex: int, alphaInt: int) -> None:
+        from javax.microedition.lcdui.Image import Image
         if alphaInt != self.paint.getAlpha():
             self.paint.setAlpha(alphaInt)
     
 
     def getImageArray(self, originalImageArray: list[Image]) -> list[Image]:
+        from javax.microedition.lcdui.Image import Image
         return originalImageArray
     
 
     def handleImage(self, imageArray: list[Image], index: int, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         pass
     
 
     def reset(self) -> None:
         pass
-from android.graphics.Paint import Paint
-from android.graphics.PorterDuff import PorterDuff
-from android.graphics.PorterDuffColorFilter import PorterDuffColorFilter
+# from android.graphics.Paint import Paint
+# from android.graphics.PorterDuff import PorterDuff
+# from android.graphics.PorterDuffColorFilter import PorterDuffColorFilter
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

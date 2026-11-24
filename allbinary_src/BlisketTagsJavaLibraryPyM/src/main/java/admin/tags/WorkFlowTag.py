@@ -22,9 +22,10 @@ class WorkFlowTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.WorkFlowHelperFactory import WorkFlowHelperFactory
         super().__init__()
         self.setTagHelperFactory(WorkFlowHelperFactory())
         self.setTagRequestHelperFactory(WorkFlowHelperFactory())
-from admin.taghelpers.WorkFlowHelperFactory import WorkFlowHelperFactory
+# from admin.taghelpers.WorkFlowHelperFactory import WorkFlowHelperFactory
 
 

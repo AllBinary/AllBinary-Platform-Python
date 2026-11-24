@@ -23,17 +23,24 @@ class RaceTrackStartPointUtil:
     # throws Exception
     @staticmethod
     def get(geographicMapInterface: BasicGeographicMap, pathFindingInfo: PathFindingInfo, index: int) -> GPoint:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
         list_: BasicArrayList = pathFindingInfo.getStartPathFindingNodeList()
         startPathFindingNode: PathFindingNode = list_.get(index)
         geographicMapCellPosition: GeographicMapCellPosition = startPathFindingNode.geographicMapCellPosition
         point: GPoint = geographicMapCellPosition.getPoint()
         return PointFactory.getInstance().createXY(point.getX(), point.getY() + geographicMapInterface.getAllBinaryTiledLayer().getHalfCellHeight())
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
 
 

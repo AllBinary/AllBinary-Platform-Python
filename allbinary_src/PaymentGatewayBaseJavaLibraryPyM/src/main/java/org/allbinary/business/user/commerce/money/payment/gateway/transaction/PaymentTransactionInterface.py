@@ -15,16 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
 # Java interface
-class PaymentTransactionInterface(TableMappingInterface, DomNodeInterface):
+class PaymentTransactionInterface(*java_bases(TableMappingInterface, DomNodeInterface)):
     
 
     def getOrderHistory(self) -> OrderHistory:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
 
 

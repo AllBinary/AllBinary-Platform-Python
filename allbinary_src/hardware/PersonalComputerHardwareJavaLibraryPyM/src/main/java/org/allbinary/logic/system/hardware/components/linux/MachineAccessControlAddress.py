@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 from org.allbinary.logic.system.hardware.components.interfaces.MachineAccessControlAddressInterface import MachineAccessControlAddressInterface
 
 
-class MachineAccessControlAddress(HardwareComponentInterface, MachineAccessControlAddressInterface):
+class MachineAccessControlAddress(*java_bases(HardwareComponentInterface, MachineAccessControlAddressInterface)):
     
 
     def __init__(self) -> None:
@@ -31,10 +32,11 @@ class MachineAccessControlAddress(HardwareComponentInterface, MachineAccessContr
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

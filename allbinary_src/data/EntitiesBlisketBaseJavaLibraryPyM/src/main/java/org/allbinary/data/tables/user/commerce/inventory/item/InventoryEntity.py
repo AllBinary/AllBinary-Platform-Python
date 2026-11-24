@@ -15,54 +15,72 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface
 
 
-class InventoryEntity(AbSqlBean, InventoryEntityInterface):
+class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
         self.tableName: str = "basicinventory"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
         super().__init__(InventoryDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().insert(values)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.INSERT, e)
     
 
     def delete(self, value: str) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().deleteWhere(self.basicItemData.ID, value)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.delete, e)
     
 
     # throws Exception
     def getItems(self, storeFrontInterface: StoreFrontInterface) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
             self.logUtil.putF("Getting Items For: " + storeFrontInterface.getName(), self, "getItems")
         itemVector: BasicArrayList = BasicArrayListD()
-        keysAndValues: dict = StdUtil.getInstance().createHashMap()
+        keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         itemHashMapVector: BasicArrayList = super().getRows(keysAndValues)
         size: int = itemHashMapVector.size()
         for i in range(0, size):
-            itemHashMap: dict = itemHashMapVector.get(i)
+            itemHashMap: HashMap = itemHashMapVector.get(i)
             if itemHashMap is not None:
                 category: str = itemHashMap.get(self.basicItemData.CATEGORY)
                 if not StringValidationUtil.getInstance().isEmpty(category) and category.startswith(storeFrontInterface.getCategoryPath()):
@@ -72,9 +90,14 @@ class InventoryEntity(AbSqlBean, InventoryEntityInterface):
 
     # throws MoneyException
     def getItem(self, id: str) -> ItemInterface:
-        keysAndValues: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.logic.StdUtil import StdUtil
+        keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(self.basicItemData.ID, id)
-        itemHashMap: dict = super().getRow(keysAndValues)
+        itemHashMap: HashMap = super().getRow(keysAndValues)
         if itemHashMap is not None:
             return BasicItem(itemHashMap)
         else:
@@ -86,6 +109,8 @@ class InventoryEntity(AbSqlBean, InventoryEntityInterface):
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE)
         stringBuffer.append(self.tableName)
@@ -158,25 +183,32 @@ class InventoryEntity(AbSqlBean, InventoryEntityInterface):
         return super().createTable(self.createTableStatement())
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
         super().updateWhere(self.basicItemData.ID, updatedValues.get(self.basicItemData.ID), updatedValues)
     
 
     def dropTable(self) -> str:
         return super().dropTable()
+    
+
+    def deleteWhere(self, key: str, value: str) -> None:
+        super().deleteWhere(key, value)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
-from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
+# from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

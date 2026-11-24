@@ -21,11 +21,13 @@ from __future__ import annotations
 class UserRole(object):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
         self.basicUserRole: BasicUserRole = None
         self.userFactoryInterface: UserFactoryInterface = None
     
 
     def __init__(self, aBasicUserRole: BasicUserRole, aUserFactoryInterface: UserFactoryInterface) -> None:
+        from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
         self._init_fields()
         self.basicUserRole = aBasicUserRole
         self.userFactoryInterface = aUserFactoryInterface
@@ -44,6 +46,7 @@ class UserRole(object):
 
     # throws Exception
     def getUserFactory(self) -> UserFactoryInterface:
+        from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
         return self.userFactoryInterface
     
 
@@ -53,6 +56,6 @@ class UserRole(object):
 
     def getSessionInactivityTimeout(self) -> int:
         return self.basicUserRole.getSessionInactivityTimeout()
-from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
+# from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
 
 

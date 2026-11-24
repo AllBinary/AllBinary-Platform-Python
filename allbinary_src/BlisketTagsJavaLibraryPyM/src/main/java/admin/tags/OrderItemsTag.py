@@ -21,11 +21,14 @@ from admin.tags.TableTag import TableTag
 class OrderItemsTag(TableTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.status: str = None
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.OrderItemsHelperFactory import OrderItemsHelperFactory
+        from admin.taghelpers.OrderItemsRequestHelperFactory import OrderItemsRequestHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(OrderItemsHelperFactory())
@@ -38,6 +41,10 @@ class OrderItemsTag(TableTag):
 
     # throws LicensingException
     def setOrderStatus(self) -> str:
+        from admin.taghelpers.OrderItemsRequestHelperFactory import OrderItemsRequestHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = OrderItemsRequestHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             if self.status is None:
@@ -56,13 +63,16 @@ class OrderItemsTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to set Order status to: " + self.status
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "setOrderStatus()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
             if self.isEnabled():
                 if self.getCommand() is not None:
@@ -80,11 +90,13 @@ class OrderItemsTag(TableTag):
             return self.SKIP_BODY
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.OrderItemsHelperFactory import OrderItemsHelperFactory
-from admin.taghelpers.OrderItemsRequestHelperFactory import OrderItemsRequestHelperFactory
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.OrderItemsHelperFactory import OrderItemsHelperFactory
+# from admin.taghelpers.OrderItemsRequestHelperFactory import OrderItemsRequestHelperFactory
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

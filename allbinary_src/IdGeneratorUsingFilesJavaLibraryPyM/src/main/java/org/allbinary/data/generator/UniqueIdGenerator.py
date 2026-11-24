@@ -24,6 +24,8 @@ class UniqueIdGenerator(IdGeneratorInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.newFile: AbFile = None
         self.id: int = 0
@@ -34,12 +36,17 @@ class UniqueIdGenerator(IdGeneratorInterface):
     
 
     def initialize(self, value: int) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.newFile.createNewFile()
             idData: AbDataOutputStream = DataOutputStreamFactory.getInstance().getInstanceForAbFile(self.newFile)
             idData.writeLong(value)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "initialize", e)
     
@@ -50,6 +57,7 @@ class UniqueIdGenerator(IdGeneratorInterface):
             return self._setFile_unlocked(filePathName, name)
 
     def _setFile_unlocked(self, filePathName: str, name: str) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         self.newFile = AbFile.createAbFile(filePathName)
     
 
@@ -59,10 +67,18 @@ class UniqueIdGenerator(IdGeneratorInterface):
             return self._getNext_unlocked()
 
     def _getNext_unlocked(self) -> str:
+        from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         idData: AbDataInputStream = None
         idOutData: AbDataOutputStream = None
         try:
-            idFile: AbFileInputStream = AbFileInputStream(self.newFile)
+            idFile: AbFileInputStream = AbFileInputStream.createFromAbFile(self.newFile)
             idData = AbDataInputStream(idFile)
             self.id = idData.readLong()
             idOutFile: AbFileOutputStream = AbFileOutputStream.createFromAbFile(self.newFile)
@@ -71,7 +87,7 @@ class UniqueIdGenerator(IdGeneratorInterface):
             idLong: int = int(self.id)
             return str(idLong)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "getNext", e)
             return "Error"
@@ -79,14 +95,16 @@ class UniqueIdGenerator(IdGeneratorInterface):
             StreamUtil.getInstance().close(idData)
             StreamUtil.getInstance().close(idOutData)
 # from java.io.IOException import IOException
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+# from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

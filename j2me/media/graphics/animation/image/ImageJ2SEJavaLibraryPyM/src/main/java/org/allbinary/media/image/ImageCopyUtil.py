@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCopyUtil:
     instance: ImageCopyUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.Anchor import Anchor
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
         self.imageCreationUtil: ImageCreationUtil = ImageCreationUtil.getInstance()
@@ -38,11 +41,13 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImageForRotation(self, originalImage: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.createImage(originalImage)
     
 
     # throws Exception
     def createImage(self, originalImage: Image) -> Image:
+        from javax.microedition.lcdui.Image import Image
         image: Image = self.imageCreationUtil.createImageWH(originalImage.getWidth(), originalImage.getHeight())
         if image.isMutable():
             image.getGraphics().drawImage(originalImage, 0, 0, self.anchor)
@@ -53,6 +58,8 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImageScale(self, originalImage: Image, canvasScale: float, resize: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
         newWidth: int = int((originalImage.getWidth() * canvasScale))
         newHeight: int = int((originalImage.getHeight() * canvasScale))
         if resize:
@@ -66,12 +73,15 @@ class ImageCopyUtil:
         return image
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
 from org.allbinary.media.image.ImageUtil import ImageUtil
 from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
 
 
-ImageCopyUtil.instance = ImageCopyUtil()
+def _ImageCopyUtil_instance() -> object:
+    return ImageCopyUtil()
+
+lazy_static(ImageCopyUtil, "instance", _ImageCopyUtil_instance)
 

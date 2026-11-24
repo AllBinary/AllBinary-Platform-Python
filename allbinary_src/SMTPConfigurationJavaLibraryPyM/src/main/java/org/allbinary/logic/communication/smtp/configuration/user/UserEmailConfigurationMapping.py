@@ -29,24 +29,27 @@ class UserEmailConfigurationMapping(TableMappingInterface):
         self.userEmailConfigurationInterface = userEmailConfigurationInterface
     
 
-    def toHashMap(self) -> dict:
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         return hashMap
     
 
     # throws Exception
     def getKey(self) -> object:
-        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationData import UserEmailConfigurationData
         return UserEmailConfigurationData.NAME
     
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = BasicArrayListD()
         return vector
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

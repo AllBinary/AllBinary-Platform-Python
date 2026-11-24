@@ -21,11 +21,14 @@ from admin.tags.TableTag import TableTag
 class QuoteRequestTag(TableTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.storeName: str = None
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.QuoteHelperFactory import QuoteHelperFactory
+        from admin.taghelpers.QuoteRequestHelperFactory import QuoteRequestHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(QuoteHelperFactory())
@@ -38,6 +41,10 @@ class QuoteRequestTag(TableTag):
 
     # throws LicensingException
     def email(self) -> str:
+        from admin.taghelpers.QuoteHelperFactory import QuoteHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = QuoteHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             helperClass: type = type(anyType)
@@ -48,13 +55,16 @@ class QuoteRequestTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to send QuoteRequest emails"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "sendEmail()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
             if self.getCommand() is not None:
                 self.getPropertiesHashMap().put(StoreFrontData.getInstance().NAME, self.storeName)
@@ -72,11 +82,13 @@ class QuoteRequestTag(TableTag):
             return self.SKIP_BODY
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.QuoteHelperFactory import QuoteHelperFactory
-from admin.taghelpers.QuoteRequestHelperFactory import QuoteRequestHelperFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.QuoteHelperFactory import QuoteHelperFactory
+# from admin.taghelpers.QuoteRequestHelperFactory import QuoteRequestHelperFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.communication.smtp.queue.BasicEmailQueue import BasicEmailQueue
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class EmailQueueFactory:
-    emailQueueInterface: EmailQueueInterface = BasicEmailQueue.getInstance()
+    emailQueueInterface: EmailQueueInterface = None
     
 
     def __init__(self) -> None:
@@ -30,4 +30,10 @@ class EmailQueueFactory:
     def getInstance() -> EmailQueueInterface:
         return EmailQueueFactory.emailQueueInterface
 
+
+def _EmailQueueFactory_emailQueueInterface() -> object:
+    from org.allbinary.logic.communication.smtp.queue.BasicEmailQueue import BasicEmailQueue
+    return BasicEmailQueue.getInstance()
+
+lazy_static(EmailQueueFactory, "emailQueueInterface", _EmailQueueFactory_emailQueueInterface)
 

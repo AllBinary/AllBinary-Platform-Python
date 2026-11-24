@@ -24,6 +24,6 @@ class Memory:
     @staticmethod
     def getInfo() -> str:
         raise RuntimeError()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

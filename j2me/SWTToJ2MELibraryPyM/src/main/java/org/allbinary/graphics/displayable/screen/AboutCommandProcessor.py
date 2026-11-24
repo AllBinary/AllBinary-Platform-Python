@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AboutCommandProcessor:
@@ -27,11 +28,17 @@ class AboutCommandProcessor:
     
 
     def process(self, midletCommandListener: CommandListener, command: Command, canvas: Canvas) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.Command import Command
+        from javax.microedition.lcdui.CommandListener import CommandListener
         midletCommandListener.commandAction(command, canvas)
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 
 
-AboutCommandProcessor.instance = AboutCommandProcessor()
+def _AboutCommandProcessor_instance() -> object:
+    return AboutCommandProcessor()
+
+lazy_static(AboutCommandProcessor, "instance", _AboutCommandProcessor_instance)
 

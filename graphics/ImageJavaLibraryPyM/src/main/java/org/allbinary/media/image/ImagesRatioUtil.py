@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImagesRatioUtil:
     instance: ImagesRatioUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
     
@@ -56,8 +58,8 @@ class ImagesRatioUtil:
     
 
     # throws Exception
-    def fudge(self, bufferedImage: BufferedImage, ratio: float) -> BufferedImage:
-        from org.allbinary.media.image.Point import Point
+    def fudge_j2(self, bufferedImage: BufferedImage, ratio: float) -> BufferedImage:
+        from org.allbinary.string.CommonLabels import CommonLabels
         imageRatio: float = (float(bufferedImage.getWidth()) / bufferedImage.getHeight())
         point: Point = Point()
         newHeight: int = bufferedImage.getHeight()
@@ -91,8 +93,7 @@ class ImagesRatioUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def fudge(self, bufferedImageArray: list[BufferedImage], totalImages: int, ratio: float) -> list[BufferedImage]:
+    def fudge_j3(self, bufferedImageArray: list[BufferedImage], totalImages: int, ratio: float) -> list[BufferedImage]:
         end: int = totalImages
         if len(bufferedImageArray) < totalImages:
             end = len(bufferedImageArray)
@@ -100,12 +101,18 @@ class ImagesRatioUtil:
         for index in range(0, end):
             fudgedBufferedImageArray[index] = self.fudge(bufferedImageArray[index], ratio)
         return fudgedBufferedImageArray
-# from java.awt import *
+
+    def fudge(self, *args):
+        return getattr(self, "fudge_j" + str(len(args)))(*args)
+# from java.awt.Point import Point
+# from java.awt.Graphics2D import Graphics2D
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 
-ImagesRatioUtil.instance = ImagesRatioUtil()
+def _ImagesRatioUtil_instance() -> object:
+    return ImagesRatioUtil()
+
+lazy_static(ImagesRatioUtil, "instance", _ImagesRatioUtil_instance)
 

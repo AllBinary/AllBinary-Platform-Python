@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigType:
-    availableLogConfigTypes: BasicArrayList = BasicArrayListD()
+    availableLogConfigTypes: BasicArrayList = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.name: str = None
         self.description: str = None
@@ -48,7 +49,15 @@ class LogConfigType:
 
     def setDescription(self, value: str) -> None:
         self.description = value
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
+
+def _LogConfigType_availableLogConfigTypes() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(LogConfigType, "availableLogConfigTypes", _LogConfigType_availableLogConfigTypes)
 

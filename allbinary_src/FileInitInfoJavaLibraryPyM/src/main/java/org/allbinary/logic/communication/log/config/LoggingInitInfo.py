@@ -16,12 +16,12 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LoggingInitInfo:
     INITFILENAME: str = "logConfig.xml"
-    PACKAGE: str = self.PATH_GLOBALS.getInstance().INIT_PATH
+    PACKAGE: str = None
     logConfigInfoList: BasicArrayList = None
     hasRead: bool = False
     _lock = threading.RLock()
@@ -39,7 +39,13 @@ class LoggingInitInfo:
 
     @staticmethod
     def _getDoc_unlocked() -> Document:
-        path: str = self.URLGLOBALS.getWebappPath() + LoggingInitInfo.PACKAGE
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.w3c.dom.Document import Document
+        path: str = URLGLOBALS.getWebappPath() + LoggingInitInfo.PACKAGE
         FILEABPATH: AbPath = AbPath(path, LoggingInitInfo.INITFILENAME)
         file: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
         document: Document = DomDocumentHelper.create(AbFileLocalInputStream(file))
@@ -68,9 +74,13 @@ class LoggingInitInfo:
 
     @staticmethod
     def _read_unlocked() -> None:
-        from org.allbinary.logic.communication.log.config.LogConfigsData import LogConfigsData
-        from org.allbinary.logic.communication.log.config.LogConfigData import LogConfigData
         from org.allbinary.logic.communication.log.config.LogConfig import LogConfig
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         try:
             document: Document = LoggingInitInfo.getDoc()
             logConfigsNodeList: NodeList = document.getElementsByTagName(LogConfigsData.getInstance().NAME)
@@ -125,12 +135,14 @@ class LoggingInitInfo:
 
     @staticmethod
     def _set_unlocked(logConfigInfoVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         LoggingInitInfo.logConfigInfoList = logConfigInfoVector
     
 
     # throws Exception
     @staticmethod
     def get() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         LoggingInitInfo.updateIfNeeded()
         return LoggingInitInfo.logConfigInfoList
     
@@ -138,6 +150,8 @@ class LoggingInitInfo:
     # throws Exception
     @staticmethod
     def getTypeNameList() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         LoggingInitInfo.updateIfNeeded()
         allLogTypeVector: BasicArrayList = BasicArrayListD()
         size: int = LoggingInitInfo.logConfigInfoList.size()
@@ -152,6 +166,8 @@ class LoggingInitInfo:
     # throws Exception
     @staticmethod
     def getTypeList() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         LoggingInitInfo.updateIfNeeded()
         allLogTypeVector: BasicArrayList = BasicArrayListD()
         size: int = LoggingInitInfo.logConfigInfoList.size()
@@ -169,6 +185,8 @@ class LoggingInitInfo:
     
 
     def toString(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.w3c.dom.Document import Document
         try:
             document: Document = LoggingInitInfo.getDoc()
             return XmlDocumentHelper.toString(document)
@@ -177,17 +195,24 @@ class LoggingInitInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
+
+def _LoggingInitInfo_PACKAGE() -> object:
+    from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+    return PATH_GLOBALS.getInstance().INIT_PATH
+
+lazy_static(LoggingInitInfo, "PACKAGE", _LoggingInitInfo_PACKAGE)
 

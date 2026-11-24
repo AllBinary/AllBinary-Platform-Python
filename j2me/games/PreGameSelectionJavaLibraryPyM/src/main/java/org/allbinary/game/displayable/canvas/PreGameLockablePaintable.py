@@ -21,11 +21,15 @@ from org.allbinary.graphics.form.LockablePaintable import LockablePaintable
 class PreGameLockablePaintable(LockablePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
         self.halfWidth: int = None
         self.paintableForm: ScrollCurrentSelectionForm = None
     
 
     def __init__(self, paintableForm: ScrollCurrentSelectionForm, lockedIndex: int) -> None:
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
+        from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
         super().__init__(lockedIndex)
         self._init_fields()
         self.paintableForm = paintableForm
@@ -33,16 +37,19 @@ class PreGameLockablePaintable(LockablePaintable):
     
 
     def paint(self, graphics: Graphics, currentIndex: int, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
         if LockedUtil.getInstance().isLocked() and self.getPaintableForm().getSelectedIndex() >= self.getLockedIndex():
             self.getAnimation().paintXY(graphics, self.getPaintableForm().getDx() - self.halfWidth, self.getPaintableForm().getDy() + 34)
     
 
     def getPaintableForm(self) -> ScrollCurrentSelectionForm:
+        from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
         return self.paintableForm
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
-from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
-from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
+# from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
+# from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
 
 

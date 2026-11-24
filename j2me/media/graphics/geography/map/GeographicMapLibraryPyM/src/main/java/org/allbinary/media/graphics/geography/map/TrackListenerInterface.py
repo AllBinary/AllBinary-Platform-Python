@@ -22,7 +22,8 @@ class TrackListenerInterface:
     
 
     def finished(self, layerInterface: AllBinaryLayer) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         raise NotImplementedError()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

@@ -14,36 +14,45 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
 from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
 
 
-class FakeLayerManager(AllBinaryGameLayerManager, GeographicMapCompositeInterface):
+class FakeLayerManager(*java_bases(AllBinaryGameLayerManager, GeographicMapCompositeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         self.geographicMapInterfaceArray: list[BasicGeographicMap] = BasicGeographicMap.NULL_BASIC_GEOGRAPHIC_MAP_ARRAY
-        self.geographicMapCellTypeArray: list[GeographicMapCellType] = GeographicMapCellType.NULL_GEOGRAPHIC_MAP_CELL_TYPE_ARRAY
+        self.cachedGeographicMapCellTypes: list[GeographicMapCellType] = GeographicMapCellType.NULL_GEOGRAPHIC_MAP_CELL_TYPE_ARRAY
     
 
     def __init__(self, gameInfo: GameInfo) -> None:
+        from org.allbinary.game.GameInfo import GameInfo
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE, gameInfo)
         self._init_fields()
     
 
     def getGeographicMapInterface(self) -> list[BasicGeographicMap]:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         return self.geographicMapInterfaceArray
     
 
     def setGeographicMapInterface(self, geographicMapInterfaceArray: list[BasicGeographicMap]) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         self.geographicMapInterfaceArray = geographicMapInterfaceArray
-        self.geographicMapCellTypeArray = [None] * (len(self.geographicMapInterfaceArray))
+        self.cachedGeographicMapCellTypes = [None] * (len(self.geographicMapInterfaceArray))
     
 
     def geographicMapCellTypeArray(self) -> list[GeographicMapCellType]:
-        return self.geographicMapCellTypeArray
-from org.allbinary.game.GameInfo import GameInfo
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        return self.cachedGeographicMapCellTypes
+# from org.allbinary.game.GameInfo import GameInfo
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
 
 

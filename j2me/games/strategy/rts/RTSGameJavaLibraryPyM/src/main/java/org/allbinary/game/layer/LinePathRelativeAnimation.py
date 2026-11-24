@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.LinePathAnimation import LinePathAnimation
 
 
@@ -31,11 +32,17 @@ class LinePathRelativeAnimation(LinePathAnimation):
     
 
     def paint(self, graphics: Graphics, point: GPoint, nextPoint: GPoint, tiledLayer: Layer) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.Layer import Layer
         graphics.drawLine(nextPoint.getX() - tiledLayer.getXP(), nextPoint.getY() - tiledLayer.getYP(), point.getX() - tiledLayer.getXP(), point.getY() - tiledLayer.getYP())
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.layer.Layer import Layer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.layer.Layer import Layer
 
 
-LinePathRelativeAnimation.instanceC = LinePathRelativeAnimation()
+def _LinePathRelativeAnimation_instanceC() -> object:
+    return LinePathRelativeAnimation()
+
+lazy_static(LinePathRelativeAnimation, "instanceC", _LinePathRelativeAnimation_instanceC)
 

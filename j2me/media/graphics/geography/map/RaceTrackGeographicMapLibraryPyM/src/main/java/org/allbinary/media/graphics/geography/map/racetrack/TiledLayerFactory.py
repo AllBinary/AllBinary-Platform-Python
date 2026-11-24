@@ -21,11 +21,13 @@ class TiledLayerFactory:
     
 
     def getInstance(self, raceTrackData: RaceTrackData) -> TiledLayer:
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         mapArray: list[list[int]] = raceTrackData.getMapArray()
         return TiledLayer(len(mapArray[0]), len(mapArray), raceTrackData.getTileSetImage(), raceTrackData.getCellWidth(), raceTrackData.getCellHeight())
     
 
     def getMiniInstance(self, raceTrackData: RaceTrackData) -> TiledLayer:
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         mapArray: list[list[int]] = raceTrackData.getMapArray()
         return TiledLayer(len(mapArray[0]), len(mapArray), raceTrackData.getMiniTileSetImage(), raceTrackData.getMiniCellWidth(), raceTrackData.getMiniCellHeight())
 # from javax.microedition.lcdui.game.TiledLayer import TiledLayer

@@ -21,20 +21,26 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class UserDomNode(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
         self.dataMappingInterface: TableMappingInterface = None
     
 
     def __init__(self, dataMappingInterface: TableMappingInterface) -> None:
+        from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
         self._init_fields()
         self.dataMappingInterface = dataMappingInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.user.UserData import UserData
-        from org.allbinary.business.user.UserData import UserData
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
-        hashMap: dict = self.dataMappingInterface.toHashMap()
+        hashMap: HashMap = self.dataMappingInterface.toHashMap()
         hashMap.put(EntryData.getInstance().LASTMODIFIED, EMPTY_STRING)
         hashMap.put(EntryData.getInstance().ENCRYPTION, EMPTY_STRING)
         hashMap.put(UserData.PASSWORD, EMPTY_STRING)
@@ -43,6 +49,7 @@ class UserDomNode(DomNodeInterface):
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
@@ -50,11 +57,11 @@ class UserDomNode(DomNodeInterface):
     def view(self) -> str:
         return None
 # from java.util.HashMap import HashMap
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FrameLog:
-    frameBytes: list[int] = str("Frame: ").getBytes()
-    info: list[int] = str("Info: \n").getBytes()
-    actions: list[int] = str("Actions: \n").getBytes()
+    frameBytes: list[int] = None
+    info: list[int] = None
+    actions: list[int] = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.frame: int = None
         self.infoStringBuffer: StringMaker = StringMaker()
         self.actionsStringBuffer: StringMaker = StringMaker()
@@ -38,18 +40,24 @@ class FrameLog:
     
 
     def addActions(self, vectorOfStrings: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = vectorOfStrings.size()
         for index in range(0, size):
             self.addAction(vectorOfStrings.get(index))
     
 
     def addAction(self, action: str) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.actionsStringBuffer.append(action)
         self.actionsStringBuffer.append(CommonSeps.getInstance().NEW_LINE)
     
 
     # throws Exception
     def write(self) -> None:
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.input.automation.ImageOutputData import ImageOutputData
+        from org.allbinary.logic.java.number.LongUtil import LongUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         filePathStringBuffer: StringMaker = StringMaker()
         filePathStringBuffer.append(ImageOutputData.SAVE_PATH)
         filePathStringBuffer.append(LongUtil.fillIn(str(self.frame)))
@@ -71,11 +79,26 @@ class FrameLog:
         return self.frame
 # from java.io.File import File
 # from java.io.FileOutputStream import FileOutputStream
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.automation.ImageOutputData import ImageOutputData
-from org.allbinary.logic.java.number.LongUtil import LongUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.automation.ImageOutputData import ImageOutputData
+# from org.allbinary.logic.java.number.LongUtil import LongUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
+
+def _FrameLog_frameBytes() -> object:
+    return str("Frame: ").getBytes()
+
+lazy_static(FrameLog, "frameBytes", _FrameLog_frameBytes)
+
+def _FrameLog_info() -> object:
+    return str("Info: \n").getBytes()
+
+lazy_static(FrameLog, "info", _FrameLog_info)
+
+def _FrameLog_actions() -> object:
+    return str("Actions: \n").getBytes()
+
+lazy_static(FrameLog, "actions", _FrameLog_actions)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #Do not use this instead just skip target, build, Application paths.
@@ -22,6 +23,7 @@ class GitProcessHelper:
     instance: GitProcessHelper = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.directory.TrackedStrings import TrackedStrings
         self.trackedStrings: TrackedStrings = TrackedStrings.getInstance()
     
 
@@ -31,6 +33,8 @@ class GitProcessHelper:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -39,15 +43,16 @@ class GitProcessHelper:
     
 
     # throws IOException, InterruptedException
-    def trackedFiles(self, rootAsString: str, pathspec: str) -> List[str]:
+    def trackedFiles_j2(self, rootAsString: str, pathspec: str) -> List[str]:
+        from java.util.List import List
         return self.trackedFiles(rootAsString, pathspec, ".java")
     
 
     # throws IOException, InterruptedException
-    # Java overloaded method: Python keeps the last definition
-    def trackedFiles(self, rootAsString: str, pathspec: str, suffix: str) -> List[str]:
-        from org.allbinary.java.runtime.process.git.ProcessBuilder import ProcessBuilder
-        from org.allbinary.java.runtime.process.git.ProcessBuilder import ProcessBuilder
+    def trackedFiles_j3(self, rootAsString: str, pathspec: str, suffix: str) -> List[str]:
+        from java.util.ArrayList import ArrayList
+        from java.util.List import List
+        from org.allbinary.logic.string.StringMaker import StringMaker
         process: Process = ProcessBuilder(self.trackedStrings.GIT_COMMAND, self.trackedStrings.CHANGE_DIRECTORY_OPTION, rootAsString, self.trackedStrings.LIST_FILES_COMMAND, self.trackedStrings.SEP_BY_NULL_CHAR_INSTEAD_OF_NEW_LINE, self.trackedStrings.PATHSPEC_SEPARATOR, pathspec).redirectError(ProcessBuilder.Redirect.INHERIT).start()
         output: list[int] = process.getInputStream().readAllBytes()
         exitCode: int = process.waitFor()
@@ -63,10 +68,14 @@ class GitProcessHelper:
                     files.add(relativePath)
                 start = index + 1
         return files
+
+    def trackedFiles(self, *args):
+        return getattr(self, "trackedFiles_j" + str(len(args)))(*args)
     
 
     def isTracked(self, file: AbFile) -> bool:
-        from org.allbinary.java.runtime.process.git.ProcessBuilder import ProcessBuilder
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         try:
             nativeFile: File = AbFileNativeUtil.get(file)
             parentFile: File = nativeFile.getParentFile()
@@ -80,13 +89,16 @@ class GitProcessHelper:
 # from java.nio.charset.StandardCharsets import StandardCharsets
 # from java.util.ArrayList import ArrayList
 # from java.util.List import List
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
-from org.allbinary.logic.io.file.directory.TrackedStrings import TrackedStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.file.directory.TrackedStrings import TrackedStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-GitProcessHelper.instance = GitProcessHelper()
+def _GitProcessHelper_instance() -> object:
+    return GitProcessHelper()
+
+lazy_static(GitProcessHelper, "instance", _GitProcessHelper_instance)
 

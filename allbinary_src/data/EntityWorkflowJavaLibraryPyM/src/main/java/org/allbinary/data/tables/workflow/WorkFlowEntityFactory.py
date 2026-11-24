@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WorkFlowEntityFactory:
     instance: WorkFlowEntityFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,16 +37,24 @@ class WorkFlowEntityFactory:
 
     def create2(self) -> WorkFlowEntity:
         from org.allbinary.data.tables.workflow.WorkFlowEntity import WorkFlowEntity
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return WorkFlowEntity()
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return None
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-WorkFlowEntityFactory.instance = WorkFlowEntityFactory()
+def _WorkFlowEntityFactory_instance() -> object:
+    return WorkFlowEntityFactory()
+
+lazy_static(WorkFlowEntityFactory, "instance", _WorkFlowEntityFactory_instance)
 

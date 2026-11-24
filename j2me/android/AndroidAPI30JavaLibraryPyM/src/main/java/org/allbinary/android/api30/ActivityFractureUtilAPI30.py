@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.api5.ActivityFractureUtilAPI5 import ActivityFractureUtilAPI5
 
 
@@ -31,16 +32,24 @@ class ActivityFractureUtilAPI30(ActivityFractureUtilAPI5):
     
 
     def setFullScreen(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
+        from android.view.Window import Window
+        from androidx.core.view.WindowCompat import WindowCompat
+        from androidx.core.view.WindowInsetsCompat import WindowInsetsCompat
+        from androidx.core.view.WindowInsetsControllerCompat import WindowInsetsControllerCompat
         window: Window = activity.getWindow()
         windowInsetsController: WindowInsetsControllerCompat = WindowCompat.getInsetsController(window, window.getDecorView())
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
         windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
-from android.app.Activity import Activity
-from android.view.Window import Window
-from androidx.core.view.WindowCompat import WindowCompat
-from androidx.core.view.WindowInsetsCompat import WindowInsetsCompat
-from androidx.core.view.WindowInsetsControllerCompat import WindowInsetsControllerCompat
+# from android.app.Activity import Activity
+# from android.view.Window import Window
+# from androidx.core.view.WindowCompat import WindowCompat
+# from androidx.core.view.WindowInsetsCompat import WindowInsetsCompat
+# from androidx.core.view.WindowInsetsControllerCompat import WindowInsetsControllerCompat
 
 
-ActivityFractureUtilAPI30.instance30 = ActivityFractureUtilAPI30()
+def _ActivityFractureUtilAPI30_instance30() -> object:
+    return ActivityFractureUtilAPI30()
+
+lazy_static(ActivityFractureUtilAPI30, "instance30", _ActivityFractureUtilAPI30_instance30)
 

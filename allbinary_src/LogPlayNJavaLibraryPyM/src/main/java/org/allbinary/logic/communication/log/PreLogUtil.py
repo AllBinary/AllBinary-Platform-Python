@@ -29,6 +29,11 @@ class PreLogUtil:
     @staticmethod
     def put(specialMessage: str, anyType: object, functionName: str) -> None:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from playn.core.PlayN import PlayN
         className: str = PreLogUtil.getClassName(anyType)
         if className is None:
             className = CommonStrings.getInstance().EMPTY
@@ -40,6 +45,11 @@ class PreLogUtil:
     @staticmethod
     def putOE(specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from playn.core.PlayN import PlayN
         className: str = PreLogUtil.getClassName(anyType)
         if className is None:
             className = CommonStrings.getInstance().EMPTY
@@ -51,6 +61,7 @@ class PreLogUtil:
     @staticmethod
     def putS(specialMessage: str, className: str, functionName: str) -> None:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+        from playn.core.PlayN import PlayN
         message: str = LogFormatUtil.getInstance().getS(className, functionName, specialMessage)
         PlayN.log().debug(str(PreLogUtil.LOG_SUCCESS) + message)
     
@@ -58,17 +69,18 @@ class PreLogUtil:
     @staticmethod
     def putSE(specialMessage: str, className: str, functionName: str, exception: object) -> None:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+        from playn.core.PlayN import PlayN
         message: str = LogFormatUtil.getInstance().get(className, functionName, specialMessage, exception)
         PlayN.log().error(str(PreLogUtil.LOG_SUCCESS) + message, exception)
     
 
     @staticmethod
     def getClassName(anyType: object) -> str:
-        raise NotImplementedError()
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from playn.core.PlayN import PlayN
+        raise NotImplementedError("UnsupportedOperationException: native method PreLogUtil.getClassName has a parameter or result type the Python JNI runtime does not pass")
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from playn.core.PlayN import PlayN
 
 

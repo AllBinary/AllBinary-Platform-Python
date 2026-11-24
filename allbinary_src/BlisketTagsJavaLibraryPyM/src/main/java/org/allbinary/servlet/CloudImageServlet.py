@@ -21,6 +21,8 @@ from __future__ import annotations
 class CloudImageServlet(HttpServlet):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
@@ -32,18 +34,25 @@ class CloudImageServlet(HttpServlet):
     # throws ServletException, IOException
     def processRequest(self, request: HttpServletRequest, response: HttpServletResponse) -> None:
         from org.allbinary.servlet.BlisketServletUtil import BlisketServletUtil
+        from java.io.InputStream import InputStream
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         inputStream: InputStream = None
         try:
             BlisketServletUtil.getInstance().init(request)
             requestURI: str = request.getRequestURI()
-            file: AbFile = AbFile.createAbFile(str(self.URLGLOBALS.getWebappPath()) + requestURI)
+            file: AbFile = AbFile.createAbFile(str(URLGLOBALS.getWebappPath()) + requestURI)
             inputStream = CloudStreamUtil.getInstance().getFile(file)
             outputStream: ByteArrayOutputStream = ByteArrayOutputStream(8000)
             byteArray: list[int] = StreamUtil.getInstance().getByteArray(inputStream, outputStream, [0] * (16384))
             response.setContentType("image/jpeg;charset=utf-8")
             response.getOutputStream().write(byteArray)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "processRequest()", e)
         finally:
             StreamUtil.getInstance().close(response.getOutputStream())
@@ -69,11 +78,13 @@ class CloudImageServlet(HttpServlet):
 # from javax.servlet.ServletException import ServletException
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.http.HttpServletResponse import HttpServletResponse
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -24,6 +24,11 @@ class AbstractInputAutomationWorker(RunnableInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
+        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.index: int = 0
@@ -104,6 +109,8 @@ class AbstractInputAutomationWorker(RunnableInterface):
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -129,33 +136,39 @@ class AbstractInputAutomationWorker(RunnableInterface):
     
 
     def getCaptureWorker(self) -> CaptureWorkerInterface:
+        from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
         return self.captureWorkerInterface
     
 
     def setCaptureWorker(self, captureWorkerInterface: CaptureWorkerInterface) -> None:
+        from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
         self.captureWorkerInterface = captureWorkerInterface
     
 
     def getImageComparisonWorker(self) -> ImageComparisonWorker:
+        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
         return self.imageComparisonWorker
     
 
     def setImageComparisonWorker(self, imageComparisonWorker: ImageComparisonWorker) -> None:
+        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
         self.imageComparisonWorker = imageComparisonWorker
     
 
     def getMotionRectanglesWorker(self) -> MotionRectanglesWorker:
+        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
         return self.motionRectanglesWorker
     
 
     def setMotionRectanglesWorker(self, motionRectanglesWorker: MotionRectanglesWorker) -> None:
+        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
         self.motionRectanglesWorker = motionRectanglesWorker
-from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
-from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
+# from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

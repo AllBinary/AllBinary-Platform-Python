@@ -21,13 +21,17 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class StoreFrontView(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.storeFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF("Constructing: StoreFrontView for: " + storeFrontInterface.getName(), self, commonStrings.GET_INSTANCE)
         self.storeFrontInterface = storeFrontInterface
@@ -35,8 +39,12 @@ class StoreFrontView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-        hashMap: dict = self.storeFrontInterface.toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        hashMap: HashMap = self.storeFrontInterface.toHashMap()
         storeFrontData: StoreFrontData = StoreFrontData.getInstance()
         hashMap.put(storeFrontData.CURRENTHOMEHOSTNAME, self.storeFrontInterface.getCurrentHomeHostName())
         hashMap.put(storeFrontData.CURRENTHOMEHOSTNAMEPATH, self.storeFrontInterface.getCurrentHomeHostNamePath())
@@ -46,11 +54,13 @@ class StoreFrontView(DomNodeInterface):
         node: Node = ModDomHelper.createNameValueNodes(document, storeFrontData.NAME, hashMap)
         return node
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

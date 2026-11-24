@@ -30,6 +30,10 @@ class InputImageIOInterfaceFactory:
         from org.allbinary.input.media.image.InputImageType import InputImageType
         from org.allbinary.input.media.image.InputImageType import InputImageType
         from org.allbinary.input.media.image.InputImageType import InputImageType
+        from org.allbinary.input.media.image.capture.CapturedImageInputOutput import CapturedImageInputOutput
+        from org.allbinary.media.image.comparison.ComparisonImageInputOutput import ComparisonImageInputOutput
+        from org.allbinary.media.image.comparison.motion.MotionRectanglesImageInputOutput import MotionRectanglesImageInputOutput
+        from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
         if imageType == InputImageType.CAPTURE:
             return CapturedImageInputOutput()
         elif imageType == InputImageType.COMPARISON:
@@ -38,9 +42,9 @@ class InputImageIOInterfaceFactory:
             return MotionRectanglesImageInputOutput()
         else:
             raise Exception("No ImageIOInterface for: " + str(imageType))
-from org.allbinary.input.media.image.capture.CapturedImageInputOutput import CapturedImageInputOutput
-from org.allbinary.media.image.comparison.ComparisonImageInputOutput import ComparisonImageInputOutput
-from org.allbinary.media.image.comparison.motion.MotionRectanglesImageInputOutput import MotionRectanglesImageInputOutput
-from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
+# from org.allbinary.input.media.image.capture.CapturedImageInputOutput import CapturedImageInputOutput
+# from org.allbinary.media.image.comparison.ComparisonImageInputOutput import ComparisonImageInputOutput
+# from org.allbinary.media.image.comparison.motion.MotionRectanglesImageInputOutput import MotionRectanglesImageInputOutput
+# from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
 
 

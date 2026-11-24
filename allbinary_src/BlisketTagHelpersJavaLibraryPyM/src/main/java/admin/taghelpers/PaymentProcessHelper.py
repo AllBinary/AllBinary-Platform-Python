@@ -21,10 +21,15 @@ from admin.taghelpers.TagHelper import TagHelper
 class PaymentProcessHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from views.admin.payment.PaymentProcessorComponent import PaymentProcessorComponent
         self.paymentProcessorComponent: PaymentProcessorComponent = None
     
 
-    def __init__(self, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from views.admin.payment.PaymentProcessorComponent import PaymentProcessorComponent
         super().__init__()
         self._init_fields()
         transformInfoInterface: TransformInfoHttpInterface = TransformInfoHttpFactory.getInstance(propertiesHashMap, pageContext)
@@ -36,8 +41,8 @@ class PaymentProcessHelper(TagHelper):
         return self.paymentProcessorComponent.view()
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from views.admin.payment.PaymentProcessorComponent import PaymentProcessorComponent
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from views.admin.payment.PaymentProcessorComponent import PaymentProcessorComponent
 
 

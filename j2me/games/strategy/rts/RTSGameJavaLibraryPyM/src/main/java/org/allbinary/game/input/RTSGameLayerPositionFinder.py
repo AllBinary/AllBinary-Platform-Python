@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.LayerPositionFinderInterface import LayerPositionFinderInterface
 
 
@@ -32,11 +33,17 @@ class RTSGameLayerPositionFinder(LayerPositionFinderInterface):
     
 
     def getLayerInterface(self, geographicMapCellPosition: GeographicMapCellPosition) -> AllBinaryLayer:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
         return DropCellPositionHistory.getInstance().getLayerInterface(geographicMapCellPosition)
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
 
 
-RTSGameLayerPositionFinder.instance = RTSGameLayerPositionFinder()
+def _RTSGameLayerPositionFinder_instance() -> object:
+    return RTSGameLayerPositionFinder()
+
+lazy_static(RTSGameLayerPositionFinder, "instance", _RTSGameLayerPositionFinder_instance)
 

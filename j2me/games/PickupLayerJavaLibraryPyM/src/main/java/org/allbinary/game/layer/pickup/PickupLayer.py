@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayer import MultiPlayerGameLayer
 from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
 from org.allbinary.game.layer.pickup.PickupableInterface import PickupableInterface
 
 
-class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterface):
+class PickupLayer(*java_bases(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation
@@ -118,6 +119,5 @@ class PickupLayer(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterf
 # from org.allbinary.graphics.Rectangle import Rectangle
 # from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 # from org.allbinary.view.ViewPositionBase import ViewPositionBase
-from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
 
 

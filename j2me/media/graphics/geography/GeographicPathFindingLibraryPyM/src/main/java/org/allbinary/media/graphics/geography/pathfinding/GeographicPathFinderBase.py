@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GeographicPathFinderBase:
     NULL_GEOGRAPHIC_PATH_FINDER_BASE: GeographicPathFinderBase = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -29,15 +31,20 @@ class GeographicPathFinderBase:
 
     # throws Exception
     def searchTotalPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, totalPaths: int) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     # throws Exception
     def searchTotalPathN(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, totalPaths: int, multipassState: MultipassState) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-GeographicPathFinderBase.NULL_GEOGRAPHIC_PATH_FINDER_BASE = GeographicPathFinderBase()
+def _GeographicPathFinderBase_NULL_GEOGRAPHIC_PATH_FINDER_BASE() -> object:
+    return GeographicPathFinderBase()
+
+lazy_static(GeographicPathFinderBase, "NULL_GEOGRAPHIC_PATH_FINDER_BASE", _GeographicPathFinderBase_NULL_GEOGRAPHIC_PATH_FINDER_BASE)
 

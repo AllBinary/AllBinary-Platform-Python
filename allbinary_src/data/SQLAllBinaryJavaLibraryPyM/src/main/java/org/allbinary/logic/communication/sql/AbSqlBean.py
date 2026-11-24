@@ -21,17 +21,22 @@ from org.allbinary.logic.communication.sql.AbSqlRow import AbSqlRow
 class AbSqlBean(AbSqlRow):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.METHOD_GET_FIELD: str = "getField"
         self.METHOD_IS_SUBSET_OF_ENTRY: str = "isSubsetOfEntry"
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
         self._init_fields()
     
 
-    def getField(self, key: str, value: str, requestedField: str) -> str:
+    def getField_j3(self, key: str, value: str, requestedField: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.SELECT)
         stringBuffer.append(requestedField)
@@ -48,7 +53,7 @@ class AbSqlBean(AbSqlRow):
             rset: ResultSet = self.executeSQLStatement(sqlStatement)
             while rset.next():
                 field = rset.getString(requestedField)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append(self.sqlStrings.SQL_STATEMENT_LABEL)
                     stringBuffer.append(sqlStatement)
@@ -58,13 +63,17 @@ class AbSqlBean(AbSqlRow):
                 return field
             return None
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(str(self.FAILED_SQL_STATEMENT) + sqlStatement, self, self.METHOD_GET_FIELD, e)
             return str(self.FAILED_SQL_STATEMENT) + sqlStatement
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getField(self, keysAndValues: dict, requestedField: str) -> str:
+    def getField_j2(self, keysAndValues: HashMap, requestedField: str) -> str:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.SELECT)
         stringBuffer.append(requestedField)
@@ -91,7 +100,7 @@ class AbSqlBean(AbSqlRow):
             rset: ResultSet = self.executeSQLStatement(sqlStatement)
             while rset.next():
                 field = rset.getString(requestedField)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.append(self.sqlStrings.SQL_STATEMENT_LABEL)
                     stringBuffer.append(sqlStatement)
@@ -102,12 +111,20 @@ class AbSqlBean(AbSqlRow):
             return None
         except Exception as e:
             sqlStatement: str = str(stringBuffer)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(str(self.FAILED_SQL_STATEMENT) + sqlStatement, self, self.METHOD_GET_FIELD, e)
             return str(self.FAILED_SQL_STATEMENT) + sqlStatement
+
+    def getField(self, *args):
+        return getattr(self, "getField_j" + str(len(args)))(*args)
     
 
-    def isSubsetOfEntry(self, key: str, value: str, columnsAndValues: dict) -> str:
+    def isSubsetOfEntry(self, key: str, value: str, columnsAndValues: HashMap) -> str:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.SELECT)
         try:
@@ -136,21 +153,24 @@ class AbSqlBean(AbSqlRow):
                     columnName = str(keyArray2[i])
                     field = str(rset.getObject(columnName))
                     if ((field > columnsAndValues.get(columnName)) - (field < columnsAndValues.get(columnName))) != 0:
-                        return org.allbinary.globals.GLOBALS2.NOTASUBSET
+                        return GLOBALS2.NOTASUBSET
             if rset.getRow() != 1:
-                return org.allbinary.globals.GLOBALS2.NOTASUBSET
+                return GLOBALS2.NOTASUBSET
             else:
-                return org.allbinary.globals.GLOBALS2.ISASUBSET
+                return GLOBALS2.ISASUBSET
         except Exception as e:
             sqlStatement: str = str(stringBuffer)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(str(self.FAILED_SQL_STATEMENT) + sqlStatement, self, self.METHOD_IS_SUBSET_OF_ENTRY, e)
             return str(self.FAILED_SQL_STATEMENT) + sqlStatement
 # from java.sql.ResultSet import ResultSet
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -21,11 +21,15 @@ from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventP
 class BaseGameInputMotionEventProcessor(MotionEventProcessor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameMotionGestureListener: GameMotionGestureListener = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
+        from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
         super().__init__()
         self._init_fields()
         self.gameMotionGestureListener = GameMotionGestureListener(MotionGestureReceiveInterfaceFactory.getInstance())
@@ -33,16 +37,18 @@ class BaseGameInputMotionEventProcessor(MotionEventProcessor):
     
 
     def process(self, motionEvent: MotionEvent) -> None:
+        from android.view.MotionEvent import MotionEvent
         pass
     
 
     def addListener(self) -> None:
+        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         motionGesturesHandler: BasicMotionGesturesHandler = BasicMotionGesturesHandler.getInstance()
         motionGesturesHandler.addListenerInterface(self.gameMotionGestureListener)
-from android.view.MotionEvent import MotionEvent
-from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
-from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
-from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from android.view.MotionEvent import MotionEvent
+# from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
+# from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
+# from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

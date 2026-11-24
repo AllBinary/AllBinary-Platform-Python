@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.workarea.tools.event.EventObject import EventObject
+from java.util.EventObject import EventObject
 
 
 class MyGraphicItemEvent(EventObject):

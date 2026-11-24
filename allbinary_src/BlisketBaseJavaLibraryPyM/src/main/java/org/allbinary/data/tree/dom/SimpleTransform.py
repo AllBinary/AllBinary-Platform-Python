@@ -20,11 +20,13 @@ from __future__ import annotations
 class SimpleTransform:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.xsltFilePath: AbPath = None
         self.dataFilePath: AbPath = None
     
 
     def __init__(self, xsltFilePath: AbPath, dataFilePath: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self._init_fields()
         self.xsltFilePath = xsltFilePath
         self.dataFilePath = dataFilePath
@@ -32,18 +34,22 @@ class SimpleTransform:
 
     # throws Exception
     def transform(self) -> str:
-        from org.allbinary.data.tree.dom.XslHelper import XslHelper
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.w3c.dom.Document import Document
         inputStream: AbFileLocalInputStream = AbFileLocalInputStream(AbFile.createAbFileFromAbPath(self.xsltFilePath))
         document: Document = DomDocumentHelper.create(AbFileLocalInputStream(AbFile.createAbFileFromAbPath(self.dataFilePath)))
         result: str = XslHelper.getInstance().translate(StreamSource(inputStream), StreamSource(StringBufferInputStream(XmlDocumentHelper.toString(document))))
         return result
 # from java.io.StringBufferInputStream import StringBufferInputStream
 # from javax.xml.transform.stream.StreamSource import StreamSource
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.w3c.dom.Document import Document
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.w3c.dom.Document import Document
 
 

@@ -22,6 +22,8 @@ class AbeLicenseClient:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.MINSERVERS: int = 3
@@ -38,6 +40,13 @@ class AbeLicenseClient:
 
     def _get_unlocked(self, abeClientInformation: AbeClientInformationInterface) -> AbeLicenseInterface:
         from org.allbinary.logic.system.security.licensing.client.XmlRpcAbeLicenseRetrievalClient import XmlRpcAbeLicenseRetrievalClient
+        from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.GET)
             xmlRpcAbeLicenseClient: XmlRpcAbeClient = XmlRpcAbeLicenseRetrievalClient(abeClientInformation)
@@ -61,14 +70,14 @@ class AbeLicenseClient:
             return abeLicenseInterface
         except Exception as e:
             raise e
-from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
-from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+# from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

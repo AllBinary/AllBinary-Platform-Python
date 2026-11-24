@@ -20,6 +20,7 @@ from __future__ import annotations
 class AbResponseHandler:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,11 +31,15 @@ class AbResponseHandler:
     # throws JspTagException
     @staticmethod
     def sendJspTagRedirect(pageContext: PageContext, e: Exception) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 logUtil.put("Jsp Tag Exception", "AbResponseHandler", "sendJspRedirect()", e)
-            AbResponseHandler.sendRedirect(pageContext, self.FREEBLISKET_PATH_GLOBALS.getInstance().ERRORPAGE)
+            AbResponseHandler.sendRedirect(pageContext, FREEBLISKET_PATH_GLOBALS.getInstance().ERRORPAGE)
         except Exception as e2:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LICENSINGERROR):
                 logUtil.put("Exception in Redirect Handling", "AbResponseHandler", "sendJspRedirect", e)
@@ -44,11 +49,15 @@ class AbResponseHandler:
     # throws ServletException
     @staticmethod
     def sendServletRedirect(pageContext: PageContext, e: Exception) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 logUtil.put("Jsp Tag Exception", "AbResponseHandler", "sendJspRedirect()", e)
-            AbResponseHandler.sendRedirect(pageContext, self.FREEBLISKET_PATH_GLOBALS.getInstance().ERRORPAGE)
+            AbResponseHandler.sendRedirect(pageContext, FREEBLISKET_PATH_GLOBALS.getInstance().ERRORPAGE)
         except Exception as e2:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LICENSINGERROR):
                 logUtil.put("Exception in Redirect Handling", "AbResponseHandler", "sendJspRedirect", e)
@@ -58,11 +67,15 @@ class AbResponseHandler:
     # throws JspTagException
     @staticmethod
     def sendJspTagLicensingRedirect(pageContext: PageContext, e: Exception) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 logUtil.put("Licensing Exception", "AbResponseHandler", "sendJspTagLicensingRedirect()", e)
-            AbResponseHandler.sendRedirect(pageContext, self.FREEBLISKET_PATH_GLOBALS.getInstance().LICENSEERRORPAGE)
+            AbResponseHandler.sendRedirect(pageContext, FREEBLISKET_PATH_GLOBALS.getInstance().LICENSEERRORPAGE)
         except Exception as e2:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LICENSINGERROR):
                 logUtil.put("Exception in Redirect Handling", "AbResponseHandler", "sendJspTagLicensingRedirect", e)
@@ -72,11 +85,15 @@ class AbResponseHandler:
     # throws ServletException
     @staticmethod
     def sendServletLicensingRedirect(pageContext: PageContext, e: Exception) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 logUtil.put("Licensing Exception", "AbResponseHandler", "sendServletLicensingRedirect()", e)
-            AbResponseHandler.sendRedirect(pageContext, self.FREEBLISKET_PATH_GLOBALS.getInstance().LICENSEERRORPAGE)
+            AbResponseHandler.sendRedirect(pageContext, FREEBLISKET_PATH_GLOBALS.getInstance().LICENSEERRORPAGE)
         except Exception as e2:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LICENSINGERROR):
                 logUtil.put("Exception in Redirect Handling", "AbResponseHandler", "sendServletLicensingRedirect", e)
@@ -102,9 +119,9 @@ class AbResponseHandler:
 # from javax.servlet.http.HttpServletResponse import HttpServletResponse
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

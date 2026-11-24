@@ -22,9 +22,10 @@ class InitTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.InitHelperFactory import InitHelperFactory
         super().__init__()
         self.setTagHelperFactory(InitHelperFactory())
         self.setTagRequestHelperFactory(InitHelperFactory())
-from admin.taghelpers.InitHelperFactory import InitHelperFactory
+# from admin.taghelpers.InitHelperFactory import InitHelperFactory
 
 

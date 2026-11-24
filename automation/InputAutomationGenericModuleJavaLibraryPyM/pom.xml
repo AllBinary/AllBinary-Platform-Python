@@ -202,7 +202,7 @@
             
 
             <plugin>
-                <artifactId>maven-resources-pluginPy</artifactId>
+                <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
                 <executions>
                     <execution>

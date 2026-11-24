@@ -41,6 +41,8 @@ class AbstractInputAutomationFactory(InputAutomationModuleFactoryInterface):
     
 
     def _constructor2(self, name: str, jPanel: JPanel) -> None:
+        from java.net.URL import URL
+        from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
         super().__init__()
         self._init_fields()
         self.name = name
@@ -61,7 +63,7 @@ class AbstractInputAutomationFactory(InputAutomationModuleFactoryInterface):
         return self.helpSet
 # from java.net.URL import URL
 # from javax.help.HelpSet import HelpSet
-# from javax.swing import *
-from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
+# from javax.swing.JPanel import JPanel
+# from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
 
 

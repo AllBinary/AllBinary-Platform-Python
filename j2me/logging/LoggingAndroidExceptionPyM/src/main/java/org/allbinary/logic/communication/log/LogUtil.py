@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -58,8 +59,10 @@ class LogUtil:
         className = type(anyType).__module__ + "." + type(anyType).__qualname__
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         android.util.Log.i(self.LABEL, self.LOG_SUCCESS + message)
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

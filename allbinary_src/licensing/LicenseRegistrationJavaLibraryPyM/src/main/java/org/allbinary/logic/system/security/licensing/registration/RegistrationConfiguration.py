@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RegistrationConfiguration:
     SINGLETON: RegistrationConfiguration = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.registrationCode: str = "No Registration Code"
         self.NAME: str = "registrationid"
@@ -28,6 +30,8 @@ class RegistrationConfiguration:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.io.file.FileFactory import FileFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             if FileFactory.getInstance().isFile(self.FILE):
@@ -46,6 +50,12 @@ class RegistrationConfiguration:
 
     # throws Exception
     def read(self) -> None:
+        from java.io.DataInputStream import DataInputStream
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         fileInputStreamFactory: FileStreamFactory = FileStreamFactory.getInstance()
         fileInputStream: InputStream = fileInputStreamFactory.getFileInputStreamInstance(StringUtil.getInstance().EMPTY_STRING, self.FILE)
         dataInputStream: DataInputStream = DataInputStream(fileInputStream)
@@ -55,6 +65,12 @@ class RegistrationConfiguration:
 
     # throws Exception
     def write(self) -> None:
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         dataOutputStream: AbDataOutputStream = None
         try:
             self.logUtil.putF(str(StringMaker().append("Write Configuration: ").append(str(self))), self, "write")
@@ -68,6 +84,7 @@ class RegistrationConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         return str(StringMaker().append("Registration Code: ").append(self.getRegistrationCode()))
 
     def __str__(self) -> str:
@@ -83,16 +100,19 @@ class RegistrationConfiguration:
 # from java.io.DataInputStream import DataInputStream
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.FileFactory import FileFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.FileFactory import FileFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 
 
-RegistrationConfiguration.SINGLETON = RegistrationConfiguration()
+def _RegistrationConfiguration_SINGLETON() -> object:
+    return RegistrationConfiguration()
+
+lazy_static(RegistrationConfiguration, "SINGLETON", _RegistrationConfiguration_SINGLETON)
 

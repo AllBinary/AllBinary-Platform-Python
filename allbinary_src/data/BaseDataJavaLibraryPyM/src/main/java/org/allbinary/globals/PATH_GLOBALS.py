@@ -31,7 +31,7 @@ class PATH_GLOBALS:
 
     @staticmethod
     def getInstance() -> PATH_GLOBALS:
-        return self.PATH_GLOBALS.instance
+        return PATH_GLOBALS.instance
     
 
     def __init__(self) -> None:

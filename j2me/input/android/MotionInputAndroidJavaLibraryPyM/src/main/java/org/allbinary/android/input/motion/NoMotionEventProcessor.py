@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
-from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventProcessor
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventProcessor
 
 
 class NoMotionEventProcessor(MotionEventProcessor):
-    SINGLETON: MotionEventProcessor = MotionEventProcessor()
+    SINGLETON: MotionEventProcessor = None
 
     def __init__(self) -> None:
         super().__init__()
@@ -30,4 +30,10 @@ class NoMotionEventProcessor(MotionEventProcessor):
     def getInstance() -> MotionEventProcessor:
         return NoMotionEventProcessor.SINGLETON
 
+
+def _NoMotionEventProcessor_SINGLETON() -> object:
+    from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventProcessor
+    return MotionEventProcessor()
+
+lazy_static(NoMotionEventProcessor, "SINGLETON", _NoMotionEventProcessor_SINGLETON)
 

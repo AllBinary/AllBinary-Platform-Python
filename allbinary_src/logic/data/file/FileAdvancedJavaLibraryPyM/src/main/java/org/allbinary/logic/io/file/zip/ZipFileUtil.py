@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ZipFileUtil:
     instance: ZipFileUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
@@ -34,6 +37,12 @@ class ZipFileUtil:
     
 
     def create(self, outFilename: str, fileBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             zipFile: AbFile = AbFile.createAbFile(outFilename)
             if zipFile.exists():
@@ -57,7 +66,7 @@ class ZipFileUtil:
                     stringBuffer.append(file.getPath())
                     self.logUtil.putF(str(stringBuffer), self, "create()")
                     try:
-                        fileInputStream = AbFileInputStream(file)
+                        fileInputStream = AbFileInputStream.createFromAbFile(file)
                         outputStream.putNextEntry(ZipEntry(file.getPath()))
                         streamUtil.get(fileInputStream, outputStream, byteArray)
                         outputStream.closeEntry()
@@ -72,10 +81,17 @@ class ZipFileUtil:
 
     # throws Exception
     def unzip(self, path: str, zipFile: AbFile, fileName: str) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         buffer: list[int] = [0] * (16384)
         inputStream: ZipInputStream = None
         try:
-            inputStream = ZipInputStream(AbFileInputStream(zipFile))
+            inputStream = ZipInputStream(AbFileInputStream.createFromAbFile(zipFile))
             zipEntry: ZipEntry = None
             stringBuffer: StringMaker = StringMaker()
             fileUtil: FileUtil = FileUtil.getInstance()
@@ -103,18 +119,21 @@ class ZipFileUtil:
 # from java.util.zip.ZipEntry import ZipEntry
 # from java.util.zip.ZipInputStream import ZipInputStream
 # from java.util.zip.ZipOutputStream import ZipOutputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+# from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-ZipFileUtil.instance = ZipFileUtil()
+def _ZipFileUtil_instance() -> object:
+    return ZipFileUtil()
+
+lazy_static(ZipFileUtil, "instance", _ZipFileUtil_instance)
 

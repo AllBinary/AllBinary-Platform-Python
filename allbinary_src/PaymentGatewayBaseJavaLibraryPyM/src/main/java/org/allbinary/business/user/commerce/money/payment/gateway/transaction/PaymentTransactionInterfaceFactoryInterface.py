@@ -23,38 +23,45 @@ class PaymentTransactionInterfaceFactoryInterface:
 
     # throws Exception
     def getInstance(self, orderHistory: OrderHistory) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
         raise NotImplementedError()
     
 
     # throws Exception
     def getSaleTransaction(self, tenderType: TenderType) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
         raise NotImplementedError()
     
 
     # throws Exception
     def getCreditTransaction(self, tenderType: TenderType) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
         raise NotImplementedError()
     
 
     # throws Exception
     def getAuthorizationTransaction(self, tenderType: TenderType) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
         raise NotImplementedError()
     
 
     # throws Exception
     def getCaptureDelayedTransaction(self, tenderType: TenderType) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
         raise NotImplementedError()
     
 
     # throws Exception
     def getVoidTransaction(self, tenderType: TenderType) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
         raise NotImplementedError()
     
 
     # throws Exception
     def getInquiryTransaction(self, tenderType: TenderType) -> PaymentTransactionInterface:
+        from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
-from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.business.user.commerce.money.payment.types.TenderType import TenderType
 
 

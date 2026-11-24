@@ -20,11 +20,13 @@ from __future__ import annotations
 class ItemView:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.itemInterface: OrderItemInterface = None
         self.vector: BasicArrayList = None
     
 
     def __init__(self, itemInterface: OrderItemInterface, vector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.itemInterface = itemInterface
         self.vector = vector
@@ -32,9 +34,15 @@ class ItemView:
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.user.commerce.inventory.item.ItemData import ItemData
         from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
-        hashMap: dict = self.itemInterface.toHashMap()
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        hashMap: HashMap = self.itemInterface.toHashMap()
         keySet: Set = hashMap.keySet()
         node: Node = document.createElement(ItemData.ITEM)
         basicItemView: BasicItemView = BasicItemView(self.itemInterface, self.vector)
@@ -52,12 +60,12 @@ class ItemView:
         return node
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

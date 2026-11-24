@@ -16,6 +16,8 @@
 from __future__ import annotations
 
 import threading
+from java.lang.ClassLoader import ClassLoader
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbeFactory:
@@ -23,12 +25,13 @@ class AbeFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.useCustomLoader: bool = False
     
 
     @staticmethod
-    def getInstance() -> AbeFactory:
+    def getInstance_j0() -> AbeFactory:
         return AbeFactory.instance
     
 
@@ -37,33 +40,42 @@ class AbeFactory:
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, className: str) -> object:
+    def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, className: str) -> object:
         with self._lock:
-            return self._getInstance_unlocked(abeClientInformation, className)
+            return self._getInstance_j2_unlocked(abeClientInformation, className)
 
-    def _getInstance_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str) -> object:
+    def _getInstance_j2_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str) -> object:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.getClass(abeClientInformation, className).newInstance()
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LOADERERROR):
                 self.logUtil.put("Failure for: " + className, self, "getInstance(classname)", e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LOADERERROR):
                 self.logUtil.put("Failure for: " + className, self, "getInstance(classname)", e)
             return None
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, className: str, classes: list[type], params: list[object]) -> object:
+    def getInstance_j4(self, abeClientInformation: AbeClientInformationInterface, className: str, classes: list[type], params: list[object]) -> object:
         with self._lock:
-            return self._getInstance_unlocked(abeClientInformation, className, classes, params)
+            return self._getInstance_j4_unlocked(abeClientInformation, className, classes, params)
 
-    def _getInstance_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str, classes: list[type], params: list[object]) -> object:
-        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
+    def _getInstance_j4_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str, classes: list[type], params: list[object]) -> object:
         from org.allbinary.logic.system.loader.AbeClassLoader import AbeClassLoader
+        from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.AbKeys import AbKeys
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         constructor: Constructor = None
         try:
             parent: ClassLoader = WebappClassLoaderInfo.getLoader()
@@ -77,7 +89,7 @@ class AbeFactory:
                 constructor = myClass.getConstructor(classes)
                 return constructor.newInstance(params)
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LOADERERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Failure for: ")
                 stringBuffer.append(className)
@@ -86,7 +98,7 @@ class AbeFactory:
                 self.logUtil.put(str(stringBuffer), self, "getInstance(className,params)", e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LOADERERROR):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Failure for: ")
                 stringBuffer.append(className)
@@ -94,6 +106,9 @@ class AbeFactory:
                 stringBuffer.append(ConstructorUtil.view(constructor, CommonSeps.getInstance().NEW_LINE))
                 self.logUtil.put(str(stringBuffer), self, "getInstance(className,params)", e)
             return None
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
     
 
     # throws LicensingException
@@ -102,8 +117,12 @@ class AbeFactory:
             return self._getClass_unlocked(abeClientInformation, className)
 
     def _getClass_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str) -> type:
-        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
         from org.allbinary.logic.system.loader.AbeClassLoader import AbeClassLoader
+        from org.allbinary.logic.system.security.AbKeys import AbKeys
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             parent: ClassLoader = WebappClassLoaderInfo.getLoader()
             if self.useCustomLoader:
@@ -114,22 +133,27 @@ class AbeFactory:
                 c: type = parent.loadClass(className)
                 return c
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LOADERERROR):
                 self.logUtil.put("Failure for: " + className, self, "getClass(className)", e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LOADERERROR):
                 self.logUtil.put("Failure for: " + className, self, "getClass(className)", e)
             return None
 # from java.lang.reflect.Constructor import Constructor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.AbKeys import AbKeys
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.AbKeys import AbKeys
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-AbeFactory.instance = AbeFactory()
+def _AbeFactory_instance() -> object:
+    return AbeFactory()
+
+lazy_static(AbeFactory, "instance", _AbeFactory_instance)
 

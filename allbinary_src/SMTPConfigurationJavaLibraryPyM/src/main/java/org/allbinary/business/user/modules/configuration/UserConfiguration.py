@@ -21,6 +21,9 @@ from org.allbinary.business.user.modules.configuration.UserConfigurationInterfac
 class UserConfiguration(UserConfigurationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.time.created.TimeCreated import TimeCreated
+        from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
         self.userEmailConfigurationInterface: UserEmailConfigurationInterface = None
         self.timeCreated: TimeCreated = None
         self.timeLastModified: TimeLastModified = None
@@ -33,13 +36,23 @@ class UserConfiguration(UserConfigurationInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.time.created.TimeCreated import TimeCreated
+        from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfiguration import UserEmailConfiguration
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
         self._init_fields()
         self.userEmailConfigurationInterface = UserEmailConfiguration()
         self.timeCreated = TimeCreated(0)
         self.timeLastModified = TimeLastModified(0)
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.time.created.TimeCreated import TimeCreated
+        from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfiguration import UserEmailConfiguration
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
         self._init_fields()
         self.userEmailConfigurationInterface = UserEmailConfiguration(hashMap)
         self.timeCreated = TimeCreated(hashMap.get(EntryData.getInstance().TIMECREATED))
@@ -47,32 +60,38 @@ class UserConfiguration(UserConfigurationInterface):
     
 
     def getUserEmailConfigurationInterface(self) -> UserEmailConfigurationInterface:
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
         return self.userEmailConfigurationInterface
     
 
     def setUserEmailConfigurationInterface(self, userEmailConfigurationInterface: UserEmailConfigurationInterface) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
         self.userEmailConfigurationInterface = userEmailConfigurationInterface
     
 
     def getTimeCreated(self) -> TimeCreated:
+        from org.allbinary.business.time.created.TimeCreated import TimeCreated
         return self.timeCreated
     
 
     def getTimeLastModified(self) -> TimeLastModified:
+        from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
         return self.timeLastModified
     
 
     def setTimeCreated(self, timeCreated: TimeCreated) -> None:
+        from org.allbinary.business.time.created.TimeCreated import TimeCreated
         self.timeCreated = timeCreated
     
 
     def setTimeLastModified(self, timeLastModified: TimeLastModified) -> None:
+        from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
         self.timeLastModified = timeLastModified
 # from java.util.HashMap import HashMap
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.time.created.TimeCreated import TimeCreated
-from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
-from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfiguration import UserEmailConfiguration
-from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.time.created.TimeCreated import TimeCreated
+# from org.allbinary.business.time.modified.TimeLastModified import TimeLastModified
+# from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfiguration import UserEmailConfiguration
+# from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationInterface import UserEmailConfigurationInterface
 
 

@@ -22,8 +22,10 @@ class AllBinaryPlatformImageRotationAnimationFactory(AllBinaryAndroidImageRotati
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         super().__init__(image, width, height, angleIncrement, animationBehaviorFactory, resizeCanvasForRotation)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
 
 

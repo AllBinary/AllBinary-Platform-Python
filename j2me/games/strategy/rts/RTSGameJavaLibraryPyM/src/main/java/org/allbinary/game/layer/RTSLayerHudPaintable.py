@@ -15,14 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
-class RTSLayerHudPaintable(SelectionHudPaintable, UpdateMyFontInterface):
+class RTSLayerHudPaintable(*java_bases(SelectionHudPaintable, UpdateMyFontInterface)):
     instance: RTSLayerHudPaintable = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         self.weaponProperties: list[str] = StringUtil.getInstance().getArrayInstance()
         self.rtsLayer: CollidableDestroyableDamageableLayer = CollidableDestroyableDamageableLayer.getNullInstance()
         self.costY: int = 0
@@ -41,6 +45,9 @@ class RTSLayerHudPaintable(SelectionHudPaintable, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.AndroidUtil import AndroidUtil
         super().updateMeasurement(graphics)
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
@@ -52,6 +59,7 @@ class RTSLayerHudPaintable(SelectionHudPaintable, UpdateMyFontInterface):
     
 
     def updateSelectionInfo(self) -> None:
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
         self.setName(self.getRtsLayer().getName())
         partInterface: BasicWeaponPart = self.getRtsLayer().getPartInterfaceArray()[0]
         self.weaponProperties = partInterface.getWeaponProperties().toStringArray()
@@ -59,6 +67,7 @@ class RTSLayerHudPaintable(SelectionHudPaintable, UpdateMyFontInterface):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paint(graphics)
         size: int = len(self.weaponProperties)
         for index in range(0, size):
@@ -70,14 +79,18 @@ class RTSLayerHudPaintable(SelectionHudPaintable, UpdateMyFontInterface):
     
 
     def getRtsLayer(self) -> CollidableDestroyableDamageableLayer:
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         return self.rtsLayer
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 
 
-RTSLayerHudPaintable.instance = RTSLayerHudPaintable()
+def _RTSLayerHudPaintable_instance() -> object:
+    return RTSLayerHudPaintable()
+
+lazy_static(RTSLayerHudPaintable, "instance", _RTSLayerHudPaintable_instance)
 

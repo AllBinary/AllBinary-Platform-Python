@@ -20,6 +20,8 @@ from __future__ import annotations
 class BasicPaymentType:
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
+        from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
         self.name: str = None
         self.value: str = None
         self.paymentGatewayInterfaceFactoryInterface: PaymentGatewayInterfaceFactoryInterface = None
@@ -38,6 +40,8 @@ class BasicPaymentType:
     
 
     def _constructor3(self, paymentMethod: str, paymentGatewayInterfaceFactoryInterface: PaymentGatewayInterfaceFactoryInterface, paymentGatewayDomNodeFactoryInterface: PaymentGatewayDomNodeFactoryInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
+        from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
         self._init_fields()
         self.init(paymentMethod)
         self.paymentGatewayInterfaceFactoryInterface = paymentGatewayInterfaceFactoryInterface
@@ -46,7 +50,12 @@ class BasicPaymentType:
 
     def init(self, paymentMethod: str) -> None:
         from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.string.CommonSeps import CommonSeps
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         UNDERSCORE: str = "_"
         hashMap.put(CommonSeps.getInstance().SPACE, UNDERSCORE)
         hashMap.put(AbPathData.getInstance().EXTENSION_SEP, UNDERSCORE)
@@ -67,6 +76,7 @@ class BasicPaymentType:
 
     # throws Exception
     def getPaymentGatewayInterfaceFactoryInterface(self) -> PaymentGatewayInterfaceFactoryInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
         if self.paymentGatewayInterfaceFactoryInterface is None:
             raise Exception("PaymentGatewayInterfaceFactoryInterface is Null")
         return self.paymentGatewayInterfaceFactoryInterface
@@ -74,6 +84,7 @@ class BasicPaymentType:
 
     # throws Exception
     def getPaymentGatewayDomNodeFactoryInterface(self) -> PaymentGatewayDomNodeFactoryInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
         if self.paymentGatewayDomNodeFactoryInterface is None:
             raise Exception("PaymentGatewayDomNodeFactoryInterface is Null")
         return self.paymentGatewayDomNodeFactoryInterface
@@ -84,14 +95,19 @@ class BasicPaymentType:
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = BasicArrayListD()
         vector.add(self.name)
         vector.add(self.value)
         return vector
     
 
-    def toHashMap(self) -> dict:
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(str(PaymentGatewayData.NAME), self.name)
         hashMap.put(str(PaymentGatewayData.VALUE), self.value)
         return hashMap
@@ -103,14 +119,14 @@ class BasicPaymentType:
     def __str__(self) -> str:
         return self.toString()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
-from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

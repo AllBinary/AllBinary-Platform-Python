@@ -28,6 +28,12 @@ class GenericProfileCaptureWorkerFactory:
     @staticmethod
     def getInstance(genericProfile: GenericProfile) -> CaptureWorkerInterface:
         from org.allbinary.input.automation.module.generic.SavedCaptureImagesWorker import SavedCaptureImagesWorker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
+        from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
+        from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
+        from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
         vector: BasicArrayList = genericProfile.getGenericProfileDataWorkerTypeVector()
         size: int = vector.size()
         for index in range(0, size):
@@ -37,12 +43,12 @@ class GenericProfileCaptureWorkerFactory:
             elif genericProfileDataWorkerType == GenericProfileDataWorkerType.SAVED_CAPTURE:
                 return SavedCaptureImagesWorker(genericProfileDataWorkerType)
         raise Exception("No CaptureWorkerInterface specified in GenericProfile")
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
-from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
-from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
-from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
-from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+# from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
+# from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
+# from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
+# from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
 
 

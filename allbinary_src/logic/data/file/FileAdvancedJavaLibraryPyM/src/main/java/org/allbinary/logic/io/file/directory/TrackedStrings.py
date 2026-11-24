@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TrackedStrings:
@@ -42,5 +43,8 @@ class TrackedStrings:
         return TrackedStrings.instance
 
 
-TrackedStrings.instance = TrackedStrings()
+def _TrackedStrings_instance() -> object:
+    return TrackedStrings()
+
+lazy_static(TrackedStrings, "instance", _TrackedStrings_instance)
 

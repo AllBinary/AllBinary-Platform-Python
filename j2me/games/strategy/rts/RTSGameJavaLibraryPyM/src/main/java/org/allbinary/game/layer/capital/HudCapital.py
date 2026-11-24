@@ -21,10 +21,12 @@ from org.allbinary.game.layer.capital.Capital import Capital
 class HudCapital(Capital):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
         self.capitalGraphic: NumberStringHud = None
     
 
     def __init__(self, moneyGraphic: NumberStringHud) -> None:
+        from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
         super().__init__()
         self._init_fields()
         self.capitalGraphic = moneyGraphic
@@ -42,6 +44,6 @@ class HudCapital(Capital):
     def addMoney(self, points: int) -> None:
         super().addMoney(points)
         self.capitalGraphic.add(points)
-from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
+# from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
 
 

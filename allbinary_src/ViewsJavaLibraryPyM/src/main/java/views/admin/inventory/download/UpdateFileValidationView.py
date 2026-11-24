@@ -15,48 +15,72 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
 
 
-class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponentInterface):
+class UpdateFileValidationView(*java_bases(DownloadableInventoryItemView, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
     
 
-    def isValid(self) -> bool:
+    def isValid_j0(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemValidation import DownloadableItemValidation
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            command: str = self.getRequestHashMap().get(self.GLOBALS2.ADMINCOMMAND)
+            command: str = self.getRequestHashMap().get(GLOBALS2.ADMINCOMMAND)
             if StringValidationUtil.getInstance().isEmpty(command) or ((command > self.commonStrings.UPDATE) - (command < self.commonStrings.UPDATE)) != 0:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Invalid AdminCommand=" + command, self, self.commonStrings.IS_VALID)
                 return False
             try:
                 inventoryEntity: InventoryEntity = InventoryEntityFactory.getInstance().getInventoryEntityInstance()
                 self.itemInterface = inventoryEntity.getItem(self.id)
             except MoneyException as e:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.put("Existing Item With MoneyException", self, self.commonStrings.IS_VALID, e)
             if self.itemInterface is None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Item Does Not Exist", self, self.commonStrings.IS_VALID)
                 return False
             if BasicItemValidation(self.itemInterface).isValid() == False:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("BasicItem is not valid", self, self.commonStrings.IS_VALID)
                 return False
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
-            fullCategory: str = str(StringMaker().append(self.URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
+            fullCategory: str = str(StringMaker().append(URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
             if not categoryFile.isDirectory():
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Category Does Not Exist: " + fullCategory, self, self.commonStrings.IS_VALID)
                 return False
             downloadableFileObject: object = self.getRequestHashMap().get(DownloadItemData.FILE)
@@ -97,7 +121,7 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                     self.unzip(fileItem)
             else:
                 self.getRequestHashMap().remove(DownloadItemData.EXTRA_FILES)
-            hashMap: dict = self.getRequestHashMap()
+            hashMap: HashMap = self.getRequestHashMap()
             hashMap.put(self.basicItemData.ID, self.itemInterface.getId())
             licenseObject: object = hashMap.get(DownloadItemData.LICENSE_FILE)
             if licenseObject is not None:
@@ -112,33 +136,51 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
             self.downloadableItem = DownloadableItem(hashMap)
             downloadableItemValidation: DownloadableItemValidation = DownloadableItemValidation(self.downloadableItem)
             if downloadableItemValidation.isValid() == False:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("DownloadableItem is not valid", self, self.commonStrings.IS_VALID)
                 return False
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Exception in validation", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
-    def validationInfo(self) -> str:
+    def validationInfo_j0(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemValidation import DownloadableItemValidation
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
-            command: str = self.getRequestHashMap().get(self.GLOBALS2.ADMINCOMMAND)
+            command: str = self.getRequestHashMap().get(GLOBALS2.ADMINCOMMAND)
             if StringValidationUtil.getInstance().isEmpty(command) or ((command > self.commonStrings.UPDATE) - (command < self.commonStrings.UPDATE)) != 0:
                 return StringUtil.getInstance().EMPTY_STRING
             if self.itemInterface is None:
                 ITEM_NOT_FOUND: str = "Item Does Not Exist"
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF(ITEM_NOT_FOUND, self, "validationInfo()")
                 return ITEM_NOT_FOUND
             basicItemValidation: BasicItemValidation = BasicItemValidation(self.itemInterface)
@@ -146,8 +188,8 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                 stringBuffer.append(basicItemValidation.validationInfo())
                 stringBuffer.append("<br/>")
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
-            fullCategory: str = str(StringMaker().append(self.URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            fullCategory: str = str(StringMaker().append(URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Category: " + fullCategory, self, "validationInfo()")
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
             if not categoryFile.isDirectory():
@@ -184,25 +226,29 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                 downloadableItemValidation: DownloadableItemValidation = DownloadableItemValidation(self.downloadableItem)
                 if downloadableItemValidation.isValid() == False:
                     log: str = downloadableItemValidation.validationInfo()
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         self.logUtil.putF(log, self, self.commonStrings.IS_VALID)
                     stringBuffer.append(log)
                     stringBuffer.append("<br/>")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Getting Validation Info"
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def isValid(self, fileName: str, size: int) -> bool:
+    def isValid_j2(self, fileName: str, size: int) -> bool:
+        from org.allbinary.logic.io.file.FileData import FileData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINDOWNLOADABLEFILESIZE:
             if size < fileData.MAXDOWNLOADABLEFILESIZE:
                 if not StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN):
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("File name is not valid: ")
                         stringBuffer.append(fileName)
@@ -211,7 +257,7 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                 else:
                     pass
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("File Size To Large: ")
                     stringBuffer.appendlong(size)
@@ -220,7 +266,7 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                     self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
                 return False
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("File Size To Small: ")
                 stringBuffer.appendlong(size)
@@ -229,10 +275,15 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                 self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
             return False
         return True
+
+    def isValid(self, *args):
+        return getattr(self, "isValid_j" + str(len(args)))(*args)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def validationInfo(self, stringBuffer: StringMaker, fileName: str, size: int) -> None:
+    def validationInfo_j3(self, stringBuffer: StringMaker, fileName: str, size: int) -> None:
+        from org.allbinary.logic.io.file.FileData import FileData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINDOWNLOADABLEFILESIZE:
             if size < fileData.MAXDOWNLOADABLEFILESIZE:
@@ -252,30 +303,41 @@ class UpdateFileValidationView(DownloadableInventoryItemView, ValidationComponen
                 stringBuffer.append("< >")
                 stringBuffer.appendint(int(fileData.MAXDOWNLOADABLEFILESIZE))
                 stringBuffer.append("<br/>")
+
+    def validationInfo(self, *args):
+        return getattr(self, "validationInfo_j" + str(len(args)))(*args)
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemValidation import DownloadableItemValidation
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileData import FileData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.apache.commons.fileupload.FileItem import FileItem
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemValidation import BasicItemValidation
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemValidation import DownloadableItemValidation
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.http.file.upload.HttpFileUploadUtil import HttpFileUploadUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileData import FileData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

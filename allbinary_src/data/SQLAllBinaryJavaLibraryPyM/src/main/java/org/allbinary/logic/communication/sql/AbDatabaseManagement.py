@@ -13,6 +13,9 @@ from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 class AbDatabaseManagement(AbSqlBean):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.sqlCommandLog: StringMaker = StringMaker()
@@ -36,17 +39,24 @@ class AbDatabaseManagement(AbSqlBean):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> None:
+    def _constructor1_1(self, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> None:
+        from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
         self._init_fields()
     
 
-    def _constructor1(self, connectionInfo: DbConnectionInfo) -> None:
+    def _constructor1_2(self, connectionInfo: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(connectionInfo)
         self._init_fields()
     
@@ -61,7 +71,8 @@ class AbDatabaseManagement(AbSqlBean):
     
 
     # throws Exception
-    def addDbUser(self, hostName: str, db: str, userName: str, password: str) -> bool:
+    def addDbUser_j4(self, hostName: str, db: str, userName: str, password: str) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.GRANT_ALL)
         stringBuffer.append(db)
@@ -79,8 +90,7 @@ class AbDatabaseManagement(AbSqlBean):
         return True
     
 
-    # Java overloaded method: Python keeps the last definition
-    def addDbUser(self, db: str, userName: str, password: str) -> bool:
+    def addDbUser_j3(self, db: str, userName: str, password: str) -> bool:
         try:
             self.addDbUser(self.AT_LOCALHOST, db, userName, password)
             hostName: str = self.getHostName()
@@ -90,6 +100,9 @@ class AbDatabaseManagement(AbSqlBean):
         except Exception as e:
             self.logUtil.put(self.UNABLE_TO_CREATE_USER + userName, self, self.METHOD_ADD_USER, e)
             return False
+
+    def addDbUser(self, *args):
+        return getattr(self, "addDbUser_j" + str(len(args)))(*args)
     
 
     def addDb(self, db: str) -> bool:
@@ -103,10 +116,10 @@ class AbDatabaseManagement(AbSqlBean):
             self.logUtil.put(self.UNABLE_TO_CREATE_DATABASE + db, self, self.METHOD_ADD_DB, e)
             return False
 # from java.net.InetAddress import InetAddress
-from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

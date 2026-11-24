@@ -15,7 +15,8 @@
 
 from __future__ import annotations
 
-# from javax.microedition.khronos.opengles.GL10 import GL10
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.microedition.khronos.opengles.GL10 import GL10
 
 
 class NullGL10(GL10):
@@ -106,13 +107,15 @@ class NullGL10(GL10):
         return
     
 
-    def glDeleteTextures(self, n: int, textures: list[int], offset: int) -> None:
+    def glDeleteTextures_j3(self, n: int, textures: list[int], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDeleteTextures(self, n: int, textures: IntBuffer) -> None:
+    def glDeleteTextures_j2(self, n: int, textures: IntBuffer) -> None:
         return
+
+    def glDeleteTextures(self, *args):
+        return getattr(self, "glDeleteTextures_j" + str(len(args)))(*args)
     
 
     def glDepthFunc(self, func: int) -> None:
@@ -167,26 +170,30 @@ class NullGL10(GL10):
         return
     
 
-    def glFogfv(self, pname: int, params: list[float], offset: int) -> None:
+    def glFogfv_j3(self, pname: int, params: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glFogfv(self, pname: int, params: FloatBuffer) -> None:
+    def glFogfv_j2(self, pname: int, params: FloatBuffer) -> None:
         return
+
+    def glFogfv(self, *args):
+        return getattr(self, "glFogfv_j" + str(len(args)))(*args)
     
 
     def glFogx(self, pname: int, param: int) -> None:
         pass
     
 
-    def glFogxv(self, pname: int, params: list[int], offset: int) -> None:
+    def glFogxv_j3(self, pname: int, params: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glFogxv(self, pname: int, params: IntBuffer) -> None:
+    def glFogxv_j2(self, pname: int, params: IntBuffer) -> None:
         pass
+
+    def glFogxv(self, *args):
+        return getattr(self, "glFogxv_j" + str(len(args)))(*args)
     
 
     def glFrontFace(self, mode: int) -> None:
@@ -201,29 +208,34 @@ class NullGL10(GL10):
         pass
     
 
-    def glGenTextures(self, n: int, textures: list[int], offset: int) -> None:
+    def glGenTextures_j3(self, n: int, textures: list[int], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGenTextures(self, n: int, textures: IntBuffer) -> None:
+    def glGenTextures_j2(self, n: int, textures: IntBuffer) -> None:
         return
+
+    def glGenTextures(self, *args):
+        return getattr(self, "glGenTextures_j" + str(len(args)))(*args)
     
 
     def glGetError(self) -> int:
         return 0
     
 
-    def glGetIntegerv(self, pname: int, params: list[int], offset: int) -> None:
+    def glGetIntegerv_j3(self, pname: int, params: list[int], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGetIntegerv(self, pname: int, params: IntBuffer) -> None:
+    def glGetIntegerv_j2(self, pname: int, params: IntBuffer) -> None:
         return
+
+    def glGetIntegerv(self, *args):
+        return getattr(self, "glGetIntegerv_j" + str(len(args)))(*args)
     
 
     def glGetString(self, name: int) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
@@ -235,52 +247,60 @@ class NullGL10(GL10):
         return
     
 
-    def glLightModelfv(self, pname: int, params: list[float], offset: int) -> None:
+    def glLightModelfv_j3(self, pname: int, params: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLightModelfv(self, pname: int, params: FloatBuffer) -> None:
+    def glLightModelfv_j2(self, pname: int, params: FloatBuffer) -> None:
         return
+
+    def glLightModelfv(self, *args):
+        return getattr(self, "glLightModelfv_j" + str(len(args)))(*args)
     
 
     def glLightModelx(self, pname: int, param: int) -> None:
         pass
     
 
-    def glLightModelxv(self, pname: int, params: list[int], offset: int) -> None:
+    def glLightModelxv_j3(self, pname: int, params: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLightModelxv(self, pname: int, params: IntBuffer) -> None:
+    def glLightModelxv_j2(self, pname: int, params: IntBuffer) -> None:
         pass
+
+    def glLightModelxv(self, *args):
+        return getattr(self, "glLightModelxv_j" + str(len(args)))(*args)
     
 
     def glLightf(self, light: int, pname: int, param: float) -> None:
         return
     
 
-    def glLightfv(self, light: int, pname: int, params: list[float], offset: int) -> None:
+    def glLightfv_j4(self, light: int, pname: int, params: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLightfv(self, light: int, pname: int, params: FloatBuffer) -> None:
+    def glLightfv_j3(self, light: int, pname: int, params: FloatBuffer) -> None:
         return
+
+    def glLightfv(self, *args):
+        return getattr(self, "glLightfv_j" + str(len(args)))(*args)
     
 
     def glLightx(self, light: int, pname: int, param: int) -> None:
         pass
     
 
-    def glLightxv(self, light: int, pname: int, params: list[int], offset: int) -> None:
+    def glLightxv_j4(self, light: int, pname: int, params: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLightxv(self, light: int, pname: int, params: IntBuffer) -> None:
+    def glLightxv_j3(self, light: int, pname: int, params: IntBuffer) -> None:
         pass
+
+    def glLightxv(self, *args):
+        return getattr(self, "glLightxv_j" + str(len(args)))(*args)
     
 
     def glLineWidth(self, width: float) -> None:
@@ -295,22 +315,26 @@ class NullGL10(GL10):
         return
     
 
-    def glLoadMatrixf(self, m: list[float], offset: int) -> None:
+    def glLoadMatrixf_j2(self, m: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLoadMatrixf(self, m: FloatBuffer) -> None:
+    def glLoadMatrixf_j1(self, m: FloatBuffer) -> None:
         return
+
+    def glLoadMatrixf(self, *args):
+        return getattr(self, "glLoadMatrixf_j" + str(len(args)))(*args)
     
 
-    def glLoadMatrixx(self, m: list[int], offset: int) -> None:
+    def glLoadMatrixx_j2(self, m: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLoadMatrixx(self, m: IntBuffer) -> None:
+    def glLoadMatrixx_j1(self, m: IntBuffer) -> None:
         pass
+
+    def glLoadMatrixx(self, *args):
+        return getattr(self, "glLoadMatrixx_j" + str(len(args)))(*args)
     
 
     def glLogicOp(self, opcode: int) -> None:
@@ -321,48 +345,56 @@ class NullGL10(GL10):
         return
     
 
-    def glMaterialfv(self, face: int, pname: int, params: list[float], offset: int) -> None:
+    def glMaterialfv_j4(self, face: int, pname: int, params: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMaterialfv(self, face: int, pname: int, params: FloatBuffer) -> None:
+    def glMaterialfv_j3(self, face: int, pname: int, params: FloatBuffer) -> None:
         return
+
+    def glMaterialfv(self, *args):
+        return getattr(self, "glMaterialfv_j" + str(len(args)))(*args)
     
 
     def glMaterialx(self, face: int, pname: int, param: int) -> None:
         pass
     
 
-    def glMaterialxv(self, face: int, pname: int, params: list[int], offset: int) -> None:
+    def glMaterialxv_j4(self, face: int, pname: int, params: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMaterialxv(self, face: int, pname: int, params: IntBuffer) -> None:
+    def glMaterialxv_j3(self, face: int, pname: int, params: IntBuffer) -> None:
         pass
+
+    def glMaterialxv(self, *args):
+        return getattr(self, "glMaterialxv_j" + str(len(args)))(*args)
     
 
     def glMatrixMode(self, mode: int) -> None:
         return
     
 
-    def glMultMatrixf(self, m: list[float], offset: int) -> None:
+    def glMultMatrixf_j2(self, m: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMultMatrixf(self, m: FloatBuffer) -> None:
+    def glMultMatrixf_j1(self, m: FloatBuffer) -> None:
         return
+
+    def glMultMatrixf(self, *args):
+        return getattr(self, "glMultMatrixf_j" + str(len(args)))(*args)
     
 
-    def glMultMatrixx(self, m: list[int], offset: int) -> None:
+    def glMultMatrixx_j2(self, m: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMultMatrixx(self, m: IntBuffer) -> None:
+    def glMultMatrixx_j1(self, m: IntBuffer) -> None:
         pass
+
+    def glMultMatrixx(self, *args):
+        return getattr(self, "glMultMatrixx_j" + str(len(args)))(*args)
     
 
     def glMultiTexCoord4f(self, target: int, s: float, t: float, r: float, q: float) -> None:
@@ -477,26 +509,30 @@ class NullGL10(GL10):
         return
     
 
-    def glTexEnvfv(self, target: int, pname: int, params: list[float], offset: int) -> None:
+    def glTexEnvfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
         return
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glTexEnvfv(self, target: int, pname: int, params: FloatBuffer) -> None:
+    def glTexEnvfv_j3(self, target: int, pname: int, params: FloatBuffer) -> None:
         return
+
+    def glTexEnvfv(self, *args):
+        return getattr(self, "glTexEnvfv_j" + str(len(args)))(*args)
     
 
     def glTexEnvx(self, target: int, pname: int, param: int) -> None:
         pass
     
 
-    def glTexEnvxv(self, target: int, pname: int, params: list[int], offset: int) -> None:
+    def glTexEnvxv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glTexEnvxv(self, target: int, pname: int, params: IntBuffer) -> None:
+    def glTexEnvxv_j3(self, target: int, pname: int, params: IntBuffer) -> None:
         pass
+
+    def glTexEnvxv(self, *args):
+        return getattr(self, "glTexEnvxv_j" + str(len(args)))(*args)
     
 
     def glTexImage2D(self, target: int, level: int, internalformat: int, width: int, height: int, border: int, format: int, type_: int, pixels: Buffer) -> None:
@@ -532,8 +568,11 @@ class NullGL10(GL10):
 # from java.nio.Buffer import Buffer
 # from java.nio.FloatBuffer import FloatBuffer
 # from java.nio.IntBuffer import IntBuffer
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-NullGL10.NULL_GL10 = NullGL10()
+def _NullGL10_NULL_GL10() -> object:
+    return NullGL10()
+
+lazy_static(NullGL10, "NULL_GL10", _NullGL10_NULL_GL10)
 

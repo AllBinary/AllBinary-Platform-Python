@@ -21,11 +21,18 @@ from org.allbinary.business.context.modules.storefront.statistics.inventory.Stor
 class StoreFrontInventoryStatistics(StoreFrontInventoryStatisticsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.totalNumberOfItems: int = 0
         self.totalInventorySaleValueMoney: Money = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface
         self._init_fields()
         self.totalInventorySaleValueMoney = Money()
         inventoryEntityInterface: InventoryEntityInterface = InventoryEntityFactory.getInstance().getInventoryEntityInstance()
@@ -45,32 +52,34 @@ class StoreFrontInventoryStatistics(StoreFrontInventoryStatisticsInterface):
     
 
     def getTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.totalInventorySaleValueMoney
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsData import StoreFrontInventoryStatisticsData
-        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsData import StoreFrontInventoryStatisticsData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(StoreFrontInventoryStatisticsData.getInstance().NUMBEROFITEMS, str(self.getNumber()))
         hashMap.put(StoreFrontInventoryStatisticsData.getInstance().TOTALVALUE, str(self.getTotal()))
         return hashMap
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return None
     
 
     def getKey(self) -> object:
         return None
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

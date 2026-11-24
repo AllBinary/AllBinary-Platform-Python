@@ -22,8 +22,9 @@ class TransformInfoTableTag(TableTag):
     
 
     def __init__(self) -> None:
+        from taghelpers.transform.info.TransformInfoHelperFactory import TransformInfoHelperFactory
         super().__init__()
         self.setTagHelperFactory(TransformInfoHelperFactory())
-from taghelpers.transform.info.TransformInfoHelperFactory import TransformInfoHelperFactory
+# from taghelpers.transform.info.TransformInfoHelperFactory import TransformInfoHelperFactory
 
 

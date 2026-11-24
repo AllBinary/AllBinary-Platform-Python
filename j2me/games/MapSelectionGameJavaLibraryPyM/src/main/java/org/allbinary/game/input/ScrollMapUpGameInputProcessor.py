@@ -27,8 +27,10 @@ class ScrollMapUpGameInputProcessor(ScrollMapGameInputProcessor):
 
     # throws Exception
     def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         self.scrollMapPlayerGameInput.up()
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 

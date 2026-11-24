@@ -21,12 +21,14 @@ from org.allbinary.logic.visual.transform.info.TransformInfoHttpStore import Tra
 class TransformInfoHttpStoreNoManipulation(TransformInfoHttpStore):
     
 
-    def __init__(self, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
         super().__init__(propertiesHashMap, pageContext)
     
 
     # throws Exception
     def setObjectConfigFile(self, value: str) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigNoManipulationFactory import TransformInfoObjectConfigNoManipulationFactory
         self.setObjectConfigFileName(value)
         self.setObjectConfigInterface(TransformInfoObjectConfigNoManipulationFactory.getInstance().getInstance(self, self.getObjectConfigFilePath()))
     
@@ -36,6 +38,6 @@ class TransformInfoHttpStoreNoManipulation(TransformInfoHttpStore):
         raise Exception("Should not set from config")
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigNoManipulationFactory import TransformInfoObjectConfigNoManipulationFactory
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigNoManipulationFactory import TransformInfoObjectConfigNoManipulationFactory
 
 

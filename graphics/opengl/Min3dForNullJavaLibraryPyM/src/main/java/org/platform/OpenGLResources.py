@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLResources:
@@ -28,16 +29,19 @@ class OpenGLResources:
 
     # throws Exception
     def openRawResource(self, id: int) -> InputStream:
+        from java.io.InputStream import InputStream
         raise RuntimeError()
     
 
     # throws Exception
     def openRawResourceFromName(self, resourceName: str) -> InputStream:
+        from java.io.InputStream import InputStream
         raise RuntimeError()
     
 
     # throws Exception
     def getResourceAsStream(self, resourceName: str) -> InputStream:
+        from java.io.InputStream import InputStream
         raise RuntimeError()
     
 
@@ -46,5 +50,8 @@ class OpenGLResources:
 # from java.io.InputStream import InputStream
 
 
-OpenGLResources.instance = OpenGLResources()
+def _OpenGLResources_instance() -> object:
+    return OpenGLResources()
+
+lazy_static(OpenGLResources, "instance", _OpenGLResources_instance)
 

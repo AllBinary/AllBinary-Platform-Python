@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
 
 
@@ -30,14 +31,19 @@ class EmptyRaceRaceTrackGeographicMapCellTypeFactory(RaceTrackGeographicMapCellT
     def __init__(self) -> None:
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoData import PathFindingNodeCostInfoData
         super().__init__()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.EMPTY_CELL_TYPE = RaceTrackGeographicMapCellType(commonStrings.EMPTY, 0, PathFindingNodeCostInfoData.getInstance().MAX_NODE_COST, 1)
         self.EASY_CELL_TYPE = RaceTrackGeographicMapCellType("Easy", 19, 1, 0)
         self.FINISH_LINE_ROAD_CELL_TYPE = self.DEFAULT_FINISH_LINE_ROAD_CELL_TYPE
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoData import PathFindingNodeCostInfoData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoData import PathFindingNodeCostInfoData
 
 
-EmptyRaceRaceTrackGeographicMapCellTypeFactory.instanceC = EmptyRaceRaceTrackGeographicMapCellTypeFactory()
+def _EmptyRaceRaceTrackGeographicMapCellTypeFactory_instanceC() -> object:
+    return EmptyRaceRaceTrackGeographicMapCellTypeFactory()
+
+lazy_static(EmptyRaceRaceTrackGeographicMapCellTypeFactory, "instanceC", _EmptyRaceRaceTrackGeographicMapCellTypeFactory_instanceC)
 

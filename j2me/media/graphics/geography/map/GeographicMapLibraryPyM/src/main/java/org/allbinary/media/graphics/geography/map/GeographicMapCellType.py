@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GeographicMapCellType:
-    NULL_GEOGRAPHIC_MAP_CELL_TYPE_ARRAY: list[GeographicMapCellType] = None
+    NULL_GEOGRAPHIC_MAP_CELL_TYPE_ARRAY: list[GeographicMapCellType] = [None] * (0)
     NULL_GEOGRAPHIC_MAP_CELL_TYPE: GeographicMapCellType = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.type_: int = None
     
@@ -45,15 +47,17 @@ class GeographicMapCellType:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         return str(SmallIntegerSingletonFactory.getInstance().getAt(self.type_))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 
-GeographicMapCellType.NULL_GEOGRAPHIC_MAP_CELL_TYPE_ARRAY = [None] * (0)
+def _GeographicMapCellType_NULL_GEOGRAPHIC_MAP_CELL_TYPE() -> object:
+    return GeographicMapCellType(-2147483648, 0)
 
-GeographicMapCellType.NULL_GEOGRAPHIC_MAP_CELL_TYPE = GeographicMapCellType(-2147483648, 0)
+lazy_static(GeographicMapCellType, "NULL_GEOGRAPHIC_MAP_CELL_TYPE", _GeographicMapCellType_NULL_GEOGRAPHIC_MAP_CELL_TYPE)
 

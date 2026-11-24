@@ -21,12 +21,17 @@ class SpecialCharacterUtil:
     
 
     @staticmethod
-    def getHashMap() -> dict:
-        from org.allbinary.logic.string.StringUtil import StringUtil
+    def getHashMap() -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.math.MathData import MathData
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         stringUtil: StringUtil = StringUtil.getInstance()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put("!", stringUtil.EMPTY_STRING)
         hashMap.put("@", stringUtil.EMPTY_STRING)
         hashMap.put(commonPhoneStrings.POUND, stringUtil.EMPTY_STRING)
@@ -53,10 +58,10 @@ class SpecialCharacterUtil:
         hashMap.put("`", stringUtil.EMPTY_STRING)
         return hashMap
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.math.MathData import MathData
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.math.MathData import MathData
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

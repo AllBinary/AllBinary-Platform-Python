@@ -24,6 +24,12 @@ class Category(CategoryInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.categoryHierarchyInterface: CategoryHierarchyInterface = None
@@ -43,8 +49,13 @@ class Category(CategoryInterface):
     
 
     def _constructor1(self, categoryPropertiesFactoryInterface: CategoryPropertiesFactoryInterface) -> None:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchy import CategoryHierarchy
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, "Category(CategoryPropertiesFactoryInterface)")
         self.categoryPropertiesInterface = categoryPropertiesFactoryInterface.getInstance()
         self.categoryHierarchyInterface = CategoryHierarchy(self, self)
@@ -52,6 +63,9 @@ class Category(CategoryInterface):
     
 
     def _constructor2(self, categoryPropertiesFactoryInterface: CategoryPropertiesFactoryInterface, level: int) -> None:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchy import CategoryHierarchy
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
         self._init_fields()
         self.categoryPropertiesInterface = categoryPropertiesFactoryInterface.getInstance()
         self.categoryHierarchyInterface = CategoryHierarchy(self, self, level)
@@ -59,6 +73,10 @@ class Category(CategoryInterface):
     
 
     def _constructor3(self, rootCategoryInterface: CategoryInterface, parentCategoryInterface: CategoryInterface, categoryPropertiesFactoryInterface: CategoryPropertiesFactoryInterface) -> None:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchy import CategoryHierarchy
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         self._init_fields()
         self.categoryPropertiesInterface = categoryPropertiesFactoryInterface.getInstance()
         self.categoryHierarchyInterface = CategoryHierarchy(rootCategoryInterface, parentCategoryInterface)
@@ -72,6 +90,9 @@ class Category(CategoryInterface):
 
     # throws Exception
     def getRootFilePath(self) -> AbPath:
+        from org.allbinary.business.category.properties.root.RootCategoryPropertiesInterface import RootCategoryPropertiesInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         rootAbPath: AbPath = AbPath(Category.NOT_ROOT, StringUtil.getInstance().EMPTY_STRING)
         categoryInterface: CategoryInterface = self.categoryHierarchyInterface.getRoot()
         if categoryInterface.getProperties().isRoot():
@@ -82,17 +103,20 @@ class Category(CategoryInterface):
 
     # throws Exception
     def getFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return AbPath(str(self.getRootFilePath()) + str(self.getProperties().getPath(self.getHierarchy())), self.getProperties().getFileName())
     
 
     # throws Exception
     def getWebAppPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         categoryInterface: CategoryInterface = self.categoryHierarchyInterface.getRoot()
         return categoryInterface.getProperties().getWebAppPath()
     
 
     # throws Exception
     def getPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.categoryPropertiesInterface.getPath(self.categoryHierarchyInterface)
     
 
@@ -101,6 +125,7 @@ class Category(CategoryInterface):
             return self._addChildProperty_unlocked(categoryPropertiesInterface)
 
     def _addChildProperty_unlocked(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> bool:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         self.typeVector.add(self.PROPERTIES)
         return self.childCategoryVector.add(categoryPropertiesInterface)
     
@@ -110,8 +135,11 @@ class Category(CategoryInterface):
             return self._addChild_unlocked(categoryInterface)
 
     def _addChild_unlocked(self, categoryInterface: CategoryInterface) -> bool:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.removeDuplicateChild(categoryInterface)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF("adding", self, "addChild")
         childCategoryHierarchyInterface: CategoryHierarchyInterface = categoryInterface.getHierarchy()
         childCategoryHierarchyInterface.setParent(self)
@@ -122,6 +150,7 @@ class Category(CategoryInterface):
     
 
     def getChildNodes(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.childCategoryVector
     
 
@@ -130,6 +159,8 @@ class Category(CategoryInterface):
             return self._removeChild_unlocked(categoryInterface)
 
     def _removeChild_unlocked(self, categoryInterface: CategoryInterface) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         removalVector: BasicArrayList = BasicArrayListD()
         bool_return: bool = False
         size: int = self.childCategoryVector.size()
@@ -145,6 +176,7 @@ class Category(CategoryInterface):
     
 
     def removal(self, removalVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         removalSize: int = removalVector.size()
         for index in range(0, removalSize):
             anyType: object = removalVector.get(index)
@@ -158,6 +190,9 @@ class Category(CategoryInterface):
             return self._removeDuplicateChild_unlocked(categoryInterface)
 
     def _removeDuplicateChild_unlocked(self, categoryInterface: CategoryInterface) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         removalVector: BasicArrayList = BasicArrayListD()
         bool_return: bool = False
         size: int = self.childCategoryVector.size()
@@ -191,18 +226,22 @@ class Category(CategoryInterface):
     
 
     def getProperties(self) -> CategoryPropertiesInterface:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         return self.categoryPropertiesInterface
     
 
     def setProperties(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> None:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         self.categoryPropertiesInterface = categoryPropertiesInterface
     
 
     def getHierarchy(self) -> CategoryHierarchyInterface:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         return self.categoryHierarchyInterface
     
 
     def setHierarchy(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> None:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         self.categoryHierarchyInterface = categoryHierarchyInterface
     
 
@@ -212,6 +251,7 @@ class Category(CategoryInterface):
             return self._isValid_unlocked()
 
     def _isValid_unlocked(self) -> bool:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         if not self.categoryPropertiesInterface.isValid():
             return False
         size: int = self.childCategoryVector.size()
@@ -230,11 +270,14 @@ class Category(CategoryInterface):
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -244,13 +287,15 @@ class Category(CategoryInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        categoryHashMap: dict = self.categoryPropertiesInterface.toHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        categoryHashMap: HashMap = self.categoryPropertiesInterface.toHashMap()
         return categoryHashMap
     
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         categoryVector: BasicArrayList = self.categoryPropertiesInterface.toVector()
         categoryVector.add(self.childCategoryVector)
         return categoryVector
@@ -258,7 +303,10 @@ class Category(CategoryInterface):
 
     # throws Exception
     def log(self) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Category Name: ")
             stringBuffer.append(self.categoryPropertiesInterface.getValue())
@@ -268,20 +316,22 @@ class Category(CategoryInterface):
             stringBuffer.append(str(self.getFilePath()))
             self.logUtil.putF(str(stringBuffer), self, "log()")
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.category.hierarchy.CategoryHierarchy import CategoryHierarchy
-from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
-from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-from org.allbinary.business.category.properties.root.RootCategoryPropertiesInterface import RootCategoryPropertiesInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.category.hierarchy.CategoryHierarchy import CategoryHierarchy
+# from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+# from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
+# from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+# from org.allbinary.business.category.properties.root.RootCategoryPropertiesInterface import RootCategoryPropertiesInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

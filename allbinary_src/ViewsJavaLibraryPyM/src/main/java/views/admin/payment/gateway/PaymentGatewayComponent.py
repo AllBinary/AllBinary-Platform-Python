@@ -21,11 +21,15 @@ from views.business.context.modules.storefront.HttpStoreComponentView import Htt
 class PaymentGatewayComponent(HttpStoreComponentView):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.paymentGatewayInterface: PaymentGatewayInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface, paymentGatewayInterface: PaymentGatewayInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.paymentGatewayInterface = paymentGatewayInterface
@@ -33,6 +37,10 @@ class PaymentGatewayComponent(HttpStoreComponentView):
 
     # throws Exception
     def addDomNodeInterfaces(self) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
+        from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
         paymentType: BasicPaymentType = BasicPaymentTypeUtil.getInstance().get(self.paymentGatewayInterface.getName())
         paymentGatewayDomNodeFactoryInterface: PaymentGatewayDomNodeFactoryInterface = paymentType.getPaymentGatewayDomNodeFactoryInterface()
         domNodeInterface: DomNodeInterface = paymentGatewayDomNodeFactoryInterface.getInstance(self.paymentGatewayInterface)
@@ -40,20 +48,24 @@ class PaymentGatewayComponent(HttpStoreComponentView):
     
 
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
             error: str = "Failed to view payment gateway"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             return error
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
-from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
-from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
+# from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

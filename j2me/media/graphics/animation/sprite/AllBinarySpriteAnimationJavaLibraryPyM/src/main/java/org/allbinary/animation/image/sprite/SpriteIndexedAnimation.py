@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 
 
-class SpriteIndexedAnimation(IndexedAnimation, ColorCompositeInterface):
+class SpriteIndexedAnimation(*java_bases(IndexedAnimation, ColorCompositeInterface)):
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Image import Image

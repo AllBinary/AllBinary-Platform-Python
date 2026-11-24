@@ -36,6 +36,12 @@ class LicenseRegistrationUtil:
         from org.allbinary.logic.system.security.licensing.registration.RegistrationConfiguration import RegistrationConfiguration
         from org.allbinary.logic.system.security.licensing.registration.RegistrationConfiguration import RegistrationConfiguration
         from org.allbinary.logic.system.security.licensing.registration.XmlRpcRemoteLicenseRegistrationClient import XmlRpcRemoteLicenseRegistrationClient
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.canvas.SpecialMessageUtil import SpecialMessageUtil
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.ABHashtable import ABHashtable
         try:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             PreLogUtil.put(str(CommonLabels.getInstance().START_LABEL) + "License Registration", "LicenseRegistrationUtil", commonStrings.PROCESS)
@@ -48,11 +54,11 @@ class LicenseRegistrationUtil:
             XmlRpcRemoteLicenseRegistrationClient(abeClientInformation).get(hashtable)
         except Exception as e:
             PreLogUtil.putOE("License Registration Exception", "LicenseRegistrationUtil", "License Registration", e)
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.canvas.SpecialMessageUtil import SpecialMessageUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.canvas.SpecialMessageUtil import SpecialMessageUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

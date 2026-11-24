@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.Vector import Vector
+from java.util.Vector import Vector
 
 
-class ABVector(list):
+class ABVector(Vector):
 
     def __init__(self) -> None:
         super().__init__()

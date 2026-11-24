@@ -24,10 +24,12 @@ class QuoteRequestEntityInterface(BasicDataTableInterface):
 
     # throws Exception
     def get(self, userName: str, id: int) -> QuoteRequest:
+        from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
         raise NotImplementedError()
     
 
     def getIds(self, userName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -36,14 +38,16 @@ class QuoteRequestEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
-    def update(self, userName: str, updatedValues: dict) -> None:
+    def update(self, userName: str, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
 
 

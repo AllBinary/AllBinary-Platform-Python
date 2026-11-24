@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 
 
-class RectangleAdjustedAnimation(Animation, ColorCompositeInterface):
+class RectangleAdjustedAnimation(*java_bases(Animation, ColorCompositeInterface)):
 
     def _init_fields(self) -> None:
         self.width: int = None

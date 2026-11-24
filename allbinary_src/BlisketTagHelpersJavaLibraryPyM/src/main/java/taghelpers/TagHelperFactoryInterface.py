@@ -22,10 +22,12 @@ class TagHelperFactoryInterface:
     
 
     # throws LicensingException
-    def getInstance(self, hashMap: dict, pageContext: PageContext) -> object:
+    def getInstance(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
 
 

@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InitInfo:
@@ -23,6 +24,7 @@ class InitInfo:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.TESTING: str = "TESTING"
         self.MAINPATH: str = "MAINPATH"
         self.TESTHTMLPATH: str = "TESTHTMLPATH"
@@ -42,12 +44,15 @@ class InitInfo:
     
 
     # throws InitException
-    def set(self) -> None:
+    def set_j0(self) -> None:
         with self._lock:
-            return self._set_unlocked()
+            return self._set_j0_unlocked()
 
-    def _set_unlocked(self) -> None:
+    def _set_j0_unlocked(self) -> None:
         from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             initInfoEntity: InitInfoEntity = InitInfoEntity()
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
@@ -66,12 +71,17 @@ class InitInfo:
                 PreLogUtil.putOE("error", "InitInfo", "set()", e)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def set(self, hashMap: dict) -> None:
+    def set_j1(self, hashMap: HashMap) -> None:
         with self._lock:
-            return self._set_unlocked(hashMap)
+            return self._set_j1_unlocked(hashMap)
 
-    def _set_unlocked(self, hashMap: dict) -> None:
+    def _set_j1_unlocked(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         try:
             self.testing = hashMap.get(self.TESTING)
             self.mainPath = AbPath(hashMap.get(self.MAINPATH), StringUtil.getInstance().EMPTY_STRING)
@@ -79,6 +89,9 @@ class InitInfo:
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADERERROR):
                 PreLogUtil.putOE("error", "InitInfo", "set()", e)
+
+    def set(self, *args):
+        return getattr(self, "set_j" + str(len(args)))(*args)
     
 
     def get(self) -> None:
@@ -87,6 +100,9 @@ class InitInfo:
 
     def _get_unlocked(self) -> None:
         from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.testing = None
             self.mainPath = None
@@ -112,6 +128,9 @@ class InitInfo:
             return self._updateIfNeeded_unlocked()
 
     def _updateIfNeeded_unlocked(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if not self.hasRead:
                 self.hasRead = True
@@ -123,6 +142,10 @@ class InitInfo:
     
 
     def isTesting(self) -> bool:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
         try:
             self.updateIfNeeded()
             return BooleanUtil.getInstance().getFromString(self.testing)
@@ -158,41 +181,51 @@ class InitInfo:
     
 
     def setTestHtmlPath(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.testHtmlPath = value
     
 
     def setMainPath(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.mainPath = value
     
 
     def isMainPathValid(self, abPath: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return True
     
 
     def isTestHtmlPathValid(self, abPath: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return True
     
 
     # throws Exception
     def isTestingValid(self, testing: str) -> bool:
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
         return BooleanUtil.getInstance().isStringBoolean(testing)
     
 
-    def toHashMap(self) -> dict:
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(self.TESTING, self.getTesting())
         hashMap.put(self.MAINPATH, self.getMainPath())
         hashMap.put(self.TESTHTMLPATH, self.getTestHtmlPath())
         return hashMap
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-InitInfo.instance = InitInfo()
+def _InitInfo_instance() -> object:
+    return InitInfo()
+
+lazy_static(InitInfo, "instance", _InitInfo_instance)
 

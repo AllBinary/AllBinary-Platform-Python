@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
 
 
-class Payment(PaymentInterface, DomNodeInterface):
+class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
 
     def _init_fields(self) -> None:
         self.name: str = None
@@ -42,29 +43,21 @@ class Payment(PaymentInterface, DomNodeInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
         elif len(args) == 0:
             self._constructor0(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, payment: dict) -> None:
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+    def _constructor1_1(self, payment: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
         self._init_fields()
         self.name = payment.get(PaymentData.NAME)
         self.type_ = payment.get(PaymentData.TYPE)
@@ -89,21 +82,7 @@ class Payment(PaymentInterface, DomNodeInterface):
         self.magneticInkCheckReader = payment.get(PaymentData.MAGNETICINKCHECKREADER)
     
 
-    def _constructor1(self, request: ServletRequest) -> None:
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+    def _constructor1_2(self, request: ServletRequest) -> None:
         self._init_fields()
         self.name = request.getParameter(PaymentData.NAME)
         self.type_ = request.getParameter(PaymentData.TYPE)
@@ -126,6 +105,8 @@ class Payment(PaymentInterface, DomNodeInterface):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.business.user.commerce.money.payment.types.CreditCardType import CreditCardType
         stringUtil: StringUtil = StringUtil.getInstance()
         aFalse: bool = False
         if self.name is None or ((self.name > stringUtil.EMPTY_STRING) - (self.name < stringUtil.EMPTY_STRING)) == 0:
@@ -136,7 +117,7 @@ class Payment(PaymentInterface, DomNodeInterface):
             return aFalse
         if self.number is None or ((self.number > stringUtil.EMPTY_STRING) - (self.number < stringUtil.EMPTY_STRING)) == 0:
             return aFalse
-        if len(self.number) > org.allbinary.business.user.commerce.money.payment.types.CreditCardType.MAXLEN:
+        if len(self.number) > CreditCardType.MAXLEN:
             return aFalse
         return True
     
@@ -258,8 +239,6 @@ class Payment(PaymentInterface, DomNodeInterface):
     
 
     def getLastFour(self) -> str:
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
         if len(self.number) > PaymentData.MIN and len(self.number) <= PaymentData.MAX:
             return self.number[len(self.number) - 4:]
         else:
@@ -270,21 +249,12 @@ class Payment(PaymentInterface, DomNodeInterface):
         return self.isDefault
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(PaymentData.NAME, self.name)
         hashMap.put(PaymentData.TYPE, self.type_)
         hashMap.put(PaymentData.EXPIRATION, self.expiration)
@@ -307,13 +277,17 @@ class Payment(PaymentInterface, DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        hashMap: dict = self.toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        hashMap: HashMap = self.toHashMap()
         node: Node = ModDomHelper.createNameValueNodes(document, PaymentData.PAYMENT, hashMap)
         return node
     
 
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
@@ -322,10 +296,13 @@ class Payment(PaymentInterface, DomNodeInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -333,12 +310,13 @@ class Payment(PaymentInterface, DomNodeInterface):
         return None
 # from java.util.HashMap import HashMap
 # from javax.servlet.ServletRequest import ServletRequest
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.business.user.commerce.money.payment.types.CreditCardType import CreditCardType
 
 

@@ -22,17 +22,21 @@ class AbFileUpload(FileUpload):
     
 
     def __init__(self, fileItemFactory: FileItemFactory) -> None:
+        from org.apache.commons.fileupload.FileItemFactory import FileItemFactory
         super().__init__(fileItemFactory)
     
 
     # throws FileUploadException, IOException
     def getItemIterator(self, request: HttpServletRequest) -> FileItemIterator:
+        from org.apache.commons.fileupload.FileItemIterator import FileItemIterator
+        from org.apache.commons.fileupload.FileUploadException import FileUploadException
+        from org.apache.commons.fileupload.servlet.ServletRequestContext import ServletRequestContext
         return super().getItemIterator(ServletRequestContext(request))
 # from java.io.IOException import IOException
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.apache.commons.fileupload.FileItemFactory import FileItemFactory
-from org.apache.commons.fileupload.FileItemIterator import FileItemIterator
-from org.apache.commons.fileupload.FileUploadException import FileUploadException
-from org.apache.commons.fileupload.servlet.ServletRequestContext import ServletRequestContext
+# from org.apache.commons.fileupload.FileItemFactory import FileItemFactory
+# from org.apache.commons.fileupload.FileItemIterator import FileItemIterator
+# from org.apache.commons.fileupload.FileUploadException import FileUploadException
+# from org.apache.commons.fileupload.servlet.ServletRequestContext import ServletRequestContext
 
 

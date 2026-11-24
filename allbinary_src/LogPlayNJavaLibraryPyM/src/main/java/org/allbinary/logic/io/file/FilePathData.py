@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FilePathData:
@@ -34,5 +35,8 @@ class FilePathData:
         self._init_fields()
 
 
-FilePathData.instance = FilePathData()
+def _FilePathData_instance() -> object:
+    return FilePathData()
+
+lazy_static(FilePathData, "instance", _FilePathData_instance)
 

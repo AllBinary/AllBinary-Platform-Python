@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageRotationUtil:
     instance: ImageRotationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
         self.imageSwtRotationUtil: ImageSwtRotationUtil = ImageSwtRotationUtil.getInstance()
         self.features: Features = Features.getInstance()
     
@@ -35,10 +37,16 @@ class ImageRotationUtil:
     
 
     def rotateImage(self, originalImage: Image, image: Image, totalAngle: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.eclipse.swt.graphics.GC import GC
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         originalImage2: Image = originalImage
         if self.features.isFeature(OpenGLFeatureFactory.getInstance().OPENGL):
             if image.getType() >= OpenGLESImage.TYPE:
-                openGLESImage: OpenGLESImage = (image)
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(image)
                 openGLESImage.openGLESImageProperties.angle = totalAngle
                 return
             else:
@@ -57,17 +65,21 @@ class ImageRotationUtil:
 
     # throws Exception
     def createRotatedImage(self, originalImage: Image, rotationInDegrees: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return originalImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.eclipse.swt.graphics.GC import GC
-from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
-from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.eclipse.swt.graphics.GC import GC
+# from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+# from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
 from org.allbinary.media.image.ImageSwtRotationUtil import ImageSwtRotationUtil
 
 
-ImageRotationUtil.instance = ImageRotationUtil()
+def _ImageRotationUtil_instance() -> object:
+    return ImageRotationUtil()
+
+lazy_static(ImageRotationUtil, "instance", _ImageRotationUtil_instance)
 

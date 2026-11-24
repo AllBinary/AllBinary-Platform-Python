@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.CompositeSound import CompositeSound
 
 
@@ -27,9 +28,14 @@ class DowngradeSound(CompositeSound):
 
     @staticmethod
     def getInstance() -> Sound:
+        from org.allbinary.media.audio.Sound import Sound
         return DowngradeSound.soundInterface
-from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.media.audio.Sound import Sound
 
 
-DowngradeSound.soundInterface = DowngradeSound()
+def _DowngradeSound_soundInterface() -> object:
+    from org.allbinary.media.audio.Sound import Sound
+    return DowngradeSound()
+
+lazy_static(DowngradeSound, "soundInterface", _DowngradeSound_soundInterface)
 

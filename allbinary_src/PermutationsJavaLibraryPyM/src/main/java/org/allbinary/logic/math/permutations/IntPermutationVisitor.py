@@ -27,14 +27,13 @@ class IntPermutationVisitor(Visitor):
         return NullUtil.getInstance().NULL_OBJECT
     
 
-    def print_(self, data: list[int]) -> None:
+    def print__j1(self, data: list[int]) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuilder: StringMaker = StringMaker()
         self.print_(data, stringBuilder)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def print_(self, data: list[int], stringBuilder: StringMaker) -> None:
+    def print__j2(self, data: list[int], stringBuilder: StringMaker) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -43,6 +42,9 @@ class IntPermutationVisitor(Visitor):
             stringBuilder.appendint(data[i])
             stringBuilder.append(commonSeps.SPACE)
         print(str(stringBuilder))
+
+    def print_(self, *args):
+        return getattr(self, "print__j" + str(len(args)))(*args)
 # from org.allbinary.logic.NullUtil import NullUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonSeps import CommonSeps

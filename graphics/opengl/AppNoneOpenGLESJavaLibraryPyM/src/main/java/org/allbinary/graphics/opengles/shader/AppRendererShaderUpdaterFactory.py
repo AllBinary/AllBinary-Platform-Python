@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderUpdater import ShaderUpdater
 
 
@@ -44,5 +45,8 @@ class AppRendererShaderUpdaterFactory(ShaderUpdater):
         pass
 
 
-AppRendererShaderUpdaterFactory.instanceC = AppRendererShaderUpdaterFactory()
+def _AppRendererShaderUpdaterFactory_instanceC() -> object:
+    return AppRendererShaderUpdaterFactory()
+
+lazy_static(AppRendererShaderUpdaterFactory, "instanceC", _AppRendererShaderUpdaterFactory_instanceC)
 

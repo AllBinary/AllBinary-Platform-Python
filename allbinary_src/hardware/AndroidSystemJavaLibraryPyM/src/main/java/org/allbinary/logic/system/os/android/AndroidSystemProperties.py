@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidSystemProperties:
     SINGLETON: AndroidSystemProperties = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
 
@@ -31,10 +32,12 @@ class AndroidSystemProperties:
     
 
     def __init__(self, context: Context) -> None:
+        from android.content.Context import Context
         self._init_fields()
     
 
     def getDeviceId(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
@@ -95,56 +98,73 @@ class AndroidSystemProperties:
     
 
     def getBoard(self) -> str:
+        from android.os.Build import Build
         return Build.BOARD
     
 
     def getBrand(self) -> str:
+        from android.os.Build import Build
         return Build.BRAND
     
 
     def getDevice(self) -> str:
+        from android.os.Build import Build
         return Build.DEVICE
     
 
     def getFingerprint(self) -> str:
+        from android.os.Build import Build
         return Build.FINGERPRINT
     
 
     def getHost(self) -> str:
+        from android.os.Build import Build
         return Build.HOST
     
 
     def getId(self) -> str:
+        from android.os.Build import Build
         return Build.ID
     
 
     def getModel(self) -> str:
+        from android.os.Build import Build
         return Build.MODEL
     
 
     def getProduct(self) -> str:
+        from android.os.Build import Build
         return Build.PRODUCT
     
 
     def getTags(self) -> str:
+        from android.os.Build import Build
         return Build.TAGS
     
 
     def getTime(self) -> int:
+        from android.os.Build import Build
         return Build.TIME
     
 
     def getType(self) -> str:
+        from android.os.Build import Build
         return Build.TYPE
     
 
     def getUser(self) -> str:
+        from android.os.Build import Build
         return Build.USER
-from android.content.Context import Context
-from android.os.Build import Build
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from android.content.Context import Context
+# from android.os.Build import Build
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AndroidSystemProperties.SINGLETON = AndroidSystemProperties(ResourceUtil.getInstance().getContext())
+def _AndroidSystemProperties_SINGLETON() -> object:
+    from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+    return AndroidSystemProperties(ResourceUtil.getInstance().getContext())
+
+lazy_static(AndroidSystemProperties, "SINGLETON", _AndroidSystemProperties_SINGLETON)
 

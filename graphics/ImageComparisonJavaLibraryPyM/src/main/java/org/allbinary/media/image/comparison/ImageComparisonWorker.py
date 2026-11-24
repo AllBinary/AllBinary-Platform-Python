@@ -16,14 +16,19 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsListener import CapturedImageWorkerResultsListener
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
-class ImageComparisonWorker(BasicEventHandler, CapturedImageWorkerResultsListener):
+class ImageComparisonWorker(*java_bases(BasicEventHandler, CapturedImageWorkerResultsListener)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.bufferedImageVector: BasicArrayList = BasicArrayListD()
@@ -62,6 +67,7 @@ class ImageComparisonWorker(BasicEventHandler, CapturedImageWorkerResultsListene
             return self._onCaptureEvent_unlocked(capturedImageWorkerResultsEvent)
 
     def _onCaptureEvent_unlocked(self, capturedImageWorkerResultsEvent: CapturedImageWorkerResultsEvent) -> None:
+        from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
         self.bufferedImageVector.add(capturedImageWorkerResultsEvent)
         if self.bufferedImageVector.size() > 1:
             self.run()
@@ -72,6 +78,8 @@ class ImageComparisonWorker(BasicEventHandler, CapturedImageWorkerResultsListene
             return self._onEvent_unlocked(allBinaryEventObject)
 
     def _onEvent_unlocked(self, allBinaryEventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         self.onCaptureEvent(allBinaryEventObject)
     
 
@@ -79,6 +87,10 @@ class ImageComparisonWorker(BasicEventHandler, CapturedImageWorkerResultsListene
         from org.allbinary.media.image.comparison.ImageComparisonResultFrameCacheable import ImageComparisonResultFrameCacheable
         from org.allbinary.media.image.comparison.ImageComparisonResultCacheSingleton import ImageComparisonResultCacheSingleton
         from org.allbinary.media.image.comparison.ImageComparisonResultsEvent import ImageComparisonResultsEvent
+        from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -105,15 +117,15 @@ class ImageComparisonWorker(BasicEventHandler, CapturedImageWorkerResultsListene
             self.logUtil.putF(self.commonStrings.END, self, self.commonStrings.RUN)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

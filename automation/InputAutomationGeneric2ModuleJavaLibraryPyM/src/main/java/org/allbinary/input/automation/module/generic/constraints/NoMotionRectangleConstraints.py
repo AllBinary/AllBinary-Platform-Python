@@ -22,8 +22,6 @@ class NoMotionRectangleConstraints(MotionRectangleConstraints):
     
 
     def __init__(self) -> None:
-        from org.allbinary.input.automation.module.generic.constraints.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.constraints.Dimension import Dimension
         super().__init__()
         self.setMinDimension(Dimension(0, 0))
         self.setMinArea(0)
@@ -33,7 +31,8 @@ class NoMotionRectangleConstraints(MotionRectangleConstraints):
 
     def isValid(self, frame: int, bufferedImage: BufferedImage, rectangle: Rectangle) -> bool:
         return True
-# from java.awt import *
+# from java.awt.Dimension import Dimension
+# from java.awt.Rectangle import Rectangle
 # from java.awt.image.BufferedImage import BufferedImage
 
 

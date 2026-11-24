@@ -20,6 +20,7 @@ from __future__ import annotations
 class BasicTopViewGeographicMapCellType:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.name: str = None
         self.cost: int = None
@@ -28,12 +29,17 @@ class BasicTopViewGeographicMapCellType:
 
     @staticmethod
     def createType(name: str, type_: int, cost: int) -> BasicTopViewGeographicMapCellType:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         types: BasicArrayList = BasicArrayListS(1)
         types.add(type_)
         return BasicTopViewGeographicMapCellType(name, types, cost)
     
 
     def __init__(self, name: str, types: BasicArrayList, cost: int) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         size: int = types.size()
         typeArray: list[int] = [0] * (size)
@@ -53,6 +59,7 @@ class BasicTopViewGeographicMapCellType:
     
 
     def isType(self, type_: GeographicMapCellType) -> bool:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         return self.hasType(type_.getType())
     
 
@@ -69,6 +76,8 @@ class BasicTopViewGeographicMapCellType:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringMaker: StringMaker = StringMaker()
         size: int = len(self.types)
         for index in range(0, size):
@@ -77,13 +86,13 @@ class BasicTopViewGeographicMapCellType:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 

@@ -16,14 +16,19 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsListener import CapturedImageWorkerResultsListener
 
 
-class SaveCapturedImageWorker(BasicEventHandler, CapturedImageWorkerResultsListener):
+class SaveCapturedImageWorker(*java_bases(BasicEventHandler, CapturedImageWorkerResultsListener)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.running: bool = False
@@ -57,11 +62,14 @@ class SaveCapturedImageWorker(BasicEventHandler, CapturedImageWorkerResultsListe
     
 
     def onEvent(self, allBinaryEventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         self.onCaptureEvent(allBinaryEventObject)
     
 
     def run(self) -> None:
         from org.allbinary.input.media.image.capture.CapturedImageInputOutput import CapturedImageInputOutput
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -77,13 +85,13 @@ class SaveCapturedImageWorker(BasicEventHandler, CapturedImageWorkerResultsListe
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

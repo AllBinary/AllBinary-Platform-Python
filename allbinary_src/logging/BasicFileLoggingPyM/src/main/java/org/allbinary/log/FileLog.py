@@ -16,15 +16,14 @@
 from __future__ import annotations
 
 import threading
-# from java.io.File import File
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileLog:
-    stringUtil: StringUtil = StringUtil.getInstance()
+    stringUtil: StringUtil = None
     logLength: int = 33000000
     logPath: str = "g:\\log\\"
-    extension: str = str("dat")
+    extension: str = None
     fileName: str = None
     backupFileName: str = None
     ORG_ALLBINARY: str = "org.allbinary: "
@@ -70,6 +69,8 @@ class FileLog:
 
     @staticmethod
     def _createLogFileBackup_unlocked() -> bool:
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             stringMaker: StringMaker = StringMaker()
             FileLog.logFileBak = File(FileLog.logPath, str(stringMaker.append(FileLog.backupFileName).append(CommonSeps.getInstance().PERIOD).appendint(FileLog.backupIndex)))
@@ -80,7 +81,8 @@ class FileLog:
             line: str = ""
             tmpOut: BufferedWriter = BufferedWriter(FileWriter(FileLog.logFileBak))
             tmpIn: BufferedReader = BufferedReader(FileReader(FileLog.logFile))
-            while ((line := tmpIn.readLine())) is not None:
+            while tmpIn.ready():
+                line = tmpIn.readLine()
                 tmpOut.write(line, 0, len(line))
                 tmpOut.newLine()
             tmpOut.flush()
@@ -93,24 +95,26 @@ class FileLog:
             return False
     
 
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def put(specialMessage: str, anyType: object, functionName: str) -> str:
+    def put_j3_1(specialMessage: str, anyType: object, functionName: str) -> str:
         with FileLog._lock:
-            return FileLog._put_unlocked(specialMessage, anyType, functionName)
+            return FileLog._put_j3_1_unlocked(specialMessage, anyType, functionName)
 
     @staticmethod
-    def _put_unlocked(specialMessage: str, anyType: object, functionName: str) -> str:
+    def _put_j3_1_unlocked(specialMessage: str, anyType: object, functionName: str) -> str:
         return FileLog.put(specialMessage, anyType, functionName, None)
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def put(specialMessage: str, anyType: object, functionName: str, exception: BaseException) -> str:
+    def put_j4_1(specialMessage: str, anyType: object, functionName: str, exception: BaseException) -> str:
         with FileLog._lock:
-            return FileLog._put_unlocked(specialMessage, anyType, functionName, exception)
+            return FileLog._put_j4_1_unlocked(specialMessage, anyType, functionName, exception)
 
     @staticmethod
-    def _put_unlocked(specialMessage: str, anyType: object, functionName: str, exception: BaseException) -> str:
+    def _put_j4_1_unlocked(specialMessage: str, anyType: object, functionName: str, exception: BaseException) -> str:
+        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         try:
             if FileLog.firstTime == True:
                 FileLog.createLogFileBackup()
@@ -118,7 +122,7 @@ class FileLog:
                     return str("Log File Creation Error")
             length: int = FileLog.logFile.length()
             if length > FileLog.logLength:
-                if not (FileLog.createLogFileBackup()) or FileLog.createLogFile() == False:
+                if not FileLog.createLogFileBackup() or FileLog.createLogFile() == False:
                     return str("Couldn't Create a Backup file")
             className: str = str(FileLog.stringUtil.NULL_STRING)
             if functionName is None:
@@ -136,25 +140,26 @@ class FileLog:
             return str("Error: " + str(e))
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def put(specialMessage: str, className: str, functionName: str) -> str:
+    def put_j3_2(specialMessage: str, className: str, functionName: str) -> str:
         with FileLog._lock:
-            return FileLog._put_unlocked(specialMessage, className, functionName)
+            return FileLog._put_j3_2_unlocked(specialMessage, className, functionName)
 
     @staticmethod
-    def _put_unlocked(specialMessage: str, className: str, functionName: str) -> str:
+    def _put_j3_2_unlocked(specialMessage: str, className: str, functionName: str) -> str:
         return FileLog.put(specialMessage, className, functionName, None)
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def put(specialMessage: str, className: str, functionName: str, exception: Exception) -> str:
+    def put_j4_2(specialMessage: str, className: str, functionName: str, exception: Exception) -> str:
         with FileLog._lock:
-            return FileLog._put_unlocked(specialMessage, className, functionName, exception)
+            return FileLog._put_j4_2_unlocked(specialMessage, className, functionName, exception)
 
     @staticmethod
-    def _put_unlocked(specialMessage: str, className: str, functionName: str, exception: Exception) -> str:
+    def _put_j4_2_unlocked(specialMessage: str, className: str, functionName: str, exception: Exception) -> str:
+        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         try:
             if FileLog.firstTime == True:
                 FileLog.createLogFileBackup()
@@ -162,7 +167,7 @@ class FileLog:
                     return str("Log File Creation Error")
             length: int = FileLog.logFile.length()
             if length > FileLog.logLength:
-                if not (FileLog.createLogFileBackup()) or FileLog.createLogFile() == False:
+                if not FileLog.createLogFileBackup() or FileLog.createLogFile() == False:
                     return str("Couldn't Create a Backup file")
             if functionName is None:
                 functionName = str(FileLog.stringUtil.NULL_STRING)
@@ -175,6 +180,18 @@ class FileLog:
             return str(str(FileLog.ORG_ALLBINARY) + message)
         except Exception as e:
             return str("Error: " + str(e))
+
+    @staticmethod
+    def put(*args):
+        if len(args) == 3 and True and (args[0] is None or isinstance(args[0], str)) and (args[2] is None or isinstance(args[2], str)):
+            return FileLog.put_j3_1(*args)
+        if len(args) == 4 and True and (args[0] is None or isinstance(args[0], str)) and (args[2] is None or isinstance(args[2], str)) and not isinstance(args[3], (str, list, int, float)):
+            return FileLog.put_j4_1(*args)
+        if len(args) == 3:
+            return FileLog.put_j3_2(*args)
+        if len(args) == 4:
+            return FileLog.put_j4_2(*args)
+        return getattr(FileLog, "put_j" + str(len(args)))(*args)
     
 
     @staticmethod
@@ -182,17 +199,39 @@ class FileLog:
         return FileLog.logPath + FileLog.fileName
 # from java.io.BufferedReader import BufferedReader
 # from java.io.BufferedWriter import BufferedWriter
+# from java.io.File import File
 # from java.io.FileReader import FileReader
 # from java.io.FileWriter import FileWriter
 # from java.io.RandomAccessFile import RandomAccessFile
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-FileLog.fileName = str("log." + str(FileLog.extension))
+def _FileLog_stringUtil() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return StringUtil.getInstance()
 
-FileLog.backupFileName = FileLog.fileName.concat(".bak")
+lazy_static(FileLog, "stringUtil", _FileLog_stringUtil)
 
-FileLog.logFile = File(FileLog.logPath, FileLog.fileName)
+def _FileLog_extension() -> object:
+    return str("dat")
+
+lazy_static(FileLog, "extension", _FileLog_extension)
+
+def _FileLog_fileName() -> object:
+    return str("log." + str(FileLog.extension))
+
+lazy_static(FileLog, "fileName", _FileLog_fileName)
+
+def _FileLog_backupFileName() -> object:
+    return FileLog.fileName.concat(".bak")
+
+lazy_static(FileLog, "backupFileName", _FileLog_backupFileName)
+
+def _FileLog_logFile() -> object:
+    return File(FileLog.logPath, FileLog.fileName)
+
+lazy_static(FileLog, "logFile", _FileLog_logFile)
 

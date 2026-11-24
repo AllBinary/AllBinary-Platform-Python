@@ -15,15 +15,17 @@ class OpenGLObject3dProcessor:
         self._init_fields()
     
 
-    def process(self, gl: GL10, object3d: object) -> None:
+    def process_j2(self, gl: GL10, object3d: object) -> None:
         from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def process(self, gl: GL10, object3d: object, index: int) -> None:
+    def process_j3(self, gl: GL10, object3d: object, index: int) -> None:
         from javax.microedition.khronos.opengles.GL10 import GL10
         pass
+
+    def process(self, *args):
+        return getattr(self, "process_j" + str(len(args)))(*args)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from org.allbinary.string.CommonStrings import CommonStrings
 

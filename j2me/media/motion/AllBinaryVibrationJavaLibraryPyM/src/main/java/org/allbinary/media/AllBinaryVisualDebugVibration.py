@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
 
 
-class AllBinaryVisualDebugVibration(AllBinaryVibrationME, UpdateMyFontInterface):
+class AllBinaryVisualDebugVibration(*java_bases(AllBinaryVibrationME, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor

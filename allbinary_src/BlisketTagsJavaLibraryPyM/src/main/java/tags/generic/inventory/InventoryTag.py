@@ -21,6 +21,7 @@ from tags.StoreValidationTransformTag import StoreValidationTransformTag
 class InventoryTag(StoreValidationTransformTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -31,6 +32,10 @@ class InventoryTag(StoreValidationTransformTag):
 
     # throws LicensingException
     def search(self) -> None:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from taghelpers.InventoryHelperFactory import InventoryHelperFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = InventoryHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -41,18 +46,22 @@ class InventoryTag(StoreValidationTransformTag):
             raise e
         except Exception as e:
             error: str = "Failed to search Inventory by keyword"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "search()", e)
             try:
                 self.pageContext.getOut().print_(error + "<br>")
                 self.pageContext.getOut().print_("Exception: " + str(e) + "<br>")
             except Exception as e2:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LICENSINGERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LICENSINGERROR):
                     self.logUtil.put("Exception in Exception Handling", self, "search()", e)
     
 
     # throws LicensingException
     def viewSummary(self) -> None:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from taghelpers.InventoryHelperFactory import InventoryHelperFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = InventoryHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             helperClass: type = type(anyType)
@@ -63,31 +72,34 @@ class InventoryTag(StoreValidationTransformTag):
             raise e
         except Exception as e:
             error: str = "Failed to View Summary"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "viewSummary()", e)
             try:
                 self.pageContext.getOut().print_(error + "<br>")
                 self.pageContext.getOut().print_("Exception: " + str(e) + "<br>")
             except Exception as e2:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().LICENSINGERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().LICENSINGERROR):
                     self.logUtil.put("Exception in Exception Handling", self, "viewSummary())", e)
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.getCommand() is not None:
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.SEARCH) == 0:
+                if self.getCommand().compareTo(GLOBALS2.SEARCH) == 0:
                     self.setName("Basic Search Inventory View")
                     self.setObjectFile("views.generic.inventory.AutoSearchValidationInventoryView")
                     self.search()
                     return self.EVAL_BODY_INCLUDE
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEWSUMMARY) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.VIEWSUMMARY) == 0:
                     self.setName("Basic Inventory View")
                     self.setObjectFile("views.generic.inventory.AutoValidationInventoryView")
                     self.viewSummary()
                     return self.EVAL_BODY_INCLUDE
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     self.setName("Basic Inventory View")
                     self.setObjectFile("views.generic.inventory.AutoValidationInventoryView")
                     return super().doStartTag()
@@ -102,9 +114,12 @@ class InventoryTag(StoreValidationTransformTag):
             return self.SKIP_BODY
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from taghelpers.InventoryHelperFactory import InventoryHelperFactory
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from taghelpers.InventoryHelperFactory import InventoryHelperFactory
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -20,10 +20,12 @@ from __future__ import annotations
 class HtmlTags:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.htmlTagVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.htmlTagVector = BasicArrayListD()
     
@@ -38,8 +40,8 @@ class HtmlTags:
 
     def size(self) -> int:
         return self.htmlTagVector.size()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

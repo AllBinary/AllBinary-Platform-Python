@@ -21,6 +21,8 @@ from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInt
 class InputAutomationRobotOSGIServiceVisitor(OSGIServiceVisitorInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
@@ -29,12 +31,18 @@ class InputAutomationRobotOSGIServiceVisitor(OSGIServiceVisitorInterface):
         self._init_fields()
     
 
-    def visit(self, anyType: object) -> object:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def visit_j1_1(self, anyType: object) -> object:
+        from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
         return self.visit(anyType)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def visit(self, osgiServiceInterface: OSGIServiceInterface) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def visit_j1_2(self, osgiServiceInterface: OSGIServiceInterface) -> bool:
+        from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
         try:
             self.logUtil.putF(self.commonStrings.START, self, "visit")
             inputAutomationRobotServiceInterface: InputAutomationRobotServiceInterface = osgiServiceInterface
@@ -46,11 +54,18 @@ class InputAutomationRobotOSGIServiceVisitor(OSGIServiceVisitorInterface):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "visit", e)
             return False
-from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+
+    def visit(self, *args):
+        if len(args) == 1 and True:
+            return self.visit_j1_1(*args)
+        if len(args) == 1:
+            return self.visit_j1_2(*args)
+        return getattr(self, "visit_j" + str(len(args)))(*args)
+# from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

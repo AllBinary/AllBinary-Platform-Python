@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinaryThreedTiledLayerFactory:
@@ -22,18 +23,26 @@ class AllBinaryThreedTiledLayerFactory:
     
 
     @staticmethod
-    def getInstance() -> AllBinaryThreedTiledLayerFactory:
+    def getInstance_j0() -> AllBinaryThreedTiledLayerFactory:
         return AllBinaryThreedTiledLayerFactory.instance
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
+    def getInstance_j2(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackInfo import RaceTrackInfo
         raise Exception("No Threed")
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackInfo import RaceTrackInfo
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackInfo import RaceTrackInfo
 
 
-AllBinaryThreedTiledLayerFactory.instance = AllBinaryThreedTiledLayerFactory()
+def _AllBinaryThreedTiledLayerFactory_instance() -> object:
+    return AllBinaryThreedTiledLayerFactory()
+
+lazy_static(AllBinaryThreedTiledLayerFactory, "instance", _AllBinaryThreedTiledLayerFactory_instance)
 

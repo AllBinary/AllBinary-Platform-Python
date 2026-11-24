@@ -22,8 +22,6 @@ class CollidableHelperFactory:
 
     @staticmethod
     def getInstance() -> CollisionHelper:
-        from org.allbinary.game.collision.SourceCollisionHelper import SourceCollisionHelper
-        from org.allbinary.game.collision.CollisionHelper import CollisionHelper
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer

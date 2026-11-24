@@ -34,7 +34,6 @@ class AllBinaryVibration(AllBinaryVibrationME):
 
     @staticmethod
     def init() -> None:
-        from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         if int(GameConfigurationCentral.getInstance().VIBRATION.getValue()) == 0:
             AllBinaryVibration.VIBRATION = AllBinaryNoVibration.NO_VIBRATION
@@ -48,7 +47,6 @@ class AllBinaryVibration(AllBinaryVibrationME):
 
 
 def _AllBinaryVibration_VIBRATION() -> object:
-    from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
     return AllBinaryNoVibration.NO_VIBRATION
 
 lazy_static(AllBinaryVibration, "VIBRATION", _AllBinaryVibration_VIBRATION)

@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.category.CategoryEntityInterface import CategoryEntityInterface
 
 
-class CategoryEntity(AbSqlBean, CategoryEntityInterface):
+class CategoryEntity(*java_bases(AbSqlBean, CategoryEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "categories"
 
@@ -33,42 +35,56 @@ class CategoryEntity(AbSqlBean, CategoryEntityInterface):
     
 
     def _constructor1(self, categoryFactoryInterface: CategoryFactoryInterface) -> None:
+        from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
         super().__init__(InventoryDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
         super().__init__(InventoryDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
-    def insert(self, category: Category) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def insert_j1_1(self, category: Category) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.category.Category import Category
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             categoryVector: BasicArrayList = category.toVector()
             values: BasicArrayList = BasicArrayListD()
             values.add(categoryVector.get(0))
             values.add(categoryVector.get(1))
             super().insert(values)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.INSERT, e)
     
 
     def delete(self, value: str) -> None:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().deleteWhere(CategoryData.getInstance().NAME, value)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.delete, e)
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE)
         stringBuffer.append(self.tableName)
@@ -87,21 +103,38 @@ class CategoryEntity(AbSqlBean, CategoryEntityInterface):
         return super().createTable(self.createTableStatement())
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.CategoryData import CategoryData
         super().updateWhere(CategoryData.getInstance().NAME, updatedValues.get(CategoryData.getInstance().NAME), updatedValues)
     
 
     def dropTable(self) -> str:
         return super().dropTable()
+    
+
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def insert_j1_2(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        super().insert(values)
+
+    def insert(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.insert_j1_1(*args)
+        if len(args) == 1:
+            return self.insert_j1_2(*args)
+        return getattr(self, "insert_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.category.Category import Category
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
-from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.category.Category import Category
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+# from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

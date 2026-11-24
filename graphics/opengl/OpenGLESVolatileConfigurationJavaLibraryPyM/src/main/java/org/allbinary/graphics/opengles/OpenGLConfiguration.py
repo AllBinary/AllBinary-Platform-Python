@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLConfiguration:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.opengl: bool = False
@@ -33,6 +35,7 @@ class OpenGLConfiguration:
 
     @staticmethod
     def getInstance() -> OpenGLConfiguration:
+        from org.allbinary.logic.NullUtil import NullUtil
         if OpenGLConfiguration.instance == NullUtil.getInstance().NULL_OBJECT:
             OpenGLConfiguration.instance = OpenGLConfiguration()
         return OpenGLConfiguration.instance
@@ -48,9 +51,10 @@ class OpenGLConfiguration:
 
     # throws Exception
     def init(self) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         features: Features = Features.getInstance()
         if ChangedGameFeatureListener.getInstance().isChangedFeature(MainFeatureFactory.getInstance().STATIC):
             if self.isOpenGL():
@@ -75,7 +79,8 @@ class OpenGLConfiguration:
 
     # throws Exception
     def update(self, gameFeature: Feature, colorLocked: bool) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.game.configuration.feature.Feature import Feature
+        from org.allbinary.game.configuration.feature.Features import Features
         features: Features = Features.getInstance()
         openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
         modified: bool = False
@@ -157,6 +162,8 @@ class OpenGLConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         stringBuffer.append(" isOpenGL: ")
@@ -173,15 +180,21 @@ class OpenGLConfiguration:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
-from org.allbinary.game.configuration.feature.Feature import Feature
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+# from org.allbinary.game.configuration.feature.Feature import Feature
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
+
+def _OpenGLConfiguration_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(OpenGLConfiguration, "instance", _OpenGLConfiguration_instance)
 

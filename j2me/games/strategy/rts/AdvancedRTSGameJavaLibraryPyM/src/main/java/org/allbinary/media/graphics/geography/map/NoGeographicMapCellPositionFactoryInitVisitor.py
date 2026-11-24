@@ -23,7 +23,8 @@ class NoGeographicMapCellPositionFactoryInitVisitor(GeographicMapCellPositionFac
 
     # throws Exception
     def visit(self, tiledLayer: AllBinaryTiledLayer, cellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         pass
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
 
 

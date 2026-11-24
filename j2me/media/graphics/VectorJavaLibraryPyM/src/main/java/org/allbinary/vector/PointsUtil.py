@@ -43,12 +43,11 @@ class PointsUtil:
         return newPoints
     
 
-    def adjust(self, points: list[list[int]], both: int) -> list[list[int]]:
+    def adjust_j2(self, points: list[list[int]], both: int) -> list[list[int]]:
         return self.adjust(points, both, both)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def adjust(self, points: list[list[int]], x: int, y: int) -> list[list[int]]:
+    def adjust_j3(self, points: list[list[int]], x: int, y: int) -> list[list[int]]:
         newPoints: list[list[int]] = [[0] * (2) for _ in range(len(points))]
         for index2 in range(0, len(points)):
             if points[index2][0] != 1000:
@@ -58,6 +57,9 @@ class PointsUtil:
                 newPoints[index2][0] = 1000
                 newPoints[index2][1] = 1000
         return newPoints
+
+    def adjust(self, *args):
+        return getattr(self, "adjust_j" + str(len(args)))(*args)
 
 
 def _PointsUtil_instance() -> object:

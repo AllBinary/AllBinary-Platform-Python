@@ -21,6 +21,7 @@ from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface imp
 class PickUpShippingModule(ShippingInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.name: str = "No Shipping (For Pickup Orders Only)"
         self.description: str = "This shipping method is for pickup orders only."
@@ -31,6 +32,8 @@ class PickUpShippingModule(ShippingInterface):
     
 
     def getCost(self, order: OrderInterface) -> Money:
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
         return Money()
     
 
@@ -40,8 +43,8 @@ class PickUpShippingModule(ShippingInterface):
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

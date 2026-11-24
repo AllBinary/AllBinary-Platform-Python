@@ -21,6 +21,7 @@ from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEv
 class UserEmailEventConfiguration(UserEmailEventConfigurationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.name: str = None
         self.eventListenerClassPath: str = None
@@ -33,20 +34,24 @@ class UserEmailEventConfiguration(UserEmailEventConfigurationInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.setName(StringUtil.getInstance().EMPTY_STRING)
         self.setEventListenerClassPath(StringUtil.getInstance().EMPTY_STRING)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF("New", self, " Constructor")
     
 
-    def _constructor1(self, hashMap: dict) -> None:
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.setName(hashMap.get(UserEmailEventConfigurationData.NAME))
         self.setEventListenerClassPath(hashMap.get(UserEmailEventConfigurationData.LISTENER_CLASSPATH))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF("Log: " + str(self.log()), self, " Constructor")
     
 
@@ -69,7 +74,9 @@ class UserEmailEventConfiguration(UserEmailEventConfigurationInterface):
     def log(self) -> str:
         return "\nUser Email Event Log Info:" + "\nName: " + self.getName() + "\nEventListenerClassPath: " + str(self.getEventListenerClassPath())
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

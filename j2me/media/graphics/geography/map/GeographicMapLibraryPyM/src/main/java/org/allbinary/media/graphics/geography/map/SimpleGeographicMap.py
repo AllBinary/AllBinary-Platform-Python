@@ -20,6 +20,10 @@ from __future__ import annotations
 class SimpleGeographicMap:
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.id: int = None
         self.name: str = None
@@ -31,6 +35,8 @@ class SimpleGeographicMap:
     
 
     def __init__(self, id: int, name: str, cellTypeIdToGeographicMapCellType: list[int], tiledLayer: AllBinaryTiledLayer, foregroundBasicColor: BasicColor, backgroundBasicColor: BasicColor) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self._init_fields()
         self.id = id
         self.name = name
@@ -53,6 +59,7 @@ class SimpleGeographicMap:
     
 
     def getAllBinaryTiledLayer(self) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         return self.tiledLayer
     
 
@@ -71,23 +78,27 @@ class SimpleGeographicMap:
     
 
     def getForegroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.foregroundBasicColor
     
 
     def setForegroundBasicColor(self, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.foregroundBasicColor = foregroundBasicColor
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.backgroundBasicColor
     
 
     def setBackgroundBasicColor(self, backgroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.backgroundBasicColor = backgroundBasicColor
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
 
 

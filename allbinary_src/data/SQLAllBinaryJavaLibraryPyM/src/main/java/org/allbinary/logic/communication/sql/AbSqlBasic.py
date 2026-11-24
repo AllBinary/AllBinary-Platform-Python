@@ -17,11 +17,19 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.ClassLoader import ClassLoader
 
 
 class AbSqlBasic:
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.sql.connection.pool.SqlConnectionPool import SqlConnectionPool
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.sqlConnectionPool: SqlConnectionPool = SqlConnectionPool.getInstance()
         self.databaseConnectionInfoInterface: DbConnectionInfo = None
@@ -50,6 +58,7 @@ class AbSqlBasic:
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         self._init_fields()
         self.databaseConnectionInfoInterface = databaseConnectionInfoInterface
         self.connectAttemptCounter = 0
@@ -58,6 +67,8 @@ class AbSqlBasic:
 
     # throws SQLException
     def executeSQLStatement(self, statement: str) -> ResultSet:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.initialize()
             stmt: Statement = self.conn.createStatement()
@@ -69,7 +80,7 @@ class AbSqlBasic:
             self.sqlConnectionPool.add(self.getDatabaseConnectionInfoInterface().getUrl(), tempConnection)
             return rset
         except SQLException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(self.FAILED_SQL_STATEMENT + statement, self, self.METHOD_EXECUTED_SQL_STATEMENT, e)
             self.conn.close()
             self.conn = None
@@ -77,22 +88,26 @@ class AbSqlBasic:
     
 
     def create(self, databaseName: str) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.executeSQLStatement(str(self.sqlStrings.CREATE_DATABASE) + databaseName)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.DATABASE_CREATED_LABEL + databaseName, self, self.METHOD_CREATE)
             return databaseName + str(self.sqlStrings.CREATE_RETURN)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(self.DATABASE_CREATION_FAILED_LABEL + databaseName, self, self.METHOD_CREATE, e)
             return self.DATABASE_CREATION_FAILED_LABEL + databaseName
     
 
     def createConnection(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.conn = self.sqlConnectionPool.get(self.getDatabaseConnectionInfoInterface().getUrl())
         except SQLException as se:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(self.SQL_CONNECTION_RETRYING, self, self.METHOD_CREATE_CONNECTION, se)
             try:
                 threading.current_thread().sleep(2000)
@@ -100,11 +115,13 @@ class AbSqlBasic:
                     self.connectAttemptCounter += 1
                     self.initialize()
             except Exception as e:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                     self.logUtil.put(self.SQL_CONNECTION_RETRY + str(se), self, self.METHOD_CREATE_CONNECTION, e)
     
 
     def initialize(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if True:
                 try:
@@ -112,33 +129,35 @@ class AbSqlBasic:
                     jdbcDriverClass: type = loader.loadClass(self.getDatabaseConnectionInfoInterface().getJdbcDriver())
                     jdbcDriverClass.newInstance()
                 except Exception as e:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                         self.logUtil.put(self.LOAD_JDBC_DRIVER_FAILED_LABEL + str(self.getDatabaseConnectionInfoInterface().getJdbcDriver()), self, self.METHOD_INITIALIZE, e)
             self.createConnection()
         except Exception as se:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 self.logUtil.put(self.SQL_CONNECTION_FAILED, self, self.METHOD_INITIALIZE, se)
     
 
     def getDatabaseConnectionInfoInterface(self) -> DatabaseConnectionInfoInterface:
+        from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
         return self.databaseConnectionInfoInterface
     
 
     def setDatabaseConnectionInfoInterface(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         self.databaseConnectionInfoInterface = databaseConnectionInfoInterface
 # from java.sql.Connection import Connection
 # from java.sql.ResultSet import ResultSet
 # from java.sql.SQLException import SQLException
 # from java.sql.Statement import Statement
-from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.sql.connection.pool.SqlConnectionPool import SqlConnectionPool
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.sql.SqlTypeStrings import SqlTypeStrings
-from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.sql.connection.pool.SqlConnectionPool import SqlConnectionPool
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

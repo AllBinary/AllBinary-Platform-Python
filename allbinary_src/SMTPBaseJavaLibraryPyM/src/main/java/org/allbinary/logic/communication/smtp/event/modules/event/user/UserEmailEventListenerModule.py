@@ -21,17 +21,24 @@ from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterfac
 class UserEmailEventListenerModule(UserEmailEventListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.userInterface: UserInterface = None
     
 
     def __init__(self, userInterface: UserInterface) -> None:
+        from org.allbinary.business.user.UserInterface import UserInterface
         self._init_fields()
         self.userInterface = userInterface
     
 
     # throws Exception
     def onEmailSendFailure(self, emailEvent: EmailEvent) -> None:
+        from org.allbinary.logic.communication.smtp.BasicEmail import BasicEmail
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+        from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
+        from org.allbinary.logic.communication.smtp.queue.EmailQueueFactory import EmailQueueFactory
         to: str = self.userInterface.getSecondaryEmail()
         email: BasicEmail = BasicEmail(emailEvent.getEmailInfo(), to)
         EmailQueueFactory.getInstance().offer(email.getEmail())
@@ -39,16 +46,24 @@ class UserEmailEventListenerModule(UserEmailEventListenerInterface):
 
     # throws Exception
     def onEmailSendRequest(self, emailEvent: EmailEvent) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        from org.allbinary.logic.communication.smtp.BasicEmail import BasicEmail
+        from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+        from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
+        from org.allbinary.logic.communication.smtp.queue.EmailQueueFactory import EmailQueueFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF("Add Email To Que For Sending: " + str(emailEvent), self, "onEmailSendRequest")
         to: str = self.userInterface.getMainEmail()
         email: BasicEmail = BasicEmail(emailEvent.getEmailInfo(), to)
         EmailQueueFactory.getInstance().offer(email.getEmail())
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.BasicEmail import BasicEmail
-from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
-from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
-from org.allbinary.logic.communication.smtp.queue.EmailQueueFactory import EmailQueueFactory
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.BasicEmail import BasicEmail
+# from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
+# from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
+# from org.allbinary.logic.communication.smtp.queue.EmailQueueFactory import EmailQueueFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

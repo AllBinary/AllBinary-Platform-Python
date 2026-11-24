@@ -28,7 +28,6 @@ class PCGameInputMapping(PersistentInputMapping):
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
-        from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         PCKeyFactory.getInstance()
@@ -39,7 +38,6 @@ class PCGameInputMapping(PersistentInputMapping):
     
 
     def isDelete(self, input: Input) -> bool:
-        from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
         if input == PCKeyFactory.getInstance().DEL:
             return True
         else:

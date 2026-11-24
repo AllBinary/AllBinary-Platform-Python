@@ -21,6 +21,8 @@ from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectC
 class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = None
 
@@ -34,12 +36,17 @@ class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
     
 
     def _constructor2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.abeClientInformation = abeClientInformation
     
 
     def _constructor3(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, document: Document) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Document import Document
         super().__init__(transformInfoInterface, document)
         self._init_fields()
         self.abeClientInformation = abeClientInformation
@@ -47,6 +54,8 @@ class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
     
 
     def _constructor4(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, name: str, type_: str) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, name, type_)
         self._init_fields()
         self.abeClientInformation = abeClientInformation
@@ -54,8 +63,15 @@ class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
     
 
     # throws Exception
-    def generate(self, objectConfigDocument: Document) -> Document:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+    def generate_j1(self, objectConfigDocument: Document) -> Document:
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttp import TransformInfoHttp
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("TransformInfo: ")
             if self.getTransformInfoInterface() is not None:
@@ -65,15 +81,19 @@ class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
             self.logUtil.putF(str(stringBuffer), self, "generate()")
         transformInfoHttpStoreInterface: TransformInfoHttp = self.getTransformInfoInterface()
         objectConfigDocumentString: str = XmlDocumentHelper.toString(objectConfigDocument)
-        replaceHashMap: dict = self.createReplaceHashMap(transformInfoHttpStoreInterface, objectConfigDocumentString)
+        replaceHashMap: HashMap = self.createReplaceHashMap(transformInfoHttpStoreInterface, objectConfigDocumentString)
         return self.generate(objectConfigDocumentString, replaceHashMap)
     
 
     # throws Exception
-    def createReplaceHashMap(self, transformInfoHttpStoreInterface: TransformInfoHttp, objectConfigDocumentString: str) -> dict:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+    def createReplaceHashMap(self, transformInfoHttpStoreInterface: TransformInfoHttp, objectConfigDocumentString: str) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttp import TransformInfoHttp
+        from org.allbinary.logic.visual.transform.template.util.TransformTemplateCustomizerUtil import TransformTemplateCustomizerUtil
         storeName: str = transformInfoHttpStoreInterface.getStoreName()
-        hashMap: dict = self.createHashMap(transformInfoHttpStoreInterface, objectConfigDocumentString)
+        hashMap: HashMap = self.createHashMap(transformInfoHttpStoreInterface, objectConfigDocumentString)
         transformInfoObjectConfigData: TransformInfoObjectConfigData = TransformInfoObjectConfigData.getInstance()
         hashMap.put(transformInfoObjectConfigData.VARKEY + StoreFrontData.getInstance().NAME, storeName)
         pageName: str = TransformTemplateCustomizerUtil.getInstance().getPageNameHack(self.getTransformInfoInterface().getName(), storeName)
@@ -82,13 +102,24 @@ class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
     
 
     # throws Exception
-    def createHashMap(self, transformInfoHttpStoreInterface: TransformInfoHttp, objectConfigDocumentString: str) -> dict:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def createHashMap(self, transformInfoHttpStoreInterface: TransformInfoHttp, objectConfigDocumentString: str) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.RootTransformInfoData import RootTransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttp import TransformInfoHttp
+        from org.allbinary.logic.visual.transform.template.TransformTemplateFactory import TransformTemplateFactory
+        from org.allbinary.logic.visual.transform.template.TransformTemplateInterface import TransformTemplateInterface
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         storeName: str = transformInfoHttpStoreInterface.getStoreName()
-        propertiesHashMap: dict = transformInfoHttpStoreInterface.getPropertiesHashMap()
+        propertiesHashMap: HashMap = transformInfoHttpStoreInterface.getPropertiesHashMap()
         templateNameOverride: str = StringUtil.getInstance().getNonNull(propertiesHashMap.get(TransformInfoData.getInstance().PARTIAL))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("TemplateNameOverride: " + templateNameOverride, self, "generate()")
         templateNameStringBuffer: StringMaker = StringMaker()
         templateNameStringBuffer.append(storeName)
@@ -104,31 +135,42 @@ class GenericStoreTransformInfoObjectConfig(TransformInfoObjectConfig):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def generate(self, objectConfigDocumentString: str, hashMap: dict) -> Document:
+    def generate_j2(self, objectConfigDocumentString: str, hashMap: HashMap) -> Document:
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         replace: Replace = Replace(hashMap)
         newObjectConfigDocument: Document = DomDocumentHelper.create(replace.all(objectConfigDocumentString))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Final ObjectConfig: " + XmlDocumentHelper.toString(newObjectConfigDocument), self, "generate()")
         return newObjectConfigDocument
+
+    def generate(self, *args):
+        return getattr(self, "generate_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.RootTransformInfoData import RootTransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfoHttp import TransformInfoHttp
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.template.TransformTemplateFactory import TransformTemplateFactory
-from org.allbinary.logic.visual.transform.template.TransformTemplateInterface import TransformTemplateInterface
-from org.allbinary.logic.visual.transform.template.util.TransformTemplateCustomizerUtil import TransformTemplateCustomizerUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.w3c.dom.Document import Document
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.RootTransformInfoData import RootTransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttp import TransformInfoHttp
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.template.TransformTemplateFactory import TransformTemplateFactory
+# from org.allbinary.logic.visual.transform.template.TransformTemplateInterface import TransformTemplateInterface
+# from org.allbinary.logic.visual.transform.template.util.TransformTemplateCustomizerUtil import TransformTemplateCustomizerUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.w3c.dom.Document import Document
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

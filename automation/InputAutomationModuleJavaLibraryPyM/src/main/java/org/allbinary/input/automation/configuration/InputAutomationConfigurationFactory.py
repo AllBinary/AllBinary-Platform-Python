@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputAutomationConfigurationFactory:
     instance: InputAutomationConfigurationFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.inputAutomationConfiguration: InputAutomationConfiguration = None
     
@@ -38,6 +40,12 @@ class InputAutomationConfigurationFactory:
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
         from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
         from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
+        from java.io.FileInputStream import FileInputStream
+        from java.util.List import List
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         INPUT_AUTOMATION_CONFIGURATION: str = "InputAutomationConfiguration"
@@ -67,11 +75,14 @@ class InputAutomationConfigurationFactory:
 # from javax.xml.bind.JAXBElement import JAXBElement
 # from javax.xml.bind.Unmarshaller import Unmarshaller
 # from javax.xml.transform.stream.StreamSource import StreamSource
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-InputAutomationConfigurationFactory.instance = InputAutomationConfigurationFactory()
+def _InputAutomationConfigurationFactory_instance() -> object:
+    return InputAutomationConfigurationFactory()
+
+lazy_static(InputAutomationConfigurationFactory, "instance", _InputAutomationConfigurationFactory_instance)
 

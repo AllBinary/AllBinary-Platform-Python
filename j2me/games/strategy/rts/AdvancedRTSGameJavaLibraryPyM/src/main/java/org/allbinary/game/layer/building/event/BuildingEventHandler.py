@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -33,12 +34,18 @@ class BuildingEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         buildingEventListenerInterface: BuildingEventListenerInterface = (eventListenerInterface)
         buildingEventListenerInterface.onBuildingEvent(eventObject)
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
-BuildingEventHandler.eventHandler = BuildingEventHandler()
+def _BuildingEventHandler_eventHandler() -> object:
+    return BuildingEventHandler()
+
+lazy_static(BuildingEventHandler, "eventHandler", _BuildingEventHandler_eventHandler)
 

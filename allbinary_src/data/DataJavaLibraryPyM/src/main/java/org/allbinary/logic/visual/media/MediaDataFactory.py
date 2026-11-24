@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MediaDataFactory:
@@ -52,5 +53,8 @@ class MediaDataFactory:
 from org.allbinary.logic.visual.media.MediaData import MediaData
 
 
-MediaDataFactory.instance = MediaDataFactory()
+def _MediaDataFactory_instance() -> object:
+    return MediaDataFactory()
+
+lazy_static(MediaDataFactory, "instance", _MediaDataFactory_instance)
 

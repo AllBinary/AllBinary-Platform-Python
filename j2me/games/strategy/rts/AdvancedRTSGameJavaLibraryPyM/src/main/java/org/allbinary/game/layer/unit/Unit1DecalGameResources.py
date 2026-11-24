@@ -15,11 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
 
 
 class Unit1DecalGameResources(BasicGameResources):
-    instance: Unit1DecalGameResources = None
+    instance: object = None
+    
+
+    @staticmethod
+    def getInstance() -> BasicGameResources:
+        from org.allbinary.logic.NullUtil import NullUtil
+        if Unit1DecalGameResources.instance == NullUtil.getInstance().NULL_OBJECT:
+            Unit1DecalGameResources.instance = Unit1DecalGameResources()
+        return Unit1DecalGameResources.instance
     
 
     def __init__(self) -> None:
@@ -41,19 +50,22 @@ class Unit1DecalGameResources(BasicGameResources):
 
     # throws Exception
     def getString(self) -> str:
+        from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
         if AndroidUtil.isAndroid():
             return GameGraphicsResourceUtil.getInstance().getStringForFeature(GraphicsFeatureFactory.getInstance().SPRITE_QUARTER_ROTATION_GRAPHICS)
         else:
             return super().getString()
-    
-
-    @staticmethod
-    def getInstance() -> BasicGameResources:
-        return Unit1DecalGameResources.instance
-from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
+# from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
 
-Unit1DecalGameResources.instance = Unit1DecalGameResources()
+def _Unit1DecalGameResources_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(Unit1DecalGameResources, "instance", _Unit1DecalGameResources_instance)
 

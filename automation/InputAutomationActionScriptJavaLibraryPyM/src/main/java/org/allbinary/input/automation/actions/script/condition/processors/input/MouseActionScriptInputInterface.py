@@ -40,6 +40,6 @@ class MouseActionScriptInputInterface(ProfileActionScriptInputInterface):
 
     def log(self) -> None:
         raise NotImplementedError()
-# from java.awt import *
+# from java.awt.Point import Point
 
 

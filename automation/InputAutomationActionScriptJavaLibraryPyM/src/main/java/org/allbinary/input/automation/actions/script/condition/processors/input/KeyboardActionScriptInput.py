@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.input.BasicProfileActionScriptInput import BasicProfileActionScriptInput
 from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputInterface import KeyboardActionScriptInputInterface
 
 
-class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScriptInputInterface):
+class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, KeyboardActionScriptInputInterface)):
     NAME: str = "Keyboard"
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.keyArray: list[int] = [KeySingletonFactory.getInstance(KeyEvent.VK_0)]
         self.keyboardActionScriptInputJPanel: KeyboardActionScriptInputJPanel = None
@@ -44,6 +47,12 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputJPanel import KeyboardActionScriptInputJPanel
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(KeyboardActionScriptInput.NAME, node)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -125,6 +134,7 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
     
 
     def setKeyArray(self, keyArray: list[int]) -> None:
+        from org.allbinary.string.CommonLabels import CommonLabels
         if keyArray is not None:
             self.logUtil.putF(CommonLabels.getInstance().START + len(keyArray), self, "setKeyArray")
         self.keyArray = keyArray
@@ -134,19 +144,21 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
         self.keyboardActionScriptInputJPanel.getKeyActionJDialog().setVisible(True)
     
 
-    def getText(self) -> str:
+    def getText_j0(self) -> str:
         return self.getText(self.getKeyArray())
     
 
     def setText(self, text: str) -> None:
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(CommonLabels.getInstance().START) + text, self, "setText")
         integerArray: list[int] = self.integerArrayValue(text)
         self.setKeyArray(integerArray)
     
 
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getText(integerArray: list[int]) -> str:
+    def getText_j1(integerArray: list[int]) -> str:
+        from org.allbinary.input.KeyUtil import KeyUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         index: int = 0
         stringBuffer: StringMaker = StringMaker()
         while index < len(integerArray):
@@ -157,9 +169,16 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
                 stringBuffer.append("&#" + str(nextInteger) + ";")
             index += 1
         return str(stringBuffer)
+
+    def getText(self, *args):
+        return getattr(self, "getText_j" + str(len(args)))(*args)
     
 
     def integerArrayValue(self, text: str) -> list[int]:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(CommonLabels.getInstance().START) + text, self, "integerArrayValue")
         vector: BasicArrayList = BasicArrayListD()
         index: int = 0
@@ -180,12 +199,14 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
         return integerArray
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         for index in range(0, len(self.getKeyArray())):
             hashMap.put(KeyboardActionScriptInputData.KEY + index, str(self.getKeyArray()[index]))
         hashMap.put(KeyboardActionScriptInputData.DELAY_BETWEEN_KEYS, str(self.getDelayBetweenKeys()))
@@ -198,6 +219,9 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, KeyboardActionScriptInputData.NAME, self.toHashMap()))
         return node
@@ -214,6 +238,7 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(" Text: ")
@@ -230,19 +255,19 @@ class KeyboardActionScriptInput(BasicProfileActionScriptInput, KeyboardActionScr
         return self.toString()
 # from java.awt.event.KeyEvent import KeyEvent
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
-from org.allbinary.input.KeyUtil import KeyUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
+# from org.allbinary.input.KeyUtil import KeyUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

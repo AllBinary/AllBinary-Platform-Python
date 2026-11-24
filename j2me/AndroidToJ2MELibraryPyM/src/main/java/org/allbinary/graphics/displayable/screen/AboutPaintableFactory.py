@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AboutPaintableFactory:
     instance: AboutPaintableFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.paintableArray: list[Paintable] = [NullPaintable.getInstance()]
 
     def __init__(self) -> None:
@@ -30,9 +33,12 @@ class AboutPaintableFactory:
     @staticmethod
     def getInstance() -> AboutPaintableFactory:
         return AboutPaintableFactory.instance
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
 
 
-AboutPaintableFactory.instance = AboutPaintableFactory()
+def _AboutPaintableFactory_instance() -> object:
+    return AboutPaintableFactory()
+
+lazy_static(AboutPaintableFactory, "instance", _AboutPaintableFactory_instance)
 

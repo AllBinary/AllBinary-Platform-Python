@@ -10,6 +10,7 @@ class ViewSwapper:
     NULL_VIEW_ARRAY: list[View] = [None] * (0)
 
     def _init_fields(self) -> None:
+        from android.app.Activity import Activity
         self.rootViewId: int = None
         self.activity: Activity = None
         self.currentMainViewId: int = -1
@@ -18,6 +19,7 @@ class ViewSwapper:
     
 
     def __init__(self, activity: Activity, rootViewId: int) -> None:
+        from android.app.Activity import Activity
         self._init_fields()
         self.activity = activity
         self.rootViewId = rootViewId
@@ -32,6 +34,7 @@ class ViewSwapper:
     
 
     def setMainView(self, id: int) -> None:
+        from android.view.ViewGroup import ViewGroup
         viewGroup: ViewGroup = self.activity.findViewById(self.rootViewId)
         if id != self.currentMainViewId:
             for index in range(0, len(self.topViewArray)):
@@ -45,7 +48,7 @@ class ViewSwapper:
                     self.currentMainViewId = id
             for index in range(0, len(self.topViewArray)):
                 viewGroup.addView(self.topViewArray[index])
-from android.app.Activity import Activity
-from android.view.ViewGroup import ViewGroup
+# from android.app.Activity import Activity
+# from android.view.ViewGroup import ViewGroup
 
 

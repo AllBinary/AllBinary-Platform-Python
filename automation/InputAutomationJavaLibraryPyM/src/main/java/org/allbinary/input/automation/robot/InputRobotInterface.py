@@ -61,7 +61,7 @@ class InputRobotInterface:
         raise NotImplementedError()
     
 
-    def mouseMove(self, x: int, y: int) -> None:
+    def mouseMove_j2(self, x: int, y: int) -> None:
         raise NotImplementedError()
     
 
@@ -96,21 +96,27 @@ class InputRobotInterface:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def mouseMove(self, point: Point) -> None:
+    def mouseMove_j1(self, point: Point) -> None:
+        raise NotImplementedError()
+
+    def mouseMove(self, *args):
+        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
+    
+
+    # throws Exception
+    def mouseMoveToTarget_j1(self, rectangle: Rectangle) -> None:
         raise NotImplementedError()
     
 
     # throws Exception
-    def mouseMoveToTarget(self, rectangle: Rectangle) -> None:
+    def mouseMoveToTarget_j3(self, rectangle: Rectangle, x: int, y: int) -> None:
         raise NotImplementedError()
-    
 
-    # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def mouseMoveToTarget(self, rectangle: Rectangle, x: int, y: int) -> None:
-        raise NotImplementedError()
-# from java.awt import *
+    def mouseMoveToTarget(self, *args):
+        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
+# from java.awt.Rectangle import Rectangle
+# from java.awt.Color import Color
+# from java.awt.Point import Point
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.help.HelpSet import HelpSet
 

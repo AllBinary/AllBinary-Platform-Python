@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.ClassLoader import ClassLoader
 from java.lang.JavaRuntimeStatic import lazy_static
 
 

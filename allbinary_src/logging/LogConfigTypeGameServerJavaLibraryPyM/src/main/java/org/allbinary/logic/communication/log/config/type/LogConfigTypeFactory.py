@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigTypeFactory:
@@ -32,15 +32,22 @@ class LogConfigTypeFactory:
 
     @staticmethod
     def getInstance() -> LogConfigTypeFactory:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         return LogConfigTypeFactory.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         self._init_fields()
         LogConfigTypes.LOGGING.add(self.INIT_SERVER)
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
 
 
-LogConfigTypeFactory.instance = LogConfigTypeFactory()
+def _LogConfigTypeFactory_instance() -> object:
+    from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+    return LogConfigTypeFactory()
+
+lazy_static(LogConfigTypeFactory, "instance", _LogConfigTypeFactory_instance)
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class ImageActionScriptOutputProcessor:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,6 +31,12 @@ class ImageActionScriptOutputProcessor:
     # throws Exception
     @staticmethod
     def process(imageActionScriptOutputInterface: ImageActionScriptOutputInterface, frame: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.media.image.InputImageIOInterfaceFactory import InputImageIOInterfaceFactory
+        from org.allbinary.input.media.image.InputImageType import InputImageType
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         logUtil.putF("Start - Processing at: " + str(imageActionScriptOutputInterface), "ImageActionScriptOutputProcessor", commonStrings.PROCESS)
@@ -40,12 +47,12 @@ class ImageActionScriptOutputProcessor:
             imageType: InputImageType = vector.get(index)
             imageIOInterface: ImageIOInterface = InputImageIOInterfaceFactory.getInstance(imageType)
             imageIOInterface.save(frame)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.media.image.InputImageIOInterfaceFactory import InputImageIOInterfaceFactory
-from org.allbinary.input.media.image.InputImageType import InputImageType
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.media.image.InputImageIOInterfaceFactory import InputImageIOInterfaceFactory
+# from org.allbinary.input.media.image.InputImageType import InputImageType
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

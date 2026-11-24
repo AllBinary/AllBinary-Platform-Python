@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.java.proxy.InvocationHandler import InvocationHandler
+from java.lang.reflect.InvocationHandler import InvocationHandler
 
 
 class InterfaceCastProxy(InvocationHandler):

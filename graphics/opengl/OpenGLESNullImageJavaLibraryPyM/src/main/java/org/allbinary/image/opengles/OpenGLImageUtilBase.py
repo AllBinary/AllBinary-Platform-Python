@@ -20,16 +20,18 @@ from __future__ import annotations
 class OpenGLImageUtilBase:
     
 
-    def paint(self, alphaBitmap: OpenGLBitmap, originalBitmap: OpenGLBitmap, index: int) -> OpenGLBitmap:
+    def paint_j3(self, alphaBitmap: OpenGLBitmap, originalBitmap: OpenGLBitmap, index: int) -> OpenGLBitmap:
         from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
         raise RuntimeError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def paint(self, colorBitmap: OpenGLBitmap, originalBitmap: OpenGLBitmap, alpha: int, basicColor: BasicColor) -> OpenGLBitmap:
+    def paint_j4(self, colorBitmap: OpenGLBitmap, originalBitmap: OpenGLBitmap, alpha: int, basicColor: BasicColor) -> OpenGLBitmap:
         from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap
         from org.allbinary.graphics.color.BasicColor import BasicColor
         raise RuntimeError()
+
+    def paint(self, *args):
+        return getattr(self, "paint_j" + str(len(args)))(*args)
     
 
     # throws IOException

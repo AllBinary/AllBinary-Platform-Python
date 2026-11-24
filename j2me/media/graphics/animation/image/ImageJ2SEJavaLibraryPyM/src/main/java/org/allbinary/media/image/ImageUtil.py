@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageUtil:
     instance: ImageUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.IIOIMAGE_POOL_NAME: str = "IIOIMAGE_POOL_NAME"
@@ -137,6 +140,7 @@ class ImageUtil:
     
 
     def convertToBufferedImage(self, toolkitImage: Image) -> BufferedImage:
+        from javax.microedition.lcdui.Image import Image
         if toolkitImage is None:
             return None
         bufferedImage: BufferedImage = BufferedImage(toolkitImage.getWidth(None), toolkitImage.getHeight(None), BufferedImage.TYPE_INT_ARGB)
@@ -147,6 +151,9 @@ class ImageUtil:
     
 
     def getBufferedImage(self, image: Image) -> BufferedImage:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
+        from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
         bufferedImage: BufferedImage = None
         if image.isMutable():
             j2seImage: J2SEMutableImage = image
@@ -158,6 +165,8 @@ class ImageUtil:
     
 
     def toString(self, bufferedImage: BufferedImage) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         commonLabels: CommonLabels = CommonLabels.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(" BufferedImage -")
@@ -176,13 +185,16 @@ class ImageUtil:
 # from java.awt.geom.AffineTransform import AffineTransform
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
-from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
+# from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
 
 
-ImageUtil.instance = ImageUtil()
+def _ImageUtil_instance() -> object:
+    return ImageUtil()
+
+lazy_static(ImageUtil, "instance", _ImageUtil_instance)
 

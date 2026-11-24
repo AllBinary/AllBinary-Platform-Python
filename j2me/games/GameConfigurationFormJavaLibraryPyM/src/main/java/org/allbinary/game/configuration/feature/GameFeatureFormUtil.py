@@ -22,10 +22,10 @@ class GameFeatureFormUtil:
     instance: GameFeatureFormUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.MEUtil import MEUtil
+        from org.allbinary.MIDPUtil import MIDPUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.meUtil: MEUtil = MEUtil.getInstance()
+        self.meUtil: MIDPUtil = MIDPUtil.getInstance()
 
     def __init__(self) -> None:
         self._init_fields()
@@ -37,7 +37,6 @@ class GameFeatureFormUtil:
     
 
     def getChoiceGroup(self, hashtable: ABHashtable[object, object], name: str, option: int) -> ChoiceGroup:
-        from org.allbinary.game.configuration.feature.Features import Features
         from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -81,7 +80,6 @@ class GameFeatureFormUtil:
 
     # throws Exception
     def setDefault(self, form: CommandForm) -> None:
-        from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
         from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
         from javax.microedition.lcdui.Item import Item
         from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
@@ -97,10 +95,10 @@ class GameFeatureFormUtil:
 # from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
 # from javax.microedition.lcdui.Item import Item
 # from javax.microedition.lcdui.NullImage import NullImage
+# from org.allbinary.MIDPUtil import MIDPUtil
 # from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
 # from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
 # from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
-# from org.allbinary.logic.MEUtil import MEUtil
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.logic.string.StringUtil import StringUtil

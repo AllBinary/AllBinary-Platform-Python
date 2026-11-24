@@ -21,21 +21,29 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class EmailsNotUsed(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.emailInfoVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.emailInfoVector = BasicArrayListD()
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.data.tree.dom.BasicErrorNodeUtil import BasicErrorNodeUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                 self.logUtil.putF(self.commonStrings.START, self, "toXmlNode")
             node: Node = document.createElement(EmailData.NAME)
             size: int = self.emailInfoVector.size()
@@ -44,21 +52,23 @@ class EmailsNotUsed(DomNodeInterface):
                 emailNode: Node = email.toXmlNode(document)
                 if emailNode is not None:
                     node.appendChild(emailNode)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                 self.logUtil.putF(self.commonStrings.END, self, "toXmlNode()")
             return node
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "toXmlNode()", e)
             error: str = "Error Processing Order.  Please contact us if error persists.<p/>"
             return BasicErrorNodeUtil.get(document, error)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.BasicErrorNodeUtil import BasicErrorNodeUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.BasicErrorNodeUtil import BasicErrorNodeUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

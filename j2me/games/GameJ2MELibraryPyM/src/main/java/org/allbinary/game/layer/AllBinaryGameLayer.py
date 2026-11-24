@@ -15,36 +15,19 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.paint.Paintable import Paintable
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.view.event.ViewPositionEventListenerInterface import ViewPositionEventListenerInterface
 
 
-class AllBinaryGameLayer(AllBinaryLayer, ViewPositionEventListenerInterface, OpenGLSurfaceChangedInterface):
-    #Named instead of anonymous so the languages generated from this Java can convert it
-    class SWTBlackPaintable(Paintable):
-
-        def _init_fields(self) -> None:
-            from org.allbinary.graphics.color.BasicColor import BasicColor
-            from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-            from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-            self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
-            self.BLACK: BasicColor = BasicColorFactory.getInstance().BLACK
-
-        def __init__(self) -> None:
-            super().__init__()
-            self._init_fields()
-        
-
-        def paint(self, graphics: Graphics) -> None:
-            from javax.microedition.lcdui.Graphics import Graphics
-            self.basicSetColorUtil.setBasicColorP(graphics, self.BLACK)
+class AllBinaryGameLayer(*java_bases(AllBinaryLayer, ViewPositionEventListenerInterface, OpenGLSurfaceChangedInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
+        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
@@ -57,8 +40,9 @@ class AllBinaryGameLayer(AllBinaryLayer, ViewPositionEventListenerInterface, Ope
 
     @staticmethod
     def createPaintable() -> Paintable:
-        from org.allbinary.game.layer.SWTUtil import SWTUtil
+        from org.allbinary.game.layer.SWTBlackPaintable import SWTBlackPaintable
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         if SWTUtil.isSWT:
             return SWTBlackPaintable()
         return NullPaintable.getInstance()
@@ -150,6 +134,7 @@ class AllBinaryGameLayer(AllBinaryLayer, ViewPositionEventListenerInterface, Ope
 # from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 # from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
 # from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
 # from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 # from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
 # from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject

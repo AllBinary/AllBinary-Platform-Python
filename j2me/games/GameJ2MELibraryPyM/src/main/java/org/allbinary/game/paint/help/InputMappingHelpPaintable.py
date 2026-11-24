@@ -22,21 +22,6 @@ class InputMappingHelpPaintable(HelpPaintable):
     AND: str = " and "
     SEP: str = ", "
     MORE_THAN_TWO_IN_LIST_AND: str = ", and "
-    class UpdateMyFontProperties:
-
-        def _init_fields(self) -> None:
-            from org.allbinary.logic.NullUtil import NullUtil
-            from org.allbinary.logic.string.StringUtil import StringUtil
-            self.actionStringArray: list[str] = StringUtil.getInstance().getArrayInstance()
-            self.keymappingBeginWidthArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
-            self.actionStringDeltaXArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
-            self.inputDeltaXArray: list[list[int]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
-            self.sepArray: list[list[str]] = StringUtil.getInstance().ONE_EMPTY_STRING_ARRAY_OF_ARRAYS
-            self.sepWidthArray: list[list[int]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
-            self.charHeight: int = 0
-
-        def __init__(self) -> None:
-            self._init_fields()
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameKey import GameKey
@@ -79,6 +64,7 @@ class InputMappingHelpPaintable(HelpPaintable):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from org.allbinary.game.paint.help.UpdateMyFontProperties import UpdateMyFontProperties
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.game.input.Input import Input
@@ -258,5 +244,6 @@ class InputMappingHelpPaintable(HelpPaintable):
 # from org.allbinary.string.CommonSeps import CommonSeps
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.util.BasicArrayList import BasicArrayList
+from org.allbinary.game.paint.help.UpdateMyFontProperties import UpdateMyFontProperties
 
 

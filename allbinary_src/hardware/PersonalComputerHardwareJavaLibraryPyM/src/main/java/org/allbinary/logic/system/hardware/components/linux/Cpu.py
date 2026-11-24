@@ -15,17 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 
 
-class Cpu(CpuInterface, HardwareComponentInterface):
+class Cpu(*java_bases(CpuInterface, HardwareComponentInterface)):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.CPUFILE: str = "/proc/cpuinfo"
-        self.cpuHashMap: dict = None
+        self.cpuHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
@@ -45,7 +49,10 @@ class Cpu(CpuInterface, HardwareComponentInterface):
     
 
     # throws Exception
-    def init(self, filePath: str) -> None:
+    def init_j1(self, filePath: str) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
         lineNumberReader: LineNumberReader = None
         try:
             self.init(lineNumberReader, filePath)
@@ -56,8 +63,7 @@ class Cpu(CpuInterface, HardwareComponentInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def init(self, lineNumberReader: LineNumberReader, filePath: str) -> None:
+    def init_j2(self, lineNumberReader: LineNumberReader, filePath: str) -> None:
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
@@ -74,6 +80,14 @@ class Cpu(CpuInterface, HardwareComponentInterface):
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             fileReader: FileReader = FileReader(filePath)
             lineNumberReader = LineNumberReader(fileReader)
@@ -87,7 +101,7 @@ class Cpu(CpuInterface, HardwareComponentInterface):
                     lineNumberReader = LineNumberReader(FileReader(file.getPath()))
             if lineNumberReader is not None:
                 nextLine: str = lineNumberReader.readLine()
-                while lineNumberReader is not None and nextLine is not None:
+                while nextLine is not None:
                     index: int = nextLine.find(':')
                     if index >= 0:
                         key: str = nextLine[0:index]
@@ -113,6 +127,9 @@ class Cpu(CpuInterface, HardwareComponentInterface):
         finally:
             if lineNumberReader is not None:
                 lineNumberReader.close()
+
+    def init(self, *args):
+        return getattr(self, "init_j" + str(len(args)))(*args)
     
 
     def getProcessor(self) -> str:
@@ -155,13 +172,21 @@ class Cpu(CpuInterface, HardwareComponentInterface):
         return self.cpuHashMap.get(CpuInfo.CACHESIZE)
     
 
-    def compareTo(self, cpuInterface: CpuInterface) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def compareTo_j1_1(self, cpuInterface: CpuInterface) -> bool:
         return True
     
 
-    # Java overloaded method: Python keeps the last definition
-    def compareTo(self, componentInterface: HardwareComponentInterface) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def compareTo_j1_2(self, componentInterface: HardwareComponentInterface) -> bool:
         return True
+
+    def compareTo(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.compareTo_j1_1(*args)
+        if len(args) == 1:
+            return self.compareTo_j1_2(*args)
+        return getattr(self, "compareTo_j" + str(len(args)))(*args)
     
 
     def toString(self) -> str:
@@ -173,6 +198,9 @@ class Cpu(CpuInterface, HardwareComponentInterface):
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
         from org.allbinary.logic.system.hardware.components.linux.CpuInfo import CpuInfo
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonLabels: CommonLabels = CommonLabels.getInstance()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringMaker: StringMaker = StringMaker()
@@ -198,17 +226,17 @@ class Cpu(CpuInterface, HardwareComponentInterface):
 # from java.io.FileReader import FileReader
 # from java.io.LineNumberReader import LineNumberReader
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

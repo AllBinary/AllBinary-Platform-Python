@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.combat.destroy.DestroyableInterface import DestroyableInterface
 from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
@@ -22,11 +23,12 @@ from org.allbinary.game.layer.waypoint.WaypointLayerInterface import WaypointLay
 
 
 # Java interface
-class PathFindingLayerInterface(WaypointLayerInterface, GameKeyEventSourceInterface, GroupInterfaceCompositeInterface, DestroyableInterface):
+class PathFindingLayerInterface(*java_bases(WaypointLayerInterface, GameKeyEventSourceInterface, GroupInterfaceCompositeInterface, DestroyableInterface)):
     
 
     # throws Exception
     def getEndGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -58,6 +60,6 @@ class PathFindingLayerInterface(WaypointLayerInterface, GameKeyEventSourceInterf
     # throws Exception
     def setTarget(self, targetGameLayer: PathFindingLayerInterface) -> None:
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

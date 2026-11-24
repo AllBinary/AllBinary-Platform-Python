@@ -3,11 +3,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformKeyFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.androidKeyFactory: AndroidKeyFactory = ActivityFractureControllerUtilFactory.getInstance()
@@ -18,6 +18,7 @@ class PlatformKeyFactory:
 
     @staticmethod
     def getInstance() -> PlatformKeyFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if PlatformKeyFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             PlatformKeyFactory.instance = PlatformKeyFactory()
         return PlatformKeyFactory.instance
@@ -58,6 +59,13 @@ class PlatformKeyFactory:
 
     def isEnter(self, input: Input) -> bool:
         return self.androidKeyFactory.isEnter(input)
+# from org.allbinary.logic.NullUtil import NullUtil
 from org.allbinary.game.input.ActivityFractureControllerUtilFactory import ActivityFractureControllerUtilFactory
 
+
+def _PlatformKeyFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(PlatformKeyFactory, "instance", _PlatformKeyFactory_instance)
 

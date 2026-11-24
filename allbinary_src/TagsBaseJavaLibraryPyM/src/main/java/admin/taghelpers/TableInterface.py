@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from admin.taghelpers.BasicTableInterface import BasicTableInterface
 from admin.taghelpers.ModifyTableInterface import ModifyTableInterface
 
 
 # Java interface
-class TableInterface(BasicTableInterface, ModifyTableInterface):
+class TableInterface(*java_bases(BasicTableInterface, ModifyTableInterface)):
     pass
 
 

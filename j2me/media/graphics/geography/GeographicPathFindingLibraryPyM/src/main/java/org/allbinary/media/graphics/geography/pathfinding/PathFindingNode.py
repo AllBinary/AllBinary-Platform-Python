@@ -20,11 +20,16 @@ from __future__ import annotations
 class PathFindingNode:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         self.parent: object = NullUtil.getInstance().NULL_OBJECT
         self.geographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
     
 
     def __init__(self, parent: object, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         self._init_fields()
         self.parent = parent
         self.setGeographicMapCellPositionP(geographicMapCellPosition)
@@ -37,10 +42,14 @@ class PathFindingNode:
     
 
     def setGeographicMapCellPositionP(self, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         self.geographicMapCellPosition = geographicMapCellPosition
     
 
     def toString(self) -> str:
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
         stringBuffer.append(CommonLabels.getInstance().COLON_SEP)
@@ -55,11 +64,11 @@ class PathFindingNode:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

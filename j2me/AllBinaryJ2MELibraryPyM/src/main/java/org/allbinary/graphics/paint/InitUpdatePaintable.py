@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.paint.Paintable import Paintable
 from org.allbinary.graphics.paint.InitUpdatePaintableInterface import InitUpdatePaintableInterface
 
 
-class InitUpdatePaintable(Paintable, InitUpdatePaintableInterface):
+class InitUpdatePaintable(*java_bases(Paintable, InitUpdatePaintableInterface)):
     
 
     def __init__(self) -> None:

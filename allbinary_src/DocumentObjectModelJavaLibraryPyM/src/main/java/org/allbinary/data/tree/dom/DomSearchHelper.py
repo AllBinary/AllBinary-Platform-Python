@@ -26,6 +26,8 @@ class DomSearchHelper:
 
     @staticmethod
     def getNodeNoThrow(nodeName: str, nodeList: NodeList) -> Node:
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         numberOfNodes: int = nodeList.getLength()
         for index in range(0, numberOfNodes):
             node: Node = nodeList.item(index)
@@ -37,6 +39,8 @@ class DomSearchHelper:
     # throws Exception
     @staticmethod
     def getNode(nodeName: str, nodeList: NodeList) -> Node:
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         node: Node = DomSearchHelper.getNodeNoThrow(nodeName, nodeList)
         if node is not None:
             return node
@@ -47,6 +51,8 @@ class DomSearchHelper:
     # throws Exception
     @staticmethod
     def getChildNodeList(nodeName: str, nodeList: NodeList) -> NodeList:
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         node: Node = DomSearchHelper.getNode(nodeName, nodeList)
         return node.getChildNodes()
     
@@ -54,6 +60,8 @@ class DomSearchHelper:
     # throws Exception
     @staticmethod
     def getAllNodes(nodeName: str, nodeList: NodeList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.NodeList import NodeList
         vector: BasicArrayList = DomSearchHelper.getAllNodesNoThrow(nodeName, nodeList)
         if vector is None:
             raise Exception(nodeName + " Node Not Found in search")
@@ -63,6 +71,10 @@ class DomSearchHelper:
 
     @staticmethod
     def getAllNodesNoThrow(nodeName: str, nodeList: NodeList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         nodeVector: BasicArrayList = BasicArrayListD()
         numberOfNodes: int = nodeList.getLength()
         for index in range(0, numberOfNodes):
@@ -70,9 +82,9 @@ class DomSearchHelper:
             if node.getNodeName().compareTo(nodeName) == 0:
                 nodeVector.add(node)
         return nodeVector
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

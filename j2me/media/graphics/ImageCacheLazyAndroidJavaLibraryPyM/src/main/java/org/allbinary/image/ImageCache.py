@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.ImageCacheBase import ImageCacheBase
 
 
@@ -24,6 +25,10 @@ class ImageCache(ImageCacheBase):
     NULL_IMAGE_CACHE: ImageCache = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
@@ -36,7 +41,9 @@ class ImageCache(ImageCacheBase):
     
 
     # throws Exception
-    def get(self, caller: str, width: int, height: int) -> Image:
+    def get_j3(self, caller: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         foundIndex: int = self.getIndexWH(width, height)
         image: Image = self.getFromAvailable(foundIndex, width, height)
         if image == NullImage.NULL_IMAGE:
@@ -55,8 +62,13 @@ class ImageCache(ImageCacheBase):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def get(self, key: object) -> Image:
+    def get_j1(self, key: object) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.system.Memory import Memory
         resourceUtil: ResourceUtil = ResourceUtil.getInstance()
         resourceId: int = resourceUtil.getResourceId(key)
         image: Image = self.getImage(resourceId)
@@ -75,9 +87,15 @@ class ImageCache(ImageCacheBase):
                 image = self.createImage(key, inputStream)
             self.hashtable.put(resourceId, image)
         return image
+
+    def get(self, *args):
+        return getattr(self, "get_j" + str(len(args)))(*args)
     
 
     def getIndex(self, key: object) -> int:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.game.gd.resource.GDResources import GDResources
+        from org.allbinary.logic.string.StringUtil import StringUtil
         gdResources: GDResources = GDResources.getInstance()
         resourceStringArray: list[str] = gdResources.resourceStringArray
         size: int = len(resourceStringArray)
@@ -90,6 +108,8 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def createImage(self, key: object, inputStream: InputStream) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
         return Image.createImageLater(key, -1, -1)
     
 
@@ -98,16 +118,19 @@ class ImageCache(ImageCacheBase):
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.game.gd.resource.GDResources import GDResources
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.system.Memory import Memory
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.game.gd.resource.GDResources import GDResources
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.system.Memory import Memory
 
 
-ImageCache.NULL_IMAGE_CACHE = ImageCache()
+def _ImageCache_NULL_IMAGE_CACHE() -> object:
+    return ImageCache()
+
+lazy_static(ImageCache, "NULL_IMAGE_CACHE", _ImageCache_NULL_IMAGE_CACHE)
 

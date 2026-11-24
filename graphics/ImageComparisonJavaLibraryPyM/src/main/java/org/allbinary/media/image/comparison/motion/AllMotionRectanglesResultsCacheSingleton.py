@@ -15,17 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static_block
 
 
 class AllMotionRectanglesResultsCacheSingleton:
     cacheInterface: CacheInterface = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
+        from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+        from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         STATIC_BLOCK: str = "Static Block"
@@ -44,14 +51,15 @@ class AllMotionRectanglesResultsCacheSingleton:
 
     @staticmethod
     def getInstance() -> CacheInterface:
+        from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
         return AllMotionRectanglesResultsCacheSingleton.cacheInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
-from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
-from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
-from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
+# from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
+# from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+# from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AllMotionRectanglesResultsCacheSingleton._static_init()
+lazy_static_block(AllMotionRectanglesResultsCacheSingleton, ("cacheInterface", ), AllMotionRectanglesResultsCacheSingleton._static_init)
 

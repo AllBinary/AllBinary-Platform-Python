@@ -23,14 +23,11 @@ class ColorFillPaintableFactory:
     
 
     @staticmethod
-    def getInstance() -> ColorFillPaintableFactory:
+    def getInstance_j0() -> ColorFillPaintableFactory:
         return ColorFillPaintableFactory.instance
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, basicColor: BasicColor, forThreedCanvas: bool) -> ColorFillBasePaintable:
-        from org.allbinary.game.paint.ColorFillPaintable import ColorFillPaintable
-        from org.allbinary.game.paint.OverScanColorFillPaintable import OverScanColorFillPaintable
+    def getInstance_j2(self, basicColor: BasicColor, forThreedCanvas: bool) -> ColorFillBasePaintable:
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
@@ -39,6 +36,9 @@ class ColorFillPaintableFactory:
             return OverScanColorFillPaintable(basicColor)
         else:
             return ColorFillPaintable(basicColor)
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 # from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory

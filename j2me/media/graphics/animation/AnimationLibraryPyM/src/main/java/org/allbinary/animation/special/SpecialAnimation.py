@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.special.SpecialAnimationInterface import SpecialAnimationInterface
 
 
-class SpecialAnimation(IndexedAnimation, SpecialAnimationInterface):
+class SpecialAnimation(*java_bases(IndexedAnimation, SpecialAnimationInterface)):
     NULL_SPECIAL_ANIMATION: SpecialAnimation = None
     
 

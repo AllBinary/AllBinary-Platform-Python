@@ -15,18 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.address.shipping.ShippingAddressView import ShippingAddressView
 
 
-class TaxValidationView(ShippingAddressView, ValidationComponentInterface):
+class TaxValidationView(*java_bases(ShippingAddressView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
     
 
     def isValid(self) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntity import ShippingAddressesEntity
         billingAddressesEntity: ShippingAddressesEntity = ShippingAddressesEntity(self.getWeblisketSession().getUserName())
         streetAddressList: BasicArrayList = billingAddressesEntity.get()
         if streetAddressList is None:
@@ -41,23 +47,33 @@ class TaxValidationView(ShippingAddressView, ValidationComponentInterface):
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntity import ShippingAddressesEntity
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntity import ShippingAddressesEntity
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

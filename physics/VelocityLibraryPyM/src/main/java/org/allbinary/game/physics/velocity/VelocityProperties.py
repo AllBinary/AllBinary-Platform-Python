@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
 from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
 
 
-class VelocityProperties(BasicVelocityProperties, VelocityInterface):
+class VelocityProperties(*java_bases(BasicVelocityProperties, VelocityInterface)):
     NULL_VELOCITY_PROPERTIES: VelocityProperties = None
 
     def _init_fields(self) -> None:

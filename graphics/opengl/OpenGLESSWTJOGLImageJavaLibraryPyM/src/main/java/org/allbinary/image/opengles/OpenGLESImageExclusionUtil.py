@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLESImageExclusionUtil:
     instance: OpenGLESImageExclusionUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.EXCLUSION: str = "font"
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -35,6 +38,7 @@ class OpenGLESImageExclusionUtil:
     
 
     def isCustomScaling(self, image: Image) -> bool:
+        from javax.microedition.lcdui.Image import Image
         imageName: str = image.getName()
         isNormalScaling: bool = self.list_.size() == 0 or imageName.startswith(self.EXCLUSION)
         if isNormalScaling:
@@ -51,9 +55,12 @@ class OpenGLESImageExclusionUtil:
         else:
             return True
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-OpenGLESImageExclusionUtil.instance = OpenGLESImageExclusionUtil()
+def _OpenGLESImageExclusionUtil_instance() -> object:
+    return OpenGLESImageExclusionUtil()
+
+lazy_static(OpenGLESImageExclusionUtil, "instance", _OpenGLESImageExclusionUtil_instance)
 

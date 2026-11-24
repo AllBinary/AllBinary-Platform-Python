@@ -23,6 +23,7 @@ class Memory:
 
     @staticmethod
     def getInfo() -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         maxUtilizedMemoryAvailable: int = Runtime.getRuntime().maxMemory()
         memoryUsed: int = Runtime.getRuntime().totalMemory()
@@ -37,6 +38,6 @@ class Memory:
         stringBuffer.append("/")
         stringBuffer.appendlong(int(Runtime.getRuntime().maxMemory() - memoryUsed))
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.threed.min3d.renderer.processor.ObjectThreedOpenGLProcessor import ObjectThreedOpenGLProcessor
 
 
@@ -32,9 +33,13 @@ class TextureAttributePointerOpenGLProcessor(ObjectThreedOpenGLProcessor):
     
 
     def process(self, gl: GL10, anyType: object) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise RuntimeError()
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-TextureAttributePointerOpenGLProcessor.instance = TextureAttributePointerOpenGLProcessor()
+def _TextureAttributePointerOpenGLProcessor_instance() -> object:
+    return TextureAttributePointerOpenGLProcessor()
+
+lazy_static(TextureAttributePointerOpenGLProcessor, "instance", _TextureAttributePointerOpenGLProcessor_instance)
 

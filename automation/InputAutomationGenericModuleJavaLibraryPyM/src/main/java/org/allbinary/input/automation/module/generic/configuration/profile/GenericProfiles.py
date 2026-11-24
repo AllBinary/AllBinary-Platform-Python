@@ -15,24 +15,36 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
 
 
-class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
+class GenericProfiles(*java_bases(DomNodeInterface, DomDocumentMappingInterface)):
     DEFAULT_PROFILES_PATH: str = "./modules/configs/profiles/"
     DEFAULT_PROFILE_ACTIONS_PATH: str = None
     DEFAULT_FILE: str = None
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.hashMap: dict = None
+        self.hashMap: HashMap = None
         self.profilesDefaultListModelHelper: DefaultListModelHelper = None
         self.fileName: str = None
     
 
     def __init__(self, fileName: str) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfilesData import GenericProfilesData
+        from java.io.FileInputStream import FileInputStream
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionData import GenericProfileActionData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         self.fileName = fileName
         self.profilesDefaultListModelHelper = DefaultListModelHelper()
@@ -60,6 +72,8 @@ class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
     def initProfiles(self, node: Node) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileData import GenericProfileData
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         nodeList: NodeList = node.getChildNodes()
         for index in range(0, nodeList.getLength()):
             profileNameNode: Node = nodeList.item(index)
@@ -70,11 +84,13 @@ class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
     
 
     def getDefaultListModelHelper(self) -> DefaultListModelHelper:
+        from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
         return self.profilesDefaultListModelHelper
     
 
     # throws Exception
     def get(self, name: str) -> GenericProfile:
+        from org.allbinary.string.CommonStrings import CommonStrings
         genericProfile: GenericProfile = self.hashMap.get(name)
         if genericProfile is None:
             commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -102,6 +118,9 @@ class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfilesData import GenericProfilesData
+        from java.util.Set import Set
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(GenericProfilesData.NAME)
         set: Set = self.hashMap.keySet()
         nameArray: list[object] = set.toArray()
@@ -114,6 +133,9 @@ class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         document: Document = DomDocumentHelper.create()
         node: Node = self.toXmlNode(document)
         document.appendChild(node)
@@ -122,6 +144,9 @@ class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
 
     # throws Exception
     def save(self) -> None:
+        from java.io.DataOutputStream import DataOutputStream
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
         idFile: FileOutputStream = FileOutputStream(self.fileName)
         idOutData: DataOutputStream = DataOutputStream(idFile)
         documentString: str = XmlDocumentHelper.toString(self.toXmlDoc())
@@ -132,19 +157,25 @@ class GenericProfiles(DomNodeInterface, DomDocumentMappingInterface):
 # from java.io.FileOutputStream import FileOutputStream
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionData import GenericProfileActionData
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionData import GenericProfileActionData
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 
-GenericProfiles.DEFAULT_PROFILE_ACTIONS_PATH = str(GenericProfiles.DEFAULT_PROFILES_PATH) + "actions/"
+def _GenericProfiles_DEFAULT_PROFILE_ACTIONS_PATH() -> object:
+    return str(GenericProfiles.DEFAULT_PROFILES_PATH) + "actions/"
 
-GenericProfiles.DEFAULT_FILE = str(GenericProfiles.DEFAULT_PROFILES_PATH) + "profiles.xml"
+lazy_static(GenericProfiles, "DEFAULT_PROFILE_ACTIONS_PATH", _GenericProfiles_DEFAULT_PROFILE_ACTIONS_PATH)
+
+def _GenericProfiles_DEFAULT_FILE() -> object:
+    return str(GenericProfiles.DEFAULT_PROFILES_PATH) + "profiles.xml"
+
+lazy_static(GenericProfiles, "DEFAULT_FILE", _GenericProfiles_DEFAULT_FILE)
 

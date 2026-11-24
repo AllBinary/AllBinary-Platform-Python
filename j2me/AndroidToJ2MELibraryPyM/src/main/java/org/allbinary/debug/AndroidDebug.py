@@ -31,12 +31,14 @@ class AndroidDebug(DebugInterface):
     
 
     def start(self) -> None:
+        from android.os.Debug import Debug
         self.setStartTime(int(time.time() * 1000))
         Debug.startMethodTracing("trace", self.bufferSize)
         self.setRunning(True)
     
 
     def stop(self) -> None:
+        from android.os.Debug import Debug
         self.startTime = 9223372036854775807
         Debug.stopMethodTracing()
         self.setRunning(False)
@@ -60,6 +62,6 @@ class AndroidDebug(DebugInterface):
 
     def isRunning(self) -> bool:
         return self.running
-from android.os.Debug import Debug
+# from android.os.Debug import Debug
 
 

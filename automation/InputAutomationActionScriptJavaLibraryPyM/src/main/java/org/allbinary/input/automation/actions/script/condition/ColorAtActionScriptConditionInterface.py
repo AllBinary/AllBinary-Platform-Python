@@ -30,16 +30,18 @@ class ColorAtActionScriptConditionInterface:
     
 
     def getColorRangeInterface(self) -> ColorRangeInterface:
+        from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         raise NotImplementedError()
     
 
     def setColorRangeInterface(self, colorRangeInterface: ColorRangeInterface) -> None:
+        from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         raise NotImplementedError()
     
 
     def log(self) -> None:
         raise NotImplementedError()
-# from java.awt import *
-from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
+# from java.awt.Point import Point
+# from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
 
 

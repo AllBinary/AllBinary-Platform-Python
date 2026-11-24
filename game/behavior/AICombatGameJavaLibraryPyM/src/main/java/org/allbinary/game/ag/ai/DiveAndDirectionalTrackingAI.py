@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ai.BasicAI import BasicAI
 from org.allbinary.game.combat.destroy.event.DestroyedEventListenerInterface import DestroyedEventListenerInterface
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
 
 
-class DiveAndDirectionalTrackingAI(BasicAI, TrackingEventListenerInterface, DestroyedEventListenerInterface):
+class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInterface, DestroyedEventListenerInterface)):
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas

@@ -20,6 +20,8 @@ from __future__ import annotations
 class VectorCenterGenerator:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.minX: int = 2147483647
@@ -37,7 +39,12 @@ class VectorCenterGenerator:
     
 
     # throws Exception
-    def calculate(self, hashMap: dict) -> None:
+    def calculate(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         graphicItemArray: list[object] = hashMap.keySet().toArray()
         size: int = len(graphicItemArray)
         for index in range(0, size):
@@ -61,7 +68,12 @@ class VectorCenterGenerator:
     
 
     # throws Exception
-    def transform(self, hashMap: dict) -> None:
+    def transform(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.Points import Points
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.calculate(hashMap)
         self.logUtil.putF(str(StringMaker().append(" dx: ").appendint(self.dx).append(" dy: ").appendint(self.dy)), self, self.commonStrings.GET_INSTANCE)
         graphicItemArray: list[object] = hashMap.keySet().toArray()
@@ -76,6 +88,8 @@ class VectorCenterGenerator:
 
     # throws Exception
     def getInstance(self, pointVector: BasicArrayList) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             size: int = pointVector.size()
             for index in range(0, size):
@@ -96,6 +110,8 @@ class VectorCenterGenerator:
     # throws Exception
     @staticmethod
     def translate(list_: BasicArrayList, x: int, y: int) -> BasicArrayList:
+        from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicsPipe: BasicGraphicsPipeline = BasicGraphicsPipeline(list_)
         graphicsPipe.createMatrix()
         graphicsPipe.translate(x, y)
@@ -117,15 +133,15 @@ class VectorCenterGenerator:
     def setHeight(self, height: int) -> None:
         self.height = height
 # from java.util.HashMap import HashMap
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
-from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
-from org.allbinary.graphics.j2me.workarea.tools.Points import Points
-from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+# from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+# from org.allbinary.graphics.j2me.workarea.tools.Points import Points
+# from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

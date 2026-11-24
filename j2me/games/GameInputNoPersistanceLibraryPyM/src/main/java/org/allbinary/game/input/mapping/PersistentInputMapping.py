@@ -63,7 +63,6 @@ class PersistentInputMapping:
     
 
     def getDefault(self) -> InputToGameKeyMapping:
-        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         return InputToGameKeyMapping.getNullInstance()
     
 
@@ -171,7 +170,6 @@ class PersistentInputMapping:
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.EnumerationUtil import EnumerationUtil
 # from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
 
 
 def _PersistentInputMapping_instance() -> object:

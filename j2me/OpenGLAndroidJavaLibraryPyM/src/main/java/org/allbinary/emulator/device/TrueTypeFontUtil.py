@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.device.TrueTypeFontUtilBase import TrueTypeFontUtilBase
 
 
@@ -23,6 +24,9 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     instance: TrueTypeFontUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.preResourceImageUtil: PreResourceImageUtil = PreResourceImageUtil.getInstance()
         self.realFontSize: int = 18
@@ -40,6 +44,13 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def saveFontAtlasAsFile(self) -> None:
+        from java.io.FileOutputStream import FileOutputStream
+        from android.graphics.Bitmap import Bitmap
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         try:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             file: File = ResourceUtil.getInstance().getContext().getFilesDir()
@@ -54,6 +65,16 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def getFontBitmapGL(self, gl: GL10, filename: str, cellSize: int, basicColor: BasicColor) -> Image:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Image import Image
+        from android.graphics.Bitmap import Bitmap
+        from android.graphics.Canvas import Canvas
+        from android.graphics.Paint import Paint
+        from android.graphics.Rect import Rect
+        from android.graphics.Typeface import Typeface
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.microemu.android.device.AndroidImmutableImage import AndroidImmutableImage
         if self.fontImage == OpenGLESImage.NULL_OPENGL_IMAGE:
             cellsPerRow2: int = self.CELLS_PER_ROW * 2
             cellsPerRow3: int = self.CELLS_PER_ROW * 3
@@ -110,6 +131,9 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def getFontWidths(self, filename: str, fontSize: int) -> list[int]:
+        from android.graphics.Paint import Paint
+        from android.graphics.Rect import Rect
+        from android.graphics.Typeface import Typeface
         typeface: Typeface = Typeface.DEFAULT
         paint: Paint = Paint()
         paint.setTypeface(typeface)
@@ -159,22 +183,25 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
 # from java.io.FileOutputStream import FileOutputStream
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Image import Image
-from android.graphics.Bitmap import Bitmap
-from android.graphics.Canvas import Canvas
-from android.graphics.Paint import Paint
-from android.graphics.Rect import Rect
-from android.graphics.Typeface import Typeface
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
-from org.microemu.android.device.AndroidImmutableImage import AndroidImmutableImage
+# from android.graphics.Bitmap import Bitmap
+# from android.graphics.Canvas import Canvas
+# from android.graphics.Paint import Paint
+# from android.graphics.Rect import Rect
+# from android.graphics.Typeface import Typeface
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
+# from org.microemu.android.device.AndroidImmutableImage import AndroidImmutableImage
 
 
-TrueTypeFontUtil.instance = TrueTypeFontUtil()
+def _TrueTypeFontUtil_instance() -> object:
+    return TrueTypeFontUtil()
+
+lazy_static(TrueTypeFontUtil, "instance", _TrueTypeFontUtil_instance)
 

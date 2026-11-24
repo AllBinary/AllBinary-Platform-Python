@@ -22,7 +22,8 @@ class AbSqlTablePresentation(AbSqlBasic):
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
 
 

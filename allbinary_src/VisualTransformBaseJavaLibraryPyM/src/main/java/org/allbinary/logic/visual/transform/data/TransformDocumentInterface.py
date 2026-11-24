@@ -22,12 +22,14 @@ class TransformDocumentInterface:
     
 
     def getBaseNode(self) -> Node:
+        from org.w3c.dom.Node import Node
         raise NotImplementedError()
     
 
     def getDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

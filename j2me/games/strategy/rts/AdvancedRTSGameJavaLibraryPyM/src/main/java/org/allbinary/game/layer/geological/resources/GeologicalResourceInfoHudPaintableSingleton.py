@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.layer.geological.resources.GeologicalResourceInfoHudPaintable import GeologicalResourceInfoHudPaintable
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GeologicalResourceInfoHudPaintableSingleton:
-    instance: GeologicalResourceInfoHudPaintable = GeologicalResourceInfoHudPaintable()
+    instance: GeologicalResourceInfoHudPaintable = None
     
 
     @staticmethod
     def getInstance() -> GeologicalResourceInfoHudPaintable:
         return GeologicalResourceInfoHudPaintableSingleton.instance
 
+
+def _GeologicalResourceInfoHudPaintableSingleton_instance() -> object:
+    from org.allbinary.game.layer.geological.resources.GeologicalResourceInfoHudPaintable import GeologicalResourceInfoHudPaintable
+    return GeologicalResourceInfoHudPaintable()
+
+lazy_static(GeologicalResourceInfoHudPaintableSingleton, "instance", _GeologicalResourceInfoHudPaintableSingleton_instance)
 

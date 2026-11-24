@@ -7,11 +7,52 @@ import time
 import gc
 import threading
 from android.app.Service import Service
+from org.allbinary.thread.ARunnable import ARunnable
 
 
 class BaseMusicService(Service):
+    #A member class instead of a local class using the method's player and intent since most of the converted languages do not have local classes.
+    class MusicRunnable(ARunnable):
+
+        def _init_fields(self) -> None:
+            from android.content.Intent import Intent
+            from android.media.MediaPlayer import MediaPlayer
+            self.baseMusicService: BaseMusicService = None
+            self.player: MediaPlayer = None
+            self.intent: Intent = None
+        
+
+        def __init__(self, baseMusicService: BaseMusicService, player: MediaPlayer, intent: Intent) -> None:
+            from android.content.Intent import Intent
+            from android.media.MediaPlayer import MediaPlayer
+            super().__init__()
+            self._init_fields()
+            self.baseMusicService = baseMusicService
+            self.player = player
+            self.intent = intent
+        
+
+        def run(self) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStateStrings import CommonStateStrings
+            from org.allbinary.string.CommonStrings import CommonStrings
+            logUtil: LogUtil = LogUtil.getInstance()
+            commonStrings: CommonStrings = CommonStrings.getInstance()
+            commonStateStrings: CommonStateStrings = CommonStateStrings.getInstance()
+            try:
+                while self.player.isPlaying():
+                    logUtil.putF(self.baseMusicService.WAITING_FOR_MUSIC_TO_END, self, commonStateStrings.ON_START_COMMAND)
+                    time.sleep((1200) / 1000)
+                self.baseMusicService.onStartCommandIntent(self.intent)
+            except Exception as e:
+                logUtil.put(commonStrings.EXCEPTION, self, commonStateStrings.ON_START_COMMAND, e)
 
     def _init_fields(self) -> None:
+        from android.media.MediaPlayer import MediaPlayer
+        from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStateStrings import CommonStateStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonStateStrings: CommonStateStrings = CommonStateStrings.getInstance()
@@ -28,6 +69,8 @@ class BaseMusicService(Service):
     
 
     def onBind(self, intent: Intent) -> IBinder:
+        from android.content.Intent import Intent
+        from android.os.IBinder import IBinder
         self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.BIND)
         return None
     
@@ -37,6 +80,7 @@ class BaseMusicService(Service):
     
 
     def onDestroy(self) -> None:
+        from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
         self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.DESTROY)
         if self.player != NullAndroidCanvas.NULL_MEDIA_PLAYER:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.PAUSE)
@@ -46,18 +90,21 @@ class BaseMusicService(Service):
     
 
     def pause(self) -> None:
+        from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
         if self.player != NullAndroidCanvas.NULL_MEDIA_PLAYER:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.PAUSE)
             self.player.pause()
     
 
     def resume(self) -> None:
+        from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
         if self.player != NullAndroidCanvas.NULL_MEDIA_PLAYER and not self.player.isPlaying():
             self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.RESUME)
             self.player.start()
     
 
     def start(self) -> None:
+        from android.media.MediaPlayer import MediaPlayer
         self.player = MediaPlayer.create(self, self.songId)
         self.player.setVolume((float(self.leftVolume)) / 100.0, (float(self.rightVolume)) / 100.0)
         self.player.setLooping(False)
@@ -65,18 +112,23 @@ class BaseMusicService(Service):
     
 
     def onStart(self, intent: Intent, startid: int) -> None:
+        from android.content.Intent import Intent
         self.onStartCommandIntent(intent)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.START)
     
 
     def onStartCommand(self, intent: Intent, flags: int, startId: int) -> int:
+        from android.content.Intent import Intent
         self.onStartCommandIntent(intent)
         return Service.START_STICKY
     
 
     def onStartCommandIntent(self, intent: Intent) -> None:
         from org.allbinary.media.audio.music.MusicStrings import MusicStrings
-        from org.allbinary.media.audio.music.MusicRunnable import MusicRunnable
+        from android.content.Intent import Intent
+        from android.media.MediaPlayer import MediaPlayer
+        from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(self.commonStrings.START, self, self.commonStateStrings.ON_START_COMMAND)
         musicStrings: MusicStrings = MusicStrings.getInstance()
         if intent is not None:
@@ -99,42 +151,18 @@ class BaseMusicService(Service):
             if self.player != NullAndroidCanvas.NULL_MEDIA_PLAYER and self.player.isPlaying():
                 player: MediaPlayer = self.player
                 self.logUtil.putF(self.ALREADY_PLAYING, self, self.commonStateStrings.ON_START_COMMAND)
-                class MusicRunnable(ARunnable):
-
-                    def _init_fields(self) -> None:
-                        self.baseMusicService: BaseMusicService = None
-                    
-
-                    def __init__(self, baseMusicService: BaseMusicService) -> None:
-                        super().__init__()
-                        self._init_fields()
-                        self.baseMusicService = baseMusicService
-                    
-
-                    def run(self) -> None:
-                        logUtil: LogUtil = LogUtil.getInstance()
-                        commonStrings: CommonStrings = CommonStrings.getInstance()
-                        commonStateStrings: CommonStateStrings = CommonStateStrings.getInstance()
-                        try:
-                            while self.player.isPlaying():
-                                logUtil.putF(self.baseMusicService.WAITING_FOR_MUSIC_TO_END, self, commonStateStrings.ON_START_COMMAND)
-                                time.sleep((1200) / 1000)
-                            self.baseMusicService.onStartCommandIntent(self.intent)
-                        except Exception as e:
-                            logUtil.put(commonStrings.EXCEPTION, self, commonStateStrings.ON_START_COMMAND, e)
-                runnable: object = MusicRunnable(self)
+                runnable: object = BaseMusicService.MusicRunnable(self, player, intent)
                 thread: threading.Thread = threading.Thread(target=runnable.run)
                 thread.start()
                 return
             self.start()
-from android.content.Intent import Intent
-from android.media.MediaPlayer import MediaPlayer
-from android.os.IBinder import IBinder
-from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStateStrings import CommonStateStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.thread.ARunnable import ARunnable
+# from android.content.Intent import Intent
+# from android.media.MediaPlayer import MediaPlayer
+# from android.os.IBinder import IBinder
+# from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStateStrings import CommonStateStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.cache.BaseBasicArrayListCache import BaseBasicArrayListCache
 
 
@@ -25,6 +26,7 @@ class BasicGeographicMapExtractedPathsCacheFactory(BaseBasicArrayListCache):
     
 
     def init(self, maxConcurrentPaths: int, maxPaths: int) -> None:
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         if maxConcurrentPaths != self.maxConcurrentPaths:
             for index in range(maxConcurrentPaths, self.maxConcurrentPaths - 1, -1):
                 self.list_.add(BasicArrayListS(maxPaths))
@@ -33,6 +35,8 @@ class BasicGeographicMapExtractedPathsCacheFactory(BaseBasicArrayListCache):
     
 
     def getPaths(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         if self.list_.size() > 0:
             return self.list_.removeAt(0)
         else:
@@ -41,13 +45,17 @@ class BasicGeographicMapExtractedPathsCacheFactory(BaseBasicArrayListCache):
 
     def release(self, list_: BasicArrayList) -> None:
         from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapExtractedPathCacheFactory import BasicGeographicMapExtractedPathCacheFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         for index in range(list_.size() - 1, 0 - 1, -1):
             BasicGeographicMapExtractedPathCacheFactory.getInstance().release(list_.get(index))
         list_.clear()
         self.list_.add(list_)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 
-BasicGeographicMapExtractedPathsCacheFactory.instance = BasicGeographicMapExtractedPathsCacheFactory()
+def _BasicGeographicMapExtractedPathsCacheFactory_instance() -> object:
+    return BasicGeographicMapExtractedPathsCacheFactory()
+
+lazy_static(BasicGeographicMapExtractedPathsCacheFactory, "instance", _BasicGeographicMapExtractedPathsCacheFactory_instance)
 

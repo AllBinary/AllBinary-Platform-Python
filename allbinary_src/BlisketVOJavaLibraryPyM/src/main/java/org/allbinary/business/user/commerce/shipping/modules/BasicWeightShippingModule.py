@@ -21,6 +21,7 @@ from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface imp
 class BasicWeightShippingModule(ShippingInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.name: str = "Basic Shipping (5 to 7 working days)"
         self.description: str = "We will soon provide a variety of shipping methods."
@@ -31,6 +32,9 @@ class BasicWeightShippingModule(ShippingInterface):
     
 
     def getCost(self, order: OrderInterface) -> Money:
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
         basket: BasketInterface = order.getBasket()
         money: Money = Money()
         money.add(basket.getTotalWeight())
@@ -45,9 +49,9 @@ class BasicWeightShippingModule(ShippingInterface):
 
     def getName(self) -> str:
         return self.name
-from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

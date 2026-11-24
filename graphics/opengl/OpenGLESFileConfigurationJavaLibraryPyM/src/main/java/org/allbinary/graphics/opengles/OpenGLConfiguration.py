@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLConfiguration:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.FILE: str = "OpenGLConfiguration.dat"
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -35,12 +38,14 @@ class OpenGLConfiguration:
 
     @staticmethod
     def getInstance() -> OpenGLConfiguration:
+        from org.allbinary.logic.NullUtil import NullUtil
         if OpenGLConfiguration.instance == NullUtil.getInstance().NULL_OBJECT:
             OpenGLConfiguration.instance = OpenGLConfiguration()
         return OpenGLConfiguration.instance
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.io.file.FileFactory import FileFactory
         self._init_fields()
         try:
             if FileFactory.getInstance().isFile(self.FILE):
@@ -53,7 +58,11 @@ class OpenGLConfiguration:
 
     # throws Exception
     def read(self) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from java.io.DataInputStream import DataInputStream
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
         fileInputStreamFactory: FileStreamFactory = FileStreamFactory.getInstance()
         fileInputStream: InputStream = fileInputStreamFactory.getFileInputStreamInstance(StringUtil.getInstance().EMPTY_STRING, self.FILE)
@@ -102,6 +111,14 @@ class OpenGLConfiguration:
 
     # throws Exception
     def write(self) -> None:
+        from java.io.Closeable import Closeable
+        from java.io.OutputStream import OutputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.io.NullCloseable import NullCloseable
         closeable: Closeable = NullCloseable.NULL_CLOSEABLE
         try:
             PreLogUtil.put("Write Configuration: " + str(self), self, "write")
@@ -126,10 +143,10 @@ class OpenGLConfiguration:
 
     # throws Exception
     def init(self) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         features: Features = Features.getInstance()
         if ChangedGameFeatureListener.getInstance().isChangedFeature(MainFeatureFactory.getInstance().STATIC):
             openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
@@ -158,7 +175,8 @@ class OpenGLConfiguration:
 
     # throws Exception
     def update(self, gameFeature: Feature, colorLocked: bool) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.game.configuration.feature.Feature import Feature
+        from org.allbinary.game.configuration.feature.Features import Features
         features: Features = Features.getInstance()
         openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
         modified: bool = False
@@ -242,6 +260,8 @@ class OpenGLConfiguration:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         stringBuffer.append(" isOpenGL: ")
@@ -262,21 +282,27 @@ class OpenGLConfiguration:
 # from java.io.DataInputStream import DataInputStream
 # from java.io.InputStream import InputStream
 # from java.io.OutputStream import OutputStream
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.FileFactory import FileFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
-from org.allbinary.game.configuration.feature.Feature import Feature
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
-from org.allbinary.logic.io.NullCloseable import NullCloseable
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.FileFactory import FileFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
+# from org.allbinary.game.configuration.feature.Feature import Feature
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.io.NullCloseable import NullCloseable
 
+
+def _OpenGLConfiguration_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(OpenGLConfiguration, "instance", _OpenGLConfiguration_instance)
 

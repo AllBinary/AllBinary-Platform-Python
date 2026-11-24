@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BaseViewWrapper:
@@ -29,5 +30,8 @@ class BaseViewWrapper:
         pass
 
 
-BaseViewWrapper.NULL_VIEW_WRAPPER = BaseViewWrapper()
+def _BaseViewWrapper_NULL_VIEW_WRAPPER() -> object:
+    return BaseViewWrapper()
+
+lazy_static(BaseViewWrapper, "NULL_VIEW_WRAPPER", _BaseViewWrapper_NULL_VIEW_WRAPPER)
 

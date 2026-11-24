@@ -21,14 +21,20 @@ from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmai
 class StoreEmailInfo(BasicEmailInfo):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.storeFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface, subject: str, textBody: str) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(subject, textBody)
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)
         self.storeFrontInterface = storeFrontInterface
@@ -37,13 +43,17 @@ class StoreEmailInfo(BasicEmailInfo):
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         contextConfigurationInterface: ContextConfigurationInterface = self.storeFrontInterface.getContextConfigurationInterface()
         emailServerConfigurationInterface: EmailServerConfigurationInterface = contextConfigurationInterface.getEmailServerConfigurationInterface()
         self.setEmailServerConfigurationInterface(emailServerConfigurationInterface)
-from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

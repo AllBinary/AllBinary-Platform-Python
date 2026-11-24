@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.module.game.MeteredGameObject import MeteredGameObject
 from org.allbinary.input.automation.module.game.MagicGameObjectInterface import MagicGameObjectInterface
 
 
-class MagicGameObject(MeteredGameObject, MagicGameObjectInterface):
+class MagicGameObject(*java_bases(MeteredGameObject, MagicGameObjectInterface)):
 
     def _init_fields(self) -> None:
         self.MP_LABEL: str = "MP:"
@@ -31,6 +32,8 @@ class MagicGameObject(MeteredGameObject, MagicGameObjectInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(CommonSeps.getInstance().NEW_LINE)
         stringBuffer.append(self.MP_LABEL)
@@ -40,7 +43,7 @@ class MagicGameObject(MeteredGameObject, MagicGameObjectInterface):
     def __str__(self) -> str:
         return self.toString()
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

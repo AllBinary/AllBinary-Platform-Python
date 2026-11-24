@@ -31,6 +31,8 @@ class AndroidTitleProgressBar(ProgressCanvas):
         
 
         def run(self) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             try:
@@ -50,6 +52,8 @@ class AndroidTitleProgressBar(ProgressCanvas):
         
 
         def run(self) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             try:
@@ -69,6 +73,8 @@ class AndroidTitleProgressBar(ProgressCanvas):
         
 
         def run(self) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             try:
@@ -88,6 +94,8 @@ class AndroidTitleProgressBar(ProgressCanvas):
         
 
         def run(self) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             try:
@@ -96,6 +104,8 @@ class AndroidTitleProgressBar(ProgressCanvas):
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
 
     def _init_fields(self) -> None:
+        from org.allbinary.android.activity.NullProgressActivity import NullProgressActivity
+        from org.allbinary.android.activity.ProgressActivityInterface import ProgressActivityInterface
         self.showTitleProgressBarRunnable: ShowTitleProgressBarRunnable = ShowTitleProgressBarRunnable(self)
         self.dismissTitleProgressBarRunnable: DismissTitleProgressBarRunnable = DismissTitleProgressBarRunnable(self)
         self.progressDialogPortionSetProgressRunnable: TitleProgressBarPortionSetProgressRunnable = TitleProgressBarPortionSetProgressRunnable(self)
@@ -105,15 +115,18 @@ class AndroidTitleProgressBar(ProgressCanvas):
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(title, backgroundBasicColor, foregroundBasicColor)
         self._init_fields()
     
 
     def init(self, activity: ProgressActivityInterface) -> None:
+        from org.allbinary.android.activity.ProgressActivityInterface import ProgressActivityInterface
         self.progressActivity = activity
     
 
     def isInitialized(self) -> bool:
+        from org.allbinary.android.activity.NullProgressActivity import NullProgressActivity
         if self.progressActivity != NullProgressActivity.NULL_PROGRESS_ACTIVITY:
             return True
         else:
@@ -169,16 +182,13 @@ class AndroidTitleProgressBar(ProgressCanvas):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         pass
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.android.activity.NullProgressActivity import NullProgressActivity
-from org.allbinary.android.activity.ProgressActivityInterface import ProgressActivityInterface
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.graphics.canvas.transition.progress.ShowTitleProgressBarRunnable import ShowTitleProgressBarRunnable
-from org.allbinary.graphics.canvas.transition.progress.DismissTitleProgressBarRunnable import DismissTitleProgressBarRunnable
-from org.allbinary.graphics.canvas.transition.progress.TitleProgressBarPortionSetProgressRunnable import TitleProgressBarPortionSetProgressRunnable
-from org.allbinary.graphics.canvas.transition.progress.TitleProgressBarSetProgressRunnable import TitleProgressBarSetProgressRunnable
+# from org.allbinary.android.activity.NullProgressActivity import NullProgressActivity
+# from org.allbinary.android.activity.ProgressActivityInterface import ProgressActivityInterface
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

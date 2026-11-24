@@ -15,10 +15,17 @@
 
 from __future__ import annotations
 
-# from javax.sound.sampled.AudioFormat import AudioFormat
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullAudioFormat:
-    NULL_AUDIO_FORMAT: AudioFormat = AudioFormat(AudioFormat.Encoding.PCM_UNSIGNED, 0.0, 0, 0, 0, 0.0, False)
+    NULL_AUDIO_FORMAT: AudioFormat = None
+# from javax.sound.sampled.AudioFormat import AudioFormat
 
+
+def _NullAudioFormat_NULL_AUDIO_FORMAT() -> object:
+    from javax.sound.sampled.AudioFormat import AudioFormat
+    return AudioFormat(AudioFormat.Encoding.PCM_UNSIGNED, 0.0, 0, 0, 0, 0.0, False)
+
+lazy_static(NullAudioFormat, "NULL_AUDIO_FORMAT", _NullAudioFormat_NULL_AUDIO_FORMAT)
 

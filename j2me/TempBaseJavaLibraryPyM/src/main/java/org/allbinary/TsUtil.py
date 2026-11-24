@@ -29,11 +29,11 @@ class TsUtil:
     
 
     def longBitsToDouble(self, bits: int) -> float:
-        return java.lang.Double.longBitsToDouble(bits)
+        return Double.longBitsToDouble(bits)
     
 
     def intBitsToFloat(self, bits: int) -> float:
-        return java.lang.Float.intBitsToFloat(bits)
+        return Float.intBitsToFloat(bits)
     
 
     def hashCode(self, anyType: object) -> int:

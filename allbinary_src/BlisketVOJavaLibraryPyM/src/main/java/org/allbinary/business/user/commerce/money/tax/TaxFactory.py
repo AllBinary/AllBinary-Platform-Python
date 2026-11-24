@@ -15,19 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TaxFactory:
     instance: TaxFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.TAXATIONFILENAME: str = "taxationMethod.xml"
     
 
     @staticmethod
-    def getInstance() -> TaxFactory:
+    def getInstance_j0() -> TaxFactory:
         return TaxFactory.instance
     
 
@@ -36,11 +39,32 @@ class TaxFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, storeFrontInterface: StoreFrontInterface) -> TaxModuleInterface:
+    def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, storeFrontInterface: StoreFrontInterface) -> TaxModuleInterface:
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.money.tax.components.TaxData import TaxData
+        from org.allbinary.business.user.commerce.money.tax.modules.SimpleStateTaxModule import SimpleStateTaxModule
+        from org.allbinary.business.user.commerce.money.tax.modules.TaxModuleInterface import TaxModuleInterface
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(self.URLGLOBALS.getMainPath())
-        stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+        stringBuffer.append(URLGLOBALS.getMainPath())
+        stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
         stringBuffer.append(storeFrontInterface.getName())
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         stringBuffer.append("generic")
@@ -61,35 +85,43 @@ class TaxFactory:
                     className: str = DomNodeHelper.getTextNodeValue(classNameNode)
                     return AbeFactory.getInstance().getInstance(abeClientInformation, className)
                 else:
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAX):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAX):
                         self.logUtil.putF("Class Node Null", self, self.commonStrings.GET_INSTANCE)
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAX):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAX):
                     self.logUtil.putF("Tax Name Node Node Children", self, self.commonStrings.GET_INSTANCE)
         return SimpleStateTaxModule()
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.money.tax.components.TaxData import TaxData
-from org.allbinary.business.user.commerce.money.tax.modules.SimpleStateTaxModule import SimpleStateTaxModule
-from org.allbinary.business.user.commerce.money.tax.modules.TaxModuleInterface import TaxModuleInterface
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.money.tax.components.TaxData import TaxData
+# from org.allbinary.business.user.commerce.money.tax.modules.SimpleStateTaxModule import SimpleStateTaxModule
+# from org.allbinary.business.user.commerce.money.tax.modules.TaxModuleInterface import TaxModuleInterface
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-TaxFactory.instance = TaxFactory()
+def _TaxFactory_instance() -> object:
+    return TaxFactory()
+
+lazy_static(TaxFactory, "instance", _TaxFactory_instance)
 

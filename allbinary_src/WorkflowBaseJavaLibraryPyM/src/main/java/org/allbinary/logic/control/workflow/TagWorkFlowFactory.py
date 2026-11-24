@@ -15,17 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TagWorkFlowFactory:
     instance: TagWorkFlowFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
-    def getInstance() -> TagWorkFlowFactory:
+    def getInstance_j0() -> TagWorkFlowFactory:
         return TagWorkFlowFactory.instance
     
 
@@ -34,8 +36,16 @@ class TagWorkFlowFactory:
     
 
     # throws Exception, LicensingException
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, propertiesHashMap: dict, pageContext: PageContext) -> WorkFlowInterface:
+    def getInstance_j3(self, abeClientInformation: AbeClientInformationInterface, propertiesHashMap: HashMap, pageContext: PageContext) -> WorkFlowInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             workFlowClassName: str = propertiesHashMap.get(DynamicObjectData.NAME)
             params: list[object] = [None] * (2)
@@ -46,7 +56,7 @@ class TagWorkFlowFactory:
             params[1] = pageContext
             return AbeFactory.getInstance().getInstance(abeClientInformation, workFlowClassName, classes, params)
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 workFlowClassName: str = propertiesHashMap.get(DynamicObjectData.NAME)
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Failed To Get Instance: ")
@@ -57,7 +67,7 @@ class TagWorkFlowFactory:
                 self.logUtil.put(str(stringBuffer), self, commonStrings.GET_INSTANCE, e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 workFlowClassName: str = propertiesHashMap.get(DynamicObjectData.NAME)
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Failed To Get Instance: ")
@@ -67,16 +77,24 @@ class TagWorkFlowFactory:
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(str(stringBuffer), self, commonStrings.GET_INSTANCE, e)
             raise e
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-TagWorkFlowFactory.instance = TagWorkFlowFactory()
+def _TagWorkFlowFactory_instance() -> object:
+    return TagWorkFlowFactory()
+
+lazy_static(TagWorkFlowFactory, "instance", _TagWorkFlowFactory_instance)
 

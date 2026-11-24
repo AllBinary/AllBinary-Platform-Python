@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
 from org.allbinary.game.IntermissionCompositeInterface import IntermissionCompositeInterface
 from org.allbinary.game.IntermissionEnableListenerInterface import IntermissionEnableListenerInterface
@@ -28,42 +29,10 @@ from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 from org.allbinary.game.displayable.canvas.PopupMenuInterface import PopupMenuInterface
 
 
-class AllBinaryGameCanvas(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanvasRunnableInterface, MenuListener, IntermissionCompositeInterface, IntermissionEnableListenerInterface, PopupMenuInterface, DisplayChangeEventListener, UpdateMyFontInterface):
+class AllBinaryGameCanvas(*java_bases(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanvasRunnableInterface, MenuListener, IntermissionCompositeInterface, IntermissionEnableListenerInterface, PopupMenuInterface, DisplayChangeEventListener, UpdateMyFontInterface)):
     id: int = 0
     TYPE: int = 2
     _lock = threading.RLock()
-    class SaveHighScoreRunnable(object):
-        _lock = threading.RLock()
-
-        def _init_fields(self) -> None:
-            from org.allbinary.game.score.displayable.HighScoreTextBox import HighScoreTextBox
-            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-            self.progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
-            self.isLast: bool = None
-            self.textBox: HighScoreTextBox = None
-        
-
-        def __init__(self, isLast: bool, textBox: HighScoreTextBox) -> None:
-            from org.allbinary.game.score.displayable.HighScoreTextBox import HighScoreTextBox
-            self._init_fields()
-            self.isLast = isLast
-            self.textBox = textBox
-        
-
-        def run(self) -> None:
-            from org.allbinary.logic.communication.log.LogUtil import LogUtil
-            from org.allbinary.string.CommonStrings import CommonStrings
-            logUtil: LogUtil = LogUtil.getInstance()
-            try:
-                if self.isLast:
-                    self.textBox.submit()
-                else:
-                    self.textBox.saveHighScore()
-            except Exception as e:
-                commonStrings: CommonStrings = CommonStrings.getInstance()
-                logUtil.put(commonStrings.EXCEPTION, self, "run", e)
-                self.progressCanvas.end()
 
     def _init_fields(self) -> None:
         from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
@@ -229,7 +198,6 @@ class AllBinaryGameCanvas(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanv
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
-        from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.Rectangle import Rectangle
@@ -311,8 +279,6 @@ class AllBinaryGameCanvas(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanv
 
     # throws Exception
     def initPopupMenu(self) -> None:
-        from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
-        from org.allbinary.game.displayable.canvas.BasicPopupMenuPaintable import BasicPopupMenuPaintable
         from org.allbinary.game.displayable.canvas.PopupMenuInputProcessor import PopupMenuInputProcessor
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.graphics.Rectangle import Rectangle
@@ -428,7 +394,6 @@ class AllBinaryGameCanvas(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanv
     
 
     def isPausable(self) -> bool:
-        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
         if CurrentDisplayableFactory.getInstance().getUsedRunnable() == NullWaitGameRunnable.getInstance():
             return True
@@ -1269,6 +1234,7 @@ class AllBinaryGameCanvas(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanv
 
     # throws Exception
     def setHighScore2(self, abeClientInformation: AbeClientInformationInterface, name: str, score: int, autoSubmit: bool, isLast: bool) -> None:
+        from org.allbinary.game.displayable.canvas.SaveHighScoreRunnable import SaveHighScoreRunnable
         from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         from org.allbinary.game.score.HighScore import HighScore
         from org.allbinary.game.score.displayable.HighScoreTextBox import HighScoreTextBox
@@ -1708,10 +1674,6 @@ class AllBinaryGameCanvas(RunnableCanvas, AllBinaryGameCanvasInterface, GameCanv
 # from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 from org.allbinary.game.displayable.canvas.GameCanvasRunnable import GameCanvasRunnable
 from org.allbinary.game.displayable.canvas.GameCanvasPauseRunnable import GameCanvasPauseRunnable
-from org.allbinary.game.displayable.canvas.FormUtil import FormUtil
-from org.allbinary.game.displayable.canvas.MyFormUtil import MyFormUtil
-from org.allbinary.game.displayable.canvas.EndGameInfo import EndGameInfo
-from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
 from org.allbinary.game.displayable.canvas.NullDemoPaintable import NullDemoPaintable
 from org.allbinary.game.displayable.canvas.GameCanvasInputProcessor import GameCanvasInputProcessor
 from org.allbinary.game.displayable.canvas.FormInputProcessor import FormInputProcessor

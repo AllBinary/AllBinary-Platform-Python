@@ -22,19 +22,22 @@ class ShippingMethodsInterface:
     
 
     def get(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getShippingInterface(self, name: str) -> ShippingInterface:
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def getDefault(self) -> ShippingInterface:
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
 
 

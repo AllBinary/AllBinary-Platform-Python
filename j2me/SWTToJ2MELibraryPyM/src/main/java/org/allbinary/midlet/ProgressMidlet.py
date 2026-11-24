@@ -22,11 +22,14 @@ from org.allbinary.midlet.AllBinaryMidlet import AllBinaryMidlet
 class ProgressMidlet(AllBinaryMidlet):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = None
     
 
     def __init__(self, clientInformationFactory: ClientInformationFactory) -> None:
+        from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
         super().__init__()
         self._init_fields()
         self.preInit()
@@ -39,7 +42,9 @@ class ProgressMidlet(AllBinaryMidlet):
 
     def exitProgress(self, isProgress: bool) -> None:
         from org.allbinary.midlet.MidletExitProcessorFactory import MidletExitProcessorFactory
-        from org.allbinary.midlet.ExitRunnable import ExitRunnable
+        from org.allbinary.canvas.Processor import Processor
+        from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+        from org.allbinary.thread.ThreadPool import ThreadPool
         processor: Processor = MidletExitProcessorFactory.getInstance().getExitInstance(self)
         try:
             primaryThreadPool: ThreadPool = PrimaryThreadPool.getInstance()
@@ -51,11 +56,11 @@ class ProgressMidlet(AllBinaryMidlet):
                 processor.process()
             except Exception as e2:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "exit", e)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
-from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
-from org.allbinary.thread.ThreadPool import ThreadPool
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
+# from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
+# from org.allbinary.thread.ThreadPool import ThreadPool
 
 

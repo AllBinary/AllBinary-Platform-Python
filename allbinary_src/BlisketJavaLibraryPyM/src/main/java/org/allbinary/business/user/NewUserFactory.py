@@ -26,41 +26,50 @@ class NewUserFactory:
 
     # throws Exception
     @staticmethod
-    def getInstance() -> UserInterface:
+    def getInstance_j0() -> UserInterface:
+        from org.allbinary.business.user.modules.User import User
         return User()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(transformInfoInterface: TransformInfoInterface) -> UserInterface:
-        from org.allbinary.business.user.CreateUserFactory import CreateUserFactory
+    def getInstance_j1(transformInfoInterface: TransformInfoInterface) -> UserInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         httpTransformInfoInterface: TransformInfoHttpInterface = transformInfoInterface
         httpServletRequest: HttpServletRequest = httpTransformInfoInterface.getPageContext().getRequest()
-        hashMap: dict = RequestParams(httpServletRequest).toHashMap()
+        hashMap: HashMap = RequestParams(httpServletRequest).toHashMap()
         role: str = httpTransformInfoInterface.getPropertiesHashMap().get(str(UserRoleData.NAME))
         hashMap.put(str(UserRoleData.NAME), role)
         return CreateUserFactory.getInstance(hashMap)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(httpServletRequest: HttpServletRequest, propertiesHashMap: dict) -> UserInterface:
-        from org.allbinary.business.user.CreateUserFactory import CreateUserFactory
+    def getInstance_j2(httpServletRequest: HttpServletRequest, propertiesHashMap: HashMap) -> UserInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         if propertiesHashMap is not None:
-            requestHashMap: dict = RequestParams(httpServletRequest).toHashMap()
+            requestHashMap: HashMap = RequestParams(httpServletRequest).toHashMap()
             roleString: str = propertiesHashMap.get(str(UserRoleData.NAME))
             requestHashMap.put(str(UserRoleData.NAME), roleString)
             return CreateUserFactory.getInstance(requestHashMap)
         else:
             raise Exception("Null HashMap")
+
+    @staticmethod
+    def getInstance(*args):
+        return getattr(NewUserFactory, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.user.modules.User import User
-from org.allbinary.business.user.role.UserRoleData import UserRoleData
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.business.user.modules.User import User
+# from org.allbinary.business.user.role.UserRoleData import UserRoleData
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

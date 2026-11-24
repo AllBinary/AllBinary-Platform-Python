@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageUnifierUtil:
     instance: ImageUnifierUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
     
@@ -35,13 +37,13 @@ class ImageUnifierUtil:
     
 
     def getDefaultConfiguration(self) -> GraphicsConfiguration:
-        from org.allbinary.media.image.GraphicsEnvironment import GraphicsEnvironment
         ge: GraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment()
         gd: GraphicsDevice = ge.getDefaultScreenDevice()
         return gd.getDefaultConfiguration()
     
 
     def getImage(self, bufferedImageArray: list[BufferedImage], imageUnifierProperties: ImageUnifierProperties) -> BufferedImage:
+        from org.allbinary.string.CommonLabels import CommonLabels
         newBufferedImage: BufferedImage = self.imageUtil.create(imageUnifierProperties.getWidth(), imageUnifierProperties.getHeight())
         commonLabels: CommonLabels = CommonLabels.getInstance()
         self.logUtil.putF("Setting Image - " + str(commonLabels.WIDTH_LABEL) + str(newBufferedImage.getWidth()) + str(commonLabels.HEIGHT_LABEL) + str(newBufferedImage.getHeight()), self, "getImage")
@@ -59,12 +61,17 @@ class ImageUnifierUtil:
                 columnIndex = 0
         g.dispose()
         return newBufferedImage
-# from java.awt import *
+# from java.awt.GraphicsEnvironment import GraphicsEnvironment
+# from java.awt.GraphicsDevice import GraphicsDevice
+# from java.awt.GraphicsConfiguration import GraphicsConfiguration
+# from java.awt.Graphics2D import Graphics2D
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 
-ImageUnifierUtil.instance = ImageUnifierUtil()
+def _ImageUnifierUtil_instance() -> object:
+    return ImageUnifierUtil()
+
+lazy_static(ImageUnifierUtil, "instance", _ImageUnifierUtil_instance)
 

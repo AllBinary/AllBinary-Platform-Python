@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PostGameCommandFactory:
@@ -27,17 +28,25 @@ class PostGameCommandFactory:
     
 
     def addCommands(self, canvas: MyCanvas) -> None:
+        from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+        from org.allbinary.game.configuration.feature.MultiPlayerGameFeatureFactory import MultiPlayerGameFeatureFactory
+        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+        from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         if not operatingSystemInterface.isOverScan():
             canvas.addCommand(gameCommandsFactory.TOGGLE_KEYBOARD)
         MultiPlayerGameFeatureFactory.getInstance().addCommands(canvas)
-from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
-from org.allbinary.game.configuration.feature.MultiPlayerGameFeatureFactory import MultiPlayerGameFeatureFactory
-from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
-from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
+# from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
+# from org.allbinary.game.configuration.feature.MultiPlayerGameFeatureFactory import MultiPlayerGameFeatureFactory
+# from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
+# from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
+# from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
 
 
-PostGameCommandFactory.instance = PostGameCommandFactory()
+def _PostGameCommandFactory_instance() -> object:
+    return PostGameCommandFactory()
+
+lazy_static(PostGameCommandFactory, "instance", _PostGameCommandFactory_instance)
 

@@ -21,6 +21,7 @@ from org.allbinary.media.graphics.geography.map.racetrack.RaceTracksPathPrinter 
 class DynamicRaceTracksPathPrinter(RaceTracksPathPrinter):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -29,6 +30,14 @@ class DynamicRaceTracksPathPrinter(RaceTracksPathPrinter):
     
 
     def printAllPaths(self, raceTrackGeographicMapInterfaceFactoryInterface: RaceTrackGeographicMapInterfaceFactoryInterface, pathFindingInfo: PathFindingInfo, size: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterfaceFactoryInterface import RaceTrackGeographicMapInterfaceFactoryInterface
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+        from org.allbinary.media.graphics.geography.pathfinding.PathGenerator import PathGenerator
         try:
             for index in range(0, size):
                 geographicMapInterface: BasicGeographicMap = raceTrackGeographicMapInterfaceFactoryInterface.getTrackInstance(SmallIntegerSingletonFactory.getInstance().getAt(index))
@@ -38,14 +47,14 @@ class DynamicRaceTracksPathPrinter(RaceTracksPathPrinter):
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.PROCESS, e)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterfaceFactoryInterface import RaceTrackGeographicMapInterfaceFactoryInterface
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-from org.allbinary.media.graphics.geography.pathfinding.PathGenerator import PathGenerator
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterfaceFactoryInterface import RaceTrackGeographicMapInterfaceFactoryInterface
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+# from org.allbinary.media.graphics.geography.pathfinding.PathGenerator import PathGenerator
 
 

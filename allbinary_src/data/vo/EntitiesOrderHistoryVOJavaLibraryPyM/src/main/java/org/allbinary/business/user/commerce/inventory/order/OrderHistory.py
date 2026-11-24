@@ -16,13 +16,17 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.user.commerce.inventory.order.Order import Order
 from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
 
 
-class OrderHistory(Order, OrderHistoryInterface):
+class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
         self.userName: str = None
         self.shippingAddress: StreetAddress = None
         self.billingAddress: StreetAddress = None
@@ -41,17 +45,23 @@ class OrderHistory(Order, OrderHistoryInterface):
         if len(args) == 1:
             self._constructor1(*args)
         elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        else:
+            self._constructor2_2(*args)
     
 
     def _constructor1(self, basketInterface: BasketInterface) -> None:
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
         super().__init__(basketInterface)
         self._init_fields()
     
 
-    def _constructor2(self, basketInterface: BasketInterface, orderHistory: OrderHistory) -> None:
+    def _constructor2_1(self, basketInterface: BasketInterface, orderHistory: OrderHistory) -> None:
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
         super().__init__(orderHistory.getStoreName(), basketInterface, orderHistory.getId(), orderHistory.getShippingMethod(), orderHistory.getSpecial(), orderHistory.getPaymentMethod())
         self._init_fields()
         self.userName = orderHistory.getUserName()
@@ -73,21 +83,20 @@ class OrderHistory(Order, OrderHistoryInterface):
         super().setStoreCancelComments(orderHistory.getStoreCancelComments())
     
 
-    def _constructor2(self, basketInterface: BasketInterface, orderHistoryHashMap: dict) -> None:
-        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+    def _constructor2_2(self, basketInterface: BasketInterface, orderHistoryHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
         super().__init__(orderHistoryHashMap.get(StoreFrontData.getInstance().NAME), basketInterface, orderHistoryHashMap.get(OrderData.ID), orderHistoryHashMap.get(ShippingMethodData.NAME), orderHistoryHashMap.get(EntryData.getInstance().SPECIAL), orderHistoryHashMap.get(PaymentData.METHOD))
         self._init_fields()
         self.shippingAddress = StreetAddress(orderHistoryHashMap.get(ShippingAddressData.NAME), orderHistoryHashMap.get(ShippingAddressData.STREET), orderHistoryHashMap.get(ShippingAddressData.CITY), orderHistoryHashMap.get(ShippingAddressData.STATE), orderHistoryHashMap.get(ShippingAddressData.CODE), orderHistoryHashMap.get(ShippingAddressData.COUNTRY))
@@ -114,14 +123,17 @@ class OrderHistory(Order, OrderHistoryInterface):
     
 
     def setDefaultShippingAddress(self, shippingAddress: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         self.shippingAddress = shippingAddress
     
 
     def setBillingAddress(self, billingAddress: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         self.billingAddress = billingAddress
     
 
     def setPaymentInfo(self, payment: Payment) -> None:
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
         self.payment = payment
     
 
@@ -146,18 +158,22 @@ class OrderHistory(Order, OrderHistoryInterface):
     
 
     def setSubTotal(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.subTotal = value
     
 
     def setShippingCost(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.shippingCost = value
     
 
     def setTaxes(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.taxes = value
     
 
     def setTotal(self, value: Money) -> None:
+        from org.allbinary.business.user.commerce.money.Money import Money
         self.total = value
     
 
@@ -166,14 +182,17 @@ class OrderHistory(Order, OrderHistoryInterface):
     
 
     def getShippingAddress(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         return self.shippingAddress
     
 
     def getBillingAddress(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         return self.billingAddress
     
 
     def getPaymentInfo(self) -> Payment:
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
         return self.payment
     
 
@@ -198,36 +217,30 @@ class OrderHistory(Order, OrderHistoryInterface):
     
 
     def getSubTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.subTotal
     
 
     def getShippingCost(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.shippingCost
     
 
     def getTaxes(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.taxes
     
 
     def getTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         return self.total
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(UserData.USERNAME, self.userName)
         hashMap.put(OrderHistoryData.ORDERDATE, self.orderDate)
         hashMap.put(OrderHistoryData.SHIPPEDDATE, self.shipDate)
@@ -247,8 +260,15 @@ class OrderHistory(Order, OrderHistoryInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-        hashMap: dict = self.toHashMap()
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        hashMap: HashMap = self.toHashMap()
         keySet: Set = hashMap.keySet()
         keyArray: list[object] = keySet.toArray()
         size: int = len(keyArray)
@@ -267,25 +287,29 @@ class OrderHistory(Order, OrderHistoryInterface):
             value = StringUtil.getInstance().getNonNull(value)
             node.appendChild(ModDomHelper.createNameValueNodes(document, name, value))
         return node
+    
+
+    def getPaymentMethod(self) -> str:
+        return super().getPaymentMethod()
 # from java.util.Date import Date
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.business.user.commerce.money.payment.Payment import Payment
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.business.user.commerce.money.payment.Payment import Payment
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

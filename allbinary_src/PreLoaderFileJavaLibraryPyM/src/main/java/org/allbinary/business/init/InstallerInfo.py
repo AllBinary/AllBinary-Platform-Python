@@ -16,20 +16,20 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InstallerInfo:
     instance: InstallerInfo = None
     INITFILENAME: str = "installerdata.dat"
-    PACKAGE: str = self.PATH_GLOBALS.getInstance().INIT_PATH
-    userName: str = StringUtil.getInstance().EMPTY_STRING
-    password: str = StringUtil.getInstance().EMPTY_STRING
+    PACKAGE: str = None
+    userName: str = None
+    password: str = None
     hasRead: bool = False
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -43,7 +43,16 @@ class InstallerInfo:
             return self._write_unlocked()
 
     def _write_unlocked(self) -> None:
-        FILEABPATH: AbPath = AbPath(self.URLGLOBALS.getMainPath() + InstallerInfo.PACKAGE, InstallerInfo.INITFILENAME)
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        FILEABPATH: AbPath = AbPath(URLGLOBALS.getMainPath() + InstallerInfo.PACKAGE, InstallerInfo.INITFILENAME)
         try:
             newFile: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
             newFile.createNewFile()
@@ -54,7 +63,7 @@ class InstallerInfo:
             dataOutputStream.writeUTF(DatabaseEncoder.encode(cryptedPassword))
             InstallerInfo.hasRead = False
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRELOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADERERROR):
                 self.logUtil.putF("Failed", self, "write")
             raise e
     
@@ -65,8 +74,16 @@ class InstallerInfo:
             return self._read_unlocked()
 
     def _read_unlocked(self) -> None:
-        from org.allbinary.business.init.FILEABPATH import FILEABPATH
-        FILEABPATH: AbPath = AbPath(self.URLGLOBALS.getMainPath() + InstallerInfo.PACKAGE, InstallerInfo.INITFILENAME)
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+        from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+        from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        FILEABPATH: AbPath = AbPath(URLGLOBALS.getMainPath() + InstallerInfo.PACKAGE, InstallerInfo.INITFILENAME)
         try:
             file: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
             if file.isFile():
@@ -77,10 +94,10 @@ class InstallerInfo:
                 self.setUserName(WeakCrypt(1).decrypt(decryptedUserName))
                 self.setPassword(WeakCrypt(2).decrypt(decryptedPassword))
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRELOADER):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
                     self.logUtil.putF("Not a File - Failed Loading: " + str(FILEABPATH), self, "read")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRELOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADERERROR):
                 self.logUtil.putF("Failed", self, "read")
     
 
@@ -108,11 +125,13 @@ class InstallerInfo:
             return self._updateIfNeeded_unlocked()
 
     def _updateIfNeeded_unlocked(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if not InstallerInfo.hasRead:
             InstallerInfo.hasRead = True
             self.read()
             if InstallerInfo.userName is None or InstallerInfo.password is None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRELOADER):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
                     self.logUtil.putF("Failed", self, "updateIfNeeded")
     
 
@@ -134,17 +153,42 @@ class InstallerInfo:
         if self.userName is not None and ((self.userName > userName) - (self.userName < userName)) == 0 and self.password is not None and ((self.password > password) - (self.password < password)) == 0:
             return True
         return False
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
-from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
+# from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-InstallerInfo.instance = InstallerInfo()
+def _InstallerInfo_instance() -> object:
+    return InstallerInfo()
+
+lazy_static(InstallerInfo, "instance", _InstallerInfo_instance)
+
+def _InstallerInfo_PACKAGE() -> object:
+    from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+    return PATH_GLOBALS.getInstance().INIT_PATH
+
+lazy_static(InstallerInfo, "PACKAGE", _InstallerInfo_PACKAGE)
+
+def _InstallerInfo_userName() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return StringUtil.getInstance().EMPTY_STRING
+
+lazy_static(InstallerInfo, "userName", _InstallerInfo_userName)
+
+def _InstallerInfo_password() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return StringUtil.getInstance().EMPTY_STRING
+
+lazy_static(InstallerInfo, "password", _InstallerInfo_password)
 

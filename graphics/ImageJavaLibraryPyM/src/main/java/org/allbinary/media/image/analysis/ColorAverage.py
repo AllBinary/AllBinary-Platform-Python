@@ -33,6 +33,8 @@ class ColorAverage:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("getAvgRed(): ")
         stringBuffer.appendfloat(self.getAvgRed())
@@ -71,7 +73,7 @@ class ColorAverage:
 
     def setAvgBlue(self, avgBlue: float) -> None:
         self.avgBlue = avgBlue
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

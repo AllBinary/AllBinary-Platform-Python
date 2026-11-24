@@ -23,6 +23,7 @@ class TransformInfoHttpInterface(TransformInfoInterface):
     
 
     def getWeblisketSession(self) -> WeblisketSessionInterface:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         raise NotImplementedError()
     
 
@@ -30,10 +31,11 @@ class TransformInfoHttpInterface(TransformInfoInterface):
         raise NotImplementedError()
     
 
-    def getPropertiesHashMap(self) -> dict:
+    def getPropertiesHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
 
 

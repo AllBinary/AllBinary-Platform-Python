@@ -30,10 +30,12 @@ class CategoryHierarchyInterface:
     
 
     def getRoot(self) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
     
 
     def getParent(self) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
     
 
@@ -42,11 +44,13 @@ class CategoryHierarchyInterface:
     
 
     def setRoot(self, categoryInterface: CategoryInterface) -> None:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
     
 
     def setParent(self, categoryInterface: CategoryInterface) -> None:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
 
 

@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.BaseGameInputMotionEventProcessor import BaseGameInputMotionEventProcessor
-from org.allbinary.logic.NullUtil import NullUtil
 
 
 class GameInputMotionEventProcessorAPI1(BaseGameInputMotionEventProcessor):
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
+        from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.motionRecognizer: MotionRecognizer = AllMotionRecognizer()
     
 
     @staticmethod
     def getInstance() -> GameInputMotionEventProcessorAPI1:
+        from org.allbinary.logic.NullUtil import NullUtil
         if GameInputMotionEventProcessorAPI1.instance == NullUtil.getInstance().NULL_OBJECT:
             GameInputMotionEventProcessorAPI1.instance = GameInputMotionEventProcessorAPI1()
         return GameInputMotionEventProcessorAPI1.instance
@@ -40,6 +44,7 @@ class GameInputMotionEventProcessorAPI1(BaseGameInputMotionEventProcessor):
     
 
     def process(self, motionEvent: MotionEvent) -> None:
+        from android.view.MotionEvent import MotionEvent
         try:
             x: int = int(motionEvent.getX())
             y: int = int(motionEvent.getY())
@@ -52,9 +57,16 @@ class GameInputMotionEventProcessorAPI1(BaseGameInputMotionEventProcessor):
                 self.motionRecognizer.processDraggedMotionEvent(x, y, motionEvent.getDeviceId(), 0)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-from android.view.MotionEvent import MotionEvent
-from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
-from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from android.view.MotionEvent import MotionEvent
+# from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
+# from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
+
+def _GameInputMotionEventProcessorAPI1_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(GameInputMotionEventProcessorAPI1, "instance", _GameInputMotionEventProcessorAPI1_instance)
 

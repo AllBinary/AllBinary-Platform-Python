@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLVersionValidator:
@@ -41,9 +42,13 @@ class OpenGLVersionValidator:
     
 
     def setShaderComposite(self, shaderComposite: ShaderComposite, anyType: object) -> None:
+        from org.allbinary.graphics.opengles.shader.ShaderComposite import ShaderComposite
         pass
-from org.allbinary.graphics.opengles.shader.ShaderComposite import ShaderComposite
+# from org.allbinary.graphics.opengles.shader.ShaderComposite import ShaderComposite
 
 
-OpenGLVersionValidator.instance = OpenGLVersionValidator()
+def _OpenGLVersionValidator_instance() -> object:
+    return OpenGLVersionValidator()
+
+lazy_static(OpenGLVersionValidator, "instance", _OpenGLVersionValidator_instance)
 

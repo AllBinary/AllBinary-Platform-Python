@@ -16,14 +16,21 @@
 from __future__ import annotations
 
 import datetime
-from org.allbinary.logic.io.path.AbPathData import AbPathData
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
 
 
 class StoreFront(StoreFrontInterface):
-    RESOURCES: str = " Resources" + str(AbPathData.getInstance().SEPARATOR)
+    RESOURCES: str = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathUtil import AbPathUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.directory: Directory = Directory.getInstance()
@@ -67,26 +74,38 @@ class StoreFront(StoreFrontInterface):
         if len(args) == 0:
             self._constructor0(*args)
         elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.context.configuration.ContextConfiguration import ContextConfiguration
         self._init_fields()
         self.contextConfigurationInterface = ContextConfiguration()
     
 
-    def _constructor1(self, request: HttpServletRequest) -> None:
+    def _constructor1_1(self, request: HttpServletRequest) -> None:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterfaceFactory import ContextConfigurationInterfaceFactory
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.getFormData(RequestParams(request).toHashMap())
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF("TWB- needs update for adding and updating context configuration - currently defaults to admin context config", self, "StoreFront")
         self.setContextConfigurationInterface(ContextConfigurationInterfaceFactory.getInstance().getInstance("Admin"))
     
 
-    def _constructor1(self, hashMap: dict) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+    def _constructor1_2(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.configuration.ContextConfigurationInterfaceFactory import ContextConfigurationInterfaceFactory
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.w3c.dom.Document import Document
         self._init_fields()
         self.getFormData(hashMap)
         domDocumentString: str = hashMap.get(StoreFrontData.getInstance().CONFIGURATION)
@@ -96,7 +115,7 @@ class StoreFront(StoreFrontInterface):
     
 
     def isColumn(self, columnName: str) -> bool:
-        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.user.UserData import UserData
         if ((columnName > StoreFrontData.getInstance().NAME) - (columnName < StoreFrontData.getInstance().NAME)) == 0 or ((columnName > UserData.MAINEMAIL) - (columnName < UserData.MAINEMAIL)) == 0:
             return True
         else:
@@ -104,21 +123,32 @@ class StoreFront(StoreFrontInterface):
     
 
     # throws Exception
-    def createPath(self, key: str, hashMap: dict) -> AbPath:
+    def createPath_j2(self, key: str, hashMap: HashMap) -> AbPath:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return AbPath(self.create(self.EMPTY_STRING, key, hashMap), StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def createPath(self, append: str, key: str, hashMap: dict) -> AbPath:
+    def createPath_j3(self, append: str, key: str, hashMap: HashMap) -> AbPath:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return AbPath(self.create(append, key, hashMap), StringUtil.getInstance().EMPTY_STRING)
+
+    def createPath(self, *args):
+        return getattr(self, "createPath_j" + str(len(args)))(*args)
     
 
-    def get(self, key: str, hashMap: dict) -> str:
+    def get(self, key: str, hashMap: HashMap) -> str:
+        from java.util.HashMap import HashMap
         return self.create(self.EMPTY_STRING, key, hashMap)
     
 
-    def create(self, append: str, key: str, hashMap: dict) -> str:
+    def create(self, append: str, key: str, hashMap: HashMap) -> str:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         path: str = hashMap.get(key)
         if StringValidationUtil.getInstance().isEmpty(path):
             return self.EMPTY_STRING
@@ -130,8 +160,10 @@ class StoreFront(StoreFrontInterface):
     
 
     # throws Exception
-    def getFormData(self, storeHashMap: dict) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+    def getFormData(self, storeHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         storeFrontData: StoreFrontData = StoreFrontData.getInstance()
         self.name = storeHashMap.get(storeFrontData.NAME)
         self.basketName = storeHashMap.get(storeFrontData.NAME)
@@ -163,6 +195,12 @@ class StoreFront(StoreFrontInterface):
     
 
     def isNameValid(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.string.SpecialCharacterUtil import SpecialCharacterUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
         if not StringValidationUtil.getInstance().isValidRequired(self.name, self.MINSTORENAMELENGTH, self.MAXCHAR):
             return False
         else:
@@ -175,13 +213,14 @@ class StoreFront(StoreFrontInterface):
             if stringValidationUtil.containsSpaces(self.name):
                 isSpacesContained = True
             if isSpacesContained or isEscapedCharactersContained:
-                hashMap: dict = SpecialCharacterUtil.getHashMap()
+                hashMap: HashMap = SpecialCharacterUtil.getHashMap()
                 hashMap.put([CommonSeps.getInstance().SPACE], self.ONE_EMPTY_STRING_ARRAY)
                 self.name = Replace(hashMap).all(self.name)
         return True
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         valid: bool = True
         valid = self.isNameValid()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
@@ -240,6 +279,8 @@ class StoreFront(StoreFrontInterface):
     
 
     def nameValidationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if not stringValidationUtil.isValidRequired(self.name, self.MINCHAR, self.MAXCHAR):
             stringBuffer: StringMaker = StringMaker()
@@ -251,6 +292,10 @@ class StoreFront(StoreFrontInterface):
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
             stringBuffer: StringMaker = StringMaker()
@@ -315,18 +360,20 @@ class StoreFront(StoreFrontInterface):
                 stringBuffer.append("Test ftp password is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
 
     def getTestHtmlPath(self) -> str:
-        return org.allbinary.globals.URLGLOBALS.getTestHtmlPath() + self.getCurrentHostNamePath()
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        return URLGLOBALS.getTestHtmlPath() + self.getCurrentHostNamePath()
     
 
     def getCurrentHostName(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHostName()
         else:
             location = self.getHostName()
@@ -334,8 +381,9 @@ class StoreFront(StoreFrontInterface):
     
 
     def getCurrentHostNamePath(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHostNamePath()
         else:
             location = self.getHostNamePath()
@@ -343,8 +391,9 @@ class StoreFront(StoreFrontInterface):
     
 
     def getCurrentHomeHostName(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHomeHostName()
         else:
             location = self.getHomeHostName()
@@ -352,8 +401,9 @@ class StoreFront(StoreFrontInterface):
     
 
     def getCurrentHomeHostNamePath(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHomeHostNamePath()
         else:
             location = self.getHomeHostNamePath()
@@ -414,6 +464,12 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def getSubStores(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         try:
             tokenizer: Tokenizer = Tokenizer(CommonSeps.getInstance().SEMICOLON)
             subStoreVector: BasicArrayList = tokenizer.getTokensFromString(self.subStores, BasicArrayListD())
@@ -426,7 +482,7 @@ class StoreFront(StoreFrontInterface):
         return self.tagLocation
     
 
-    def getPackageLocation(self) -> str:
+    def getPackageLocation_j0(self) -> str:
         return self.packageLocation
     
 
@@ -484,6 +540,8 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def setHomeHostNamePath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.homeHostNamePath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
@@ -493,6 +551,8 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def setHostNamePath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.hostNamePath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
@@ -502,6 +562,8 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def setTestHomeHostNamePath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.testHomeHostNamePath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
@@ -511,21 +573,29 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def setTestHostNamePath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.testHostNamePath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
     def setImagePath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.imagePath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
     def setStaticPath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.staticPath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
     def setCategoryPath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.categoryPath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
@@ -545,9 +615,11 @@ class StoreFront(StoreFrontInterface):
         self.inventoryControl = value
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getPackageLocation(self, value: str) -> None:
+    def getPackageLocation_j1(self, value: str) -> None:
         self.packageLocation = value
+
+    def getPackageLocation(self, *args):
+        return getattr(self, "getPackageLocation_j" + str(len(args)))(*args)
     
 
     def setFtp(self, value: str) -> None:
@@ -584,17 +656,24 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def setFtpPath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.ftpPath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
     def setTestFtpPath(self, value: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.testFtpPath = AbPath(value, StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
     def createDirectories(self) -> bool:
-        storeAbPath: AbPath = AbPath(self.URLGLOBALS.getWebappPath() + self.getCurrentHomeHostNamePath(), StringUtil.getInstance().EMPTY_STRING)
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        storeAbPath: AbPath = AbPath(URLGLOBALS.getWebappPath() + self.getCurrentHomeHostNamePath(), StringUtil.getInstance().EMPTY_STRING)
         if not self.directory.create(storeAbPath):
             return False
         if not self.directory.create(AbPath(storeAbPath + self.getCategoryPath(), StringUtil.getInstance().EMPTY_STRING)):
@@ -606,17 +685,26 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def install(self, current: int, total: int) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if not self.createDirectories():
                 raise Exception("Unable to create store directories")
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.delete(0, stringBuffer.length())
-            stringBuffer.append(self.URLGLOBALS.getMainPath())
-            stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+            stringBuffer.append(URLGLOBALS.getMainPath())
+            stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
             viewPath: str = str(stringBuffer)
             stringBuffer.delete(0, stringBuffer.length())
             stringBuffer.append(viewPath)
-            stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().INSTALLPATH)
+            stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().INSTALLPATH)
             fromDirectoryAbPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
             stringBuffer.delete(0, stringBuffer.length())
             stringBuffer.append(viewPath)
@@ -648,18 +736,26 @@ class StoreFront(StoreFrontInterface):
             else:
                 self.installMedia(fromDirectoryAbPath, current - installTotal, total - installTotal)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "install()", e)
             raise e
     
 
     # throws Exception
     def installViews(self, fromDirectoryAbPath: AbPath, toDirectoryAbPath: AbPath, current: int, total: int) -> None:
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
         FileUtil.getInstance().copyDirectoryPortion(fromDirectoryAbPath, toDirectoryAbPath, True, False, current, total)
     
 
     # throws Exception
     def installResources(self, fromDirectoryAbPath: AbPath, current: int, total: int) -> None:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(fromDirectoryAbPath))
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
@@ -667,7 +763,7 @@ class StoreFront(StoreFrontInterface):
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         installCategoryAbPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
         stringBuffer.delete(0, stringBuffer.length())
-        stringBuffer.append(self.URLGLOBALS.getMainPath())
+        stringBuffer.append(URLGLOBALS.getMainPath())
         stringBuffer.append(self.getCurrentHomeHostNamePath())
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         stringBuffer.append(self.getCategoryPath())
@@ -677,19 +773,31 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def installMedia(self, fromDirectoryAbPath: AbPath, current: int, total: int) -> None:
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(fromDirectoryAbPath))
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
-        stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().TEMPLATEPATH)
+        stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().TEMPLATEPATH)
         stringBuffer.append("images")
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         viewStoreImagesDirectoryAbPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
-        storeAbPath: AbPath = AbPath(self.URLGLOBALS.getWebappPath() + self.getCurrentHomeHostNamePath(), StringUtil.getInstance().EMPTY_STRING)
+        storeAbPath: AbPath = AbPath(URLGLOBALS.getWebappPath() + self.getCurrentHomeHostNamePath(), StringUtil.getInstance().EMPTY_STRING)
         FileUtil.getInstance().copyDirectoryPortion(viewStoreImagesDirectoryAbPath, storeAbPath, True, False, current, total)
     
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.configuration.ContextConfigurationDomDocumentMapping import ContextConfigurationDomDocumentMapping
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         dataVector: BasicArrayList = BasicArrayListD()
         dataVector.add(self.name)
         dataVector.add(self.homeHostName)
@@ -725,10 +833,13 @@ class StoreFront(StoreFrontInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.configuration.ContextConfigurationDomDocumentMapping import ContextConfigurationDomDocumentMapping
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.StdUtil import StdUtil
         storeFrontData: StoreFrontData = StoreFrontData.getInstance()
-        dataHashMap: dict = StdUtil.getInstance().createHashMap()
+        dataHashMap: HashMap = StdUtil.getInstance().createHashMap()
         dataHashMap.put(storeFrontData.NAME, self.name)
         dataHashMap.put(storeFrontData.HOMEHOSTNAME, self.homeHostName)
         dataHashMap.put(storeFrontData.HOMEHOSTNAMEPATH, str(self.homeHostNamePath))
@@ -766,44 +877,55 @@ class StoreFront(StoreFrontInterface):
     
 
     def getContextConfigurationInterface(self) -> ContextConfigurationInterface:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         return self.contextConfigurationInterface
     
 
     def setContextConfigurationInterface(self, contextConfigurationInterface: ContextConfigurationInterface) -> None:
+        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         self.contextConfigurationInterface = contextConfigurationInterface
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.context.configuration.ContextConfiguration import ContextConfiguration
-from org.allbinary.business.context.configuration.ContextConfigurationDomDocumentMapping import ContextConfigurationDomDocumentMapping
-from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
-from org.allbinary.business.context.configuration.ContextConfigurationInterfaceFactory import ContextConfigurationInterfaceFactory
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathUtil import AbPathUtil
-from org.allbinary.logic.string.SpecialCharacterUtil import SpecialCharacterUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
-from org.w3c.dom.Document import Document
+# from org.allbinary.business.context.configuration.ContextConfiguration import ContextConfiguration
+# from org.allbinary.business.context.configuration.ContextConfigurationDomDocumentMapping import ContextConfigurationDomDocumentMapping
+# from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
+# from org.allbinary.business.context.configuration.ContextConfigurationInterfaceFactory import ContextConfigurationInterfaceFactory
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.io.path.AbPathUtil import AbPathUtil
+# from org.allbinary.logic.string.SpecialCharacterUtil import SpecialCharacterUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
+# from org.w3c.dom.Document import Document
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
+
+def _StoreFront_RESOURCES() -> object:
+    from org.allbinary.logic.io.path.AbPathData import AbPathData
+    return " Resources" + str(AbPathData.getInstance().SEPARATOR)
+
+lazy_static(StoreFront, "RESOURCES", _StoreFront_RESOURCES)
 

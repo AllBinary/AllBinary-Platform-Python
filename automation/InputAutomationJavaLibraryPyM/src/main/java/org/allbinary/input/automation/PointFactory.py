@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+# from java.awt.Point import Point
 
 
 class PointFactory:
@@ -27,12 +28,10 @@ class PointFactory:
 
     @staticmethod
     def getInstance(x: int, y: int) -> Point:
-        from org.allbinary.input.automation.Point import Point
         point: Point = PointFactory.pointArray[x][y]
         if point is None:
             PointFactory.pointArray[x][y] = Point(x, y)
             point = PointFactory.pointArray[x][y]
         return point
-# from java.awt import *
 
 

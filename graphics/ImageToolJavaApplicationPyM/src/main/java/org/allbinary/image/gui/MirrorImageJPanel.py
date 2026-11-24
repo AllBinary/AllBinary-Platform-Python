@@ -16,13 +16,18 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
-from org.allbinary.image.gui.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
-class MirrorImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
+class MirrorImageJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.ImageStrings import ImageStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageStrings: ImageStrings = ImageStrings.getInstance()
@@ -42,6 +47,7 @@ class MirrorImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
         self._init_fields()
         self.logUtil.putF("Starting", self, self.commonStrings.CONSTRUCTOR)
@@ -50,10 +56,16 @@ class MirrorImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def process(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.MirrorImageUtil import MirrorImageUtil
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+#                 from org.allbinary.media.image.MirrorImageUtil import MirrorImageUtil
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     imageProcessorInput: ImageProcessorInput = self.getImageProcessorInput()
@@ -78,23 +90,6 @@ class MirrorImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.JLayeredPane import JLayeredPane
-        from org.allbinary.image.gui.ButtonGroup import ButtonGroup
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JCheckBox import JCheckBox
-        from org.allbinary.image.gui.JCheckBox import JCheckBox
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JRadioButton import JRadioButton
-        from org.allbinary.image.gui.JRadioButton import JRadioButton
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
         self.jLayeredPane1 = JLayeredPane()
         self.buttonGroup = ButtonGroup()
         self.jPanel1 = (JPanel()  # Java anonymous class body:
@@ -160,20 +155,30 @@ class MirrorImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def getImageProcessorInput(self) -> ImageProcessorInput:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         return self.imageProcessorInput
     
 
     def setImageProcessorInput(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         self.imageProcessorInput = imageProcessorInput
-# from java.awt import *
+# from java.awt.Graphics import Graphics
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.awt.image.RenderedImage import RenderedImage
 # from java.io.File import File
 # from javax.imageio.ImageIO import ImageIO
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
-from org.allbinary.media.image.ImageStrings import ImageStrings
-from org.allbinary.media.image.MirrorImageUtil import MirrorImageUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+# from org.allbinary.media.image.ImageStrings import ImageStrings
+# from org.allbinary.media.image.MirrorImageUtil import MirrorImageUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.ButtonGroup import ButtonGroup
+# from javax.swing.JButton import JButton
+# from javax.swing.JCheckBox import JCheckBox
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JLayeredPane import JLayeredPane
+# from javax.swing.JRadioButton import JRadioButton
 
 

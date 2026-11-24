@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.system.security.licensing.AbeNoLicense import AbeNoLicense
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LicenseInterfaceSingleton:
-    licenseInterface: AbeLicenseInterface = AbeNoLicense.getInstance()
+    licenseInterface: AbeLicenseInterface = None
     
 
     @staticmethod
@@ -32,4 +32,10 @@ class LicenseInterfaceSingleton:
         if licenseInterface is not None:
             LicenseInterfaceSingleton.licenseInterface = licenseInterface
 
+
+def _LicenseInterfaceSingleton_licenseInterface() -> object:
+    from org.allbinary.logic.system.security.licensing.AbeNoLicense import AbeNoLicense
+    return AbeNoLicense.getInstance()
+
+lazy_static(LicenseInterfaceSingleton, "licenseInterface", _LicenseInterfaceSingleton_licenseInterface)
 

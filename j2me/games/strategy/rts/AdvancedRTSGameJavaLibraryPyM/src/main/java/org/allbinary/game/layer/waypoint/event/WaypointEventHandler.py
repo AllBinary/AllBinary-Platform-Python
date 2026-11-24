@@ -26,10 +26,13 @@ class WaypointEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         waypointEventListenerInterface: WaypointEventListenerInterface = (eventListenerInterface)
         waypointEventListenerInterface.onWaypointEvent(eventObject)
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 

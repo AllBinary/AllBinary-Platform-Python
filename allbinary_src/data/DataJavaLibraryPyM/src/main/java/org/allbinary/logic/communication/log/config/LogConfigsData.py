@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LogConfigsData:
@@ -32,5 +33,8 @@ class LogConfigsData:
         return LogConfigsData.instance
 
 
-LogConfigsData.instance = LogConfigsData()
+def _LogConfigsData_instance() -> object:
+    return LogConfigsData()
+
+lazy_static(LogConfigsData, "instance", _LogConfigsData_instance)
 

@@ -3,11 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 
 
-class CustomCustomItem(ABCustomItem, UpdateMyFontInterface):
+class CustomCustomItem(*java_bases(ABCustomItem, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor

@@ -20,11 +20,13 @@ from __future__ import annotations
 class LogBuffer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.logEntryVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.logEntryVector = BasicArrayListD()
     
@@ -38,9 +40,8 @@ class LogBuffer:
         for index in range(0, size):
             log: Log = self.logEntryVector.get(index)
             self.logUtil.putL(log)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

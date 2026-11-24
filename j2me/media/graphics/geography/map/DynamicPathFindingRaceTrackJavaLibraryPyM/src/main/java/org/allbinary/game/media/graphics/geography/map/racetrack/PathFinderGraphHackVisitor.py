@@ -21,16 +21,20 @@ from org.allbinary.game.media.graphics.geography.map.racetrack.BasePathFinderGra
 class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, edgeMinimum: int, minPathWeight: int, maxPathWeight: int) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         super().__init__(geographicMapInterface, edgeMinimum, minPathWeight, maxPathWeight)
         self._init_fields()
     
 
     # throws Exception
     def visit(self, graph: SimpleWeightedGraph, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.fixStart(graph, startPathFindingNodeList)
         self.fixEnd(graph, endPathFindingNodeList)
         self.fixOverPassEdges(graph)
@@ -38,6 +42,14 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def fixStart(self, graph: SimpleWeightedGraph[CellPosition, DefaultWeightedEdge], startPathFindingNodeList: BasicArrayList) -> None:
+        from org.jgrapht.graph.DefaultWeightedEdge import DefaultWeightedEdge
+        from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = self.geographicMapInterface.getGeographicMapCellPositionFactory()
         tiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         for index in range(startPathFindingNodeList.size() - 1, 0 - 1, -1):
@@ -53,6 +65,14 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def fixEnd(self, graph: SimpleWeightedGraph[CellPosition, DefaultWeightedEdge], endPathFindingNodeList: BasicArrayList) -> None:
+        from org.jgrapht.graph.DefaultWeightedEdge import DefaultWeightedEdge
+        from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = self.geographicMapInterface.getGeographicMapCellPositionFactory()
         tiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         for index in range(endPathFindingNodeList.size() - 1, 0 - 1, -1):
@@ -69,7 +89,12 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def fixOverPassEdges(self, graph: SimpleWeightedGraph[CellPosition, DefaultWeightedEdge]) -> None:
-        from org.allbinary.game.media.graphics.geography.map.racetrack.CellPositionArray import CellPositionArray
+        from org.jgrapht.graph.DefaultWeightedEdge import DefaultWeightedEdge
+        from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = self.geographicMapInterface.getGeographicMapCellPositionFactory()
         raceTrackGeographicMap: RaceTrackGeographicMap = self.geographicMapInterface
         CellPositionArray: list[CellPosition] = raceTrackGeographicMap.getRaceTrackData().getOverPassGeographicMapCellPositionArray()
@@ -88,6 +113,9 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def fixPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, pathList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapUtil import BasicGeographicMapUtil
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
         for index in range(startPathFindingNodeList.size() - 1, 0 - 1, -1):
             endPathFindingNode: PathFindingNode = endPathFindingNodeList.get(index)
             startPathFindingNode: PathFindingNode = startPathFindingNodeList.get(index)
@@ -100,7 +128,11 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
 
     # throws Exception
     def removeOverPassEdges(self, pathList: BasicArrayList) -> None:
-        from org.allbinary.game.media.graphics.geography.map.racetrack.CellPositionArray import CellPositionArray
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = self.geographicMapInterface.getGeographicMapCellPositionFactory()
         raceTrackGeographicMap: RaceTrackGeographicMap = self.geographicMapInterface
         CellPositionArray: list[CellPosition] = raceTrackGeographicMap.getRaceTrackData().getOverPassGeographicMapCellPositionArray()
@@ -113,22 +145,23 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
     
 
     def isValid(self, graphPath: GraphPath) -> bool:
+        from org.jgrapht.GraphPath import GraphPath
         if graphPath.getEdgeList().size() > self.edgeMinimum and graphPath.getWeight() < self.maxPathWeight and graphPath.getWeight() > self.minPathWeight:
             return True
         else:
             return False
-from org.jgrapht.GraphPath import GraphPath
-from org.jgrapht.graph.DefaultWeightedEdge import DefaultWeightedEdge
-from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapUtil import BasicGeographicMapUtil
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
+# from org.jgrapht.GraphPath import GraphPath
+# from org.jgrapht.graph.DefaultWeightedEdge import DefaultWeightedEdge
+# from org.jgrapht.graph.SimpleWeightedGraph import SimpleWeightedGraph
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapUtil import BasicGeographicMapUtil
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
 
 

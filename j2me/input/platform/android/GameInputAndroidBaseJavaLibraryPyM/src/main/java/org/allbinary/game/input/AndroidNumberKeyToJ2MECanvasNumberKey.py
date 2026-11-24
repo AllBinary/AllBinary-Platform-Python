@@ -11,6 +11,8 @@ class AndroidNumberKeyToJ2MECanvasNumberKey:
 
     @staticmethod
     def init() -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from android.view.KeyEvent import KeyEvent
         AndroidNumberKeyToJ2MECanvasNumberKey.androidtoJavaMicroEditionKeyMap[KeyEvent.KEYCODE_0] = Canvas.KEY_NUM0
         AndroidNumberKeyToJ2MECanvasNumberKey.androidtoJavaMicroEditionKeyMap[KeyEvent.KEYCODE_1] = Canvas.KEY_NUM1
         AndroidNumberKeyToJ2MECanvasNumberKey.androidtoJavaMicroEditionKeyMap[KeyEvent.KEYCODE_2] = Canvas.KEY_NUM2
@@ -35,6 +37,6 @@ class AndroidNumberKeyToJ2MECanvasNumberKey:
                 return value
         return key
 # from javax.microedition.lcdui.Canvas import Canvas
-from android.view.KeyEvent import KeyEvent
+# from android.view.KeyEvent import KeyEvent
 
 

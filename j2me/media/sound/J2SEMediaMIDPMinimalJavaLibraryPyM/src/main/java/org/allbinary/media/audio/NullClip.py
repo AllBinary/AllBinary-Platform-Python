@@ -15,24 +15,25 @@
 
 from __future__ import annotations
 
-# from javax.sound.sampled.BooleanControl import BooleanControl
-# from javax.sound.sampled.Clip import Clip
-# from javax.sound.sampled.Control.Type import Type
-from org.allbinary.media.audio.NullJ2SEControl import NullJ2SEControl
+from java.lang.JavaRuntimeStatic import lazy_static
+from javax.sound.sampled.Clip import Clip
 
 
 class NullClip(Clip):
-    NULL_CONTROL: NullJ2SEControl = NullJ2SEControl(BooleanControl.Type.MUTE)
+    NULL_CONTROL: NullJ2SEControl = None
     
 
     # throws LineUnavailableException
-    def open(self, format: AudioFormat, data: list[int], offset: int, bufferSize: int) -> None:
+    def open_j4(self, format: AudioFormat, data: list[int], offset: int, bufferSize: int) -> None:
+        from javax.sound.sampled.AudioFormat import AudioFormat
+        from javax.sound.sampled.LineUnavailableException import LineUnavailableException
         pass
     
 
     # throws LineUnavailableException, IOException
-    # Java overloaded method: Python keeps the last definition
-    def open(self, stream: AudioInputStream) -> None:
+    def open_j1(self, stream: AudioInputStream) -> None:
+        from javax.sound.sampled.AudioInputStream import AudioInputStream
+        from javax.sound.sampled.LineUnavailableException import LineUnavailableException
         pass
     
 
@@ -86,6 +87,7 @@ class NullClip(Clip):
 
     def getFormat(self) -> AudioFormat:
         from org.allbinary.media.audio.NullAudioFormat import NullAudioFormat
+        from javax.sound.sampled.AudioFormat import AudioFormat
         return NullAudioFormat.NULL_AUDIO_FORMAT
     
 
@@ -119,9 +121,12 @@ class NullClip(Clip):
     
 
     # throws LineUnavailableException
-    # Java overloaded method: Python keeps the last definition
-    def open(self) -> None:
+    def open_j0(self) -> None:
+        from javax.sound.sampled.LineUnavailableException import LineUnavailableException
         pass
+
+    def open(self, *args):
+        return getattr(self, "open_j" + str(len(args)))(*args)
     
 
     def close(self) -> None:
@@ -133,6 +138,7 @@ class NullClip(Clip):
     
 
     def getControls(self) -> list[Control]:
+        from javax.sound.sampled.Control import Control
         return [None] * (0)
     
 
@@ -141,21 +147,33 @@ class NullClip(Clip):
     
 
     def getControl(self, control: Type) -> Control:
+        from javax.sound.sampled.Control import Control
         return NullClip.NULL_CONTROL
     
 
     def addLineListener(self, listener: LineListener) -> None:
+        from javax.sound.sampled.LineListener import LineListener
         pass
     
 
     def removeLineListener(self, listener: LineListener) -> None:
+        from javax.sound.sampled.LineListener import LineListener
         pass
 # from java.io.IOException import IOException
 # from javax.sound.sampled.AudioFormat import AudioFormat
 # from javax.sound.sampled.AudioInputStream import AudioInputStream
+# from javax.sound.sampled.BooleanControl import BooleanControl
 # from javax.sound.sampled.Control import Control
-# from javax.sound.sampled.Line.Info import Info
+# from javax.sound.sampled.Control.Type import Type
+# from javax.sound.sampled.DataLine.Info import Info
 # from javax.sound.sampled.LineListener import LineListener
 # from javax.sound.sampled.LineUnavailableException import LineUnavailableException
 
+
+def _NullClip_NULL_CONTROL() -> object:
+    from org.allbinary.media.audio.NullJ2SEControl import NullJ2SEControl
+    from javax.sound.sampled.BooleanControl import BooleanControl
+    return NullJ2SEControl(BooleanControl.Type.MUTE)
+
+lazy_static(NullClip, "NULL_CONTROL", _NullClip_NULL_CONTROL)
 

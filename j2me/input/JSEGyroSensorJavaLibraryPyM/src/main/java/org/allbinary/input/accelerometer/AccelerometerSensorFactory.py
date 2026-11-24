@@ -24,7 +24,6 @@ class AccelerometerSensorFactory:
     # throws Exception
     @staticmethod
     def init() -> None:
-        from org.allbinary.input.accelerometer.NoAccelerometerSensor import NoAccelerometerSensor
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
         features: Features = Features.getInstance()

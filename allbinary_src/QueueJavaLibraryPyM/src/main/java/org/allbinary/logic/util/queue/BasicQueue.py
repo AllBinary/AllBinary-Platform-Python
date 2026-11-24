@@ -22,6 +22,8 @@ class BasicQueue:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.queueVector: BasicArrayList = BasicArrayListD()
     
 
@@ -55,7 +57,7 @@ class BasicQueue:
         anyType: object = self.queueVector.get(self.queueVector.size() - 1)
         self.queueVector.remove(anyType)
         return anyType
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

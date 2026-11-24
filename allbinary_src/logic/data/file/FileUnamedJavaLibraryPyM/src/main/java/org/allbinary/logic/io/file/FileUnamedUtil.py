@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileUnamedUtil:
     instance: FileUnamedUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
 
     def __init__(self) -> None:
@@ -37,8 +39,11 @@ class FileUnamedUtil:
         simplifiedString = simplifiedString.replace(self.commonSeps.SPACE, self.commonSeps.UNDERSCORE)
         simplifiedString = simplifiedString.replace(self.commonSeps.DASH, self.commonSeps.UNDERSCORE)
         return simplifiedString
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 
-FileUnamedUtil.instance = FileUnamedUtil()
+def _FileUnamedUtil_instance() -> object:
+    return FileUnamedUtil()
+
+lazy_static(FileUnamedUtil, "instance", _FileUnamedUtil_instance)
 

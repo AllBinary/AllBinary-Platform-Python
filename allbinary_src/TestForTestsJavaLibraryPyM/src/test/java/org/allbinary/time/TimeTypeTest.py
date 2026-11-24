@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import datetime
+from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
 
 
 class TimeTypeTest:
@@ -34,44 +35,57 @@ class TimeTypeTest:
     
 
     def isNight_returnsTrue_for_hours_less_than_6(self) -> None:
-        from org.allbinary.time.TestableTimeTypeUtil import TestableTimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         """Otherwise - statement - ForEachStmt"""
     
 
     def isNight_returnsTrue_for_hours_greater_than_18(self) -> None:
-        from org.allbinary.time.TestableTimeTypeUtil import TestableTimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         """Otherwise - statement - ForEachStmt"""
     
 
     def isNight_returnsFalse_for_boundary_hours_6_and_18(self) -> None:
-        from org.allbinary.time.TestableTimeTypeUtil import TestableTimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         """Otherwise - statement - ForEachStmt"""
     
 
     def getNightOrDay_returns_expected_label(self) -> None:
-        from org.allbinary.time.TestableTimeTypeUtil import TestableTimeTypeUtil
-        from org.allbinary.time.TestableTimeTypeUtil import TestableTimeTypeUtil
-        nightUtil: TimeTypeUtil = TestableTimeTypeUtil(0)
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
+        nightUtil: TimeTypeUtil = TimeTypeTest.TestableTimeTypeUtil(0)
         Assertions.assertEquals(nightUtil.NIGHT, nightUtil.getNightOrDay())
-        dayUtil: TimeTypeUtil = TestableTimeTypeUtil(12)
+        dayUtil: TimeTypeUtil = TimeTypeTest.TestableTimeTypeUtil(12)
         Assertions.assertEquals(dayUtil.DAY, dayUtil.getNightOrDay())
     
 
     def getHourOfDay_long_converts_epoch_to_local_hour(self) -> None:
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         util: TimeTypeUtil = TimeTypeUtil()
         """Otherwise - statement - ForEachStmt"""
     
 
     def isNight_long_expected_ranges(self) -> None:
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         util: TimeTypeUtil = TimeTypeUtil()
         """Otherwise - statement - ForEachStmt"""
         """Otherwise - statement - ForEachStmt"""
     
 
     def getNightOrDay_long_consistency(self) -> None:
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         util: TimeTypeUtil = TimeTypeUtil()
         nightMillis: int = TimeTypeTest.millisForHourLocal(0)
         dayMillis: int = TimeTypeTest.millisForHourLocal(12)
@@ -80,27 +94,32 @@ class TimeTypeTest:
     
 
     def boundaries_day_for_long_based_api(self) -> None:
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         util: TimeTypeUtil = TimeTypeUtil()
         """Otherwise - statement - ForEachStmt"""
     
 
     def constants_accessible_and_stable(self) -> None:
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         util: TimeTypeUtil = TimeTypeUtil()
         Assertions.assertEquals("Night", util.NIGHT)
         Assertions.assertEquals("Day", util.DAY)
     
 
     def getInstance_returns_same_singleton(self) -> None:
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
-        from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
+        from org.junit.jupiter.api.Assertions import Assertions
+        from org.junit.jupiter.api.DisplayName import DisplayName
+        from org.junit.jupiter.api.Test import Test
         a: TimeTypeUtil = TimeTypeUtil.getInstance()
         b: TimeTypeUtil = TimeTypeUtil.getInstance()
         Assertions.assertSame(a, b)
 # from java.util.Calendar import Calendar
-from org.junit.jupiter.api.Assertions import Assertions
-from org.junit.jupiter.api.DisplayName import DisplayName
-from org.junit.jupiter.api.Test import Test
+# from org.junit.jupiter.api.Assertions import Assertions
+# from org.junit.jupiter.api.DisplayName import DisplayName
+# from org.junit.jupiter.api.Test import Test
 
 

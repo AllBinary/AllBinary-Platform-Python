@@ -20,6 +20,10 @@ from __future__ import annotations
 class NewPasswordEmail:
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = None
@@ -28,6 +32,8 @@ class NewPasswordEmail:
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, userInterface: UserInterface, newPassword: str) -> None:
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         self.abeClientInformation = abeClientInformation
         self.userInterface = userInterface
@@ -42,8 +48,16 @@ class NewPasswordEmail:
 
     # throws Exception
     def notifyStoreAdmin(self) -> None:
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+        from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.putF("notifyStoreAdmin", self, "notifyStoreAdmin")
             emailSubject: str = "New Password For User: " + str(self.userInterface.getUserName())
             emailBody: str = "New Password: " + self.newPassword
@@ -52,14 +66,22 @@ class NewPasswordEmail:
             adminUserEmailEventHandler: UserEmailEventHandler = AdminUserEmailEventHandlerSingletons.getInstance().getInstance(self.abeClientInformation, UserEmailEventNameData.NEWPASSWORD)
             adminUserEmailEventHandler.receiveEmailInfo(UserEmailEventNameData.NEWPASSWORD, emailInfo)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "emailAdmin", e)
     
 
     # throws Exception
     def notifyUser(self) -> None:
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+        from org.allbinary.logic.communication.smtp.event.handler.factory.UserEmailEventHandlerSingletons import UserEmailEventHandlerSingletons
+        from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
                 self.logUtil.putF("Email User", self, "notifyUser()")
             subject: str = "New Password"
             body: str = "New Password: " + self.newPassword
@@ -68,19 +90,21 @@ class NewPasswordEmail:
             userEmailEventHandler: UserEmailEventHandler = UserEmailEventHandlerSingletons.getInstance().getInstance(self.abeClientInformation, UserEmailEventNameData.NEWPASSWORD, self.userInterface)
             userEmailEventHandler.receiveEmailInfo(UserEmailEventNameData.NEWPASSWORD, emailInfo)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "notifyUser", e)
             raise e
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
-from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
-from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.event.handler.factory.UserEmailEventHandlerSingletons import UserEmailEventHandlerSingletons
-from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
-from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
-from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+# from org.allbinary.logic.communication.smtp.event.handler.UserEmailEventHandler import UserEmailEventHandler
+# from org.allbinary.logic.communication.smtp.event.handler.factory.AdminUserEmailEventHandlerSingletons import AdminUserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.event.handler.factory.UserEmailEventHandlerSingletons import UserEmailEventHandlerSingletons
+# from org.allbinary.logic.communication.smtp.info.AdminEmailInfo import AdminEmailInfo
+# from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+# from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

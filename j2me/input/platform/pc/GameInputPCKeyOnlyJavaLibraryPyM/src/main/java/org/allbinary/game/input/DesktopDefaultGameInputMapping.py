@@ -22,8 +22,6 @@ class DesktopDefaultGameInputMapping(PersistentInputMapping):
     
 
     def __init__(self) -> None:
-        from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
-        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.configuration.persistance.GamePersistanceStrings import GamePersistanceStrings
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         super().__init__(GamePersistanceStrings.getInstance().DEFAULT_INPUT_MAPPING_RECORD_ID)

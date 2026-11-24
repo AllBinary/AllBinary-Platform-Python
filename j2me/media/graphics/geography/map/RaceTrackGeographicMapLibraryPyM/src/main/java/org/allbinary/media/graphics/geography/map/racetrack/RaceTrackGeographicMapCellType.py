@@ -34,6 +34,6 @@ class RaceTrackGeographicMapCellType(GeographicMapCellType):
 
     def getTravelCost(self) -> int:
         return self.travelCost
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

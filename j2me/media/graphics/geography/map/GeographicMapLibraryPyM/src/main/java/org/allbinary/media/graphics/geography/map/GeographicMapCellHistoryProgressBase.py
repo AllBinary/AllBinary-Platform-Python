@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GeographicMapCellHistoryProgressBase:
@@ -38,5 +39,8 @@ class GeographicMapCellHistoryProgressBase:
         raise RuntimeError()
 
 
-GeographicMapCellHistoryProgressBase.instance = GeographicMapCellHistoryProgressBase()
+def _GeographicMapCellHistoryProgressBase_instance() -> object:
+    return GeographicMapCellHistoryProgressBase()
+
+lazy_static(GeographicMapCellHistoryProgressBase, "instance", _GeographicMapCellHistoryProgressBase_instance)
 

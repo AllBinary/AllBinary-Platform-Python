@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThemeData:
@@ -36,5 +37,8 @@ class ThemeData:
         self._init_fields()
 
 
-ThemeData.instance = ThemeData()
+def _ThemeData_instance() -> object:
+    return ThemeData()
+
+lazy_static(ThemeData, "instance", _ThemeData_instance)
 

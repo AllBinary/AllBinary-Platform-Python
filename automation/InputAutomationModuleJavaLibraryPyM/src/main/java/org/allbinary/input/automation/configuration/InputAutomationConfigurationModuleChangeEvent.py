@@ -20,20 +20,24 @@ from __future__ import annotations
 class InputAutomationConfigurationModuleChangeEvent:
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         self.inputAutomationModuleConfiguration: InputAutomationModuleConfiguration = None
     
 
     def __init__(self, inputAutomationModuleConfiguration: InputAutomationModuleConfiguration) -> None:
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         self._init_fields()
         self.setInputAutomationModuleConfiguration(inputAutomationModuleConfiguration)
     
 
     def getInputAutomationModuleConfiguration(self) -> InputAutomationModuleConfiguration:
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         return self.inputAutomationModuleConfiguration
     
 
     def setInputAutomationModuleConfiguration(self, inputAutomationModuleConfiguration: InputAutomationModuleConfiguration) -> None:
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         self.inputAutomationModuleConfiguration = inputAutomationModuleConfiguration
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
 
 

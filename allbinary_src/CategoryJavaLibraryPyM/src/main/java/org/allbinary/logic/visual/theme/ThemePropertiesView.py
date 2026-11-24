@@ -31,11 +31,13 @@ class ThemePropertiesView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createNameValueNodes(document, ThemeData.getInstance().NAME, self.themeInterface.toHashMap())
         return node
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

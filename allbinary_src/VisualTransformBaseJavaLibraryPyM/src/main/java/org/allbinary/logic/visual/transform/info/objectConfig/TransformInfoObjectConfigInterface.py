@@ -23,6 +23,7 @@ class TransformInfoObjectConfigInterface(DomDocumentMappingInterface):
     
 
     def containsView(self, transformInfoInterface: TransformInfoInterface) -> bool:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         raise NotImplementedError()
     
 
@@ -33,21 +34,25 @@ class TransformInfoObjectConfigInterface(DomDocumentMappingInterface):
 
     # throws Exception
     def getTransformsGroup(self, group: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getTransforms(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getParentTransforms(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def getGroupTransforms(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -80,8 +85,8 @@ class TransformInfoObjectConfigInterface(DomDocumentMappingInterface):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

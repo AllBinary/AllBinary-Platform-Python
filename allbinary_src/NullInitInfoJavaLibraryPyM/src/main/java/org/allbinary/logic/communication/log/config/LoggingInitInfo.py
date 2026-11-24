@@ -95,12 +95,14 @@ class LoggingInitInfo:
 
     @staticmethod
     def _set_unlocked(logConfigInfoList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         LoggingInitInfo.logConfigInfoList = logConfigInfoList
     
 
     # throws Exception
     @staticmethod
     def get() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         LoggingInitInfo.updateIfNeeded()
         return LoggingInitInfo.logConfigInfoList
     
@@ -108,6 +110,8 @@ class LoggingInitInfo:
     # throws Exception
     @staticmethod
     def getTypeList() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         LoggingInitInfo.updateIfNeeded()
         allLogTypeVector: BasicArrayList = BasicArrayListD()
         size: int = LoggingInitInfo.logConfigInfoList.size()
@@ -132,7 +136,7 @@ class LoggingInitInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

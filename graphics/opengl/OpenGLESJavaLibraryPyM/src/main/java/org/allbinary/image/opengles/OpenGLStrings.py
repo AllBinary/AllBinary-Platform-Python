@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLStrings:
@@ -21,5 +22,8 @@ class OpenGLStrings:
         return OpenGLStrings.instance
 
 
-OpenGLStrings.instance = OpenGLStrings()
+def _OpenGLStrings_instance() -> object:
+    return OpenGLStrings()
+
+lazy_static(OpenGLStrings, "instance", _OpenGLStrings_instance)
 

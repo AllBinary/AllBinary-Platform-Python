@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -33,12 +34,16 @@ class TimeStampUtil:
     
 
     def getAsString(self) -> str:
+        from com.google.gwt.i18n.client.DateTimeFormat import DateTimeFormat
         simpleDataFormat: DateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm:ss.SSS")
         date: datetime.datetime = datetime.datetime()
         return simpleDataFormat.format(date)
-from com.google.gwt.i18n.client.DateTimeFormat import DateTimeFormat
+# from com.google.gwt.i18n.client.DateTimeFormat import DateTimeFormat
 # from java.util.Date import Date
 
 
-TimeStampUtil.instance = TimeStampUtil()
+def _TimeStampUtil_instance() -> object:
+    return TimeStampUtil()
+
+lazy_static(TimeStampUtil, "instance", _TimeStampUtil_instance)
 

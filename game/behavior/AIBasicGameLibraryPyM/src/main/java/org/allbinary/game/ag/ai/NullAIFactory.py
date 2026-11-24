@@ -23,7 +23,7 @@ class NullAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
     NULL_AI: NullAI = None
     
 
-    def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
+    def getInstance_j3(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
@@ -31,11 +31,13 @@ class NullAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
         return NullAIFactory.NULL_AI
     
 
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance() -> ArtificialIntelligenceInterface:
+    def getInstance_j0() -> ArtificialIntelligenceInterface:
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         return NullAIFactory.NULL_AI
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
 # from org.allbinary.game.input.GameInput import GameInput
 # from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer

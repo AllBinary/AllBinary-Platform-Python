@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputOutputTypeData:
@@ -43,5 +44,8 @@ class InputOutputTypeData:
         self._init_fields()
 
 
-InputOutputTypeData.instance = InputOutputTypeData()
+def _InputOutputTypeData_instance() -> object:
+    return InputOutputTypeData()
+
+lazy_static(InputOutputTypeData, "instance", _InputOutputTypeData_instance)
 

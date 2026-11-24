@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StoreFrontsData:
@@ -38,5 +39,8 @@ class StoreFrontsData:
         return StoreFrontsData.instance
 
 
-StoreFrontsData.instance = StoreFrontsData()
+def _StoreFrontsData_instance() -> object:
+    return StoreFrontsData()
+
+lazy_static(StoreFrontsData, "instance", _StoreFrontsData_instance)
 

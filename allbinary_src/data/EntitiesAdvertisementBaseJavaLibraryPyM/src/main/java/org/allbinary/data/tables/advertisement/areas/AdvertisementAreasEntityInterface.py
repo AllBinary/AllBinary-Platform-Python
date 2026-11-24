@@ -23,14 +23,18 @@ class AdvertisementAreasEntityInterface(BasicDataTableInterface):
     
 
     # throws Exception
-    def get(self, storeName: str) -> BasicArrayList:
+    def get_j1(self, storeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def get(self, storeName: str, advertisementAreaName: str) -> AdvertisementAreaInterface:
+    def get_j2(self, storeName: str, advertisementAreaName: str) -> AdvertisementAreaInterface:
+        from org.allbinary.business.advertisement.area.AdvertisementAreaInterface import AdvertisementAreaInterface
         raise NotImplementedError()
+
+    def get(self, *args):
+        return getattr(self, "get_j" + str(len(args)))(*args)
     
 
     def delete(self, value: str) -> None:
@@ -38,14 +42,16 @@ class AdvertisementAreasEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.advertisement.area.AdvertisementAreaInterface import AdvertisementAreaInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.advertisement.area.AdvertisementAreaInterface import AdvertisementAreaInterface
 
 

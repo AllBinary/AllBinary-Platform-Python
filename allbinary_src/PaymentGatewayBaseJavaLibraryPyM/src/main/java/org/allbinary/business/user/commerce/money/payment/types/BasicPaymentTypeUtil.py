@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicPaymentTypeUtil:
     instance: BasicPaymentTypeUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.paymentTypeVector: BasicArrayList = BasicArrayListD()
     
 
@@ -57,6 +60,8 @@ class BasicPaymentTypeUtil:
     
 
     def difference(self, a_PaymentTypeVector: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         diff: BasicArrayList = BasicArrayListD()
         size: int = self.paymentTypeVector.size()
         for i in range(0, size):
@@ -64,12 +69,15 @@ class BasicPaymentTypeUtil:
             if not a_PaymentTypeVector.contains(paymentType):
                 diff.add(paymentType)
         return diff
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 
-BasicPaymentTypeUtil.instance = BasicPaymentTypeUtil()
+def _BasicPaymentTypeUtil_instance() -> object:
+    return BasicPaymentTypeUtil()
+
+lazy_static(BasicPaymentTypeUtil, "instance", _BasicPaymentTypeUtil_instance)
 
 BasicPaymentTypeUtil._static_init()
 

@@ -23,13 +23,17 @@ class TaxModuleInterface:
 
     # throws Exception
     def getTaxRate(self, streetAddress: StreetAddress, storeFrontInterface: StoreFrontInterface) -> float:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     # throws Exception
     def isValid(self, streetAddress: StreetAddress, storeFrontInterface: StoreFrontInterface) -> bool:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
 
 

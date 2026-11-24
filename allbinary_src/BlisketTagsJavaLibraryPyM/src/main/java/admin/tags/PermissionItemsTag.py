@@ -22,10 +22,12 @@ class PermissionItemsTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.PermissionItemsHelperFactory import PermissionItemsHelperFactory
+        from admin.taghelpers.PermissionItemsRequestHelperFactory import PermissionItemsRequestHelperFactory
         super().__init__()
         self.setTagHelperFactory(PermissionItemsHelperFactory())
         self.setTagRequestHelperFactory(PermissionItemsRequestHelperFactory())
-from admin.taghelpers.PermissionItemsHelperFactory import PermissionItemsHelperFactory
-from admin.taghelpers.PermissionItemsRequestHelperFactory import PermissionItemsRequestHelperFactory
+# from admin.taghelpers.PermissionItemsHelperFactory import PermissionItemsHelperFactory
+# from admin.taghelpers.PermissionItemsRequestHelperFactory import PermissionItemsRequestHelperFactory
 
 

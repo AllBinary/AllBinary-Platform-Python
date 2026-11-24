@@ -26,6 +26,8 @@ class DomNodeHelper:
 
     @staticmethod
     def getFirstChildElement(parentNode: Node) -> Node:
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         node: Node = parentNode.getFirstChild()
         if node is not None and node.getNodeType() != Node.ELEMENT_NODE:
             nodeList: NodeList = parentNode.getChildNodes()
@@ -37,7 +39,9 @@ class DomNodeHelper:
     
 
     @staticmethod
-    def getTextNodeValue(node: Node) -> str:
+    def getTextNodeValue_j1(node: Node) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Node import Node
         nodeTextNode: Node = node.getFirstChild()
         if nodeTextNode is not None:
             return nodeTextNode.getNodeValue()
@@ -46,16 +50,24 @@ class DomNodeHelper:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getTextNodeValue(nodeName: str, nodeList: NodeList) -> str:
+    def getTextNodeValue_j2(nodeName: str, nodeList: NodeList) -> str:
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         node: Node = DomSearchHelper.getNode(nodeName, nodeList)
         return DomNodeHelper.getTextNodeValue(node)
+
+    @staticmethod
+    def getTextNodeValue(*args):
+        return getattr(DomNodeHelper, "getTextNodeValue_j" + str(len(args)))(*args)
     
 
     @staticmethod
     def getTextNodesValue(node: Node) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         stringBuffer: StringMaker = StringMaker()
         nodeList: NodeList = node.getChildNodes()
         for index in range(0, nodeList.getLength()):
@@ -64,9 +76,9 @@ class DomNodeHelper:
                 if nodeTextNode is not None:
                     stringBuffer.append(nodeTextNode.getNodeValue())
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

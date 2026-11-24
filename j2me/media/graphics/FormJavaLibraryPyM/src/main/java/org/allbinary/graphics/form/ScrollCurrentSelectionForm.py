@@ -15,113 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.canvas.Processor import Processor
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
-from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
-from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
 
 
-class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
-    class TempHorizontalFormProcessor(Processor):
-
-        def _init_fields(self) -> None:
-            self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
-        
-
-        def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
-        
-
-        # throws Exception
-        def process(self) -> None:
-            self.scrollCurrentSelectionForm.processTempHorizontalForm()
-            self.scrollCurrentSelectionForm.processor = Processor.getInstance()
-    class HorizontalFormProcessor(Processor):
-
-        def _init_fields(self) -> None:
-            self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
-        
-
-        def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
-        
-
-        # throws Exception
-        def process(self) -> None:
-            self.scrollCurrentSelectionForm.processHorizontalForm()
-            self.scrollCurrentSelectionForm.processor = Processor.getInstance()
-    class VerticalFormProcessor(Processor):
-
-        def _init_fields(self) -> None:
-            self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
-        
-
-        def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
-        
-
-        # throws Exception
-        def process(self) -> None:
-            self.scrollCurrentSelectionForm.processVerticalForm()
-            self.scrollCurrentSelectionForm.processor = Processor.getInstance()
-    class TempHorizontalItemIndexDx(ItemIndexDx):
-
-        def _init_fields(self) -> None:
-            self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
-        
-
-        def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
-        
-
-        # throws Exception
-        def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollCurrentSelectionForm.getXTempHorizontalForm(index, item, dx, dy)
-    class HorizontalItemIndexDx(ItemIndexDx):
-
-        def _init_fields(self) -> None:
-            self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
-        
-
-        def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
-        
-
-        # throws Exception
-        def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollCurrentSelectionForm.getXHorizontalForm(index, item, dx, dy)
-    class VerticalItemIndexDx(ItemIndexDx):
-
-        def _init_fields(self) -> None:
-            self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
-        
-
-        def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
-        
-
-        # throws Exception
-        def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollCurrentSelectionForm.getXVerticalForm(index, item, dx, dy)
+class ScrollCurrentSelectionForm(*java_bases(ScrollSelectionForm, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
         from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.moveForSmallScreen: bool = None
@@ -145,6 +47,12 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
     # throws Exception
     def init(self, rectangle: Rectangle, formType: FormType) -> None:
         from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from org.allbinary.graphics.form.VerticalFormProcessor import VerticalFormProcessor
+        from org.allbinary.graphics.form.VerticalItemIndexDx import VerticalItemIndexDx
+        from org.allbinary.graphics.form.HorizontalFormProcessor import HorizontalFormProcessor
+        from org.allbinary.graphics.form.HorizontalItemIndexDx import HorizontalItemIndexDx
+        from org.allbinary.graphics.form.TempHorizontalFormProcessor import TempHorizontalFormProcessor
+        from org.allbinary.graphics.form.TempHorizontalItemIndexDx import TempHorizontalItemIndexDx
         from org.allbinary.graphics.Rectangle import Rectangle
         super().init(rectangle, formType)
         formTypeFactory: FormTypeFactory = FormTypeFactory.getInstance()
@@ -272,6 +180,7 @@ class ScrollCurrentSelectionForm(ScrollSelectionForm, UpdateMyFontInterface):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.canvasStrings.PAINT, e)
 # from javax.microedition.lcdui.Graphics import Graphics
+# from org.allbinary.canvas.Processor import Processor
 # from org.allbinary.graphics.Rectangle import Rectangle
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor

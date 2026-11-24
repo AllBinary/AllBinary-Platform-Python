@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidInfoFactory:
     instance: AndroidInfoFactory = None
 
     def _init_fields(self) -> None:
+        from android.os.Build import Build
         self.version: int = int(Build.VERSION.SDK)
 
     def __init__(self) -> None:
@@ -34,8 +36,11 @@ class AndroidInfoFactory:
 
     def getVersion(self) -> int:
         return self.version
-from android.os.Build import Build
+# from android.os.Build import Build
 
 
-AndroidInfoFactory.instance = AndroidInfoFactory()
+def _AndroidInfoFactory_instance() -> object:
+    return AndroidInfoFactory()
+
+lazy_static(AndroidInfoFactory, "instance", _AndroidInfoFactory_instance)
 

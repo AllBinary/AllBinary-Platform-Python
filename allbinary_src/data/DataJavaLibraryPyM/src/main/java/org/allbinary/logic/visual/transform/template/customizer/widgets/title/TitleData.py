@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TitleData:
@@ -36,5 +37,8 @@ class TitleData:
         self._init_fields()
 
 
-TitleData.instance = TitleData()
+def _TitleData_instance() -> object:
+    return TitleData()
+
+lazy_static(TitleData, "instance", _TitleData_instance)
 

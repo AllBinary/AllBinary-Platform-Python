@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.threed.min3d.renderer.processor.ObjectThreedOpenGLProcessor import ObjectThreedOpenGLProcessor
 
 
@@ -32,9 +33,13 @@ class VertexAttributePointerVBOOpenGLProcessor(ObjectThreedOpenGLProcessor):
     
 
     def process(self, gl: GL10, anyType: object) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise RuntimeError()
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-VertexAttributePointerVBOOpenGLProcessor.instance = VertexAttributePointerVBOOpenGLProcessor()
+def _VertexAttributePointerVBOOpenGLProcessor_instance() -> object:
+    return VertexAttributePointerVBOOpenGLProcessor()
+
+lazy_static(VertexAttributePointerVBOOpenGLProcessor, "instance", _VertexAttributePointerVBOOpenGLProcessor_instance)
 

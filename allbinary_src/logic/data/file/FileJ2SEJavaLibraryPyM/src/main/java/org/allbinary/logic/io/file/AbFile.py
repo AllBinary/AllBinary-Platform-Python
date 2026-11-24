@@ -196,31 +196,37 @@ class AbFile(AbFileInterface):
         return self.file.setReadOnly()
     
 
-    def setWritable(self, writable: bool, ownerOnly: bool) -> bool:
+    def setWritable_j2(self, writable: bool, ownerOnly: bool) -> bool:
         return self.file.setExecutable(writable, ownerOnly)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def setWritable(self, writable: bool) -> bool:
+    def setWritable_j1(self, writable: bool) -> bool:
         return self.file.setWritable(writable)
+
+    def setWritable(self, *args):
+        return getattr(self, "setWritable_j" + str(len(args)))(*args)
     
 
-    def setReadable(self, readable: bool, ownerOnly: bool) -> bool:
+    def setReadable_j2(self, readable: bool, ownerOnly: bool) -> bool:
         return self.file.setReadable(readable, ownerOnly)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def setReadable(self, readable: bool) -> bool:
+    def setReadable_j1(self, readable: bool) -> bool:
         return self.file.setReadable(readable)
+
+    def setReadable(self, *args):
+        return getattr(self, "setReadable_j" + str(len(args)))(*args)
     
 
-    def setExecutable(self, executable: bool, ownerOnly: bool) -> bool:
+    def setExecutable_j2(self, executable: bool, ownerOnly: bool) -> bool:
         return self.file.setExecutable(executable, ownerOnly)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def setExecutable(self, executable: bool) -> bool:
+    def setExecutable_j1(self, executable: bool) -> bool:
         return self.file.setExecutable(executable)
+
+    def setExecutable(self, *args):
+        return getattr(self, "setExecutable_j" + str(len(args)))(*args)
     
 
     def canExecute(self) -> bool:

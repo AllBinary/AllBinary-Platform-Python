@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CommandUriAction:
     instance: CommandUriAction = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
@@ -35,10 +40,12 @@ class CommandUriAction:
     
 
     def add(self, command: Command, url: str) -> None:
+        from javax.microedition.lcdui.Command import Command
         self.hashtable.put(command, url)
     
 
     def process(self, command: Command) -> None:
+        from javax.microedition.lcdui.Command import Command
         try:
             pass
         except Exception as e:
@@ -46,14 +53,18 @@ class CommandUriAction:
     
 
     def getIntent(self, command: Command) -> Intent:
+        from javax.microedition.lcdui.Command import Command
         url: str = self.hashtable.get(command)
         return self.intent
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-CommandUriAction.instance = CommandUriAction()
+def _CommandUriAction_instance() -> object:
+    return CommandUriAction()
+
+lazy_static(CommandUriAction, "instance", _CommandUriAction_instance)
 

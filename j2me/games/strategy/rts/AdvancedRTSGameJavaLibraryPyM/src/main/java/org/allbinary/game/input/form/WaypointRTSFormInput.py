@@ -21,6 +21,11 @@ from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 class WaypointRTSFormInput(RTSFormInput):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+        from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+        from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         self.WAYPOINT_EVENT: RTSLayerEvent = RTSLayerEvent(NullRTSLayer.NULL_RTS_LAYER)
         self.dragToSpotGameNotificationEvent: GameNotificationEvent = None
         self.spotTakenGameNotificationEvent: GameNotificationEvent = None
@@ -33,6 +38,12 @@ class WaypointRTSFormInput(RTSFormInput):
     
 
     def __init__(self, groupInterface: list[Group], isPrimaryWaypointCreator: bool) -> None:
+        from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
         self._init_fields()
         self.isPrimaryWaypointCreator = isPrimaryWaypointCreator
@@ -48,6 +59,9 @@ class WaypointRTSFormInput(RTSFormInput):
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -61,6 +75,15 @@ class WaypointRTSFormInput(RTSFormInput):
 
     # throws Exception
     def processAtPoint(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, point: GPoint) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().process(layerManager)
         if self.isStickyItemSelected() or associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
             if self.isStickyItemSelected() and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
@@ -81,6 +104,14 @@ class WaypointRTSFormInput(RTSFormInput):
 
     # throws Exception
     def processCellPosition(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         itemIndex: int = self.getSelectedStickyItemIndex()
         if self.newUnconstructedRTSLayerInterfaceArray[itemIndex] == CollidableDestroyableDamageableLayer.getNullInstance():
             self.newUnconstructedRTSLayerInterfaceArray[itemIndex] = self.getInstance(layerManager, self.getSelectedStickyItem(), geographicMapCellPosition)
@@ -96,6 +127,12 @@ class WaypointRTSFormInput(RTSFormInput):
 
     # throws Exception
     def processStickyGameSpecific(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, item: ABCustomItem, index: int) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.layer.Layer import Layer
         self.logUtil.putF("Set Sticking Item: " + str(item), self, "processSticky")
         self.setSelectedStickyItem(item)
         self.setSelectedStickyItemIndex(index)
@@ -106,6 +143,27 @@ class WaypointRTSFormInput(RTSFormInput):
 
     # throws Exception
     def attemptBuild(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, layerInterface: RTSLayer, itemIndex: int) -> bool:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.capital.Capital import Capital
+        from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
+        from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.audio.ErrorSound import ErrorSound
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
         self.logUtil.putF("Layer: " + str(layerInterface), self, "attemptBuild")
         if layerInterface is None:
             self.logUtil.put("Layer was null", self, "attemptBuild", Exception())
@@ -167,6 +225,11 @@ class WaypointRTSFormInput(RTSFormInput):
     # throws Exception
     def addWayPoint(self, layerInterface: WaypointLayer) -> None:
         from org.allbinary.game.input.form.PrimaryWaypointHelper import PrimaryWaypointHelper
+        from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+        from org.allbinary.game.layer.RTSLayerUtil import RTSLayerUtil
+        from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
+        from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stickyAssociatedAdvandedRtsLayer: AdvancedRTSGameLayer = self.stickyAssociatedRtsLayer
         list_: BasicArrayList = stickyAssociatedAdvandedRtsLayer.getWaypointBehavior().getOwnedWaypointList()
         RTSLayerUtil.getInstance().destroyAndClear(list_)
@@ -175,43 +238,43 @@ class WaypointRTSFormInput(RTSFormInput):
             PrimaryWaypointHelper.getInstance().setWaypointLayer(layerInterface)
         self.WAYPOINT_EVENT.setRtsLayer(layerInterface)
         WaypointEventHandlerFactory.getInstance(layerInterface.getGroupInterface()[0]).fireEvent(self.WAYPOINT_EVENT)
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
-from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
-from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
-from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
-from org.allbinary.game.layer.RTSLayerUtil import RTSLayerUtil
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.game.layer.capital.Capital import Capital
-from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
-from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
-from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
-from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
-from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.media.audio.ErrorSound import ErrorSound
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
+# from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
+# from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
+# from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.game.layer.RTSLayerUtil import RTSLayerUtil
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.game.layer.capital.Capital import Capital
+# from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
+# from org.allbinary.game.layer.waypoint.WaypointLayer import WaypointLayer
+# from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+# from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+# from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+# from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.audio.ErrorSound import ErrorSound
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
 
 

@@ -15,13 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
-class RTSLayerTextAnimation(Animation, UpdateMyFontInterface):
+class RTSLayerTextAnimation(*java_bases(Animation, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.image: Image = None
         self.text: str = None
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
@@ -29,6 +33,7 @@ class RTSLayerTextAnimation(Animation, UpdateMyFontInterface):
     
 
     def __init__(self, text: str, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         super().__init__()
         self._init_fields()
         self.text = text
@@ -36,12 +41,16 @@ class RTSLayerTextAnimation(Animation, UpdateMyFontInterface):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         super().paintXY(graphics, x, y)
         adjustedCostY: int = self.image.getHeight() - self.fontHeight
@@ -49,7 +58,7 @@ class RTSLayerTextAnimation(Animation, UpdateMyFontInterface):
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
 
 

@@ -72,7 +72,6 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
 
     # throws Exception
     def getBasicAnimationInterfaceFactoryInstance(self, resource: str) -> BasicAnimationInterfaceFactoryInterface:
-        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.animation.resource.FeatureResourceAnimationInterfaceFactoryInterface import FeatureResourceAnimationInterfaceFactoryInterface
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil

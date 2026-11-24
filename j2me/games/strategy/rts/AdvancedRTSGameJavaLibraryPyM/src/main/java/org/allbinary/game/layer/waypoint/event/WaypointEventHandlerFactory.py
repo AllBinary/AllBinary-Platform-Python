@@ -15,22 +15,39 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WaypointEventHandlerFactory:
-    eventHandlerArray: list[WaypointEventHandler] = [WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler()]
+    eventHandlerArray: list[WaypointEventHandler] = None
     
 
     @staticmethod
     def getInstance(groupInterface: Group) -> WaypointEventHandler:
-        return WaypointEventHandlerFactory.eventHandlerArray[int(groupInterface.getGroupId())]
+        from org.allbinary.game.identification.Group import Group
+        groupId: int = int(groupInterface.getGroupId())
+        return WaypointEventHandlerFactory.eventHandlerArray[groupId]
     
 
     @staticmethod
     def removeAll() -> None:
         for index in range(len(WaypointEventHandlerFactory.eventHandlerArray) - 1, 0 - 1, -1):
             WaypointEventHandlerFactory.eventHandlerArray[index].removeAllListeners()
-from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.identification.Group import Group
 
+
+def _WaypointEventHandlerFactory_eventHandlerArray() -> object:
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    from org.allbinary.game.layer.waypoint.event.WaypointEventHandler import WaypointEventHandler
+    return [WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler(), WaypointEventHandler()]
+
+lazy_static(WaypointEventHandlerFactory, "eventHandlerArray", _WaypointEventHandlerFactory_eventHandlerArray)
 

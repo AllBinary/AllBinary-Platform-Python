@@ -21,12 +21,15 @@ from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
 class AllBinaryJ2METiledLayer(AllBinaryTiledLayer):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         self.tiledLayerP: TiledLayer = None
         self.debugColor: int = None
         self.font2: Font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, 4)
     
 
     def __init__(self, dataId: int, tiledLayer: TiledLayer, mapTwoDArray: list[list[int]], debugColor: int) -> None:
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         super().__init__(dataId, tiledLayer.getWidth(), tiledLayer.getHeight(), tiledLayer.getCellWidth(), tiledLayer.getCellHeight())
         self._init_fields()
         self.tiledLayerP = tiledLayer
@@ -35,10 +38,15 @@ class AllBinaryJ2METiledLayer(AllBinaryTiledLayer):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.tiledLayerP.paint(graphics)
     
 
     def paintDebug(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
         font: Font = graphics.getFont()
         graphics.setFont(self.font2)
         graphics.setColor(self.debugColor)
@@ -87,6 +95,7 @@ class AllBinaryJ2METiledLayer(AllBinaryTiledLayer):
     
 
     def getTiledLayer(self) -> TiledLayer:
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         return self.tiledLayerP
     
 
@@ -119,7 +128,7 @@ class AllBinaryJ2METiledLayer(AllBinaryTiledLayer):
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.game.TiledLayer import TiledLayer
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

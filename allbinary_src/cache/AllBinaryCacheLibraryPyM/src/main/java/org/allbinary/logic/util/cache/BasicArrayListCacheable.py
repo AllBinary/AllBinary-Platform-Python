@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 
 
-class BasicArrayListCacheable(BasicArrayListD, CacheableInterface):
+class BasicArrayListCacheable(*java_bases(BasicArrayListD, CacheableInterface)):
 
     def __init__(self) -> None:
         super().__init__()

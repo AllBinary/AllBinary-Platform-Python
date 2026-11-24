@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageJ2MEScaleUtil:
@@ -32,6 +33,7 @@ class ImageJ2MEScaleUtil:
 
     # throws Exception
     def scaleArray(self, images: list[Image], width: int, height: int) -> list[Image]:
+        from javax.microedition.lcdui.Image import Image
         scaledImages: list[Image] = [None] * (len(images))
         index = len(images)
         while (index := index - 1) >= 0:
@@ -42,10 +44,14 @@ class ImageJ2MEScaleUtil:
     # throws Exception
     def scale(self, image: Image, width: int, height: int) -> Image:
         from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+        from javax.microedition.lcdui.Image import Image
         scaledImage: Image = ImageCopyUtil.getInstance().createImageWH(image, width, height, True)
         return scaledImage
 # from javax.microedition.lcdui.Image import Image
 
 
-ImageJ2MEScaleUtil.instance = ImageJ2MEScaleUtil()
+def _ImageJ2MEScaleUtil_instance() -> object:
+    return ImageJ2MEScaleUtil()
+
+lazy_static(ImageJ2MEScaleUtil, "instance", _ImageJ2MEScaleUtil_instance)
 

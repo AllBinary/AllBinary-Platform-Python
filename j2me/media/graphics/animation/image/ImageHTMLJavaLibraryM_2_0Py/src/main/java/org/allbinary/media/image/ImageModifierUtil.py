@@ -15,11 +15,55 @@
 
 from __future__ import annotations
 
+from playn.core.Callback import Callback
 
 
 class ImageModifierUtil:
+    class ImageCopyCallback(Callback):
+
+        def _init_fields(self) -> None:
+            from javax.microedition.lcdui.Image import Image
+            from playn.core.CoreImage import CoreImage
+            self.imageModifierUtil: ImageModifierUtil = None
+            self.imageArray: list[Image] = None
+            self.index: int = None
+            self.image: Image = None
+            self.image3: CoreImage = None
+        
+
+        def __init__(self, imageModifierUtil: ImageModifierUtil, imageArray: list[Image], index: int, image: Image, image3: CoreImage) -> None:
+            from javax.microedition.lcdui.Image import Image
+            from playn.core.CoreImage import CoreImage
+            self._init_fields()
+            self.imageModifierUtil = imageModifierUtil
+            self.imageArray = imageArray
+            self.index = index
+            self.image = image
+            self.image3 = image3
+        
+
+        def onSuccess(self, resource: object) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.microemu.device.ResourceCallbackStrings import ResourceCallbackStrings
+            logUtil: LogUtil = LogUtil.getInstance()
+            resourceCallbackStrings: ResourceCallbackStrings = self.imageModifierUtil.resourceCallbackStrings
+            logUtil.putF(str(resourceCallbackStrings.DONE) + self.image.getName(), self, resourceCallbackStrings.HANDLE_IMAGE)
+            self.imageModifierUtil.copy(self.imageArray, self.index, self.image, self.image3)
+        
+
+        def onFailure(self, e: BaseException) -> None:
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.logic.string.StringMaker import StringMaker
+            from org.microemu.device.ResourceCallbackStrings import ResourceCallbackStrings
+            logUtil: LogUtil = LogUtil.getInstance()
+            resourceCallbackStrings: ResourceCallbackStrings = self.imageModifierUtil.resourceCallbackStrings
+            logUtil.put(str(StringMaker().append(self.imageModifierUtil.commonStrings.EXCEPTION_LABEL).append(resourceCallbackStrings.ERROR).append(self.image.getName())), self, resourceCallbackStrings.HANDLE_IMAGE, e)
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.microemu.device.ResourceCallbackStrings import ResourceCallbackStrings
+        from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.resourceCallbackStrings: ResourceCallbackStrings = ResourceCallbackStrings.getInstance()
@@ -36,26 +80,37 @@ class ImageModifierUtil:
     
 
     def setColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
     
 
     def changeColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
     
 
     def setAlpha(self, originalImage: Image, image: Image, imageIndex: int, alpha: int) -> None:
+        from javax.microedition.lcdui.Image import Image
         alphaF: float = float(alpha)
         alphaFloat: float = alphaF / 255.0
         self.setAlphaF(originalImage, image, imageIndex, alphaFloat)
     
 
     def setAlphaF(self, originalImage: Image, image: Image, imageIndex: int, alpha: float) -> None:
+        from javax.microedition.lcdui.Image import Image
         if self.alphaArray[imageIndex]:
             self.alphaArray[imageIndex] = False
             self.setAlpha2(originalImage, image, imageIndex, alpha)
     
 
     def setAlpha2(self, originalImage: Image, image: Image, imageIndex: int, alpha: float) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynImage import PlaynImage
+        from playn.core.Canvas import Canvas
+        from playn.core.CoreImage import CoreImage
+        from playn.core.ImageImpl import ImageImpl
         htmlImage: PlaynImage = image
         canvasImage: ImageImpl = htmlImage.getImage()
         originalPlaynImage: CoreImage = (originalImage).getImage()
@@ -66,6 +121,10 @@ class ImageModifierUtil:
     
 
     def setAlpha3(self, image: Image, alpha: float) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynImage import PlaynImage
+        from playn.core.Canvas import Canvas
+        from playn.core.ImageImpl import ImageImpl
         alphaF: float = alpha
         alphaFloat: float = alphaF / 255.0
         htmlImage: PlaynImage = image
@@ -75,6 +134,7 @@ class ImageModifierUtil:
     
 
     def getImageArray(self, originalImageArray: list[Image]) -> list[Image]:
+        from javax.microedition.lcdui.Image import Image
         size: int = len(originalImageArray)
         self.alphaArray = [False] * (size)
         imageArray: list[Image] = [None] * (size)
@@ -85,30 +145,25 @@ class ImageModifierUtil:
     
 
     def handleImage(self, imageArray: list[Image], index: int, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynImage import PlaynImage
+        from playn.core.CoreImage import CoreImage
         image3: CoreImage = (image).getImage()
         if image3 is not None:
             if image3.isReady() or image3.width() + image3.height() <= 0 or image.getName() == self.resourceCallbackStrings.FROM_DATA:
                 self.copy(imageArray, index, image, image3)
             else:
-                callback: Callback = (Callback()  # Java anonymous class body:
-#                     
-# 
-#                     def onSuccess(self, resource: object) -> None:
-#                         logUtil: LogUtil = LogUtil.getInstance()
-#                         logUtil.putF(str(self.resourceCallbackStrings.DONE) + image.getName(), self, self.resourceCallbackStrings.HANDLE_IMAGE)
-#                         self.copy(imageArray, index, image, image3)
-#                     
-# 
-#                     def onFailure(self, e: BaseException) -> None:
-#                         logUtil: LogUtil = LogUtil.getInstance()
-#                         logUtil.put(str(StringMaker().append(self.commonStrings.EXCEPTION_LABEL).append(self.resourceCallbackStrings.ERROR).append(image.getName())), self, self.resourceCallbackStrings.HANDLE_IMAGE, e)
-)
+                callback: Callback = ImageModifierUtil.ImageCopyCallback(self, imageArray, index, image, image3)
                 image3.addCallback(callback)
         else:
             self.logUtil.putF(self.resourceCallbackStrings.NULL + image.isMutable(), self, self.resourceCallbackStrings.HANDLE_IMAGE)
     
 
     def copy(self, imageArray: list[Image], index: int, image: Image, image3: CoreImage) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.Anchor import Anchor
+        from playn.core.CoreImage import CoreImage
         try:
             image2: Image = Image.createImageWH(int(image3.width()), int(image3.height()))
             graphics: Graphics = image2.getGraphics()
@@ -124,17 +179,16 @@ class ImageModifierUtil:
             self.alphaArray[index] = True
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.Anchor import Anchor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.microemu.device.playn.PlaynImage import PlaynImage
-from org.microemu.device.ResourceCallbackStrings import ResourceCallbackStrings
-from playn.core.Callback import Callback
-from playn.core.Canvas import Canvas
-from playn.core.CoreImage import CoreImage
-from playn.core.ImageImpl import ImageImpl
-from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
+# from org.allbinary.graphics.Anchor import Anchor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.microemu.device.playn.PlaynImage import PlaynImage
+# from org.microemu.device.ResourceCallbackStrings import ResourceCallbackStrings
+# from playn.core.Canvas import Canvas
+# from playn.core.CoreImage import CoreImage
+# from playn.core.ImageImpl import ImageImpl
+# from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
 
 

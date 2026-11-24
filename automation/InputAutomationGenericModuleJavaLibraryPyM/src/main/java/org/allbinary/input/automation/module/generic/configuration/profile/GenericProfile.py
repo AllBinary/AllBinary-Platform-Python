@@ -20,6 +20,9 @@ from __future__ import annotations
 class GenericProfile:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.name: str = None
         self.vector: BasicArrayList = None
@@ -27,14 +30,22 @@ class GenericProfile:
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, node: Node) -> None:
+    def _constructor1_1(self, node: Node) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerData import GenericProfileDataWorkerData
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         self.setName(DomNodeHelper.getTextNodeValue(node))
         self.vector = BasicArrayListD()
@@ -48,13 +59,15 @@ class GenericProfile:
                 self.vector.add(genericProfileDataWorkerType)
     
 
-    def _constructor1(self, name: str) -> None:
+    def _constructor1_2(self, name: str) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.setName(name)
         self.vector = BasicArrayListD()
     
 
     def getGenericProfileDataWorkerTypeVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.vector
     
 
@@ -70,6 +83,9 @@ class GenericProfile:
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileData import GenericProfileData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createTextNode(document, GenericProfileData.NAME, self.name)
         size: int = self.vector.size()
         for index in range(0, size):
@@ -87,20 +103,22 @@ class GenericProfile:
     
 
     def getGenericProfileActions(self) -> GenericProfileActions:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
         return self.genericProfileActions
     
 
     def setGenericProfileActions(self, genericProfileActions: GenericProfileActions) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
         self.genericProfileActions = genericProfileActions
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

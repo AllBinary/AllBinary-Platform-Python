@@ -21,6 +21,9 @@ from org.allbinary.animation.image.ImageBaseRotationAnimation import ImageBaseRo
 class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+        from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
         self.imageRotationUtil: ImageRotationUtil = ImageRotationUtil.getInstance()
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
         self.realOriginalImage: Image = None
@@ -41,6 +44,10 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         super().__init__(image, angleInfo, totalAngle, animationBehavior)
         self._init_fields()
         self.realOriginalImage = originalImage
@@ -52,6 +59,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.animation.image.SetColorProcessor import SetColorProcessor
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
@@ -63,6 +71,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
 
     def changeBasicColor(self, basicColor: BasicColor) -> None:
         from org.allbinary.animation.image.ChangeColorProcessor import ChangeColorProcessor
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getChangeBasicColor() is None or int(self.getChangeBasicColor()) != int(basicColor):
             changed = True
@@ -111,6 +120,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def updateImage(self) -> None:
+        from javax.microedition.lcdui.NullImage import NullImage
         self.imageRotationUtil.rotateImage(self.originalImageArray[0], self.twoImages[self.bufferedImageIndex], self.angleInfo.getAngle() + 90)
         self.alphaProcessor.updateAlpha(self.imageModifierUtil, NullImage.NULL_IMAGE, self.twoImages[self.bufferedImageIndex], 0, self.alphaP)
         self.setColorProcessor.updateColor(self.imageModifierUtil, NullImage.NULL_IMAGE, self.twoImages[self.bufferedImageIndex], 0, self.basicColor)
@@ -132,11 +142,13 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawImage(self.imageToShow, x, y, self.anchor)
     
 
     # throws Exception
     def close(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         super().close()
         disposalUtil: DisposalUtil = DisposalUtil.getInstance()
         size2: int = len(self.twoImages)
@@ -151,6 +163,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
 
     # throws Throwable
     def finalize(self) -> None:
+        from org.allbinary.DisposalUtil import DisposalUtil
         super().finalize()
         disposalUtil: DisposalUtil = DisposalUtil.getInstance()
         size2: int = len(self.twoImages)
@@ -164,13 +177,13 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.DisposalUtil import DisposalUtil
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
-from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
+# from org.allbinary.DisposalUtil import DisposalUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
 from org.allbinary.animation.image.ModifierBaseProcessor import ModifierBaseProcessor
 from org.allbinary.animation.image.ScaleProcessor import ScaleProcessor
 

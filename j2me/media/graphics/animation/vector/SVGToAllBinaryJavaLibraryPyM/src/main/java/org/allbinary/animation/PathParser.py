@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.StringBuffer import StringBuffer
 
 
 class PathParser:
@@ -10,7 +11,8 @@ class PathParser:
 
     @staticmethod
     def tokenize(d: str) -> list[str]:
-        from org.allbinary.animation.StringBuffer import StringBuffer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         tokens: BasicArrayList = BasicArrayListD()
         sb: StringBuffer = StringBuffer()
         for i in range(0, len(d)):
@@ -130,8 +132,8 @@ class PathParser:
     def isCommand(tok: str) -> bool:
         c: str = tok[0]
         return "MmLlVvCcZz".find(c) >= 0
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

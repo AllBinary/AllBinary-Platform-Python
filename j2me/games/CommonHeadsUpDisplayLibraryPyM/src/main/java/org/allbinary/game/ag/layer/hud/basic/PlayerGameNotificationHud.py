@@ -15,44 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.canvas.Processor import Processor
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
-class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
-    class SetAndRemoveProcessor(Processor):
-
-        def _init_fields(self) -> None:
-            self.updateMeasurementProcessor: PlayerGameNotificationHud = None
-        
-
-        def __init__(self, updateMeasurementProcessor: PlayerGameNotificationHud) -> None:
-            super().__init__()
-            self._init_fields()
-            self.updateMeasurementProcessor = updateMeasurementProcessor
-        
-
-        # throws Exception
-        def process(self) -> None:
-            self.updateMeasurementProcessor.setAndRemoveProcess()
-    class NextUnremoveableProcessor(Processor):
-
-        def _init_fields(self) -> None:
-            self.updateMeasurementProcessor: PlayerGameNotificationHud = None
-        
-
-        def __init__(self, updateMeasurementProcessor: PlayerGameNotificationHud) -> None:
-            super().__init__()
-            self._init_fields()
-            self.updateMeasurementProcessor = updateMeasurementProcessor
-        
-
-        # throws Exception
-        def process(self) -> None:
-            self.updateMeasurementProcessor.setNextUnremoveableProcess()
+class PlayerGameNotificationHud(*java_bases(GameNotificationHud, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
         from org.allbinary.game.ag.layer.hud.basic.notification.GameNotification import GameNotification
         from org.allbinary.graphics.CustomGPoint import CustomGPoint
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
@@ -93,6 +64,7 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.canvas.Processor import Processor
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         try:
@@ -199,6 +171,7 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
+# from org.allbinary.canvas.Processor import Processor
 # from org.allbinary.game.GameAdState import GameAdState
 # from org.allbinary.game.ag.layer.hud.basic.notification.GameNotification import GameNotification
 # from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
@@ -214,5 +187,7 @@ class PlayerGameNotificationHud(GameNotificationHud, UpdateMyFontInterface):
 # from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 # from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 # from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+from org.allbinary.game.ag.layer.hud.basic.SetAndRemoveProcessor import SetAndRemoveProcessor
+from org.allbinary.game.ag.layer.hud.basic.NextUnremoveableProcessor import NextUnremoveableProcessor
 
 

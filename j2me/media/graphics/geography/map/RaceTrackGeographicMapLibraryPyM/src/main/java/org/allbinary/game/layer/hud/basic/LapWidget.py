@@ -21,12 +21,14 @@ from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 class LapWidget(BasicHud):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.LAP_STR: str = "Lap "
         self.OF_STR: str = " of "
         self.string: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, location: int, direction: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, 2, basicColor)
         self._init_fields()
         self.updateMaxHeight = 15
@@ -34,6 +36,8 @@ class LapWidget(BasicHud):
     
 
     def update(self, lapInfo: LapInfo) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.game.layer.hud.LapInfo import LapInfo
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.delete(0, stringBuffer.length())
         stringBuffer.append(self.LAP_STR)
@@ -44,11 +48,12 @@ class LapWidget(BasicHud):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintString(graphics, self.string)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.game.layer.hud.LapInfo import LapInfo
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.layer.hud.LapInfo import LapInfo
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

@@ -25,17 +25,20 @@ class FtpConfigurationView(DomNodeInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, node: Node) -> None:
+    def _constructor1_1(self, node: Node) -> None:
         from org.allbinary.logic.communication.ftp.configuration.FtpConfiguration import FtpConfiguration
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         self.setFtpConfigurationInterface(FtpConfiguration())
         chileNodeList: NodeList = node.getChildNodes()
@@ -49,7 +52,7 @@ class FtpConfigurationView(DomNodeInterface):
         self.getFtpConfigurationInterface().setPath(path)
     
 
-    def _constructor1(self, ftpConfigurationInterface: FtpConfigurationInterface) -> None:
+    def _constructor1_2(self, ftpConfigurationInterface: FtpConfigurationInterface) -> None:
         self._init_fields()
         self.setFtpConfigurationInterface(ftpConfigurationInterface)
     
@@ -57,9 +60,12 @@ class FtpConfigurationView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationMapping import FtpConfigurationMapping
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         ftpConfigurationMapping: FtpConfigurationMapping = FtpConfigurationMapping(self.getFtpConfigurationInterface())
-        hashMap: dict = ftpConfigurationMapping.toHashMap()
+        hashMap: HashMap = ftpConfigurationMapping.toHashMap()
         node: Node = ModDomHelper.createNameValueNodes(document, FtpConfigurationData.NAME, hashMap)
         return node
     
@@ -71,10 +77,10 @@ class FtpConfigurationView(DomNodeInterface):
     def setFtpConfigurationInterface(self, ftpConfigurationInterface: FtpConfigurationInterface) -> None:
         self.ftpConfigurationInterface = ftpConfigurationInterface
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

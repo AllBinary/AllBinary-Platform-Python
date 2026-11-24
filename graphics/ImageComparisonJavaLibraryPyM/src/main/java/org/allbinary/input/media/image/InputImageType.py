@@ -15,13 +15,12 @@
 
 from __future__ import annotations
 
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InputImageType:
-    hashMap: dict = StdUtil.getInstance().createHashMap()
-    TYPE_VECTOR: BasicArrayList = BasicArrayListD()
+    hashMap: HashMap = None
+    TYPE_VECTOR: BasicArrayList = None
     CAPTURE: InputImageType = None
     COMPARISON: InputImageType = None
     MOTION: InputImageType = None
@@ -57,18 +56,44 @@ class InputImageType:
 
     @staticmethod
     def getAllAsVector() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return InputImageType.TYPE_VECTOR
     
 
     def getIndex(self) -> int:
         return self.index
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 
-InputImageType.CAPTURE = InputImageType("Capture", 0)
+def _InputImageType_hashMap() -> object:
+    from java.util.HashMap import HashMap
+    from org.allbinary.logic.StdUtil import StdUtil
+    return StdUtil.getInstance().createHashMap()
 
-InputImageType.COMPARISON = InputImageType("Comparison", 1)
+lazy_static(InputImageType, "hashMap", _InputImageType_hashMap)
 
-InputImageType.MOTION = InputImageType("Motion", 2)
+def _InputImageType_TYPE_VECTOR() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListD import BasicArrayListD
+    return BasicArrayListD()
+
+lazy_static(InputImageType, "TYPE_VECTOR", _InputImageType_TYPE_VECTOR)
+
+def _InputImageType_CAPTURE() -> object:
+    return InputImageType("Capture", 0)
+
+lazy_static(InputImageType, "CAPTURE", _InputImageType_CAPTURE)
+
+def _InputImageType_COMPARISON() -> object:
+    return InputImageType("Comparison", 1)
+
+lazy_static(InputImageType, "COMPARISON", _InputImageType_COMPARISON)
+
+def _InputImageType_MOTION() -> object:
+    return InputImageType("Motion", 2)
+
+lazy_static(InputImageType, "MOTION", _InputImageType_MOTION)
 

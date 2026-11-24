@@ -30,7 +30,7 @@ class VectorRotationGenerator:
     
 
     @staticmethod
-    def getInstance() -> VectorRotationGenerator:
+    def getInstance_j0() -> VectorRotationGenerator:
         return VectorRotationGenerator.instance
     
 
@@ -38,10 +38,12 @@ class VectorRotationGenerator:
         self._init_fields()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, vectorRotationInfo: VectorInfo) -> list[list[list[int]]]:
+    def getInstance_j1(self, vectorRotationInfo: VectorInfo) -> list[list[list[int]]]:
         from org.allbinary.vector.VectorInfo import VectorInfo
         return self.getInstanceFrames(vectorRotationInfo.getWidth(), vectorRotationInfo.getHeight(), vectorRotationInfo.getPoints(), vectorRotationInfo.getTotalFrames())
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
     
 
     def getInstanceFrames(self, width: int, height: int, points: list[list[int]], frames: int) -> list[list[list[int]]]:
@@ -78,7 +80,7 @@ class VectorRotationGenerator:
         from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicsPipe: BasicGraphicsPipeline = BasicGraphicsPipeline(pointBasicArrayList)
         graphicsPipe.createMatrix()
-        graphicsPipe.translate(-(width >> 1), -(height >> 1))
+        graphicsPipe.translate(-width >> 1, -height >> 1)
         graphicsPipe.rotateToAngle(angle)
         graphicsPipe.translate((width >> 1), (height >> 1))
         return graphicsPipe.getMatrix()

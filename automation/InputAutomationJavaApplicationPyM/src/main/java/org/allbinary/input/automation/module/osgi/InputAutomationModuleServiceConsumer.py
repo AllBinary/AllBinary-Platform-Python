@@ -23,8 +23,10 @@ class InputAutomationModuleServiceConsumer(InputAutomationServiceConsumer):
 
     def __init__(self, bundleContext: BundleContext) -> None:
         from org.allbinary.input.automation.module.osgi.InputAutomationModuleOSGIServiceVisitor import InputAutomationModuleOSGIServiceVisitor
-        super().__init__(InputAutomationModuleServiceInterface.getName(), bundleContext, InputAutomationModuleOSGIServiceVisitor())
-from org.osgi.framework.BundleContext import BundleContext
-from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
+        super().__init__(InputAutomationModuleServiceInterface.__module__ + "." + InputAutomationModuleServiceInterface.__qualname__, bundleContext, InputAutomationModuleOSGIServiceVisitor())
+# from org.osgi.framework.BundleContext import BundleContext
+# from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
 
 

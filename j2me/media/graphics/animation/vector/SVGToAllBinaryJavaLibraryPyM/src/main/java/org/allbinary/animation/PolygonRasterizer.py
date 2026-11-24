@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PolygonRasterizer:
@@ -86,5 +87,8 @@ class PolygonRasterizer:
         PolygonRasterizer.getInstance().getPixelBuffer(svgPath, pathX, pathY, pixelBuffer, width, height)
 
 
-PolygonRasterizer.instance = PolygonRasterizer()
+def _PolygonRasterizer_instance() -> object:
+    return PolygonRasterizer()
+
+lazy_static(PolygonRasterizer, "instance", _PolygonRasterizer_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageSwtUtil:
@@ -24,10 +25,13 @@ class ImageSwtUtil:
     @staticmethod
     def getInstance() -> ImageSwtUtil:
         return ImageSwtUtil.instance
-from org.eclipse.swt.graphics.Color import Color
-from org.eclipse.swt.graphics.RGB import RGB
-from org.microemu.app.BareMain import BareMain
+# from org.eclipse.swt.graphics.Color import Color
+# from org.eclipse.swt.graphics.RGB import RGB
+# from org.microemu.app.BareMain import BareMain
 
 
-ImageSwtUtil.instance = ImageSwtUtil()
+def _ImageSwtUtil_instance() -> object:
+    return ImageSwtUtil()
+
+lazy_static(ImageSwtUtil, "instance", _ImageSwtUtil_instance)
 

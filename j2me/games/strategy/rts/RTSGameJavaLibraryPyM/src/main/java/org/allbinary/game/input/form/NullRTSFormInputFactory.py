@@ -15,16 +15,23 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
-from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullRTSFormInputFactory:
-    SINGLETON: RTSFormInput = RTSFormInput(BasicGroupFactory.getInstance().NONE_ARRAY)
+    SINGLETON: RTSFormInput = None
     
 
     @staticmethod
     def getInstance() -> RTSFormInput:
         return NullRTSFormInputFactory.SINGLETON
+# from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
 
+
+def _NullRTSFormInputFactory_SINGLETON() -> object:
+    from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
+    from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
+    return RTSFormInput(BasicGroupFactory.getInstance().NONE_ARRAY)
+
+lazy_static(NullRTSFormInputFactory, "SINGLETON", _NullRTSFormInputFactory_SINGLETON)
 

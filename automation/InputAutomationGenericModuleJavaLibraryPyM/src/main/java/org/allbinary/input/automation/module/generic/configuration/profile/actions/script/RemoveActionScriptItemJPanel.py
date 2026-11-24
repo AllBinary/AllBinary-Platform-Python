@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.Panel import Panel
+# from java.awt.Panel import Panel
 
 
 class RemoveActionScriptItemJPanel(Panel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.genericProfileActionJPanel: GenericProfileActionJPanel = None
         self.profileActionScriptConditionInterface: ProfileActionScriptConditionInterface = None
@@ -28,6 +31,8 @@ class RemoveActionScriptItemJPanel(Panel):
     
 
     def __init__(self, genericProfileActionJPanel: GenericProfileActionJPanel, profileActionScriptConditionInterface: ProfileActionScriptConditionInterface) -> None:
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -36,9 +41,6 @@ class RemoveActionScriptItemJPanel(Panel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JButton import JButton
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GridLayout import GridLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.ActionListener import ActionListener
         self.removeJButton = JButton()
         self.setLayout(GridLayout())
         self.removeJButton.setText("Remove")
@@ -52,15 +54,20 @@ class RemoveActionScriptItemJPanel(Panel):
     
 
     def removeJButtonActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileAction import GenericProfileAction
         genericProfileAction: GenericProfileAction = self.genericProfileActionJPanel.getGenericProfileAction()
         if genericProfileAction is None:
             self.logUtil.putF("GenericProfileAction was null", self, "removeJButtonActionPerformed")
             return
         genericProfileAction.getGenericProfileActionScript().removeCondition(self.profileActionScriptConditionInterface)
         self.genericProfileActionJPanel.updateProfileActionUI()
-from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileAction import GenericProfileAction
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileAction import GenericProfileAction
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.JButton import JButton
 
 

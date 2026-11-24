@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.ClassLoader import ClassLoader
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -48,7 +49,7 @@ class Globals:
         commonStrings: CommonStrings = CommonStrings.getInstance()
         appUrlGlobals: AppUrlGlobals = AppUrlGlobals()
         appUrlGlobals.setWebappPath(pathString)
-        self.URLGLOBALS.init(appUrlGlobals)
+        URLGLOBALS.init(appUrlGlobals)
         WebappClassLoaderInfo.setLoader(classLoader)
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Setting Up AllBinary System Configuration Args: ")
@@ -64,11 +65,11 @@ class Globals:
             stringBuffer.append(CommonSeps.getInstance().SPACE)
             stringBuffer.append(CommonSeps.getInstance().EQUALS)
             stringBuffer.append(CommonSeps.getInstance().SPACE)
-            stringBuffer.append(self.URLGLOBALS.getWebappPath())
+            stringBuffer.append(URLGLOBALS.getWebappPath())
             self.logUtil.putF(str(stringBuffer), self, commonStrings.INIT)
         stringBuffer.delete(0, stringBuffer.length())
         stringBuffer.append("Webapp Path Set To: ")
-        stringBuffer.append(self.URLGLOBALS.getWebappPath())
+        stringBuffer.append(URLGLOBALS.getWebappPath())
         self.logUtil.putF(str(stringBuffer), self, commonStrings.INIT)
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker

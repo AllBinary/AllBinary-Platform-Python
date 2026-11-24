@@ -22,11 +22,13 @@ class InputAutomationRobotChangeListener:
     
 
     def onAdd(self, inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent) -> None:
+        from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
         raise NotImplementedError()
     
 
     def onRemove(self, inputAutomationRobotChangeEvent: InputAutomationRobotChangeEvent) -> None:
+        from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
         raise NotImplementedError()
-from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
+# from org.allbinary.input.automation.robot.osgi.InputAutomationRobotChangeEvent import InputAutomationRobotChangeEvent
 
 

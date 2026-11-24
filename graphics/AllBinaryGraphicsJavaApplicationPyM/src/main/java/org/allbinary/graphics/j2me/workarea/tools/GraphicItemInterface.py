@@ -58,6 +58,7 @@ class GraphicItemInterface:
     
 
     def setFulcrumPoint(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         raise NotImplementedError()
     
 
@@ -87,19 +88,24 @@ class GraphicItemInterface:
     
 
     def paint(self, g: Graphics, canvasAngle: float, dimension: IntegerDimension, x: int, y: int) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
         raise NotImplementedError()
     
 
     # throws Exception
     def toDom(self, canvasDom: CanvasDom) -> Node:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+        from org.w3c.dom.Node import Node
         raise NotImplementedError()
     
 
     def removePoint(self) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         raise NotImplementedError()
     
 
     def addPoint(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         raise NotImplementedError()
     
 
@@ -146,11 +152,14 @@ class GraphicItemInterface:
     # throws Exception
     def duplicate(self) -> GraphicItemInterface:
         raise NotImplementedError()
-# from java.awt import *
+# from java.awt.Color import Color
+# from java.awt.Graphics import Graphics
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
-from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
-from org.w3c.dom.Node import Node
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+# from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+# from org.w3c.dom.Node import Node
+# from java.awt.event.KeyEvent import KeyEvent
+# from java.awt.event.MouseEvent import MouseEvent
 
 

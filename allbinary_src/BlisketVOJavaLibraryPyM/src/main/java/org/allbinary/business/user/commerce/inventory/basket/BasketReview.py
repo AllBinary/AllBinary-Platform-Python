@@ -20,6 +20,8 @@ from __future__ import annotations
 class BasketReview:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.items: BasicArrayList = BasicArrayListD()
     
 
@@ -32,14 +34,17 @@ class BasketReview:
     
 
     def addItem(self, item: Item) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         self.items.add(item)
     
 
     def getItems(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.items
     
 
     def removeItem(self, id: str) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         itemArray: list[object] = self.items.toArray()
         size: int = len(itemArray)
         for index in range(0, size):
@@ -49,6 +54,7 @@ class BasketReview:
     
 
     def adjustItem(self, id: str, num: str) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         itemArray: list[object] = self.items.toArray()
         size: int = len(itemArray)
         for index in range(0, size):
@@ -58,6 +64,7 @@ class BasketReview:
     
 
     def getTotalWeight(self) -> str:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         weightFloat: float = 0.0
         itemArray: list[object] = self.items.toArray()
         size: int = len(itemArray)
@@ -72,6 +79,9 @@ class BasketReview:
     
 
     def getIds(self) -> Set:
+        from java.util.HashSet import HashSet
+        from java.util.Set import Set
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         idSet: HashSet = HashSet()
         itemArray: list[object] = self.items.toArray()
         size: int = len(itemArray)
@@ -82,6 +92,7 @@ class BasketReview:
     
 
     def getNumberOf(self, id: str) -> int:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         itemArray: list[object] = self.items.toArray()
         size: int = len(itemArray)
         for index in range(0, size):
@@ -93,7 +104,11 @@ class BasketReview:
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
+        from org.allbinary.business.user.commerce.inventory.item.ItemView import ItemView
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(BasketData.BASKET)
         itemArray: list[object] = self.items.toArray()
         size: int = len(itemArray)
@@ -103,12 +118,12 @@ class BasketReview:
         return node
 # from java.util.HashSet import HashSet
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.inventory.item.Item import Item
-from org.allbinary.business.user.commerce.inventory.item.ItemView import ItemView
-from org.allbinary.logic.StdUtil import StdUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.inventory.item.Item import Item
+# from org.allbinary.business.user.commerce.inventory.item.ItemView import ItemView
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

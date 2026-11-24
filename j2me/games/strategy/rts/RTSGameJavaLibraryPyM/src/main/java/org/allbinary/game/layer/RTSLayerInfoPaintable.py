@@ -21,6 +21,7 @@ from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 class RTSLayerInfoPaintable(InitUpdatePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.paint.NullInitUpdatePaintable import NullInitUpdatePaintable
         self.initUpdatePaintable: InitUpdatePaintable = NullInitUpdatePaintable.getInstance()
     
 
@@ -34,6 +35,7 @@ class RTSLayerInfoPaintable(InitUpdatePaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.initUpdatePaintable.paint(graphics)
     
 
@@ -45,6 +47,6 @@ class RTSLayerInfoPaintable(InitUpdatePaintable):
         hudPaintable.updateSelectionInfo()
         self.initUpdatePaintable = hudPaintable
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.paint.NullInitUpdatePaintable import NullInitUpdatePaintable
+# from org.allbinary.graphics.paint.NullInitUpdatePaintable import NullInitUpdatePaintable
 
 

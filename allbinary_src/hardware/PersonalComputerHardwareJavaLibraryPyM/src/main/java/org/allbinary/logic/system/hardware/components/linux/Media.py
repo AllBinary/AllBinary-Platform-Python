@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 from org.allbinary.logic.system.hardware.components.interfaces.MediaInterface import MediaInterface
 
 
-class Media(HardwareComponentInterface, MediaInterface):
+class Media(*java_bases(HardwareComponentInterface, MediaInterface)):
 
     def _init_fields(self) -> None:
         self.data: str = None

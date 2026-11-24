@@ -25,7 +25,6 @@ class NullThread:
 
 
 def _NullThread_NULL_THREAD() -> object:
-    from org.allbinary.thread.NullRunnable import NullRunnable
     from org.allbinary.logic.string.StringUtil import StringUtil
     return threading.Thread(target=NullRunnable.getInstance().run, name=StringUtil.getInstance().EMPTY_STRING)
 

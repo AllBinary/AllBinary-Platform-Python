@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.game.layer.waypoint.WaypointInfoHudPaintable import WaypointInfoHudPaintable
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WaypointInfoHudPaintableSingleton:
-    instance: WaypointInfoHudPaintable = WaypointInfoHudPaintable()
+    instance: WaypointInfoHudPaintable = None
     
 
     @staticmethod
     def getInstance() -> WaypointInfoHudPaintable:
         return WaypointInfoHudPaintableSingleton.instance
 
+
+def _WaypointInfoHudPaintableSingleton_instance() -> object:
+    from org.allbinary.game.layer.waypoint.WaypointInfoHudPaintable import WaypointInfoHudPaintable
+    return WaypointInfoHudPaintable()
+
+lazy_static(WaypointInfoHudPaintableSingleton, "instance", _WaypointInfoHudPaintableSingleton_instance)
 

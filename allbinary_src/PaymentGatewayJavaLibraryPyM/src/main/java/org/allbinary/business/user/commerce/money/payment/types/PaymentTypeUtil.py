@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaymentTypeUtil:
     instance: PaymentTypeUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.PAYMENTGATEWAYFILEPATHSTRING: str = None
@@ -40,6 +45,8 @@ class PaymentTypeUtil:
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
         sep: str = AbPathData.getInstance().SEPARATOR
@@ -75,12 +82,30 @@ class PaymentTypeUtil:
 
     # throws Exception
     def initDefault(self, storeName: str) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewaysData import PaymentGatewaysData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
             self.logUtil.putF("initDefault Payment: " + self.defaultName, self, "initDefault")
         if StringValidationUtil.getInstance().isEmpty(self.defaultName):
             stringBuffer: StringMaker = StringMaker()
-            stringBuffer.append(self.URLGLOBALS.getMainPath())
-            stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+            stringBuffer.append(URLGLOBALS.getMainPath())
+            stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
             stringBuffer.append(storeName)
             stringBuffer.append(AbPathData.getInstance().SEPARATOR)
             stringBuffer.append(self.PAYMENTGATEWAYFILEPATHSTRING)
@@ -92,7 +117,7 @@ class PaymentTypeUtil:
                 node: Node = nodeList.item(index)
                 defaultPaymentGatewayNode: Node = DomSearchHelper.getNode(EntryData.getInstance().DEFAULT, node.getChildNodes())
                 defaultPaymentGatewayNodeValue: str = DomNodeHelper.getTextNodeValue(defaultPaymentGatewayNode)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                     self.logUtil.putF("DefaultPaymentGatewayNodeValue: " + defaultPaymentGatewayNodeValue, self, "initDefault")
                 if not StringValidationUtil.getInstance().isEmpty(defaultPaymentGatewayNodeValue):
                     self.defaultName = defaultPaymentGatewayNodeValue
@@ -100,7 +125,10 @@ class PaymentTypeUtil:
 
     # throws Exception
     def getDefault(self, storeName: str) -> PaymentType:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
             self.logUtil.putF(self.commonStrings.START, self, "getDefault")
         self.initDefault(storeName)
         if not StringValidationUtil.getInstance().isEmpty(self.defaultName):
@@ -113,6 +141,8 @@ class PaymentTypeUtil:
     
 
     def difference(self, a_PaymentTypeVector: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         diff: BasicArrayList = BasicArrayListD()
         size: int = self.paymentTypeVector.size()
         for i in range(0, size):
@@ -120,30 +150,35 @@ class PaymentTypeUtil:
             if not a_PaymentTypeVector.contains(paymentType):
                 diff.add(paymentType)
         return diff
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewaysData import PaymentGatewaysData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewaysData import PaymentGatewaysData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-PaymentTypeUtil.instance = PaymentTypeUtil()
+def _PaymentTypeUtil_instance() -> object:
+    return PaymentTypeUtil()
+
+lazy_static(PaymentTypeUtil, "instance", _PaymentTypeUtil_instance)
 
 PaymentTypeUtil._static_init()
 

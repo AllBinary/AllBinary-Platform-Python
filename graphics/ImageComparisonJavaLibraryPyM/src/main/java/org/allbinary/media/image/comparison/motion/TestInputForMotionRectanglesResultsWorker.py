@@ -24,6 +24,9 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.index: int = 0
@@ -32,11 +35,13 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.motionRectanglesVector = BasicArrayListD()
     
 
     def getMotionRectanglesVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.motionRectanglesVector
     
 
@@ -46,6 +51,7 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
     
 
     def onEvent(self, allBinaryEventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         self.onMotionRectanglesImageComparisonResultsEvent(allBinaryEventObject)
     
 
@@ -66,6 +72,13 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
     
 
     def run(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.allbinary.util.ABHashtable import ABHashtable
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -116,16 +129,16 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
 # from java.awt.Rectangle import Rectangle
 # from java.awt.event.InputEvent import InputEvent
 # from java.awt.event.KeyEvent import KeyEvent
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

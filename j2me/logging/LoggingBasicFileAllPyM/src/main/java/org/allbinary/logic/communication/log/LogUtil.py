@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -40,20 +41,26 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.log.FileLog import FileLog
         FileLog.put(specialMessage, anyType, functionName)
     
 
     def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
+        from org.allbinary.log.FileLog import FileLog
         FileLog.put(specialMessage, className, functionName)
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.log.FileLog import FileLog
         FileLog.put(specialMessage, anyType, functionName, exception)
-from org.allbinary.log.FileLog import FileLog
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.log.FileLog import FileLog
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

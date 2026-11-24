@@ -38,6 +38,7 @@ class ExceptionUtil:
     
 
     def getStackTrace(self, e: BaseException) -> str:
+        from java.io.PrintStream import PrintStream
         if e is not None:
             byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
             printStream: PrintStream = PrintStream(byteArrayOutputStream)

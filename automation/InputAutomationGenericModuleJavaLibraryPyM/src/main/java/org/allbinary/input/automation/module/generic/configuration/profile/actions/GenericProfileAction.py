@@ -21,6 +21,8 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class GenericProfileAction(DomNodeInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.name: str = None
         self.genericProfileActionScript: GenericProfileActionScript = None
@@ -35,6 +37,10 @@ class GenericProfileAction(DomNodeInterface):
 
     def _constructor2(self, genericProfileActionJPanel: GenericProfileActionJPanel, node: Node) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionData import GenericProfileActionData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
+        from org.w3c.dom.Node import Node
         self._init_fields()
         actionNameNode: Node = DomSearchHelper.getNode(GenericProfileActionData.NAME, node.getChildNodes())
         if actionNameNode is not None:
@@ -45,6 +51,7 @@ class GenericProfileAction(DomNodeInterface):
     
 
     def _constructor1(self, name: str) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
         self._init_fields()
         self.name = name
         self.setGenericProfileActionScript(GenericProfileActionScript(self.genericProfileActionJPanel))
@@ -58,9 +65,11 @@ class GenericProfileAction(DomNodeInterface):
         self.name = name
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionData import GenericProfileActionData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(GenericProfileActionData.NAME, self.name)
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
@@ -69,25 +78,30 @@ class GenericProfileAction(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionData import GenericProfileActionData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createNodeWithValueNodes(document, GenericProfileActionData.NAME, self.toHashMap())
         node.appendChild(self.getGenericProfileActionScript().toXmlNode(document))
         return node
     
 
     def getGenericProfileActionScript(self) -> GenericProfileActionScript:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
         return self.genericProfileActionScript
     
 
     def setGenericProfileActionScript(self, genericProfileActionScript: GenericProfileActionScript) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
         self.genericProfileActionScript = genericProfileActionScript
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

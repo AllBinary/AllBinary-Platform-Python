@@ -21,18 +21,21 @@ from org.allbinary.logic.math.vector.MathVectorInterface import MathVectorInterf
 class MathVector(MathVectorInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self.magnitudeBasicDecimal: BasicDecimal = None
         self.direction: int = None
         self.resultBasicDecimal: BasicDecimal = None
     
 
     def __init__(self, magnitudeBasicDecimal: BasicDecimal, direction: int) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self._init_fields()
         self.magnitudeBasicDecimal = magnitudeBasicDecimal
         self.direction = direction
     
 
     def getMagnitude(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.magnitudeBasicDecimal
     
 
@@ -41,7 +44,8 @@ class MathVector(MathVectorInterface):
     
 
     def getResult(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         return self.resultBasicDecimal
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
 
 

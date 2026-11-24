@@ -22,31 +22,42 @@ class OpenGLESStrings:
 
     # throws Exception
     def set(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise RuntimeError()
     
 
     def initFont(self, gl: GL10, width: int, height: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise RuntimeError()
     
 
     # throws Exception
     def update(self, gl: GL10, width: int, height: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise RuntimeError()
     
 
     def drawChar(self, gl: GL10, graphics: Graphics, character: str, x: int, y: int, anchor: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Graphics import Graphics
         raise RuntimeError()
     
 
     def drawChars(self, gl: GL10, graphics: Graphics, data: list[str], offset: int, length: int, x: int, y: int, anchor: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Graphics import Graphics
         raise RuntimeError()
     
 
     def drawString(self, gl: GL10, graphics: Graphics, string: str, x: int, y: int, anchor: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Graphics import Graphics
         raise RuntimeError()
     
 
     def drawSubstring(self, gl: GL10, graphics: Graphics, string: str, offset: int, len_: int, x: int, y: int, anchor: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.lcdui.Graphics import Graphics
         raise RuntimeError()
     
 
@@ -58,13 +69,15 @@ class OpenGLESStrings:
         raise RuntimeError()
     
 
-    def stringWidth(self, string: str) -> int:
+    def stringWidth_j1(self, string: str) -> int:
         raise RuntimeError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def stringWidth(self, string: str, offset: int, len_: int) -> int:
+    def stringWidth_j3(self, string: str, offset: int, len_: int) -> int:
         raise RuntimeError()
+
+    def stringWidth(self, *args):
+        return getattr(self, "stringWidth_j" + str(len(args)))(*args)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics

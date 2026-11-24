@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicTopViewGeographicMapStrings:
@@ -39,5 +40,8 @@ class BasicTopViewGeographicMapStrings:
         return BasicTopViewGeographicMapStrings.instance
 
 
-BasicTopViewGeographicMapStrings.instance = BasicTopViewGeographicMapStrings()
+def _BasicTopViewGeographicMapStrings_instance() -> object:
+    return BasicTopViewGeographicMapStrings()
+
+lazy_static(BasicTopViewGeographicMapStrings, "instance", _BasicTopViewGeographicMapStrings_instance)
 

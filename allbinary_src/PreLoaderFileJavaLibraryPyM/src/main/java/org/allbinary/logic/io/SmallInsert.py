@@ -20,6 +20,8 @@ from __future__ import annotations
 class SmallInsert:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.fileName: str = None
@@ -27,24 +29,33 @@ class SmallInsert:
     
 
     def __init__(self, fileName: str) -> None:
+        from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
         self._init_fields()
         self.fileName = fileName
         self.string = AbFileSystem.getInstance().readAsString(fileName)
     
 
     def atBeginning(self, text: str) -> bool:
+        from java.io.DataOutputStream import DataOutputStream
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             idFile: FileOutputStream = FileOutputStream(self.fileName)
             idOutData: DataOutputStream = DataOutputStream(idFile)
             idOutData.writeBytes(text + self.string)
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "insertAtBeginning", e)
             return False
     
 
     def after(self, text: str, after: str) -> bool:
+        from java.io.DataOutputStream import DataOutputStream
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             index: int = self.string.find(after)
             if index < 0:
@@ -60,25 +71,31 @@ class SmallInsert:
             idFile.close()
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "after", e)
             return False
     
 
     def atEnd(self, text: str) -> bool:
+        from java.io.DataOutputStream import DataOutputStream
+        from java.io.FileOutputStream import FileOutputStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             idFile: FileOutputStream = FileOutputStream(self.fileName)
             idOutData: DataOutputStream = DataOutputStream(idFile)
             idOutData.writeBytes(self.string + text)
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "insertAtEnd", e)
             return False
 # from java.io.DataOutputStream import DataOutputStream
 # from java.io.FileOutputStream import FileOutputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

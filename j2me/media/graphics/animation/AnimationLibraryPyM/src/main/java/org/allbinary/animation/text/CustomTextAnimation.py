@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.text.TextAnimation import TextAnimation
 from org.allbinary.animation.text.TextInterface import TextInterface
 
 
-class CustomTextAnimation(TextAnimation, TextInterface):
+class CustomTextAnimation(*java_bases(TextAnimation, TextInterface)):
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Font import Font

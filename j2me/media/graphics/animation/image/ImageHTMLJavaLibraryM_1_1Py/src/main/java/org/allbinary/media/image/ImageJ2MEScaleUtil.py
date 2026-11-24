@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageJ2MEScaleUtil:
     instance: ImageJ2MEScaleUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,6 +37,7 @@ class ImageJ2MEScaleUtil:
 
     # throws Exception
     def scaleArray(self, images: list[Image], width: int, height: int) -> list[Image]:
+        from javax.microedition.lcdui.Image import Image
         scaledImages: list[Image] = [None] * (len(images))
         index = len(images)
         while (index := index - 1) >= 0:
@@ -44,6 +47,11 @@ class ImageJ2MEScaleUtil:
 
     # throws Exception
     def scale(self, image: Image, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
+        from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+        from playn.core.CanvasImage import CanvasImage
+        from playn.core.CanvasSurface import CanvasSurface
         originalPlayNImage: Image = None
         if image.isMutable():
             originalHTMLImage: PlaynMutableImage = image
@@ -58,12 +66,15 @@ class ImageJ2MEScaleUtil:
         canvasSurface.drawImage(originalPlayNImage, 0, 0, scaledImage.getWidth(), scaledImage.getHeight(), 0, 0, image.getWidth(), image.getHeight())
         return scaledImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
-from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
-from playn.core.CanvasImage import CanvasImage
-from playn.core.CanvasSurface import CanvasSurface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
+# from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+# from playn.core.CanvasImage import CanvasImage
+# from playn.core.CanvasSurface import CanvasSurface
 
 
-ImageJ2MEScaleUtil.instance = ImageJ2MEScaleUtil()
+def _ImageJ2MEScaleUtil_instance() -> object:
+    return ImageJ2MEScaleUtil()
+
+lazy_static(ImageJ2MEScaleUtil, "instance", _ImageJ2MEScaleUtil_instance)
 

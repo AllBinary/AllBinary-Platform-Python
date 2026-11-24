@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class JvmStatisticsData:
@@ -36,25 +37,58 @@ class JvmStatisticsData:
         super().__init__()
 
 
-JvmStatisticsData.NAME = str(JvmStatisticsData.JVM_STATISTICS) + "NAME"
+def _JvmStatisticsData_NAME() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "NAME"
 
-JvmStatisticsData.TOTAL_MEMORY_BYTES = str(JvmStatisticsData.JVM_STATISTICS) + "TOTAL_MEMORY_BYTES"
+lazy_static(JvmStatisticsData, "NAME", _JvmStatisticsData_NAME)
 
-JvmStatisticsData.TOTAL_MEMORY_KILOBYTES = str(JvmStatisticsData.JVM_STATISTICS) + "TOTAL_MEMORY_KILOBYTES"
+def _JvmStatisticsData_TOTAL_MEMORY_BYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "TOTAL_MEMORY_BYTES"
 
-JvmStatisticsData.TOTAL_MEMORY_MEGABYTES = str(JvmStatisticsData.JVM_STATISTICS) + "TOTAL_MEMORY_MEGABYTES"
+lazy_static(JvmStatisticsData, "TOTAL_MEMORY_BYTES", _JvmStatisticsData_TOTAL_MEMORY_BYTES)
 
-JvmStatisticsData.FREE_MEMORY_BYTES = str(JvmStatisticsData.JVM_STATISTICS) + "FREE_MEMORY_BYTES"
+def _JvmStatisticsData_TOTAL_MEMORY_KILOBYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "TOTAL_MEMORY_KILOBYTES"
 
-JvmStatisticsData.FREE_MEMORY_KILOBYTES = str(JvmStatisticsData.JVM_STATISTICS) + "FREE_MEMORY_KILOBYTES"
+lazy_static(JvmStatisticsData, "TOTAL_MEMORY_KILOBYTES", _JvmStatisticsData_TOTAL_MEMORY_KILOBYTES)
 
-JvmStatisticsData.FREE_MEMORY_MEGABYTES = str(JvmStatisticsData.JVM_STATISTICS) + "FREE_MEMORY_MEGABYTES"
+def _JvmStatisticsData_TOTAL_MEMORY_MEGABYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "TOTAL_MEMORY_MEGABYTES"
 
-JvmStatisticsData.MAX_MEMORY_BYTES = str(JvmStatisticsData.JVM_STATISTICS) + "MAX_MEMORY_BYTES"
+lazy_static(JvmStatisticsData, "TOTAL_MEMORY_MEGABYTES", _JvmStatisticsData_TOTAL_MEMORY_MEGABYTES)
 
-JvmStatisticsData.MAX_MEMORY_KILOBYTES = str(JvmStatisticsData.JVM_STATISTICS) + "MAX_MEMORY_KILOBYTES"
+def _JvmStatisticsData_FREE_MEMORY_BYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "FREE_MEMORY_BYTES"
 
-JvmStatisticsData.MAX_MEMORY_MEGABYTES = str(JvmStatisticsData.JVM_STATISTICS) + "MAX_MEMORY_MEGABYTES"
+lazy_static(JvmStatisticsData, "FREE_MEMORY_BYTES", _JvmStatisticsData_FREE_MEMORY_BYTES)
 
-JvmStatisticsData.NUMBER_OF_THREADS = str(JvmStatisticsData.JVM_STATISTICS) + "NUMBER_OF_THREADS"
+def _JvmStatisticsData_FREE_MEMORY_KILOBYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "FREE_MEMORY_KILOBYTES"
+
+lazy_static(JvmStatisticsData, "FREE_MEMORY_KILOBYTES", _JvmStatisticsData_FREE_MEMORY_KILOBYTES)
+
+def _JvmStatisticsData_FREE_MEMORY_MEGABYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "FREE_MEMORY_MEGABYTES"
+
+lazy_static(JvmStatisticsData, "FREE_MEMORY_MEGABYTES", _JvmStatisticsData_FREE_MEMORY_MEGABYTES)
+
+def _JvmStatisticsData_MAX_MEMORY_BYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "MAX_MEMORY_BYTES"
+
+lazy_static(JvmStatisticsData, "MAX_MEMORY_BYTES", _JvmStatisticsData_MAX_MEMORY_BYTES)
+
+def _JvmStatisticsData_MAX_MEMORY_KILOBYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "MAX_MEMORY_KILOBYTES"
+
+lazy_static(JvmStatisticsData, "MAX_MEMORY_KILOBYTES", _JvmStatisticsData_MAX_MEMORY_KILOBYTES)
+
+def _JvmStatisticsData_MAX_MEMORY_MEGABYTES() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "MAX_MEMORY_MEGABYTES"
+
+lazy_static(JvmStatisticsData, "MAX_MEMORY_MEGABYTES", _JvmStatisticsData_MAX_MEMORY_MEGABYTES)
+
+def _JvmStatisticsData_NUMBER_OF_THREADS() -> object:
+    return str(JvmStatisticsData.JVM_STATISTICS) + "NUMBER_OF_THREADS"
+
+lazy_static(JvmStatisticsData, "NUMBER_OF_THREADS", _JvmStatisticsData_NUMBER_OF_THREADS)
 

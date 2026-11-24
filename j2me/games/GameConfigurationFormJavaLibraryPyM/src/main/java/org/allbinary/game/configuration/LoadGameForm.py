@@ -21,8 +21,8 @@ from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 class LoadGameForm(CommandForm):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.MEUtil import MEUtil
-        self.meUtil: MEUtil = MEUtil.getInstance()
+        from org.allbinary.MIDPUtil import MIDPUtil
+        self.meUtil: MIDPUtil = MIDPUtil.getInstance()
         self.areChoices: bool = False
     
 
@@ -115,10 +115,10 @@ class LoadGameForm(CommandForm):
 # from javax.microedition.lcdui.Item import Item
 # from javax.microedition.lcdui.NullImage import NullImage
 # from javax.microedition.lcdui.StringItem import StringItem
+# from org.allbinary.MIDPUtil import MIDPUtil
 # from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
 # from org.allbinary.game.configuration.persistance.GamePersistanceSingleton import GamePersistanceSingleton
 # from org.allbinary.graphics.color.BasicColor import BasicColor
-# from org.allbinary.logic.MEUtil import MEUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.util.BasicArrayList import BasicArrayList

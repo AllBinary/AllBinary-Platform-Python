@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.StdUtil import StdUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MediaData:
-    hashMap: dict = StdUtil.getInstance().createHashMap()
+    hashMap: HashMap = None
 
     def _init_fields(self) -> None:
         self.name: str = None
@@ -80,8 +80,17 @@ class MediaData:
     
 
     @staticmethod
-    def toHashMap() -> dict:
+    def toHashMap() -> HashMap:
+        from java.util.HashMap import HashMap
         return MediaData.hashMap
 # from java.util.HashMap import HashMap
+# from org.allbinary.logic.StdUtil import StdUtil
 
+
+def _MediaData_hashMap() -> object:
+    from java.util.HashMap import HashMap
+    from org.allbinary.logic.StdUtil import StdUtil
+    return StdUtil.getInstance().createHashMap()
+
+lazy_static(MediaData, "hashMap", _MediaData_hashMap)
 

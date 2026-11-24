@@ -40,7 +40,7 @@ class AdjustedImageArrayRotationAnimation(ImageArrayRotationAnimation):
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
-        return AdjustedImageArrayRotationAnimation(imageArray, angleInfo, totalAngle, -(imageArray[0].getWidth() >> 2), -(imageArray[0].getHeight() >> 2), animationBehavior)
+        return AdjustedImageArrayRotationAnimation(imageArray, angleInfo, totalAngle, -imageArray[0].getWidth() >> 2, -imageArray[0].getHeight() >> 2, animationBehavior)
     
 
     def __init__(self, imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int, dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:

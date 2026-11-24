@@ -24,7 +24,8 @@ class StaticTileLayerViewPositionFactory(ViewPositionFactoryInterface):
     # throws Exception
     def getInstance(self) -> ViewPositionBase:
         from org.allbinary.game.view.StaticTileLayerIntoPositionViewPosition import StaticTileLayerIntoPositionViewPosition
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         return StaticTileLayerIntoPositionViewPosition()
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
 

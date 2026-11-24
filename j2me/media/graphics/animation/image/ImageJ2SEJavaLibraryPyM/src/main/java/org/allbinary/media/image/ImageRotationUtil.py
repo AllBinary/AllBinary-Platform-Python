@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageRotationUtil:
@@ -34,6 +35,10 @@ class ImageRotationUtil:
     
 
     def rotateImage(self, originalImage: Image, image: Image, totalAngle: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
+        from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
         if image.isMutable():
             j2seImage: J2SEMutableImage = image
             newBufferedImage: BufferedImage = j2seImage.getImage()
@@ -52,6 +57,9 @@ class ImageRotationUtil:
     # throws Exception
     def createRotatedImage(self, originalImage: Image, rotationInDegrees: int) -> Image:
         from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
+        from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
         image: Image = ImageCreationUtil.getInstance().createImageWH(originalImage.getWidth(), originalImage.getHeight())
         if image.isMutable():
             originalAwtImage: Image = None
@@ -69,11 +77,14 @@ class ImageRotationUtil:
             raise Exception("Not Mutable")
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
-from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
+# from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
 from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
 
 
-ImageRotationUtil.instance = ImageRotationUtil()
+def _ImageRotationUtil_instance() -> object:
+    return ImageRotationUtil()
+
+lazy_static(ImageRotationUtil, "instance", _ImageRotationUtil_instance)
 

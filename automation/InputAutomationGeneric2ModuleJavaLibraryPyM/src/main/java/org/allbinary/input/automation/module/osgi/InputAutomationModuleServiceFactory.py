@@ -21,6 +21,9 @@ from org.osgi.framework.ServiceFactory import ServiceFactory
 class InputAutomationModuleServiceFactory(ServiceFactory):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.inputAutomationModuleInterfaceArray: list[InputAutomationModuleFactoryInterface] = None
@@ -31,25 +34,32 @@ class InputAutomationModuleServiceFactory(ServiceFactory):
     
 
     def getService(self, bundle: Bundle, registration: ServiceRegistration) -> object:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
+        from bundle.input.automation.module.InputAutomationModuleService import InputAutomationModuleService
         self.logUtil.putF(self.commonStrings.START, self, "getService")
         return InputAutomationModuleService(self.getInputAutomationModuleInterfaceArray())
     
 
     def ungetService(self, bundle: Bundle, registration: ServiceRegistration, service: object) -> None:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
         pass
     
 
     def getInputAutomationModuleInterfaceArray(self) -> list[InputAutomationModuleFactoryInterface]:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         return self.inputAutomationModuleInterfaceArray
     
 
     def setInputAutomationModuleInterfaceArray(self, inputAutomationModuleInterfaceArray: list[InputAutomationModuleFactoryInterface]) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         self.inputAutomationModuleInterfaceArray = inputAutomationModuleInterfaceArray
-from org.osgi.framework.Bundle import Bundle
-from org.osgi.framework.ServiceRegistration import ServiceRegistration
-from bundle.input.automation.module.InputAutomationModuleService import InputAutomationModuleService
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.osgi.framework.Bundle import Bundle
+# from org.osgi.framework.ServiceRegistration import ServiceRegistration
+# from bundle.input.automation.module.InputAutomationModuleService import InputAutomationModuleService
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

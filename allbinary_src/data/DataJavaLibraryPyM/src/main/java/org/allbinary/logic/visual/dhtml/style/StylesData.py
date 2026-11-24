@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StylesData:
@@ -33,5 +34,8 @@ class StylesData:
         self._init_fields()
 
 
-StylesData.instance = StylesData()
+def _StylesData_instance() -> object:
+    return StylesData()
+
+lazy_static(StylesData, "instance", _StylesData_instance)
 

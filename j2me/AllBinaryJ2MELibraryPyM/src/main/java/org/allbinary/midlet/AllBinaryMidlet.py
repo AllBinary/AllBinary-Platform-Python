@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.CommandListener import CommandListener
 from javax.microedition.midlet.MIDlet import MIDlet
 
 
-class AllBinaryMidlet(MIDlet, CommandListener):
+class AllBinaryMidlet(*java_bases(MIDlet, CommandListener)):
     NULL_ALLBINARY_MIDLET: object = None
 
     def _init_fields(self) -> None:

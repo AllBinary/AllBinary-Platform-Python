@@ -16,21 +16,26 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.category.CategoryModifierTree import CategoryModifierTree
 from org.allbinary.data.tree.category.CategoryLoaderInterface import CategoryLoaderInterface
 
 
-class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
+class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, categoryFactoryInterface: CategoryFactoryInterface) -> None:
+        from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(categoryFactoryInterface)
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.START, self, "CategoryLoader(CategoryFactoryInterface categoryFactoryInterface)")
     
 
@@ -39,6 +44,15 @@ class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
             return self._getDoc_unlocked(categoryInterface)
 
     def _getDoc_unlocked(self, categoryInterface: CategoryInterface) -> Document:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if categoryInterface.getProperties().getPath(categoryInterface.getHierarchy()) is not None:
                 if categoryInterface.getHierarchy().getLevel() == 1:
@@ -55,7 +69,7 @@ class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
             else:
                 raise Exception("Null Category")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 try:
                     categoryInterface.log()
                 except Exception as e2:
@@ -64,73 +78,112 @@ class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
             return None
     
 
-    def get(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def get_j1_1(self, categoryInterface: CategoryInterface) -> CategoryInterface:
         with self._lock:
-            return self._get_unlocked(categoryInterface)
+            return self._get_j1_1_unlocked(categoryInterface)
 
-    def _get_unlocked(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+    def _get_j1_1_unlocked(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             document: Document = self.getDoc(categoryInterface)
             categoryNode: Node = DomSearchHelper.getNode(CategoryData.getInstance().NAME, document.getChildNodes())
             return self.addProperties(categoryInterface, categoryNode.getChildNodes())
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.GET, e)
             return None
     
 
-    # Java overloaded method: Python keeps the last definition
-    def get(self, document: Document) -> CategoryInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def get_j1_2(self, document: Document) -> CategoryInterface:
         with self._lock:
-            return self._get_unlocked(document)
+            return self._get_j1_2_unlocked(document)
 
-    def _get_unlocked(self, document: Document) -> CategoryInterface:
+    def _get_j1_2_unlocked(self, document: Document) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             categoryNode: Node = DomSearchHelper.getNode(CategoryData.getInstance().NAME, document.getChildNodes())
             loadedCategoryInterface: CategoryInterface = self.categoryFactoryInterface.getRootInstanceFromNode(categoryNode)
             return self.addProperties(loadedCategoryInterface, categoryNode.getChildNodes())
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.GET, e)
             return None
+
+    def get(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.get_j1_1(*args)
+        if len(args) == 1:
+            return self.get_j1_2(*args)
+        return getattr(self, "get_j" + str(len(args)))(*args)
     
 
-    def getAll(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getAll_j1_1(self, categoryInterface: CategoryInterface) -> CategoryInterface:
         with self._lock:
-            return self._getAll_unlocked(categoryInterface)
+            return self._getAll_j1_1_unlocked(categoryInterface)
 
-    def _getAll_unlocked(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+    def _getAll_j1_1_unlocked(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             document: Document = self.getDoc(categoryInterface)
             return self.getAll(document)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.GET, e)
             return None
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getAll(self, document: Document) -> CategoryInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getAll_j1_2(self, document: Document) -> CategoryInterface:
         with self._lock:
-            return self._getAll_unlocked(document)
+            return self._getAll_j1_2_unlocked(document)
 
-    def _getAll_unlocked(self, document: Document) -> CategoryInterface:
+    def _getAll_j1_2_unlocked(self, document: Document) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             categoryNode: Node = DomSearchHelper.getNode(CategoryData.getInstance().NAME, document.getChildNodes())
             loadedCategoryInterface: CategoryInterface = self.categoryFactoryInterface.getRootInstanceFromNode(categoryNode)
             return self.addProperties(loadedCategoryInterface, categoryNode.getChildNodes())
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.GET, e)
             return None
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getAll(self, parentCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
+    def getAll_j2(self, parentCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
         with self._lock:
-            return self._getAll_unlocked(parentCategoryInterface, categoryNodeList)
+            return self._getAll_j2_unlocked(parentCategoryInterface, categoryNodeList)
 
-    def _getAll_unlocked(self, parentCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
+    def _getAll_j2_unlocked(self, parentCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if categoryNodeList is not None:
                 for index in range(0, categoryNodeList.getLength()):
@@ -140,9 +193,16 @@ class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
                         parentCategoryInterface.addChild(categoryInterface)
             return parentCategoryInterface
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.GET, e)
             return None
+
+    def getAll(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getAll_j1_1(*args)
+        if len(args) == 1:
+            return self.getAll_j1_2(*args)
+        return getattr(self, "getAll_j" + str(len(args)))(*args)
     
 
     def addProperties(self, loadedCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
@@ -150,6 +210,14 @@ class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
             return self._addProperties_unlocked(loadedCategoryInterface, categoryNodeList)
 
     def _addProperties_unlocked(self, loadedCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if categoryNodeList is not None:
                 for index in range(0, categoryNodeList.getLength()):
@@ -159,22 +227,24 @@ class CategoryLoader(CategoryModifierTree, CategoryLoaderInterface):
                         loadedCategoryInterface.addChildProperty(categoryPropertiesInterface)
             return loadedCategoryInterface
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.GET, e)
             return None
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
-from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
-from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
+# from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

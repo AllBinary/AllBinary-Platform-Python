@@ -22,6 +22,12 @@ from org.allbinary.logic.communication.sql.AbDatabaseManagement import AbDatabas
 class InitDbCrypted(AbDatabaseManagement):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
+        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
+        from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
+        from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.userDbInitInfo: UserDbInitInfo = None
         self.inventoryDbInitInfo: InventoryDbInitInfo = None
@@ -32,11 +38,18 @@ class InitDbCrypted(AbDatabaseManagement):
     
 
     def __init__(self, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> None:
+        from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
         self._init_fields()
     
 
     def addUsers(self) -> bool:
+        from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
+        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
+        from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
+        from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.METHOD_ADD_USERS)
             self.userDbInitInfo = UserDbInitInfo()
@@ -82,6 +95,15 @@ class InitDbCrypted(AbDatabaseManagement):
     
 
     def addDatabases(self) -> bool:
+        from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
+        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
+        from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
+        from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileFactory import FileFactory
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.METHOD_ADD_DATABASES)
             self.userDbInitInfo = UserDbInitInfo()
@@ -120,6 +142,23 @@ class InitDbCrypted(AbDatabaseManagement):
     
 
     def addTables(self) -> bool:
+        from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.data.tables.log.LogTableEntityFactory import LogTableEntityFactory
+        from org.allbinary.data.tables.staticpages.StaticPagesEntityFactory import StaticPagesEntityFactory
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+        from org.allbinary.data.tables.user.address.billing.BillingAddressesEntityFactory import BillingAddressesEntityFactory
+        from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntityFactory import ShippingAddressesEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntityFactory import OrderItemsEntityFactory
+        from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntityFactory import PaymentEntityFactory
+        from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityFactory import PaymentGatewayEntityFactory
+        from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionEntityFactory import TransactionEntityFactory
+        from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionResultEntityFactory import TransactionResultEntityFactory
+        from org.allbinary.data.tables.user.quoterequest.QuoteRequestEntityFactory import QuoteRequestEntityFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             stringBuffer: StringMaker = StringMaker()
             self.logUtil.putF(self.commonStrings.START, self, self.METHOD_ADD_TABLES)
@@ -144,34 +183,34 @@ class InitDbCrypted(AbDatabaseManagement):
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.METHOD_ADD_TABLES, e)
             return False
-from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
-from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
-from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
-from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
-from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
-from org.allbinary.data.tables.log.LogTableEntityFactory import LogTableEntityFactory
-from org.allbinary.data.tables.staticpages.StaticPagesEntityFactory import StaticPagesEntityFactory
-from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
-from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
-from org.allbinary.data.tables.user.address.billing.BillingAddressesEntityFactory import BillingAddressesEntityFactory
-from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntityFactory import ShippingAddressesEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntityFactory import OrderItemsEntityFactory
-from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntityFactory import PaymentEntityFactory
-from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityFactory import PaymentGatewayEntityFactory
-from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionEntityFactory import TransactionEntityFactory
-from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionResultEntityFactory import TransactionResultEntityFactory
-from org.allbinary.data.tables.user.quoterequest.QuoteRequestEntityFactory import QuoteRequestEntityFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileFactory import FileFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
+# from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
+# from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
+# from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
+# from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+# from org.allbinary.data.tables.log.LogTableEntityFactory import LogTableEntityFactory
+# from org.allbinary.data.tables.staticpages.StaticPagesEntityFactory import StaticPagesEntityFactory
+# from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+# from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
+# from org.allbinary.data.tables.user.address.billing.BillingAddressesEntityFactory import BillingAddressesEntityFactory
+# from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntityFactory import ShippingAddressesEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntityFactory import OrderItemsEntityFactory
+# from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntityFactory import PaymentEntityFactory
+# from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityFactory import PaymentGatewayEntityFactory
+# from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionEntityFactory import TransactionEntityFactory
+# from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionResultEntityFactory import TransactionResultEntityFactory
+# from org.allbinary.data.tables.user.quoterequest.QuoteRequestEntityFactory import QuoteRequestEntityFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileFactory import FileFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

@@ -31,6 +31,13 @@ class LinesGraphicItem(GraphicItemInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.input.GameInputStrings import GameInputStrings
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
@@ -65,6 +72,10 @@ class LinesGraphicItem(GraphicItemInterface):
         from org.allbinary.graphics.j2me.workarea.tools.Points import Points
         from org.allbinary.graphics.j2me.workarea.tools.PointsDomUtil import PointsDomUtil
         from org.allbinary.graphics.j2me.workarea.tools.PointsDomUtil import PointsDomUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.points = Points()
         self.init()
@@ -86,6 +97,8 @@ class LinesGraphicItem(GraphicItemInterface):
     # throws Exception
     def init(self) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.PointsDomUtil import PointsDomUtil
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.graphics.PointFactory import PointFactory
         self.treeNode = DefaultMutableTreeNode(PointsDomUtil.getInstance().LINES + LinesGraphicItem.item)
         LinesGraphicItem.item += 1
         self.points.init()
@@ -96,6 +109,8 @@ class LinesGraphicItem(GraphicItemInterface):
     # throws Exception
     def translate(self, x: int, y: int) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.Points import Points
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+        from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
         StatusFactory.getInstance().setStatus("Translating: " + str(self.points.getPoints()))
         basicGraphicsPipeline: BasicGraphicsPipeline = BasicGraphicsPipeline(self.points.getPoints())
         basicGraphicsPipeline.translate(x, y)
@@ -104,10 +119,10 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     def setRotate(self, theta: float) -> None:
-        while theta > 2 * Math.PI:
-            theta -= 2 * Math.PI
+        while theta > 2 * math.pi:
+            theta -= 2 * math.pi
         while theta < 0.0:
-            theta += 2 * Math.PI
+            theta += 2 * math.pi
         self.theta = theta
     
 
@@ -137,11 +152,20 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     # throws Exception
-    def addPoint(self, pointNodes: NodeList) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def addPoint_j1_1(self, pointNodes: NodeList) -> None:
         with self._lock:
-            return self._addPoint_unlocked(pointNodes)
+            return self._addPoint_j1_1_unlocked(pointNodes)
 
-    def _addPoint_unlocked(self, pointNodes: NodeList) -> None:
+    def _addPoint_j1_1_unlocked(self, pointNodes: NodeList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         list_: BasicArrayList = DomHelper.getInstance().getWithoutTextNodes(pointNodes)
         xNode: Node = DomHelper.getInstance().searchNodeList(PositionStrings.getInstance().X, list_)
         xTextNode: Node = xNode.getFirstChild()
@@ -153,16 +177,24 @@ class LinesGraphicItem(GraphicItemInterface):
         self.addPoint(point)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def addPoint(self, point: GPoint) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def addPoint_j1_2(self, point: GPoint) -> None:
         with self._lock:
-            return self._addPoint_unlocked(point)
+            return self._addPoint_j1_2_unlocked(point)
 
-    def _addPoint_unlocked(self, point: GPoint) -> None:
+    def _addPoint_j1_2_unlocked(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         self.points.getPoints().add(point)
         self.logUtil.putF(str(point), self, "addPoint")
         self.pointTreeNodeVector.add(DefaultMutableTreeNode(str(point)))
         self.treeNode.add(self.pointTreeNodeVector.get(self.pointTreeNodeVector.size() - 1))
+
+    def addPoint(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.addPoint_j1_1(*args)
+        if len(args) == 1:
+            return self.addPoint_j1_2(*args)
+        return getattr(self, "addPoint_j" + str(len(args)))(*args)
     
 
     def removePoint(self) -> GPoint:
@@ -170,6 +202,7 @@ class LinesGraphicItem(GraphicItemInterface):
             return self._removePoint_unlocked()
 
     def _removePoint_unlocked(self) -> GPoint:
+        from org.allbinary.graphics.GPoint import GPoint
         point: GPoint = None
         if self.points.getSize() > 0:
             lastPoint: int = self.points.getSize() - 1
@@ -195,6 +228,10 @@ class LinesGraphicItem(GraphicItemInterface):
 
     # throws Exception
     def duplicatePoints(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = list_.size()
         for index in range(0, size):
             point: GPoint = list_.get(index)
@@ -217,12 +254,17 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     def setFulcrumPoint(self, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
         self.fulcrumPoint = point
     
 
     def paint(self, g: Graphics, canvasAngle: float, dimension: IntegerDimension, x: int, y: int) -> None:
-        from org.allbinary.graphics.j2me.workarea.tools.BasicStroke import BasicStroke
         from org.allbinary.graphics.j2me.workarea.tools.PointsUtil import PointsUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             graphics: Graphics2D = g
             graphics.setColor(self.getColor())
@@ -247,6 +289,8 @@ class LinesGraphicItem(GraphicItemInterface):
     # throws Exception
     def toDom(self, canvasDom: CanvasDom) -> Node:
         from org.allbinary.graphics.j2me.workarea.tools.PointsDomUtil import PointsDomUtil
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+        from org.w3c.dom.Node import Node
         return PointsDomUtil.getInstance().toDom(canvasDom, self.points.getPoints())
     
 
@@ -271,6 +315,9 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     def mouseClicked(self, mouseEvent: MouseEvent, x: int, y: int) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         try:
             mousePoint: GPoint = PointFactory.getInstance().createXY(mouseEvent.getPoint().x, mouseEvent.getPoint().y)
             if (mouseEvent.getModifiers() & mouseEvent.BUTTON1_MASK) == mouseEvent.BUTTON1_MASK:
@@ -306,6 +353,8 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     def mouseMoved(self, mouseEvent: MouseEvent, x: int, y: int) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
         try:
             mousePoint: GPoint = PointFactory.getInstance().createXY(mouseEvent.getPoint().x, mouseEvent.getPoint().y)
             point: GPoint = PointFactory.getInstance().createXY(mousePoint.getX() / x, mousePoint.getY() / y)
@@ -315,6 +364,7 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     def keyPressed(self, keyEvent: KeyEvent) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         try:
             keyCode: int = keyEvent.getKeyCode()
             if keyCode == keyEvent.VK_ESCAPE:
@@ -338,27 +388,31 @@ class LinesGraphicItem(GraphicItemInterface):
 
     def keyTyped(self, keyEvent: KeyEvent) -> None:
         pass
-# from java.awt import *
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from java.awt.Color import Color
+# from java.awt.Graphics2D import Graphics2D
+# from java.awt.BasicStroke import BasicStroke
+# from java.awt.Graphics import Graphics
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
-from org.allbinary.dom.DomHelper import DomHelper
-from org.allbinary.game.input.GameInputStrings import GameInputStrings
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
-from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
-from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
-from org.allbinary.graphics.j2me.workarea.tools.Color import Color
+# from org.allbinary.dom.DomHelper import DomHelper
+# from org.allbinary.game.input.GameInputStrings import GameInputStrings
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+# from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+# from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from java.awt.event.KeyEvent import KeyEvent
+# from java.awt.event.MouseEvent import MouseEvent
 
 

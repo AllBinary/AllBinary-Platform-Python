@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InventoryItemViewParentTagHelper:
@@ -28,6 +29,11 @@ class InventoryItemViewParentTagHelper:
 
     # throws Exception
     def getInventoryItemView(self, inventoryTag: HelperTag) -> InventoryItemView:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+        from taghelpers.ValidationViewHelper import ValidationViewHelper
+        from tags.HelperTag import HelperTag
+        from views.admin.inventory.InventoryItemView import InventoryItemView
         if inventoryTag is not None:
             self.checkForValidationViewHelper(inventoryTag.getHelper())
             validationViewHelper: ValidationViewHelper = inventoryTag.getHelper()
@@ -45,6 +51,11 @@ class InventoryItemViewParentTagHelper:
 
     # throws Exception
     def getDownloadableInventoryItemView(self, inventoryTag: HelperTag) -> DownloadableInventoryItemView:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+        from taghelpers.ValidationViewHelper import ValidationViewHelper
+        from tags.HelperTag import HelperTag
+        from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
         if inventoryTag is not None:
             self.checkForValidationViewHelper(inventoryTag.getHelper())
             validationViewHelper: ValidationViewHelper = inventoryTag.getHelper()
@@ -62,6 +73,13 @@ class InventoryItemViewParentTagHelper:
 
     # throws Exception
     def getRequestMapInterface(self, inventoryTag: HelperTag) -> RequestMapInterface:
+        from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+        from taghelpers.ValidationViewHelper import ValidationViewHelper
+        from tags.HelperTag import HelperTag
+        from views.admin.inventory.InventoryItemView import InventoryItemView
+        from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
         if inventoryTag is not None:
             self.checkForValidationViewHelper(inventoryTag.getHelper())
             validationViewHelper: ValidationViewHelper = inventoryTag.getHelper()
@@ -79,21 +97,26 @@ class InventoryItemViewParentTagHelper:
 
     # throws Exception
     def checkForValidationViewHelper(self, helperObject: object) -> None:
-        if not (isinstance(helperObject, ValidationViewHelper)):
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from taghelpers.ValidationViewHelper import ValidationViewHelper
+        if not isinstance(helperObject, ValidationViewHelper):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Must have ")
             stringBuffer.append("ValidationViewHelper")
             stringBuffer.append("and not: ")
             stringBuffer.append(type(helperObject).__module__ + "." + type(helperObject).__qualname__)
             raise Exception(str(stringBuffer))
-from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
-from taghelpers.ValidationViewHelper import ValidationViewHelper
-from tags.HelperTag import HelperTag
-from views.admin.inventory.InventoryItemView import InventoryItemView
-from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
+# from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+# from taghelpers.ValidationViewHelper import ValidationViewHelper
+# from tags.HelperTag import HelperTag
+# from views.admin.inventory.InventoryItemView import InventoryItemView
+# from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
 
 
-InventoryItemViewParentTagHelper.instance = InventoryItemViewParentTagHelper()
+def _InventoryItemViewParentTagHelper_instance() -> object:
+    return InventoryItemViewParentTagHelper()
+
+lazy_static(InventoryItemViewParentTagHelper, "instance", _InventoryItemViewParentTagHelper_instance)
 

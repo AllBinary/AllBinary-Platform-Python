@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
 from org.allbinary.business.category.CategoryView import CategoryView
 
 
-class CategoryComponent(CategoryView, TransformInterface):
+class CategoryComponent(*java_bases(CategoryView, TransformInterface)):
 
     def _init_fields(self) -> None:
         self.NO_TYPE: int = 0
@@ -35,21 +36,26 @@ class CategoryComponent(CategoryView, TransformInterface):
     
 
     def getTransformDocumentInterface(self) -> TransformDocumentInterface:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         return None
     
 
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         return None
     
 
     def setTransformDocumentInterface(self, viewDocumentInterface: TransformDocumentInterface) -> None:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         pass
     
 
     # throws Exception
     def toXmlDoc(self) -> Document:
         from org.allbinary.business.category.CategoryView import CategoryView
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.w3c.dom.Document import Document
         document: Document = DomDocumentHelper.create()
         document.appendChild(CategoryView(self.getCategoryInterface()).toXmlNode(document))
         return document
@@ -58,9 +64,9 @@ class CategoryComponent(CategoryView, TransformInterface):
     # throws Exception
     def view(self) -> str:
         return None
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
 
 

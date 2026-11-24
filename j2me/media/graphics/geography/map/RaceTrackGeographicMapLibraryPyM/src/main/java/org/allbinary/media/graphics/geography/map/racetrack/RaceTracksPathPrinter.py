@@ -21,6 +21,9 @@ class RaceTracksPathPrinter:
     
 
     def printPath(self, list_: BasicArrayList) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         size: int = list_.size()
         for index in range(0, size):
             anyType: object = list_.get(index)
@@ -28,13 +31,16 @@ class RaceTracksPathPrinter:
     
 
     def printPaths(self, list_: BasicArrayList) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.string.CommonLabels import CommonLabels
         size: int = list_.size()
         for index in range(0, size):
             print(str(StringMaker().append(" Path ").appendint(index).append(CommonLabels.getInstance().COLON_SEP)))
             self.printPath(list_.get(index))
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

@@ -15,14 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.gui.dialog.FileJDialogListenerInterface import FileJDialogListenerInterface
-from org.allbinary.image.gui.JFrame import JFrame
+# from javax.swing.JFrame import JFrame
 
 
-class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
+class ImageToolJFrame(*java_bases(JFrame, FileJDialogListenerInterface)):
     imageProcessorInputCompositeInterface: ImageProcessorInputCompositeInterface = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.gui.dialog.FileJDialog import FileJDialog
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.fileJDialog: FileJDialog = None
@@ -60,6 +65,8 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
     
 
     def __init__(self) -> None:
+        from org.allbinary.gui.dialog.FileJDialog import FileJDialog
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -76,54 +83,6 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.JDialog import JDialog
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JMenuBar import JMenuBar
-        from org.allbinary.image.gui.JMenu import JMenu
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenu import JMenu
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.JMenuItem import JMenuItem
-        from org.allbinary.image.gui.Dimension import Dimension
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.GridLayout import GridLayout
-        from org.allbinary.image.gui.GridLayout import GridLayout
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
         self.analysisActionJDialog = JDialog()
         self.titleJLabel = JLabel()
         self.colorRangeJLabel = JLabel()
@@ -173,7 +132,7 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
         self.analysisActionJDialog.getContentPane().setLayout(analysisActionJDialogLayout)
         analysisActionJDialogLayout.setHorizontalGroup(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().addContainerGap().add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(self.blueJLabel).add(self.greenJLabel).add(self.redJLabel).add(self.colorRangeJLabel)).add(29, 29, 29).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(org.jdesktop.layout.GroupLayout.TRAILING, self.minJLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, False).add(org.jdesktop.layout.GroupLayout.LEADING, self.minBlueJTextField).add(org.jdesktop.layout.GroupLayout.LEADING, self.minGreenJTextField).add(org.jdesktop.layout.GroupLayout.LEADING, self.minRedJTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE).add(org.jdesktop.layout.GroupLayout.LEADING, self.okJButton))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(org.jdesktop.layout.GroupLayout.LEADING, analysisActionJDialogLayout.createSequentialGroup().add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, False).add(org.jdesktop.layout.GroupLayout.LEADING, self.maxRedJTextField).add(org.jdesktop.layout.GroupLayout.LEADING, analysisActionJDialogLayout.createSequentialGroup().add(1, 1, 1).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(self.maxBlueJTextField).add(self.maxGreenJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 17, Short.MAX_VALUE)).add(org.jdesktop.layout.GroupLayout.LEADING, self.maxJLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)).addContainerGap()).add(org.jdesktop.layout.GroupLayout.TRAILING, analysisActionJDialogLayout.createSequentialGroup().add(self.titleJLabel).add(25, 25, 25)))))
         analysisActionJDialogLayout.setVerticalGroup(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().add(self.titleJLabel).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minJLabel).add(self.colorRangeJLabel).add(self.maxJLabel)).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(self.redJLabel).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minRedJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(self.maxRedJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(self.greenJLabel).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minGreenJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(self.maxGreenJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(self.blueJLabel).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minBlueJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(self.maxBlueJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).add(16, 16, 16).add(self.okJButton).addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        self.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE)
+        self.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
         self.getContentPane().setLayout(GridLayout(1, 0))
         self.jPanel1.setLayout(GridLayout(1, 0))
         self.getContentPane().add(self.jPanel1)
@@ -299,6 +258,8 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
 
     def okJButtonActionPerformed(self, evt: ActionEvent) -> None:
         from org.allbinary.image.gui.ImageAnalysisResultsJPanel import ImageAnalysisResultsJPanel
+        from org.allbinary.media.image.analysis.ImageAnalysis import ImageAnalysis
+        from org.allbinary.media.image.analysis.ImageAnalysisResults import ImageAnalysisResults
         try:
             self.logUtil.putF("Starting", self, "okJButtonActionPerformed")
             imageAnalysisResultsArray: list[ImageAnalysisResults] = ImageAnalysis.getInstance().process(self.imageProcessorInput.getBufferedImageArray(), self.getColorRangeInterface())
@@ -324,6 +285,7 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
     
 
     def onFiles(self, files: list[File]) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         try:
             self.logUtil.putF("Reading " + str(len(files)) + " files.", self, "onFiles")
             Arrays.sort(files, (Comparator()  # Java anonymous class body:
@@ -476,6 +438,8 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
     
 
     def getColorRangeInterface(self) -> ColorRangeInterface:
+        from org.allbinary.media.image.analysis.ColorRange import ColorRange
+        from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         colorRangeInterface: ColorRangeInterface = ColorRange()
         colorRangeInterface.setMinRed(int(int(self.getMinRedJTextField().getText())))
         colorRangeInterface.setMaxRed(int(int(self.getMaxRedJTextField().getText())))
@@ -537,15 +501,28 @@ class ImageToolJFrame(JFrame, FileJDialogListenerInterface):
 # from java.util.Arrays import Arrays
 # from java.util.Comparator import Comparator
 # from javax.imageio.ImageIO import ImageIO
-from org.allbinary.gui.dialog.FileJDialog import FileJDialog
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
-from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
-from org.allbinary.media.image.analysis.ColorRange import ColorRange
-from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
-from org.allbinary.media.image.analysis.ImageAnalysis import ImageAnalysis
-from org.allbinary.media.image.analysis.ImageAnalysisResults import ImageAnalysisResults
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.gui.dialog.FileJDialog import FileJDialog
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+# from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
+# from org.allbinary.media.image.analysis.ColorRange import ColorRange
+# from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
+# from org.allbinary.media.image.analysis.ImageAnalysis import ImageAnalysis
+# from org.allbinary.media.image.analysis.ImageAnalysisResults import ImageAnalysisResults
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.JButton import JButton
+# from javax.swing.JDialog import JDialog
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JMenu import JMenu
+# from javax.swing.JMenuBar import JMenuBar
+# from javax.swing.JMenuItem import JMenuItem
+# from javax.swing.JPanel import JPanel
+# from javax.swing.JTextField import JTextField
+# from javax.swing.WindowConstants import WindowConstants
 
 

@@ -15,14 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.rts.technology.event.TechEventListenerInterface import TechEventListenerInterface
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
-class RTSLayerCostAnimation(Animation, TechEventListenerInterface, UpdateMyFontInterface):
+class RTSLayerCostAnimation(*java_bases(Animation, TechEventListenerInterface, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.game.layer.CostLayerInterfaceFactoryInterface import CostLayerInterfaceFactoryInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+        from org.allbinary.logic.NullUtil import NullUtil
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.primitiveLongUtil: PrimitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(10000)
         self.DOLLAR: str = "$"
@@ -36,6 +44,8 @@ class RTSLayerCostAnimation(Animation, TechEventListenerInterface, UpdateMyFontI
     
 
     def __init__(self, image: Image, layerInterfaceFactoryInterface: CostLayerInterfaceFactoryInterface) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.game.layer.CostLayerInterfaceFactoryInterface import CostLayerInterfaceFactoryInterface
         super().__init__()
         self._init_fields()
         self.image = image
@@ -44,6 +54,9 @@ class RTSLayerCostAnimation(Animation, TechEventListenerInterface, UpdateMyFontI
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
         self.adjustedCostX = font.stringWidth(self.DOLLAR)
@@ -51,10 +64,15 @@ class RTSLayerCostAnimation(Animation, TechEventListenerInterface, UpdateMyFontI
     
 
     def onEvent(self, event: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onTechEvent(self, event: AllBinaryEventObject) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         try:
             self.update()
         except Exception as e:
@@ -70,6 +88,7 @@ class RTSLayerCostAnimation(Animation, TechEventListenerInterface, UpdateMyFontI
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
         super().paintXY(graphics, x, y)
         adjustedCostY: int = self.image.getHeight() - self.fontHeight
@@ -79,15 +98,15 @@ class RTSLayerCostAnimation(Animation, TechEventListenerInterface, UpdateMyFontI
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.game.layer.CostLayerInterfaceFactoryInterface import CostLayerInterfaceFactoryInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.game.layer.CostLayerInterfaceFactoryInterface import CostLayerInterfaceFactoryInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 

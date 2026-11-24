@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.AllBinarySensorListener import AllBinarySensorListener
 from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
 
 
-class NoGyroSensor(AllBinaryOrientationSensor, AllBinarySensorListener):
+class NoGyroSensor(*java_bases(AllBinaryOrientationSensor, AllBinarySensorListener)):
     
 
     def __init__(self) -> None:

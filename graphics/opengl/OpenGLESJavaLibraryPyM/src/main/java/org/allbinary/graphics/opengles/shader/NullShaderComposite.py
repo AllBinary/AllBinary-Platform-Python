@@ -15,14 +15,8 @@
 
 from __future__ import annotations
 
-# from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
-from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderComposite import ShaderComposite
-from org.allbinary.graphics.opengles.shader.Shader import Shader
-from org.allbinary.graphics.opengles.shader.CompositeShaderUpdater import CompositeShaderUpdater
-from org.allbinary.graphics.opengles.shader.ShaderInitializer import ShaderInitializer
-from org.allbinary.graphics.opengles.shader.ModelViewProjection import ModelViewProjection
 
 
 class NullShaderComposite(ShaderComposite):
@@ -35,15 +29,32 @@ class NullShaderComposite(ShaderComposite):
     
 
     def __init__(self, requiresOpenGLVersion: str, shaderArray: list[Shader], compositeShaderUpdater: CompositeShaderUpdater, shaderInitializer: ShaderInitializer, modelViewProjection: ModelViewProjection, colorOpenGLProcessor: OpenGLProcessor, vertexOpenGLProcessor: OpenGLProcessor, disableProgramShaderOpenGLProcessor: OpenGLProcessor) -> None:
+        from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
         super().__init__(requiresOpenGLVersion, shaderArray, compositeShaderUpdater, shaderInitializer, modelViewProjection, colorOpenGLProcessor, vertexOpenGLProcessor, disableProgramShaderOpenGLProcessor)
         self.useProgramShaderOpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
-from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
+# from javax.microedition.khronos.opengles.GL10 import GL10
+# from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+# from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
+# from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
 
 
-NullShaderComposite.instance = (NullShaderComposite(OpenGLCapabilities.getInstance().VERSION_2_0, [Shader(), Shader()], CompositeShaderUpdater.getInstance(), ShaderInitializer.getInstance(), ModelViewProjection.getInstance(), None, None, NullOpenGLProcessorFactory.getInstance())  # Java anonymous class body:
+def _NullShaderComposite_instance() -> object:
+    from org.allbinary.graphics.opengles.shader.Shader import Shader
+    from org.allbinary.graphics.opengles.shader.Shader import Shader
+    from org.allbinary.graphics.opengles.shader.CompositeShaderUpdater import CompositeShaderUpdater
+    from org.allbinary.graphics.opengles.shader.ShaderInitializer import ShaderInitializer
+    from org.allbinary.graphics.opengles.shader.ModelViewProjection import ModelViewProjection
+    from javax.microedition.khronos.opengles.GL10 import GL10
+    from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+    from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
+    return (NullShaderComposite(OpenGLCapabilities.getInstance().VERSION_2_0, [Shader(), Shader()], CompositeShaderUpdater.getInstance(), ShaderInitializer.getInstance(), ModelViewProjection.getInstance(), NullOpenGLProcessorFactory.getInstance(), NullOpenGLProcessorFactory.getInstance(), NullOpenGLProcessorFactory.getInstance())  # Java anonymous class body:
 #         
 # 
 #         def init(self, gl: GL10) -> None:
+#             from javax.microedition.khronos.opengles.GL10 import GL10
 #             pass
 )
+
+lazy_static(NullShaderComposite, "instance", _NullShaderComposite_instance)
 

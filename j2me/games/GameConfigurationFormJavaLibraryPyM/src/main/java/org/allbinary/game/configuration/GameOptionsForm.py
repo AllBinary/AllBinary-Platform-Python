@@ -21,8 +21,8 @@ from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 class GameOptionsForm(CommandForm):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.MEUtil import MEUtil
-        self.meUtil: MEUtil = MEUtil.getInstance()
+        from org.allbinary.MIDPUtil import MIDPUtil
+        self.meUtil: MIDPUtil = MIDPUtil.getInstance()
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
@@ -68,7 +68,6 @@ class GameOptionsForm(CommandForm):
     
 
     def addTextFields(self) -> None:
-        from org.allbinary.game.configuration.GameConfigurationTextInput import GameConfigurationTextInput
         from javax.microedition.lcdui.TextField import TextField
         from org.allbinary.util.HashtableUtil import HashtableUtil
         from org.allbinary.util.ABHashtable import ABHashtable
@@ -84,8 +83,6 @@ class GameOptionsForm(CommandForm):
     
 
     def addConfiguration(self) -> None:
-        from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
-        from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
         from javax.microedition.lcdui.Command import Command
         from org.allbinary.game.configuration.feature.GameFeatureItemCommandListener import GameFeatureItemCommandListener
         from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
@@ -121,12 +118,8 @@ class GameOptionsForm(CommandForm):
 
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface) -> None:
-        from org.allbinary.game.configuration.GameConfigurationTextInput import GameConfigurationTextInput
         from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
         from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
-        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-        from org.allbinary.game.configuration.SCALE import SCALE
-        from org.allbinary.game.configuration.SCALE import SCALE
         from javax.microedition.lcdui.Item import Item
         from javax.microedition.lcdui.TextField import TextField
         from org.allbinary.game.configuration.persistance.GameConfigurationPersistanceSingleton import GameConfigurationPersistanceSingleton
@@ -162,6 +155,7 @@ class GameOptionsForm(CommandForm):
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Item import Item
 # from javax.microedition.lcdui.TextField import TextField
+# from org.allbinary.MIDPUtil import MIDPUtil
 # from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
 # from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
 # from org.allbinary.game.configuration.feature.GameFeatureFormUtil import GameFeatureFormUtil
@@ -173,7 +167,6 @@ class GameOptionsForm(CommandForm):
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
 # from org.allbinary.input.gyro.OrientationData import OrientationData
-# from org.allbinary.logic.MEUtil import MEUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 # from org.allbinary.util.BasicArrayList import BasicArrayList

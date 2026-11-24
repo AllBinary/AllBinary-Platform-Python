@@ -13,6 +13,7 @@ class ActivityFractureControllerUtilFactory:
         from org.allbinary.game.input.AndroidAPI12KeyFactory import AndroidAPI12KeyFactory
         from org.allbinary.game.input.AndroidAPI9KeyFactory import AndroidAPI9KeyFactory
         from org.allbinary.game.input.AndroidAPI1KeyFactory import AndroidAPI1KeyFactory
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION <= 8:
             return AndroidAPI1KeyFactory.getInstance()
@@ -20,6 +21,6 @@ class ActivityFractureControllerUtilFactory:
             return AndroidAPI9KeyFactory.getInstance()
         else:
             return AndroidAPI12KeyFactory.getAPI12Instance()
-from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+# from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
 
 

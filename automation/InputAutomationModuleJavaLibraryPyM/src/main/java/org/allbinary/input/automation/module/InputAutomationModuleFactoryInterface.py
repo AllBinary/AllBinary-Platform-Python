@@ -34,9 +34,10 @@ class InputAutomationModuleFactoryInterface:
 
     # throws Exception
     def getInstance(self) -> RunnableInterface:
+        from org.allbinary.thread.RunnableInterface import RunnableInterface
         return None
 # from javax.help.HelpSet import HelpSet
-# from javax.swing import *
-from org.allbinary.thread.RunnableInterface import RunnableInterface
+# from javax.swing.JPanel import JPanel
+# from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 

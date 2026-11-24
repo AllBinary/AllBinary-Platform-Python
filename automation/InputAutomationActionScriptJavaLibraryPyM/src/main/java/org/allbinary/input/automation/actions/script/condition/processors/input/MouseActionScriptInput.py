@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.input.BasicProfileActionScriptInput import BasicProfileActionScriptInput
 from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputInterface import MouseActionScriptInputInterface
 
 
-class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInputInterface):
+class MouseActionScriptInput(*java_bases(BasicProfileActionScriptInput, MouseActionScriptInputInterface)):
     NAME: str = "Mouse"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.point: Point = None
         self.buttons: int = 0
@@ -36,14 +38,16 @@ class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInp
     
 
     def _constructor1(self, node: Node) -> None:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Point import Point
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Point import Point
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputJPanel import MouseActionScriptInputJPanel
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(MouseActionScriptInput.NAME, node)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -74,7 +78,6 @@ class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInp
     
 
     def _constructor0(self) -> None:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Point import Point
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputJPanel import MouseActionScriptInputJPanel
         super().__init__(MouseActionScriptInput.NAME)
         self._init_fields()
@@ -103,9 +106,11 @@ class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInp
         self.mouseActionScriptInputJPanel.getMouseActionJDialog().setVisible(True)
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(MouseActionScriptInputData.BUTTONS, str(self.getButtonClicks()))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
@@ -117,10 +122,15 @@ class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInp
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         mouseNode: Node = ModDomHelper.createNodeWithValueNodes(document, MouseActionScriptInputData.NAME, self.toHashMap())
         node.appendChild(mouseNode)
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(MouseActionScriptInputData.MOVE_X, str(self.getPoint().x))
         hashMap.put(MouseActionScriptInputData.MOVE_Y, str(self.getPoint().y))
         mouseNode.appendChild(ModDomHelper.createNodeWithValueNodes(document, MouseActionScriptInputData.MOVE, hashMap))
@@ -134,6 +144,8 @@ class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInp
     
 
     def log(self) -> None:
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         buttonStringBuffer: StringMaker = StringMaker()
         buttonStringBuffer.append("1: ")
         booleanFactory: BooleanFactory = BooleanFactory.getInstance()
@@ -152,18 +164,18 @@ class MouseActionScriptInput(BasicProfileActionScriptInput, MouseActionScriptInp
         else:
             buttonStringBuffer.append(booleanFactory.FALSE_STRING)
         self.logUtil.putF("Input Type: " + self.getInputRobotInterface().getName() + " Point: " + str(self.getPoint()) + " Buttons Clicked: " + str(buttonStringBuffer), self, "log")
-# from java.awt import *
+# from java.awt.Point import Point
 # from java.awt.event.InputEvent import InputEvent
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

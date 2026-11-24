@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 # from java.awt.event.ActionListener import ActionListener
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItemInterface import ProfileActionScriptItemInterface
 
 
-class ProfileActionScriptItem(DefaultMutableTreeNode, ProfileActionScriptItemInterface, ActionListener):
+class ProfileActionScriptItem(*java_bases(DefaultMutableTreeNode, ProfileActionScriptItemInterface, ActionListener)):
     EDIT: str = "Edit"
     DELETE: str = "Delete"
     NEW_CONDITION: str = "New Condition"
@@ -35,6 +36,8 @@ class ProfileActionScriptItem(DefaultMutableTreeNode, ProfileActionScriptItemInt
     NEW_IMAGE_OUTPUT: str = "Image"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.jPopupMenu: JPopupMenu = None
@@ -47,6 +50,7 @@ class ProfileActionScriptItem(DefaultMutableTreeNode, ProfileActionScriptItemInt
     
 
     def _constructor2(self, label: str, node: Node) -> None:
+        from org.w3c.dom.Node import Node
         super().__init__(label)
         self._init_fields()
         self.init()
@@ -61,9 +65,6 @@ class ProfileActionScriptItem(DefaultMutableTreeNode, ProfileActionScriptItemInt
     
 
     def init(self) -> None:
-        from org.allbinary.input.automation.actions.script.JPopupMenu import JPopupMenu
-        from org.allbinary.input.automation.actions.script.JMenuItem import JMenuItem
-        from org.allbinary.input.automation.actions.script.JMenuItem import JMenuItem
         self.setJPopupMenu(JPopupMenu())
         jMenuItemEdit: JMenuItem = JMenuItem(ProfileActionScriptItem.EDIT)
         jMenuItemDelete: JMenuItem = JMenuItem(ProfileActionScriptItem.DELETE)
@@ -94,9 +95,10 @@ class ProfileActionScriptItem(DefaultMutableTreeNode, ProfileActionScriptItemInt
     def setJPopupMenu(self, jPopupMenu: JPopupMenu) -> None:
         self.jPopupMenu = jPopupMenu
 # from java.awt.event.ActionEvent import ActionEvent
-# from javax.swing import *
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Node import Node
+# from javax.swing.JPopupMenu import JPopupMenu
+# from javax.swing.JMenuItem import JMenuItem
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Node import Node
 
 

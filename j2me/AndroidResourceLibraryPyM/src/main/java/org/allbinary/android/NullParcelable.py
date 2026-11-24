@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from android.os.Parcelable import Parcelable
 
 
@@ -27,9 +28,13 @@ class NullParcelable(Parcelable):
     
 
     def writeToParcel(self, dest: Parcel, flags: int) -> None:
+        from android.os.Parcel import Parcel
         pass
-from android.os.Parcel import Parcel
+# from android.os.Parcel import Parcel
 
 
-NullParcelable.NULL_PARCELABLE = NullParcelable()
+def _NullParcelable_NULL_PARCELABLE() -> object:
+    return NullParcelable()
+
+lazy_static(NullParcelable, "NULL_PARCELABLE", _NullParcelable_NULL_PARCELABLE)
 

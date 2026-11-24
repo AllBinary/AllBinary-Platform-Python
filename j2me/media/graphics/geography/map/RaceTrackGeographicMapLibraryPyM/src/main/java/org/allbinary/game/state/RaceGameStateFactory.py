@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RaceGameStateFactory:
-    instance: object = NullUtil.getInstance().NULL_OBJECT
+    instance: object = None
 
     def _init_fields(self) -> None:
         self.START_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("START_GAME_STATE")
@@ -32,9 +32,16 @@ class RaceGameStateFactory:
 
     @staticmethod
     def getInstance() -> RaceGameStateFactory:
+        from org.allbinary.logic.NullUtil import NullUtil
         if RaceGameStateFactory.instance == NullUtil.getInstance().NULL_OBJECT:
             RaceGameStateFactory.instance = RaceGameStateFactory()
         return RaceGameStateFactory.instance
-from org.allbinary.game.state.GameStateFactory import GameStateFactory
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _RaceGameStateFactory_instance() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(RaceGameStateFactory, "instance", _RaceGameStateFactory_instance)
 

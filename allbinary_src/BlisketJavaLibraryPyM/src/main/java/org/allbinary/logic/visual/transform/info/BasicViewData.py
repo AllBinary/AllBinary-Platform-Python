@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicViewData:
@@ -74,5 +75,8 @@ class BasicViewData:
         self._init_fields()
 
 
-BasicViewData.instance = BasicViewData()
+def _BasicViewData_instance() -> object:
+    return BasicViewData()
+
+lazy_static(BasicViewData, "instance", _BasicViewData_instance)
 

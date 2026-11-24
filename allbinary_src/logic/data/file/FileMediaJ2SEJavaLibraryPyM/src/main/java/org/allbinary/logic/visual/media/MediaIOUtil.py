@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MediaIOUtil:
@@ -23,5 +24,8 @@ class MediaIOUtil:
 # from javax.imageio.ImageIO import ImageIO
 
 
-MediaIOUtil.instance = MediaIOUtil()
+def _MediaIOUtil_instance() -> object:
+    return MediaIOUtil()
+
+lazy_static(MediaIOUtil, "instance", _MediaIOUtil_instance)
 

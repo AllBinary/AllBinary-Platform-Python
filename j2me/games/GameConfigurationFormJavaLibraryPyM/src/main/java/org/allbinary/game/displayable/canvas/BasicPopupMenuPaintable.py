@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
-class BasicPopupMenuPaintable(Paintable, UpdateMyFontInterface):
+class BasicPopupMenuPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
     NAME: str = "MENU"
 
     def _init_fields(self) -> None:

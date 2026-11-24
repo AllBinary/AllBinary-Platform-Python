@@ -22,7 +22,8 @@ class PaymentGatewayInterfaceFactoryInterface:
     
 
     # throws Exception
-    def getInstance(self, hashMap: dict) -> PaymentGatewayInterface:
+    def getInstance(self, hashMap: HashMap) -> PaymentGatewayInterface:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 

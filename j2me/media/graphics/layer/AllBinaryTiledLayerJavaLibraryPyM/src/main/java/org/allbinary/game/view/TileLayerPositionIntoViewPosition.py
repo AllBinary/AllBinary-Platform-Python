@@ -21,6 +21,8 @@ from org.allbinary.view.ViewPosition import ViewPosition
 class TileLayerPositionIntoViewPosition(ViewPosition):
 
     def _init_fields(self) -> None:
+        from org.allbinary.layer.Layer import Layer
+        from org.allbinary.layer.NullLayer import NullLayer
         self.tiledLayer: Layer = NullLayer.getInstance()
     
 
@@ -42,9 +44,10 @@ class TileLayerPositionIntoViewPosition(ViewPosition):
     
 
     def setTiledLayer(self, tiledLayer: AllBinaryTiledLayer) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         self.tiledLayer = tiledLayer
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.layer.NullLayer import NullLayer
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.layer.NullLayer import NullLayer
 
 

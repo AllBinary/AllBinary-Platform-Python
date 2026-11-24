@@ -27,10 +27,12 @@ class StreetAddressesEntityInterface(BasicDataTableInterface):
     
 
     def add(self, address: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def update(self, address: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
@@ -39,11 +41,12 @@ class StreetAddressesEntityInterface(BasicDataTableInterface):
     
 
     def getDefault(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def setDefault(self, value: str) -> None:
         raise NotImplementedError()
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
 
 

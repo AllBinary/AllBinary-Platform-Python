@@ -21,6 +21,7 @@ from org.allbinary.media.image.io.ImageIOInterface import ImageIOInterface
 class MotionRectanglesImageInputOutput(ImageIOInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NUMBER_OF_IMAGES: int = 1
     
@@ -30,10 +31,12 @@ class MotionRectanglesImageInputOutput(ImageIOInterface):
     
 
     # throws Exception
-    def save(self, frame: int) -> None:
+    def save_j1(self, frame: int) -> None:
         from org.allbinary.media.image.comparison.motion.AllMotionRectanglesResultsCacheSingleton import AllMotionRectanglesResultsCacheSingleton
         from org.allbinary.media.image.comparison.motion.ConsolidatedMotionRectanglesResultsCacheSingleton import ConsolidatedMotionRectanglesResultsCacheSingleton
         from org.allbinary.media.image.comparison.motion.ConstrainedMotionRectanglesResultsCacheSingleton import ConstrainedMotionRectanglesResultsCacheSingleton
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         motionRectanglesResultsFrameCacheable: MotionRectanglesResultsFrameCacheable = (AllMotionRectanglesResultsCacheSingleton.getInstance()).get(frame)
         if motionRectanglesResultsFrameCacheable is not None:
@@ -50,9 +53,20 @@ class MotionRectanglesImageInputOutput(ImageIOInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def save(self, motionRectangles: MotionRectangles, frame: int) -> None:
-        from org.allbinary.media.image.comparison.motion.Color import Color
+    def save_j2(self, motionRectangles: MotionRectangles, frame: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.ImageOutputData import ImageOutputData
+        from org.allbinary.logic.java.number.LongUtil import LongUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+        from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
+        from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+        from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+        from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
+        from org.allbinary.media.image.cache.BufferedImageInfoFactory import BufferedImageInfoFactory
+        from org.allbinary.media.image.cache.BufferedImagePoolSingleton import BufferedImagePoolSingleton
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         filePathStringBuffer: StringMaker = StringMaker()
         filePathStringBuffer.append(ImageOutputData.SAVE_PATH)
@@ -101,23 +115,28 @@ class MotionRectanglesImageInputOutput(ImageIOInterface):
         imagePersistanceUtil.saveWithImageIO(str(filePathStringBuffer2), bufferedImageCacheables[0].getBufferedImage())
         if self.NUMBER_OF_IMAGES > 2:
             imagePersistanceUtil.saveWithImageIO(str(filePathStringBuffer3), bufferedImageCacheables[2].getBufferedImage())
-# from java.awt import *
+
+    def save(self, *args):
+        return getattr(self, "save_j" + str(len(args)))(*args)
+# from java.awt.Graphics import Graphics
+# from java.awt.Rectangle import Rectangle
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.automation.ImageOutputData import ImageOutputData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.number.LongUtil import LongUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
-from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
-from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
-from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
-from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
-from org.allbinary.media.image.cache.BufferedImageInfoFactory import BufferedImageInfoFactory
-from org.allbinary.media.image.cache.BufferedImagePoolSingleton import BufferedImagePoolSingleton
-from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.automation.ImageOutputData import ImageOutputData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.number.LongUtil import LongUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.logic.util.cache.PoolInterface import PoolInterface
+# from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
+# from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+# from org.allbinary.media.image.cache.BufferedImageCacheable import BufferedImageCacheable
+# from org.allbinary.media.image.cache.BufferedImageInfo import BufferedImageInfo
+# from org.allbinary.media.image.cache.BufferedImageInfoFactory import BufferedImageInfoFactory
+# from org.allbinary.media.image.cache.BufferedImagePoolSingleton import BufferedImagePoolSingleton
+# from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

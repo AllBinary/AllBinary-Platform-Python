@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BuildingPropertiesFactory:
     instance: BuildingPropertiesFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
         self.damageFloatersPaintableInterface: Paintable = NullPaintable.getInstance()
 
     def __init__(self) -> None:
@@ -37,6 +40,10 @@ class BuildingPropertiesFactory:
     
 
     def getDamageFloaters(self, buildingLayer: BuildingLayer) -> DamageFloaters:
+        from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
+        from org.allbinary.game.combat.damage.PtsDamageFloaters import PtsDamageFloaters
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         damageFloaters: DamageFloaters = DamageFloaters.getInstance()
         if Features.getInstance().isFeature(GameFeatureFactory.getInstance().DAMAGE_FLOATERS):
             damageFloaters = PtsDamageFloaters(buildingLayer)
@@ -48,6 +55,14 @@ class BuildingPropertiesFactory:
 
     # throws Exception
     def getHealthBar(self, buildingLayer: BuildingLayer) -> Paintable:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.game.health.HealthBar import HealthBar
+        from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.graphics.paint.Paintable import Paintable
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         healthBar: Paintable = NullPaintable.getInstance()
         if Features.getInstance().isFeature(GameFeatureFactory.getInstance().HEALTH_BARS):
             healthBar = HealthBar(buildingLayer, buildingLayer.getHealthInterface(), HealthBarTwodAnimation(buildingLayer, BasicHudFactory.getInstance().BOTTOMLEFT), -1)
@@ -55,25 +70,31 @@ class BuildingPropertiesFactory:
     
 
     def getHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         return StdUtil.getInstance().createHashtable()
     
 
     def getTrackingEvent(self, buildingLayer: BuildingLayer) -> TrackingEvent:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         return TrackingEvent(buildingLayer)
-from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
-from org.allbinary.game.combat.damage.PtsDamageFloaters import PtsDamageFloaters
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.game.health.HealthBar import HealthBar
-from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
+# from org.allbinary.game.combat.damage.PtsDamageFloaters import PtsDamageFloaters
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.game.health.HealthBar import HealthBar
+# from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-BuildingPropertiesFactory.instance = BuildingPropertiesFactory()
+def _BuildingPropertiesFactory_instance() -> object:
+    return BuildingPropertiesFactory()
+
+lazy_static(BuildingPropertiesFactory, "instance", _BuildingPropertiesFactory_instance)
 

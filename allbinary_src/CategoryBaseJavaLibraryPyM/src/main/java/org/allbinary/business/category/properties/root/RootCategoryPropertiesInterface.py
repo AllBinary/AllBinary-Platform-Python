@@ -23,12 +23,14 @@ class RootCategoryPropertiesInterface:
 
     # throws Exception
     def setRootFilePath(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     # throws Exception
     def getRootFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 

@@ -31,6 +31,11 @@ class ImageComparator:
 
     # throws Exception
     def process(self, imageComparisonInfo: ImageComparisonResult, point: GPoint) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+        from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+        from org.allbinary.media.image.comparison.pixel.PixelDeltaFactory import PixelDeltaFactory
         isCollsionWithAvoidRectangles: bool = self.imageComparatorConstraintsInterface.isCollisionWithAvoidRectangles(point)
         if not isCollsionWithAvoidRectangles:
             rgb1: int = imageComparisonInfo.getBufferedImages()[0].getRGB(point.getX(), point.getY())
@@ -52,14 +57,15 @@ class ImageComparator:
     
 
     # throws Exception
-    def compare(self, bufferedImage1: BufferedImage, bufferedImage2: BufferedImage, frameOne: int, frameTwo: int, tolerance: int) -> ImageComparisonResult:
+    def compare_j5(self, bufferedImage1: BufferedImage, bufferedImage2: BufferedImage, frameOne: int, frameTwo: int, tolerance: int) -> ImageComparisonResult:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return self.compare(bufferedImage1, bufferedImage2, frameOne, frameTwo, tolerance, StringUtil.getInstance().EMPTY_STRING)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def compare(self, bufferedImage1: BufferedImage, bufferedImage2: BufferedImage, frameOne: int, frameTwo: int, tolerance: int, name: str) -> ImageComparisonResult:
+    def compare_j6(self, bufferedImage1: BufferedImage, bufferedImage2: BufferedImage, frameOne: int, frameTwo: int, tolerance: int, name: str) -> ImageComparisonResult:
         from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
+        from org.allbinary.graphics.PointFactory import PointFactory
         if bufferedImage1 is None or bufferedImage2 is None:
             raise Exception("Input images must not be null.")
         imageComparisonInfo: ImageComparisonResult = ImageComparisonResult(name, bufferedImage1, bufferedImage2, frameOne, frameTwo, tolerance)
@@ -69,14 +75,17 @@ class ImageComparator:
                 if imageComparisonInfo.getNonMatchingPixelVector().size() > self.imageComparatorConstraintsInterface.getMaxNonMatchingPixelDeltas():
                     break
         return imageComparisonInfo
-# from java.awt import *
+
+    def compare(self, *args):
+        return getattr(self, "compare_j" + str(len(args)))(*args)
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
-from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.media.image.comparison.pixel.PixelDeltaFactory import PixelDeltaFactory
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.color.ColorCacheFactory import ColorCacheFactory
+# from org.allbinary.graphics.color.ColorCacheable import ColorCacheable
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.media.image.comparison.pixel.PixelDeltaFactory import PixelDeltaFactory
 
 

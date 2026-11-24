@@ -21,6 +21,7 @@ from org.allbinary.game.layer.RTSLayerCompositePaintable import RTSLayerComposit
 class UpgradableWideRTSLayerPaintable(RTSLayerCompositePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.cost: str = StringUtil.getInstance().EMPTY_STRING
     
 
@@ -30,11 +31,14 @@ class UpgradableWideRTSLayerPaintable(RTSLayerCompositePaintable):
     
 
     def update(self, rtsLayer: RTSLayer) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
         super().update(rtsLayer)
         self.setCost(str(StringMaker().append(self.getUpgradeCost()).append(CommonSeps.getInstance().SPACE).append(self.getDownGradeCost())))
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         graphics.drawString(self.getCost(), self.upgradableRTSLayerHudPaintable.textX, self.upgradableRTSLayerHudPaintable.costY, 0)
     
 
@@ -45,8 +49,8 @@ class UpgradableWideRTSLayerPaintable(RTSLayerCompositePaintable):
     def getCost(self) -> str:
         return self.cost
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

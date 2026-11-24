@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PointsDomUtil:
@@ -40,6 +41,13 @@ class PointsDomUtil:
     # throws Exception
     def toDom(self, canvasDom: CanvasDom, pointVector: BasicArrayList) -> Node:
         from org.allbinary.graphics.j2me.workarea.tools.PointsUtil import PointsUtil
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.Document import Document
         tempPointVector: BasicArrayList = PointsUtil.getInstance().doTransforms(pointVector, float(canvasDom.getAngle()), PointFactory.getInstance().createXY(canvasDom.getDimension().getWidth(), canvasDom.getDimension().getHeight()))
         document: Document = WorkAreaJPanel.getDocument()
         linesNode: Node = document.createElement(self.LINES)
@@ -72,6 +80,11 @@ class PointsDomUtil:
     
 
     def getPointNode(self, point: GPoint, pointName: str) -> Node:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+        from org.allbinary.math.PositionStrings import PositionStrings
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.Document import Document
         document: Document = WorkAreaJPanel.getDocument()
         pointNode: Node = document.createElement(pointName)
         xNode: Node = document.createElement(PositionStrings.getInstance().X)
@@ -83,14 +96,18 @@ class PointsDomUtil:
         pointNode.appendChild(xNode)
         pointNode.appendChild(yNode)
         return pointNode
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Node import Node
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
 
 
-PointsDomUtil.instance = PointsDomUtil()
+def _PointsDomUtil_instance() -> object:
+    return PointsDomUtil()
+
+lazy_static(PointsDomUtil, "instance", _PointsDomUtil_instance)
 

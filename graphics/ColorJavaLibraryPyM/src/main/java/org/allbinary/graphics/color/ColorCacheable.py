@@ -26,7 +26,6 @@ class ColorCacheable(CacheableInterface):
     
 
     def __init__(self, key: object) -> None:
-        from org.allbinary.graphics.color.Color import Color
         self._init_fields()
         self.key = key
         self.color = Color(int((key)))
@@ -42,6 +41,6 @@ class ColorCacheable(CacheableInterface):
 
     def setColor(self, color: Color) -> None:
         self.color = color
-# from java.awt import *
+# from java.awt.Color import Color
 
 

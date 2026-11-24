@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.automation.module.osgi.InputAutomationModuleServiceFactory import InputAutomationModuleServiceFactory
 
 
@@ -22,11 +23,13 @@ class InputAutomationGenericModuleServiceFactory(InputAutomationModuleServiceFac
     inputAutomationGenericModuleServiceFactory: InputAutomationGenericModuleServiceFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self) -> None:
         from org.allbinary.input.automation.module.generic.GenericModuleFactory import GenericModuleFactory
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         super().__init__()
         self._init_fields()
         try:
@@ -40,9 +43,12 @@ class InputAutomationGenericModuleServiceFactory(InputAutomationModuleServiceFac
     @staticmethod
     def getInstance() -> InputAutomationGenericModuleServiceFactory:
         return InputAutomationGenericModuleServiceFactory.inputAutomationGenericModuleServiceFactory
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-InputAutomationGenericModuleServiceFactory.inputAutomationGenericModuleServiceFactory = InputAutomationGenericModuleServiceFactory()
+def _InputAutomationGenericModuleServiceFactory_inputAutomationGenericModuleServiceFactory() -> object:
+    return InputAutomationGenericModuleServiceFactory()
+
+lazy_static(InputAutomationGenericModuleServiceFactory, "inputAutomationGenericModuleServiceFactory", _InputAutomationGenericModuleServiceFactory_inputAutomationGenericModuleServiceFactory)
 

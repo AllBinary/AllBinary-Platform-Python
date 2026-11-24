@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.EthernetInterface import EthernetInterface
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 
 
-class Ethernet(HardwareComponentInterface, EthernetInterface):
+class Ethernet(*java_bases(HardwareComponentInterface, EthernetInterface)):
 
     def _init_fields(self) -> None:
         self.data: str = None

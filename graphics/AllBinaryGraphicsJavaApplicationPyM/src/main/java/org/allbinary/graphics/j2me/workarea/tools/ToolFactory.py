@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ToolFactory:
     instance: ToolFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.selectedTool: GraphicsItemInterfaceFactoryInterface = None
@@ -37,6 +40,7 @@ class ToolFactory:
     
 
     def setSelectedTool(self, tool: str) -> None:
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         try:
             StatusFactory.getInstance().setStatus(self.SELECTED_LABEL + tool)
             self.tool = tool
@@ -46,6 +50,7 @@ class ToolFactory:
 
     def getSelectedToolFactory(self) -> GraphicsItemInterfaceFactoryInterface:
         from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
+        from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
         StatusFactory.getInstance().setStatus("Tool In Use: " + self.tool)
         if self.tool is not None:
             self.selectedTool = GraphicItemFactory.getInstance().getInstance(self.tool)
@@ -53,10 +58,13 @@ class ToolFactory:
             return self.selectedTool
         else:
             return None
-from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.j2me.StatusFactory import StatusFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ToolFactory.instance = ToolFactory()
+def _ToolFactory_instance() -> object:
+    return ToolFactory()
+
+lazy_static(ToolFactory, "instance", _ToolFactory_instance)
 

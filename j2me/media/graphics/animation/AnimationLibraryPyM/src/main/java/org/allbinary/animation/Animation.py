@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 from org.allbinary.animation.AnimationInterface import AnimationInterface
 
 
-class Animation(AnimationInterface, OpenGLSurfaceChangedInterface):
+class Animation(*java_bases(AnimationInterface, OpenGLSurfaceChangedInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor

@@ -20,6 +20,7 @@ from __future__ import annotations
 class HelperFactory:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -28,8 +29,16 @@ class HelperFactory:
     
 
     # throws LicensingException
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def getInstance(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str, hashMap: dict, httpServletRequest: HttpServletRequest) -> object:
+    def getInstance_j5_1(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             params: list[object] = [None] * (2)
@@ -43,20 +52,28 @@ class HelperFactory:
             return anyType
         except LicensingException as e:
             error: str = "Failed To Get Instance Args: HashMap=" + str(hashMap) + " HttpServletRequest=" + str(httpServletRequest)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 logUtil.put(error, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             raise e
         except Exception as e:
             error: str = "Failed To Get Instance"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 logUtil.put(error, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             return None
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def getInstance(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str, hashMap: dict, pageContext: PageContext) -> object:
+    def getInstance_j5_2(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str, hashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             params: list[object] = [None] * (2)
@@ -69,21 +86,28 @@ class HelperFactory:
             anyType: object = abeFactory.getInstance(abeClientInformation, className, classes, params)
             return anyType
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 error: str = "Failed To Get Instance Args: HashMap=" + str(hashMap) + " PageContext=" + str(pageContext)
                 logUtil.put(error, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             return None
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str, hashMap: dict, specialhashMap: dict, pageContext: PageContext) -> object:
+    def getInstance_j6(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str, hashMap: HashMap, specialhashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             params: list[object] = [None] * (3)
@@ -98,42 +122,58 @@ class HelperFactory:
             anyType: object = abeFactory.getInstance(abeClientInformation, className, classes, params)
             return anyType
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 error: str = "Failed To Get Instance Args: HashMap=" + str(hashMap) + " PageContext=" + str(pageContext)
                 logUtil.put(error, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             return None
     
 
     # throws LicensingException
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str) -> object:
+    def getInstance_j3(abeClientInformation: AbeClientInformationInterface, factoryName: str, className: str) -> object:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             anyType: object = AbeFactory.getInstance().getInstance(abeClientInformation, className)
             return anyType
         except LicensingException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             raise e
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, factoryName + "->HelperFactory", "getInstance(String, String, HashMap, PageContext)", e)
             return None
+
+    @staticmethod
+    def getInstance(*args):
+        if len(args) == 5 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)) and not isinstance(args[3], (str, list, int, float)) and not isinstance(args[4], (str, list, int, float)):
+            return HelperFactory.getInstance_j5_1(*args)
+        if len(args) == 5:
+            return HelperFactory.getInstance_j5_2(*args)
+        return getattr(HelperFactory, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

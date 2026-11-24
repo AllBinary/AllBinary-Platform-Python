@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FREEBLISKET_PATH_GLOBALS:
     instance: FREEBLISKET_PATH_GLOBALS = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         self.INSTALLPATH: str = None
         self.XSLPATH: str = None
         self.TEMPLATEPATH: str = "template" + str(AbPathData.getInstance().SEPARATOR)
@@ -37,11 +39,12 @@ class FREEBLISKET_PATH_GLOBALS:
 
     @staticmethod
     def getInstance() -> FREEBLISKET_PATH_GLOBALS:
-        return self.FREEBLISKET_PATH_GLOBALS.instance
+        return FREEBLISKET_PATH_GLOBALS.instance
     
 
     def __init__(self) -> None:
-        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("install")
@@ -68,10 +71,12 @@ class FREEBLISKET_PATH_GLOBALS:
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         self.CONTEXTCONFIGURATIONPATH = str(stringBuffer)
         stringBuffer.delete(0, stringBuffer.length())
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-FREEBLISKET_PATH_GLOBALS.instance = FREEBLISKET_PATH_GLOBALS()
+def _FREEBLISKET_PATH_GLOBALS_instance() -> object:
+    return FREEBLISKET_PATH_GLOBALS()
+
+lazy_static(FREEBLISKET_PATH_GLOBALS, "instance", _FREEBLISKET_PATH_GLOBALS_instance)
 

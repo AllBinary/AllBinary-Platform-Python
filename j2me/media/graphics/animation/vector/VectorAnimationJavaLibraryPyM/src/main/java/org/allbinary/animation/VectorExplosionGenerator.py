@@ -30,7 +30,7 @@ class VectorExplosionGenerator:
     
 
     @staticmethod
-    def getInstance() -> VectorExplosionGenerator:
+    def getInstance_j0() -> VectorExplosionGenerator:
         return VectorExplosionGenerator.instance
     
 
@@ -53,13 +53,15 @@ class VectorExplosionGenerator:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, points: list[list[int]], howMuch: int, type_: VectorExplosionType) -> list[list[list[int]]]:
+    def getInstance_j3(self, points: list[list[int]], howMuch: int, type_: VectorExplosionType) -> list[list[list[int]]]:
         from org.allbinary.util.BasicArrayList import BasicArrayList
         pointsBasicArrayList: BasicArrayList = self.getInstanceStartFrame(points, howMuch, type_, True)
         tempBasicArrayList: BasicArrayList = pointsBasicArrayList.objectArray[0]
         newPoints: list[list[list[int]]] = self.vectorAnimationUtil.toAnimationArrayFromListOfPointListWithPointsPerFrame(pointsBasicArrayList, tempBasicArrayList.size())
         return newPoints
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
     
 
     # throws Exception

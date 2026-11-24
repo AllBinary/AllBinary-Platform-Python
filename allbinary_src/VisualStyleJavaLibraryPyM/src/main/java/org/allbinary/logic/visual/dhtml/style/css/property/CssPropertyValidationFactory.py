@@ -27,9 +27,12 @@ class CssPropertyValidationFactory:
     # throws Exception
     @staticmethod
     def getInstance(node: Node) -> ValidationInterface:
+        from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
+        from org.allbinary.logic.visual.dhtml.style.css.property.font.FontFamilyValidation import FontFamilyValidation
+        from org.w3c.dom.Node import Node
         return FontFamilyValidation(node)
-from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
-from org.allbinary.logic.visual.dhtml.style.css.property.font.FontFamilyValidation import FontFamilyValidation
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
+# from org.allbinary.logic.visual.dhtml.style.css.property.font.FontFamilyValidation import FontFamilyValidation
+# from org.w3c.dom.Node import Node
 
 

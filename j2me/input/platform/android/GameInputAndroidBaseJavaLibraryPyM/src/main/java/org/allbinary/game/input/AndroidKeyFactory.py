@@ -9,6 +9,10 @@ from org.allbinary.android.ActivityFractureUtil import ActivityFractureUtil
 class AndroidKeyFactory(ActivityFractureUtil):
 
     def _init_fields(self) -> None:
+        from android.view.KeyEvent import KeyEvent
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.UNKNOWN: AndroidGameKey = AndroidGameKey(KeyEvent.KEYCODE_UNKNOWN, "UNKNOWN")
         self.KEYCODE_BUTTON_L1: AndroidGameKey = self.UNKNOWN
@@ -133,6 +137,7 @@ class AndroidKeyFactory(ActivityFractureUtil):
     
 
     def init(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF("Start/End", self, commonStrings.INIT)
     
@@ -187,11 +192,11 @@ class AndroidKeyFactory(ActivityFractureUtil):
         elif input == self.CALL:
             return True
         return False
-from android.view.KeyEvent import KeyEvent
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from android.view.KeyEvent import KeyEvent
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 from org.allbinary.game.input.AndroidGameKey import AndroidGameKey
 
 

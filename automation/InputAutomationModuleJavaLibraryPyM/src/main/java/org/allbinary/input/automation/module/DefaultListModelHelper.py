@@ -20,19 +20,19 @@ from __future__ import annotations
 class DefaultListModelHelper:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.defaultListModel: DefaultListModel = None
         self.vector: BasicArrayList = None
     
 
     def __init__(self) -> None:
-        from org.allbinary.input.automation.module.DefaultListModel import DefaultListModel
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.vector = BasicArrayListD()
         self.defaultListModel = DefaultListModel()
     
 
     def initDefaultModelList(self) -> None:
-        from org.allbinary.input.automation.module.DefaultListModel import DefaultListModel
         self.defaultListModel = DefaultListModel()
         size: int = self.vector.size()
         for index in range(0, size):
@@ -50,9 +50,10 @@ class DefaultListModelHelper:
 
     def remove(self, string: str) -> None:
         self.vector.remove(string)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-# from javax.swing import *
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from javax.swing.DefaultListModel import DefaultListModel
+# from javax.swing.ListModel import ListModel
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LapInfo:
@@ -50,6 +51,7 @@ class LapInfo:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("isDone: ")
         stringBuffer.appendboolean(self.isDone())
@@ -61,8 +63,11 @@ class LapInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-LapInfo.NULL_LAP_INFO = LapInfo(-1)
+def _LapInfo_NULL_LAP_INFO() -> object:
+    return LapInfo(-1)
+
+lazy_static(LapInfo, "NULL_LAP_INFO", _LapInfo_NULL_LAP_INFO)
 

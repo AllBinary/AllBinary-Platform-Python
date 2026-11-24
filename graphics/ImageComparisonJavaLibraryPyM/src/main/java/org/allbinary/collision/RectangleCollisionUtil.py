@@ -24,28 +24,37 @@ class RectangleCollisionUtil:
         pass
     
 
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def isCollision(rectangle: Rectangle, point: GPoint) -> bool:
+    def isCollision_j2_1(rectangle: Rectangle, point: GPoint) -> bool:
+        from org.allbinary.graphics.GPoint import GPoint
         if point.getX() > (int(rectangle.x) + rectangle.getWidth()) or point.getY() > (int(rectangle.y) + rectangle.getHeight()) or point.getX() < rectangle.x or point.getY() < rectangle.y:
             return False
         else:
             return True
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def isCollision(rectangle1: Rectangle, rectangle2: Rectangle) -> bool:
+    def isCollision_j2_2(rectangle1: Rectangle, rectangle2: Rectangle) -> bool:
         return RectangleCollisionUtil.isCollision(rectangle1.x, rectangle1.y, rectangle1.x + rectangle1.width, rectangle1.y + rectangle1.height, rectangle2.x, rectangle2.y, rectangle2.x + rectangle2.width, rectangle2.y + rectangle2.height)
     
 
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def isCollision(rectX1: int, rectY1: int, rectX2: int, rectY2: int, rect2X1: int, rect2Y1: int, rect2X2: int, rect2Y2: int) -> bool:
+    def isCollision_j8(rectX1: int, rectY1: int, rectX2: int, rectY2: int, rect2X1: int, rect2Y1: int, rect2X2: int, rect2Y2: int) -> bool:
         if rect2X1 >= rectX2 or rect2Y1 >= rectY2 or rect2X2 <= rectX1 or rect2Y2 <= rectY1:
             return False
         else:
             return True
-# from java.awt import *
-from org.allbinary.graphics.GPoint import GPoint
+
+    @staticmethod
+    def isCollision(*args):
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            return RectangleCollisionUtil.isCollision_j2_1(*args)
+        if len(args) == 2:
+            return RectangleCollisionUtil.isCollision_j2_2(*args)
+        return getattr(RectangleCollisionUtil, "isCollision_j" + str(len(args)))(*args)
+# from java.awt.Rectangle import Rectangle
+# from org.allbinary.graphics.GPoint import GPoint
 
 

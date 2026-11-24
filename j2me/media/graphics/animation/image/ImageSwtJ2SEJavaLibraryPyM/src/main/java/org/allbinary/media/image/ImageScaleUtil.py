@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageScaleUtil:
     instance: ImageScaleUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageCopyUtil: ImageCopyUtil = ImageCopyUtil.getInstance()
@@ -40,11 +45,15 @@ class ImageScaleUtil:
 
     # throws Exception
     def createImage2(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         return self.createImage3(imageCache, originalImage, scaleNominatorX, scaleDenominatorX, scaleNominatorY, scaleDenominatorY, cached, True)
     
 
     # throws Exception
     def createImage3(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool, mutable: bool) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.ImageCache import ImageCache
         if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
@@ -58,23 +67,28 @@ class ImageScaleUtil:
 
     # throws Exception
     def scale2(self, originalImage: Image, originalImageArray: list[Image], ximageToShowArray: list[Image], unused: int, scaleX: float, scaleY: float, maxScaleX: float, maxScaleY: float) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.scale(originalImage, originalImageArray, ximageToShowArray, unused, scaleX, scaleY, maxScaleX, maxScaleY, True)
     
 
     # throws Exception
     def scale(self, originalImage: Image, originalImageArray: list[Image], ximageToShowArray: list[Image], unused: int, scaleX: float, scaleY: float, maxScaleX: float, maxScaleY: float, mutable: bool) -> None:
+        from javax.microedition.lcdui.Image import Image
         width: int = originalImage.getWidth()
         height: int = originalImage.getHeight()
         scaledImage: Image = self.imageCopyUtil.createImageWH(originalImage, int((scaleX * float(width))), int((scaleY * float(height))), mutable)
         originalImageArray[0] = scaledImage
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
 
 
-ImageScaleUtil.instance = ImageScaleUtil()
+def _ImageScaleUtil_instance() -> object:
+    return ImageScaleUtil()
+
+lazy_static(ImageScaleUtil, "instance", _ImageScaleUtil_instance)
 

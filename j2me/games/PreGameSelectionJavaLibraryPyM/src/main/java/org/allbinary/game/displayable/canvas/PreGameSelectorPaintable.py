@@ -21,12 +21,15 @@ from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 class PreGameSelectorPaintable(InitUpdatePaintable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
         self.title: str = None
         self.canvasDrawLineString: CanvasDrawLineString = None
         self.preGameScrollSelectionForm: PreGameScrollSelectionForm = None
     
 
     def __init__(self, title: str, preGameScrollSelectionForm: PreGameScrollSelectionForm) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
         super().__init__()
         self._init_fields()
         self.title = title
@@ -36,11 +39,15 @@ class PreGameSelectorPaintable(InitUpdatePaintable):
     
 
     def update(self) -> None:
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.canvasDrawLineString = CanvasDrawLineString(displayInfo.getLastHalfWidth(), 0)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         graphics.setColor(int(BasicColorFactory.getInstance().WHITE))
         self.canvasDrawLineString.paint(graphics, self.title, 0)
         self.getPreGameSelectionForm().paint(graphics)
@@ -49,8 +56,8 @@ class PreGameSelectorPaintable(InitUpdatePaintable):
     def getPreGameSelectionForm(self) -> PreGameScrollSelectionForm:
         return self.preGameScrollSelectionForm
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
 
 

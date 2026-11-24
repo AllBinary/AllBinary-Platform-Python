@@ -16,37 +16,51 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionEntityInterface import TransactionEntityInterface
 
 
-class TransactionEntity(AbSqlBean, TransactionEntityInterface):
+class TransactionEntity(*java_bases(AbSqlBean, TransactionEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "vtrans"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
     def remove(self, userName: str, orderNumber: str) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            whereHashMap: dict = StdUtil.getInstance().createHashMap()
+            whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(OrderData.ID, orderNumber)
             whereHashMap.put(UserData.USERNAME, userName)
             super().deleteWhere(whereHashMap)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "remove")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "remove", e)
     
 
     def add(self, userName: str, orderNumber: str, paymentTransactionInterface: PaymentTransactionInterface) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             values: BasicArrayList = BasicArrayListD()
             values.add(orderNumber)
@@ -57,14 +71,19 @@ class TransactionEntity(AbSqlBean, TransactionEntityInterface):
             values.add(time)
             values.add(time)
             super().insert(values)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "add")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "add", e)
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionKeysFactory import PaymentTransactionKeysFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
         paymentTransactionKeysFactory: PaymentTransactionKeysFactory = PaymentTransactionKeysFactory.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE)
@@ -82,16 +101,18 @@ class TransactionEntity(AbSqlBean, TransactionEntityInterface):
         return super().dropTable()
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionKeysFactory import PaymentTransactionKeysFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionKeysFactory import PaymentTransactionKeysFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

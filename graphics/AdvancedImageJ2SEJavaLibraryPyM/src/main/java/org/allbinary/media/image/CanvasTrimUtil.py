@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CanvasTrimUtil:
     instance: CanvasTrimUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
 
@@ -45,9 +48,12 @@ class CanvasTrimUtil:
             visitor.visit(subBufferedImageArray[index], self.stringUtil.EMPTY_STRING, index)
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.IOException import IOException
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-CanvasTrimUtil.instance = CanvasTrimUtil()
+def _CanvasTrimUtil_instance() -> object:
+    return CanvasTrimUtil()
+
+lazy_static(CanvasTrimUtil, "instance", _CanvasTrimUtil_instance)
 

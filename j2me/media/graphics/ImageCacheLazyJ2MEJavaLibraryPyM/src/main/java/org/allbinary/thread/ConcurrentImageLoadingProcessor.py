@@ -16,22 +16,29 @@
 from __future__ import annotations
 
 from org.allbinary.thread.BaseImageLoadingProcessor import BaseImageLoadingProcessor
+from org.allbinary.thread.ABRunnable import ABRunnable
 
 
 class ConcurrentImageLoadingProcessor(BaseImageLoadingProcessor):
     class ImageCacheRunnable(ABRunnable):
 
         def _init_fields(self) -> None:
+            from org.allbinary.image.ImageCache import ImageCache
             self.imageCache: ImageCache = None
         
 
         def __init__(self, imageCache: ImageCache) -> None:
+            from org.allbinary.image.ImageCache import ImageCache
             super().__init__()
             self._init_fields()
             self.imageCache = imageCache
         
 
         def run(self) -> None:
+            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             try:
                 self.setRunning(True)
@@ -48,25 +55,26 @@ class ConcurrentImageLoadingProcessor(BaseImageLoadingProcessor):
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.runnable: ABRunnable = None
     
 
     def __init__(self, imageCache: ImageCache) -> None:
-        from org.allbinary.thread.ImageCacheRunnable import ImageCacheRunnable
+        from org.allbinary.image.ImageCache import ImageCache
         super().__init__()
         self._init_fields()
-        self.runnable = ImageCacheRunnable(imageCache)
+        self.runnable = ConcurrentImageLoadingProcessor.ImageCacheRunnable(imageCache)
     
 
     def runTask(self) -> None:
         from org.allbinary.thread.ImageThreadPool import ImageThreadPool
         if not self.runnable.isRunning():
             ImageThreadPool.getInstance().runTask(self.runnable)
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

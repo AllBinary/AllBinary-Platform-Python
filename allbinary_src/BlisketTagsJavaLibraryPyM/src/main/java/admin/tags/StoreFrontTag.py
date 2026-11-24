@@ -21,10 +21,12 @@ from tags.CustomTagSupport import CustomTagSupport
 class StoreFrontTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.command: str = None
         self.storeName: str = None
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
@@ -42,6 +44,10 @@ class StoreFrontTag(CustomTagSupport):
 
     # throws LicensingException
     def getCurrentLocation(self) -> str:
+        from admin.taghelpers.StoreFrontHelperFactory import StoreFrontHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = StoreFrontHelperFactory().getInstance(self.propertiesHashMap, self.pageContext)
             method: Method = type(anyType).getMethod("getCurrentLocation", None)
@@ -51,13 +57,17 @@ class StoreFrontTag(CustomTagSupport):
             raise e
         except Exception as e:
             error: str = "Failed to retrieve current location"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getCurrentLocation()", e)
             return error
     
 
     # throws LicensingException
     def getCurrentHomeLocation(self) -> str:
+        from admin.taghelpers.StoreFrontHelperFactory import StoreFrontHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = StoreFrontHelperFactory().getInstance(self.propertiesHashMap, self.pageContext)
             method: Method = type(anyType).getMethod("getCurrentHomeLocation", None)
@@ -67,20 +77,25 @@ class StoreFrontTag(CustomTagSupport):
             raise e
         except Exception as e:
             error: str = "Failed to retrieve current home location"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getCurrentHomeLocation()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.command is not None:
                 self.propertiesHashMap = StdUtil.getInstance().createHashMap()
                 self.propertiesHashMap.put(StoreFrontData.getInstance().NAME, self.storeName)
-                if ((self.command > org.allbinary.globals.GLOBALS2.GETCURRENTLOCATION) - (self.command < org.allbinary.globals.GLOBALS2.GETCURRENTLOCATION)) == 0:
+                if ((self.command > GLOBALS2.GETCURRENTLOCATION) - (self.command < GLOBALS2.GETCURRENTLOCATION)) == 0:
                     self.pageContext.getOut().print_(self.getCurrentLocation())
-                elif ((self.command > org.allbinary.globals.GLOBALS2.GETCURRENTHOMELOCATION) - (self.command < org.allbinary.globals.GLOBALS2.GETCURRENTHOMELOCATION)) == 0:
+                elif ((self.command > GLOBALS2.GETCURRENTHOMELOCATION) - (self.command < GLOBALS2.GETCURRENTHOMELOCATION)) == 0:
                     self.pageContext.getOut().print_(self.getCurrentHomeLocation())
             return self.SKIP_BODY
         except LicensingException as e:
@@ -92,11 +107,14 @@ class StoreFrontTag(CustomTagSupport):
 # from java.lang.reflect.Method import Method
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.StoreFrontHelperFactory import StoreFrontHelperFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.StoreFrontHelperFactory import StoreFrontHelperFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

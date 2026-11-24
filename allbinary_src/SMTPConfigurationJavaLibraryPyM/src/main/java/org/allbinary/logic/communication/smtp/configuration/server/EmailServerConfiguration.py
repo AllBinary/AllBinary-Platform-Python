@@ -21,6 +21,7 @@ from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConf
 class EmailServerConfiguration(EmailServerConfigurationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.accountName: str = None
         self.password: str = None
@@ -36,19 +37,24 @@ class EmailServerConfiguration(EmailServerConfigurationInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)
         self.setSmtpServer(StringUtil.getInstance().EMPTY_STRING)
     
 
-    def _constructor1(self, hashMap: dict) -> None:
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, "EmailServerConfiguration(HashMap)")
         self.setAccountName(hashMap.get(EmailServerConfigurationData.ACCOUNT))
@@ -58,8 +64,11 @@ class EmailServerConfiguration(EmailServerConfigurationInterface):
     
 
     def _constructor3(self, account: str, password: str, server: str) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, "EmailServerConfiguration(HashMap)")
         self.setAccountName(account)
@@ -93,7 +102,9 @@ class EmailServerConfiguration(EmailServerConfigurationInterface):
     
 
     def log(self) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF(str(self), self, "EmailServerConfiguration")
     
 
@@ -103,8 +114,10 @@ class EmailServerConfiguration(EmailServerConfigurationInterface):
     def __str__(self) -> str:
         return self.toString()
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -21,6 +21,8 @@ from org.allbinary.media.image.ImageCompleteUtil import ImageCompleteUtil
 class ImageWaitCompleteUtil(ImageCompleteUtil):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(18000)
         self.allTimeDelayHelper: TimeDelayHelper = TimeDelayHelper(120000)
@@ -33,6 +35,7 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
 
     # throws Exception
     def waitForImage(self, image: Image, name: str) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.timeDelayHelper.setStartTimeTNT()
         self.waitForATime(image, name, self.timeDelayHelper)
     
@@ -45,6 +48,9 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
 
     # throws Exception
     def waitForATime(self, image: Image, name: str, timeDelayHelper: TimeDelayHelper) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.microemu.device.playn.PlaynImage import PlaynImage
         playnImage: PlaynImage = image
         playnCoreImage: Image = playnImage.getImage()
         while not playnCoreImage.isReady() or playnCoreImage.width() + playnCoreImage.height() <= 0:
@@ -56,6 +62,11 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
 
     # throws Exception
     def waitForAll(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.HashtableUtil import HashtableUtil
         self.allTimeDelayHelper.setStartTimeTNT()
         hashtable: ABHashtable[object, object] = GameFeatureImageCacheFactory.getInstance().getHashtableP()
         objectArray: list[object] = HashtableUtil.getInstance().getKeysAsArray(hashtable)
@@ -64,12 +75,12 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
         for index in range(0, size):
             self.waitForATime(hashtable.get(objectArray[index]), objectArray[index], self.allTimeDelayHelper)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.HashtableUtil import HashtableUtil
-from org.microemu.device.playn.PlaynImage import PlaynImage
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.HashtableUtil import HashtableUtil
+# from org.microemu.device.playn.PlaynImage import PlaynImage
 
 

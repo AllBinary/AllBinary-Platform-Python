@@ -15,19 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
-class DirectoryDataModel(DomNodeInterface, TransformInterface):
+class DirectoryDataModel(*java_bases(DomNodeInterface, TransformInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.fileBasicArrayList: BasicArrayList = None
         self.transformDocumentInterface: TransformDocumentInterface = None
         self.NO_TYPE: int = 0
     
 
     def __init__(self, file: AbFile) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         self._init_fields()
         self.fileBasicArrayList = Directory.getInstance().search(file)
         self.transformDocumentInterface = TransformDocumentFactory.getInstance()
@@ -39,20 +46,26 @@ class DirectoryDataModel(DomNodeInterface, TransformInterface):
 
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         return None
     
 
     def setTransformDocumentInterface(self, transformDocumentInterface: TransformDocumentInterface) -> None:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         self.transformDocumentInterface = transformDocumentInterface
     
 
     def getTransformDocumentInterface(self) -> TransformDocumentInterface:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         return self.transformDocumentInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.data.tree.dom.FileDomDataModel import FileDomDataModel
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         dirNode: Node = document.createElement("dir")
         size: int = self.fileBasicArrayList.size()
         nextFile: AbFile = None
@@ -66,22 +79,25 @@ class DirectoryDataModel(DomNodeInterface, TransformInterface):
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return self.getTransformDocumentInterface().getDoc()
     
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.w3c.dom.Node import Node
         node: Node = self.toXmlNode(self.getTransformDocumentInterface().getDoc())
         self.getTransformDocumentInterface().getBaseNode().appendChild(node)
         return XmlDocumentHelper.toString(self.getTransformDocumentInterface().getDoc())
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
-from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
+# from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

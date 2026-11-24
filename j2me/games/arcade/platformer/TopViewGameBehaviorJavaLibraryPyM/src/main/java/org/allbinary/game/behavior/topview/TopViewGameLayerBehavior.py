@@ -41,6 +41,7 @@ class TopViewGameLayerBehavior(GameLayerBehavior):
     
 
     def land(self, velocityProperties: VelocityProperties) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         velocityProperties.getVelocityYBasicDecimalP().setint(0)
         self.landReset()
     
@@ -53,6 +54,8 @@ class TopViewGameLayerBehavior(GameLayerBehavior):
     
 
     def up(self, velocityProperties: VelocityProperties, acceleration: BasicAccelerationProperties, jumpBehavior: InitialJumpBehavior, accelerationMultiplier: int) -> None:
+        from org.allbinary.game.physics.acceleration.BasicAccelerationProperties import BasicAccelerationProperties
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         if not self.isJumpOver:
             if self.gravityActionIndex < self.maxGravityActionIndex:
                 acceleration2: int = -acceleration.getForward() * accelerationMultiplier
@@ -69,9 +72,10 @@ class TopViewGameLayerBehavior(GameLayerBehavior):
     
 
     def inputFrames(self, velocityProperties: VelocityProperties) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         if self.gravityActionIndex > 0 and velocityProperties.getVelocityYBasicDecimalP().getUnscaled() > 0:
             self.isJumpOver = True
-from org.allbinary.game.physics.acceleration.BasicAccelerationProperties import BasicAccelerationProperties
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.game.physics.acceleration.BasicAccelerationProperties import BasicAccelerationProperties
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
 
 

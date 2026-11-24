@@ -15,18 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.context.AbContext import AbContext
 from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
 
 
 #Hack class should not exist
-class TransformInfoBasic(AbContext, TransformInfoHttpInterface):
+class TransformInfoBasic(*java_bases(AbContext, TransformInfoHttpInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         self.storeFrontInterface: StoreFrontInterface = None
     
 
-    def __init__(self, storeFrontInterface: StoreFrontInterface, propertiesHashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, storeFrontInterface: StoreFrontInterface, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         super().__init__(propertiesHashMap, pageContext)
         self._init_fields()
         self.storeFrontInterface = storeFrontInterface
@@ -40,7 +44,8 @@ class TransformInfoBasic(AbContext, TransformInfoHttpInterface):
         return self.commonStrings.NOT_IMPLEMENTED
     
 
-    def override(self, hashMap: dict) -> None:
+    def override(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         pass
     
 
@@ -57,14 +62,17 @@ class TransformInfoBasic(AbContext, TransformInfoHttpInterface):
     
 
     def getObjectConfigInterface(self) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         return None
     
 
     def setObjectConfigInterface(self, transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         pass
     
 
     def getTemplateFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return None
     
 
@@ -77,6 +85,7 @@ class TransformInfoBasic(AbContext, TransformInfoHttpInterface):
     
 
     def getDataFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return None
     
 
@@ -86,6 +95,7 @@ class TransformInfoBasic(AbContext, TransformInfoHttpInterface):
 
     # throws Exception
     def getDataDocument(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
     
 
@@ -148,19 +158,36 @@ class TransformInfoBasic(AbContext, TransformInfoHttpInterface):
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return None
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return None
+    
+
+    def getWeblisketSession(self) -> WeblisketSessionInterface:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+        return super().getWeblisketSession()
+    
+
+    def getPageContext(self) -> PageContext:
+        return super().getPageContext()
+    
+
+    def getPropertiesHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        return super().getPropertiesHashMap()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
-from org.w3c.dom.Document import Document
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.w3c.dom.Document import Document
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
 
 

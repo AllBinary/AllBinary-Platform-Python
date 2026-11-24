@@ -27,12 +27,17 @@ class AllBinaryHTMLImageRotationAnimationFactory(BaseImageAnimationFactory):
     # throws Exception
     @staticmethod
     def createFactoryADXY(image: Image, width: int, height: int, dx: int, dy: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory) -> AllBinaryHTMLImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         htmlImageRotationAnimationFactory: AllBinaryHTMLImageRotationAnimationFactory = AllBinaryHTMLImageRotationAnimationFactory(image, width, height, angleIncrement, animationBehaviorFactory)
         htmlImageRotationAnimationFactory.init(dx, dy)
         return htmlImageRotationAnimationFactory
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), width, height, 0, 0, animationBehaviorFactory)
         self._init_fields()
         self.angleIncrement = angleIncrement
@@ -49,6 +54,11 @@ class AllBinaryHTMLImageRotationAnimationFactory(BaseImageAnimationFactory):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.AllBinaryHTMLImageRotationAnimation import AllBinaryHTMLImageRotationAnimation
         from org.allbinary.animation.image.AllBinaryAdjustedHTMLImageRotationAnimation import AllBinaryAdjustedHTMLImageRotationAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
         scaledImage: Image = self.animationFactoryImageScaleUtil.createImage(self.getImage(), self.animationFactoryInitializationVisitor.width, self.animationFactoryInitializationVisitor.height, self.scaleProperties.scaleWidth, self.scaleProperties.scaleHeight)
         copyOfScaledImage: Image = ImageCopyUtil.getInstance().createImage(scaledImage)
         if self.animationFactoryInitializationVisitor.dx != 0 or self.animationFactoryInitializationVisitor.dy != 0:
@@ -61,12 +71,12 @@ class AllBinaryHTMLImageRotationAnimationFactory(BaseImageAnimationFactory):
     def getAngleIncrement(self) -> int:
         return self.angleIncrement
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

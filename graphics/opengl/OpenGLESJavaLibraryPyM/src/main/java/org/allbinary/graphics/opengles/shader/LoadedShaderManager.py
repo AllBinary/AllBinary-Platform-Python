@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.opengles.shader.ShaderManager import ShaderManager
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LoadedShaderManager:
-    instance: ShaderManager = ShaderManager(-1, -1)
+    instance: ShaderManager = None
     
 
     @staticmethod
     def getInstance() -> ShaderManager:
         return LoadedShaderManager.instance
 
+
+def _LoadedShaderManager_instance() -> object:
+    from org.allbinary.graphics.opengles.shader.ShaderManager import ShaderManager
+    return ShaderManager(-1, -1)
+
+lazy_static(LoadedShaderManager, "instance", _LoadedShaderManager_instance)
 

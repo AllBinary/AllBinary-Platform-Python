@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from android.app.Activity import Activity
 from org.allbinary.android.GenericMotionEventVerifyInterface import GenericMotionEventVerifyInterface
 from org.allbinary.game.configuration.event.GameFeatureListenerInterface import GameFeatureListenerInterface
@@ -23,21 +24,24 @@ from org.allbinary.android.activity.SimpleProgressActivityInterface import Simpl
 from org.allbinary.android.activity.KeyInputViewCompositeInterface import KeyInputViewCompositeInterface
 
 
-class MidletActivityBase(Activity, GameFeatureListenerInterface, GameInitializedListenerInterface, SimpleProgressActivityInterface, KeyInputViewCompositeInterface, GenericMotionEventVerifyInterface):
+class MidletActivityBase(*java_bases(Activity, GameFeatureListenerInterface, GameInitializedListenerInterface, SimpleProgressActivityInterface, KeyInputViewCompositeInterface, GenericMotionEventVerifyInterface)):
 
     def __init__(self) -> None:
         super().__init__()
     
 
     def onGameFeatureChange(self, gameFeatureEvent: GameFeatureEvent) -> None:
+        from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
         pass
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         pass
     
 
     def onGameInitialized(self, gameInitializedEvent: GameInitializedEvent) -> None:
+        from org.allbinary.game.configuration.event.GameInitializedEvent import GameInitializedEvent
         pass
     
 
@@ -57,23 +61,27 @@ class MidletActivityBase(Activity, GameFeatureListenerInterface, GameInitialized
     
 
     def getRootView(self) -> View:
+        from android.view.View import View
         raise RuntimeError()
     
 
     def getView(self) -> View:
+        from android.view.View import View
         raise RuntimeError()
     
 
     def setKeyInputView(self, keyInputView: View) -> None:
+        from android.view.View import View
         pass
     
 
     def onGenericMotionEvent(self, event: MotionEvent) -> bool:
+        from android.view.MotionEvent import MotionEvent
         raise RuntimeError()
-from android.view.MotionEvent import MotionEvent
-from android.view.View import View
-from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
-from org.allbinary.game.configuration.event.GameInitializedEvent import GameInitializedEvent
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from android.view.MotionEvent import MotionEvent
+# from android.view.View import View
+# from org.allbinary.game.configuration.event.GameFeatureEvent import GameFeatureEvent
+# from org.allbinary.game.configuration.event.GameInitializedEvent import GameInitializedEvent
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

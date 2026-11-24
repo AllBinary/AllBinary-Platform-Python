@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
 
 
@@ -22,6 +23,7 @@ class RaceTrackGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
     instanceC: RaceTrackGeographicMapCellTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         self.EMPTY_CELL_TYPE: GeographicMapCellType = GeographicMapCellType(0, -1)
         self.EASY_CELL_TYPE: GeographicMapCellType = self.EMPTY_CELL_TYPE
         self.BOTTOM_LEFT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
@@ -68,11 +70,15 @@ class RaceTrackGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
     
 
     def isPath(self, cellType: GeographicMapCellType) -> bool:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         if cellType != self.EMPTY_CELL_TYPE and cellType != self.EASY_CELL_TYPE:
             return True
         return False
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
 
 
-RaceTrackGeographicMapCellTypeFactory.instanceC = RaceTrackGeographicMapCellTypeFactory()
+def _RaceTrackGeographicMapCellTypeFactory_instanceC() -> object:
+    return RaceTrackGeographicMapCellTypeFactory()
+
+lazy_static(RaceTrackGeographicMapCellTypeFactory, "instanceC", _RaceTrackGeographicMapCellTypeFactory_instanceC)
 

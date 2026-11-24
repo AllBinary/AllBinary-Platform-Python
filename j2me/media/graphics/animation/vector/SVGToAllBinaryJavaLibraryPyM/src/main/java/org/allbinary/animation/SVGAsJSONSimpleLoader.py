@@ -17,12 +17,16 @@ from __future__ import annotations
 
 import math
 import traceback
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SVGAsJSONSimpleLoader:
     instance: SVGAsJSONSimpleLoader = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+        from org.allbinary.math.PositionStrings import PositionStrings
         self.graphicsStrings: GraphicsStrings = GraphicsStrings.getInstance()
         self.shapeTypeFactory: ShapeTypeFactory = ShapeTypeFactory.getInstance()
         self.KEY_SVG: str = "svg"
@@ -54,6 +58,10 @@ class SVGAsJSONSimpleLoader:
 
     # throws Exception
     def load(self, svgAsJson: str) -> list[list[int]]:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.json.me.JSONException import JSONException
+        from org.json.me.JSONObject import JSONObject
         if svgAsJson is None:
             return self.EMPTY_POINTS
         try:
@@ -61,9 +69,10 @@ class SVGAsJSONSimpleLoader:
             svgValue: object = root.opt(self.KEY_SVG)
             svg: JSONObject = (root if svgValue is None else self.asObject(svgValue, self.KEY_SVG))
             pointVector: BasicArrayList = BasicArrayListD()
-            keys: Enumeration = svg.keys()
-            while keys.hasMoreElements():
-                key: str = keys.nextElement()
+            objectArray: list[object] = svg.keysAsArray()
+            size: int = len(objectArray)
+            for index in range(0, size):
+                key: str = objectArray[index]
                 value: object = svg.opt(key)
                 if self.shapeTypeFactory.KEY_LINE.equals(key):
                     self.addShapes(pointVector, value, self.shapeTypeFactory.LINE)
@@ -78,6 +87,8 @@ class SVGAsJSONSimpleLoader:
 
     # throws Exception
     def addShapes(self, pointVector: BasicArrayList, value: object, shapeType: ShapeType) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.json.me.JSONArray import JSONArray
         if isinstance(value, JSONArray):
             array: JSONArray = value
             size: int = array.length()
@@ -89,6 +100,8 @@ class SVGAsJSONSimpleLoader:
 
     # throws Exception
     def addShape(self, pointVector: BasicArrayList, value: object, shapeType: ShapeType) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.json.me.JSONObject import JSONObject
         shape: JSONObject = self.asObject(value, shapeType.getName())
         if shapeType == self.shapeTypeFactory.LINE:
             self.addLine(pointVector, shape)
@@ -100,6 +113,8 @@ class SVGAsJSONSimpleLoader:
 
     # throws Exception
     def addLine(self, pointVector: BasicArrayList, line: JSONObject) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.json.me.JSONObject import JSONObject
         self.addPoint(pointVector, self.readInt(line, self.KEY_X1), self.readInt(line, self.KEY_Y1))
         self.addPoint(pointVector, self.readInt(line, self.KEY_X2), self.readInt(line, self.KEY_Y2))
         self.addSeparator(pointVector)
@@ -107,11 +122,13 @@ class SVGAsJSONSimpleLoader:
 
     # throws Exception
     def addCircle(self, pointVector: BasicArrayList, circle: JSONObject) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.json.me.JSONObject import JSONObject
         cx: int = self.readInt(circle, self.KEY_CX)
         cy: int = self.readInt(circle, self.KEY_CY)
         radius: int = self.readInt(circle, self.KEY_R)
         for index in range(0, self.CIRCLE_SEGMENTS + 1):
-            angle: float = (Math.PI * 2.0 * index) / self.CIRCLE_SEGMENTS
+            angle: float = (math.pi * 2.0 * index) / self.CIRCLE_SEGMENTS
             x: int = int(int(math.floor(cx + (math.cos(angle) * radius) + 0.5)))
             y: int = int(int(math.floor(cy + (math.sin(angle) * radius) + 0.5)))
             self.addPoint(pointVector, x, y)
@@ -120,6 +137,8 @@ class SVGAsJSONSimpleLoader:
 
     # throws Exception
     def addRectangle(self, pointVector: BasicArrayList, rectangle: JSONObject) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.json.me.JSONObject import JSONObject
         x: int = self.readInt(rectangle, self.KEY_X, 0)
         y: int = self.readInt(rectangle, self.KEY_Y, 0)
         width: int = self.readInt(rectangle, self.graphicsStrings.WIDTH)
@@ -133,23 +152,26 @@ class SVGAsJSONSimpleLoader:
     
 
     def addPoint(self, pointVector: BasicArrayList, x: int, y: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pointVector.add([x, y])
     
 
     def addSeparator(self, pointVector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pointVector.add([self.SHAPE_SEPARATOR[0], self.SHAPE_SEPARATOR[1]])
     
 
     # throws Exception
-    def readInt(self, anyType: JSONObject, key: str) -> int:
+    def readInt_j2(self, anyType: JSONObject, key: str) -> int:
+        from org.json.me.JSONObject import JSONObject
         value: object = anyType.get(key)
         if value is None:
             raise ValueError(self.ERROR_MISSING_KEY_PREFIX + key)
         return self.toInt(value, key)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def readInt(self, anyType: JSONObject, key: str, defaultValue: int) -> int:
+    def readInt_j3(self, anyType: JSONObject, key: str, defaultValue: int) -> int:
+        from org.json.me.JSONObject import JSONObject
         try:
             if anyType.has(key):
                 value: object = anyType.get(key)
@@ -157,6 +179,9 @@ class SVGAsJSONSimpleLoader:
         except Exception as e:
             traceback.print_exception(e)
         return defaultValue
+
+    def readInt(self, *args):
+        return getattr(self, "readInt_j" + str(len(args)))(*args)
     
 
     def toInt(self, value: object, key: str) -> int:
@@ -168,12 +193,14 @@ class SVGAsJSONSimpleLoader:
     
 
     def asObject(self, value: object, name: str) -> JSONObject:
+        from org.json.me.JSONObject import JSONObject
         if isinstance(value, JSONObject):
             return value
         raise ValueError(self.ERROR_EXPECTED_OBJECT_PREFIX + name)
     
 
     def toPoints(self, pointVector: BasicArrayList) -> list[list[int]]:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if pointVector.size() == 0:
             return self.EMPTY_POINTS
         points: list[list[int]] = [[0] * (2) for _ in range(pointVector.size())]
@@ -186,6 +213,8 @@ class SVGAsJSONSimpleLoader:
     # throws Exception
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         svgAsJson: str = "{\"svg\": {\n" + "    \"rect\": {\n" + "        \"width\": 20,\n" + "        \"fill\": \"#008c00\",\n" + "        \"height\": 20\n" + "    },\n" + "    \"xmlns\": \"http://www.w3.org/2000/svg\",\n" + "    \"width\": 20,\n" + "    \"height\": 20\n" + "}}\n"
         points: list[list[int]] = SVGAsJSONSimpleLoader.getInstance().load(svgAsJson)
         stringBuilder: StringMaker = StringMaker()
@@ -196,19 +225,21 @@ class SVGAsJSONSimpleLoader:
                 stringBuilder.appendint(int(points[index][index2]))
                 stringBuilder.append(CommonSeps.getInstance().COMMA)
         print(str(stringBuilder))
-# from java.util.Enumeration import Enumeration
-from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.json.me.JSONArray import JSONArray
-from org.json.me.JSONException import JSONException
-from org.json.me.JSONObject import JSONObject
+# from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.json.me.JSONArray import JSONArray
+# from org.json.me.JSONException import JSONException
+# from org.json.me.JSONObject import JSONObject
 from org.allbinary.animation.ShapeTypeFactory import ShapeTypeFactory
 
 
-SVGAsJSONSimpleLoader.instance = SVGAsJSONSimpleLoader()
+def _SVGAsJSONSimpleLoader_instance() -> object:
+    return SVGAsJSONSimpleLoader()
+
+lazy_static(SVGAsJSONSimpleLoader, "instance", _SVGAsJSONSimpleLoader_instance)
 

@@ -22,6 +22,8 @@ import threading
 class EmulatorCustomRenderer:
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.renderStrings: RendererStrings = RendererStrings.getInstance()
@@ -31,6 +33,10 @@ class EmulatorCustomRenderer:
     
 
     def onSurfaceCreated(self, gl: GL10, eglConfig: EGLConfig) -> None:
+        from javax.microedition.khronos.egl.EGLConfig import EGLConfig
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from org.allbinary.emulator.InitEmulatorFactory import InitEmulatorFactory
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         self.logUtil.putF(self.commonStrings.START, self, self.renderStrings.ON_SURFACE_CREATED)
         initEmulatorFactory: InitEmulatorFactory = InitEmulatorFactory.getInstance()
         if not initEmulatorFactory.isInitEmulator():
@@ -43,10 +49,9 @@ class EmulatorCustomRenderer:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.renderStrings.ON_SURFACE_CREATED, e)
 # from javax.microedition.khronos.egl.EGLConfig import EGLConfig
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.emulator.InitEmulatorFactory import InitEmulatorFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.graphics.opengles.renderer.RendererStrings import RendererStrings
+# from org.allbinary.emulator.InitEmulatorFactory import InitEmulatorFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 
 

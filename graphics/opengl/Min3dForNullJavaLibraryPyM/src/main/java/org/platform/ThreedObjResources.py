@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ThreedObjResources:
     instance: ThreedObjResources = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
 
     def __init__(self) -> None:
@@ -37,9 +40,12 @@ class ThreedObjResources:
         if resourceName2 is not None:
             return resourceName2
         return resourceName
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-ThreedObjResources.instance = ThreedObjResources()
+def _ThreedObjResources_instance() -> object:
+    return ThreedObjResources()
+
+lazy_static(ThreedObjResources, "instance", _ThreedObjResources_instance)
 

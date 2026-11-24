@@ -21,7 +21,8 @@ from __future__ import annotations
 class UserEmailEventsConfigurationInterface:
     
 
-    def getEventConfigurationHashMap(self) -> dict:
+    def getEventConfigurationHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
     
 
@@ -31,11 +32,15 @@ class UserEmailEventsConfigurationInterface:
 
     # throws Exception
     def getEventListener(self, abeClientInformation: AbeClientInformationInterface, userEmailEventNameData: UserEmailEventNameData, userInterface: UserInterface) -> UserEmailEventListenerInterface:
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterface import UserEmailEventListenerInterface
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterface import UserEmailEventListenerInterface
-from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterface import UserEmailEventListenerInterface
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 
 

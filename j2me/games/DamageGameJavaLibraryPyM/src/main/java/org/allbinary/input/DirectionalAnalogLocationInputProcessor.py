@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.android.input.motion.AnalogLocationInputProcessor import AnalogLocationInputProcessor
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 
 
-class DirectionalAnalogLocationInputProcessor(AnalogLocationInputProcessor, GameKeyEventSourceInterface):
+class DirectionalAnalogLocationInputProcessor(*java_bases(AnalogLocationInputProcessor, GameKeyEventSourceInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameInputProcessor import GameInputProcessor

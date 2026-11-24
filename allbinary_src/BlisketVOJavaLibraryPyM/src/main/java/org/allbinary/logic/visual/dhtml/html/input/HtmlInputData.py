@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HtmlInputData:
@@ -40,5 +41,8 @@ class HtmlInputData:
         return HtmlInputData.instance
 
 
-HtmlInputData.instance = HtmlInputData()
+def _HtmlInputData_instance() -> object:
+    return HtmlInputData()
+
+lazy_static(HtmlInputData, "instance", _HtmlInputData_instance)
 

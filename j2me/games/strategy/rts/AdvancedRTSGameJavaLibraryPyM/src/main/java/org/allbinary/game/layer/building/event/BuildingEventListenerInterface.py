@@ -23,7 +23,8 @@ class BuildingEventListenerInterface(EventListenerInterface):
 
     # throws Exception
     def onBuildingEvent(self, event: RTSLayerEvent) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
         raise NotImplementedError()
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
 
 

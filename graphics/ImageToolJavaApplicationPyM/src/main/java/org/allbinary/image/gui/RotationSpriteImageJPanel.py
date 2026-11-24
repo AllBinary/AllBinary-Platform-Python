@@ -16,13 +16,18 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
-from org.allbinary.image.gui.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
-class RotationSpriteImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
+class RotationSpriteImageJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.ImageStrings import ImageStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageStrings: ImageStrings = ImageStrings.getInstance()
@@ -41,6 +46,7 @@ class RotationSpriteImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -48,10 +54,20 @@ class RotationSpriteImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def process(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.string.CommonSeps import CommonSeps
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.logic.string.StringMaker import StringMaker
+#                 from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+#                 from org.allbinary.string.CommonSeps import CommonSeps
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     generatedBufferedImageArray: list[BufferedImage] = None
@@ -78,24 +94,7 @@ class RotationSpriteImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JComboBox import JComboBox
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JComboBox import JComboBox
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JCheckBox import JCheckBox
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.DefaultComboBoxModel import DefaultComboBoxModel
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.DefaultComboBoxModel import DefaultComboBoxModel
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.jPanel1 = (JPanel()  # Java anonymous class body:
 #             
 # 
@@ -158,23 +157,32 @@ class RotationSpriteImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def getImageProcessorInput(self) -> ImageProcessorInput:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         return self.imageProcessorInput
     
 
     def setImageProcessorInput(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         self.imageProcessorInput = imageProcessorInput
-# from java.awt import *
+# from java.awt.Graphics import Graphics
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.awt.image.RenderedImage import RenderedImage
 # from java.io.File import File
 # from javax.imageio.ImageIO import ImageIO
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
-from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
-from org.allbinary.media.image.ImageStrings import ImageStrings
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
+# from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+# from org.allbinary.media.image.ImageStrings import ImageStrings
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from javax.swing.JButton import JButton
+# from javax.swing.JCheckBox import JCheckBox
+# from javax.swing.JComboBox import JComboBox
+# from javax.swing.JLabel import JLabel
 
 

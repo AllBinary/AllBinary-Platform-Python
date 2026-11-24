@@ -21,13 +21,14 @@ from __future__ import annotations
 class CustomTagSupport(TagSupport):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.tagStrings: TagStrings = TagStrings.getInstance()
 
     def __init__(self) -> None:
         super().__init__()
         self._init_fields()
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 from tags.TagStrings import TagStrings
 
 

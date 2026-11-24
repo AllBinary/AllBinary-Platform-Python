@@ -16,12 +16,15 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AbeLicenseInterfaceFactory:
     SINGLETON: AbeLicenseInterfaceFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.time: int = 0
@@ -50,9 +53,9 @@ class AbeLicenseInterfaceFactory:
     # throws LicensingException
     def get(self, abeClientInformation: AbeClientInformationInterface) -> AbeLicenseInterface:
         from org.allbinary.logic.system.security.licensing.AbeNoLicense import AbeNoLicense
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.system.security.licensing.client.AbeLicenseClient import AbeLicenseClient
         try:
             self.logUtil.putF("Getting Keys", self, self.commonStrings.GET)
             self.abeLicenseInterface = AbeNoLicense.getInstance()
@@ -89,10 +92,13 @@ class AbeLicenseInterfaceFactory:
         return self.check
 # from java.io.IOException import IOException
 # from java.util.Calendar import Calendar
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.client.AbeLicenseClient import AbeLicenseClient
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.client.AbeLicenseClient import AbeLicenseClient
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-AbeLicenseInterfaceFactory.SINGLETON = AbeLicenseInterfaceFactory()
+def _AbeLicenseInterfaceFactory_SINGLETON() -> object:
+    return AbeLicenseInterfaceFactory()
+
+lazy_static(AbeLicenseInterfaceFactory, "SINGLETON", _AbeLicenseInterfaceFactory_SINGLETON)
 

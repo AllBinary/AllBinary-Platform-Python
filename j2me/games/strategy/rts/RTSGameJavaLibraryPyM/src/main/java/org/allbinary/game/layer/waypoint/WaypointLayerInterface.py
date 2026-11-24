@@ -23,19 +23,25 @@ class WaypointLayerInterface:
 
     # throws Exception
     def init(self, geographicMapCellHistory: GeographicMapCellHistory, geographicMapCellPositionBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def getMoveOutOfBuildAreaPath(self, geographicMapCellPosition: GeographicMapCellPosition) -> BasicArrayList:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     # throws Exception
     def setClosestGeographicMapCellHistory(self, pathsList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def teleportTo(self, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise NotImplementedError()
     
 
@@ -46,6 +52,7 @@ class WaypointLayerInterface:
 
     # throws Exception
     def getSurroundingGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
@@ -73,10 +80,13 @@ class WaypointLayerInterface:
 
     # throws Exception
     def buildingChase(self, allbinaryLayer: AllBinaryLayer, cellPosition: GeographicMapCellPosition) -> bool:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise NotImplementedError()
     
 
     def getTrackingEvent(self) -> TrackingEvent:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         raise NotImplementedError()
     
 
@@ -90,19 +100,23 @@ class WaypointLayerInterface:
 
     # throws Exception
     def getCurrentGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise NotImplementedError()
     
 
     # throws Exception
     def getTopLeftGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise NotImplementedError()
     
 
     def getCaptionAnimationHelper(self) -> CaptionAnimationHelperBase:
+        from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
         raise NotImplementedError()
     
 
     def getWaypointBehavior(self) -> WaypointBehaviorBase:
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
         raise NotImplementedError()
     
 
@@ -116,12 +130,12 @@ class WaypointLayerInterface:
 
     def getWaypointRunnableLogHelper(self) -> WaypointRunnableLogHelper:
         raise NotImplementedError()
-from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
-from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
+# from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

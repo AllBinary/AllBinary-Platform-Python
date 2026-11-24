@@ -21,6 +21,8 @@ from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 class BuildingRTSFormInput(RTSFormInput):
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
         self.isUnitProducer: bool = None
         self.buildOnPathGameNotificationEvent: GameNotificationEvent = None
         self.spotTakenGameNotificationEvent: GameNotificationEvent = None
@@ -35,6 +37,12 @@ class BuildingRTSFormInput(RTSFormInput):
     
 
     def __init__(self, groupInterface: list[Group], isUnitProducer: bool) -> None:
+        from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+        from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
         self._init_fields()
         self.isUnitProducer = isUnitProducer
@@ -53,6 +61,9 @@ class BuildingRTSFormInput(RTSFormInput):
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -69,6 +80,10 @@ class BuildingRTSFormInput(RTSFormInput):
 
     # throws Exception
     def processGameSpecific(self, associatedRtsLayer: CollidableDestroyableDamageableLayer, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, item: ABCustomItem, itemIndex: int) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         super().process(layerManager)
         self.buildFromMotionInput(rtsPlayerLayerInterface, layerManager, item, itemIndex)
     
@@ -78,6 +93,10 @@ class BuildingRTSFormInput(RTSFormInput):
     
 
     def isDemoLocked(self, item: ABCustomItem) -> bool:
+        from org.allbinary.game.layer.DemoLockedWithCostLayerInterfaceFactoryInterface import DemoLockedWithCostLayerInterfaceFactoryInterface
+        from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
         factoryItem: LayerInterfaceFactoryImageItem = item
         layerInterfaceFactoryInterface: DemoLockedWithCostLayerInterfaceFactoryInterface = factoryItem.getLayerInterfaceFactoryInterface()
         if LockedUtil.getInstance().isLocked() and layerInterfaceFactoryInterface.isDemoLocked():
@@ -88,6 +107,22 @@ class BuildingRTSFormInput(RTSFormInput):
 
     # throws Exception
     def buildFromMotionInput(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, item: ABCustomItem, itemIndex: int) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.system.security.licensing.LockedFeatureNotificationUtil import LockedFeatureNotificationUtil
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.audio.ErrorSound import ErrorSound
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(commonStrings.START, self, "buildFromMotionInput")
         if layerManager is None:
@@ -107,10 +142,10 @@ class BuildingRTSFormInput(RTSFormInput):
                     if self.newUnconstructedRTSLayerInterfaceArray[itemIndex] == CollidableDestroyableDamageableLayer.getNullInstance():
                         self.newUnconstructedRTSLayerInterfaceArray[itemIndex] = self.getInstance(layerManager, item, geographicMapCellPosition)
                     else:
-                        rtsLayer: RTSLayer = self.newUnconstructedRTSLayerInterfaceArray[itemIndex]
+                        positionedLayer: RTSLayer = self.newUnconstructedRTSLayerInterfaceArray[itemIndex]
                         cellPoint: GPoint = geographicMapCellPosition.getPoint()
-                        rtsLayer.setPosition(cellPoint.getX(), cellPoint.getY(), cellPoint.getZ())
-                        rtsLayer.geographicMapCellPositionAreaBase.update(geographicMapInterface)
+                        positionedLayer.setPosition(cellPoint.getX(), cellPoint.getY(), cellPoint.getZ())
+                        positionedLayer.geographicMapCellPositionAreaBase.update(geographicMapInterface)
                     rtsLayer: RTSLayer = self.newUnconstructedRTSLayerInterfaceArray[itemIndex]
                     self.attemptBuild(rtsPlayerLayerInterface, layerManager, rtsLayer, itemIndex)
                 else:
@@ -129,6 +164,22 @@ class BuildingRTSFormInput(RTSFormInput):
 
     # throws Exception
     def attemptBuild(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, layerInterface: RTSLayer, itemIndex: int) -> bool:
+        from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.capital.Capital import Capital
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.audio.ErrorSound import ErrorSound
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
         self.logUtil.putF(str(StringMaker().append("Layer: ").append(StringUtil.getInstance().toString(layerInterface))), self, "attemptBuild")
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = layerInterface.geographicMapCellPositionAreaBase
         occupyList: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
@@ -170,6 +221,12 @@ class BuildingRTSFormInput(RTSFormInput):
 
     # throws Exception
     def isBuildAttemptValid(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerInterface: RTSLayer) -> bool:
+        from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.media.audio.ErrorSound import ErrorSound
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = layerInterface.geographicMapCellPositionAreaBase
         occupyList: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
         if self.dropCellPositionHistory.anyCellPositionWithDrop(occupyList):
@@ -193,6 +250,14 @@ class BuildingRTSFormInput(RTSFormInput):
 
     # throws Exception
     def add(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerManager: AllBinaryLayerManager, layerInterface: RTSLayer) -> None:
+        from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
+        from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.media.audio.BuildingSound import BuildingSound
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = layerInterface.geographicMapCellPositionAreaBase
         occupyList: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
         self.dropCellPositionHistory.addAll(occupyList, layerInterface)
@@ -205,6 +270,11 @@ class BuildingRTSFormInput(RTSFormInput):
     
 
     def isSurroundingCellsOffMap(self, layerInterface: RTSLayer) -> bool:
+        from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = layerInterface.geographicMapCellPositionAreaBase
         occupyList: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
         surroundList: BasicArrayList = geographicMapCellPositionArea.getSurroundingGeographicMapCellPositionList()
@@ -227,39 +297,39 @@ class BuildingRTSFormInput(RTSFormInput):
             return True
         else:
             return False
-from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
-from org.allbinary.game.layer.DemoLockedWithCostLayerInterfaceFactoryInterface import DemoLockedWithCostLayerInterfaceFactoryInterface
-from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
-from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.game.layer.capital.Capital import Capital
-from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.media.audio.BuildingSound import BuildingSound
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-from org.allbinary.logic.system.security.licensing.LockedFeatureNotificationUtil import LockedFeatureNotificationUtil
-from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
-from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.audio.ErrorSound import ErrorSound
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
+# from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
+# from org.allbinary.game.layer.DemoLockedWithCostLayerInterfaceFactoryInterface import DemoLockedWithCostLayerInterfaceFactoryInterface
+# from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
+# from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.game.layer.capital.Capital import Capital
+# from org.allbinary.game.layer.item.LayerInterfaceFactoryImageItem import LayerInterfaceFactoryImageItem
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.media.audio.BuildingSound import BuildingSound
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
+# from org.allbinary.logic.system.security.licensing.LockedFeatureNotificationUtil import LockedFeatureNotificationUtil
+# from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
+# from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.audio.ErrorSound import ErrorSound
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellTypeFactory import RaceTrackGeographicMapCellTypeFactory
 
 

@@ -15,17 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.InventoryItemView import InventoryItemView
 
 
-class EditValidationView(InventoryItemView, ValidationComponentInterface):
+class EditValidationView(*java_bases(InventoryItemView, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
         self.id: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, StringUtil.getInstance().EMPTY_STRING)
         self._init_fields()
         self.getFormData()
@@ -33,7 +36,9 @@ class EditValidationView(InventoryItemView, ValidationComponentInterface):
 
     # throws Exception
     def getFormData(self) -> None:
-        hashMap: dict = RequestParams(self.request).toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        hashMap: HashMap = RequestParams(self.request).toHashMap()
         if hashMap is None:
             raise Exception("No Request Params Found")
         self.id = hashMap.get(self.basicItemData.ID)
@@ -41,6 +46,10 @@ class EditValidationView(InventoryItemView, ValidationComponentInterface):
 
     # throws Exception
     def isValid(self) -> bool:
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntity import DownloadItemsEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntityFactory import DownloadItemsEntityFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
             return False
         self.itemInterface = InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.id)
@@ -54,33 +63,46 @@ class EditValidationView(InventoryItemView, ValidationComponentInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     # throws MoneyException
     def validationInfo(self) -> str:
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringBuffer: StringMaker = StringMaker()
         if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
             stringBuffer.append("Id is not valid.<br />")
         if InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.id) is None:
             stringBuffer.append("Item does not exist.<br />")
         return str(stringBuffer)
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntity import DownloadItemsEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntityFactory import DownloadItemsEntityFactory
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntity import DownloadItemsEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntityFactory import DownloadItemsEntityFactory
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

@@ -21,6 +21,8 @@ from org.allbinary.input.automation.module.AbstractInputAutomationWorker import 
 class GenericInputAutomationWorker(AbstractInputAutomationWorker):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.PROCESS_DATA_WORKER_RESULTS: str = "processDataWorkerResults"
         self.lastFrame: int = int(-1)
@@ -30,6 +32,14 @@ class GenericInputAutomationWorker(AbstractInputAutomationWorker):
 
     def __init__(self, inputAutomationActionInterface: InputAutomationActionInterface, genericProfile: GenericProfile, motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface) -> None:
         from org.allbinary.input.automation.module.generic.GenericProfileCaptureWorkerFactory import GenericProfileCaptureWorkerFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.module.InputAutomationActionInterface import InputAutomationActionInterface
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
+        from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
+        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
+        from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
+        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
         super().__init__(inputAutomationActionInterface)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -52,6 +62,13 @@ class GenericInputAutomationWorker(AbstractInputAutomationWorker):
     # throws Exception
     def processDataWorkerResults(self) -> None:
         from org.allbinary.input.automation.module.generic.CaptureWorkerUtil import CaptureWorkerUtil
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileAction import GenericProfileAction
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
+        from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
+        from org.allbinary.logic.util.cache.J2SECacheInterface import J2SECacheInterface
         self.logUtil.putF(self.commonStrings.START, self, self.PROCESS_DATA_WORKER_RESULTS)
         self.waitForDataWorkers()
         cacheInterface: J2SECacheInterface = CapturedBufferedImagesCacheSingleton.getInstance()
@@ -61,7 +78,7 @@ class GenericInputAutomationWorker(AbstractInputAutomationWorker):
             self.setFrame(keyArray[len(keyArray) - 1])
             if self.getFrame() > self.lastFrame:
                 self.logUtil.putF("Processing new frame: " + str(self.getFrame()), self, self.PROCESS_DATA_WORKER_RESULTS)
-                hashMap: dict = self.getGenericProfile().getGenericProfileActions().getHashMap()
+                hashMap: HashMap = self.getGenericProfile().getGenericProfileActions().getHashMap()
                 set: Set = hashMap.keySet()
                 self.logUtil.putF("Processing " + str(set.size()) + "Actions", self, self.PROCESS_DATA_WORKER_RESULTS)
                 actionNameArray: list[object] = set.toArray()
@@ -86,10 +103,12 @@ class GenericInputAutomationWorker(AbstractInputAutomationWorker):
     
 
     def getGenericProfile(self) -> GenericProfile:
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
         return self.genericProfile
     
 
     def setGenericProfile(self, genericProfile: GenericProfile) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
         self.genericProfile = genericProfile
     
 
@@ -101,19 +120,19 @@ class GenericInputAutomationWorker(AbstractInputAutomationWorker):
         self.frame = frame
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.input.automation.module.InputAutomationActionInterface import InputAutomationActionInterface
-from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
-from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileAction import GenericProfileAction
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
-from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.cache.J2SECacheInterface import J2SECacheInterface
-from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
-from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
-from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
-from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.input.automation.module.InputAutomationActionInterface import InputAutomationActionInterface
+# from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+# from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileAction import GenericProfileAction
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
+# from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.cache.J2SECacheInterface import J2SECacheInterface
+# from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
+# from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
+# from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
+# from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
 
 

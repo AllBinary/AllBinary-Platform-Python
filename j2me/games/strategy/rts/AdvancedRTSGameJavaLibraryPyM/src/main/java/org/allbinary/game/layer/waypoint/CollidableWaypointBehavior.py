@@ -26,22 +26,28 @@ class CollidableWaypointBehavior(CollidableRTSBehavior):
     
 
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         return False
     
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         pass
     
 
     def isCollisionInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterface: CollidableInterfaceCompositeInterface) -> bool:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
         return False
     
 
     # throws Exception
     def collideInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterface: CollidableInterfaceCompositeInterface) -> None:
+        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
         pass
-from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+# from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
+# from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
 
 

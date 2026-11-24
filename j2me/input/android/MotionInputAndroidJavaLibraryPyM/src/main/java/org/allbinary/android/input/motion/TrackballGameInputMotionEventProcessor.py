@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventProcessor
 
 
@@ -22,6 +23,9 @@ class TrackballGameInputMotionEventProcessor(MotionEventProcessor):
     PROCESSOR: TrackballGameInputMotionEventProcessor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.input.motion.action.SingleKeyPressGameKeyFromMotionGestureEventListener import SingleKeyPressGameKeyFromMotionGestureEventListener
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.listener: SingleKeyPressGameKeyFromMotionGestureEventListener = SingleKeyPressGameKeyFromMotionGestureEventListener()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -38,6 +42,11 @@ class TrackballGameInputMotionEventProcessor(MotionEventProcessor):
     
 
     def process(self, motionEvent: MotionEvent) -> None:
+        from android.view.MotionEvent import MotionEvent
+        from org.allbinary.input.motion.trackball.action.DownTrackballInputToGameKeyEventAction import DownTrackballInputToGameKeyEventAction
+        from org.allbinary.input.motion.trackball.action.LeftTrackballInputToGameKeyEventAction import LeftTrackballInputToGameKeyEventAction
+        from org.allbinary.input.motion.trackball.action.RightTrackballInputToGameKeyEventAction import RightTrackballInputToGameKeyEventAction
+        from org.allbinary.input.motion.trackball.action.UpTrackballInputToGameKeyEventAction import UpTrackballInputToGameKeyEventAction
         try:
             x: float = motionEvent.getX()
             y: float = motionEvent.getY()
@@ -51,15 +60,18 @@ class TrackballGameInputMotionEventProcessor(MotionEventProcessor):
                 self.listener.onCompleteMotionGestureInputEvent(DownTrackballInputToGameKeyEventAction.getInstance())
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-from android.view.MotionEvent import MotionEvent
-from org.allbinary.game.input.motion.action.SingleKeyPressGameKeyFromMotionGestureEventListener import SingleKeyPressGameKeyFromMotionGestureEventListener
-from org.allbinary.input.motion.trackball.action.DownTrackballInputToGameKeyEventAction import DownTrackballInputToGameKeyEventAction
-from org.allbinary.input.motion.trackball.action.LeftTrackballInputToGameKeyEventAction import LeftTrackballInputToGameKeyEventAction
-from org.allbinary.input.motion.trackball.action.RightTrackballInputToGameKeyEventAction import RightTrackballInputToGameKeyEventAction
-from org.allbinary.input.motion.trackball.action.UpTrackballInputToGameKeyEventAction import UpTrackballInputToGameKeyEventAction
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from android.view.MotionEvent import MotionEvent
+# from org.allbinary.game.input.motion.action.SingleKeyPressGameKeyFromMotionGestureEventListener import SingleKeyPressGameKeyFromMotionGestureEventListener
+# from org.allbinary.input.motion.trackball.action.DownTrackballInputToGameKeyEventAction import DownTrackballInputToGameKeyEventAction
+# from org.allbinary.input.motion.trackball.action.LeftTrackballInputToGameKeyEventAction import LeftTrackballInputToGameKeyEventAction
+# from org.allbinary.input.motion.trackball.action.RightTrackballInputToGameKeyEventAction import RightTrackballInputToGameKeyEventAction
+# from org.allbinary.input.motion.trackball.action.UpTrackballInputToGameKeyEventAction import UpTrackballInputToGameKeyEventAction
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-TrackballGameInputMotionEventProcessor.PROCESSOR = TrackballGameInputMotionEventProcessor()
+def _TrackballGameInputMotionEventProcessor_PROCESSOR() -> object:
+    return TrackballGameInputMotionEventProcessor()
+
+lazy_static(TrackballGameInputMotionEventProcessor, "PROCESSOR", _TrackballGameInputMotionEventProcessor_PROCESSOR)
 

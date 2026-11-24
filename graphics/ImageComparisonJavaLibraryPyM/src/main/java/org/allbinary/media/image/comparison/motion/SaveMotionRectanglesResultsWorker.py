@@ -23,6 +23,9 @@ class SaveMotionRectanglesResultsWorker(MotionRectanglesResultsListener):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.running: bool = False
@@ -30,11 +33,13 @@ class SaveMotionRectanglesResultsWorker(MotionRectanglesResultsListener):
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.motionRectanglesVector = BasicArrayListD()
     
 
     def getMotionRectanglesVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.motionRectanglesVector
     
 
@@ -44,6 +49,7 @@ class SaveMotionRectanglesResultsWorker(MotionRectanglesResultsListener):
     
 
     def onEvent(self, allBinaryEventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         self.onMotionRectanglesImageComparisonResultsEvent(allBinaryEventObject)
     
 
@@ -65,6 +71,8 @@ class SaveMotionRectanglesResultsWorker(MotionRectanglesResultsListener):
 
     def run(self) -> None:
         from org.allbinary.media.image.comparison.motion.MotionRectanglesImageInputOutput import MotionRectanglesImageInputOutput
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -78,13 +86,13 @@ class SaveMotionRectanglesResultsWorker(MotionRectanglesResultsListener):
             self.logUtil.putF(self.commonStrings.END, self, self.commonStrings.RUN)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

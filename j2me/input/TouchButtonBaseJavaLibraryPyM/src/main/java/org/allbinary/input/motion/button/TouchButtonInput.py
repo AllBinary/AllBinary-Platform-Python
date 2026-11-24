@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 from org.allbinary.game.input.Input import Input
 
 
-class TouchButtonInput(Input, GameKeyEventSourceInterface):
+class TouchButtonInput(*java_bases(Input, GameKeyEventSourceInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent

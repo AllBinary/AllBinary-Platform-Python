@@ -40,7 +40,8 @@ class BufferedWriterUtil:
     
 
     # throws Exception
-    def overwrite(self, path: str, data: str) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def overwrite_j2_1(self, path: str, data: str) -> None:
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -63,8 +64,8 @@ class BufferedWriterUtil:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def overwrite(self, abFile: AbFile, data: str) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def overwrite_j2_2(self, abFile: AbFile, data: str) -> None:
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -83,6 +84,13 @@ class BufferedWriterUtil:
                 stringBuilder.delete(0, stringBuilder.length())
                 self.logUtil.putF(str(stringBuilder.append(self.commonLabels.RESULT_).appendboolean(result)), self, self.commonStrings.CREATE)
         self.write(abFile, data)
+
+    def overwrite(self, *args):
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or isinstance(args[1], str)):
+            return self.overwrite_j2_1(*args)
+        if len(args) == 2:
+            return self.overwrite_j2_2(*args)
+        return getattr(self, "overwrite_j" + str(len(args)))(*args)
     
 
     # throws Exception

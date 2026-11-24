@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PathFindingNodeCostInfoData:
@@ -34,5 +35,8 @@ class PathFindingNodeCostInfoData:
         self._init_fields()
 
 
-PathFindingNodeCostInfoData.instance = PathFindingNodeCostInfoData()
+def _PathFindingNodeCostInfoData_instance() -> object:
+    return PathFindingNodeCostInfoData()
+
+lazy_static(PathFindingNodeCostInfoData, "instance", _PathFindingNodeCostInfoData_instance)
 

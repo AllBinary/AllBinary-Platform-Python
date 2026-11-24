@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
-class GamePerformanceInitUpdatePaintable(InitUpdatePaintable, UpdateMyFontInterface):
+class GamePerformanceInitUpdatePaintable(*java_bases(InitUpdatePaintable, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory

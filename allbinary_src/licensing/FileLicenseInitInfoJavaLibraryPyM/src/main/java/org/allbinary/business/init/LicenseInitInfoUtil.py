@@ -65,7 +65,7 @@ class LicenseInitInfoUtil:
         from org.allbinary.logic.system.security.crypt.DatabaseEncoder import DatabaseEncoder
         from org.allbinary.logic.system.security.crypt.WeakCrypt import WeakCrypt
         if self.filePath == self.stringUtil.EMPTY_STRING:
-            self.filePath = self.URLGLOBALS.getMainPath() + self.PATH_GLOBALS.getInstance().INIT_PATH
+            self.filePath = URLGLOBALS.getMainPath() + PATH_GLOBALS.getInstance().INIT_PATH
         try:
             tsUtil: TsUtil = TsUtil.getInstance()
             dataOutputStream: AbDataOutputStream = DataOutputStreamFactory.getInstance().getInstance(self.filePath, self.INITFILENAME)
@@ -110,7 +110,7 @@ class LicenseInitInfoUtil:
         from org.allbinary.string.CommonLabels import CommonLabels
         METHOD_NAME: str = "readAgain"
         if self.filePath == self.stringUtil.EMPTY_STRING:
-            self.filePath = self.URLGLOBALS.getMainPath() + self.PATH_GLOBALS.getInstance().INIT_PATH
+            self.filePath = URLGLOBALS.getMainPath() + PATH_GLOBALS.getInstance().INIT_PATH
         try:
             self.logUtil.putF("LicenseInitInfo File: " + self.INITFILENAME, self, METHOD_NAME)
             fileStreamFactory: FileStreamFactory = FileStreamFactory.getInstance()

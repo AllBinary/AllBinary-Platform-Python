@@ -21,6 +21,10 @@ from org.allbinary.logic.visual.transform.BasicTransformerInterface import Basic
 class AbTransformer(BasicTransformerInterface):
 
     def _init_fields(self) -> None:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.transformInfoInterface: TransformInfoInterface = None
@@ -29,15 +33,18 @@ class AbTransformer(BasicTransformerInterface):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
     
 
     def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         return self.transformInfoInterface
     
 
     def setInputStream(self, inputStream: InputStream) -> None:
+        from java.io.InputStream import InputStream
         self.inputStream = inputStream
     
 
@@ -46,6 +53,7 @@ class AbTransformer(BasicTransformerInterface):
     
 
     def getInputStream(self) -> InputStream:
+        from java.io.InputStream import InputStream
         return self.inputStream
     
 
@@ -59,29 +67,36 @@ class AbTransformer(BasicTransformerInterface):
 
     # throws Exception
     def translate(self, xmlDocumentStr: str) -> str:
+        from org.allbinary.data.tree.dom.XslHelper import XslHelper
+        from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGenerator import TransformInfoObjectConfigGenerator
+        from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGeneratorFactory import TransformInfoObjectConfigGeneratorFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().XMLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().XMLLOGGING):
                 self.logUtil.putF("xml: \n" + xmlDocumentStr, self, "translate(String xmlDocumentStr)")
             if self.getURIResolver() is None:
                 raise Exception("No URIResolver")
             result: str = XslHelper.getInstance().translate(self.getURIResolver(), StreamSource(self.getInputStream()), StreamSource(StringBufferInputStream(xmlDocumentStr)))
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().XSLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().XSLLOGGING):
                 self.logUtil.putF("translated xml: " + result, self, "translate(String xmlDocumentStr)")
             transformInfoObjectConfigGeneratorInterface: TransformInfoObjectConfigGenerator = TransformInfoObjectConfigGeneratorFactory.getInstance().getInstance(self.getTransformInfoInterface())
             return transformInfoObjectConfigGeneratorInterface.process(result)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.transformInfoInterface.log(), self, "translate(document)", e)
             raise e
 # from java.io.InputStream import InputStream
 # from java.io.StringBufferInputStream import StringBufferInputStream
 # from javax.xml.transform.URIResolver import URIResolver
 # from javax.xml.transform.stream.StreamSource import StreamSource
-from org.allbinary.data.tree.dom.XslHelper import XslHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGenerator import TransformInfoObjectConfigGenerator
-from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGeneratorFactory import TransformInfoObjectConfigGeneratorFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.data.tree.dom.XslHelper import XslHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGenerator import TransformInfoObjectConfigGenerator
+# from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGeneratorFactory import TransformInfoObjectConfigGeneratorFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

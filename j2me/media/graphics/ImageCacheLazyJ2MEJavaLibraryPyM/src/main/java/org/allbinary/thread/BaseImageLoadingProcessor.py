@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BaseImageLoadingProcessor:
@@ -30,5 +31,8 @@ class BaseImageLoadingProcessor:
         pass
 
 
-BaseImageLoadingProcessor.instance = BaseImageLoadingProcessor()
+def _BaseImageLoadingProcessor_instance() -> object:
+    return BaseImageLoadingProcessor()
+
+lazy_static(BaseImageLoadingProcessor, "instance", _BaseImageLoadingProcessor_instance)
 

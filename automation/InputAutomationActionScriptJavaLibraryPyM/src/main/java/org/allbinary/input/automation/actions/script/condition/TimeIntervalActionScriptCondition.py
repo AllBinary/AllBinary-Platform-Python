@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.BasicProfileActionScriptCondition import BasicProfileActionScriptCondition
 from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptConditionInterface import TimeIntervalActionScriptConditionInterface
 
 
-class TimeIntervalActionScriptCondition(BasicProfileActionScriptCondition, TimeIntervalActionScriptConditionInterface):
+class TimeIntervalActionScriptCondition(*java_bases(BasicProfileActionScriptCondition, TimeIntervalActionScriptConditionInterface)):
     NAME: str = "Time Interval"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.timeIntervalActionScriptConditionJPanel: TimeIntervalActionScriptConditionJPanel = None
         self.timeHelper: TimeDelayHelper = None
@@ -37,6 +40,11 @@ class TimeIntervalActionScriptCondition(BasicProfileActionScriptCondition, TimeI
     def _constructor1(self, node: Node) -> None:
         from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptConditionData import TimeIntervalActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptConditionData import TimeIntervalActionScriptConditionData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(TimeIntervalActionScriptCondition.NAME, node)
         self._init_fields()
         actionNode: Node = DomSearchHelper.getNode(TimeIntervalActionScriptConditionData.NAME, node.getChildNodes())
@@ -55,6 +63,7 @@ class TimeIntervalActionScriptCondition(BasicProfileActionScriptCondition, TimeI
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         super().__init__(TimeIntervalActionScriptCondition.NAME)
         self._init_fields()
         self.setTimeDelayHelper(TimeDelayHelper(0))
@@ -70,9 +79,11 @@ class TimeIntervalActionScriptCondition(BasicProfileActionScriptCondition, TimeI
         self.timeIntervalActionScriptConditionJPanel.getTimeIntervalActionJDialog().setVisible(True)
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptConditionData import TimeIntervalActionScriptConditionData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(TimeIntervalActionScriptConditionData.TIME, str(self.timeHelper.delay))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
@@ -81,6 +92,9 @@ class TimeIntervalActionScriptCondition(BasicProfileActionScriptCondition, TimeI
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptConditionData import TimeIntervalActionScriptConditionData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, TimeIntervalActionScriptConditionData.NAME, self.toHashMap()))
         return node
@@ -91,29 +105,32 @@ class TimeIntervalActionScriptCondition(BasicProfileActionScriptCondition, TimeI
     
 
     def getTimeDelayHelper(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         return self.timeHelper
     
 
     def setTimeDelayHelper(self, timeHelper: TimeDelayHelper) -> None:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeHelper = timeHelper
     
 
     # throws Exception
     def shouldProcess(self, frame: int) -> bool:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         timeHelper: TimeDelayHelper = self.getTimeDelayHelper()
         if timeHelper.isTimeTNT():
             timeHelper.setStartTimeTNT()
             return super().shouldProcess(frame)
         return False
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

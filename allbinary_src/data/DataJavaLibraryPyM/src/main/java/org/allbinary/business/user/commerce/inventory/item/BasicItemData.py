@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicItemData:
@@ -60,5 +61,8 @@ class BasicItemData:
         return BasicItemData.instance
 
 
-BasicItemData.instance = BasicItemData()
+def _BasicItemData_instance() -> object:
+    return BasicItemData()
+
+lazy_static(BasicItemData, "instance", _BasicItemData_instance)
 

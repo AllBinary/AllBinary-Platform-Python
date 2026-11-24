@@ -35,16 +35,12 @@ class BasicTouchButtonsBuilder(BaseTouchInput):
         from org.allbinary.input.motion.button.BasicTouchButtonCellPositionFactory import BasicTouchButtonCellPositionFactory
         from org.allbinary.input.motion.button.TouchButton import TouchButton
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-        from org.allbinary.input.motion.button.TouchButtonUpResource import TouchButtonUpResource
         from org.allbinary.input.motion.button.TouchButton import TouchButton
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-        from org.allbinary.input.motion.button.TouchButtonDownResource import TouchButtonDownResource
         from org.allbinary.input.motion.button.TouchButton import TouchButton
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-        from org.allbinary.input.motion.button.TouchButtonTurnLeftResource import TouchButtonTurnLeftResource
         from org.allbinary.input.motion.button.TouchButton import TouchButton
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-        from org.allbinary.input.motion.button.TouchButtonTurnRightResource import TouchButtonTurnRightResource
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil

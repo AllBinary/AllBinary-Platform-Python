@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InitializerData:
@@ -73,6 +74,7 @@ class InitializerData:
     
 
     def getJdbcDriverSolutionInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("The following describes the possible problems and solutions regarding the Jdbc Driver error(s):<p/>")
         stringBuffer.append("1. A JDBC driver you specified is not in your classpath.<br/>")
@@ -84,8 +86,11 @@ class InitializerData:
         stringBuffer.append("3. The JDBC driver you specified is not valid.<br/>")
         stringBuffer.append("Solution: Use a valid JDBC driver.<p/>")
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 
-InitializerData.instance = InitializerData()
+def _InitializerData_instance() -> object:
+    return InitializerData()
+
+lazy_static(InitializerData, "instance", _InitializerData_instance)
 

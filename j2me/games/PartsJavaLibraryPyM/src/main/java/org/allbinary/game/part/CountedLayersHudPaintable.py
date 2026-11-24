@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
-class CountedLayersHudPaintable(PaintableInterface, UpdateMyFontInterface):
+class CountedLayersHudPaintable(*java_bases(PaintableInterface, UpdateMyFontInterface)):
     XXStringWidth: int = 0
 
     def _init_fields(self) -> None:

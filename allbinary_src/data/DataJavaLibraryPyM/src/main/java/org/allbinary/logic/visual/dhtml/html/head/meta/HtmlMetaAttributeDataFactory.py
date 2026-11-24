@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HtmlMetaAttributeDataFactory:
@@ -36,5 +37,8 @@ class HtmlMetaAttributeDataFactory:
 from org.allbinary.logic.visual.dhtml.html.head.meta.HtmlMetaAttributeData import HtmlMetaAttributeData
 
 
-HtmlMetaAttributeDataFactory.instance = HtmlMetaAttributeDataFactory()
+def _HtmlMetaAttributeDataFactory_instance() -> object:
+    return HtmlMetaAttributeDataFactory()
+
+lazy_static(HtmlMetaAttributeDataFactory, "instance", _HtmlMetaAttributeDataFactory_instance)
 

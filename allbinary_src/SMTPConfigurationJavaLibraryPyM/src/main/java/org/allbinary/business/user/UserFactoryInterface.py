@@ -23,7 +23,8 @@ class UserFactoryInterface(object):
     
 
     # throws Exception
-    def getInstance(self, hashMap: dict) -> UserInterface:
+    def getInstance(self, hashMap: HashMap) -> UserInterface:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 

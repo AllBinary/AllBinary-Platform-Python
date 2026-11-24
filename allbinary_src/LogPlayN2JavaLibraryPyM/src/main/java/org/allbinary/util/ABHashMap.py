@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.HashMap import HashMap
+from java.util.HashMap import HashMap
 
 
-class ABHashMap(dict):
+class ABHashMap(HashMap):
 
     def __init__(self) -> None:
         super().__init__()
@@ -45,6 +45,7 @@ class ABHashMap(dict):
     
 
     def putAll(self, map: Map[object, object]) -> None:
+        from java.util.Map import Map
         super().putAll(map)
     
 
@@ -61,10 +62,13 @@ class ABHashMap(dict):
     
 
     def keySet(self) -> Set[K]:
+        from java.util.Set import Set
         return super().keySet()
     
 
     def entrySet(self) -> Set[Entry[K, V]]:
+        from java.util.Map import Map
+        from java.util.Set import Set
         return super().entrySet()
     
 
@@ -80,6 +84,6 @@ class ABHashMap(dict):
         return super().clone()
 # from java.util.Map import Map
 # from java.util.Set import Set
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

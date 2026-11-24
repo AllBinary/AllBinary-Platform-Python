@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.LayerPositionFinderInterface import LayerPositionFinderInterface
 
 
@@ -32,15 +33,22 @@ class AdvancedRTSGameLayerPositionFinder(LayerPositionFinderInterface):
     
 
     def getLayerInterface(self, geographicMapCellPosition: GeographicMapCellPosition) -> AllBinaryLayer:
+        from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
         layerInterface: AllBinaryLayer = DropCellPositionHistory.getInstance().getLayerInterface(geographicMapCellPosition)
         if layerInterface == AllBinaryLayer.NULL_ALLBINARY_LAYER:
             layerInterface = WaypointCellPositionHistory.getInstance().getLayerInterface(geographicMapCellPosition)
         return layerInterface
-from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
 
 
-AdvancedRTSGameLayerPositionFinder.instance = AdvancedRTSGameLayerPositionFinder()
+def _AdvancedRTSGameLayerPositionFinder_instance() -> object:
+    return AdvancedRTSGameLayerPositionFinder()
+
+lazy_static(AdvancedRTSGameLayerPositionFinder, "instance", _AdvancedRTSGameLayerPositionFinder_instance)
 

@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageModifierUtil:
     instance: ImageModifierUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageCopyUtil: ImageCopyUtil = ImageCopyUtil.getInstance()
         self.features: Features = Features.getInstance()
@@ -35,10 +38,16 @@ class ImageModifierUtil:
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         pass
     
 
     def setColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         newBufferedImage: Image = None
         if image.isMutable():
             swtImage: SwtMutableImage = image
@@ -70,9 +79,17 @@ class ImageModifierUtil:
     
 
     def changeColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.image.opengles.ModifierOpenGLESImageProcessor import ModifierOpenGLESImageProcessor
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from org.eclipse.swt.graphics.ImageData import ImageData
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         if self.features.isFeature(OpenGLFeatureFactory.getInstance().OPENGL):
             if image.getType() >= OpenGLESImage.TYPE:
-                openGLESImage: OpenGLESImage = (image)
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(image)
                 openGLESImage.imageProcessor = ModifierOpenGLESImageProcessor.getInstance()
                 openGLESImage.openGLESImageProperties.redf = basicColor.getRedComponent()
                 openGLESImage.openGLESImageProperties.greenf = basicColor.getGreenComponent()
@@ -108,9 +125,13 @@ class ImageModifierUtil:
     
 
     def setAlpha(self, unusedOriginalImage: Image, image: Image, imageIndex: int, alphaInt: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.image.opengles.ModifierOpenGLESImageProcessor import ModifierOpenGLESImageProcessor
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         if self.features.isFeature(OpenGLFeatureFactory.getInstance().OPENGL):
             if image.getType() >= OpenGLESImage.TYPE:
-                openGLESImage: OpenGLESImage = (image)
+                openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(image)
                 openGLESImage.imageProcessor = ModifierOpenGLESImageProcessor.getInstance()
                 openGLESImage.openGLESImageProperties.alphaf = (float(alphaInt)) / 255.0
                 return
@@ -118,6 +139,9 @@ class ImageModifierUtil:
     
 
     def setAlphaSWT(self, image: Image, alphaInt: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+        from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         alpha: int = ((int(alphaInt) + 128) % 256 - 128)
         newBufferedImage: Image = None
         if image.isMutable():
@@ -130,6 +154,9 @@ class ImageModifierUtil:
     
 
     def getImageArray(self, originalImageArray: list[Image]) -> list[Image]:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             newImageArray: list[Image] = [None] * (len(originalImageArray))
             size: int = len(newImageArray)
@@ -146,25 +173,29 @@ class ImageModifierUtil:
     
 
     def handleImage(self, imageArray: list[Image], index: int, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         pass
     
 
     def reset(self) -> None:
         pass
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.image.opengles.ModifierOpenGLESImageProcessor import ModifierOpenGLESImageProcessor
-from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.eclipse.swt.graphics.ImageData import ImageData
-from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
-from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.image.opengles.ModifierOpenGLESImageProcessor import ModifierOpenGLESImageProcessor
+# from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.eclipse.swt.graphics.ImageData import ImageData
+# from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
+# from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
 from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
 
 
-ImageModifierUtil.instance = ImageModifierUtil()
+def _ImageModifierUtil_instance() -> object:
+    return ImageModifierUtil()
+
+lazy_static(ImageModifierUtil, "instance", _ImageModifierUtil_instance)
 

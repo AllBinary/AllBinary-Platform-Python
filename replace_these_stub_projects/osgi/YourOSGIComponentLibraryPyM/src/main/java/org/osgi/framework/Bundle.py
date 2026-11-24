@@ -14,13 +14,15 @@ class Bundle:
     
 
     # throws BundleException
-    def start(self) -> None:
+    def start_j0(self) -> None:
         raise NotImplementedError()
     
 
     # throws BundleException
-    # Java overloaded method: Python keeps the last definition
-    def start(self, options: int) -> None:
+    def start_j1(self, options: int) -> None:
         raise NotImplementedError()
+
+    def start(self, *args):
+        return getattr(self, "start_j" + str(len(args)))(*args)
 
 

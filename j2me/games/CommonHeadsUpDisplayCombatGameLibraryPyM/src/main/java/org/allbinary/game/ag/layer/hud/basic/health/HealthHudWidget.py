@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.game.health.HealthListenerInterface import HealthListenerInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
-class HealthHudWidget(BasicHud, PaintableInterface, HealthListenerInterface):
+class HealthHudWidget(*java_bases(BasicHud, PaintableInterface, HealthListenerInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation

@@ -27,14 +27,17 @@ class StoreFrontTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.getCommand() is not None:
                 if self.getCommand().compareTo(self.commonStrings.INSERT) == 0:
                     self.setName("Add Validation StoreFront View")
                     self.setObjectFile("views.admin.storefront.AddValidationStoreFrontView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     raise Exception("View not implemented")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.EDIT) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.EDIT) == 0:
                     self.setName("Edit Validation StoreFront View")
                     self.setObjectFile("views.admin.storefront.EditValidationStoreFrontView")
                 elif self.getCommand().compareTo(self.commonStrings.UPDATE) == 0:
@@ -43,9 +46,9 @@ class StoreFrontTag(StoreValidationTransformTag):
                 elif self.getCommand().compareTo(self.commonStrings.DELETE) == 0:
                     self.setName("Delete Validation StoreFront View")
                     self.setObjectFile("views.admin.storefront.DeleteValidationStoreFrontView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.BACKUP) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.BACKUP) == 0:
                     raise Exception("View not implemented")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.RESTORE) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.RESTORE) == 0:
                     raise Exception("View not implemented")
                 elif self.getCommand().compareTo(self.commonStrings.DROP) == 0:
                     raise Exception("View not implemented")
@@ -62,7 +65,8 @@ class StoreFrontTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

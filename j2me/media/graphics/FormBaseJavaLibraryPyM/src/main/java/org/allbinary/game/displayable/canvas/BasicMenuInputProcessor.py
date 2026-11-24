@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 from org.allbinary.input.motion.gesture.observer.BaseMotionGestureEventListener import BaseMotionGestureEventListener
 
 
-class BasicMenuInputProcessor(PlayerGameInput, BaseMotionGestureEventListener):
+class BasicMenuInputProcessor(*java_bases(PlayerGameInput, BaseMotionGestureEventListener)):
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas

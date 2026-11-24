@@ -21,6 +21,11 @@ from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 class ScrollMapPlayerGameInput(PlayerGameInput):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+        from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
         self.border: int = 150
         self.inputList: BasicArrayList = None
@@ -32,6 +37,9 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, list_: BasicArrayList, playerInputId: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(list_, BasicArrayListD(), playerInputId)
         self._init_fields()
         self.initInputProcessors()
@@ -42,6 +50,8 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def move(self, dx: int, dy: int) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
         terrainTiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         terrainTiledLayer.moveDXY(-dx, -dy)
         self.scrollMapEvent.setDxDy(-dx, -dy)
@@ -55,6 +65,8 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def scrollMiddleX(self) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         terrainTiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.move(-terrainTiledLayer.getXP(), 0)
@@ -68,6 +80,9 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def scrollY(self, anchor: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         terrainTiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         if anchor == Graphics.TOP:
@@ -117,7 +132,7 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
         from org.allbinary.game.input.ScrollMapDownGameInputProcessor import ScrollMapDownGameInputProcessor
         from org.allbinary.game.input.ScrollMapRightGameInputProcessor import ScrollMapRightGameInputProcessor
         from org.allbinary.game.input.ScrollMapLeftGameInputProcessor import ScrollMapLeftGameInputProcessor
-        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
+        from javax.microedition.lcdui.Canvas import Canvas
         self.inputProcessorArray[Canvas.UP] = ScrollMapUpGameInputProcessor(self)
         self.inputProcessorArray[Canvas.DOWN] = ScrollMapDownGameInputProcessor(self)
         self.inputProcessorArray[Canvas.KEY_NUM9] = ScrollMapRightGameInputProcessor(self)
@@ -127,11 +142,15 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
 
     # throws Exception
     def processInputKey(self, key: int) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         self.inputProcessorArray[key].processEvent(AllBinaryGameLayerManager.getNullInstance(), GameKeyEvent.NONE)
     
 
     # throws Exception
     def processInput(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         try:
             size: int = self.inputList.size()
             key: int = 0
@@ -148,6 +167,8 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
     
 
     def getSpecialHeight(self) -> int:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         terrainTiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         if terrainTiledLayer.getHeight() > displayInfo.getLastHeight():
@@ -157,6 +178,8 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
     
 
     def getSpecialWidth(self) -> int:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         terrainTiledLayer: AllBinaryTiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         if terrainTiledLayer.getWidth() > displayInfo.getLastWidth():
@@ -197,18 +220,17 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
             return True
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
-from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.game.input.InputFactory import InputFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
+# from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

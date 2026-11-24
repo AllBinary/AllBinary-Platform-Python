@@ -23,6 +23,8 @@ class AllBinaryPreloaderActivator(BundleActivator):
     CRYPT_REGISTRY_NAME: str = "bundle.abcs.logic.system.loader.CryptService"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
@@ -33,11 +35,13 @@ class AllBinaryPreloaderActivator(BundleActivator):
 
     @staticmethod
     def getBundleContext() -> BundleContext:
+        from org.osgi.framework.BundleContext import BundleContext
         return AllBinaryPreloaderActivator.context
     
 
     # throws Exception
     def start(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         try:
             self.logUtil.putF(self.commonStrings.START, self, "start")
             AllBinaryPreloaderActivator.context = context
@@ -49,6 +53,11 @@ class AllBinaryPreloaderActivator(BundleActivator):
 
     # throws Exception
     def registerAsService(self) -> None:
+        from org.osgi.framework.ServiceReference import ServiceReference
+        from org.osgi.framework.ServiceRegistration import ServiceRegistration
+        from org.allbinary.bundle.logic.system.loader.CryptServiceFactory import CryptServiceFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.ABHashtable import ABHashtable
         properties: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         serviceRegistration: ServiceRegistration = AllBinaryPreloaderActivator.context.registerService(AllBinaryPreloaderActivator.CRYPT_REGISTRY_NAME, CryptServiceFactory(), properties)
         serviceReference: ServiceReference = serviceRegistration.getReference()
@@ -59,14 +68,15 @@ class AllBinaryPreloaderActivator(BundleActivator):
 
     # throws Exception
     def stop(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         self.logUtil.putF(self.commonStrings.START, self, "stop")
-from org.osgi.framework.BundleContext import BundleContext
-from org.osgi.framework.ServiceReference import ServiceReference
-from org.osgi.framework.ServiceRegistration import ServiceRegistration
-from org.allbinary.bundle.logic.system.loader.CryptServiceFactory import CryptServiceFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.ServiceReference import ServiceReference
+# from org.osgi.framework.ServiceRegistration import ServiceRegistration
+# from org.allbinary.bundle.logic.system.loader.CryptServiceFactory import CryptServiceFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

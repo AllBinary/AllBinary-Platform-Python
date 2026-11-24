@@ -22,6 +22,7 @@ class LazyProgressCanvas(ProgressCanvas):
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(title, backgroundBasicColor, foregroundBasicColor)
     
 
@@ -31,6 +32,7 @@ class LazyProgressCanvas(ProgressCanvas):
     
 
     def end(self) -> None:
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.END_METHOD_NAME)
             self.endActual()
@@ -42,10 +44,12 @@ class LazyProgressCanvas(ProgressCanvas):
     
 
     def inGame(self) -> None:
+        from org.allbinary.canvas.Processor import Processor
         self.inGameProcessor = Processor.getInstance()
     
 
     def endFromInitialLazyLoadingComplete(self) -> None:
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         super().endFromInitialLazyLoadingComplete()
         self.paintable = NullPaintable.getInstance()
     
@@ -53,9 +57,9 @@ class LazyProgressCanvas(ProgressCanvas):
     def endIfPaintedSinceStart(self) -> None:
         if self.paintable == self.GAUGE_PAINTABLE and self.hasPainted:
             self.endFromInitialLazyLoadingComplete()
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.canvas.Processor import Processor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
 
 

@@ -21,6 +21,8 @@ from org.allbinary.game.layer.PlayerOwnedRTSLayers import PlayerOwnedRTSLayers
 class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.unitsList: BasicArrayList = BasicArrayListD()
         self.waypointsList: BasicArrayList = BasicArrayListD()
         self.buildingList: BasicArrayList = BasicArrayListD()
@@ -86,30 +88,37 @@ class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
     
 
     def getUnitsList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.unitsList
     
 
     def getWaypointsList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.waypointsList
     
 
     def getBaseList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.baseList
     
 
     def getGarrisonList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.garrisonList
     
 
     def getHouseList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.houseList
     
 
     def getLabList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.labList
     
 
     def getFactoryList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.factoryList
     
 
@@ -132,6 +141,7 @@ class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(str(super()))
         stringBuffer.append(" Bases: ")
@@ -155,9 +165,10 @@ class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
     
 
     def getBuildingList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.buildingList
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

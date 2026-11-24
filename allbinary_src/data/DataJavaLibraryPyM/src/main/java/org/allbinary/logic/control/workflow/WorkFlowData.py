@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WorkFlowData:
@@ -36,5 +37,8 @@ class WorkFlowData:
         self._init_fields()
 
 
-WorkFlowData.instance = WorkFlowData()
+def _WorkFlowData_instance() -> object:
+    return WorkFlowData()
+
+lazy_static(WorkFlowData, "instance", _WorkFlowData_instance)
 

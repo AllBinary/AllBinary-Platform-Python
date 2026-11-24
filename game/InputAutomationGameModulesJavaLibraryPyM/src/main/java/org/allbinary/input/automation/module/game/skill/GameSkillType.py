@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GameSkillType:
@@ -49,13 +50,28 @@ class GameSkillType:
         return self.toString()
 
 
-GameSkillType.MANA = GameSkillType("Mana")
+def _GameSkillType_MANA() -> object:
+    return GameSkillType("Mana")
 
-GameSkillType.REPLENISH = GameSkillType("Replenish")
+lazy_static(GameSkillType, "MANA", _GameSkillType_MANA)
 
-GameSkillType.TIMED = GameSkillType("Timed")
+def _GameSkillType_REPLENISH() -> object:
+    return GameSkillType("Replenish")
 
-GameSkillType.ATTACK = GameSkillType("Attack")
+lazy_static(GameSkillType, "REPLENISH", _GameSkillType_REPLENISH)
 
-GameSkillType.TRANSPORT = GameSkillType("Transport")
+def _GameSkillType_TIMED() -> object:
+    return GameSkillType("Timed")
+
+lazy_static(GameSkillType, "TIMED", _GameSkillType_TIMED)
+
+def _GameSkillType_ATTACK() -> object:
+    return GameSkillType("Attack")
+
+lazy_static(GameSkillType, "ATTACK", _GameSkillType_ATTACK)
+
+def _GameSkillType_TRANSPORT() -> object:
+    return GameSkillType("Transport")
+
+lazy_static(GameSkillType, "TRANSPORT", _GameSkillType_TRANSPORT)
 

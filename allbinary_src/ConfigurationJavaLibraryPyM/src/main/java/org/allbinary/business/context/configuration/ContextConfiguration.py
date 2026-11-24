@@ -21,6 +21,9 @@ from org.allbinary.business.context.configuration.ContextConfigurationInterface 
 class ContextConfiguration(ContextConfigurationInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
@@ -33,27 +36,34 @@ class ContextConfiguration(ContextConfigurationInterface):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfiguration import EmailServerConfiguration
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, "ContextConfiguration")
         self.setEmailServerConfigurationInterface(EmailServerConfiguration())
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfiguration import EmailServerConfiguration
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, "ContextConfiguration(HashMap)")
         self.setEmailServerConfigurationInterface(EmailServerConfiguration(hashMap))
     
 
     def getEmailServerConfigurationInterface(self) -> EmailServerConfigurationInterface:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         return self.emailServerConfigurationInterface
     
 
     def setEmailServerConfigurationInterface(self, emailServerConfigurationInterface: EmailServerConfigurationInterface) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         self.emailServerConfigurationInterface = emailServerConfigurationInterface
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfiguration import EmailServerConfiguration
-from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfiguration import EmailServerConfiguration
+# from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

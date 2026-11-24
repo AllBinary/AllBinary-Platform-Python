@@ -28,26 +28,40 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
     # throws Exception
     @staticmethod
     def createFactory(image: Image, width: int, height: int, animationBehaviorFactory: AnimationBehaviorFactory) -> AllBinaryAndroidImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.math.AngleFactory import AngleFactory
         return AllBinaryAndroidImageRotationAnimationFactory(image, width, height, ((int((AngleFactory.getInstance().TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
     
 
     # throws Exception
     @staticmethod
     def createFactoryA(image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory) -> AllBinaryAndroidImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         return AllBinaryAndroidImageRotationAnimationFactory(image, width, height, angleIncrement, animationBehaviorFactory, False)
     
 
     # throws Exception
     @staticmethod
     def createFactoryU(image: Image, animationBehaviorFactory: AnimationBehaviorFactory) -> AllBinaryAndroidImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.math.AngleFactory import AngleFactory
         androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), ((int((AngleFactory.getInstance().TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
-        androidImageRotationAnimationFactory.init(-(image.getWidth() >> 2), -(image.getHeight() >> 2))
+        androidImageRotationAnimationFactory.init(-image.getWidth() >> 2, -image.getHeight() >> 2)
         return androidImageRotationAnimationFactory
     
 
     # throws Exception
     @staticmethod
     def createFactoryDXYU(image: Image, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> AllBinaryAndroidImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.math.AngleFactory import AngleFactory
         androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), ((int((AngleFactory.getInstance().TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
         androidImageRotationAnimationFactory.init(dx, dy)
         return androidImageRotationAnimationFactory
@@ -56,6 +70,8 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
     # throws Exception
     @staticmethod
     def createFactoryADXY(image: Image, width: int, height: int, dx: int, dy: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> AllBinaryAndroidImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, width, height, angleIncrement, animationBehaviorFactory, resizeCanvasForRotation)
         androidImageRotationAnimationFactory.init(dx, dy)
         return androidImageRotationAnimationFactory
@@ -69,6 +85,9 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), width, height, 0, 0, animationBehaviorFactory)
         self._init_fields()
         self.angleIncrement = angleIncrement
@@ -77,6 +96,10 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
 
     # throws Exception
     def getCanvasImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         features: Features = Features.getInstance()
         if self.resizeCanvasForRotation and not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
             return ImageCopyUtil.getInstance().createImageScale(self.getImage(), 1.44, False)
@@ -88,6 +111,11 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.AllBinaryFlickerAndroidImageRotationAnimation import AllBinaryFlickerAndroidImageRotationAnimation
         from org.allbinary.animation.image.AllBinaryAdjustedAndroidImageRotationAnimation import AllBinaryAdjustedAndroidImageRotationAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
         canvasImage: Image = self.getCanvasImage()
         scaledImage: Image = self.animationFactoryImageScaleUtil.createImage(canvasImage, self.animationFactoryInitializationVisitor.width, self.animationFactoryInitializationVisitor.height, self.scaleProperties.scaleWidth, self.scaleProperties.scaleHeight)
         copyOfScaledImage: Image = ImageCopyUtil.getInstance().createImage(scaledImage)
@@ -97,14 +125,14 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
         else:
             return AllBinaryFlickerAndroidImageRotationAnimation(scaledImage, copyOfScaledImage, AngleInfo.getInstance(self.angleIncrement), AngleFactory.getInstance().TOTAL_ANGLE, self.animationBehaviorFactory.getOrCreateInstance())
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

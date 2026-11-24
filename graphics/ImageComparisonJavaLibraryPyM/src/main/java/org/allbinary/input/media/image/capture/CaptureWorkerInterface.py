@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.event.handler.BasicEventHandlerInterface import BasicEventHandlerInterface
 from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 
 # Java interface
-class CaptureWorkerInterface(RunnableInterface, BasicEventHandlerInterface):
+class CaptureWorkerInterface(*java_bases(RunnableInterface, BasicEventHandlerInterface)):
     pass
 
 

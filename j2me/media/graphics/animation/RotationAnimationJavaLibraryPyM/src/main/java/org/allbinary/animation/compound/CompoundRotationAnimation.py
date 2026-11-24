@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 from org.allbinary.animation.compound.CompoundAnimationInterface import CompoundAnimationInterface
 
 
-class CompoundRotationAnimation(RotationAnimation, CompoundAnimationInterface):
+class CompoundRotationAnimation(*java_bases(RotationAnimation, CompoundAnimationInterface)):
 
     def _init_fields(self) -> None:
         self.animationInterfaceArray: list[RotationAnimation] = None

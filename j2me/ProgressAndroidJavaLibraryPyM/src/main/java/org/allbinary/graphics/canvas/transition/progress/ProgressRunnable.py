@@ -21,11 +21,15 @@ from org.allbinary.thread.ARunnable import ARunnable
 class ProgressRunnable(ARunnable):
 
     def _init_fields(self) -> None:
+        from org.allbinary.android.activity.SimpleProgressActivityInterface import SimpleProgressActivityInterface
         self.midletActivity: SimpleProgressActivityInterface = None
         self.progressCanvas: ProgressCanvas = None
     
 
     def __init__(self, midletActivity: Activity, progressCanvas: ProgressCanvas) -> None:
+        from android.app.Activity import Activity
+        from org.allbinary.android.activity.MidletActivityBase import MidletActivityBase
+        from org.allbinary.android.activity.SimpleProgressActivityInterface import SimpleProgressActivityInterface
         super().__init__()
         self._init_fields()
         midletActivity2: MidletActivityBase = midletActivity
@@ -35,8 +39,8 @@ class ProgressRunnable(ARunnable):
 
     def run(self) -> None:
         pass
-from android.app.Activity import Activity
-from org.allbinary.android.activity.MidletActivityBase import MidletActivityBase
-from org.allbinary.android.activity.SimpleProgressActivityInterface import SimpleProgressActivityInterface
+# from android.app.Activity import Activity
+# from org.allbinary.android.activity.MidletActivityBase import MidletActivityBase
+# from org.allbinary.android.activity.SimpleProgressActivityInterface import SimpleProgressActivityInterface
 
 

@@ -23,22 +23,23 @@ class FileFactory:
     
 
     @staticmethod
-    def getInstance() -> FileFactory:
+    def getInstance_j0() -> FileFactory:
         return FileFactory.instance
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, filePath: str) -> AbFile:
+    def getInstance_j1(self, filePath: str) -> AbFile:
         from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFile.createAbFileFromRawPath(filePath)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, file: AbFile, childFilePath: str) -> AbFile:
+    def getInstance_j2(self, file: AbFile, childFilePath: str) -> AbFile:
         from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFile.createAbFileWithChild(file, childFilePath)
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
     
 
     # throws Exception

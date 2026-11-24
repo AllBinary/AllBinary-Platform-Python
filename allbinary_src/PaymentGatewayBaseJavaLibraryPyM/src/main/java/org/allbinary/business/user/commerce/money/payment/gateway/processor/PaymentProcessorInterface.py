@@ -24,7 +24,8 @@ class PaymentProcessorInterface(DomNodeInterface):
 
     # throws PaymentException, Exception
     def process(self) -> None:
+        from org.allbinary.business.user.commerce.money.payment.PaymentException import PaymentException
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.money.payment.PaymentException import PaymentException
+# from org.allbinary.business.user.commerce.money.payment.PaymentException import PaymentException
 
 

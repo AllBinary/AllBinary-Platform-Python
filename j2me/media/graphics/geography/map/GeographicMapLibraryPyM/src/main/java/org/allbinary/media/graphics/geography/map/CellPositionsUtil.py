@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CellPositionsUtil:
     instance: CellPositionsUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         self.reusableSingleThreadedSurroundingList: BasicArrayList = BasicArrayListS(8)
         self.surroundArray: list[list[int]] = [[-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1], [1, 0], [-1, 0]]
 
@@ -35,6 +38,7 @@ class CellPositionsUtil:
 
     # throws Exception
     def getAll(self, geographicMapInterface: BasicGeographicMap, topRightGeographicMapCellPosition: GeographicMapCellPosition, columns: int, rows: int, reusableList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         reusableList.clear()
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         lastColumn: int = topRightGeographicMapCellPosition.getColumn() + columns
@@ -50,6 +54,7 @@ class CellPositionsUtil:
 
     # throws Exception
     def getAllSurrounding(self, geographicMapInterface: BasicGeographicMap, occupyList: BasicArrayList, reusableList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         reusableList.clear()
         for index in range(occupyList.size() - 1, 0 - 1, -1):
             layerGeographicMapCellPosition: GeographicMapCellPosition = occupyList.get(index)
@@ -63,6 +68,8 @@ class CellPositionsUtil:
 
     # throws Exception
     def getAllSurroundingAt(self, geographicMapInterface: BasicGeographicMap, layerGeographicMapCellPosition: GeographicMapCellPosition, reusableSurroundingList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         reusableSurroundingList.clear()
         geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
@@ -75,10 +82,13 @@ class CellPositionsUtil:
                 geographicMapCellPosition: GeographicMapCellPosition = geographicMapCellPositionFactory.getAt(column, row)
                 reusableSurroundingList.add(geographicMapCellPosition)
         return reusableSurroundingList
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 
-CellPositionsUtil.instance = CellPositionsUtil()
+def _CellPositionsUtil_instance() -> object:
+    return CellPositionsUtil()
+
+lazy_static(CellPositionsUtil, "instance", _CellPositionsUtil_instance)
 

@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.workarea.tools.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class ToolJPanel(JPanel):
@@ -48,59 +48,7 @@ class ToolJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.tools.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.tools.JList import JList
-        from org.allbinary.graphics.j2me.workarea.tools.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
         from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.Font import Font
-        from org.allbinary.graphics.j2me.workarea.tools.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.workarea.tools.GridLayout import GridLayout
         self.lineJButton = JButton()
         self.rectJButton = JButton()
         self.arcJButton = JButton()
@@ -347,5 +295,11 @@ class ToolJPanel(JPanel):
     def lineJButtonMouseClicked(self, evt: MouseEvent) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.ToolFactory import ToolFactory
         ToolFactory.getInstance().setSelectedTool(self.lineJButton.getText())
+# from java.awt.Font import Font
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.MouseAdapter import MouseAdapter
+# from java.awt.event.MouseEvent import MouseEvent
+# from javax.swing.JButton import JButton
+# from javax.swing.JList import JList
 
 

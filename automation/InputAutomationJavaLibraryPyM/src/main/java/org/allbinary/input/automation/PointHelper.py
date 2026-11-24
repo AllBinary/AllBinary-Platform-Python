@@ -31,6 +31,7 @@ class PointHelper:
         x: float = rectangle.getX() + rectangle.getWidth() / PointHelper.two
         y: float = rectangle.getY() + rectangle.getHeight() / PointHelper.two
         return PointFactory.getInstance(int(x), int(y))
-# from java.awt import *
+# from java.awt.Point import Point
+# from java.awt.Rectangle import Rectangle
 
 

@@ -9,10 +9,12 @@ from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBas
 class OpenGLBitmap(PlatformBitmapBase):
 
     def _init_fields(self) -> None:
+        from android.graphics.Bitmap import Bitmap
         self.bitmap: Bitmap = None
     
 
     def __init__(self, bitmap: object) -> None:
+        from android.graphics.Bitmap import Bitmap
         super().__init__()
         self._init_fields()
         self.bitmap = bitmap
@@ -36,6 +38,6 @@ class OpenGLBitmap(PlatformBitmapBase):
 
     def recycle(self) -> None:
         self.bitmap.recycle()
-from android.graphics.Bitmap import Bitmap
+# from android.graphics.Bitmap import Bitmap
 
 

@@ -15,18 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
 
 
-class PathFindingNodeCost(PathFindingNode, object):
-    NULL_PATH_FINDING_NODE_COST_ARRAY_ARRAY: list[list[PathFindingNodeCost]] = None
+class PathFindingNodeCost(*java_bases(PathFindingNode, object)):
+    NULL_PATH_FINDING_NODE_COST_ARRAY_ARRAY: list[list[PathFindingNodeCost]] = [[None] * (0) for _ in range(0)]
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.pathFindingNodeCostInfoP: PathFindingNodeCostInfo = None
     
 
     def __init__(self, parent: object, geographicMapCellPosition: GeographicMapCellPosition, pathFindingNodeCostInfo: PathFindingNodeCostInfo) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         super().__init__(parent, geographicMapCellPosition)
         self._init_fields()
         self.pathFindingNodeCostInfoP = pathFindingNodeCostInfo
@@ -49,6 +52,8 @@ class PathFindingNodeCost(PathFindingNode, object):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
         stringBuffer.append(CommonLabels.getInstance().COLON_SEP)
@@ -64,11 +69,9 @@ class PathFindingNodeCost(PathFindingNode, object):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.string.CommonLabels import CommonLabels
 
-
-PathFindingNodeCost.NULL_PATH_FINDING_NODE_COST_ARRAY_ARRAY = [[None] * (0) for _ in range(0)]
 

@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 
 
 # Java interface
-class UserInterface(TableMappingInterface, ValidationInterface):
+class UserInterface(*java_bases(TableMappingInterface, ValidationInterface)):
     
 
     def setUserName(self, value: str) -> None:
@@ -88,6 +89,7 @@ class UserInterface(TableMappingInterface, ValidationInterface):
     
 
     def setRole(self, aRole: UserRole) -> None:
+        from org.allbinary.business.user.role.UserRole import UserRole
         raise NotImplementedError()
     
 
@@ -180,6 +182,7 @@ class UserInterface(TableMappingInterface, ValidationInterface):
     
 
     def getRole(self) -> UserRole:
+        from org.allbinary.business.user.role.UserRole import UserRole
         raise NotImplementedError()
     
 
@@ -200,30 +203,35 @@ class UserInterface(TableMappingInterface, ValidationInterface):
     
 
     def getUserConfigurationInterface(self) -> UserConfigurationInterface:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
         raise NotImplementedError()
     
 
     def setUserConfigurationInterface(self, userConfigurationInterface: UserConfigurationInterface) -> None:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
         raise NotImplementedError()
     
 
-    def toPasswordHashMap(self) -> dict:
+    def toPasswordHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
     
 
     def validateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         raise NotImplementedError()
     
 
     def updateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         raise NotImplementedError()
     
 
     def isSessionValid(self) -> bool:
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
-from org.allbinary.business.user.role.UserRole import UserRole
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+# from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
+# from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
 
 

@@ -26,10 +26,12 @@ class UserFactory(UserFactoryInterface):
     
 
     # throws Exception
-    def getInstance(self, hashMap: dict) -> UserInterface:
+    def getInstance(self, hashMap: HashMap) -> UserInterface:
         from org.allbinary.business.user.modules.User import User
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserInterface import UserInterface
         return User(hashMap)
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.UserInterface import UserInterface
 
 

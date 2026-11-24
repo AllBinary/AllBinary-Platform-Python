@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.configuration.feature.GameFeature import GameFeature
 
 
@@ -27,7 +28,13 @@ class RaceTrackGameFeature(GameFeature):
         super().__init__(name)
 
 
-RaceTrackGameFeature.MINI_MAP = RaceTrackGameFeature("Mini Map")
+def _RaceTrackGameFeature_MINI_MAP() -> object:
+    return RaceTrackGameFeature("Mini Map")
 
-RaceTrackGameFeature.AUTO_FINISH_AI = RaceTrackGameFeature("Auto Finish AI")
+lazy_static(RaceTrackGameFeature, "MINI_MAP", _RaceTrackGameFeature_MINI_MAP)
+
+def _RaceTrackGameFeature_AUTO_FINISH_AI() -> object:
+    return RaceTrackGameFeature("Auto Finish AI")
+
+lazy_static(RaceTrackGameFeature, "AUTO_FINISH_AI", _RaceTrackGameFeature_AUTO_FINISH_AI)
 

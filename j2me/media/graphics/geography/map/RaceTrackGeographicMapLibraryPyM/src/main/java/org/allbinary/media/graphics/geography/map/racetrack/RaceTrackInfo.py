@@ -20,6 +20,7 @@ from __future__ import annotations
 class RaceTrackInfo:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.id: int = None
         self.name: str = None
         self.raceTrackFrictionProperties: RaceTrackFrictionProperties = None
@@ -31,6 +32,7 @@ class RaceTrackInfo:
     
 
     def __init__(self, id: int, name: str, raceTrackFrictionProperties: RaceTrackFrictionProperties, foregroundBasicColor: BasicColor, backgroundBasicColor: BasicColor, qualifyTime: int, worstContinuePosition: int, totalLaps: int) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self._init_fields()
         self.id = id
         self.name = name
@@ -83,18 +85,22 @@ class RaceTrackInfo:
     
 
     def getForegroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.foregroundBasicColor
     
 
     def setForegroundBasicColor(self, foregroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.foregroundBasicColor = foregroundBasicColor
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.backgroundBasicColor
     
 
     def setBackgroundBasicColor(self, backgroundBasicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.backgroundBasicColor = backgroundBasicColor
     
 
@@ -104,6 +110,6 @@ class RaceTrackInfo:
 
     def setRaceTrackFrictionProperties(self, raceTrackFrictionProperties: RaceTrackFrictionProperties) -> None:
         self.raceTrackFrictionProperties = raceTrackFrictionProperties
-from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColor import BasicColor
 
 

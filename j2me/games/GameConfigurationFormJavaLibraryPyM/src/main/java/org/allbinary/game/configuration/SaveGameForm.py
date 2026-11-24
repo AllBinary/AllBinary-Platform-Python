@@ -24,8 +24,8 @@ class SaveGameForm(CommandForm):
     FORM: CommandForm = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.MEUtil import MEUtil
-        self.meUtil: MEUtil = MEUtil.getInstance()
+        from org.allbinary.MIDPUtil import MIDPUtil
+        self.meUtil: MIDPUtil = MIDPUtil.getInstance()
     
 
     # throws Exception
@@ -65,10 +65,10 @@ class SaveGameForm(CommandForm):
         self.setCommandListener(cmdListener)
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.TextField import TextField
+# from org.allbinary.MIDPUtil import MIDPUtil
 # from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-# from org.allbinary.logic.MEUtil import MEUtil
 
 
 def _SaveGameForm_FORM() -> object:

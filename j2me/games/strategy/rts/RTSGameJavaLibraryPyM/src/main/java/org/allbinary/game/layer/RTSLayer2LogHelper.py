@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RTSLayer2LogHelper:
@@ -66,5 +67,8 @@ class RTSLayer2LogHelper:
         pass
 
 
-RTSLayer2LogHelper.instance = RTSLayer2LogHelper()
+def _RTSLayer2LogHelper_instance() -> object:
+    return RTSLayer2LogHelper()
+
+lazy_static(RTSLayer2LogHelper, "instance", _RTSLayer2LogHelper_instance)
 

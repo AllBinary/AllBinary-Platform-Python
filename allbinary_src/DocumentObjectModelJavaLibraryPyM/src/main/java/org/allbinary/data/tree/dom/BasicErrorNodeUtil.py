@@ -28,14 +28,17 @@ class BasicErrorNodeUtil:
     @staticmethod
     def get(document: Document, errorText: str) -> Node:
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.business.error.ErrorData import ErrorData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         try:
             node: Node = document.createElement(ErrorData.getInstance().NAME)
             node.appendChild(ModDomHelper.createNameValueNodes(document, ErrorData.getInstance().TEXT, errorText))
             return node
         except Exception as e:
             raise Exception("Error Node Creation Failure")
-from org.allbinary.business.error.ErrorData import ErrorData
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.error.ErrorData import ErrorData
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

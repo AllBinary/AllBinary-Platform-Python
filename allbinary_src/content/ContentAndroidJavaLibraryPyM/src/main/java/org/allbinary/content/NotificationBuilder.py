@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NotificationBuilder:
@@ -22,13 +23,21 @@ class NotificationBuilder:
     
 
     def build(self, context: Context, command: Command, message: str, integer: int, pendingIntent: PendingIntent) -> Parcelable:
+        from org.allbinary.android.NullParcelable import NullParcelable
+        from javax.microedition.lcdui.Command import Command
+        from android.app.PendingIntent import PendingIntent
+        from android.content.Context import Context
+        from android.os.Parcelable import Parcelable
         return NullParcelable.NULL_PARCELABLE
-from org.allbinary.android.NullParcelable import NullParcelable
+# from org.allbinary.android.NullParcelable import NullParcelable
 # from javax.microedition.lcdui.Command import Command
-from android.app.PendingIntent import PendingIntent
-from android.content.Context import Context
-from android.os.Parcelable import Parcelable
+# from android.app.PendingIntent import PendingIntent
+# from android.content.Context import Context
+# from android.os.Parcelable import Parcelable
 
 
-NotificationBuilder.NULL_NOTIFICATION_BUILDER = NotificationBuilder()
+def _NotificationBuilder_NULL_NOTIFICATION_BUILDER() -> object:
+    return NotificationBuilder()
+
+lazy_static(NotificationBuilder, "NULL_NOTIFICATION_BUILDER", _NotificationBuilder_NULL_NOTIFICATION_BUILDER)
 

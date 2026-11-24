@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OSGIServiceUtil:
     instance: OSGIServiceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,6 +37,11 @@ class OSGIServiceUtil:
 
     # throws Exception
     def getServicesObjectVector(self, bundleContext: BundleContext, serviceReferences: list[ServiceReference]) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.osgi.framework.ServiceReference import ServiceReference
+        from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
         vector: BasicArrayList = BasicArrayListD()
         if serviceReferences is not None:
             size: int = len(serviceReferences)
@@ -47,14 +54,17 @@ class OSGIServiceUtil:
                         raise Exception("No Service For Reference")
                     vector.add(osgiServiceInterface)
         return vector
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.osgi.framework.BundleContext import BundleContext
-from org.osgi.framework.ServiceReference import ServiceReference
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.ServiceReference import ServiceReference
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
 
 
-OSGIServiceUtil.instance = OSGIServiceUtil()
+def _OSGIServiceUtil_instance() -> object:
+    return OSGIServiceUtil()
+
+lazy_static(OSGIServiceUtil, "instance", _OSGIServiceUtil_instance)
 

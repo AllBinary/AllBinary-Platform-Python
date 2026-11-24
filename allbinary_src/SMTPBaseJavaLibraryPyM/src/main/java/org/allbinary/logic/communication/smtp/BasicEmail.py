@@ -26,6 +26,8 @@ class BasicEmail(EmailInterface):
 
     def __init__(self, emailInfo: EmailInfo, to: str) -> None:
         from org.allbinary.logic.communication.smtp.AbEmail import AbEmail
+        from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
         self._init_fields()
         basicEmailInfo: BasicEmailInfo = emailInfo.getBasicEmailInfo()
         self.email = AbEmail(basicEmailInfo.getEmailServerConfigurationInterface().getSmtpServer(), basicEmailInfo.getEmailServerConfigurationInterface().getAccountName(), to, basicEmailInfo.getSubject(), basicEmailInfo.getTextBody(), emailInfo.getHtmlAttachment(), emailInfo.getContentBase())
@@ -49,23 +51,27 @@ class BasicEmail(EmailInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.email.toHashMap()
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return self.email.toXmlNode(document)
     
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return self.email.toXmlDoc()
 # from java.util.HashMap import HashMap
 # from javax.mail.internet.MimeMessage import MimeMessage
-from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
-from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
+# from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

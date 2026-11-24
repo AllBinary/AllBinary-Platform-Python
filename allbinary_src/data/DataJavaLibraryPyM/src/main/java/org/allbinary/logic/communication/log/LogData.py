@@ -20,6 +20,7 @@ from __future__ import annotations
 class LogData:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         self.MAX: int = 5000000
         self.extension: str = "log"
         self.backupFileExt: str = str(AbPathData.getInstance().EXTENSION_SEP) + "bak" + str(AbPathData.getInstance().EXTENSION_SEP) + "txt"
@@ -29,6 +30,6 @@ class LogData:
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
 
 

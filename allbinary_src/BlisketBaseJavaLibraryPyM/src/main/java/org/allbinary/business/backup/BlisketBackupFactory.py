@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BlisketBackupFactory:
     instance: BlisketBackupFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -37,17 +42,25 @@ class BlisketBackupFactory:
 
     # throws Exception
     def getFileBasicArrayList(self, pathString: str) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         path: AbPath = AbPath(pathString, self.stringUtil.EMPTY_STRING)
         file: AbFile = AbFile.createAbFileFromAbPath(path)
         return self.directory.search(file, True)
     
 
-    def backup(self) -> None:
+    def backup_j0(self) -> None:
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             self.logUtil.putF(self.commonStrings.START, self, "backup()")
             stringBuffer: StringMaker = StringMaker()
-            stringBuffer.append(self.URLGLOBALS.getWebappPath())
-            stringBuffer.append(self.PATH_GLOBALS.getInstance().BACKUP_PATH)
+            stringBuffer.append(URLGLOBALS.getWebappPath())
+            stringBuffer.append(PATH_GLOBALS.getInstance().BACKUP_PATH)
             backupPath: str = str(stringBuffer)
             path: AbPath = AbPath(backupPath, self.stringUtil.EMPTY_STRING)
             fileBasicArrayList: BasicArrayList = self.getFileBasicArrayList(backupPath)
@@ -57,11 +70,20 @@ class BlisketBackupFactory:
     
 
     def backupViews(self) -> None:
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         try:
             self.logUtil.putF(self.commonStrings.START, self, "backupViews()")
             stringBuffer: StringMaker = StringMaker()
-            stringBuffer.append(self.URLGLOBALS.getWebappPath())
-            stringBuffer.append(self.PATH_GLOBALS.getInstance().BACKUP_PATH)
+            stringBuffer.append(URLGLOBALS.getWebappPath())
+            stringBuffer.append(PATH_GLOBALS.getInstance().BACKUP_PATH)
             backupPath: str = str(stringBuffer)
             path: AbPath = AbPath(backupPath, self.stringUtil.EMPTY_STRING)
             fileBasicArrayList: BasicArrayList = BasicArrayListD()
@@ -73,8 +95,8 @@ class BlisketBackupFactory:
             for index in range(0, size):
                 nextStore = storeFrontNamesBasicArrayList.get(index)
                 stringBuffer.delete(0, stringBuffer.length())
-                stringBuffer.append(self.URLGLOBALS.getWebappPath())
-                stringBuffer.append(self.PATH_GLOBALS.getInstance().VIEWS_PATH)
+                stringBuffer.append(URLGLOBALS.getWebappPath())
+                stringBuffer.append(PATH_GLOBALS.getInstance().VIEWS_PATH)
                 stringBuffer.append(nextStore)
                 viewsPath = str(stringBuffer)
                 stringBuffer.delete(0, stringBuffer.length())
@@ -90,11 +112,21 @@ class BlisketBackupFactory:
     
 
     def backupResources(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         try:
             self.logUtil.putF(self.commonStrings.START, self, "backupResources()")
             stringBuffer: StringMaker = StringMaker()
-            stringBuffer.append(self.URLGLOBALS.getWebappPath())
-            stringBuffer.append(self.PATH_GLOBALS.getInstance().BACKUP_PATH)
+            stringBuffer.append(URLGLOBALS.getWebappPath())
+            stringBuffer.append(PATH_GLOBALS.getInstance().BACKUP_PATH)
             backupPath: str = str(stringBuffer)
             path: AbPath = AbPath(backupPath, self.stringUtil.EMPTY_STRING)
             fileBasicArrayList: BasicArrayList = BasicArrayListD()
@@ -108,7 +140,7 @@ class BlisketBackupFactory:
                 nextStore = storeFrontNamesBasicArrayList.get(index)
                 storeFrontInterface = storeFrontsEntity.getStoreFrontInterface(nextStore)
                 stringBuffer.delete(0, stringBuffer.length())
-                stringBuffer.append(self.URLGLOBALS.getWebappPath())
+                stringBuffer.append(URLGLOBALS.getWebappPath())
                 stringBuffer.append(storeFrontInterface.getCurrentHostNamePath())
                 stringBuffer.append(storeFrontInterface.getCategoryPath())
                 resourcesPath = str(stringBuffer)
@@ -125,11 +157,20 @@ class BlisketBackupFactory:
     
 
     def backupJsps(self) -> None:
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         try:
             self.logUtil.putF(self.commonStrings.START, self, "backupJsps()")
             stringBuffer: StringMaker = StringMaker()
-            stringBuffer.append(self.URLGLOBALS.getWebappPath())
-            stringBuffer.append(self.PATH_GLOBALS.getInstance().BACKUP_PATH)
+            stringBuffer.append(URLGLOBALS.getWebappPath())
+            stringBuffer.append(PATH_GLOBALS.getInstance().BACKUP_PATH)
             backupPath: str = str(stringBuffer)
             path: AbPath = AbPath(backupPath, self.stringUtil.EMPTY_STRING)
             fileBasicArrayList: BasicArrayList = BasicArrayListD()
@@ -141,7 +182,7 @@ class BlisketBackupFactory:
                 nextStore = storeFrontNamesBasicArrayList.get(index)
                 PreLogUtil.put("Backup Store Jsps: " + nextStore, self, "backupJsps()")
                 stringBuffer.delete(0, stringBuffer.length())
-                stringBuffer.append(self.URLGLOBALS.getWebappPath())
+                stringBuffer.append(URLGLOBALS.getWebappPath())
                 stringBuffer.append(nextStore)
                 fileBasicArrayList.addAllList(self.getFileBasicArrayList(str(stringBuffer)))
             self.backup(fileBasicArrayList, str(path.toFileSystemString()) + "backupJsps.zip")
@@ -149,8 +190,11 @@ class BlisketBackupFactory:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "backupJsps()", e)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def backup(self, fileBasicArrayList: BasicArrayList, zipFile: str) -> None:
+    def backup_j2(self, fileBasicArrayList: BasicArrayList, zipFile: str) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.io.file.zip.ZipFileUtil import ZipFileUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.delete(0, stringBuffer.length())
@@ -163,23 +207,29 @@ class BlisketBackupFactory:
             self.logUtil.putF("Created Backup Zip File", self, "backup()")
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "backup()", e)
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
-from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.file.zip.ZipFileUtil import ZipFileUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+
+    def backup(self, *args):
+        return getattr(self, "backup_j" + str(len(args)))(*args)
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+# from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.file.zip.ZipFileUtil import ZipFileUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
-BlisketBackupFactory.instance = BlisketBackupFactory()
+def _BlisketBackupFactory_instance() -> object:
+    return BlisketBackupFactory()
+
+lazy_static(BlisketBackupFactory, "instance", _BlisketBackupFactory_instance)
 

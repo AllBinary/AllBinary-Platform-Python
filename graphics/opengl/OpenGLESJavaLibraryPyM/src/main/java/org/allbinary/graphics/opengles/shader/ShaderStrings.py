@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShaderStrings:
@@ -35,5 +36,8 @@ class ShaderStrings:
         return ShaderStrings.instance
 
 
-ShaderStrings.instance = ShaderStrings()
+def _ShaderStrings_instance() -> object:
+    return ShaderStrings()
+
+lazy_static(ShaderStrings, "instance", _ShaderStrings_instance)
 

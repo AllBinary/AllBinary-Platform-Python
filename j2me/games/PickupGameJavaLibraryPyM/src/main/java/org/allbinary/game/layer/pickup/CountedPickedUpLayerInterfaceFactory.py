@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactory import PickedUpLayerInterfaceFactory
 from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryInterface import CountedPickedUpLayerInterfaceFactoryInterface
 
 
-class CountedPickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactory, CountedPickedUpLayerInterfaceFactoryInterface):
+class CountedPickedUpLayerInterfaceFactory(*java_bases(PickedUpLayerInterfaceFactory, CountedPickedUpLayerInterfaceFactoryInterface)):
     NULL_COUNTED_PICKUP_LAYER_FACTORY: CountedPickedUpLayerInterfaceFactory = None
 
     def _init_fields(self) -> None:

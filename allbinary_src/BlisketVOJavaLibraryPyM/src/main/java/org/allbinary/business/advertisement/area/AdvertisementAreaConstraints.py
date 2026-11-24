@@ -21,12 +21,18 @@ from org.allbinary.business.advertisement.area.AdvertisementAreaConstraintsInter
 class AdvertisementAreaConstraints(AdvertisementAreaConstraintsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         self.displayInBrowserContraintsInterface: DisplayInBrowserContraintsInterface = None
         self.twoDimensionConstraintsInterface: TwoDimensionalConstraintInterface = None
     
 
     def __init__(self, document: Document) -> None:
-        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraints import DisplayInBrowserContraints
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraint import TwoDimensionalConstraint
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         self._init_fields()
         node: Node = DomSearchHelper.getNode(AdvertisementAreaData.getInstance().NAME, document.getChildNodes())
         self.displayInBrowserContraintsInterface = DisplayInBrowserContraints(node)
@@ -34,26 +40,32 @@ class AdvertisementAreaConstraints(AdvertisementAreaConstraintsInterface):
     
 
     def setDisplayInBrowserContraints(self, displayInBrowserContraintsInterface: DisplayInBrowserContraintsInterface) -> None:
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
         self.displayInBrowserContraintsInterface = displayInBrowserContraintsInterface
     
 
-    def getTwoDimensionContraints(self, twoDimensionConstraintsInterface: TwoDimensionalConstraintInterface) -> None:
+    def getTwoDimensionContraints_j1(self, twoDimensionConstraintsInterface: TwoDimensionalConstraintInterface) -> None:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         self.twoDimensionConstraintsInterface = twoDimensionConstraintsInterface
     
 
     def getDisplayInBrowserContraints(self) -> DisplayInBrowserContraintsInterface:
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
         return self.displayInBrowserContraintsInterface
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getTwoDimensionContraints(self) -> TwoDimensionalConstraintInterface:
+    def getTwoDimensionContraints_j0(self) -> TwoDimensionalConstraintInterface:
+        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
         return self.twoDimensionConstraintsInterface
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraints import DisplayInBrowserContraints
-from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
-from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraint import TwoDimensionalConstraint
-from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+
+    def getTwoDimensionContraints(self, *args):
+        return getattr(self, "getTwoDimensionContraints_j" + str(len(args)))(*args)
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraints import DisplayInBrowserContraints
+# from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
+# from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraint import TwoDimensionalConstraint
+# from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

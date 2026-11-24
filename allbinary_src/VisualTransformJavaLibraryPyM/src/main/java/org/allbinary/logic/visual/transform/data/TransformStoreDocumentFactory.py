@@ -26,19 +26,24 @@ class TransformStoreDocumentFactory:
 
     # throws Exception
     @staticmethod
-    def getInstance(pageContext: PageContext, weblisketSession: WeblisketSession) -> TransformDocumentInterface:
+    def getInstance_j2(pageContext: PageContext, weblisketSession: WeblisketSession) -> TransformDocumentInterface:
         from org.allbinary.logic.visual.transform.data.TransformStoreDocument import TransformStoreDocument
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         return TransformStoreDocument(pageContext, weblisketSession)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getInstance(searchRequest: SearchRequest) -> TransformDocumentInterface:
+    def getInstance_j1(searchRequest: SearchRequest) -> TransformDocumentInterface:
         from org.allbinary.logic.visual.transform.data.TransformStoreDocument import TransformStoreDocument
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         return TransformStoreDocument(searchRequest)
+
+    @staticmethod
+    def getInstance(*args):
+        return getattr(TransformStoreDocumentFactory, "getInstance_j" + str(len(args)))(*args)
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
 
 

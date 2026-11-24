@@ -56,10 +56,10 @@ class AdjustedCircleAnimation(CircleAnimation):
         from org.allbinary.AndroidUtil import AndroidUtil
         if AndroidUtil.isAndroid():
             widthPortion: int = (int(((int(innerWidth / 3)) * 10) / 7))
-            self.xAdjustment = -((self.width >> 1) - widthPortion)
+            self.xAdjustment = -(self.width >> 1) - widthPortion
             self.yAdjustment = self.xAdjustment
         else:
-            self.xAdjustment = -((self.width >> 1) - innerWidth)
+            self.xAdjustment = -(self.width >> 1) - innerWidth
             self.yAdjustment = self.xAdjustment
     
 

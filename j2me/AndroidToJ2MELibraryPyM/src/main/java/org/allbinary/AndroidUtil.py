@@ -15,13 +15,12 @@
 
 from __future__ import annotations
 
-from android.app.Activity import Activity
-from android.os.Build import Build
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AndroidUtil:
-    NULL_ACTIVITY: Activity = Activity()
-    version: int = int(Build.VERSION.SDK)
+    NULL_ACTIVITY: Activity = None
+    version: int = None
     
 
     @staticmethod
@@ -34,5 +33,19 @@ class AndroidUtil:
     @staticmethod
     def isAndroid() -> bool:
         return True
+# from android.app.Activity import Activity
+# from android.os.Build import Build
 
+
+def _AndroidUtil_NULL_ACTIVITY() -> object:
+    from android.app.Activity import Activity
+    return Activity()
+
+lazy_static(AndroidUtil, "NULL_ACTIVITY", _AndroidUtil_NULL_ACTIVITY)
+
+def _AndroidUtil_version() -> object:
+    from android.os.Build import Build
+    return int(Build.VERSION.SDK)
+
+lazy_static(AndroidUtil, "version", _AndroidUtil_version)
 

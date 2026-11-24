@@ -3,12 +3,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Graphics import Graphics
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 from org.allbinary.device.GraphicsInterface import GraphicsInterface
 
 
-class OpenGLESGraphics(Graphics, OpenGLSurfaceChangedInterface, GraphicsInterface):
+class OpenGLESGraphics(*java_bases(Graphics, OpenGLSurfaceChangedInterface, GraphicsInterface)):
 
     def _init_fields(self) -> None:
         from javax.microedition.khronos.opengles.GL10 import GL10
@@ -64,6 +65,5 @@ class OpenGLESGraphics(Graphics, OpenGLSurfaceChangedInterface, GraphicsInterfac
 # from javax.microedition.lcdui.Font import Font
 # from org.allbinary.graphics.font.FontDebugBase import FontDebugBase
 # from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.device.NullGL10 import NullGL10
 
 

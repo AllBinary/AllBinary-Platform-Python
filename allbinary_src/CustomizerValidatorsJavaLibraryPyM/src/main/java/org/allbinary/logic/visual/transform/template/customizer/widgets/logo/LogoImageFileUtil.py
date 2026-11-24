@@ -20,12 +20,15 @@ from __future__ import annotations
 class LogoImageFileUtil:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.directory.Directory import Directory
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.directory: Directory = Directory.getInstance()
         self.fileName: str = None
         self.imageFileAbPath: AbPath = None
     
 
     def __init__(self, imageAbPath: AbPath, imageFile: str) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self._init_fields()
         self.fileName = imageFile
         self.imageFileAbPath = imageAbPath
@@ -33,6 +36,9 @@ class LogoImageFileUtil:
 
     # throws Exception
     def saveFiles(self, fileItem: FileItem) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
         if self.fileName is None:
             raise Exception("Image File Name Was Null")
         if not self.directory.create(self.imageFileAbPath):
@@ -41,10 +47,10 @@ class LogoImageFileUtil:
         originalImageFile.createNewFile()
         FileUtil.getInstance().write(ByteArrayInputStream(fileItem.get()), originalImageFile)
 # from java.io.ByteArrayInputStream import ByteArrayInputStream
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.apache.commons.fileupload.FileItem import FileItem
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.apache.commons.fileupload.FileItem import FileItem
 
 

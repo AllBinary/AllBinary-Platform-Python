@@ -16,18 +16,49 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
 from org.allbinary.game.layer.building.event.BuildingEventListenerInterface import BuildingEventListenerInterface
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 
-class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEventListenerInterface):
-    partialPositionList: BasicArrayList = BasicArrayListS(4)
+class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEventListenerInterface)):
+    partialPositionList: BasicArrayList = None
     SENSOR_RANGE_MULTIPLIER: int = 6
     MOVE: str = "Moving"
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
+        from org.allbinary.animation.caption.CaptionAnimationHelper import CaptionAnimationHelper
+        from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
+        from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
+        from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+        from org.allbinary.game.layer.LayerCaptionResources import LayerCaptionResources
+        from org.allbinary.game.layer.PathAnimation import PathAnimation
+        from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
+        from org.allbinary.game.layer.VehicleProperties import VehicleProperties
+        from org.allbinary.game.layer.capital.event.CapitalEvent import CapitalEvent
+        from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+        from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.paint.Paintable import Paintable
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
+        from org.allbinary.math.NamedAngle import NamedAngle
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         self.layerPartialCellPositionsUtil: LayerPartialCellPositionsUtil = LayerPartialCellPositionsUtil.getInstance()
@@ -47,7 +78,7 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
         self.resourceAnimation: IndexedAnimation = NullIndexedAnimationFactory.getFactoryInstance().getInstance(0)
         self.initPathAnimation: PathAnimation = None
         self.pathAnimation: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
-        self.captionAnimationHelper: CaptionAnimationHelperBase = CaptionAnimationHelper(FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(CaptionResources.getInstance().RESOURCE).getInstance(0), -23, -25, 6, 0)
+        self.captionAnimationHelper: CaptionAnimationHelperBase = CaptionAnimationHelper(FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(LayerCaptionResources.getInstance().RESOURCE).getInstance(0), -23, -25, 6, 0)
         self.decalAnimation: RotationAnimation = None
         self.waypointLayerInterfaceFactoryInterface: LayerInterfaceFactoryInterface = None
         self.resourceLoad: int = 0
@@ -62,6 +93,33 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     def __init__(self, remoteInfo: RemoteInfo, parentLayer: PathFindingLayerInterface, advancedRTSProperties: AdvancedRTSProperties, groupInterface: list[Group], rootName: str, name: str, vehicleProperties: VehicleProperties, healthInterface: Health, maxResourceLoad: int, moveSoundInterface: Sound, waypointLayerInterfaceFactoryInterface: LayerInterfaceFactoryInterface, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, decalAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, resourceAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, direction: Direction, x: int, y: int, z: int, viewPosition: ViewPositionBase) -> None:
         from org.allbinary.game.layer.unit.CollidableUnitBehavior import CollidableUnitBehavior
+        from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+        from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
+        from org.allbinary.game.combat.damage.PtsDamageFloaters import PtsDamageFloaters
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.game.health.Health import Health
+        from org.allbinary.game.health.HealthBar import HealthBar
+        from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
+        from org.allbinary.game.identification.Group import Group
+        from org.allbinary.game.input.form.WaypointRTSFormInput import WaypointRTSFormInput
+        from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
+        from org.allbinary.game.layer.LinePathRelativeAnimation import LinePathRelativeAnimation
+        from org.allbinary.game.layer.PathAnimation import PathAnimation
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.VehicleProperties import VehicleProperties
+        from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, parentLayer, advancedRTSProperties, groupInterface, rootName, name, healthInterface, WaypointRTSFormInput(groupInterface, True), animationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface, rectangle, x, y, viewPosition)
         self._init_fields()
         self.setCollidableInferface(CollidableUnitBehavior(True))
@@ -92,6 +150,7 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
         self.initPathAnimation.setAllBinaryGameLayerManager(allBinaryGameLayerManager)
     
@@ -99,6 +158,17 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     # throws Exception
     def updateWaypointBehavior(self, geographicMapInterface: BasicGeographicMap) -> None:
         from org.allbinary.game.layer.unit.UnitWaypointBehavior2 import UnitWaypointBehavior2
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.layer.waypoint.MultipassNoCacheWaypoint import MultipassNoCacheWaypoint
+        from org.allbinary.game.layer.waypoint.NoCacheWaypoint import NoCacheWaypoint
+        from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
+        from org.allbinary.layer.Layer import Layer
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.media.audio.AttackSound import AttackSound
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         hashtable.put(self.groupCommonFactory.ID, self.getGroupInterface())
         hashtable.put(Layer.ID, self)
@@ -113,6 +183,10 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def construct(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface) -> None:
+        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+        from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
+        from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         super().construct(rtsPlayerLayerInterface)
         TrackingEventHandler.getInstance().addListenerInterface(self)
         WaypointEventHandlerFactory.getInstance(self.getGroupInterface()[0]).addListenerInterface(self.getUnitWaypointBehavior())
@@ -124,6 +198,12 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def updateSensorGeographicMapCellPositionList(self) -> None:
+        from org.allbinary.game.input.form.VisibleCellPositionsSingleton import VisibleCellPositionsSingleton
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         if VisibleCellPositionsSingleton.getInstance().shouldProcess():
             currentGeographicMapCellPosition: GeographicMapCellPosition = self.getCurrentGeographicMapCellPosition()
             self.sensorGeographicMapCellPositionList.clear()
@@ -156,6 +236,7 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def getSensorGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.sensorGeographicMapCellPositionList
     
 
@@ -165,11 +246,16 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def deselect(self) -> None:
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         self.pathAnimation = NullAnimationFactory.getFactoryInstance().getInstance(0)
         super().deselect()
     
 
     def setSelected(self, selected: bool) -> None:
+        from org.allbinary.game.layer.RTSLayer2LogHelper import RTSLayer2LogHelper
+        from org.allbinary.game.layer.RTSLayer2SelectedLogHelper import RTSLayer2SelectedLogHelper
+        from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
+        from org.allbinary.game.layer.RTSLayerSelectedLogHelper import RTSLayerSelectedLogHelper
         super().setSelected(selected)
         if selected:
             if self.debug:
@@ -183,6 +269,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def setClosestGeographicMapCellHistory(self, pathsList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.rtsLogHelper.setClosestGeographicMapCellHistory(self, pathsList)
         closestIndex: int = -1
         shortestDistance: int = 2147483647
@@ -202,10 +290,13 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def init(self, geographicMapCellHistory: GeographicMapCellHistory, geographicMapCellPositionBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         geographicMapCellHistory.trackAll(geographicMapCellPositionBasicArrayList)
     
 
     def onMovement(self, trackingEvent: TrackingEvent) -> None:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         try:
             layerInterface: AdvancedRTSGameLayer = trackingEvent.getLayerInterface()
             if layerInterface.getGroupInterface()[0] != self.getGroupInterface()[0]:
@@ -217,12 +308,16 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def onMovementFound(self, trackingEvent: TrackingEvent) -> None:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         layerInterface: AdvancedRTSGameLayer = trackingEvent.getLayerInterface()
         if layerInterface.getGroupInterface()[0] != self.getGroupInterface()[0]:
             self.getUnitWaypointBehavior().getPossibleTargetList().add(layerInterface)
     
 
     def initRangeHack(self) -> None:
+        from org.allbinary.animation.vector.AdjustedCircleAnimation import AdjustedCircleAnimation
+        from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+        from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
         basicWeaponPart: BasicWeaponPart = self.getPartInterfaceArray()[0]
         weaponProperties: WeaponProperties = basicWeaponPart.getWeaponProperties()
         self.weaponRange = weaponProperties.getRange()
@@ -235,6 +330,9 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def processBuiltTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
         if not self.getHealthInterface().isAlive():
             if self.isReadyForExplosion():
                 currentFrame: int = self.destroyAnimationInterface.getFrame()
@@ -257,12 +355,18 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def teleportTo(self, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         point: GPoint = geographicMapCellPosition.getMidPoint()
         self.setPosition(point.getX() - self.getHalfWidth(), point.getY() - self.getHalfHeight(), self.z)
     
 
     # throws Exception
     def getCurrentGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
         geographicMapCompositeInterface: GeographicMapCompositeInterface = self.allBinaryGameLayerManagerP
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         geographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXY(self.x + self.getHalfWidth(), self.y + self.getHalfHeight())
@@ -274,6 +378,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def fire(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.fireTimeHelper.isTimeTNT():
             self.fireAll(layerManager)
         else:
@@ -295,18 +401,26 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def down(self) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         velocityProperties: VelocityProperties = self.getVehicleProperties().getVelocityProperties()
         if not velocityProperties.isOverXYMaxForwardVelocity():
             self.accelerate(self.decelerationBasicDecimal)
     
 
     def up(self) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         velocityProperties: VelocityProperties = self.getVehicleProperties().getVelocityProperties()
         if not velocityProperties.isOverXYMaxForwardVelocity():
             self.accelerate(self.accelerationBasicDecimal)
     
 
     def initInputProcessors(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.layer.special.SpecialDownGameInputProcessor import SpecialDownGameInputProcessor
+        from org.allbinary.game.layer.special.SpecialFireGameInputProcessor import SpecialFireGameInputProcessor
+        from org.allbinary.game.layer.special.SpecialLeftGameInputProcessor import SpecialLeftGameInputProcessor
+        from org.allbinary.game.layer.special.SpecialRightGameInputProcessor import SpecialRightGameInputProcessor
+        from org.allbinary.game.layer.special.SpecialUpGameInputProcessor import SpecialUpGameInputProcessor
         self.inputProcessorArray[Canvas.RIGHT] = SpecialRightGameInputProcessor(self)
         self.inputProcessorArray[Canvas.LEFT] = SpecialLeftGameInputProcessor(self)
         self.inputProcessorArray[Canvas.KEY_NUM0] = SpecialFireGameInputProcessor(self)
@@ -318,6 +432,10 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def processInput(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+        from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getGameKeyEventList()
         size: int = list_.size()
         for index in range(0, size):
@@ -330,11 +448,17 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def accelerate(self, accelerate: BasicDecimal) -> None:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         self.getVehicleProperties().getVelocityProperties().addVelocityi(accelerate.getUnscaled(), int(self.rotationAnimationInterfaceP.getAngleInfoP().getAngle()), 90)
     
 
     # throws Exception
     def fireAll(self, layerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.game.part.weapon.SalvoInterface import SalvoInterface
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
         angleInfo: AngleInfo = self.rotationAnimationInterfaceP.getAngleInfoP()
         angle: int = int((angleInfo.getAngle() + self.slightAngle))
         self.hashtable.put(SmallIntegerSingletonFactory.getInstance().getAt(1), SmallIntegerSingletonFactory.getInstance().getAt(int(AngleFactory.getInstance().getAt(angle).getValue())))
@@ -353,12 +477,16 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def groundFriction(self) -> None:
+        from org.allbinary.game.layer.VehicleFrictionProperties import VehicleFrictionProperties
         vehicleFrictionProperties: VehicleFrictionProperties = self.getVehicleProperties().getVehicleFrictionProperties()
         self.getVehicleProperties().getVehicleFrictionProperties().friction(self.getVehicleProperties().getVelocityProperties(), vehicleFrictionProperties.getTireFrictionNominator())
     
 
     # throws Exception
     def trackTo(self, reason: str) -> None:
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         waypointBehaviorBase: WaypointBehaviorBase = self.waypointBehaviorBase
         nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition = waypointBehaviorBase.getNextUnvisitedPathGeographicMapCellPosition()
         point: GPoint = nextUnvisitedPathGeographicMapCellPosition.getMidPoint()
@@ -376,6 +504,14 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def turnTo(self, dx: int, dy: int, targetAngle: int) -> bool:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.layer.SensorActionFactory import SensorActionFactory
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.math.FrameUtil import FrameUtil
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         waypointBehaviorBase: WaypointBehaviorBase = self.waypointBehaviorBase
         nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition = waypointBehaviorBase.getNextUnvisitedPathGeographicMapCellPosition()
         evading: bool = False
@@ -432,6 +568,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def handleDeltalX(self, dx: int, dy: int) -> None:
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         waypointBehaviorBase: WaypointBehaviorBase = self.waypointBehaviorBase
         nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition = waypointBehaviorBase.getNextUnvisitedPathGeographicMapCellPosition()
         if dx > 0:
@@ -444,6 +582,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def handleDeltalY(self, dx: int, dy: int) -> None:
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         waypointBehaviorBase: WaypointBehaviorBase = self.waypointBehaviorBase
         nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition = waypointBehaviorBase.getNextUnvisitedPathGeographicMapCellPosition()
         if dy > 0:
@@ -457,6 +597,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def trackToDXYTargetAngle(self, dx: int, dy: int, targetAngle: int) -> None:
+        from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getUnitWaypointBehavior().getSteeringVisitorList()
         if list_.size() > 0:
             for index in range(list_.size() - 1, 0 - 1, -1):
@@ -471,6 +613,10 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def fireOrMove(self) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
         if self.getUnitWaypointBehavior().needToMove():
             self.rtsLayer2LogHelper.steeringUp(self)
@@ -486,6 +632,16 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def move(self) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.layer.TiledLayerUtil import TiledLayerUtil
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
         try:
             velocityProperties: VelocityProperties = self.getVehicleProperties().getVelocityProperties()
             velocityXScaled: int = int(velocityProperties.getVelocityXBasicDecimalP().getScaled())
@@ -520,12 +676,15 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def allStop(self) -> None:
+        from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         velocityProperties: VelocityProperties = self.getVehicleProperties().getVelocityProperties()
         velocityProperties.getVelocityXBasicDecimalP().setint(0)
         velocityProperties.getVelocityYBasicDecimalP().setint(0)
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.view.ViewPositionBase import ViewPositionBase
         if self.isVisible():
             super().paint(graphics)
             viewPosition: ViewPositionBase = self.getViewPosition()
@@ -543,11 +702,14 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def onBuildingEvent(self, event: RTSLayerEvent) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+        from org.allbinary.game.layer.building.BuildingLayer import BuildingLayer
         buildingLayer: BuildingLayer = event.getRtsLayer()
         self.getUnitWaypointBehavior().moveAwayFromBuilding(buildingLayer)
     
 
     def getVehicleProperties(self) -> VehicleProperties:
+        from org.allbinary.game.layer.VehicleProperties import VehicleProperties
         return self.vehicleProperties
     
 
@@ -566,6 +728,11 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def setDestroyed(self, destroyed: bool) -> None:
+        from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
+        from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
+        from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
+        from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+        from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
         self.logUtil.putF(self.commonStrings.START, self, "setDestroyed")
         super().setDestroyed(destroyed)
         if self.isDestroyed():
@@ -593,6 +760,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def clearResourceAnimation(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
         self.resourceAnimation = NullIndexedAnimationFactory.getFactoryInstance().getInstance(0)
     
 
@@ -611,6 +780,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     # throws Exception
     def handleCost(self, ownerLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.capital.event.CapitalEventHandlerFactory import CapitalEventHandlerFactory
         if self.getLoad() > 0:
             self.CAPITAL_EVENT.setValue(self.getLoad())
             CapitalEventHandlerFactory.getInstance(ownerLayer.getGroupInterface()[0]).fireEvent(self.CAPITAL_EVENT)
@@ -618,6 +789,8 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def createHudPaintable(self) -> SelectionHudPaintable:
+        from org.allbinary.game.layer.RTSLayerHudPaintable import RTSLayerHudPaintable
+        from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
         rtsLayerHudPaintable: RTSLayerHudPaintable = RTSLayerHudPaintable.getInstance()
         rtsLayerHudPaintable.setBasicColorP(self.allBinaryGameLayerManagerP.getForegroundBasicColor())
         rtsLayerHudPaintable.setRtsLayer(self)
@@ -625,12 +798,14 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def getHudPaintable(self) -> SelectionHudPaintable:
+        from org.allbinary.game.layer.RTSLayerHudPaintable import RTSLayerHudPaintable
+        from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
         rtsLayerHudPaintable: RTSLayerHudPaintable = RTSLayerHudPaintable.getInstance()
         return rtsLayerHudPaintable
     
 
     def getType(self) -> int:
-        return UnitLayer.getStaticType()
+        return 1
     
 
     @staticmethod
@@ -643,10 +818,12 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
     
 
     def getTrackingEvent(self) -> TrackingEvent:
+        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         return self.trackingEvent
     
 
     def getCaptionAnimationHelper(self) -> CaptionAnimationHelperBase:
+        from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
         return self.captionAnimationHelper
     
 
@@ -660,113 +837,122 @@ class UnitLayer(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEv
 
     @staticmethod
     def getPartialpositionlist() -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return UnitLayer.partialPositionList
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
-from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
-from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
-from org.allbinary.animation.RotationAnimation import RotationAnimation
-from org.allbinary.animation.caption.CaptionAnimationHelper import CaptionAnimationHelper
-from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
-from org.allbinary.animation.vector.AdjustedCircleAnimation import AdjustedCircleAnimation
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
-from org.allbinary.game.combat.damage.PtsDamageFloaters import PtsDamageFloaters
-from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.game.health.Health import Health
-from org.allbinary.game.health.HealthBar import HealthBar
-from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
-from org.allbinary.game.identification.Group import Group
-from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
-from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
-from org.allbinary.game.input.form.VisibleCellPositionsSingleton import VisibleCellPositionsSingleton
-from org.allbinary.game.input.form.WaypointRTSFormInput import WaypointRTSFormInput
-from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.layer.CaptionResources import CaptionResources
-from org.allbinary.game.layer.LinePathRelativeAnimation import LinePathRelativeAnimation
-from org.allbinary.game.layer.PathAnimation import PathAnimation
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.RTSLayer2LogHelper import RTSLayer2LogHelper
-from org.allbinary.game.layer.RTSLayer2SelectedLogHelper import RTSLayer2SelectedLogHelper
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
-from org.allbinary.game.layer.RTSLayerHudPaintable import RTSLayerHudPaintable
-from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
-from org.allbinary.game.layer.RTSLayerSelectedLogHelper import RTSLayerSelectedLogHelper
-from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
-from org.allbinary.game.layer.SensorActionFactory import SensorActionFactory
-from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
-from org.allbinary.game.layer.TiledLayerUtil import TiledLayerUtil
-from org.allbinary.game.layer.VehicleFrictionProperties import VehicleFrictionProperties
-from org.allbinary.game.layer.VehicleProperties import VehicleProperties
-from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
-from org.allbinary.game.layer.building.BuildingLayer import BuildingLayer
-from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
-from org.allbinary.game.layer.capital.event.CapitalEvent import CapitalEvent
-from org.allbinary.game.layer.capital.event.CapitalEventHandlerFactory import CapitalEventHandlerFactory
-from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
-from org.allbinary.game.layer.special.SpecialDownGameInputProcessor import SpecialDownGameInputProcessor
-from org.allbinary.game.layer.special.SpecialFireGameInputProcessor import SpecialFireGameInputProcessor
-from org.allbinary.game.layer.special.SpecialLeftGameInputProcessor import SpecialLeftGameInputProcessor
-from org.allbinary.game.layer.special.SpecialRightGameInputProcessor import SpecialRightGameInputProcessor
-from org.allbinary.game.layer.special.SpecialUpGameInputProcessor import SpecialUpGameInputProcessor
-from org.allbinary.game.layer.waypoint.MultipassNoCacheWaypoint import MultipassNoCacheWaypoint
-from org.allbinary.game.layer.waypoint.NoCacheWaypoint import NoCacheWaypoint
-from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
-from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
-from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
-from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
-from org.allbinary.game.part.weapon.SalvoInterface import SalvoInterface
-from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
-from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
-from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-from org.allbinary.graphics.paint.Paintable import Paintable
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.math.FrameUtil import FrameUtil
-from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
-from org.allbinary.math.NamedAngle import NamedAngle
-from org.allbinary.media.audio.AttackSound import AttackSound
-from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-from org.allbinary.media.audio.Sound import Sound
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.view.ViewPositionBase import ViewPositionBase
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
+# from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
+# from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
+# from org.allbinary.animation.RotationAnimation import RotationAnimation
+# from org.allbinary.animation.caption.CaptionAnimationHelper import CaptionAnimationHelper
+# from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
+# from org.allbinary.animation.vector.AdjustedCircleAnimation import AdjustedCircleAnimation
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
+# from org.allbinary.game.combat.damage.PtsDamageFloaters import PtsDamageFloaters
+# from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.game.health.Health import Health
+# from org.allbinary.game.health.HealthBar import HealthBar
+# from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
+# from org.allbinary.game.identification.Group import Group
+# from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
+# from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+# from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
+# from org.allbinary.game.input.event.GameKeyEventUtil import GameKeyEventUtil
+# from org.allbinary.game.input.form.VisibleCellPositionsSingleton import VisibleCellPositionsSingleton
+# from org.allbinary.game.input.form.WaypointRTSFormInput import WaypointRTSFormInput
+# from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.layer.LayerCaptionResources import LayerCaptionResources
+# from org.allbinary.game.layer.LinePathRelativeAnimation import LinePathRelativeAnimation
+# from org.allbinary.game.layer.PathAnimation import PathAnimation
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.RTSLayer2LogHelper import RTSLayer2LogHelper
+# from org.allbinary.game.layer.RTSLayer2SelectedLogHelper import RTSLayer2SelectedLogHelper
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.game.layer.RTSLayerHudPaintable import RTSLayerHudPaintable
+# from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
+# from org.allbinary.game.layer.RTSLayerSelectedLogHelper import RTSLayerSelectedLogHelper
+# from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
+# from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
+# from org.allbinary.game.layer.SensorActionFactory import SensorActionFactory
+# from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
+# from org.allbinary.game.layer.TiledLayerUtil import TiledLayerUtil
+# from org.allbinary.game.layer.VehicleFrictionProperties import VehicleFrictionProperties
+# from org.allbinary.game.layer.VehicleProperties import VehicleProperties
+# from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+# from org.allbinary.game.layer.building.BuildingLayer import BuildingLayer
+# from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
+# from org.allbinary.game.layer.capital.event.CapitalEvent import CapitalEvent
+# from org.allbinary.game.layer.capital.event.CapitalEventHandlerFactory import CapitalEventHandlerFactory
+# from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
+# from org.allbinary.game.layer.special.SpecialDownGameInputProcessor import SpecialDownGameInputProcessor
+# from org.allbinary.game.layer.special.SpecialFireGameInputProcessor import SpecialFireGameInputProcessor
+# from org.allbinary.game.layer.special.SpecialLeftGameInputProcessor import SpecialLeftGameInputProcessor
+# from org.allbinary.game.layer.special.SpecialRightGameInputProcessor import SpecialRightGameInputProcessor
+# from org.allbinary.game.layer.special.SpecialUpGameInputProcessor import SpecialUpGameInputProcessor
+# from org.allbinary.game.layer.waypoint.MultipassNoCacheWaypoint import MultipassNoCacheWaypoint
+# from org.allbinary.game.layer.waypoint.NoCacheWaypoint import NoCacheWaypoint
+# from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
+# from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
+# from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
+# from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
+# from org.allbinary.game.part.weapon.SalvoInterface import SalvoInterface
+# from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
+# from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
+# from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
+# from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.paint.NullPaintable import NullPaintable
+# from org.allbinary.graphics.paint.Paintable import Paintable
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.math.FrameUtil import FrameUtil
+# from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
+# from org.allbinary.math.NamedAngle import NamedAngle
+# from org.allbinary.media.audio.AttackSound import AttackSound
+# from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
+# from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMap import RaceTrackGeographicMap
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.view.ViewPositionBase import ViewPositionBase
 
+
+def _UnitLayer_partialPositionList() -> object:
+    from org.allbinary.util.BasicArrayList import BasicArrayList
+    from org.allbinary.util.BasicArrayListS import BasicArrayListS
+    return BasicArrayListS(4)
+
+lazy_static(UnitLayer, "partialPositionList", _UnitLayer_partialPositionList)
 

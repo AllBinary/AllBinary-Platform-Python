@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PlatformAssetManager:
@@ -28,12 +29,17 @@ class PlatformAssetManager:
 
     # throws Exception
     def getResourceAsStream(self, resource: str) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         resourceUtil: ResourceUtil = ResourceUtil.getInstance()
         inputStream: InputStream = resourceUtil.getResourceAsStream(resource)
         return inputStream
 # from java.io.InputStream import InputStream
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
 
 
-PlatformAssetManager.instance = PlatformAssetManager()
+def _PlatformAssetManager_instance() -> object:
+    return PlatformAssetManager()
+
+lazy_static(PlatformAssetManager, "instance", _PlatformAssetManager_instance)
 

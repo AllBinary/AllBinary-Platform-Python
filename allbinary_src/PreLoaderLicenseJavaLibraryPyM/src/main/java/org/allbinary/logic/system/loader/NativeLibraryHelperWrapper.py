@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import gc
+from java.lang.ClassLoader import ClassLoader
 
 
 class NativeLibraryHelperWrapper:
@@ -34,6 +35,7 @@ class NativeLibraryHelperWrapper:
     # throws Exception
     def load(self) -> None:
         from org.allbinary.logic.system.loader.NativeLibraryClassLoader import NativeLibraryClassLoader
+        from org.allbinary.string.CommonStrings import CommonStrings
         params: list[object] = [None] * (1)
         params[0] = self.getLibraryName()
         classes: list[type] = [None] * (1)
@@ -69,6 +71,6 @@ class NativeLibraryHelperWrapper:
         self.libraryName = libraryName
 # from java.lang.reflect.Constructor import Constructor
 # from java.lang.reflect.Method import Method
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

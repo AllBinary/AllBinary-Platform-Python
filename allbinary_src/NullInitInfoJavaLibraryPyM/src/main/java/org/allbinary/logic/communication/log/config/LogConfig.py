@@ -43,7 +43,11 @@ class LogConfig:
     
 
     def _constructor1(self, node: Node) -> None:
-        from org.allbinary.logic.communication.log.config.LogConfigData import LogConfigData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+        from org.w3c.dom.Node import Node
         self._init_fields()
         enabledValueNode: Node = DomSearchHelper.getNode(EntryData.getInstance().ENABLE, node.getChildNodes())
         isEnabledString: str = DomNodeHelper.getTextNodeValue(enabledValueNode)
@@ -99,14 +103,16 @@ class LogConfig:
 
     # throws Exception
     def getTypeVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         logKeyVector: BasicArrayList = BasicArrayListD()
         return logKeyVector
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.w3c.dom.Node import Node
 
 

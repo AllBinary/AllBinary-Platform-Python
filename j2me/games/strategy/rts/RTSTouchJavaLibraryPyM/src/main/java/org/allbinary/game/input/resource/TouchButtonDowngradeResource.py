@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
 
 
@@ -29,8 +30,11 @@ class TouchButtonDowngradeResource(TouchButtonResource):
 
     def __init__(self) -> None:
         super().__init__("/touch_button_downgrade_64_by_64.png", "/touch_button_downgrade_hint_64_by_64.png")
-from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
+# from org.allbinary.input.motion.button.TouchButtonBlankResource import TouchButtonBlankResource
 
 
-TouchButtonDowngradeResource.instance = TouchButtonDowngradeResource()
+def _TouchButtonDowngradeResource_instance() -> object:
+    return TouchButtonDowngradeResource()
+
+lazy_static(TouchButtonDowngradeResource, "instance", _TouchButtonDowngradeResource_instance)
 

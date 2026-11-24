@@ -21,6 +21,7 @@ from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory imp
 class BasicPlatormGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
         self.BLOCK_CELL_TYPE: BasicPlatormGeographicMapCellType = None
         self.JUMP_THRU_CELL_TYPE: BasicPlatormGeographicMapCellType = None
@@ -31,6 +32,11 @@ class BasicPlatormGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
     def __init__(self, tileTypeToTileIdsMap: ABHashtable[object, object], maxTileId: int) -> None:
         from org.allbinary.media.graphics.geography.map.platform.BasicPlatormGeographicMapCellType import BasicPlatormGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.platform.BasicPlatormGeographicMapCellType import BasicPlatormGeographicMapCellType
+        from java.util.Enumeration import Enumeration
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__()
         self._init_fields()
         commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -78,14 +84,15 @@ class BasicPlatormGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
     
 
     def isPath(self, cellType: GeographicMapCellType) -> bool:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         if cellType.getType() == 0:
             return True
         return False
 # from java.util.Enumeration import Enumeration
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.EnumerationUtil import EnumerationUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.EnumerationUtil import EnumerationUtil
 
 

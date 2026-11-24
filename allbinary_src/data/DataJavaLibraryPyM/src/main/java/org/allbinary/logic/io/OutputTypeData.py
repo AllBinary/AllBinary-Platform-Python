@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OutputTypeData:
@@ -33,5 +34,8 @@ class OutputTypeData:
         return OutputTypeData.instance
 
 
-OutputTypeData.instance = OutputTypeData()
+def _OutputTypeData_instance() -> object:
+    return OutputTypeData()
+
+lazy_static(OutputTypeData, "instance", _OutputTypeData_instance)
 

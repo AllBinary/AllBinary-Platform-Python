@@ -22,11 +22,13 @@ class GenericModuleConfigurationInterface:
     
 
     def getSelectedGenericProfile(self) -> GenericProfile:
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
         raise NotImplementedError()
     
 
     def setSelectedGenericProfile(self, selectedGenericProfile: GenericProfile) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
         raise NotImplementedError()
-from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
+# from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
 
 

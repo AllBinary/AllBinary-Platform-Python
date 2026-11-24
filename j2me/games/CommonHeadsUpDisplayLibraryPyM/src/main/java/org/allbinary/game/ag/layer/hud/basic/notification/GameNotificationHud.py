@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.game.layer.hud.event.GameNotificationListenerInterface import GameNotificationListenerInterface
 
 
-class GameNotificationHud(BasicHud, GameNotificationListenerInterface):
+class GameNotificationHud(*java_bases(BasicHud, GameNotificationListenerInterface)):
     NULL_GAME_NOTIFICATION: GameNotificationHud = None
 
     def _init_fields(self) -> None:

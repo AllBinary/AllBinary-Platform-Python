@@ -38,6 +38,8 @@ class HtmlMetaAttributeData:
 
     def __eq__(self, other: object) -> bool:
         return self.equals(other)
+
+    __hash__ = object.__hash__
     
 
     def toString(self) -> str:

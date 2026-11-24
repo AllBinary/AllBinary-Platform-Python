@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.VectorAnimationInterface import VectorAnimationInterface
 
 
-class VectorAnimation(IndexedAnimation, VectorAnimationInterface):
+class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil

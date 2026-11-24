@@ -22,15 +22,21 @@ class TransformInfoCustomUriTransformer(BasicTransformer):
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
+        from org.allbinary.data.tree.dom.CustomUriResolver import CustomUriResolver
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         super().__init__(abeClientInformation, transformInfoInterface)
         transformInfoObjectConfigInterface: TransformInfoObjectConfigInterface = TransformInfoObjectConfigAndManipulatorFactory.getInstance().getInstance(abeClientInformation, transformInfoInterface)
         self.setURIResolver(CustomUriResolver(transformInfoObjectConfigInterface.getImportUriPath(), self.getURIResolver()))
 # from javax.xml.transform.URIResolver import URIResolver
-from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
-from org.allbinary.data.tree.dom.CustomUriResolver import CustomUriResolver
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
+# from org.allbinary.data.tree.dom.CustomUriResolver import CustomUriResolver
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
 
 

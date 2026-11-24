@@ -24,7 +24,6 @@ class NullImage:
 
 
 def _NullImage_NULL_IMAGE() -> object:
-    from javax.microedition.lcdui.Image import Image
     return Image()
 
 lazy_static(NullImage, "NULL_IMAGE", _NullImage_NULL_IMAGE)

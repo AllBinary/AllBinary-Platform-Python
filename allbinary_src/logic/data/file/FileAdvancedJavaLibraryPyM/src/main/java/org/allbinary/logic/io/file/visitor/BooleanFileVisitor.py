@@ -21,22 +21,30 @@ from org.allbinary.logic.util.visitor.VisitorInterface import VisitorInterface
 class BooleanFileVisitor(VisitorInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.filterStringBasicArrayList: BasicArrayList = None
     
 
     def __init__(self, filterStringBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.setFilterStringBasicArrayList(filterStringBasicArrayList)
         PreLogUtil.put("Filter BasicArrayList: " + str(self.getFilterStringBasicArrayList()), self, self.commonStrings.CONSTRUCTOR)
     
 
-    def visit(self, anyType: object) -> object:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def visit_j1_1(self, anyType: object) -> object:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         return self.visit(anyType)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def visit(self, file: AbFile) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def visit_j1_2(self, file: AbFile) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         list_: BasicArrayList = self.getFilterStringBasicArrayList()
         size: int = list_.size()
         nextFileFilterString: str = None
@@ -48,19 +56,28 @@ class BooleanFileVisitor(VisitorInterface):
     
 
     def getFilterStringBasicArrayList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.filterStringBasicArrayList
     
 
     def setFilterStringBasicArrayList(self, filterStringBasicArrayList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.filterStringBasicArrayList = filterStringBasicArrayList
     
 
-    # Java overloaded method: Python keeps the last definition
-    def visit(self, file: AbFile, fileNameString: str) -> bool:
+    def visit_j2(self, file: AbFile, fileNameString: str) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         return False
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.BasicArrayList import BasicArrayList
+
+    def visit(self, *args):
+        if len(args) == 1 and True:
+            return self.visit_j1_1(*args)
+        if len(args) == 1:
+            return self.visit_j1_2(*args)
+        return getattr(self, "visit_j" + str(len(args)))(*args)
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

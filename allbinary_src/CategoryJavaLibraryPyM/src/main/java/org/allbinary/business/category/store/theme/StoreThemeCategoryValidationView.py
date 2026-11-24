@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 from org.allbinary.business.category.store.theme.StoreThemeCategoryView import StoreThemeCategoryView
 
 
-class StoreThemeCategoryValidationView(StoreThemeCategoryView, ValidationInterface):
+class StoreThemeCategoryValidationView(*java_bases(StoreThemeCategoryView, ValidationInterface)):
     
 
     def __init__(self, categoryInterface: StoreThemeCategoryInterface) -> None:
@@ -33,18 +34,21 @@ class StoreThemeCategoryValidationView(StoreThemeCategoryView, ValidationInterfa
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     # throws Exception
     def validationInfo(self) -> str:
         return "Error"
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

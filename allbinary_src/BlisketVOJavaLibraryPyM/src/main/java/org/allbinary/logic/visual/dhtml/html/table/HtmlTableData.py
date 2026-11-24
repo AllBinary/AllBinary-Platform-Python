@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HtmlTableData:
     instance: HtmlTableData = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.LEFT: str = CommonStrings.getInstance().LEFT
         self.RIGHT: str = CommonStrings.getInstance().RIGHT
         self.NONE: str = "none"
@@ -41,8 +43,11 @@ class HtmlTableData:
     @staticmethod
     def getInstance() -> HtmlTableData:
         return HtmlTableData.instance
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-HtmlTableData.instance = HtmlTableData()
+def _HtmlTableData_instance() -> object:
+    return HtmlTableData()
+
+lazy_static(HtmlTableData, "instance", _HtmlTableData_instance)
 

@@ -21,10 +21,11 @@ from admin.taghelpers.TagHelperInterface import TagHelperInterface
 class TagHelper(TagHelperInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

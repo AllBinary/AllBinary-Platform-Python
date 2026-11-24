@@ -22,6 +22,12 @@ class ActivityFractureInputUtilFactory:
 
     @staticmethod
     def getInstance() -> ActivityFractureUtil:
+        from org.allbinary.android.ActivityFractureUtil import ActivityFractureUtil
+        from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+        from org.allbinary.android.api1.ActivityFractureUtilAPI1 import ActivityFractureUtilAPI1
+        from org.allbinary.android.api16.ActivityFractureUtilAPI16 import ActivityFractureUtilAPI16
+        from org.allbinary.android.api19.ActivityFractureUtilAPI19 import ActivityFractureUtilAPI19
+        from org.allbinary.android.api5.ActivityFractureUtilAPI5 import ActivityFractureUtilAPI5
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION <= 4:
             return ActivityFractureUtilAPI1.getInstance()
@@ -31,11 +37,11 @@ class ActivityFractureInputUtilFactory:
             return ActivityFractureUtilAPI16.getInstance()
         else:
             return ActivityFractureUtilAPI19.getInstance()
-from org.allbinary.android.ActivityFractureUtil import ActivityFractureUtil
-from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
-from org.allbinary.android.api1.ActivityFractureUtilAPI1 import ActivityFractureUtilAPI1
-from org.allbinary.android.api16.ActivityFractureUtilAPI16 import ActivityFractureUtilAPI16
-from org.allbinary.android.api19.ActivityFractureUtilAPI19 import ActivityFractureUtilAPI19
-from org.allbinary.android.api5.ActivityFractureUtilAPI5 import ActivityFractureUtilAPI5
+# from org.allbinary.android.ActivityFractureUtil import ActivityFractureUtil
+# from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
+# from org.allbinary.android.api1.ActivityFractureUtilAPI1 import ActivityFractureUtilAPI1
+# from org.allbinary.android.api16.ActivityFractureUtilAPI16 import ActivityFractureUtilAPI16
+# from org.allbinary.android.api19.ActivityFractureUtilAPI19 import ActivityFractureUtilAPI19
+# from org.allbinary.android.api5.ActivityFractureUtilAPI5 import ActivityFractureUtilAPI5
 
 

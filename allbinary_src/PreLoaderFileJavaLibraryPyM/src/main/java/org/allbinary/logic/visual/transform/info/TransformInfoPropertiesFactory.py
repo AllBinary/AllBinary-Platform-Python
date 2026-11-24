@@ -15,17 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransformInfoPropertiesFactory:
     instance: TransformInfoPropertiesFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
-    def getInstance() -> TransformInfoPropertiesFactory:
+    def getInstance_j0() -> TransformInfoPropertiesFactory:
         return TransformInfoPropertiesFactory.instance
     
 
@@ -34,16 +36,23 @@ class TransformInfoPropertiesFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, node: Node) -> TransformInfoProperties:
-        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+    def getInstance_j1(self, node: Node) -> TransformInfoProperties:
         from org.allbinary.logic.visual.transform.info.TransformInfoProperties import TransformInfoProperties
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.w3c.dom.Attr import Attr
+        from org.w3c.dom.NamedNodeMap import NamedNodeMap
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         transformInfoChildNodeList: NodeList = node.getChildNodes()
         transformInfoData: TransformInfoData = TransformInfoData.getInstance()
         attributes: NamedNodeMap = node.getAttributes()
         attrNode: Attr = attributes.getNamedItem(transformInfoData.NAME)
         name: str = attrNode.getValue()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF(str(CommonLabels.getInstance().NEXT) + " View Name: " + name, self, "toTransformInfoPropertiesHashMap()")
         labelNode: Node = DomSearchHelper.getNodeNoThrow(transformInfoData.LABEL, transformInfoChildNodeList)
         label: str = DomNodeHelper.getTextNodesValue(labelNode)
@@ -59,15 +68,23 @@ class TransformInfoPropertiesFactory:
         templateFileName: str = DomNodeHelper.getTextNodeValue(templateFileNode)
         transformInfoProperties: TransformInfoProperties = TransformInfoProperties(name, label, description, objectFileName, objectConfigFileName, templateFileName)
         return transformInfoProperties
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.w3c.dom.Attr import Attr
-from org.w3c.dom.NamedNodeMap import NamedNodeMap
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.w3c.dom.Attr import Attr
+# from org.w3c.dom.NamedNodeMap import NamedNodeMap
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-TransformInfoPropertiesFactory.instance = TransformInfoPropertiesFactory()
+def _TransformInfoPropertiesFactory_instance() -> object:
+    return TransformInfoPropertiesFactory()
+
+lazy_static(TransformInfoPropertiesFactory, "instance", _TransformInfoPropertiesFactory_instance)
 

@@ -20,6 +20,8 @@ from __future__ import annotations
 class ShaderComposite:
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
+        from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
         self.disableProgramShaderOpenGLProcessor: OpenGLProcessor = None
         self.requiresOpenGLVersion: str = None
         self.shaderArray: list[Shader] = None
@@ -28,7 +30,7 @@ class ShaderComposite:
         self.modelViewProjection: ModelViewProjection = None
         self.colorOpenGLProcessor: OpenGLProcessor = None
         self.vertexOpenGLProcessor: OpenGLProcessor = None
-        self.useProgramShaderOpenGLProcessor: OpenGLProcessor = None
+        self.useProgramShaderOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
         self.shaderMatrixOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
         self.colorEnableVertexAttribArrayOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
         self.normalEnableVertexAttribArrayOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
@@ -46,6 +48,7 @@ class ShaderComposite:
     
 
     def __init__(self, requiresOpenGLVersion: str, shaderArray: list[Shader], compositeShaderUpdater: CompositeShaderUpdater, shaderInitializer: ShaderInitializer, modelViewProjection: ModelViewProjection, colorOpenGLProcessor: OpenGLProcessor, vertexOpenGLProcessor: OpenGLProcessor, disableProgramShaderOpenGLProcessor: OpenGLProcessor) -> None:
+        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
         self._init_fields()
         self.requiresOpenGLVersion = requiresOpenGLVersion
         self.shaderArray = shaderArray
@@ -58,10 +61,11 @@ class ShaderComposite:
     
 
     def init(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         self.programHandle = self.shaderInitializer.init(gl, self.shaderArray, self.compositeShaderUpdater.attributeArray)
 # from javax.microedition.khronos.opengles.GL10 import GL10
-from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
-from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
+# from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
+# from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
 from org.allbinary.graphics.opengles.shader.NullOpenGLTextureProcessor import NullOpenGLTextureProcessor
 
 

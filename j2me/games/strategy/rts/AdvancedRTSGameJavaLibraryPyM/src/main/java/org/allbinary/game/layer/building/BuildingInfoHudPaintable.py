@@ -15,13 +15,50 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
+from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
 class BuildingInfoHudPaintable(SelectionHudPaintable):
     instance: BuildingInfoHudPaintable = None
+    class BuildingNumberHud(NumberStringHud):
+
+        def _init_fields(self) -> None:
+            self.baseTextX: int = None
+            self.baseY: int = None
+            self.row: int = None
+            self.prefixLength: int = None
+            self.positionBeforeMeasurement: bool = None
+        
+
+        def __init__(self, label: str, maximum: int, basicHudFactory: BasicHudFactory, basicColor: BasicColor, baseTextX: int, baseY: int, row: int, prefixLength: int, positionBeforeMeasurement: bool) -> None:
+            from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+            from org.allbinary.graphics.color.BasicColor import BasicColor
+            super().__init__(label, maximum, basicHudFactory.ABSOLUTE, basicHudFactory.HORIZONTAL, 0, basicColor)
+            self._init_fields()
+            self.baseTextX = baseTextX
+            self.baseY = baseY
+            self.row = row
+            self.prefixLength = prefixLength
+            self.positionBeforeMeasurement = positionBeforeMeasurement
+        
+
+        def updateMeasurement(self, graphics: Graphics) -> None:
+            from javax.microedition.lcdui.Font import Font
+            from javax.microedition.lcdui.Graphics import Graphics
+            if not self.positionBeforeMeasurement:
+                super().updateMeasurement(graphics)
+            font: Font = graphics.getFont()
+            self.updateMaxWidth = self.baseTextX + self.prefixLength * font.getHeight()
+            self.updateMaxHeight = self.baseY + self.row * font.getHeight()
+            if self.positionBeforeMeasurement:
+                super().updateMeasurement(graphics)
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.HEALTH: str = "Health:"
         self.productivityHud: NumberStringHud = None
@@ -38,11 +75,10 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
     
 
     def __init__(self) -> None:
-        from org.allbinary.game.layer.building.ProductivityNumberStringHud import ProductivityNumberStringHud
-        from org.allbinary.game.layer.building.EfficiencyNumberStringHud import EfficiencyNumberStringHud
-        from org.allbinary.game.layer.building.HEALTH import HEALTH
-        from org.allbinary.game.layer.building.HealthNumberStringHud import HealthNumberStringHud
-        from org.allbinary.game.layer.building.MaxHealthNumberStringHud import MaxHealthNumberStringHud
+        from org.allbinary.game.ag.layer.hud.basic.NumberStringHudFactory import NumberStringHudFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
         self._init_fields()
         numberStringHudFactory: NumberStringHudFactory = NumberStringHudFactory.getInstance()
@@ -51,71 +87,14 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
         healthHud: NumberStringHud = numberStringHudFactory.NULL_NUMBER_STRING_HUD
         maxHealthHud: NumberStringHud = numberStringHudFactory.NULL_NUMBER_STRING_HUD
         try:
-            index: int = 0
             basicHudFactory: BasicHudFactory = BasicHudFactory.getInstance()
             basicColor: BasicColor = self.getBasicColorP()
             textX: int = self.textX
             y: int = self.y
-            firstIndex: int = index
-            class ProductivityNumberStringHud(NumberStringHud):
-                
-
-                def __init__(self) -> None:
-                    super().__init__("Productivity:", 999, self.basicHudFactory.ABSOLUTE, self.basicHudFactory.HORIZONTAL, 0, self.basicColor)
-                
-
-                def updateMeasurement(self, graphics: Graphics) -> None:
-                    font: Font = graphics.getFont()
-                    self.updateMaxWidth = self.textX
-                    self.updateMaxHeight = self.y + ((self.firstIndex + 1) * font.getHeight())
-                    super().updateMeasurement(graphics)
-            productivityHud = ProductivityNumberStringHud()
-            index += 1
-            secondIndex: int = index
-            class EfficiencyNumberStringHud(NumberStringHud):
-                
-
-                def __init__(self) -> None:
-                    super().__init__("Efficiency:", 999, self.basicHudFactory.ABSOLUTE, self.basicHudFactory.HORIZONTAL, 0, self.basicColor)
-                
-
-                def updateMeasurement(self, graphics: Graphics) -> None:
-                    super().updateMeasurement(graphics)
-                    font: Font = graphics.getFont()
-                    self.updateMaxWidth = self.textX
-                    self.updateMaxHeight = self.y + ((self.secondIndex + 1) * font.getHeight())
-            efficiencyHud = EfficiencyNumberStringHud()
-            index += 1
-            HEALTH: str = self.HEALTH
-            thirdIndex: int = index
-            class HealthNumberStringHud(NumberStringHud):
-                
-
-                def __init__(self) -> None:
-                    super().__init__(self.HEALTH, 99999, self.basicHudFactory.ABSOLUTE, self.basicHudFactory.HORIZONTAL, 0, self.basicColor)
-                
-
-                def updateMeasurement(self, graphics: Graphics) -> None:
-                    font: Font = graphics.getFont()
-                    self.updateMaxWidth = self.textX
-                    self.updateMaxHeight = self.y + ((self.thirdIndex + 1) * font.getHeight())
-                    super().updateMeasurement(graphics)
-            totalLength: int = len(HEALTH) + 1
-            healthHud = HealthNumberStringHud()
-            fourthIndex: int = index
-            class MaxHealthNumberStringHud(NumberStringHud):
-                
-
-                def __init__(self) -> None:
-                    super().__init__("/ ", 99999, self.basicHudFactory.ABSOLUTE, self.basicHudFactory.HORIZONTAL, 0, self.basicColor)
-                
-
-                def updateMeasurement(self, graphics: Graphics) -> None:
-                    super().updateMeasurement(graphics)
-                    font: Font = graphics.getFont()
-                    self.updateMaxWidth = self.textX + (self.totalLength * font.getHeight())
-                    self.updateMaxHeight = self.y + ((self.fourthIndex + 1) * font.getHeight())
-            maxHealthHud = MaxHealthNumberStringHud()
+            productivityHud = BuildingInfoHudPaintable.BuildingNumberHud("Productivity:", 999, basicHudFactory, basicColor, textX, y, 1, 0, True)
+            efficiencyHud = BuildingInfoHudPaintable.BuildingNumberHud("Efficiency:", 999, basicHudFactory, basicColor, textX, y, 2, 0, False)
+            healthHud = BuildingInfoHudPaintable.BuildingNumberHud(self.HEALTH, 99999, basicHudFactory, basicColor, textX, y, 3, 0, True)
+            maxHealthHud = BuildingInfoHudPaintable.BuildingNumberHud("/ ", 99999, basicHudFactory, basicColor, textX, y, 3, len(self.HEALTH) + 1, False)
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.CONSTRUCTOR, e)
@@ -126,6 +105,10 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.logic.math.MathUtil import MathUtil
         font: Font = graphics.getFont()
         totalLength: int = len(self.HEALTH) + MathUtil.getInstance().getTotalDigits(self.currentHealth)
         self.maxHealthHud.setX(self.textX + MyFontProcessor.defaultStringWidth(font, totalLength))
@@ -133,6 +116,7 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         super().setBasicColorP(basicColor)
         self.productivityHud.setBasicColorP(basicColor)
         self.efficiencyHud.setBasicColorP(basicColor)
@@ -141,6 +125,7 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paint(graphics)
         self.myFontProcessor.process(graphics)
         self.productivityHud.paint(graphics)
@@ -163,20 +148,23 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
     
 
     def setRtsLayer(self, rtsLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.rtsLayer = rtsLayer
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
-from org.allbinary.game.ag.layer.hud.basic.NumberStringHudFactory import NumberStringHudFactory
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
-from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.game.ag.layer.hud.basic.NumberStringHudFactory import NumberStringHudFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
+# from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.logic.math.MathUtil import MathUtil
 
 
-BuildingInfoHudPaintable.instance = BuildingInfoHudPaintable()
+def _BuildingInfoHudPaintable_instance() -> object:
+    return BuildingInfoHudPaintable()
+
+lazy_static(BuildingInfoHudPaintable, "instance", _BuildingInfoHudPaintable_instance)
 

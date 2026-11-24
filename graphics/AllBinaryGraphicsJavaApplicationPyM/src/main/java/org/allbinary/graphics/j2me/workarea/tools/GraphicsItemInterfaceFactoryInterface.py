@@ -22,7 +22,8 @@ class GraphicsItemInterfaceFactoryInterface:
     
 
     def getInstance(self, canvasJPanel: CanvasJPanel) -> GraphicItemInterface:
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         raise NotImplementedError()
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
 
 

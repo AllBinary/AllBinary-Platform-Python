@@ -21,12 +21,16 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class LazyImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.layoutIndex: int = None
         self.animationInterfaceFactoryInterface: BaseImageAnimationFactory = None
         self.scaleProperties: ScaleProperties = ScaleProperties.instance
     
 
     def __init__(self, layoutIndex: int, associatedLazyAnimationId: int, animationInterfaceFactoryInterface: BaseImageAnimationFactory) -> None:
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         self._init_fields()
         self.layoutIndex = layoutIndex
         self.animationInterfaceFactoryInterface = animationInterfaceFactoryInterface
@@ -38,6 +42,7 @@ class LazyImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
+        from org.allbinary.animation.Animation import Animation
         if self.animationInterfaceFactoryInterface.getImage().isReady():
             self.animationInterfaceFactoryInterface.setInitialScale(self.scaleProperties)
             return self.animationInterfaceFactoryInterface.getInstance(instanceId)
@@ -46,11 +51,12 @@ class LazyImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
     
 
     def setInitialScale(self, scaleProperties: ScaleProperties) -> None:
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.scaleProperties = scaleProperties
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.media.ScaleProperties import ScaleProperties
 
 

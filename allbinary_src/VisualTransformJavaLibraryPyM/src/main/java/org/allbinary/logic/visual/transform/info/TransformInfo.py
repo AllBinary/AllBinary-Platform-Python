@@ -22,6 +22,12 @@ from org.allbinary.logic.visual.transform.info.TransformInfoInterface import Tra
 class TransformInfo(TransformInfoInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
@@ -65,14 +71,30 @@ class TransformInfo(TransformInfoInterface):
     
 
     # throws Exception
-    def override(self, hashMap: dict) -> None:
-        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+    def override(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.OutputTypeData import OutputTypeData
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.data.TransformInfoDataData import TransformInfoDataData
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfig import TransformInfoObjectConfig
+        from org.allbinary.logic.visual.transform.info.template.TransformInfoTemplateData import TransformInfoTemplateData
+        from org.allbinary.logic.visual.transform.info.viewObject.TransformInfoObjectData import TransformInfoObjectData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         transformInfoData: TransformInfoData = TransformInfoData.getInstance()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         aName: str = hashMap.get(transformInfoData.NAME)
         if not stringValidationUtil.isEmpty(aName):
             self.name = aName
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("TransformInfo properties overridden for: ")
             stringBuffer.append(self.getName())
@@ -86,25 +108,25 @@ class TransformInfo(TransformInfoInterface):
         if not stringValidationUtil.isEmpty(aObjectFileName):
             self.objectFileName = aObjectFileName
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(self.URLGLOBALS.getMainPath())
-        stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+        stringBuffer.append(URLGLOBALS.getMainPath())
+        stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
         stringBuffer.append(self.storeName)
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         fileAbPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
         aObject: str = hashMap.get(transformInfoData.OBJECT)
         if not stringValidationUtil.isEmpty(aObject):
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override view Object for: " + self.getName(), self, "override(HashMap hashMap)")
             fileDataString: str = CryptFileReader(TransformInfoObjectData.getInstance().UNCRYPTED_EXTENSION, TransformInfoObjectData.getInstance().ENCRYPTED_EXTENSION).get(AbPath(str(fileAbPath), aObject))
             if fileDataString is not None:
                 self.anyType = fileDataString
         if not stringValidationUtil.isEmpty(hashMap.get(transformInfoData.OBJECTCONFIG)):
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override ObjectConfig for: " + self.getName(), self, "override(HashMap hashMap)")
             self.setObjectConfig(hashMap.get(transformInfoData.OBJECTCONFIG))
         objectConfigFileName: str = hashMap.get(transformInfoData.OBJECTCONFIGFILENAME)
         if not stringValidationUtil.isEmpty(objectConfigFileName):
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override ObjectConfig File for: " + self.getName(), self, "override(HashMap hashMap)")
             self.setObjectConfigFile(objectConfigFileName)
         type_: str = hashMap.get(OutputTypeData.getInstance().NAME)
@@ -117,7 +139,7 @@ class TransformInfo(TransformInfoInterface):
             self.templateFileName = aTemplateFileName
         aTemplate: str = hashMap.get(transformInfoData.TEMPLATE)
         if not stringValidationUtil.isEmpty(aTemplate):
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override Template for: " + self.getName(), self, "override(HashMap hashMap)")
             fileDataString: str = CryptFileReader(TransformInfoTemplateData.getInstance().UNCRYPTED_EXTENSION, TransformInfoTemplateData.getInstance().ENCRYPTED_EXTENSION).get(AbPath(str(fileAbPath), aTemplate))
             if not stringValidationUtil.isEmpty(fileDataString):
@@ -127,12 +149,12 @@ class TransformInfo(TransformInfoInterface):
             self.dataFileName = aDataFileName
         aData: str = hashMap.get(transformInfoData.DATA)
         if not stringValidationUtil.isEmpty(aData):
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override Data for: " + self.getName(), self, "override(HashMap hashMap)")
             fileDataString: str = CryptFileReader(TransformInfoDataData.getInstance().UNCRYPTED_EXTENSION, TransformInfoDataData.getInstance().ENCRYPTED_EXTENSION).get(AbPath(str(fileAbPath), aData))
             if not stringValidationUtil.isEmpty(fileDataString):
                 self.data = fileDataString
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer = StringMaker()
             stringBuffer.append("Name: ")
             stringBuffer.append(aName)
@@ -150,11 +172,13 @@ class TransformInfo(TransformInfoInterface):
             stringBuffer.append(self.getObjectFile())
             stringBuffer.append("->TransformInfo")
             self.logUtil.putF(str(stringBuffer), self, "TransformInfoInterface(HashMap)")
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
             self.logUtil.putF(self.log(), self, "override")
     
 
     def log(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Name: ")
         stringBuffer.append(self.name)
@@ -210,12 +234,16 @@ class TransformInfo(TransformInfoInterface):
 
     # throws Exception
     def setObjectConfigFile(self, value: str) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
         self.objectConfigFileName = value
         self.setObjectConfigInterface(TransformInfoObjectConfigAndManipulatorFactory.getInstance().getInstance(self.abeClientInformation, self, self.getObjectConfigFilePath()))
     
 
     # throws Exception
     def setObjectConfig(self, value: str) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
+        from org.w3c.dom.Document import Document
         document: Document = DomDocumentHelper.create(value)
         self.setObjectConfigInterface(TransformInfoObjectConfigAndManipulatorFactory.getInstance().getInstance(self.abeClientInformation, self, document))
     
@@ -250,16 +278,22 @@ class TransformInfo(TransformInfoInterface):
 
     # throws Exception
     def getTemplateFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return AbFilePath(self.getTemplateFile())
     
 
     # throws Exception
     def getObjectConfigFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return AbFilePath(self.getObjectConfigFile())
     
 
     # throws Exception
     def getDataFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return AbFilePath(self.getDataFile())
     
 
@@ -268,24 +302,32 @@ class TransformInfo(TransformInfoInterface):
     
 
     def getData(self) -> str:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.data.TransformInfoDataData import TransformInfoDataData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         dataFileString: str = self.getDataFile()
         if not stringValidationUtil.isEmpty(dataFileString):
             try:
                 fileData: str = CryptFileReader(TransformInfoDataData.getInstance().UNCRYPTED_EXTENSION, TransformInfoDataData.getInstance().ENCRYPTED_EXTENSION).get(self.getDataFilePath())
                 if not stringValidationUtil.isEmpty(self.data):
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         self.logUtil.putF("Data File overriding existing data: " + str(self.getDataFilePath()), self, "getData()")
                 self.data = fileData
             except Exception as e:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     self.logUtil.put("Could Not Load Data from: " + str(self.getDataFile()), self, "getData()", e)
         try:
             if not stringValidationUtil.isEmpty(self.data):
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     self.logUtil.putF("Data: " + XmlDocumentHelper.toString(DomDocumentHelper.create(self.data)), self, "getData()")
             else:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("Name: ")
                     stringBuffer.append(self.name)
@@ -293,20 +335,25 @@ class TransformInfo(TransformInfoInterface):
                     stringBuffer.append(dataFileString)
                     stringBuffer.append("\nPath: ")
                     stringBuffer.append(self.getDataFilePath().toFileSystemString())
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                         self.logUtil.putF(str(stringBuffer), self, "getData()")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Could Not Preview Data: " + self.data, self, "getData()", e)
         return self.data
     
 
     # throws Exception
     def getDataDocument(self) -> Document:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.w3c.dom.Document import Document
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         localData: str = self.getData()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if stringValidationUtil.isEmpty(localData):
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.putF("No Data So Creating New Document", self, "getDataDocument()")
             return DomDocumentHelper.create()
         else:
@@ -318,10 +365,14 @@ class TransformInfo(TransformInfoInterface):
         return self.dataFileName
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.control.crypt.Encoder import Encoder
         transformInfoData: TransformInfoData = TransformInfoData.getInstance()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(transformInfoData.NAME, self.name)
         hashMap.put(StoreFrontData.getInstance().NAME, self.storeName)
         hashMap.put(transformInfoData.OBJECTFILENAME, self.objectFileName)
@@ -339,6 +390,9 @@ class TransformInfo(TransformInfoInterface):
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.control.crypt.Encoder import Encoder
         vector: BasicArrayList = BasicArrayListD()
         vector.add(self.name)
         vector.add(self.storeName)
@@ -370,42 +424,46 @@ class TransformInfo(TransformInfoInterface):
     
 
     def getObjectConfigInterface(self) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         return self.objectConfigInterface
     
 
     def setObjectConfigInterface(self, objectConfigInterface: TransformInfoObjectConfigInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         self.objectConfigInterface = objectConfigInterface
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.Encoder import Encoder
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.OutputTypeData import OutputTypeData
-from org.allbinary.logic.io.path.AbFilePath import AbFilePath
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
-from org.allbinary.logic.visual.transform.info.data.TransformInfoDataData import TransformInfoDataData
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfig import TransformInfoObjectConfig
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
-from org.allbinary.logic.visual.transform.info.template.TransformInfoTemplateData import TransformInfoTemplateData
-from org.allbinary.logic.visual.transform.info.viewObject.TransformInfoObjectData import TransformInfoObjectData
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.Encoder import Encoder
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.OutputTypeData import OutputTypeData
+# from org.allbinary.logic.io.path.AbFilePath import AbFilePath
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.visual.transform.info.data.TransformInfoDataData import TransformInfoDataData
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfig import TransformInfoObjectConfig
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.allbinary.logic.visual.transform.info.template.TransformInfoTemplateData import TransformInfoTemplateData
+# from org.allbinary.logic.visual.transform.info.viewObject.TransformInfoObjectData import TransformInfoObjectData
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

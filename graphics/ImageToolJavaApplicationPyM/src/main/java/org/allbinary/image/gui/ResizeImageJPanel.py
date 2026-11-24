@@ -16,13 +16,17 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
-from org.allbinary.image.gui.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
-class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
+class ResizeImageJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageProcessorInput: ImageProcessorInput = None
@@ -40,7 +44,7 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
-        from org.allbinary.image.gui.DefaultComboBoxModel import DefaultComboBoxModel
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -58,10 +62,20 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def process(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+        from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+#                 from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+#                 from org.allbinary.media.image.ImageUtil import ImageUtil
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     imageUtil: ImageUtil = ImageUtil.getInstance()
@@ -93,10 +107,14 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def update(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     imageProcessorInput: ImageProcessorInput = self.getImageProcessorInput()
@@ -114,10 +132,14 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def updateFor16Above(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     imageProcessorInput: ImageProcessorInput = self.getImageProcessorInput()
@@ -135,10 +157,14 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def updateFor16Below(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         (threading.Thread()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 try:
 #                     imageProcessorInput: ImageProcessorInput = self.getImageProcessorInput()
@@ -156,32 +182,16 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def getImageProcessorInput(self) -> ImageProcessorInput:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         return self.imageProcessorInput
     
 
     def setImageProcessorInput(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         self.imageProcessorInput = imageProcessorInput
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JComboBox import JComboBox
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.DefaultComboBoxModel import DefaultComboBoxModel
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.Dimension import Dimension
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
         self.jLabel1 = JLabel()
         self.jComboBox1 = JComboBox()
         self.aboveJButton = JButton()
@@ -229,8 +239,8 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
 ))
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.jLabel1).addComponent(self.jLabel2).addComponent(self.jLabel3)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, False).addComponent(self.jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.jTextField1).addComponent(self.jTextField2)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.floatPercentJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.adjustFor16AboveJButton).addComponent(self.adjustFor16BelowJButton)).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addGroup(layout.createSequentialGroup().addComponent(self.updateJButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.aboveJButton).addGap(0, 250, Short.MAX_VALUE)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.floatPercentJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.jLabel2).addComponent(self.adjustFor16AboveJButton)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel3).addComponent(self.jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.adjustFor16BelowJButton)).addGap(18, 18, 18).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.aboveJButton).addComponent(self.updateJButton)).addContainerGap(175, Short.MAX_VALUE)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.jLabel1).addComponent(self.jLabel2).addComponent(self.jLabel3)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, False).addComponent(self.jComboBox1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.jTextField1).addComponent(self.jTextField2)).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.floatPercentJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.adjustFor16AboveJButton).addComponent(self.adjustFor16BelowJButton)).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addGroup(layout.createSequentialGroup().addComponent(self.updateJButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.aboveJButton).addGap(0, 250, Short.MAX_VALUE)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.jComboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.floatPercentJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.jLabel2).addComponent(self.adjustFor16AboveJButton)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel3).addComponent(self.jTextField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.adjustFor16BelowJButton)).addGap(18, 18, 18).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.aboveJButton).addComponent(self.updateJButton)).addContainerGap(175, Short.MAX_VALUE)))
     
 
     def aboveJButtonActionPerformed(self, evt: ActionEvent) -> None:
@@ -250,11 +260,21 @@ class ResizeImageJPanel(JPanel, ImageProcessorInputCompositeInterface):
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.awt.image.Raster import Raster
 # from java.io.File import File
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
-from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
-from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
-from org.allbinary.media.image.ImageUtil import ImageUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+# from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+# from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+# from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JComboBox import JComboBox
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JTextField import JTextField
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

@@ -20,6 +20,8 @@ from __future__ import annotations
 class PlayerOwnedRTSLayers:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.rtsLayerList: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
@@ -27,6 +29,7 @@ class PlayerOwnedRTSLayers:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("All: ")
         stringBuffer.appendint(self.rtsLayerList.size())
@@ -34,8 +37,8 @@ class PlayerOwnedRTSLayers:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

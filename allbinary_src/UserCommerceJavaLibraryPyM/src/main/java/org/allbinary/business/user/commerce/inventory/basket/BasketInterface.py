@@ -42,10 +42,12 @@ class BasketInterface:
     
 
     def getIds(self) -> Set:
+        from java.util.Set import Set
         raise NotImplementedError()
     
 
-    def getItems(self) -> dict:
+    def getItems(self) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
     
 
@@ -55,10 +57,12 @@ class BasketInterface:
 
     # throws MoneyException
     def getSubTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
 
 

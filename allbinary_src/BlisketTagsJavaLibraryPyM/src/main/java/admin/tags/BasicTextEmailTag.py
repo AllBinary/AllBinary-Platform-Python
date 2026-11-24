@@ -21,6 +21,7 @@ from tags.CustomTagSupport import CustomTagSupport
 class BasicTextEmailTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.subject: str = None
         self.body: str = None
@@ -40,8 +41,13 @@ class BasicTextEmailTag(CustomTagSupport):
     
 
     def send(self) -> str:
+        from java.util.HashMap import HashMap
+        from admin.taghelpers.BasicTextEmailHelperFactory import BasicTextEmailHelperFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            propertiesHashMap: dict = StdUtil.getInstance().createHashMap()
+            propertiesHashMap: HashMap = StdUtil.getInstance().createHashMap()
             propertiesHashMap.put("Subject", self.subject)
             propertiesHashMap.put("Body", self.body)
             anyType: object = BasicTextEmailHelperFactory().getInstance(propertiesHashMap, self.pageContext)
@@ -50,13 +56,14 @@ class BasicTextEmailTag(CustomTagSupport):
             return "Email Sent"
         except Exception as e:
             error: str = "Failed to Send Email."
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "send()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         try:
             self.pageContext.getOut().print_(self.send())
             return self.SKIP_BODY
@@ -66,9 +73,11 @@ class BasicTextEmailTag(CustomTagSupport):
 # from java.lang.reflect.Method import Method
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.BasicTextEmailHelperFactory import BasicTextEmailHelperFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from admin.taghelpers.BasicTextEmailHelperFactory import BasicTextEmailHelperFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -27,9 +27,12 @@ class StoreFrontStatisticsTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.getCommand() is not None:
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                if self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     self.setName("Validation StoreFrontStatistics View")
                     self.setObjectFile("views.admin.storefront.statistics.ValidationStoreFrontStatisticsView")
                 else:
@@ -43,7 +46,8 @@ class StoreFrontStatisticsTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

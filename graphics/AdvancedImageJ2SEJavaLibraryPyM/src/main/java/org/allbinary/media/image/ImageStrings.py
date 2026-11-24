@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageStrings:
@@ -33,5 +34,8 @@ class ImageStrings:
         return ImageStrings.instance
 
 
-ImageStrings.instance = ImageStrings()
+def _ImageStrings_instance() -> object:
+    return ImageStrings()
+
+lazy_static(ImageStrings, "instance", _ImageStrings_instance)
 

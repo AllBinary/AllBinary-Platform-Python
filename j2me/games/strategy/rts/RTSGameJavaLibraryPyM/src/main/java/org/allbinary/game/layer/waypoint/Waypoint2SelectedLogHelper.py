@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.waypoint.Waypoint2LogHelper import Waypoint2LogHelper
 
 
@@ -22,6 +23,10 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     instanceC: Waypoint2SelectedLogHelper = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.math.PositionStrings import PositionStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.positionStrings: PositionStrings = PositionStrings.getInstance()
@@ -46,6 +51,8 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def initRange(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, closeRange: int, sensorRange: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.CLOSE_RANGE)
@@ -56,6 +63,10 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processPossibleTarget(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase, layerInterface: PathFindingLayerInterface, anotherTargetDistance: int, isShorterThanCurrentTargetDistance: bool, isCurrentTargetDestroyed: bool) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if waypointBehaviorBase.isWaypointListEmptyOrOnlyTargets() and waypointBehaviorBase.isInSensorRange(layerInterface, anotherTargetDistance):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
@@ -71,6 +82,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processSetTarget(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase, layerInterface: PathFindingLayerInterface, anotherTargetDistance: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -83,6 +97,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processPossibleTargetCloser(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase, layerInterface: PathFindingLayerInterface, anotherTargetDistance: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -95,6 +112,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def setTarget(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase, layerInterface: PathFindingLayerInterface, anotherTargetDistance: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -109,10 +129,14 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def setTargetPath(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.logUtil.putF("Target Destroyed", self, "selected: setTargetPath")
     
 
     def setTargetPathIgnoreNewPath(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" Set Path To Target: ")
@@ -123,6 +147,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processWaypoint(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase, targetLayer: PathFindingLayerInterface, size: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" Size: ")
@@ -139,6 +166,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processWaypointTracked(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, waypointBehaviorBase: WaypointBehaviorBase) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" currentPathGeographicMapCellPosition: ")
@@ -151,6 +181,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processWaypointTrackedVisit(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" Visited: ")
@@ -159,18 +192,25 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processWaypointTrackedWithoutProgress(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, reason: str) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(reason)), self, "turnTo")
     
 
     def wander(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.logUtil.putF(associatedAdvancedRTSGameLayer.getName(), self, "wander")
     
 
     def targetDestroyed(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" Target Destroyed")), self, "selected: processTargeting")
     
 
     def processTargeting(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, dx: int, dy: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -183,6 +223,8 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def processTargetingNonWayPoint(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, dx: int, dy: int) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" Targeting Non Waypoint ")
@@ -195,6 +237,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def removeWaypoint(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, unitWaypointBehavior2: WaypointBehaviorBase, waypointLayer: PathFindingLayerInterface, reason: str) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -207,6 +252,10 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def removeWaypointList(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, unitWaypointBehavior2: WaypointBehaviorBase, list_: BasicArrayList) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(self.commonSeps.SPACE)
@@ -217,14 +266,20 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def removeWaypointClear(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" Clearing removed waypoint")), self, "selected: removeWaypoint")
     
 
     def clearTarget(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" Cleared Target")), self, "selected: clearTarget")
     
 
     def addWaypointFromUser(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface, advancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
         stringBuffer.append(" Adding Waypoint to Selected: ")
@@ -236,18 +291,23 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     
 
     def targetMovedSoRetarget(self, associatedAdvancedRTSGameLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.logUtil.putF(str(StringMaker().append(associatedAdvancedRTSGameLayer.getName()).append(" - target moved so retargeting")), self, "turnTo")
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.math.PositionStrings import PositionStrings
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.math.PositionStrings import PositionStrings
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-Waypoint2SelectedLogHelper.instanceC = Waypoint2SelectedLogHelper()
+def _Waypoint2SelectedLogHelper_instanceC() -> object:
+    return Waypoint2SelectedLogHelper()
+
+lazy_static(Waypoint2SelectedLogHelper, "instanceC", _Waypoint2SelectedLogHelper_instanceC)
 

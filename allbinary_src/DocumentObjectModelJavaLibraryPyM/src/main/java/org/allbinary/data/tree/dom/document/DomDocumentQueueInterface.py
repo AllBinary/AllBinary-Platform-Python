@@ -23,12 +23,14 @@ class DomDocumentQueueInterface:
 
     # throws Exception
     def offer(self, domDocumentMappingInterface: DomDocumentMappingInterface) -> bool:
+        from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
         raise NotImplementedError()
     
 
     # throws Exception
     def remove(self) -> DomDocumentMappingInterface:
+        from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
         raise NotImplementedError()
-from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
+# from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface import DomDocumentMappingInterface
 
 

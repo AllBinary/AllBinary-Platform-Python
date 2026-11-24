@@ -30,6 +30,6 @@ class BasicGameInputAutomationActionInterface(InputAutomationActionInterface):
     # throws Exception
     def target(self, rectangle: Rectangle) -> None:
         raise NotImplementedError()
-# from java.awt import *
+# from java.awt.Rectangle import Rectangle
 
 

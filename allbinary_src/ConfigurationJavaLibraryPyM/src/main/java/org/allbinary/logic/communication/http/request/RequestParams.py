@@ -21,6 +21,9 @@ from __future__ import annotations
 class RequestParams:
 
     def _init_fields(self) -> None:
+        from java.util.Map import Map
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.map: Map = None
@@ -31,9 +34,13 @@ class RequestParams:
         if len(args) == 0:
             self._constructor0(*args)
         elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
     def _constructor0(self) -> None:
@@ -41,29 +48,34 @@ class RequestParams:
         self.logUtil.putF("New RequestParams Size: 0", self, self.commonStrings.CONSTRUCTOR)
     
 
-    def _constructor1(self, request: HttpServletRequest) -> None:
+    def _constructor1_1(self, request: HttpServletRequest) -> None:
         self._init_fields()
         self.map = request.getParameterMap()
         self.logUtil.putF("RequestParams Size: " + str(self.getMap().keySet().size()), self, self.commonStrings.CONSTRUCTOR)
     
 
-    def _constructor1(self, pageContext: PageContext) -> None:
+    def _constructor1_2(self, pageContext: PageContext) -> None:
         self._init_fields()
         self.map = pageContext.getRequest().getParameterMap()
         self.logUtil.putF("Request Params Size: " + str(self.getMap().keySet().size()), self, self.commonStrings.CONSTRUCTOR)
     
 
     def setMap(self, map: Map) -> None:
+        from java.util.Map import Map
         self.map = map
     
 
     def getMap(self) -> Map:
+        from java.util.Map import Map
         return self.map
     
 
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.communication.http.request.RequestData import RequestData
-        from org.allbinary.logic.communication.http.request.RequestData import RequestData
+        from java.util.Set import Set
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         try:
             node: Node = document.createElement(RequestData.REQUEST)
             stringBuffer: StringMaker = StringMaker()
@@ -87,8 +99,12 @@ class RequestParams:
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         keys: Set = self.map.keySet()
         keyArray: list[object] = keys.toArray()
         size: int = len(keyArray)
@@ -109,12 +125,12 @@ class RequestParams:
 # from java.util.Set import Set
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

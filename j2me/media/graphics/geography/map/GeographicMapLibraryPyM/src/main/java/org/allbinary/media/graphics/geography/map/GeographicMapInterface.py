@@ -34,11 +34,13 @@ class GeographicMapInterface:
     
 
     def getAllBinaryTiledLayer(self) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         raise NotImplementedError()
     
 
     # throws Exception
     def getCellPositionsAt(self, layer: Layer, currentCellPositionArray: list[list[GeographicMapCellPosition]], cellPositionArray: list[list[GeographicMapCellPosition]]) -> bool:
+        from org.allbinary.layer.Layer import Layer
         raise NotImplementedError()
     
 
@@ -75,13 +77,15 @@ class GeographicMapInterface:
     
 
     def getForegroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise NotImplementedError()
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         raise NotImplementedError()
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.layer.Layer import Layer
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.layer.Layer import Layer
 
 

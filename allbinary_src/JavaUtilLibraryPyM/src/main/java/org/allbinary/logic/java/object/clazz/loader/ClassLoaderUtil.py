@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.ClassLoader import ClassLoader
 
 
 class ClassLoaderUtil:

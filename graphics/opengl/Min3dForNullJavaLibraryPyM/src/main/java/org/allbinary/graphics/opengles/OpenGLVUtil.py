@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.OpenGLVUtilBase import OpenGLVUtilBase
 
 
@@ -30,5 +31,8 @@ class OpenGLVUtil(OpenGLVUtilBase):
         return OpenGLVUtil.instance
 
 
-OpenGLVUtil.instance = OpenGLVUtil()
+def _OpenGLVUtil_instance() -> object:
+    return OpenGLVUtil()
+
+lazy_static(OpenGLVUtil, "instance", _OpenGLVUtil_instance)
 

@@ -22,6 +22,9 @@ class LazyImageRotationAnimation(RotationAnimation):
     SET_REAL_ANIMATION: str = "setRealAnimation"
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.layoutIndex: int = None
         self.instanceId: int = None
@@ -32,7 +35,17 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def __init__(self, layoutIndex: int, instanceId: int, scaleProperties: ScaleProperties, animationInterfaceFactoryInterface: BaseImageAnimationFactory, animationBehavior: AnimationBehavior) -> None:
-        from org.allbinary.animation.image.ActualRotationAnimation import ActualRotationAnimation
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+        from org.allbinary.animation.NullRotationAnimationFactory import NullRotationAnimationFactory
+        from org.allbinary.image.ImageCache import ImageCache
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.media.ScaleProperties import ScaleProperties
+        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(AngleInfo.getInstance(AngleFactory.getInstance().QUARTER_TOTAL_ANGLE), CircularIndexUtil.createInstance(4), animationBehavior)
         self._init_fields()
         self.layoutIndex = layoutIndex
@@ -50,6 +63,9 @@ class LazyImageRotationAnimation(RotationAnimation):
             
 
             def __init__(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> None:
+                from org.allbinary.math.AngleFactory import AngleFactory
+                from org.allbinary.math.AngleInfo import AngleInfo
+                from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
                 super().__init__(AngleInfo.getInstance(AngleFactory.getInstance().QUARTER_TOTAL_ANGLE), CircularIndexUtil.createInstance(4), self.animationBehavior)
                 self._init_fields()
                 self.lazyImageRotationAnimation = lazyImageRotationAnimation
@@ -64,6 +80,9 @@ class LazyImageRotationAnimation(RotationAnimation):
             
 
             def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+                from javax.microedition.lcdui.Graphics import Graphics
+                from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+                from org.allbinary.logic.communication.log.LogUtil import LogUtil
                 try:
                     ImageCacheFactory.getInstance().insertFirst(self)
                     self.lazyImageRotationAnimation.animation = self.lazyImageRotationAnimation.NULL_INDEX_ANIMATION
@@ -73,6 +92,9 @@ class LazyImageRotationAnimation(RotationAnimation):
             
 
             def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+                from javax.microedition.lcdui.Graphics import Graphics
+                from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+                from org.allbinary.logic.communication.log.LogUtil import LogUtil
                 try:
                     ImageCacheFactory.getInstance().insertFirst(self)
                     self.lazyImageRotationAnimation.animation = self.lazyImageRotationAnimation.NULL_INDEX_ANIMATION
@@ -83,6 +105,7 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def setRealAnimation(self) -> None:
+        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         try:
             animation: IndexedAnimation = self.animation
             self.animationInterfaceFactoryInterface.setInitialScale(self.scaleProperties)
@@ -97,11 +120,13 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def getAnimationBehavior(self) -> AnimationBehavior:
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         return self.animation.getAnimationBehavior()
     
 
     # throws Exception
     def set(self, gl: GL) -> None:
+        from javax.microedition.khronos.opengles.GL import GL
         self.animation.set(gl)
     
 
@@ -152,14 +177,17 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def changeBasicColor(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.animation.changeBasicColor(basicColor)
     
 
     def getBasicColorP(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.animation.getBasicColorP()
     
 
     def getChangeBasicColor(self) -> BasicColor:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         return self.animation.getChangeBasicColor()
     
 
@@ -230,6 +258,7 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         try:
             self.animation.paintXY(graphics, x, y)
         except Exception as e:
@@ -237,6 +266,7 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def paintThreedXYZ(self, graphics: Graphics, x: int, y: int, z: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         try:
             self.animation.paintThreedXYZ(graphics, x, y, z)
         except Exception as e:
@@ -244,6 +274,9 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def toString(self) -> str:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.logic.string.StringMaker import StringMaker
         commonSeps: CommonSeps = CommonSeps.getInstance()
         image: Image = self.animationInterfaceFactoryInterface.getImage()
         return str(StringMaker().append(str(super())).append(commonSeps.SPACE).append(image.getName()).append(commonSeps.SPACE).appendint(int(image.getWidth())).append(commonSeps.SPACE).appendint(int(image.getHeight())))
@@ -253,18 +286,18 @@ class LazyImageRotationAnimation(RotationAnimation):
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-from org.allbinary.animation.NullRotationAnimationFactory import NullRotationAnimationFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.image.ImageCache import ImageCache
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.media.ScaleProperties import ScaleProperties
-from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.IndexedAnimation import IndexedAnimation
+# from org.allbinary.animation.NullRotationAnimationFactory import NullRotationAnimationFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.image.ImageCache import ImageCache
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.media.ScaleProperties import ScaleProperties
+# from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
 
 

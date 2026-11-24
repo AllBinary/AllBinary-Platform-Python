@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AllBinaryMediaManagerShutdown:
@@ -24,10 +25,14 @@ class AllBinaryMediaManagerShutdown:
     # throws Exception
     @staticmethod
     def shutdown(soundsFactoryInterface: SoundsFactoryInterface) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         logUtil: LogUtil = LogUtil.getInstance()
         logUtil.putF("No Media Shutdown for Android Process", AllBinaryMediaManagerShutdown.instance, "shutdown")
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-AllBinaryMediaManagerShutdown.instance = AllBinaryMediaManagerShutdown()
+def _AllBinaryMediaManagerShutdown_instance() -> object:
+    return AllBinaryMediaManagerShutdown()
+
+lazy_static(AllBinaryMediaManagerShutdown, "instance", _AllBinaryMediaManagerShutdown_instance)
 

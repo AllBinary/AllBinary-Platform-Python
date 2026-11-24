@@ -25,9 +25,9 @@ class WeaponLayerArrayLayerCircularStaticPool:
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.MAX: int = 5
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstance(self.MAX)
-        self.WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = None
-        self.TWO_WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = None
-        self.THREE_WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = None
+        self.WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = [None] * (self.MAX * 2)
+        self.TWO_WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = [None] * (self.MAX)
+        self.THREE_WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = [None] * (self.MAX)
 
     def __init__(self) -> None:
         self._init_fields()
@@ -39,16 +39,13 @@ class WeaponLayerArrayLayerCircularStaticPool:
     
 
     def init(self) -> None:
-        WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = [None] * (self.MAX * 2)
-        TWO_WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = [None] * (self.MAX)
-        THREE_WEAPONLAYER_ARRAY: list[list[WeaponLayer]] = [None] * (self.MAX)
         for index in range(0, self.MAX):
-            WEAPONLAYER_ARRAY[index] = [None] * (1)
-            TWO_WEAPONLAYER_ARRAY[index] = [None] * (2)
-            THREE_WEAPONLAYER_ARRAY[index] = [None] * (3)
-        self.WEAPONLAYER_ARRAY = WEAPONLAYER_ARRAY
-        self.TWO_WEAPONLAYER_ARRAY = TWO_WEAPONLAYER_ARRAY
-        self.THREE_WEAPONLAYER_ARRAY = THREE_WEAPONLAYER_ARRAY
+            self.WEAPONLAYER_ARRAY[index] = [None] * (1)
+            self.TWO_WEAPONLAYER_ARRAY[index] = [None] * (2)
+            self.THREE_WEAPONLAYER_ARRAY[index] = [None] * (3)
+        self.WEAPONLAYER_ARRAY = self.WEAPONLAYER_ARRAY
+        self.TWO_WEAPONLAYER_ARRAY = self.TWO_WEAPONLAYER_ARRAY
+        self.THREE_WEAPONLAYER_ARRAY = self.THREE_WEAPONLAYER_ARRAY
     
 
     def getWeaponLayerArrays(self, size: int) -> list[list[WeaponLayer]]:

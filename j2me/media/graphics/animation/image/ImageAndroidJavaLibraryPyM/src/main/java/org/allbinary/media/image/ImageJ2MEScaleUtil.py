@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageJ2MEScaleUtil:
@@ -33,6 +34,8 @@ class ImageJ2MEScaleUtil:
     # throws Exception
     def scaleArray(self, images: list[Image], width: int, height: int) -> list[Image]:
         from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         for index in range(0, len(images)):
             image: Image = images[index]
             images[index] = ImageScaleUtil.getInstance().createImage2(GameFeatureImageCacheFactory.getInstance(), image, float(width) / 2.0, float(image.getWidth()), float(height), float(image.getHeight()), False)
@@ -42,10 +45,15 @@ class ImageJ2MEScaleUtil:
     # throws Exception
     def scale(self, image: Image, width: int, height: int) -> Image:
         from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         return ImageScaleUtil.getInstance().createImage2(GameFeatureImageCacheFactory.getInstance(), image, float(width), float(image.getWidth()), float(height), float(image.getHeight()), False)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
 
 
-ImageJ2MEScaleUtil.instance = ImageJ2MEScaleUtil()
+def _ImageJ2MEScaleUtil_instance() -> object:
+    return ImageJ2MEScaleUtil()
+
+lazy_static(ImageJ2MEScaleUtil, "instance", _ImageJ2MEScaleUtil_instance)
 

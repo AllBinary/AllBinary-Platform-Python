@@ -20,6 +20,10 @@ from __future__ import annotations
 class RaceTrackData:
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.graphics.CellPosition import CellPosition
+        from org.allbinary.logic.NullUtil import NullUtil
         self.tileSetImage: Image = NullImage.NULL_IMAGE
         self.miniTileSetImage: Image = NullImage.NULL_IMAGE
         self.cellWidth: int = 0
@@ -77,26 +81,32 @@ class RaceTrackData:
     
 
     def getOverPassGeographicMapCellPositionArray(self) -> list[CellPosition]:
+        from org.allbinary.graphics.CellPosition import CellPosition
         return self.overPassGeographicMapCellPositionArray
     
 
     def setOverPassGeographicMapCellPositionArray(self, overPassGeographicMapCellPositionArray: list[CellPosition]) -> None:
+        from org.allbinary.graphics.CellPosition import CellPosition
         self.overPassGeographicMapCellPositionArray = overPassGeographicMapCellPositionArray
     
 
     def getTileSetImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.tileSetImage
     
 
     def setTileSetImage(self, tileSetImage: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.tileSetImage = tileSetImage
     
 
     def getMiniTileSetImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return self.miniTileSetImage
     
 
     def setMiniTileSetImage(self, miniTileSetImage: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         self.miniTileSetImage = miniTileSetImage
     
 
@@ -124,7 +134,7 @@ class RaceTrackData:
         return self.id
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.logic.NullUtil import NullUtil
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScaleProperties:
@@ -32,13 +33,18 @@ class ScaleProperties:
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         return str(StringMaker().append(CommonLabels.getInstance().COLON_SEP).appendboolean(self.shouldScale).append("scaleX: ").appendfloat(self.scaleX).append("scaleY: ").appendfloat(self.scaleY).append("scaleWidth: ").appendint(self.scaleWidth).append("scaleHeight: ").appendint(self.scaleHeight))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 
-ScaleProperties.instance = ScaleProperties()
+def _ScaleProperties_instance() -> object:
+    return ScaleProperties()
+
+lazy_static(ScaleProperties, "instance", _ScaleProperties_instance)
 

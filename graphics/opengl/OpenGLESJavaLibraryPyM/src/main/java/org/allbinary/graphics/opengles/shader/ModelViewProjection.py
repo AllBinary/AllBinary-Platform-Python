@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ModelViewProjection:
@@ -30,5 +31,8 @@ class ModelViewProjection:
         return None
 
 
-ModelViewProjection.instance = ModelViewProjection()
+def _ModelViewProjection_instance() -> object:
+    return ModelViewProjection()
+
+lazy_static(ModelViewProjection, "instance", _ModelViewProjection_instance)
 

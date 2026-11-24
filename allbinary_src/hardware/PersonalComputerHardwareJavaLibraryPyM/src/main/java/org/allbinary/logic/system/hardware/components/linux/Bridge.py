@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.BridgeInterface import BridgeInterface
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 
 
-class Bridge(HardwareComponentInterface, BridgeInterface):
+class Bridge(*java_bases(HardwareComponentInterface, BridgeInterface)):
 
     def _init_fields(self) -> None:
         self.data: str = None

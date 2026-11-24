@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.image.ScaleBaseProcessor import ScaleBaseProcessor
 
 
@@ -22,6 +23,9 @@ class ScaleProcessor(ScaleBaseProcessor):
     instanceC: ScaleProcessor = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageScaleUtil: ImageScaleUtil = ImageScaleUtil.getInstance()
@@ -37,15 +41,19 @@ class ScaleProcessor(ScaleBaseProcessor):
     
 
     def update(self, originalImage: Image, originalImageArray: list[Image], ximageToShowArray: list[Image], unused: int, scaleX: float, scaleY: float, maxScaleX: float, maxScaleY: float) -> None:
+        from javax.microedition.lcdui.Image import Image
         try:
             self.imageScaleUtil.scale2(originalImage, originalImageArray, ximageToShowArray, unused, scaleX, scaleY, maxScaleX, maxScaleY)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.UPDATE, e)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-ScaleProcessor.instanceC = ScaleProcessor()
+def _ScaleProcessor_instanceC() -> object:
+    return ScaleProcessor()
+
+lazy_static(ScaleProcessor, "instanceC", _ScaleProcessor_instanceC)
 

@@ -16,12 +16,14 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NotificationUtil:
     SINGLETON: NotificationUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         self.notificationManager: NotificationManager = ResourceUtil.getInstance().getContext().getSystemService(Context.NOTIFICATION_SERVICE)
 
     def __init__(self) -> None:
@@ -35,8 +37,9 @@ class NotificationUtil:
 
     def notify(self, command: Command, resource: str, message: str) -> None:
         from org.allbinary.content.CommandUriAction import CommandUriAction
-        from org.allbinary.content.Notification import Notification
-        from org.allbinary.content.PendingIntent import PendingIntent
+        from javax.microedition.lcdui.Command import Command
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.TsUtil import TsUtil
         context: Context = ResourceUtil.getInstance().getContext()
         intent: Intent = CommandUriAction.getInstance().getIntent(command)
         integer: int = ResourceUtil.getInstance().getResourceId(resource)
@@ -45,10 +48,12 @@ class NotificationUtil:
         notification.setLatestEventInfo(context, command.getLabel(), message, pendingIntent)
         self.notificationManager.notify(TsUtil.getInstance().hashCode(command), notification)
 # from javax.microedition.lcdui.Command import Command
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.content.Context import Context
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.TsUtil import TsUtil
 
 
-NotificationUtil.SINGLETON = NotificationUtil()
+def _NotificationUtil_SINGLETON() -> object:
+    return NotificationUtil()
+
+lazy_static(NotificationUtil, "SINGLETON", _NotificationUtil_SINGLETON)
 

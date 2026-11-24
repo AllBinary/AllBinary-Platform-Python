@@ -24,6 +24,6 @@ class CustomTreeNodeInterface(MutableTreeNode):
 
     def getJPopupMenu(self) -> JPopupMenu:
         raise NotImplementedError()
-# from javax.swing import *
+# from javax.swing.JPopupMenu import JPopupMenu
 
 

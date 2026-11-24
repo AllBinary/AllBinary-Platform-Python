@@ -30,24 +30,28 @@ class UserTag(StoreValidationTransformTag):
     
 
     def setRole(self, value: str) -> None:
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
         self.role = value
         self.getPropertiesHashMap().put(UserRoleData.NAME, self.role)
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.getCommand() is not None:
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.NEW) == 0:
+                if self.getCommand().compareTo(GLOBALS2.NEW) == 0:
                     self.setName("New User View")
                     self.setObjectFile("views.admin.user.NewUserView")
                 elif self.getCommand().compareTo(self.commonStrings.INSERT) == 0 or self.getCommand().compareTo(SqlStrings.getInstance().INSERT_INTO) == 0:
                     self.setName("Add Validation User View")
                     self.setObjectFile("views.admin.user.AddValidationUserView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     self.setName("Validation User View")
                     self.setObjectFile("views.admin.user.ViewValidationUserView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.EDIT) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.EDIT) == 0:
                     self.setName("Validation User View")
                     self.setObjectFile("views.admin.user.EditValidationUserView")
                 elif self.getCommand().compareTo(self.commonStrings.UPDATE) == 0 or self.getCommand().compareTo(SqlStrings.getInstance().UPDATE) == 0:
@@ -56,9 +60,9 @@ class UserTag(StoreValidationTransformTag):
                 elif self.getCommand().compareTo(self.commonStrings.DELETE) == 0:
                     self.setName("Delete Validation User View")
                     self.setObjectFile("views.admin.user.DeleteValidationUserView")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.BACKUP) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.BACKUP) == 0:
                     raise Exception("View not implemented")
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.RESTORE) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.RESTORE) == 0:
                     raise Exception("View not implemented")
                 elif self.getCommand().compareTo(self.commonStrings.DROP) == 0:
                     raise Exception("View not implemented")
@@ -72,8 +76,9 @@ class UserTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.business.user.role.UserRoleData import UserRoleData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.business.user.role.UserRoleData import UserRoleData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

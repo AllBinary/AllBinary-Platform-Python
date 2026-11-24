@@ -27,7 +27,6 @@ class Line:
     
 
     def __init__(self, p1: GPoint, p2: GPoint) -> None:
-        from org.allbinary.graphics.PointFactory import PointFactory
         self._init_fields()
         self.p1 = PointFactory.getInstance().ZERO_ZERO
         self.p2 = self.p1

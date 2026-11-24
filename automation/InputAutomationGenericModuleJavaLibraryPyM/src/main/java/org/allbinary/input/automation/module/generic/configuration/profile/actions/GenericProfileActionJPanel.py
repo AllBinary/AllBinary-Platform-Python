@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class GenericProfileActionJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.genericProfileAction: GenericProfileAction = None
         self.genericProfileActionScriptJPanel: GenericProfileActionScriptJPanel = None
@@ -39,6 +41,8 @@ class GenericProfileActionJPanel(JPanel):
     
 
     def updateProfileActionUI(self) -> None:
+        from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
         self.blankProfileActionScriptJPanel.removeAll()
         genericProfileActionScriptJPanel: GenericProfileActionScriptJPanel = GenericProfileActionScriptJPanel()
         JTreeInterfaceFactory.getInstance().set(genericProfileActionScriptJPanel)
@@ -46,8 +50,8 @@ class GenericProfileActionJPanel(JPanel):
         self.getGenericProfileActionScriptJPanel().setGenericProfileActionScript(self.getGenericProfileAction().getGenericProfileActionScript())
         self.getGenericProfileActionScriptJPanel().updateJTree()
         layout: GroupLayout = self.blankProfileActionScriptJPanel.getLayout()
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 395, Short.MAX_VALUE).addComponent(self.getGenericProfileActionScriptJPanel(), javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 256, Short.MAX_VALUE).addComponent(self.getGenericProfileActionScriptJPanel(), javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 395, Short.MAX_VALUE).addComponent(self.getGenericProfileActionScriptJPanel(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 256, Short.MAX_VALUE).addComponent(self.getGenericProfileActionScriptJPanel(), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         self.logUtil.putF("Updated UI", self, "updateUI")
     
 
@@ -60,29 +64,16 @@ class GenericProfileActionJPanel(JPanel):
     
 
     def getGenericProfileActionScriptJPanel(self) -> GenericProfileActionScriptJPanel:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
         return self.genericProfileActionScriptJPanel
     
 
     def setGenericProfileActionScriptJPanel(self, genericProfileActionScriptJPanel: GenericProfileActionScriptJPanel) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
         self.genericProfileActionScriptJPanel = genericProfileActionScriptJPanel
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.JScrollPane import JScrollPane
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.JPanel import JPanel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.JLabel import JLabel
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.JButton import JButton
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.JButton import JButton
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.JButton import JButton
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.ActionListener import ActionListener
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.ActionListener import ActionListener
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.ActionListener import ActionListener
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GroupLayout import GroupLayout
         self.genericProfileActionScriptJScrollPane = JScrollPane()
         self.blankProfileActionScriptJPanel = JPanel()
         self.ifJLabel = JLabel()
@@ -95,8 +86,8 @@ class GenericProfileActionJPanel(JPanel):
         self.blankProfileActionScriptJPanel.setMinimumSize(Dimension(400, 200))
         blankProfileActionScriptJPanelLayout: GroupLayout = GroupLayout(self.blankProfileActionScriptJPanel)
         self.blankProfileActionScriptJPanel.setLayout(blankProfileActionScriptJPanelLayout)
-        blankProfileActionScriptJPanelLayout.setHorizontalGroup(blankProfileActionScriptJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 9996, Short.MAX_VALUE))
-        blankProfileActionScriptJPanelLayout.setVerticalGroup(blankProfileActionScriptJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 9967, Short.MAX_VALUE))
+        blankProfileActionScriptJPanelLayout.setHorizontalGroup(blankProfileActionScriptJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 9996, Short.MAX_VALUE))
+        blankProfileActionScriptJPanelLayout.setVerticalGroup(blankProfileActionScriptJPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 9967, Short.MAX_VALUE))
         self.genericProfileActionScriptJScrollPane.setViewportView(self.blankProfileActionScriptJPanel)
         self.ifJLabel.setText("Conditions:")
         self.newColorAtJButton.setText("Color Range At")
@@ -122,32 +113,46 @@ class GenericProfileActionJPanel(JPanel):
 ))
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.ifJLabel).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newColorAtJButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newTimeIntervalJButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newAlwaysJButton).addContainerGap(61, Short.MAX_VALUE)).addComponent(self.genericProfileActionScriptJScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.ifJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.newColorAtJButton).addComponent(self.newTimeIntervalJButton).addComponent(self.newAlwaysJButton)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.genericProfileActionScriptJScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.ifJLabel).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newColorAtJButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newTimeIntervalJButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newAlwaysJButton).addContainerGap(61, Short.MAX_VALUE)).addComponent(self.genericProfileActionScriptJScrollPane, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.ifJLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE).addComponent(self.newColorAtJButton).addComponent(self.newTimeIntervalJButton).addComponent(self.newAlwaysJButton)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.genericProfileActionScriptJScrollPane, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)))
     
 
     def newTimeIntervalJButtonActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+        from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptCondition import TimeIntervalActionScriptCondition
         self.logUtil.putF("New Time Interval Action Condition", self, "newTimeIntervalJButtonActionPerformed")
         self.getGenericProfileAction().getGenericProfileActionScript().addCondition(TimeIntervalActionScriptCondition())
         self.updateProfileActionUI()
     
 
     def newAlwaysJButtonActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptCondition import AlwaysActionScriptCondition
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
         self.logUtil.putF("New EveryTime Action Condition", self, "newEveryTimeJButtonActionPerformed")
         self.getGenericProfileAction().getGenericProfileActionScript().addCondition(AlwaysActionScriptCondition())
         self.updateProfileActionUI()
     
 
     def newColorAtJButtonActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptCondition import ColorAtActionScriptCondition
+        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
         self.logUtil.putF("New Color At Action Condition", self, "newColorAtJButtonActionPerformed")
         self.getGenericProfileAction().getGenericProfileActionScript().addCondition(ColorAtActionScriptCondition())
         self.updateProfileActionUI()
-from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
-from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptCondition import AlwaysActionScriptCondition
-from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptCondition import ColorAtActionScriptCondition
-from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
-from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptCondition import TimeIntervalActionScriptCondition
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.input.automation.actions.script.JTreeInterfaceFactory import JTreeInterfaceFactory
+# from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptCondition import AlwaysActionScriptCondition
+# from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptCondition import ColorAtActionScriptCondition
+# from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
+# from org.allbinary.input.automation.actions.script.condition.TimeIntervalActionScriptCondition import TimeIntervalActionScriptCondition
+# from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from java.awt.Dimension import Dimension
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JScrollPane import JScrollPane
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

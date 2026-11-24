@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class JavaHelpUtil:
     instance: JavaHelpUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.point: Point = Point(0, 0)
         self.dimension: Dimension = Dimension(640, 480)
@@ -37,7 +40,9 @@ class JavaHelpUtil:
         self._init_fields()
     
 
-    def getHelpSet(self, filePath: str) -> HelpSet:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getHelpSet_j1_1(self, filePath: str) -> HelpSet:
+        from java.net.URL import URL
         try:
             helpSetURI: URI = File(filePath).toURI()
             helpSetURL: URL = helpSetURI.toURL()
@@ -47,17 +52,24 @@ class JavaHelpUtil:
             return None
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getHelpSet(self, url: URL) -> HelpSet:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getHelpSet_j1_2(self, url: URL) -> HelpSet:
+        from java.net.URL import URL
         try:
             return HelpSet(None, url)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, JavaHelpUtil.getInstance(), "set", e)
             return None
+
+    def getHelpSet(self, *args):
+        if len(args) == 1 and True and (args[0] is None or isinstance(args[0], str)):
+            return self.getHelpSet_j1_1(*args)
+        if len(args) == 1:
+            return self.getHelpSet_j1_2(*args)
+        return getattr(self, "getHelpSet_j" + str(len(args)))(*args)
     
 
     def show(self, helpSet: HelpSet) -> None:
-        from org.allbinary.logic.java.help.DisplayHelpFromSource import DisplayHelpFromSource
         try:
             helpBroker: HelpBroker = helpSet.createHelpBroker()
             helpBroker.setLocation(self.point)
@@ -75,7 +87,8 @@ class JavaHelpUtil:
             javaHelpUtil.show(javaHelpUtil.getHelpSet("G:/mnt/bc/mydev/working/automation/InputAutomationJavaApplication/AllBinaryInputAutomationHelp/AllBinaryInputAutomation.hs"))
         except Exception as e:
             pass
-# from java.awt import *
+# from java.awt.Point import Point
+# from java.awt.Dimension import Dimension
 # from java.awt.event.ActionEvent import ActionEvent
 # from java.io.File import File
 # from java.net.URI import URI
@@ -83,13 +96,13 @@ class JavaHelpUtil:
 # from javax.help.CSH import CSH
 # from javax.help.HelpBroker import HelpBroker
 # from javax.help.HelpSet import HelpSet
-# from javax.swing import *
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.java.help.Point import Point
-from org.allbinary.logic.java.help.Dimension import Dimension
-from org.allbinary.logic.java.help.JLabel import JLabel
+# from javax.swing.JLabel import JLabel
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-JavaHelpUtil.instance = JavaHelpUtil()
+def _JavaHelpUtil_instance() -> object:
+    return JavaHelpUtil()
+
+lazy_static(JavaHelpUtil, "instance", _JavaHelpUtil_instance)
 

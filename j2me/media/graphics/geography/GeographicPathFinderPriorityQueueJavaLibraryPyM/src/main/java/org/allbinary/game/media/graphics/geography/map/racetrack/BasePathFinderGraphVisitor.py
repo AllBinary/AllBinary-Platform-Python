@@ -22,6 +22,7 @@ from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorBa
 class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.geographicMapInterface: BasicGeographicMap = None
         self.edgeMinimum: int = None
         self.minPathWeight: int = None
@@ -29,6 +30,7 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, edgeMinimum: int, minPathWeight: int, maxPathWeight: int) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         super().__init__()
         self._init_fields()
         self.geographicMapInterface = geographicMapInterface
@@ -39,11 +41,14 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
 
     # throws Exception
     def visit(self, graph: object, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         pass
     
 
     # throws Exception
     def fixPath(self, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList, pathList: BasicArrayList) -> None:
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         startPathFindingNode: PathFindingNode = None
         for index in range(startPathFindingNodeList.size() - 1, 0 - 1, -1):
             startPathFindingNode = startPathFindingNodeList.get(index)
@@ -56,10 +61,11 @@ class BasePathFinderGraphVisitor(PathFinderGraphVisitorBase):
     
 
     def getInvalidReason(self, graphPath: object) -> str:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().EMPTY_STRING
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

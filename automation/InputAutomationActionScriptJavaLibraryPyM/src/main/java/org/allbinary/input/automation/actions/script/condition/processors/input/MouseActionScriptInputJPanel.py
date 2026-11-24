@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.actions.script.condition.processors.input.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class MouseActionScriptInputJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.mouseActionScriptInputInterface: MouseActionScriptInputInterface = None
@@ -44,7 +46,9 @@ class MouseActionScriptInputJPanel(JPanel):
     
 
     def __init__(self, mouseActionScriptInputInterface: MouseActionScriptInputInterface) -> None:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.DefaultComboBoxModel import DefaultComboBoxModel
+        from org.allbinary.input.automation.robot.InputRobot import InputRobot
+        from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
+        from org.allbinary.string.CommonLabels import CommonLabels
         super().__init__()
         self._init_fields()
         self.logUtil.putF(CommonLabels.getInstance().START + mouseActionScriptInputInterface, self, self.commonStrings.CONSTRUCTOR)
@@ -77,6 +81,8 @@ class MouseActionScriptInputJPanel(JPanel):
 
     # throws Exception
     def updateInputType(self) -> None:
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         comboBoxModel: ComboBoxModel = self.inputAutomationTypeJComboBox.getModel()
         selectedItem: str = comboBoxModel.getSelectedItem()
         if not StringValidationUtil.getInstance().isEmpty(selectedItem):
@@ -85,6 +91,7 @@ class MouseActionScriptInputJPanel(JPanel):
 
     # throws Exception
     def update(self) -> None:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self.updateInputType()
         self.mouseActionScriptInputInterface.setTime(str(self.mouseDelayJTextField.getText()))
         self.logUtil.putF("Button State: " + str(self.mouseActionScriptInputInterface.getButtonClicks()), self, "update")
@@ -122,32 +129,7 @@ class MouseActionScriptInputJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JDialog import JDialog
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JCheckBox import JCheckBox
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JCheckBox import JCheckBox
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JComboBox import JComboBox
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.processors.input.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Insets import Insets
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.actions.script.condition.processors.input.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.processors.input.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.processors.input.GroupLayout import GroupLayout
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.mouseActionJDialog = JDialog()
         self.titleJLabel = JLabel()
         self.okJButton = JButton()
@@ -177,10 +159,10 @@ class MouseActionScriptInputJPanel(JPanel):
         self.jLabel2.setText("Buttons:")
         self.jLabel3.setText("Move To:")
         self.button1JCheckBox.setText(CommonPhoneStrings.getInstance().ONE)
-        self.button1JCheckBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.button1JCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.button1JCheckBox.setMargin(Insets(0, 0, 0, 0))
         self.button2JCheckBox.setText(CommonPhoneStrings.getInstance().TWO)
-        self.button2JCheckBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0))
+        self.button2JCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.button2JCheckBox.setMargin(Insets(0, 0, 0, 0))
         self.button2JCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -197,8 +179,8 @@ class MouseActionScriptInputJPanel(JPanel):
         self.mouseDelayJTextField.setText("100")
         mouseActionJDialogLayout: GroupLayout = GroupLayout(self.mouseActionJDialog.getContentPane())
         self.mouseActionJDialog.getContentPane().setLayout(mouseActionJDialogLayout)
-        mouseActionJDialogLayout.setHorizontalGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addContainerGap().addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.inputTypeJLabel).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mouseActionJDialogLayout.createSequentialGroup().addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mouseActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel2).addGap(25, 25, 25)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.jLabel3).addComponent(self.jLabel6)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))).addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.mouseDelayJTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addGap(45, 45, 45)).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mouseActionJDialogLayout.createSequentialGroup().addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.inputAutomationTypeJComboBox, 0, 154, Short.MAX_VALUE)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.button1JCheckBox).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.button2JCheckBox)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.okJButton)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel4).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE).addComponent(self.mouseXJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel5).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.mouseYJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))))).addContainerGap()))
-        mouseActionJDialogLayout.setVerticalGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.inputTypeJLabel).addComponent(self.inputAutomationTypeJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE).addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.button1JCheckBox).addComponent(self.button2JCheckBox))).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel6).addComponent(self.mouseDelayJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel3).addComponent(self.jLabel4).addComponent(self.jLabel5).addComponent(self.mouseYJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(self.mouseXJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.okJButton).addContainerGap()))
+        mouseActionJDialogLayout.setHorizontalGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addContainerGap().addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.inputTypeJLabel).addGroup(GroupLayout.Alignment.TRAILING, mouseActionJDialogLayout.createSequentialGroup().addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, mouseActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel2).addGap(25, 25, 25)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.jLabel3).addComponent(self.jLabel6)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.mouseDelayJTextField, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addGap(45, 45, 45)).addGroup(GroupLayout.Alignment.TRAILING, mouseActionJDialogLayout.createSequentialGroup().addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.inputAutomationTypeJComboBox, 0, 154, Short.MAX_VALUE)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.button1JCheckBox).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.button2JCheckBox)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.TRAILING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.okJButton)).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel4).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE).addComponent(self.mouseXJTextField, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel5).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.mouseYJTextField, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))))).addContainerGap()))
+        mouseActionJDialogLayout.setVerticalGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.inputTypeJLabel).addComponent(self.inputAutomationTypeJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.jLabel2, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.button1JCheckBox).addComponent(self.button2JCheckBox))).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel6).addComponent(self.mouseDelayJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel3).addComponent(self.jLabel4).addComponent(self.jLabel5).addComponent(self.mouseYJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.mouseXJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.mouseActionJButton.setText("Edit")
         self.mouseActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
@@ -210,8 +192,8 @@ class MouseActionScriptInputJPanel(JPanel):
         self.jLabel1.setText("Mouse:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE).addComponent(self.mouseActionJButton)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.mouseActionJButton)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE).addComponent(self.mouseActionJButton)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.mouseActionJButton)))
     
 
     def button2JCheckBoxActionPerformed(self, evt: ActionEvent) -> None:
@@ -229,14 +211,28 @@ class MouseActionScriptInputJPanel(JPanel):
     def mouseActionJButtonActionPerformed(self, evt: ActionEvent) -> None:
         self.getMouseActionJDialog().setVisible(True)
 # from java.awt.event.InputEvent import InputEvent
-# from javax.swing import *
-from org.allbinary.input.automation.robot.InputRobot import InputRobot
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonStrings import CommonStrings
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from javax.swing.ComboBoxModel import ComboBoxModel
+# from org.allbinary.input.automation.robot.InputRobot import InputRobot
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.Insets import Insets
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.BorderFactory import BorderFactory
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JCheckBox import JCheckBox
+# from javax.swing.JComboBox import JComboBox
+# from javax.swing.JDialog import JDialog
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JTextField import JTextField
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

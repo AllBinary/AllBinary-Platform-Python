@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.module.game.MeteredGameObject import MeteredGameObject
 from org.allbinary.input.automation.module.game.HitPointGameObjectInterface import HitPointGameObjectInterface
 
 
-class HitPointGameObject(MeteredGameObject, HitPointGameObjectInterface):
+class HitPointGameObject(*java_bases(MeteredGameObject, HitPointGameObjectInterface)):
 
     def _init_fields(self) -> None:
         self.damaged: bool = False
@@ -66,6 +67,8 @@ class HitPointGameObject(MeteredGameObject, HitPointGameObjectInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.HP_LABEL)
@@ -81,7 +84,7 @@ class HitPointGameObject(MeteredGameObject, HitPointGameObjectInterface):
     def __str__(self) -> str:
         return self.toString()
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

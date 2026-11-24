@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
+from org.allbinary.canvas.Processor import Processor
 from org.allbinary.image.ImageCacheBase import ImageCacheBase
 
 
@@ -38,6 +40,8 @@ class ImageCache(ImageCacheBase):
         
 
         def process(self) -> None:
+            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
             progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
             progressCanvas.endIfPaintedSinceStart()
     class HTMLEndProcessor(Processor):
@@ -47,7 +51,8 @@ class ImageCache(ImageCacheBase):
         
 
         def process(self) -> None:
-            from org.allbinary.image.NotHTMLEndProcessor import NotHTMLEndProcessor
+            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+            from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
             size: int = self.gdResources.currentLayoutRequiredTotal
             if size == 0:
                 progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -55,7 +60,7 @@ class ImageCache(ImageCacheBase):
             elif self.totalLoaded > int(size / 12):
                 progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
                 progressCanvas.endIfPaintedSinceStart()
-                self.endProcessor = NotHTMLEndProcessor()
+                self.endProcessor = ImageCache.NotHTMLEndProcessor()
     class FirstProcessor(Processor):
 
         def __init__(self) -> None:
@@ -66,6 +71,17 @@ class ImageCache(ImageCacheBase):
             self.firstProcess()
 
     def _init_fields(self) -> None:
+        from org.allbinary.TsUtil import TsUtil
+        from org.allbinary.canvas.GameGlobalsFactory import GameGlobalsFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.game.gd.resource.GDResources import GDResources
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.thread.BaseImageLoadingProcessor import BaseImageLoadingProcessor
+        from org.allbinary.thread.ConcurrentImageLoadingProcessor import ConcurrentImageLoadingProcessor
+        from org.allbinary.thread.SynchObject import SynchObject
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.concurrentImageLoadingProcessor: BaseImageLoadingProcessor = ConcurrentImageLoadingProcessor(self)
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -93,17 +109,16 @@ class ImageCache(ImageCacheBase):
     
 
     def firstProcess(self) -> None:
-        from org.allbinary.image.NotHTMLProcessor import NotHTMLProcessor
-        from org.allbinary.image.NotHTMLEndProcessor import NotHTMLEndProcessor
-        from org.allbinary.image.HTMLEndProcessor import HTMLEndProcessor
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         logUtil: LogUtil = LogUtil.getInstance()
         isHTML: bool = J2MEUtil.isHTML()
         if isHTML:
             self.processor = Processor.getInstance()
-            self.endProcessor = HTMLEndProcessor()
+            self.endProcessor = ImageCache.HTMLEndProcessor()
         else:
-            self.processor = NotHTMLProcessor()
-            self.endProcessor = NotHTMLEndProcessor()
+            self.processor = ImageCache.NotHTMLProcessor()
+            self.endProcessor = ImageCache.NotHTMLEndProcessor()
             try:
                 self.runTask()
             except Exception as e:
@@ -116,6 +131,8 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def waitForLoadNow(self) -> None:
+        from org.allbinary.game.canvas.ABToGBUtil import ABToGBUtil
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         if self.firstTime:
             abToGBUtil: ABToGBUtil = ABToGBUtil.getInstance()
             abCanvas: AllBinaryGameCanvas = abToGBUtil.abCanvas
@@ -126,6 +143,11 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def loadImageForAnimation(self) -> None:
+        from org.allbinary.J2MEUtil import J2MEUtil
+        from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         lazyImageRotationAnimation: LazyImageRotationAnimation = None
         with self._lock:  # synchronized (self.lock)
             if self.loadNowList.isEmpty():
@@ -182,6 +204,7 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def loadRemainingAnimations(self) -> None:
+        from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
         while not self.loadAfterList.isEmpty() or not self.loadNowList.isEmpty():
             while not self.loadNowList.isEmpty():
                 self.loadImageForAnimation()
@@ -195,6 +218,8 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def loadImageForLazyAnimation(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> bool:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
         image: Image = lazyImageRotationAnimation.animationInterfaceFactoryInterface.getImage()
         if self.loadImage(image):
             lazyImageRotationAnimation.setRealAnimation()
@@ -204,6 +229,7 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def loadNextImage(self) -> None:
+        from javax.microedition.lcdui.Image import Image
         image: Image = None
         with self._lock:  # synchronized (self.lock)
             if self.loadList.size() == 0:
@@ -214,6 +240,7 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def loadImage(self, image: Image) -> bool:
+        from javax.microedition.lcdui.Image import Image
         if image.isReady():
             return True
         else:
@@ -235,12 +262,14 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def init(self, image: Image, image2: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         image.init(image2.getImage())
     
 
     # throws Exception
     def creatImage(self, key: str) -> Image:
-        from org.allbinary.image.ImageFactory import ImageFactory
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
         inputStream: InputStream = self.resourceUtil.getResourceAsStream(key)
         image: Image = ImageFactory.getInstance().createImageFromInputStream(inputStream)
         image.setName(key)
@@ -249,6 +278,8 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def get(self, caller: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         foundIndex: int = self.getIndexWH(width, height)
         image: Image = self.getFromAvailable(foundIndex, width, height)
         if image == NullImage.NULL_IMAGE:
@@ -269,6 +300,12 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def getWithKey(self, key: object) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.system.Memory import Memory
         image: Image = self.getImage(key)
         if image == NullImage.NULL_IMAGE:
             inputStream: InputStream = None
@@ -287,6 +324,9 @@ class ImageCache(ImageCacheBase):
     
 
     def getIndex(self, key: object) -> int:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.game.gd.resource.GDResources import GDResources
+        from org.allbinary.logic.string.StringUtil import StringUtil
         gdResources: GDResources = GDResources.getInstance()
         resourceStringArray: list[str] = gdResources.resourceStringArray
         size: int = len(resourceStringArray)
@@ -299,6 +339,9 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def createImageFromInputStream(self, key: object, inputStream: InputStream) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.game.gd.resource.GDLazyResources import GDLazyResources
         gdLazyResources: GDLazyResources = GDLazyResources.getInstance()
         resourceStringArray: list[str] = gdLazyResources.requiredResourcesBeforeLoadingArray
         size: int = len(resourceStringArray)
@@ -317,10 +360,14 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def createImageLater(self, key: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return Image.createImageLater(key, width, height)
     
 
     def getAssociated(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> BasicArrayList:
+        from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = BasicArrayListD()
         with self._lock:  # synchronized (self.lock)
             lazyImageRotationAnimation2: LazyImageRotationAnimation = None
@@ -336,12 +383,14 @@ class ImageCache(ImageCacheBase):
     
 
     def add(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> None:
+        from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
         with self._lock:  # synchronized (self.lock)
             self.loadAfterList.add(lazyImageRotationAnimation)
     
 
     # throws Exception
     def insertFirst(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> None:
+        from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
         if self.loadNowList.contains(lazyImageRotationAnimation):
             pass
         else:
@@ -370,32 +419,33 @@ class ImageCache(ImageCacheBase):
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.J2MEUtil import J2MEUtil
-from org.allbinary.TsUtil import TsUtil
-from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
-from org.allbinary.canvas.GameGlobalsFactory import GameGlobalsFactory
-from org.allbinary.canvas.Processor import Processor
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.game.canvas.ABToGBUtil import ABToGBUtil
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.game.gd.resource.GDLazyResources import GDLazyResources
-from org.allbinary.game.gd.resource.GDResources import GDResources
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
-from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.system.Memory import Memory
-from org.allbinary.thread.BaseImageLoadingProcessor import BaseImageLoadingProcessor
-from org.allbinary.thread.ConcurrentImageLoadingProcessor import ConcurrentImageLoadingProcessor
-from org.allbinary.thread.SynchObject import SynchObject
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
-from org.allbinary.image.FirstProcessor import FirstProcessor
+# from org.allbinary.J2MEUtil import J2MEUtil
+# from org.allbinary.TsUtil import TsUtil
+# from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
+# from org.allbinary.canvas.GameGlobalsFactory import GameGlobalsFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.game.canvas.ABToGBUtil import ABToGBUtil
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.game.gd.resource.GDLazyResources import GDLazyResources
+# from org.allbinary.game.gd.resource.GDResources import GDResources
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
+# from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.system.Memory import Memory
+# from org.allbinary.thread.BaseImageLoadingProcessor import BaseImageLoadingProcessor
+# from org.allbinary.thread.ConcurrentImageLoadingProcessor import ConcurrentImageLoadingProcessor
+# from org.allbinary.thread.SynchObject import SynchObject
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
 
 
-ImageCache.NULL_IMAGE_CACHE = ImageCache()
+def _ImageCache_NULL_IMAGE_CACHE() -> object:
+    return ImageCache()
+
+lazy_static(ImageCache, "NULL_IMAGE_CACHE", _ImageCache_NULL_IMAGE_CACHE)
 

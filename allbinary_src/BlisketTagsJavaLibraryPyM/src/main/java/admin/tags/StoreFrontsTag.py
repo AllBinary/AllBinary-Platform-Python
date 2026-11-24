@@ -21,10 +21,13 @@ from admin.tags.TableTag import TableTag
 class StoreFrontsTag(TableTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.StoreFrontsHelperFactory import StoreFrontsHelperFactory
+        from admin.taghelpers.StoreFrontsRequestHelperFactory import StoreFrontsRequestHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(StoreFrontsHelperFactory())
@@ -33,6 +36,9 @@ class StoreFrontsTag(TableTag):
 
     # throws LicensingException
     def generateSelect(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             method: Method = type(anyType).getMethod("generateSelect", None)
@@ -42,13 +48,16 @@ class StoreFrontsTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to generate storefronts select"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "generateSelect()", e)
             return error
     
 
     # throws LicensingException
     def install(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagRequestHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             method: Method = type(anyType).getMethod("install", None)
@@ -58,13 +67,16 @@ class StoreFrontsTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to generate storefronts select"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "generateSelect()", e)
             return error
     
 
     # throws LicensingException
     def sendStoreCreatedEmails(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = self.getTagRequestHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)
             method: Method = type(anyType).getMethod("sendStoreCreatedEmails", None)
@@ -74,13 +86,16 @@ class StoreFrontsTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to send email"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "sendStoreCreatedEmails()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
             if self.isEnabled():
                 if self.getCommand() is not None:
@@ -107,11 +122,13 @@ class StoreFrontsTag(TableTag):
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.tagext.TagSupport import TagSupport
-from admin.taghelpers.StoreFrontsHelperFactory import StoreFrontsHelperFactory
-from admin.taghelpers.StoreFrontsRequestHelperFactory import StoreFrontsRequestHelperFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.StoreFrontsHelperFactory import StoreFrontsHelperFactory
+# from admin.taghelpers.StoreFrontsRequestHelperFactory import StoreFrontsRequestHelperFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

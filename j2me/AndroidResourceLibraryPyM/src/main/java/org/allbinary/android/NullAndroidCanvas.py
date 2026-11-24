@@ -15,12 +15,25 @@
 
 from __future__ import annotations
 
-from android.graphics.Canvas import Canvas
-from android.media.MediaPlayer import MediaPlayer
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullAndroidCanvas:
-    NULL_CANVAS: Canvas = Canvas()
-    NULL_MEDIA_PLAYER: MediaPlayer = MediaPlayer()
+    NULL_CANVAS: Canvas = None
+    NULL_MEDIA_PLAYER: MediaPlayer = None
+# from android.graphics.Canvas import Canvas
+# from android.media.MediaPlayer import MediaPlayer
 
+
+def _NullAndroidCanvas_NULL_CANVAS() -> object:
+    from android.graphics.Canvas import Canvas
+    return Canvas()
+
+lazy_static(NullAndroidCanvas, "NULL_CANVAS", _NullAndroidCanvas_NULL_CANVAS)
+
+def _NullAndroidCanvas_NULL_MEDIA_PLAYER() -> object:
+    from android.media.MediaPlayer import MediaPlayer
+    return MediaPlayer()
+
+lazy_static(NullAndroidCanvas, "NULL_MEDIA_PLAYER", _NullAndroidCanvas_NULL_MEDIA_PLAYER)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.GeographicMapCellPositionAreaInterface import GeographicMapCellPositionAreaInterface
 
 
@@ -23,24 +24,31 @@ class GeographicMapCellPositionAreaBase(GeographicMapCellPositionAreaInterface):
     
 
     def getNextSurroundingGeographicMapCellPosition(self) -> GeographicMapCellPosition:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         raise RuntimeError()
     
 
     def getOccupyingGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     def getSurroundingGeographicMapCellPositionList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise RuntimeError()
     
 
     # throws Exception
     def update(self, geographicMapInterface: BasicGeographicMap) -> None:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         raise RuntimeError()
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-GeographicMapCellPositionAreaBase.NULL_GEOGRPAHIC_MAP_POSITION_AREA_BASE = GeographicMapCellPositionAreaBase()
+def _GeographicMapCellPositionAreaBase_NULL_GEOGRPAHIC_MAP_POSITION_AREA_BASE() -> object:
+    return GeographicMapCellPositionAreaBase()
+
+lazy_static(GeographicMapCellPositionAreaBase, "NULL_GEOGRPAHIC_MAP_POSITION_AREA_BASE", _GeographicMapCellPositionAreaBase_NULL_GEOGRPAHIC_MAP_POSITION_AREA_BASE)
 

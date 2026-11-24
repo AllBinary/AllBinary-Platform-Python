@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -47,5 +48,8 @@ class ExceptionUtil:
         return self.NONE
 
 
-ExceptionUtil.instance = ExceptionUtil()
+def _ExceptionUtil_instance() -> object:
+    return ExceptionUtil()
+
+lazy_static(ExceptionUtil, "instance", _ExceptionUtil_instance)
 

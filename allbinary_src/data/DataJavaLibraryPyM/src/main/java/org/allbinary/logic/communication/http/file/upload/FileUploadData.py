@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileUploadData:
@@ -34,5 +35,8 @@ class FileUploadData:
         return FileUploadData.instance
 
 
-FileUploadData.instance = FileUploadData()
+def _FileUploadData_instance() -> object:
+    return FileUploadData()
+
+lazy_static(FileUploadData, "instance", _FileUploadData_instance)
 

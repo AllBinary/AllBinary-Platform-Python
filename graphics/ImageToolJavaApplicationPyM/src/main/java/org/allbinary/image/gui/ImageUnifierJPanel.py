@@ -15,13 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
-from org.allbinary.image.gui.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
-class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
+class ImageUnifierJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.ImageStrings import ImageStrings
+        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
+        from org.allbinary.media.image.ImagesRatioUtil import ImagesRatioUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageStrings: ImageStrings = ImageStrings.getInstance()
@@ -56,6 +63,7 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -63,8 +71,9 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def init(self) -> None:
-        from org.allbinary.image.gui.DefaultListModel import DefaultListModel
         from org.allbinary.image.gui.ImageIconUnique import ImageIconUnique
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         try:
             imageProcessorInput: ImageProcessorInput = self.getImageProcessorInput()
             bufferedImageArray: list[BufferedImage] = imageProcessorInput.getBufferedImageArray()
@@ -85,7 +94,8 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.INIT, e)
     
 
-    def updateImage(self) -> None:
+    def updateImage_j0(self) -> None:
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         try:
             bufferedImageArray: list[BufferedImage] = self.getImageProcessorInput().getBufferedImageArray()
             tempBufferedImageArray: list[BufferedImage] = [None] * (len(bufferedImageArray))
@@ -109,6 +119,7 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def updateImageWithFudgedImages(self) -> None:
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         try:
             bufferedImageArray: list[BufferedImage] = self.getImageProcessorInput().getBufferedImageArray()
             tempBufferedImageArray: list[BufferedImage] = [None] * (len(bufferedImageArray))
@@ -124,18 +135,21 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "updateImageWithFudgedImages", e)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def updateImage(self, tempBufferedImageArray: list[BufferedImage]) -> None:
-        from org.allbinary.image.gui.ImageIcon import ImageIcon
-        from org.allbinary.image.gui.JLabel import JLabel
+    def updateImage_j1(self, tempBufferedImageArray: list[BufferedImage]) -> None:
+        from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
         self.result = ImageUnifierUtil.getInstance().getImage(tempBufferedImageArray, self.imageUnifierProperties)
         image: Icon = ImageIcon(self.result)
         label: JLabel = JLabel(image)
         self.jScrollPane2.getViewport().add(label)
         self.updateUI()
+
+    def updateImage(self, *args):
+        return getattr(self, "updateImage_j" + str(len(args)))(*args)
     
 
     def updateOnPropertiesChange(self) -> None:
+        from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
+        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
         if self.rowsJTextField.getText().length() > 0 and self.columnsJTextField.getText().length() > 0 and self.cellWidthJTextField.getText().length() > 0 and self.cellHeightJTextField.getText().length() > 0:
             self.imageUnifierProperties = ImageUnifierProperties()
             self.imageUnifierProperties.setRows(int(self.rowsJTextField.getText()))
@@ -151,45 +165,7 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.JScrollPane import JScrollPane
-        from org.allbinary.image.gui.JList import JList
-        from org.allbinary.image.gui.JScrollPane import JScrollPane
-        from org.allbinary.image.gui.JPanel import JPanel
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JLabel import JLabel
-        from org.allbinary.image.gui.JTextField import JTextField
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.JButton import JButton
-        from org.allbinary.image.gui.Dimension import Dimension
-        from org.allbinary.image.gui.Dimension import Dimension
-        from org.allbinary.image.gui.Dimension import Dimension
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.PropertyChangeListener import PropertyChangeListener
-        from org.allbinary.image.gui.KeyAdapter import KeyAdapter
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.ActionListener import ActionListener
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         self.jScrollPane1 = JScrollPane()
         self.imageJList = JList()
@@ -313,12 +289,12 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
 ))
         jPanel1Layout: GroupLayout = GroupLayout(self.jPanel1)
         self.jPanel1.setLayout(jPanel1Layout)
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(self.jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(jPanel1Layout.createSequentialGroup().addComponent(self.upJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE).addComponent(self.downJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)).addComponent(self.fudgeItJButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addComponent(self.jLabel3).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, javax.swing.GroupLayout.PREFERRED_SIZE)).addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addComponent(self.jLabel4).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, javax.swing.GroupLayout.PREFERRED_SIZE)).addComponent(self.avgRatioJTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellRatioJTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellHeightJTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellWidthJTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.jLabel2).addComponent(self.jLabel1)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(self.rowsJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE).addGroup(jPanel1Layout.createSequentialGroup().addComponent(self.columnsJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE).addGap(1, 1, 1)))).addComponent(self.jButtonOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)).addContainerGap()))
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(self.jButton1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.upJButton).addComponent(self.downJButton)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jButtonOrder).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.fudgeItJButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel2).addComponent(self.columnsJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.rowsJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel3).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.cellWidthJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel4).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.cellHeightJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jButton2).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel5).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.cellRatioJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(7, 7, 7).addComponent(self.jLabel6).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.avgRatioJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(66, 66, 66)))
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(self.jButton1, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(jPanel1Layout.createSequentialGroup().addComponent(self.upJButton, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE).addComponent(self.downJButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)).addComponent(self.fudgeItJButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addComponent(self.jLabel3).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 99, GroupLayout.PREFERRED_SIZE)).addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addComponent(self.jLabel4).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 96, GroupLayout.PREFERRED_SIZE)).addComponent(self.avgRatioJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jLabel6, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellRatioJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jLabel5, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellHeightJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellWidthJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jButton2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.jLabel2).addComponent(self.jLabel1)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.rowsJTextField, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE).addGroup(jPanel1Layout.createSequentialGroup().addComponent(self.columnsJTextField, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE).addGap(1, 1, 1)))).addComponent(self.jButtonOrder, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)).addContainerGap()))
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(self.jButton1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.upJButton).addComponent(self.downJButton)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jButtonOrder).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.fudgeItJButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel2).addComponent(self.columnsJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.rowsJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel3).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.cellWidthJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel4).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.cellHeightJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jButton2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel5).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.cellRatioJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(7, 7, 7).addComponent(self.jLabel6).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.avgRatioJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(66, 66, 66)))
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(self.jPanel1, javax.swing.GroupLayout.Alignment.LEADING, 0, 445, Short.MAX_VALUE).addComponent(self.jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE).addComponent(self.jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)).addContainerGap()))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jScrollPane1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jScrollPane2, GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(self.jPanel1, GroupLayout.Alignment.LEADING, 0, 445, Short.MAX_VALUE).addComponent(self.jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE).addComponent(self.jScrollPane1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)).addContainerGap()))
     
 
     def jButton2ActionPerformed(self, evt: ActionEvent) -> None:
@@ -358,6 +334,11 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def jButton1ActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
         try:
             fileArray: list[File] = self.imageProcessorInput.getFiles()
             file: File = fileArray[0]
@@ -404,29 +385,47 @@ class ImageUnifierJPanel(JPanel, ImageProcessorInputCompositeInterface):
     
 
     def getImageProcessorInput(self) -> ImageProcessorInput:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         return self.imageProcessorInput
     
 
     def setImageProcessorInput(self, imageProcessorInput: ImageProcessorInput) -> None:
+        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         self.imageProcessorInput = imageProcessorInput
         self.init()
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.File import File
-# from javax.swing import *
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
-from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
-from org.allbinary.media.image.ImageStrings import ImageStrings
-from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
-from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
-from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
-from org.allbinary.media.image.ImageUtil import ImageUtil
-from org.allbinary.media.image.ImagesRatioUtil import ImagesRatioUtil
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from javax.swing.DefaultListModel import DefaultListModel
+# from javax.swing.ImageIcon import ImageIcon
+# from javax.swing.Icon import Icon
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.image.ImagePersistanceUtil import ImagePersistanceUtil
+# from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
+# from org.allbinary.media.image.ImageStrings import ImageStrings
+# from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
+# from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
+# from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
+# from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.media.image.ImagesRatioUtil import ImagesRatioUtil
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from java.awt.event.KeyAdapter import KeyAdapter
+# from java.awt.event.KeyEvent import KeyEvent
+# from java.beans.PropertyChangeEvent import PropertyChangeEvent
+# from java.beans.PropertyChangeListener import PropertyChangeListener
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JList import JList
+# from javax.swing.JScrollPane import JScrollPane
+# from javax.swing.JTextField import JTextField
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

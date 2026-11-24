@@ -28,6 +28,8 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
     # throws Exception
     @staticmethod
     def createDXY(image: Image, width: int, height: int, dx: int, dy: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> AllBinaryJ2SEImageRotationAnimationFactory:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         imageRotationAnimationFactory: AllBinaryJ2SEImageRotationAnimationFactory = AllBinaryJ2SEImageRotationAnimationFactory(image, width, height, angleIncrement, animationBehaviorFactory, resizeCanvasForRotation)
         imageRotationAnimationFactory.animationFactoryInitializationVisitor.dx = dx
         imageRotationAnimationFactory.animationFactoryInitializationVisitor.dy = dy
@@ -37,6 +39,9 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+        from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), width, height, 0, 0, animationBehaviorFactory)
         self._init_fields()
         self.angleIncrementP = angleIncrement
@@ -45,6 +50,10 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
 
     # throws Exception
     def getCanvasImage(self) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         features: Features = Features.getInstance()
         if self.resizeCanvasForRotation and not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
             return ImageCopyUtil.getInstance().createImageScale(self.getImage(), 1.44, False)
@@ -56,6 +65,12 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.AllBinaryJ2SEImageRotationAnimation import AllBinaryJ2SEImageRotationAnimation
         from org.allbinary.animation.image.AllBinaryAdjustedJ2SEImageRotationAnimation import AllBinaryAdjustedJ2SEImageRotationAnimation
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.math.AngleInfo import AngleInfo
+        from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         imageCopyUtil: ImageCopyUtil = ImageCopyUtil.getInstance()
         canvasImage: Image = self.getCanvasImage()
         scaledImage: Image = self.animationFactoryImageScaleUtil.createImage(canvasImage, self.animationFactoryInitializationVisitor.width, self.animationFactoryInitializationVisitor.height, self.scaleProperties.scaleWidth, self.scaleProperties.scaleHeight)
@@ -72,14 +87,14 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
     def getAngleIncrement(self) -> int:
         return self.angleIncrementP
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
-from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+# from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
+# from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
 
 

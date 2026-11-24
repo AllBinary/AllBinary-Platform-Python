@@ -26,13 +26,19 @@ class NotificationBuilderAPI23(NotificationBuilder):
     
 
     def build(self, context: Context, command: Command, message: str, integer: int, pendingIntent: PendingIntent) -> Parcelable:
+        from javax.microedition.lcdui.Command import Command
+        from android.app.Notification import Notification
+        from android.app.Notification.Builder import Builder
+        from android.app.PendingIntent import PendingIntent
+        from android.content.Context import Context
+        from android.os.Parcelable import Parcelable
         notification: Notification = Builder(context).setSmallIcon(int(integer)).setTicker(message).setWhen(int(time.time() * 1000)).setContentTitle(command.getLabel()).setContentText(message).setContentIntent(pendingIntent).build()
         return notification
 # from javax.microedition.lcdui.Command import Command
-from android.app.Notification import Notification
-from android.app.Notification.Builder import Builder
-from android.app.PendingIntent import PendingIntent
-from android.content.Context import Context
-from android.os.Parcelable import Parcelable
+# from android.app.Notification import Notification
+# from android.app.Notification.Builder import Builder
+# from android.app.PendingIntent import PendingIntent
+# from android.content.Context import Context
+# from android.os.Parcelable import Parcelable
 
 

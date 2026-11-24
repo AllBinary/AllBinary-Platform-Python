@@ -23,7 +23,8 @@ class TransformInfoObjectConfigGeneratorFactoryInterface:
 
     # throws Exception
     def getInstance(self, transformInfoInterface: TransformInfoInterface) -> TransformInfoObjectConfigGenerator:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         raise NotImplementedError()
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

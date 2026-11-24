@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class VectorUtil:
@@ -27,15 +28,20 @@ class VectorUtil:
     
 
     def getSize(self, anyType: object) -> int:
-        vector: list = anyType
+        from java.util.Vector import Vector
+        vector: Vector[object] = anyType
         return vector.size()
     
 
     def elementAt(self, anyType: object, index: int) -> object:
-        vector: list = anyType
+        from java.util.Vector import Vector
+        vector: Vector[object] = anyType
         return vector.elementAt(index)
 # from java.util.Vector import Vector
 
 
-VectorUtil.instance = VectorUtil()
+def _VectorUtil_instance() -> object:
+    return VectorUtil()
+
+lazy_static(VectorUtil, "instance", _VectorUtil_instance)
 

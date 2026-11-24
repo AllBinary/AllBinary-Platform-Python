@@ -23,9 +23,11 @@ class GeologicalGeographicMapCellPositionFactoryInitVisitor(GeographicMapCellPos
 
     # throws Exception
     def visit(self, tiledLayer: AllBinaryTiledLayer, cellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         geologicalGeographicMapCellPosition: GeologicalGeographicMapCellPosition = (cellPosition)
         geologicalGeographicMapCellPosition.getGeologicalResource().init()
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
 
 

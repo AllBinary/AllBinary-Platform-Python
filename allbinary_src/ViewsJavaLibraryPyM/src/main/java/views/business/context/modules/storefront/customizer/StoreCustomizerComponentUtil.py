@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class StoreCustomizerComponentUtil:
     instance: StoreCustomizerComponentUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -34,9 +36,16 @@ class StoreCustomizerComponentUtil:
     
 
     # throws Exception
-    def generate(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> str:
+    def generate_j2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> str:
         from views.business.context.modules.storefront.customizer.CustomizerUtil import CustomizerUtil
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Generating Modified Views For: " + transformInfoInterface.getName(), self, "generateModifiedViews()")
         customizerUtil: CustomizerUtil = CustomizerUtil.getInstance()
         allCustomizedViews: BasicArrayList = customizerUtil.getTransformInfoObjectConfigGroupComponentNodes(transformInfoInterface)
@@ -44,33 +53,47 @@ class StoreCustomizerComponentUtil:
         for index in range(0, size):
             nextTransformInfoInterface: TransformInfo = allCustomizedViews.get(index)
             allViewsToBeModified: BasicArrayList = customizerUtil.getTransformInfoObjectConfigComponentNodesToCustomize(transformInfoInterface, nextTransformInfoInterface)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("View or component that was modified by a Customizer: " + nextTransformInfoInterface.getName(), self, "generateModifiedViews()")
             self.generate(abeClientInformation, transformInfoInterface, allViewsToBeModified)
         return StringUtil.getInstance().EMPTY_STRING
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def generate(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, allViewsToBeModifiedVector: BasicArrayList) -> None:
+    def generate_j3(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, allViewsToBeModifiedVector: BasicArrayList) -> None:
         from views.business.context.modules.storefront.customizer.CustomizerUtil import CustomizerUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.generator.TransformGeneratorUtil import TransformGeneratorUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         customizerUtil: CustomizerUtil = CustomizerUtil.getInstance()
         size: int = allViewsToBeModifiedVector.size()
         for index in range(0, size):
             nextTransformInfoInterface: TransformInfo = allViewsToBeModifiedVector.get(index)
             specifiedTransformInfoInterface: TransformInfoInterface = customizerUtil.getTransformInfoInterfaceToCustomize(transformInfoInterface, nextTransformInfoInterface)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Retrieved: " + specifiedTransformInfoInterface.getName(), self, "generateModifiedViews()")
             TransformGeneratorUtil.getInstance().generate(abeClientInformation, nextTransformInfoInterface, specifiedTransformInfoInterface)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.generator.TransformGeneratorUtil import TransformGeneratorUtil
-from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+
+    def generate(self, *args):
+        return getattr(self, "generate_j" + str(len(args)))(*args)
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.generator.TransformGeneratorUtil import TransformGeneratorUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-StoreCustomizerComponentUtil.instance = StoreCustomizerComponentUtil()
+def _StoreCustomizerComponentUtil_instance() -> object:
+    return StoreCustomizerComponentUtil()
+
+lazy_static(StoreCustomizerComponentUtil, "instance", _StoreCustomizerComponentUtil_instance)
 

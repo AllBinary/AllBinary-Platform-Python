@@ -21,6 +21,12 @@ from org.allbinary.logic.visual.transform.TransformInterface import TransformInt
 class CustomUriTransformView(TransformInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
@@ -30,8 +36,12 @@ class CustomUriTransformView(TransformInterface):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, self.commonStrings.CONSTRUCTOR)
         self.setTransformInfoInterface(transformInfoInterface)
         self.setTransformDocumentInterface(TransformDocumentFactory.getInstance())
@@ -42,27 +52,34 @@ class CustomUriTransformView(TransformInterface):
     
 
     def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         return self.transformInfoInterface
     
 
     def setTransformInfoInterface(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self.transformInfoInterface = transformInfoInterface
     
 
     def getTransformDocumentInterface(self) -> TransformDocumentInterface:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         return self.transformDocumentInterface
     
 
     def setTransformDocumentInterface(self, transformDocumentInterface: TransformDocumentInterface) -> None:
+        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
         self.transformDocumentInterface = transformDocumentInterface
     
 
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return self.transformDocumentInterface.getDoc()
     
 
     # throws Exception
     def getDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         document: Document = self.getTransformInfoInterface().getDataDocument()
         dataNode: Node = self.getTransformDocumentInterface().getDoc().importNode(document.getFirstChild(), True)
         if dataNode is not None:
@@ -72,24 +89,30 @@ class CustomUriTransformView(TransformInterface):
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.visual.transform.TransformInfoCustomUriTransformer import TransformInfoCustomUriTransformer
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             success: str = XmlDocumentHelper.toString(self.getDoc())
             result: str = TransformInfoCustomUriTransformer(self.abeClientInformation, self.getTransformInfoInterface()).translate(success)
             return result
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
-from org.allbinary.logic.visual.transform.TransformInfoCustomUriTransformer import TransformInfoCustomUriTransformer
-from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
-from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.visual.transform.TransformInfoCustomUriTransformer import TransformInfoCustomUriTransformer
+# from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
+# from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

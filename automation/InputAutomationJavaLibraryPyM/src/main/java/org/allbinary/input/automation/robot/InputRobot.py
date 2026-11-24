@@ -22,12 +22,12 @@ class InputRobot(InputRobotInterface):
     NAME: str = "Java Robot"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.robot: Robot = None
     
 
     def __init__(self, graphicsDevice: GraphicsDevice) -> None:
-        from org.allbinary.input.automation.robot.Robot import Robot
         self._init_fields()
         self.robot = Robot(graphicsDevice)
     
@@ -41,34 +41,39 @@ class InputRobot(InputRobotInterface):
     
 
     def getMousePoint(self) -> Point:
-        from org.allbinary.input.automation.robot.MouseInfo import MouseInfo
         point: Point = MouseInfo.getPointerInfo().getLocation()
         return point
     
 
     # throws Exception
-    def mouseMoveToTarget(self, rectangle: Rectangle, x: int, y: int) -> None:
+    def mouseMoveToTarget_j3(self, rectangle: Rectangle, x: int, y: int) -> None:
+        from org.allbinary.input.automation.PointHelper import PointHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         point: Point = PointHelper.getCenterPoint(rectangle)
         self.robot.mouseMove(point.x + x, point.y + y)
         message: str = str(StringMaker().append("Moved Mouse To: x: ").appendint(int(point.x)).append(" y: ").appendint(int(point.y)).append(" in the middle of: ").append(StringUtil.getInstance().toString(rectangle)))
         self.logUtil.putF(message, self, "moveMouseToTarget")
     
 
-    def mouseMove(self, point: Point) -> None:
+    def mouseMove_j1(self, point: Point) -> None:
         self.mouseMove(point.x, point.y)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def mouseMove(self, x: int, y: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def mouseMove_j2_1(self, x: int, y: int) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self.robot.mouseMove(x, y)
         message: str = str(StringMaker().append("Moved Mouse To: x: ").appendint(x).append(" y: ").appendint(y))
         self.logUtil.putF(message, self, "moveMouse")
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def mouseMoveToTarget(self, rectangle: Rectangle) -> None:
+    def mouseMoveToTarget_j1(self, rectangle: Rectangle) -> None:
         self.mouseMoveToTarget(rectangle, 0, 0)
+
+    def mouseMoveToTarget(self, *args):
+        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
     
 
     def createScreenCapture(self, screenRect: Rectangle) -> BufferedImage:
@@ -99,9 +104,16 @@ class InputRobot(InputRobotInterface):
         self.robot.keyRelease(keycode)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def mouseMove(self, x: int, y: int) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def mouseMove_j2_2(self, x: int, y: int) -> None:
         self.robot.mouseMove(x, y)
+
+    def mouseMove(self, *args):
+        if len(args) == 2 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool):
+            return self.mouseMove_j2_1(*args)
+        if len(args) == 2:
+            return self.mouseMove_j2_2(*args)
+        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
     
 
     def mousePress(self, buttons: int) -> None:
@@ -141,12 +153,17 @@ class InputRobot(InputRobotInterface):
 
     def off(self) -> None:
         pass
-# from java.awt import *
+# from java.awt.Robot import Robot
+# from java.awt.GraphicsDevice import GraphicsDevice
+# from java.awt.MouseInfo import MouseInfo
+# from java.awt.Point import Point
+# from java.awt.Rectangle import Rectangle
+# from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
 # from javax.help.HelpSet import HelpSet
-from org.allbinary.input.automation.PointHelper import PointHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.input.automation.PointHelper import PointHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

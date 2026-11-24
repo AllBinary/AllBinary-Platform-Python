@@ -23,7 +23,8 @@ class KeyInputViewCompositeInterface(ViewCompositeInterface):
     
 
     def setKeyInputView(self, keyInputView: View) -> None:
+        from android.view.View import View
         raise NotImplementedError()
-from android.view.View import View
+# from android.view.View import View
 
 

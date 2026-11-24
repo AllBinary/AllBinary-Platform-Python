@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.CategoryInterface import CategoryInterface
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
@@ -22,17 +23,19 @@ from org.allbinary.logic.visual.transform.info.CompositeTransformInfoInterface i
 
 
 # Java interface
-class StoreThemeCategoryInterface(CategoryInterface, TableMappingInterface, ValidationInterface, CompositeTransformInfoInterface):
+class StoreThemeCategoryInterface(*java_bases(CategoryInterface, TableMappingInterface, ValidationInterface, CompositeTransformInfoInterface)):
     
 
     def addTheme(self, themeValidation: ThemeValidation) -> None:
+        from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
         raise NotImplementedError()
     
 
     def getThemes(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
 
 

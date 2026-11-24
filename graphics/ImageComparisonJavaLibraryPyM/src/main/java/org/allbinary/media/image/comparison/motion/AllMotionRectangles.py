@@ -23,12 +23,16 @@ class AllMotionRectangles(MotionRectangles):
     
 
     def __init__(self, imageComparisonResult: ImageComparisonResult) -> None:
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
         super().__init__(AllMotionRectangles.NAME, imageComparisonResult)
         self.createMotionRectangles(imageComparisonResult)
     
 
     # throws Exception
     def createMotionRectangles(self, imageComparisonInfo: ImageComparisonResult) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         vector: BasicArrayList = imageComparisonInfo.getNonMatchingPixelVector()
         size: int = vector.size()
         for index in range(0, size):
@@ -38,6 +42,8 @@ class AllMotionRectangles(MotionRectangles):
 
     # throws Exception
     def addPixelDeltaToExistingMotionRectangle(self, pixelDelta: PixelDelta) -> bool:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         vector: BasicArrayList = self.getVector()
         size: int = vector.size()
         for index in range(0, size):
@@ -56,8 +62,8 @@ class AllMotionRectangles(MotionRectangles):
 
     # throws Exception
     def addPixelDeltaToAMotionRectangle(self, pixelDelta: PixelDelta) -> None:
-        from org.allbinary.media.image.comparison.motion.Rectangle import Rectangle
         from org.allbinary.media.image.comparison.motion.MotionRectangle import MotionRectangle
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         if not self.addPixelDeltaToExistingMotionRectangle(pixelDelta):
             newRectangle: Rectangle = Rectangle(pixelDelta.getPoint().getX(), pixelDelta.getPoint().getY(), 1, 1)
             motionRectangle: MotionRectangle = MotionRectangle(newRectangle)
@@ -67,6 +73,7 @@ class AllMotionRectangles(MotionRectangles):
 
     # throws Exception
     def shouldPixelDeltaPartOfMotionRectangle(self, motionRectangle: MotionRectangle, pixelDelta: PixelDelta) -> bool:
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         isPixelLeftOfTheRectangle: bool = False
         if motionRectangle.getRectangle().y > pixelDelta.getPoint().getY():
             raise Exception("PixelAboveTheRectangle")
@@ -79,6 +86,7 @@ class AllMotionRectangles(MotionRectangles):
 
     # throws Exception
     def isPixelDeltaLikelyPartOfMotionRectangle(self, motionRectangle: MotionRectangle, pixelDelta: PixelDelta) -> bool:
+        from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
         maxX: int = motionRectangle.getRectangle().x + motionRectangle.getRectangle().width
         maxY: int = motionRectangle.getRectangle().y + motionRectangle.getRectangle().height
         horizontalDistance: int = pixelDelta.getPoint().getX() - maxX
@@ -86,10 +94,10 @@ class AllMotionRectangles(MotionRectangles):
         if horizontalDistance < self.MAX_PIXEL_DISTANCE_THRESHOLD and verticalDistance < self.MAX_PIXEL_DISTANCE_THRESHOLD:
             return True
         return False
-# from java.awt import *
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
-from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
+# from java.awt.Rectangle import Rectangle
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
+# from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
 
 

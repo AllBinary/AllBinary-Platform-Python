@@ -23,7 +23,11 @@ class AllBinaryTiledLayerFactory(AllBinaryTiledLayerFactoryInterface):
 
     # throws Exception
     def getInstance(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
-        from org.allbinary.game.layer.AllBinaryJ2METiledLayer import AllBinaryJ2METiledLayer
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackInfo import RaceTrackInfo
+        from org.allbinary.media.graphics.geography.map.racetrack.TiledLayerFactory import TiledLayerFactory
         allbinaryTiledLayer: AllBinaryTiledLayer = None
         tiledLayer: TiledLayer = TiledLayerFactory().getInstance(raceTrackData)
         allbinaryTiledLayer = AllBinaryJ2METiledLayer(raceTrackData.getId(), tiledLayer, raceTrackData.getMapArray(), int(BasicColorFactory.getInstance().RED))
@@ -33,17 +37,21 @@ class AllBinaryTiledLayerFactory(AllBinaryTiledLayerFactoryInterface):
 
     # throws Exception
     def getMiniInstance(self, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
-        from org.allbinary.game.layer.AllBinaryJ2METiledLayer import AllBinaryJ2METiledLayer
+        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
+        from org.allbinary.media.graphics.geography.map.racetrack.TiledLayerFactory import TiledLayerFactory
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         tiledLayer: TiledLayer = TiledLayerFactory().getMiniInstance(raceTrackData)
         allbinaryTiledLayer: AllBinaryTiledLayer = AllBinaryJ2METiledLayer(smallIntegerSingletonFactory.getAt(int(raceTrackData.getId()) + 100 + 1), tiledLayer, raceTrackData.getMapArray(), int(BasicColorFactory.getInstance().RED))
         allbinaryTiledLayer.setCells(raceTrackData.getMapArray())
         return allbinaryTiledLayer
 # from javax.microedition.lcdui.game.TiledLayer import TiledLayer
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackInfo import RaceTrackInfo
-from org.allbinary.media.graphics.geography.map.racetrack.TiledLayerFactory import TiledLayerFactory
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackInfo import RaceTrackInfo
+# from org.allbinary.media.graphics.geography.map.racetrack.TiledLayerFactory import TiledLayerFactory
 
 

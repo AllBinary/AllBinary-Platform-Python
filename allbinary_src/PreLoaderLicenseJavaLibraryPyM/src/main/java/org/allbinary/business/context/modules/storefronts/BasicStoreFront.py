@@ -61,7 +61,11 @@ class BasicStoreFront(BasicStoreFrontInterface):
         self._init_fields()
     
 
-    def _constructor1(self, storeHashMap: dict) -> None:
+    def _constructor1(self, storeHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
         self._init_fields()
         storeFrontData: StoreFrontData = StoreFrontData.getInstance()
         self.name = storeHashMap.get(storeFrontData.NAME)
@@ -95,12 +99,14 @@ class BasicStoreFront(BasicStoreFrontInterface):
     
 
     def getTestHtmlPath(self) -> str:
-        return org.allbinary.globals.URLGLOBALS.getTestHtmlPath() + self.getCurrentHostNamePath()
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        return URLGLOBALS.getTestHtmlPath() + self.getCurrentHostNamePath()
     
 
     def getCurrentHostName(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHostName()
         else:
             location = self.getHostName()
@@ -108,8 +114,9 @@ class BasicStoreFront(BasicStoreFrontInterface):
     
 
     def getCurrentHostNamePath(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHostNamePath()
         else:
             location = self.getHostNamePath()
@@ -117,8 +124,9 @@ class BasicStoreFront(BasicStoreFrontInterface):
     
 
     def getCurrentHomeHostName(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHomeHostName()
         else:
             location = self.getHomeHostName()
@@ -126,8 +134,9 @@ class BasicStoreFront(BasicStoreFrontInterface):
     
 
     def getCurrentHomeHostNamePath(self) -> str:
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if org.allbinary.globals.URLGLOBALS.isTestingMode():
+        if URLGLOBALS.isTestingMode():
             location = self.getTestHomeHostNamePath()
         else:
             location = self.getHomeHostNamePath()
@@ -192,6 +201,10 @@ class BasicStoreFront(BasicStoreFrontInterface):
 
     # throws Exception
     def getSubStores(self) -> BasicArrayList:
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         try:
             tokenizer: Tokenizer = Tokenizer(CommonSeps.getInstance().SEMICOLON)
             subStoreVector: BasicArrayList = tokenizer.getTokensFromString(self.subStores, BasicArrayListD())
@@ -247,12 +260,13 @@ class BasicStoreFront(BasicStoreFrontInterface):
     def getLastModified(self) -> str:
         return self.lastModified
 # from java.util.HashMap import HashMap
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
 
 

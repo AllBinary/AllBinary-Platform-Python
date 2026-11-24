@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
 
 
-class RectangleFilledAdjustedAnimation(RectangleFilledAnimation, ColorCompositeInterface):
+class RectangleFilledAdjustedAnimation(*java_bases(RectangleFilledAnimation, ColorCompositeInterface)):
 
     def _init_fields(self) -> None:
         self.offsetX: int = None

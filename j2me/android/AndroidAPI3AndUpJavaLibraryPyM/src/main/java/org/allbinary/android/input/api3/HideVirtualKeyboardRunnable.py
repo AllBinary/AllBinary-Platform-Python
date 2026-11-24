@@ -20,16 +20,26 @@ from __future__ import annotations
 class HideVirtualKeyboardRunnable(object):
 
     def _init_fields(self) -> None:
+        from android.app.Activity import Activity
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.activity: Activity = None
     
 
     def __init__(self, activity: Activity) -> None:
+        from android.app.Activity import Activity
         self._init_fields()
         self.activity = activity
     
 
     def run(self) -> None:
+        from android.content.Context import Context
+        from android.os.IBinder import IBinder
+        from android.view.View import View
+        from android.view.inputmethod.InputMethodManager import InputMethodManager
+        from org.allbinary.android.activity.ViewCompositeInterface import ViewCompositeInterface
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             inputMethodManager: InputMethodManager = self.activity.getSystemService(Context.INPUT_METHOD_SERVICE)
@@ -44,14 +54,14 @@ class HideVirtualKeyboardRunnable(object):
             inputMethodManager.hideSoftInputFromWindow(token, 0)
         except Exception as e:
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-from android.app.Activity import Activity
-from android.content.Context import Context
-from android.os.IBinder import IBinder
-from android.view.View import View
-from android.view.inputmethod.InputMethodManager import InputMethodManager
-from org.allbinary.android.activity.ViewCompositeInterface import ViewCompositeInterface
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from android.app.Activity import Activity
+# from android.content.Context import Context
+# from android.os.IBinder import IBinder
+# from android.view.View import View
+# from android.view.inputmethod.InputMethodManager import InputMethodManager
+# from org.allbinary.android.activity.ViewCompositeInterface import ViewCompositeInterface
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

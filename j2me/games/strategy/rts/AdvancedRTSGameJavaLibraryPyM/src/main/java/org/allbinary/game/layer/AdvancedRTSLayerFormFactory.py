@@ -21,12 +21,18 @@ from org.allbinary.game.input.RTSLayerFormFactory import RTSLayerFormFactory
 class AdvancedRTSLayerFormFactory(RTSLayerFormFactory):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.scrollSelectionForm: ScrollSelectionForm = None
     
 
     def __init__(self, label: str, itemArrayFactoryInterface: ItemArraySingletonFactoryInterface) -> None:
         from org.allbinary.game.layer.RTSScrollSelectionFormFactory import RTSScrollSelectionFormFactory
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.graphics.form.item.ItemArraySingletonFactoryInterface import ItemArraySingletonFactoryInterface
         super().__init__()
         self._init_fields()
         scrollSelectionForm: ScrollSelectionForm = ScrollSelectionForm.getNullScrollSelectionForm()
@@ -40,11 +46,12 @@ class AdvancedRTSLayerFormFactory(RTSLayerFormFactory):
     
 
     def getInstance(self, rtsLayer: RTSLayer) -> ScrollSelectionForm:
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         return self.scrollSelectionForm
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.graphics.form.item.ItemArraySingletonFactoryInterface import ItemArraySingletonFactoryInterface
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.graphics.form.item.ItemArraySingletonFactoryInterface import ItemArraySingletonFactoryInterface
 
 

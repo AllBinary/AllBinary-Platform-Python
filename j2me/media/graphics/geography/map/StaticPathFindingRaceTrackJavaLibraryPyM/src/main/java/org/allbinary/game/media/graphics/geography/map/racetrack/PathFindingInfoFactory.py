@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.BasePathFindingInfoFactory import BasePathFindingInfoFactory
 
 
@@ -33,20 +34,30 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
 
     # throws Exception
     def getInstancePathFindingInfo(self, geographicMapInterface: BasicGeographicMap, graphArray: list[list[int]]) -> PathFindingInfo:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
+        from org.allbinary.util.BasicArrayListS import BasicArrayListS
         commonStrings: CommonStrings = CommonStrings.getInstance()
         PreLogUtil.put(commonStrings.START, self, commonStrings.GET_INSTANCE)
         pathFindingInfo: PathFindingInfo = PathFindingInfo(PathFindingNodeCostInfoFactoryBase(), BasicArrayListS(1), BasicArrayListS(1))
         RaceTrackRoadsGeographicMapCellHistoryFactory.getInstance().init()
         self.init(geographicMapInterface, pathFindingInfo, graphArray)
         return pathFindingInfo
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
-from org.allbinary.util.BasicArrayListS import BasicArrayListS
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackRoadsGeographicMapCellHistoryFactory import RaceTrackRoadsGeographicMapCellHistoryFactory
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
+# from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
+# from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 
-PathFindingInfoFactory.instance = PathFindingInfoFactory()
+def _PathFindingInfoFactory_instance() -> object:
+    return PathFindingInfoFactory()
+
+lazy_static(PathFindingInfoFactory, "instance", _PathFindingInfoFactory_instance)
 

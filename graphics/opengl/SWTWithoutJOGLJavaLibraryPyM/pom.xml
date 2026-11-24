@@ -112,7 +112,7 @@
             <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-pluginPy</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <forceCreation>true</forceCreation>
                     <archive>

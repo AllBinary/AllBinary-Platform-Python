@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
 from org.allbinary.game.combat.destroy.DestroyableInterface import DestroyableInterface
 from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
@@ -23,7 +24,7 @@ from org.allbinary.game.layer.pickup.PickupCompositeInterface import PickupCompo
 from org.allbinary.game.layer.special.SpecialGameInputInterface import SpecialGameInputInterface
 
 
-class CollidableDestroyableDamageableLayer(CollidableCompositeLayer, DestroyableInterface, DamageableInterface, PickupCompositeInterface, SpecialGameInputInterface):
+class CollidableDestroyableDamageableLayer(*java_bases(CollidableCompositeLayer, DestroyableInterface, DamageableInterface, PickupCompositeInterface, SpecialGameInputInterface)):
     NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER: object = None
     READYFOREXPLOSION: str = "ReadyForExplosion: "
 

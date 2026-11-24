@@ -28,7 +28,7 @@ class KeySpecFactory:
     
 
     @staticmethod
-    def getInstance() -> KeySpecFactory:
+    def getInstance_j0() -> KeySpecFactory:
         return KeySpecFactory.instance
     
 
@@ -36,8 +36,7 @@ class KeySpecFactory:
         self._init_fields()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, algorithm: str, keyData: list[int]) -> KeySpec:
+    def getInstance_j2(self, algorithm: str, keyData: list[int]) -> KeySpec:
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -53,6 +52,9 @@ class KeySpecFactory:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             PreLogUtil.putOE(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             raise RuntimeError()
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.security.spec.KeySpec import KeySpec
 # from javax.crypto.spec.DESKeySpec import DESKeySpec
 # from javax.crypto.spec.DESedeKeySpec import DESedeKeySpec

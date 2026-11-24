@@ -144,13 +144,15 @@ class GL11(GL10):
         raise NotImplementedError()
     
 
-    def glClipPlanef(self, plane: int, equation: list[float], offset: int) -> None:
+    def glClipPlanef_j3(self, plane: int, equation: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glClipPlanef(self, plane: int, equation: FloatBuffer) -> None:
+    def glClipPlanef_j2(self, plane: int, equation: FloatBuffer) -> None:
         raise NotImplementedError()
+
+    def glClipPlanef(self, *args):
+        return getattr(self, "glClipPlanef_j" + str(len(args)))(*args)
     
 
     def glColor4ub(self, red: int, green: int, blue: int, alpha: int) -> None:
@@ -161,98 +163,118 @@ class GL11(GL10):
         raise NotImplementedError()
     
 
-    def glDeleteBuffers(self, n: int, buffers: list[int], offset: int) -> None:
+    def glDeleteBuffers_j3(self, n: int, buffers: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDeleteBuffers(self, n: int, buffers: IntBuffer) -> None:
+    def glDeleteBuffers_j2(self, n: int, buffers: IntBuffer) -> None:
         raise NotImplementedError()
+
+    def glDeleteBuffers(self, *args):
+        return getattr(self, "glDeleteBuffers_j" + str(len(args)))(*args)
     
 
     def glDrawElements(self, mode: int, count: int, type_: int, offset: int) -> None:
         raise NotImplementedError()
     
 
-    def glGenBuffers(self, n: int, buffers: list[int], offset: int) -> None:
+    def glGenBuffers_j3(self, n: int, buffers: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGenBuffers(self, n: int, buffers: IntBuffer) -> None:
+    def glGenBuffers_j2(self, n: int, buffers: IntBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGenBuffers(self, *args):
+        return getattr(self, "glGenBuffers_j" + str(len(args)))(*args)
+    
+
+    def glGetBufferParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    def glGetBufferParameteriv(self, target: int, pname: int, params: list[int], offset: int) -> None:
+    def glGetBufferParameteriv_j3(self, target: int, pname: int, params: IntBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetBufferParameteriv(self, *args):
+        return getattr(self, "glGetBufferParameteriv_j" + str(len(args)))(*args)
+    
+
+    def glGetClipPlanef_j3(self, pname: int, eqn: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGetBufferParameteriv(self, target: int, pname: int, params: IntBuffer) -> None:
+    def glGetClipPlanef_j2(self, pname: int, eqn: FloatBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetClipPlanef(self, *args):
+        return getattr(self, "glGetClipPlanef_j" + str(len(args)))(*args)
+    
+
+    def glGetFloatv_j3(self, pname: int, params: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    def glGetClipPlanef(self, pname: int, eqn: list[float], offset: int) -> None:
+    def glGetFloatv_j2(self, pname: int, params: FloatBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetFloatv(self, *args):
+        return getattr(self, "glGetFloatv_j" + str(len(args)))(*args)
+    
+
+    def glGetLightfv_j4(self, light: int, pname: int, params: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGetClipPlanef(self, pname: int, eqn: FloatBuffer) -> None:
+    def glGetLightfv_j3(self, light: int, pname: int, params: FloatBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetLightfv(self, *args):
+        return getattr(self, "glGetLightfv_j" + str(len(args)))(*args)
+    
+
+    def glGetMaterialfv_j4(self, face: int, pname: int, params: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    def glGetFloatv(self, pname: int, params: list[float], offset: int) -> None:
+    def glGetMaterialfv_j3(self, face: int, pname: int, params: FloatBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetMaterialfv(self, *args):
+        return getattr(self, "glGetMaterialfv_j" + str(len(args)))(*args)
+    
+
+    def glGetTexEnviv_j4(self, env: int, pname: int, params: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGetFloatv(self, pname: int, params: FloatBuffer) -> None:
+    def glGetTexEnviv_j3(self, env: int, pname: int, params: IntBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetTexEnviv(self, *args):
+        return getattr(self, "glGetTexEnviv_j" + str(len(args)))(*args)
+    
+
+    def glGetTexParameterfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    def glGetLightfv(self, light: int, pname: int, params: list[float], offset: int) -> None:
+    def glGetTexParameterfv_j3(self, target: int, pname: int, params: FloatBuffer) -> None:
+        raise NotImplementedError()
+
+    def glGetTexParameterfv(self, *args):
+        return getattr(self, "glGetTexParameterfv_j" + str(len(args)))(*args)
+    
+
+    def glGetTexParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGetLightfv(self, light: int, pname: int, params: FloatBuffer) -> None:
+    def glGetTexParameteriv_j3(self, target: int, pname: int, params: IntBuffer) -> None:
         raise NotImplementedError()
-    
 
-    def glGetMaterialfv(self, face: int, pname: int, params: list[float], offset: int) -> None:
-        raise NotImplementedError()
-    
-
-    # Java overloaded method: Python keeps the last definition
-    def glGetMaterialfv(self, face: int, pname: int, params: FloatBuffer) -> None:
-        raise NotImplementedError()
-    
-
-    def glGetTexEnviv(self, env: int, pname: int, params: list[int], offset: int) -> None:
-        raise NotImplementedError()
-    
-
-    # Java overloaded method: Python keeps the last definition
-    def glGetTexEnviv(self, env: int, pname: int, params: IntBuffer) -> None:
-        raise NotImplementedError()
-    
-
-    def glGetTexParameterfv(self, target: int, pname: int, params: list[float], offset: int) -> None:
-        raise NotImplementedError()
-    
-
-    # Java overloaded method: Python keeps the last definition
-    def glGetTexParameterfv(self, target: int, pname: int, params: FloatBuffer) -> None:
-        raise NotImplementedError()
-    
-
-    def glGetTexParameteriv(self, target: int, pname: int, params: list[int], offset: int) -> None:
-        raise NotImplementedError()
-    
-
-    # Java overloaded method: Python keeps the last definition
-    def glGetTexParameteriv(self, target: int, pname: int, params: IntBuffer) -> None:
-        raise NotImplementedError()
+    def glGetTexParameteriv(self, *args):
+        return getattr(self, "glGetTexParameteriv_j" + str(len(args)))(*args)
     
 
     def glIsBuffer(self, buffer: int) -> bool:
@@ -275,13 +297,15 @@ class GL11(GL10):
         raise NotImplementedError()
     
 
-    def glPointParameterfv(self, pname: int, params: list[float], offset: int) -> None:
+    def glPointParameterfv_j3(self, pname: int, params: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glPointParameterfv(self, pname: int, params: FloatBuffer) -> None:
+    def glPointParameterfv_j2(self, pname: int, params: FloatBuffer) -> None:
         raise NotImplementedError()
+
+    def glPointParameterfv(self, *args):
+        return getattr(self, "glPointParameterfv_j" + str(len(args)))(*args)
     
 
     def glTexCoordPointer(self, size: int, type_: int, stride: int, offset: int) -> None:
@@ -292,31 +316,37 @@ class GL11(GL10):
         raise NotImplementedError()
     
 
-    def glTexEnviv(self, target: int, pname: int, params: list[int], offset: int) -> None:
+    def glTexEnviv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glTexEnviv(self, target: int, pname: int, params: IntBuffer) -> None:
+    def glTexEnviv_j3(self, target: int, pname: int, params: IntBuffer) -> None:
+        raise NotImplementedError()
+
+    def glTexEnviv(self, *args):
+        return getattr(self, "glTexEnviv_j" + str(len(args)))(*args)
+    
+
+    def glTexParameterfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
         raise NotImplementedError()
     
 
-    def glTexParameterfv(self, target: int, pname: int, params: list[float], offset: int) -> None:
+    def glTexParameterfv_j3(self, target: int, pname: int, params: FloatBuffer) -> None:
+        raise NotImplementedError()
+
+    def glTexParameterfv(self, *args):
+        return getattr(self, "glTexParameterfv_j" + str(len(args)))(*args)
+    
+
+    def glTexParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glTexParameterfv(self, target: int, pname: int, params: FloatBuffer) -> None:
+    def glTexParameteriv_j3(self, target: int, pname: int, params: IntBuffer) -> None:
         raise NotImplementedError()
-    
 
-    def glTexParameteriv(self, target: int, pname: int, params: list[int], offset: int) -> None:
-        raise NotImplementedError()
-    
-
-    # Java overloaded method: Python keeps the last definition
-    def glTexParameteriv(self, target: int, pname: int, params: IntBuffer) -> None:
-        raise NotImplementedError()
+    def glTexParameteriv(self, *args):
+        return getattr(self, "glTexParameteriv_j" + str(len(args)))(*args)
     
 
     def glVertexPointer(self, size: int, type_: int, stride: int, offset: int) -> None:

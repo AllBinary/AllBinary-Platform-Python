@@ -21,11 +21,17 @@ from org.allbinary.graphics.form.item.ABCustomImageItem import ABCustomImageItem
 class LayerInterfaceFactoryImageItem(ABCustomImageItem):
 
     def _init_fields(self) -> None:
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
         self.animationArray: list[Animation] = None
         self.layerInterfaceFactoryInterface: LayerInterfaceFactoryInterface = None
     
 
     def __init__(self, label: str, img: Image, layout: int, altText: str, basicColor: BasicColor, animationArray: list[Animation], layerInterfaceFactoryInterface: LayerInterfaceFactoryInterface) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
         super().__init__(label, img, layout, altText, basicColor, 0)
         self._init_fields()
         self.animationArray = animationArray
@@ -33,18 +39,20 @@ class LayerInterfaceFactoryImageItem(ABCustomImageItem):
     
 
     def getLayerInterfaceFactoryInterface(self) -> LayerInterfaceFactoryInterface:
+        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
         return self.layerInterfaceFactoryInterface
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, x, y)
         index = len(self.animationArray)
         while (index := index - 1) >= 0:
             self.animationArray[index].paintXY(graphics, x, y)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
 
 

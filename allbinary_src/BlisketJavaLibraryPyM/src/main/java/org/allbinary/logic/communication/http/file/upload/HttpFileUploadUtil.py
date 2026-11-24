@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HttpFileUploadUtil:
     instance: HttpFileUploadUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -35,7 +37,10 @@ class HttpFileUploadUtil:
 
     # throws Exception
     def isValid(self, anyType: object) -> bool:
-        if anyType is not None and not (isinstance(anyType, str)):
+        from org.allbinary.logic.java.anyType.clazz.ClassUtil import ClassUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.apache.commons.fileupload.FileItem import FileItem
+        if anyType is not None and not isinstance(anyType, str):
             if isinstance(anyType, FileItem):
                 return True
             else:
@@ -44,8 +49,15 @@ class HttpFileUploadUtil:
     
 
     # throws Exception
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def log(fileItem: FileItemStream) -> None:
+    def log_j1_1(fileItem: FileItemStream) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.apache.commons.fileupload.FileItemStream import FileItemStream
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -62,13 +74,19 @@ class HttpFileUploadUtil:
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append("Size:")
         stringBuffer.append(" Not Calculated Yet")
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTP):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTP):
             logUtil.putF(str(stringBuffer), HttpFileUploadUtil.getInstance(), "log()")
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def log(fileItem: FileItem) -> None:
+    def log_j1_2(fileItem: FileItem) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         logUtil: LogUtil = LogUtil.getInstance()
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -85,15 +103,28 @@ class HttpFileUploadUtil:
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append("Size:")
         stringBuffer.appendlong(int(fileItem.getSize()))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             logUtil.putF(str(stringBuffer), HttpFileUploadUtil.getInstance(), "log()")
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.anyType.clazz.ClassUtil import ClassUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.apache.commons.fileupload.FileItem import FileItem
-from org.apache.commons.fileupload.FileItemStream import FileItemStream
+
+    @staticmethod
+    def log(*args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return HttpFileUploadUtil.log_j1_1(*args)
+        if len(args) == 1:
+            return HttpFileUploadUtil.log_j1_2(*args)
+        return getattr(HttpFileUploadUtil, "log_j" + str(len(args)))(*args)
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.anyType.clazz.ClassUtil import ClassUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.apache.commons.fileupload.FileItemStream import FileItemStream
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-HttpFileUploadUtil.instance = HttpFileUploadUtil()
+def _HttpFileUploadUtil_instance() -> object:
+    return HttpFileUploadUtil()
+
+lazy_static(HttpFileUploadUtil, "instance", _HttpFileUploadUtil_instance)
 

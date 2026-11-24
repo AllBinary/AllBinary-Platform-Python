@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RaceTrackGeographicMapCellTypes:
@@ -56,5 +57,8 @@ class RaceTrackGeographicMapCellTypes:
         self.DEFAULT_FINISH_LINE_ROAD_CELL_TYPE = RaceTrackGeographicMapCellType("Finish Line", 8, 1, 0)
 
 
-RaceTrackGeographicMapCellTypes.instance = RaceTrackGeographicMapCellTypes()
+def _RaceTrackGeographicMapCellTypes_instance() -> object:
+    return RaceTrackGeographicMapCellTypes()
+
+lazy_static(RaceTrackGeographicMapCellTypes, "instance", _RaceTrackGeographicMapCellTypes_instance)
 

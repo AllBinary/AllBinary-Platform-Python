@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -44,6 +45,10 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.logic.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
             className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
@@ -53,6 +58,9 @@ class LogUtil:
     
 
     def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
+        from org.allbinary.logic.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         className = str(str(StringMaker().append(className).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(self.anyType), "x"))))
         message: str = self.logFormatUtil.getS(className, functionName, specialMessage)
         print(LogUtil.LOG_SUCCESS, end="")
@@ -60,18 +68,24 @@ class LogUtil:
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.logic.TsUtil import TsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
             className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         print(LogUtil.LOG_SUCCESS, end="")
         print(message)
-from org.allbinary.logic.TsUtil import TsUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from org.allbinary.logic.TsUtil import TsUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

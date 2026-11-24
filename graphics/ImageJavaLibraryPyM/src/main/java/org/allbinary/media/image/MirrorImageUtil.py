@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MirrorImageUtil:
     instance: MirrorImageUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
     
@@ -73,13 +75,15 @@ class MirrorImageUtil:
         for index in range(0, numberOfFramesPerOrientation):
             bufferedImageArray[index + numberOfFramesPerOrientation] = self.getImage(bufferedImageArray[index], verticle, horizontal)
         return bufferedImageArray
-# from java.awt import *
+# from java.awt.Graphics2D import Graphics2D
 # from java.awt.geom.AffineTransform import AffineTransform
 # from java.awt.image.AffineTransformOp import AffineTransformOp
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.ImageUtil import ImageUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-MirrorImageUtil.instance = MirrorImageUtil()
+def _MirrorImageUtil_instance() -> object:
+    return MirrorImageUtil()
+
+lazy_static(MirrorImageUtil, "instance", _MirrorImageUtil_instance)
 

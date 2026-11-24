@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 # from java.io.Serializable import Serializable
 from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
 
 
-class Basket(BasketInterface, object):
+class Basket(*java_bases(BasketInterface, object)):
 
     def _init_fields(self) -> None:
-        self.items: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        self.items: HashMap = StdUtil.getInstance().createHashMap()
     
 
     def __init__(self) -> None:
@@ -52,7 +55,11 @@ class Basket(BasketInterface, object):
     
 
     def getTotalWeight(self) -> str:
-        itemsAndNumberInBasket: dict = self.getItems()
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        itemsAndNumberInBasket: HashMap = self.getItems()
         totalWeight: Money = Money()
         if itemsAndNumberInBasket.size() > 0:
             items: Set = itemsAndNumberInBasket.keySet()
@@ -73,11 +80,13 @@ class Basket(BasketInterface, object):
     
 
     def getIds(self) -> Set:
+        from java.util.Set import Set
         set: Set = self.items.keySet()
         return set
     
 
-    def getItems(self) -> dict:
+    def getItems(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.items
     
 
@@ -88,7 +97,14 @@ class Basket(BasketInterface, object):
 
     # throws MoneyException
     def getSubTotal(self) -> Money:
-        itemsAndNumberInBasket: dict = self.getItems()
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        itemsAndNumberInBasket: HashMap = self.getItems()
         subTotal: Money = Money()
         if itemsAndNumberInBasket.size() > 0:
             items: Set = itemsAndNumberInBasket.keySet()
@@ -105,11 +121,11 @@ class Basket(BasketInterface, object):
         return subTotal
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

@@ -21,9 +21,12 @@ from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEv
 class UserEmailEventsConfiguration(UserEmailEventsConfigurationInterface):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.emailEventHashMap: dict = None
+        self.emailEventHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
@@ -37,23 +40,30 @@ class UserEmailEventsConfiguration(UserEmailEventsConfigurationInterface):
         self.init()
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.init()
     
 
     def init(self) -> None:
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.emailEventHashMap = StdUtil.getInstance().createHashMap()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, " Constructor")
     
 
-    def getEventConfigurationHashMap(self) -> dict:
+    def getEventConfigurationHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.emailEventHashMap
     
 
     def addUserEmailEventConfiguration(self, userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF("Adding: " + str(userEmailEventConfigurationInterface.log()), self, "addUserEmailEventConfiguration")
         self.emailEventHashMap.put(userEmailEventConfigurationInterface.getName(), userEmailEventConfigurationInterface)
     
@@ -61,15 +71,21 @@ class UserEmailEventsConfiguration(UserEmailEventsConfigurationInterface):
     # throws Exception
     def getEventListener(self, abeClientInformation: AbeClientInformationInterface, userEmailEventNameData: UserEmailEventNameData, userInterface: UserInterface) -> UserEmailEventListenerInterface:
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventListenerFactory import UserEmailEventListenerFactory
+        from org.allbinary.business.user.UserInterface import UserInterface
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterface import UserEmailEventListenerInterface
+        from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface = self.emailEventHashMap.get(str(userEmailEventNameData))
         return UserEmailEventListenerFactory.getInstance(abeClientInformation, userEmailEventConfigurationInterface, userInterface)
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.UserInterface import UserInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterface import UserEmailEventListenerInterface
-from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterface import UserEmailEventListenerInterface
+# from org.allbinary.logic.communication.smtp.event.UserEmailEventNameData import UserEmailEventNameData
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

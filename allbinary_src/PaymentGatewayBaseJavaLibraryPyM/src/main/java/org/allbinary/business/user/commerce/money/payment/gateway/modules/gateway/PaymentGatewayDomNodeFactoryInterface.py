@@ -22,8 +22,10 @@ class PaymentGatewayDomNodeFactoryInterface:
     
 
     def getInstance(self, paymentGatewayInterface: PaymentGatewayInterface) -> DomNodeInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
-from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+# from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 

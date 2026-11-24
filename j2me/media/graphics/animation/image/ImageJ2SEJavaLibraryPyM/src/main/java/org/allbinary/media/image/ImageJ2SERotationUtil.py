@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageJ2SERotationUtil:
@@ -24,7 +25,7 @@ class ImageJ2SERotationUtil:
     def _init_fields(self) -> None:
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
         self.imageJ2SEUtil: ImageJ2SEUtil = ImageJ2SEUtil.getInstance()
-        self.TWO_PIE: float = 2 * Math.PI
+        self.TWO_PIE: float = 2 * math.pi
     
 
     @staticmethod
@@ -105,5 +106,8 @@ from org.allbinary.media.image.ImageUtil import ImageUtil
 from org.allbinary.media.image.ImageJ2SEUtil import ImageJ2SEUtil
 
 
-ImageJ2SERotationUtil.instance = ImageJ2SERotationUtil()
+def _ImageJ2SERotationUtil_instance() -> object:
+    return ImageJ2SERotationUtil()
+
+lazy_static(ImageJ2SERotationUtil, "instance", _ImageJ2SERotationUtil_instance)
 

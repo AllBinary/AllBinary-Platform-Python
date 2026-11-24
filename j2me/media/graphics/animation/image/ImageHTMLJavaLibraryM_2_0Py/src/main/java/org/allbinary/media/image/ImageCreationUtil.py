@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageCreationUtil:
@@ -32,17 +33,24 @@ class ImageCreationUtil:
 
     # throws Exception
     def createImageWH(self, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         image: Image = GameFeatureImageCacheFactory.getInstance().get(type(self).__module__ + "." + type(self).__qualname__, width, height)
         return image
     
 
     # throws Exception
     def createImage(self, width: int, height: int, maxScaleX: float, maxScaleY: float) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         image: Image = GameFeatureImageCacheFactory.getInstance().get(type(self).__module__ + "." + type(self).__qualname__, int((float(width) * maxScaleX)) + 1, int((float(height) * maxScaleY)) + 1)
         return image
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
 
 
-ImageCreationUtil.instance = ImageCreationUtil()
+def _ImageCreationUtil_instance() -> object:
+    return ImageCreationUtil()
+
+lazy_static(ImageCreationUtil, "instance", _ImageCreationUtil_instance)
 

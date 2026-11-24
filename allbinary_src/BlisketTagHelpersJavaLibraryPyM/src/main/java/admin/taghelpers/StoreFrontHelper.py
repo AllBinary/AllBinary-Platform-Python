@@ -21,12 +21,20 @@ from admin.taghelpers.TagHelper import TagHelper
 class StoreFrontHelper(TagHelper):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         self.storeFrontInterface: StoreFrontInterface = None
         self.currentLocation: str = None
         self.currentHomeLocation: str = None
     
 
-    def __init__(self, hashMap: dict, pageContext: PageContext) -> None:
+    def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.string.CommonSeps import CommonSeps
         super().__init__()
         self._init_fields()
         storeName: str = hashMap.get(StoreFrontData.getInstance().NAME)
@@ -49,12 +57,12 @@ class StoreFrontHelper(TagHelper):
         return self.currentHomeLocation
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

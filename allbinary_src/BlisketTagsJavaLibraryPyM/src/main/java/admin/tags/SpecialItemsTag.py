@@ -22,10 +22,12 @@ class SpecialItemsTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.SpecialItemsHelperFactory import SpecialItemsHelperFactory
+        from admin.taghelpers.SpecialItemsRequestHelperFactory import SpecialItemsRequestHelperFactory
         super().__init__()
         self.setTagHelperFactory(SpecialItemsHelperFactory())
         self.setTagRequestHelperFactory(SpecialItemsRequestHelperFactory())
-from admin.taghelpers.SpecialItemsHelperFactory import SpecialItemsHelperFactory
-from admin.taghelpers.SpecialItemsRequestHelperFactory import SpecialItemsRequestHelperFactory
+# from admin.taghelpers.SpecialItemsHelperFactory import SpecialItemsHelperFactory
+# from admin.taghelpers.SpecialItemsRequestHelperFactory import SpecialItemsRequestHelperFactory
 
 

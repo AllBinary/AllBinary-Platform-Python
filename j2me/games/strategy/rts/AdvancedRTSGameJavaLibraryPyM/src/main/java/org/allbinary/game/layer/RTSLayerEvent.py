@@ -29,6 +29,7 @@ class RTSLayerEvent(AllBinaryEventObject):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("RTSLayerEvent: \n")
         stringBuffer.append("RTSLayer: ")
@@ -45,7 +46,6 @@ class RTSLayerEvent(AllBinaryEventObject):
 
     def setRtsLayer(self, rtsLayer: PathFindingLayerInterface) -> None:
         self.rtsLayer = rtsLayer
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

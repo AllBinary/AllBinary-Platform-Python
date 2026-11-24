@@ -20,6 +20,7 @@ from __future__ import annotations
 class EmailInfo:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicEmailInfo: BasicEmailInfo = None
         self.htmlAttachment: str = None
@@ -33,16 +34,22 @@ class EmailInfo:
     
 
     def _constructor1(self, basicEmailInfo: BasicEmailInfo) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)
         self.init(basicEmailInfo, None, None)
     
 
     def _constructor3(self, basicEmailInfo: BasicEmailInfo, htmlAttachment: str, contentBase: str) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)
         self.init(basicEmailInfo, None, None)
@@ -71,7 +78,9 @@ class EmailInfo:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

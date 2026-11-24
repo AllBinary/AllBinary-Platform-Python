@@ -24,55 +24,75 @@ class RootStoreThemeCategoryProperties(RootStoreCategoryProperties):
         if len(args) == 1:
             self._constructor1(*args)
         elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_2(*args)
+        else:
+            self._constructor2_3(*args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, abPath: AbPath) -> None:
+    def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, abPath: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, abPath)
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, node: Node) -> None:
+    def _constructor2_2(self, transformInfoInterface: TransformInfoInterface, node: Node) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Node import Node
         super().__init__(transformInfoInterface, node)
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, categoryPropertiesHashMap: dict) -> None:
+    def _constructor2_3(self, transformInfoInterface: TransformInfoInterface, categoryPropertiesHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, categoryPropertiesHashMap)
     
 
     # throws Exception
     def initPath(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreInterface import TransformInfoHttpStoreInterface
         transformInfoHttpStoreInterface: TransformInfoHttpStoreInterface = self.transformInfoInterface
         storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(transformInfoHttpStoreInterface.getStoreName())
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
-        stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
+        stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().XSLPATH)
         stringBuffer.append(storeFrontInterface.getName())
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
-        stringBuffer.append(self.FREEBLISKET_PATH_GLOBALS.getInstance().THEMEPATH)
+        stringBuffer.append(FREEBLISKET_PATH_GLOBALS.getInstance().THEMEPATH)
         abPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
         httpServletRequest: HttpServletRequest = transformInfoHttpStoreInterface.getPageContext().getRequest()
         self.webAppAbPath = AbPath(str(httpServletRequest.getContextPath()) + str(abPath), StringUtil.getInstance().EMPTY_STRING)
-        self.setRootFilePath(AbPath(str(self.URLGLOBALS.getMainPath()) + str(abPath), StringUtil.getInstance().EMPTY_STRING))
+        self.setRootFilePath(AbPath(str(URLGLOBALS.getMainPath()) + str(abPath), StringUtil.getInstance().EMPTY_STRING))
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreInterface import TransformInfoHttpStoreInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreInterface import TransformInfoHttpStoreInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Node import Node
 
 

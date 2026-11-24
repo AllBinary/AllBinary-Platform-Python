@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
 
 
-class CommandCurrentSelectionForm(ScrollCurrentSelectionForm, UpdateMyFontInterface):
+class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, UpdateMyFontInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation
@@ -75,7 +76,7 @@ class CommandCurrentSelectionForm(ScrollCurrentSelectionForm, UpdateMyFontInterf
         width: int = item.getMinimumWidth()
         height: int = item.getMinimumHeight()
         adjustedBorder: int = 3
-        offset: int = -(self.halfBorder + adjustedBorder)
+        offset: int = -self.halfBorder + adjustedBorder
         rectWidth: int = width + self.border - adjustedBorder
         rectHeight: int = height + self.border - adjustedBorder
         if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
@@ -111,7 +112,7 @@ class CommandCurrentSelectionForm(ScrollCurrentSelectionForm, UpdateMyFontInterf
         width: int = item.getMinimumWidth()
         height: int = item.getMinimumHeight()
         adjustedBorder: int = 3
-        offset: int = -(self.halfBorder + adjustedBorder)
+        offset: int = -self.halfBorder + adjustedBorder
         rectWidth: int = width + self.border - adjustedBorder
         rectHeight: int = height + self.border - adjustedBorder
         if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():

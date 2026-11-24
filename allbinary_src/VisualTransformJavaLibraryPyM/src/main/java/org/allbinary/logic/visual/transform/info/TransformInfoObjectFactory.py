@@ -15,17 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransformInfoObjectFactory:
     instance: TransformInfoObjectFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
-    def getInstance() -> TransformInfoObjectFactory:
+    def getInstance_j0() -> TransformInfoObjectFactory:
         return TransformInfoObjectFactory.instance
     
 
@@ -34,10 +36,17 @@ class TransformInfoObjectFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> TransformInterface:
+    def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> TransformInterface:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.putF("Creating View: " + transformInfoInterface.getName(), self, commonStrings.GET_INSTANCE)
             params: list[object] = [None] * (1)
@@ -60,7 +69,7 @@ class TransformInfoObjectFactory:
             error: str = "Failed To Get Instance: "
             if transformInfoInterface is not None:
                 error = error + transformInfoInterface.getName()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(error, self, commonStrings.GET_INSTANCE, e)
             raise e
@@ -68,18 +77,26 @@ class TransformInfoObjectFactory:
             error: str = "Failed To Get Instance: "
             if transformInfoInterface is not None:
                 error = error + transformInfoInterface.getName()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORYERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(error, self, commonStrings.GET_INSTANCE, e)
             raise e
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-TransformInfoObjectFactory.instance = TransformInfoObjectFactory()
+def _TransformInfoObjectFactory_instance() -> object:
+    return TransformInfoObjectFactory()
+
+lazy_static(TransformInfoObjectFactory, "instance", _TransformInfoObjectFactory_instance)
 

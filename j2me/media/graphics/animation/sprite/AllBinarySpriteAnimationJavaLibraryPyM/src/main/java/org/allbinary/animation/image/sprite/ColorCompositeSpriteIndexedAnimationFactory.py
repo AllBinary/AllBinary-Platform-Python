@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
-class ColorCompositeSpriteIndexedAnimationFactory(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface):
+class ColorCompositeSpriteIndexedAnimationFactory(*java_bases(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor

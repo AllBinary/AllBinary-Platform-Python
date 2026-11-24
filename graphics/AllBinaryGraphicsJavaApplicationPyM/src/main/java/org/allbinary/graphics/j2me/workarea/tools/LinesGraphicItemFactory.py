@@ -23,7 +23,8 @@ class LinesGraphicItemFactory(GraphicsItemInterfaceFactoryInterface):
 
     def getInstance(self, canvasJPanel: CanvasJPanel) -> GraphicItemInterface:
         from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         return LinesGraphicItem()
-from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
+# from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
 
 

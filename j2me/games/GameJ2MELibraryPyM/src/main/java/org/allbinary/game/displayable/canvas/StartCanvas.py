@@ -16,13 +16,14 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
 from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
 from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
 from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 
 
-class StartCanvas(RunnableCanvas, GameCanvasRunnableInterface, MenuListener, DisplayChangeEventListener):
+class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuListener, DisplayChangeEventListener)):
     id: int = 0
     BOT_GAME_STATS: str = "Bot Game Statistics: "
     _lock = threading.RLock()
@@ -96,7 +97,6 @@ class StartCanvas(RunnableCanvas, GameCanvasRunnableInterface, MenuListener, Dis
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, highScoresFactoryInterface: HighScoresFactoryInterface, paintable: Paintable, overlayPaintable: InitUpdatePaintable, gameInitializationInterfaceFactoryInterface: BasicBuildGameInitializerFactory, isContinue: bool) -> None:
-        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
         from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
@@ -324,7 +324,6 @@ class StartCanvas(RunnableCanvas, GameCanvasRunnableInterface, MenuListener, Dis
     
 
     def isPausable(self) -> bool:
-        from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
         if CurrentDisplayableFactory.getInstance().getUsedRunnable() == NullWaitGameRunnable.getInstance():
             return True
@@ -772,8 +771,5 @@ class StartCanvas(RunnableCanvas, GameCanvasRunnableInterface, MenuListener, Dis
 # from org.allbinary.util.ABHashtable import ABHashtable
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.game.displayable.canvas.FormUtil import FormUtil
-from org.allbinary.game.displayable.canvas.NoMenuInputProcessor import NoMenuInputProcessor
-from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
 
 

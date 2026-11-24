@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
 from org.allbinary.business.user.commerce.inventory.item.OrderItemInterface import OrderItemInterface
 
 
-class Item(BasicItem, OrderItemInterface):
+class Item(*java_bases(BasicItem, OrderItemInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         self.group: str = None
         self.tax: str = None
         self.shippingType: str = None
@@ -37,13 +39,17 @@ class Item(BasicItem, OrderItemInterface):
             self._constructor0(*args)
     
 
-    def _constructor1(self, itemHashMap: dict) -> None:
+    def _constructor1(self, itemHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
         super().__init__(itemHashMap)
         self._init_fields()
         self.setData(itemHashMap)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__()
         self._init_fields()
         EMPTY: str = StringUtil.getInstance().EMPTY_STRING
@@ -54,7 +60,13 @@ class Item(BasicItem, OrderItemInterface):
         self.shippingAddress = StreetAddress()
     
 
-    def setData(self, itemHashMap: dict) -> None:
+    def setData(self, itemHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
         self.group = itemHashMap.get(ShippingMethodData.GROUP)
         self.tax = itemHashMap.get(OrderHistoryData.TAX)
         self.shippingType = itemHashMap.get(ShippingMethodData.NAME)
@@ -86,6 +98,7 @@ class Item(BasicItem, OrderItemInterface):
     
 
     def setShippingAddress(self, value: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         self.shippingAddress = value
     
 
@@ -110,6 +123,7 @@ class Item(BasicItem, OrderItemInterface):
     
 
     def getShippingAddress(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         return self.shippingAddress
     
 
@@ -117,8 +131,12 @@ class Item(BasicItem, OrderItemInterface):
         return self.special
     
 
-    def toHashMap(self) -> dict:
-        hashMap: dict = super().toHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        hashMap: HashMap = super().toHashMap()
         hashMap.put(ShippingMethodData.GROUP, self.group)
         hashMap.put(OrderHistoryData.TAX, self.tax)
         hashMap.put(ShippingMethodData.NAME, self.shippingType)
@@ -127,13 +145,13 @@ class Item(BasicItem, OrderItemInterface):
         hashMap.put(EntryData.getInstance().SPECIAL, self.special)
         return hashMap
 # from java.util.HashMap import HashMap
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
-from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

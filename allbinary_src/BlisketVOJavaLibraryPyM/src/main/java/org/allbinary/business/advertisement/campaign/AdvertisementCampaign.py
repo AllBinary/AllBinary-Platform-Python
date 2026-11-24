@@ -21,10 +21,12 @@ from org.allbinary.business.advertisement.campaign.AdvertisementCampaignInterfac
 class AdvertisementCampaign(AdvertisementCampaignInterface):
 
     def _init_fields(self) -> None:
-        self.hashMap: dict = None
+        from java.util.HashMap import HashMap
+        self.hashMap: HashMap = None
     
 
-    def __init__(self, hashMap: dict) -> None:
+    def __init__(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.hashMap = hashMap
     
@@ -34,24 +36,25 @@ class AdvertisementCampaign(AdvertisementCampaignInterface):
     
 
     def getName(self) -> str:
-        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
         return self.hashMap.get(AdvertisementCampaignData.getInstance().NAME)
     
 
     def setComponentName(self, name: str) -> None:
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
         self.hashMap.put(DynamicObjectData.NAME, name)
     
 
     def setName(self, name: str) -> None:
-        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
         self.hashMap.put(AdvertisementCampaignData.getInstance().NAME, name)
     
 
     def search(self, advertisementSearchInterface: AdvertisementSearchInterface) -> AdvertisementsInterface:
+        from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
+        from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
         return None
 # from java.util.HashMap import HashMap
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
-from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
+# from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
 
 

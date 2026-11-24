@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SystemProperties:
@@ -49,8 +50,11 @@ class SystemProperties:
 
     def getUserHomePath(self) -> str:
         raise RuntimeError()
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 
-SystemProperties.instance = SystemProperties()
+def _SystemProperties_instance() -> object:
+    return SystemProperties()
+
+lazy_static(SystemProperties, "instance", _SystemProperties_instance)
 

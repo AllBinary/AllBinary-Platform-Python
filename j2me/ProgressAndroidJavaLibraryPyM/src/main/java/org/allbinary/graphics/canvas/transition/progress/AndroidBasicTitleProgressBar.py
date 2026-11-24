@@ -15,15 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
 from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
 
 
-class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
+class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEventListener)):
     RESOURCE: str = "ProgressImage"
     background: int = 0
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from android.app.Activity import Activity
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.animation.Animation import Animation
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.thread.ARunnable import ARunnable
+        from org.allbinary.thread.NullRunnable import NullRunnable
         self.showTitleProgressBarRunnable: ARunnable = NullRunnable.getInstance()
         self.dismissTitleProgressBarRunnable: ARunnable = NullRunnable.getInstance()
         self.titleProgressDialogPortionSetProgressRunnable: ARunnable = NullRunnable.getInstance()
@@ -36,6 +45,9 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
         super().__init__(title, backgroundBasicColor, foregroundBasicColor)
         self._init_fields()
         self.init()
@@ -46,6 +58,9 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def init(self) -> None:
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         try:
             if AndroidBasicTitleProgressBar.background != 0:
                 ResourceUtil.getInstance().addResource(AndroidBasicTitleProgressBar.RESOURCE, int(AndroidBasicTitleProgressBar.background))
@@ -60,6 +75,7 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
         from org.allbinary.graphics.canvas.transition.progress.DismissTitleProgressBarRunnable import DismissTitleProgressBarRunnable
         from org.allbinary.graphics.canvas.transition.progress.TitleProgressBarSetProgressRunnable import TitleProgressBarSetProgressRunnable
         from org.allbinary.graphics.canvas.transition.progress.TitleProgressBarPortionSetProgressRunnable import TitleProgressBarPortionSetProgressRunnable
+        from android.app.Activity import Activity
         try:
             if self.midletActivity != activity:
                 self.midletActivity = activity
@@ -74,6 +90,11 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def updateCurrent(self) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.animation.image.ImageAnimation import ImageAnimation
         try:
             if not self.isBackground():
                 self.animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
@@ -93,10 +114,16 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onDisplayChangeEvent(self, displayChangeEvent: DisplayChangeEvent) -> None:
+        from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
         try:
             self.loadProgressImages()
             self.updateCurrent()
@@ -106,6 +133,9 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def loadProgressImages(self) -> None:
+        from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+        from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         try:
             displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
             lastWidth: int = displayInfo.getLastWidth()
@@ -123,6 +153,7 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def isInitialized(self) -> bool:
+        from org.allbinary.AndroidUtil import AndroidUtil
         if self.midletActivity != AndroidUtil.NULL_ACTIVITY:
             return True
         else:
@@ -148,6 +179,7 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def addEarlyPortion(self, value: int, text: str, index: int) -> None:
+        from org.allbinary.AndroidUtil import AndroidUtil
         try:
             self.portion = value
             super().addEarlyPortion(value, text, index)
@@ -189,6 +221,12 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
 
     # throws Exception
     def setImages(self, index: int, lastWidth: int, lastHeight: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+        from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
         image: Image = self.image
         if image != NullImage.NULL_IMAGE:
             if Features.getInstance().isFeature(MainFeatureFactory.getInstance().FULL_SCREEN):
@@ -202,6 +240,10 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
 
     # throws Exception
     def initOpenGL(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         self.image = GameFeatureImageCacheFactory.getInstance().getWithKey(AndroidBasicTitleProgressBar.RESOURCE)
         preResourceImageUtil: PreResourceImageUtil = PreResourceImageUtil.getInstance()
@@ -214,6 +256,10 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
 
     # throws Exception
     def update(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.UPDATE)
         self.initOpenGL(graphics)
         self.image = GameFeatureImageCacheFactory.getInstance().getWithKey(AndroidBasicTitleProgressBar.RESOURCE)
@@ -226,6 +272,10 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
 
     # throws Exception
     def getImage(self, index: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
+        from org.allbinary.game.configuration.feature.Features import Features
+        from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         image: Image = NullImage.NULL_IMAGE
         if Features.getInstance().isFeature(MainFeatureFactory.getInstance().FULL_SCREEN):
             image = self.IMAGE[index]
@@ -235,6 +285,7 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
     
 
     def paint2(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         try:
             self.animation.paintXY(graphics, 0, 20)
             super().paint2(graphics)
@@ -261,28 +312,28 @@ class AndroidBasicTitleProgressBar(ProgressCanvas, DisplayChangeEventListener):
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from android.app.Activity import Activity
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
-from org.allbinary.animation.Animation import Animation
-from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.animation.image.ImageAnimation import ImageAnimation
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.logic.util.event.EventStrings import EventStrings
-from org.allbinary.thread.ARunnable import ARunnable
-from org.allbinary.thread.NullRunnable import NullRunnable
+# from android.app.Activity import Activity
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
+# from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.java.exception.ExceptionUtil import ExceptionUtil
+# from org.allbinary.animation.Animation import Animation
+# from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
+# from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.animation.image.ImageAnimation import ImageAnimation
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.thread.ARunnable import ARunnable
+# from org.allbinary.thread.NullRunnable import NullRunnable
 
 

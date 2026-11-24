@@ -21,6 +21,10 @@ from org.allbinary.animation.image.ImageBaseRotationAnimation import ImageBaseRo
 class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
 
     def _init_fields(self) -> None:
+        from android.graphics.Matrix import Matrix
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.media.image.AndroidImageUtil import AndroidImageUtil
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
         self.androidImageUtil: AndroidImageUtil = AndroidImageUtil.getInstance()
         self.matrix: Matrix = Matrix()
@@ -31,6 +35,9 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(image, angleInfo, totalAngle, animationBehavior)
         self._init_fields()
         self.originalImage = originalImage
@@ -40,6 +47,7 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             self.imageModifierUtil.setColor(self.originalImage, self.getImage(), 0, basicColor)
@@ -51,6 +59,7 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def changeBasicColor(self, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         self.setBasicColorP(basicColor)
     
 
@@ -88,12 +97,12 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
         self.angleInfo.adjustAngle(newFrame)
         self.matrix.setRotate(float((newFrame - currentFrame)) * float(self.increment), float(self.halfWidth), float(self.halfHeight))
         self.updateImage()
-from android.graphics.Matrix import Matrix
+# from android.graphics.Matrix import Matrix
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.math.AngleInfo import AngleInfo
-from org.allbinary.media.image.AndroidImageUtil import AndroidImageUtil
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.media.image.AndroidImageUtil import AndroidImageUtil
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
 
 

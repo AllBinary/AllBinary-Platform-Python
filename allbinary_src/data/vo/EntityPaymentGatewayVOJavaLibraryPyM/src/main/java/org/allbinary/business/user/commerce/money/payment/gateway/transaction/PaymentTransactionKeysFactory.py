@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaymentTransactionKeysFactory:
@@ -113,5 +114,8 @@ class PaymentTransactionKeysFactory:
 from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionKeys import PaymentTransactionKeys
 
 
-PaymentTransactionKeysFactory.instance = PaymentTransactionKeysFactory()
+def _PaymentTransactionKeysFactory_instance() -> object:
+    return PaymentTransactionKeysFactory()
+
+lazy_static(PaymentTransactionKeysFactory, "instance", _PaymentTransactionKeysFactory_instance)
 

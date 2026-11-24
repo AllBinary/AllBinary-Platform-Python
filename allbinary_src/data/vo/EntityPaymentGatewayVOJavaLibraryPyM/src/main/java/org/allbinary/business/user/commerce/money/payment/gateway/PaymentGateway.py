@@ -57,39 +57,19 @@ class PaymentGateway(PaymentGatewayInterface):
         self.timeEntered: str = None
     
 
-    def __init__(self, hashMap: dict) -> None:
+    def __init__(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.getFormData(hashMap)
     
 
-    def getFormData(self, hashMap: dict) -> None:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+    def getFormData(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.logic.string.StringUtil import StringUtil
         stringUtil: StringUtil = StringUtil.getInstance()
         empty: str = stringUtil.EMPTY_STRING
         self.storeName = hashMap.get(str(StoreFrontData.getInstance().NAME))
@@ -453,51 +433,21 @@ class PaymentGateway(PaymentGatewayInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
+    def toHashMap_j0(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.toHashMap(True)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def toHashMap(self, isEncrypted: bool) -> dict:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        paymentGatewayHashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap_j1(self, isEncrypted: bool) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+        paymentGatewayHashMap: HashMap = StdUtil.getInstance().createHashMap()
         paymentGatewayHashMap.put(EntryData.getInstance().ENABLE, self.enable)
         paymentGatewayHashMap.put(str(StoreFrontData.getInstance().NAME), self.storeName)
         paymentGatewayHashMap.put(str(PaymentGatewayData.NAME), self.getName())
@@ -548,16 +498,20 @@ class PaymentGateway(PaymentGatewayInterface):
             paymentGatewayHashMap.put(str(PaymentGatewayData.SPECIAL9), self.special9)
         paymentGatewayHashMap.put(str(EntryData.getInstance().LASTMODIFIED), self.lastModified)
         return paymentGatewayHashMap
+
+    def toHashMap(self, *args):
+        return getattr(self, "toHashMap_j" + str(len(args)))(*args)
     
 
-    def toVector(self) -> BasicArrayList:
+    def toVector_j0(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.toVector(True)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def toVector(self, isEncrypted: bool) -> BasicArrayList:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+    def toVector_j1(self, isEncrypted: bool) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
         updateVector: BasicArrayList = BasicArrayListD()
         updateVector.add(self.enable)
         updateVector.add(self.storeName)
@@ -609,6 +563,9 @@ class PaymentGateway(PaymentGatewayInterface):
             updateVector.add(self.special8)
             updateVector.add(self.special9)
         return updateVector
+
+    def toVector(self, *args):
+        return getattr(self, "toVector_j" + str(len(args)))(*args)
     
 
     # throws Exception
@@ -616,14 +573,14 @@ class PaymentGateway(PaymentGatewayInterface):
         from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
         return PaymentGatewayPrimaryKey(self.getStoreName(), self.getName())
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

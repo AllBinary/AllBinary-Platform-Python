@@ -34,7 +34,6 @@ class BasicGameResources:
     
 
     def init(self, ROOT: str, SIZE: list[str]) -> None:
-        from org.allbinary.game.layer.resources.SIZE import SIZE
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonStrings import CommonStrings

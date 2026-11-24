@@ -47,6 +47,7 @@ class WeblisketSessionInterface:
 
     # throws Exception
     def getOrder(self) -> OrderInterface:
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
         raise NotImplementedError()
     
 
@@ -60,6 +61,7 @@ class WeblisketSessionInterface:
 
     # throws Exception
     def getRole(self) -> UserRole:
+        from org.allbinary.business.user.role.UserRole import UserRole
         raise NotImplementedError()
     
 
@@ -87,13 +89,15 @@ class WeblisketSessionInterface:
         raise NotImplementedError()
     
 
-    def setAuthenticated(self) -> None:
+    def setAuthenticated_j0(self) -> None:
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def setAuthenticated(self, value: bool) -> None:
+    def setAuthenticated_j1(self, value: bool) -> None:
         raise NotImplementedError()
+
+    def setAuthenticated(self, *args):
+        return getattr(self, "setAuthenticated_j" + str(len(args)))(*args)
     
 
     def setPassword(self, password: str) -> None:
@@ -105,6 +109,7 @@ class WeblisketSessionInterface:
     
 
     def setRole(self, aRole: UserRole) -> None:
+        from org.allbinary.business.user.role.UserRole import UserRole
         raise NotImplementedError()
     
 
@@ -118,7 +123,7 @@ class WeblisketSessionInterface:
 
     def setUserName(self, userName: str) -> None:
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.role.UserRole import UserRole
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.role.UserRole import UserRole
 
 

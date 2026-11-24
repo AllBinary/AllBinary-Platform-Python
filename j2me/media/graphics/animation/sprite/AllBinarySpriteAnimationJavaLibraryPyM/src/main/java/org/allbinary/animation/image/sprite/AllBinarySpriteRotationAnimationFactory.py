@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
-class AllBinarySpriteRotationAnimationFactory(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface):
+class AllBinarySpriteRotationAnimationFactory(*java_bases(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.image.sprite.AnimationFactorySpriteScaleUtil import AnimationFactorySpriteScaleUtil

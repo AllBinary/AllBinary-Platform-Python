@@ -26,17 +26,22 @@ class AdminUserFactory(UserFactoryInterface):
     
 
     # throws Exception
-    def getInstance(self) -> UserInterface:
+    def getInstance_j0(self) -> UserInterface:
         from org.allbinary.business.user.modules.admin.AdminUser import AdminUser
+        from org.allbinary.business.user.UserInterface import UserInterface
         return AdminUser()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, hashMap: dict) -> UserInterface:
+    def getInstance_j1(self, hashMap: HashMap) -> UserInterface:
         from org.allbinary.business.user.modules.admin.AdminUser import AdminUser
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserInterface import UserInterface
         return AdminUser(hashMap)
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.UserInterface import UserInterface
+# from org.allbinary.business.user.UserInterface import UserInterface
 
 

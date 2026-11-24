@@ -21,20 +21,24 @@ from bundle.input.automation.robot.InputAutomationRobotServiceInterface import I
 class InputAutomationRobotService(InputAutomationRobotServiceInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         self.inputRobotInterfaceArray: list[InputRobotInterface] = None
     
 
     def __init__(self, inputRobotInterfaceArray: list[InputRobotInterface]) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         self._init_fields()
         self.setInputRobotInterfaceArray(inputRobotInterfaceArray)
     
 
     def getInputRobotInterfaceArray(self) -> list[InputRobotInterface]:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         return self.inputRobotInterfaceArray
     
 
     def setInputRobotInterfaceArray(self, inputRobotInterfaceArray: list[InputRobotInterface]) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         self.inputRobotInterfaceArray = inputRobotInterfaceArray
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 

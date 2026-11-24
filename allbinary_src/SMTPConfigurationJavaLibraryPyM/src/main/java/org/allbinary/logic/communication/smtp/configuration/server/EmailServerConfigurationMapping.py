@@ -29,11 +29,10 @@ class EmailServerConfigurationMapping(TableMappingInterface):
         self.emailServerConfigurationInterface = emailServerConfigurationInterface
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(EmailServerConfigurationData.SERVER, self.emailServerConfigurationInterface.getSmtpServer())
         hashMap.put(EmailServerConfigurationData.ACCOUNT, self.emailServerConfigurationInterface.getAccountName())
         hashMap.put(EmailServerConfigurationData.PASSWORD, self.emailServerConfigurationInterface.getPassword())
@@ -42,18 +41,19 @@ class EmailServerConfigurationMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
         return EmailServerConfigurationData.NAME
     
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = BasicArrayListD()
         vector.add(self.emailServerConfigurationInterface.getSmtpServer())
         return vector
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

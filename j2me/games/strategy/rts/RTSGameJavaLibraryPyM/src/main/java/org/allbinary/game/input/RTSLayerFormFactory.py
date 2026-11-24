@@ -22,8 +22,10 @@ class RTSLayerFormFactory(RTSLayerFormFactoryInterface):
     
 
     def getInstance(self, rtsLayer: RTSLayer) -> ScrollSelectionForm:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         raise RuntimeError()
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
 
 

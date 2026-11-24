@@ -21,6 +21,8 @@ from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 class VelocityWidget(BasicHud):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.KILOMETERS_PER_HOUR_STR: list[str] = [' ', 'k', 'm', '/', 'h']
         self.totalChars: int = len(self.KILOMETERS_PER_HOUR_STR)
         self.velocity: int = None
@@ -34,6 +36,8 @@ class VelocityWidget(BasicHud):
     
 
     def __init__(self, powerOfTenVelocity: int, location: int, direction: int, basicColor: BasicColor) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__(location, direction, 2, basicColor)
         self._init_fields()
         self.powerOfTenVelocity = powerOfTenVelocity
@@ -44,6 +48,10 @@ class VelocityWidget(BasicHud):
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+        from org.allbinary.logic.math.MathUtil import MathUtil
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * (5 + MathUtil.getInstance().getTotalDigits(self.powerOfTenVelocity) + 1)
         super().updateMeasurement(graphics)
@@ -60,6 +68,7 @@ class VelocityWidget(BasicHud):
     
 
     def set(self, value: int) -> None:
+        from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
         lastVelocity: int = self.velocity
         self.velocity = value
         if self.velocity > self.maxVelocity:
@@ -78,14 +87,15 @@ class VelocityWidget(BasicHud):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintDXY(graphics, self.string, 0, self.totalDigits, self.KILOMETERS_PER_HOUR_STR, 0, self.totalChars, self.offset2, self.offset)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-from org.allbinary.logic.math.MathUtil import MathUtil
-from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
-from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
+# from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
+# from org.allbinary.logic.math.MathUtil import MathUtil
+# from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
+# from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
 
 

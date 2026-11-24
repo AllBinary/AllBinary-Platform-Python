@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
 from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 
 
-class PlayerGameInputGameLayer(AllBinaryGameLayer, PlayerGameInputCompositeInterface):
+class PlayerGameInputGameLayer(*java_bases(AllBinaryGameLayer, PlayerGameInputCompositeInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.PlayerGameInput import PlayerGameInput

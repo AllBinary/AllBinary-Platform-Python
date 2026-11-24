@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface):
+class DownloadableInventoryItemView(*java_bases(HttpStoreComponentView, RequestMapInterface)):
     TYPE_ID: int = 11
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
         self.request: HttpServletRequest = None
         self.id: str = None
         self.itemInterface: ItemInterface = None
         self.downloadableItem: DownloadableItem = None
-        self.requestHashMap: dict = None
+        self.requestHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
@@ -39,6 +45,7 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.request = self.getPageContext().getRequest()
@@ -46,6 +53,7 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
     
 
     def _constructor2(self, transformInfoInterface: TransformInfoInterface, empty: str) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.request = self.getPageContext().getRequest()
@@ -57,11 +65,16 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
 
     # throws Exception
     def getFormData(self) -> None:
+        from org.allbinary.logic.communication.http.request.MultipartRequestParams import MultipartRequestParams
         self.setRequestHashMap(MultipartRequestParams(self.request).toHashMap())
         self.id = self.getRequestHashMap().get(self.basicItemData.ID)
     
 
     def addDomNodeInterfaces(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemView import DownloadableItemView
         vector: BasicArrayList = BasicArrayListD()
         if self.downloadableItem is not None:
             vector.add(DownloadableItemView(self.downloadableItem))
@@ -70,17 +83,23 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
 
     # throws Exception
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
     
 
     # throws Exception
     def processFile(self, fileItem: FileItem) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.apache.commons.fileupload.FileItem import FileItem
         fileName: str = fileItem.getName()
         fullPath: str = self.getItemFilePath()
         itemResourceFile: AbFile = AbFile.createAbFile(fullPath)
@@ -98,6 +117,10 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
 
     # throws Exception
     def unzip(self, fileItem: FileItem) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.zip.ZipFileUtil import ZipFileUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.apache.commons.fileupload.FileItem import FileItem
         fileName: str = fileItem.getName()
         fullPath: str = self.getItemFilePath()
         stringBuffer: StringMaker = StringMaker()
@@ -110,10 +133,15 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
     
 
     def getItemFilePath(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
         filePathData: FilePathData = FilePathData.getInstance()
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(self.URLGLOBALS.getWebappPath())
+        stringBuffer.append(URLGLOBALS.getWebappPath())
         stringBuffer.append(storeFrontInterface.getCurrentHostNamePath())
         stringBuffer.append(self.itemInterface.getCategory())
         stringBuffer.appendchar(filePathData.SEPARATORCHAR)
@@ -124,38 +152,43 @@ class DownloadableInventoryItemView(HttpStoreComponentView, RequestMapInterface)
         return str(stringBuffer)
     
 
-    def setRequestHashMap(self, requestHashMap: dict) -> None:
+    def setRequestHashMap(self, requestHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self.requestHashMap = requestHashMap
     
 
-    def getRequestHashMap(self) -> dict:
+    def getRequestHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.requestHashMap
     
 
     def getDownloadableItem(self) -> DownloadableItem:
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
         return self.downloadableItem
 # from java.io.ByteArrayInputStream import ByteArrayInputStream
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemView import DownloadableItemView
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.MultipartRequestParams import MultipartRequestParams
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.file.zip.ZipFileUtil import ZipFileUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.apache.commons.fileupload.FileItem import FileItem
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItemView import DownloadableItemView
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.MultipartRequestParams import MultipartRequestParams
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.file.zip.ZipFileUtil import ZipFileUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

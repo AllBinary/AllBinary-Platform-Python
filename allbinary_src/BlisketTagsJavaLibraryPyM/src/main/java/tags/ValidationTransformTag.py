@@ -21,12 +21,14 @@ from tags.TransformTag import TransformTag
 class ValidationTransformTag(TransformTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.xslFile: str = None
         self.logic: bool = None
     
 
     def __init__(self) -> None:
+        from taghelpers.ValidatedViewHelperFactory import ValidatedViewHelperFactory
         super().__init__(ValidatedViewHelperFactory())
         self._init_fields()
         self.logic = True
@@ -43,34 +45,43 @@ class ValidationTransformTag(TransformTag):
 
     # throws Exception
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.getHelper())
             method: Method = helperClass.getMethod(self.commonStrings.IS_VALID, None)
             result: bool = method.invoke(self.getHelper(), None)
             return result
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.IS_VALID, e)
             raise e
     
 
     # throws Exception
     def validationInfo(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             addressHelperClass: type = type(self.getHelper())
             method: Method = addressHelperClass.getMethod("validationInfo", None)
             result: str = method.invoke(self.getHelper(), None)
             return result
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "validationInfo()", e)
             raise e
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 stringBuffer: StringMaker = StringMaker()
                 request: HttpServletRequest = self.pageContext.getRequest()
                 stringBuffer.append("ValidationViewTag Start For: ")
@@ -83,7 +94,7 @@ class ValidationTransformTag(TransformTag):
             self.setHelper()
             if self.isValid():
                 super().doStartTag()
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("View File: ")
                     stringBuffer.append(self.getObjectFile())
@@ -96,7 +107,7 @@ class ValidationTransformTag(TransformTag):
                     return self.SKIP_BODY
             else:
                 self.pageContext.getOut().print_(self.validationInfo())
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("View File: ")
                     stringBuffer.append(self.getObjectFile())
@@ -117,17 +128,21 @@ class ValidationTransformTag(TransformTag):
     
 
     def doEndTag(self) -> int:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF("Tag Ended", self, "doEndTag")
         self.logic = True
         return super().doEndTag()
 # from java.lang.reflect.Method import Method
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from taghelpers.ValidatedViewHelperFactory import ValidatedViewHelperFactory
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from taghelpers.ValidatedViewHelperFactory import ValidatedViewHelperFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

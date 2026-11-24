@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class WaypointRunnableLogHelper:
@@ -27,13 +28,18 @@ class WaypointRunnableLogHelper:
     
 
     def start(self, pathFindingLayerInterface: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         pass
     
 
     def end(self, pathFindingLayerInterface: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         pass
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
 
 
-WaypointRunnableLogHelper.instance = WaypointRunnableLogHelper()
+def _WaypointRunnableLogHelper_instance() -> object:
+    return WaypointRunnableLogHelper()
+
+lazy_static(WaypointRunnableLogHelper, "instance", _WaypointRunnableLogHelper_instance)
 

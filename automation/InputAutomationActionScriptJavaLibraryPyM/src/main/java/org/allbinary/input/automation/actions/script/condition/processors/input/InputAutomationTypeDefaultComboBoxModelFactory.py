@@ -27,7 +27,8 @@ class InputAutomationTypeDefaultComboBoxModelFactory:
     # throws Exception
     @staticmethod
     def getInstance() -> DefaultComboBoxModel:
-        from org.allbinary.input.automation.actions.script.condition.processors.input.DefaultComboBoxModel import DefaultComboBoxModel
+        from java.util.Set import Set
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
         defaultComboBoxModel: DefaultComboBoxModel = DefaultComboBoxModel()
         set: Set = InputRobotFactory.getInstance().get().keySet()
         nameArray: list[object] = set.toArray()
@@ -36,7 +37,7 @@ class InputAutomationTypeDefaultComboBoxModelFactory:
             defaultComboBoxModel.addElement(nameArray[index])
         return defaultComboBoxModel
 # from java.util.Set import Set
-# from javax.swing import *
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from javax.swing.DefaultComboBoxModel import DefaultComboBoxModel
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
 
 

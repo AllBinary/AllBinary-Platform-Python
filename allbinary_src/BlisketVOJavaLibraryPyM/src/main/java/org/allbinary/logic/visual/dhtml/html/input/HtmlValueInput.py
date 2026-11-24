@@ -26,11 +26,12 @@ class HtmlValueInput(HtmlInput):
     
 
     def __init__(self, before: str, type_: str, name: str, value: str, after: str) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(before, type_, name, after)
         self._init_fields()
         stringUtil: StringUtil = StringUtil.getInstance()
         self.value = stringUtil.EMPTY_STRING
         self.addAttribute(self.VALUE, value)
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

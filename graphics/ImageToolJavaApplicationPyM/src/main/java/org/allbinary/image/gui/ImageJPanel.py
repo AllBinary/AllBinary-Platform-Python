@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.image.gui.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class ImageJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
@@ -44,15 +47,15 @@ class ImageJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.image.gui.GroupLayout import GroupLayout
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 300, Short.MAX_VALUE))
-# from java.awt import *
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 300, Short.MAX_VALUE))
+# from java.awt.Graphics import Graphics
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from javax.swing.GroupLayout import GroupLayout
 
 

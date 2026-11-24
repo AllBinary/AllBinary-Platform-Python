@@ -24,7 +24,8 @@ class RaceTrackPickupLayerFactory(AllBinaryLayerFactoryInterface):
     # throws Exception
     def getInstance(self) -> AllBinaryLayer:
         from org.allbinary.game.layer.pickup.RaceTrackPickupLayer import RaceTrackPickupLayer
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         return RaceTrackPickupLayer()
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 

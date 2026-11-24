@@ -11,17 +11,21 @@ class ImageIOUtil:
     # throws Exception
     @staticmethod
     def read(file: AbFile) -> BufferedImage:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         return ImageIO.read(AbFileNativeUtil.get(file))
     
 
     # throws Exception
     @staticmethod
     def write(renderedImage: RenderedImage, name: str, file: AbFile) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         return ImageIO.write(renderedImage, name, AbFileNativeUtil.get(file))
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.awt.image.RenderedImage import RenderedImage
 # from javax.imageio.ImageIO import ImageIO
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
 
 

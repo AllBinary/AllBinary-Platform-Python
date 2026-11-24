@@ -130,7 +130,7 @@
             <!-- Java build plugin converted with a Py suffix. The Python build does not use it (like Erlang).
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-pluginPy</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>sources</id>
@@ -166,7 +166,7 @@
 <!-- just this not the inner part
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-pluginPy</artifactId>
+        <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.7</version>
         <executions>
 -->

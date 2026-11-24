@@ -22,12 +22,16 @@ class StoreTransformer(BasicTransformer):
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
+        from org.allbinary.data.tree.dom.StoreUriResolver import StoreUriResolver
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(abeClientInformation, transformInfoInterface)
         self.setURIResolver(StoreUriResolver(self.getTransformInfoInterface(), self.getURIResolver()))
 # from javax.xml.transform.URIResolver import URIResolver
-from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
-from org.allbinary.data.tree.dom.StoreUriResolver import StoreUriResolver
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
+# from org.allbinary.data.tree.dom.StoreUriResolver import StoreUriResolver
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 

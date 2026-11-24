@@ -15,36 +15,45 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
-class ThemesValidation(Validation, DomNodeInterface):
+class ThemesValidation(*java_bases(Validation, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.themeVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
             self._constructor0(*args)
         elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
         self._init_fields()
         self.themeVector = BasicArrayListD()
     
 
-    def _constructor1(self, node: Node) -> None:
+    def _constructor1_1(self, node: Node) -> None:
+        from org.w3c.dom.Node import Node
         super().__init__()
         self._init_fields()
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1_2(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         super().__init__()
         self._init_fields()
     
@@ -58,16 +67,20 @@ class ThemesValidation(Validation, DomNodeInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.theme.ThemesData import ThemesData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(ThemesData.getInstance().NAME)
         size: int = self.themeVector.size()
         for i in range(0, size):
@@ -75,10 +88,10 @@ class ThemesValidation(Validation, DomNodeInterface):
             node.appendChild(themeDomNodeInterface.toXmlNode(document))
         return node
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

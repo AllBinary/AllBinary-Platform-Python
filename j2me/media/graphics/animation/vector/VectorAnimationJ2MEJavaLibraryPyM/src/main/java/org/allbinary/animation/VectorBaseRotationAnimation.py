@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 from org.allbinary.animation.VectorAnimationInterface import VectorAnimationInterface
 
 
-class VectorBaseRotationAnimation(RotationAnimation, VectorAnimationInterface):
+class VectorBaseRotationAnimation(*java_bases(RotationAnimation, VectorAnimationInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil

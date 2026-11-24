@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static_block
 
 
 class CapturedBufferedImagesCacheSingleton:
     cacheInterface: AutomaticCacheInterface = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,11 +32,18 @@ class CapturedBufferedImagesCacheSingleton:
 
     @staticmethod
     def getInstance() -> CacheInterface:
+        from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
         return CapturedBufferedImagesCacheSingleton.cacheInterface
     
 
     @staticmethod
     def _static_init() -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+        from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
+        from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+        from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         STATIC_BLOCK: str = "Static Block"
@@ -45,14 +54,14 @@ class CapturedBufferedImagesCacheSingleton:
             logUtil.putF(commonStrings.END, instance, STATIC_BLOCK)
         except Exception as e:
             logUtil.put(commonStrings.EXCEPTION, instance, STATIC_BLOCK, e)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
-from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
-from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
-from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
-from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
+# from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
+# from org.allbinary.logic.util.cache.CacheInterfaceFactory import CacheInterfaceFactory
+# from org.allbinary.logic.util.cache.CachePolicyFactory import CachePolicyFactory
+# from org.allbinary.logic.util.cache.CacheTypeFactory import CacheTypeFactory
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-CapturedBufferedImagesCacheSingleton._static_init()
+lazy_static_block(CapturedBufferedImagesCacheSingleton, ("cacheInterface", ), CapturedBufferedImagesCacheSingleton._static_init)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ColorData:
@@ -33,5 +34,8 @@ class ColorData:
         self._init_fields()
 
 
-ColorData.instance = ColorData()
+def _ColorData_instance() -> object:
+    return ColorData()
+
+lazy_static(ColorData, "instance", _ColorData_instance)
 

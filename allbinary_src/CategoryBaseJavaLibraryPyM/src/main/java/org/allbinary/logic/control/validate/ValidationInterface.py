@@ -28,18 +28,21 @@ class ValidationInterface:
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         raise NotImplementedError()
     
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
     
 
     # throws Exception
     def validationInfo(self) -> str:
         raise NotImplementedError()
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

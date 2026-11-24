@@ -29,6 +29,10 @@ class MouseInputAutomationProcessor:
     # throws Exception
     @staticmethod
     def process(mouseActionScriptInputInterface: MouseActionScriptInputInterface) -> None:
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonStrings import CommonStrings
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(str(StringMaker().append("Start - Processing Mouse Input at: ").append(str(mouseActionScriptInputInterface.getPoint())).append(" clicks: ").appendint(int(mouseActionScriptInputInterface.getButtonClicks()))), "MouseInputAutomationProcessor", commonStrings.PROCESS)
@@ -41,9 +45,9 @@ class MouseInputAutomationProcessor:
             time.sleep((mouseActionScriptInputInterface.getTime()) / 1000)
             inputRobotInterface.mouseRelease(mouseActionScriptInputInterface.getButtonClicks())
         time.sleep((mouseActionScriptInputInterface.getTime()) / 1000)
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

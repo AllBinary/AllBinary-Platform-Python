@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
-from org.allbinary.gui.dialog.JDialog import JDialog
+# from javax.swing.JDialog import JDialog
 
 
 class FileJDialog(JDialog):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.finishedListenerInterface: FileJDialogListenerInterface = None
         self.jFileChooser1: JFileChooser = None
@@ -51,11 +52,8 @@ class FileJDialog(JDialog):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.gui.dialog.JFileChooser import JFileChooser
-        from org.allbinary.gui.dialog.ActionListener import ActionListener
-        from org.allbinary.gui.dialog.GroupLayout import GroupLayout
         self.jFileChooser1 = JFileChooser()
-        self.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE)
+        self.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
         self.jFileChooser1.addActionListener((ActionListener()  # Java anonymous class body:
 #             
 # 
@@ -81,12 +79,11 @@ class FileJDialog(JDialog):
 
     @staticmethod
     def main(args: list[str]) -> None:
-        from org.allbinary.gui.dialog.JFrame import JFrame
-        java.awt.EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
+        from org.allbinary.thread.ARunnable import ARunnable
+        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
-#                 from org.allbinary.gui.dialog.JFrame import JFrame
 #                 FileJDialog(JFrame(), True).setVisible(True)
 ))
     
@@ -97,8 +94,15 @@ class FileJDialog(JDialog):
 
     def setJFileChooser1(self, jFileChooser1: JFileChooser) -> None:
         self.jFileChooser1 = jFileChooser1
-from org.allbinary.thread.ARunnable import ARunnable
+# from org.allbinary.thread.ARunnable import ARunnable
 # from java.io.File import File
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from java.awt.EventQueue import EventQueue
+# from java.awt.Frame import Frame
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.JFileChooser import JFileChooser
+# from javax.swing.JFrame import JFrame
+# from javax.swing.WindowConstants import WindowConstants
 
 

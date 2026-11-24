@@ -31,7 +31,8 @@ class CategoriesView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.category.CategoryView import CategoryView
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = CategoryView(self.categoryInterface).toXmlNode(document)
         childArray: list[object] = self.categoryInterface.getChildNodes().toArray()
         size: int = len(childArray)
@@ -40,7 +41,7 @@ class CategoriesView(DomNodeInterface):
             childCategoryNode: Node = CategoriesView(childCategoryInterface).toXmlNode(document)
             node.appendChild(childCategoryNode)
         return node
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

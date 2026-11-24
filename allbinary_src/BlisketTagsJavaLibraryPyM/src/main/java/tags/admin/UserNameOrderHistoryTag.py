@@ -35,11 +35,13 @@ class UserNameOrderHistoryTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             self.setName("Range Order History View")
             self.setObjectFile("views.admin.orderhistory.UserNameOrderHistoryView")
             if self.getCommand() is not None:
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                if self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     pass
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
@@ -49,6 +51,7 @@ class UserNameOrderHistoryTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

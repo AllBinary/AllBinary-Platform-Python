@@ -15,11 +15,11 @@
 
 from __future__ import annotations
 
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class RaceTrackRoadsGeographicMapCellHistoryFactory:
-    geographicMapCellHistory: GeographicMapCellHistory = GeographicMapCellHistory()
+    geographicMapCellHistory: GeographicMapCellHistory = None
     
 
     def __init__(self) -> None:
@@ -28,6 +28,14 @@ class RaceTrackRoadsGeographicMapCellHistoryFactory:
 
     @staticmethod
     def getInstance() -> GeographicMapCellHistory:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         return RaceTrackRoadsGeographicMapCellHistoryFactory.geographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
 
+
+def _RaceTrackRoadsGeographicMapCellHistoryFactory_geographicMapCellHistory() -> object:
+    from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+    return GeographicMapCellHistory()
+
+lazy_static(RaceTrackRoadsGeographicMapCellHistoryFactory, "geographicMapCellHistory", _RaceTrackRoadsGeographicMapCellHistoryFactory_geographicMapCellHistory)
 

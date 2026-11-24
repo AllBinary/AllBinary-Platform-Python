@@ -22,11 +22,12 @@ class TimeIntervalActionScriptConditionInterface:
     
 
     def getTimeDelayHelper(self) -> TimeDelayHelper:
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         raise NotImplementedError()
     
 
     def log(self) -> None:
         raise NotImplementedError()
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

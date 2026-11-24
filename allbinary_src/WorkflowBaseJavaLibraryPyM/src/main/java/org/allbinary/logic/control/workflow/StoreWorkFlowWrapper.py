@@ -21,6 +21,7 @@ from org.allbinary.logic.control.workflow.WorkFlowWrapper import WorkFlowWrapper
 class StoreWorkFlowWrapper(WorkFlowWrapper):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -31,6 +32,9 @@ class StoreWorkFlowWrapper(WorkFlowWrapper):
 
     # throws Exception
     def getStoreName(self) -> str:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.getWorkFlowObject())
             method: Method = helperClass.getMethod("getStoreName", None)
@@ -38,12 +42,14 @@ class StoreWorkFlowWrapper(WorkFlowWrapper):
             return result
         except Exception as e:
             error: str = "Reflection Exception"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "getStoreName()", e)
             raise Exception(error)
 # from java.lang.reflect.Method import Method
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

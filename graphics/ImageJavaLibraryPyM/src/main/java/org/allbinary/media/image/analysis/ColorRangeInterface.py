@@ -71,6 +71,6 @@ class ColorRangeInterface:
 
     def isInRange(self, color: Color) -> bool:
         raise NotImplementedError()
-# from java.awt import *
+# from java.awt.Color import Color
 
 

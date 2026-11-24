@@ -16,19 +16,21 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.automation.module.AbstractInputAutomationFactory import AbstractInputAutomationFactory
-from org.allbinary.input.automation.module.InputAutomationModuleData import InputAutomationModuleData
 
 
 class TestModuleFactory(AbstractInputAutomationFactory):
-    NAME: str = "Test New Game" + str(InputAutomationModuleData.MODULE_NAME_END)
+    NAME: str = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.configuration.BlankModuleConfigurationJPanel import BlankModuleConfigurationJPanel
         self.blankModuleConfigurationJPanel: BlankModuleConfigurationJPanel = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.input.automation.module.configuration.BlankModuleConfigurationJPanel import BlankModuleConfigurationJPanel
         super().__init__(TestModuleFactory.NAME, BlankModuleConfigurationJPanel())
         self._init_fields()
     
@@ -47,9 +49,17 @@ class TestModuleFactory(AbstractInputAutomationFactory):
             return self._getInstance_unlocked()
 
     def _getInstance_unlocked(self) -> RunnableInterface:
+        from org.allbinary.thread.RunnableInterface import RunnableInterface
         return None
-# from javax.swing import *
-from org.allbinary.input.automation.module.configuration.BlankModuleConfigurationJPanel import BlankModuleConfigurationJPanel
-from org.allbinary.thread.RunnableInterface import RunnableInterface
+# from javax.swing.JPanel import JPanel
+# from org.allbinary.input.automation.module.InputAutomationModuleData import InputAutomationModuleData
+# from org.allbinary.input.automation.module.configuration.BlankModuleConfigurationJPanel import BlankModuleConfigurationJPanel
+# from org.allbinary.thread.RunnableInterface import RunnableInterface
 
+
+def _TestModuleFactory_NAME() -> object:
+    from org.allbinary.input.automation.module.InputAutomationModuleData import InputAutomationModuleData
+    return "Test New Game" + str(InputAutomationModuleData.MODULE_NAME_END)
+
+lazy_static(TestModuleFactory, "NAME", _TestModuleFactory_NAME)
 

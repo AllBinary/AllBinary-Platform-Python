@@ -21,6 +21,7 @@ from org.allbinary.business.user.modules.User import User
 class AffiliateUser(User):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.advertisement.affiliate.sales.AffiliateSales import AffiliateSales
         self.affiliateSales: AffiliateSales = None
 
     def __init__(self, *args) -> None:
@@ -31,30 +32,35 @@ class AffiliateUser(User):
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.advertisement.affiliate.sales.AffiliateSales import AffiliateSales
         super().__init__()
         self._init_fields()
         self.affiliateSales = AffiliateSales()
     
 
-    def _constructor1(self, userHashMap: dict) -> None:
+    def _constructor1(self, userHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.advertisement.affiliate.sales.AffiliateSales import AffiliateSales
         super().__init__(userHashMap)
         self._init_fields()
         self.affiliateSales = AffiliateSales()
     
 
     def validateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         super().validateSession(weblisketSession)
         self.updateSession(weblisketSession)
     
 
     def updateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
         weblisketSession.setStoreName(self.getPermissions())
     
 
     def isSessionValid(self) -> bool:
         return self.affiliateSales.isValid()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.advertisement.affiliate.sales.AffiliateSales import AffiliateSales
-from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
+# from org.allbinary.business.advertisement.affiliate.sales.AffiliateSales import AffiliateSales
+# from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
 
 

@@ -17,12 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.form.PaintableForm import PaintableForm
-from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable
-from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable
-from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable
-from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
-from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
-from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
 
 
 class ScrollSelectionForm(PaintableForm):
@@ -31,105 +25,6 @@ class ScrollSelectionForm(PaintableForm):
     INSIDE_FORM: str = " inside form"
     IS_IN_FORM: str = "isInForm"
     GET_SELECTED_INDEX: str = "getSelectedIndexForPoint"
-    class ScrollSelectionFormHorizontalPaintable(ItemIndexPaintable):
-
-        def _init_fields(self) -> None:
-            self.scrollSelectionForm: ScrollSelectionForm = None
-        
-
-        def __init__(self, scrollSelectionForm: ScrollSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollSelectionForm = scrollSelectionForm
-        
-
-        # throws Exception
-        def paint(self, graphics: Graphics, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from javax.microedition.lcdui.Graphics import Graphics
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollSelectionForm.paintItemHorizontal(graphics, index, item, dx, dy)
-    class ScrollSelectionFormVerticalPaintable(ItemIndexPaintable):
-
-        def _init_fields(self) -> None:
-            self.scrollSelectionForm: ScrollSelectionForm = None
-        
-
-        def __init__(self, scrollSelectionForm: ScrollSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollSelectionForm = scrollSelectionForm
-        
-
-        # throws Exception
-        def paint(self, graphics: Graphics, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from javax.microedition.lcdui.Graphics import Graphics
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollSelectionForm.paintItemVertical(graphics, index, item, dx, dy)
-    class ScrollSelectionFormTempHorizontalPaintable(ItemIndexPaintable):
-
-        def _init_fields(self) -> None:
-            self.scrollSelectionForm: ScrollSelectionForm = None
-        
-
-        def __init__(self, scrollSelectionForm: ScrollSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollSelectionForm = scrollSelectionForm
-        
-
-        # throws Exception
-        def paint(self, graphics: Graphics, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from javax.microedition.lcdui.Graphics import Graphics
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollSelectionForm.paintItemTempHorizontal(graphics, index, item, dx, dy)
-    class ScrollSelectionFormHorizontalDx(ItemIndexDx):
-
-        def _init_fields(self) -> None:
-            self.scrollSelectionForm: ScrollSelectionForm = None
-        
-
-        def __init__(self, multipleScrollSelectionForm: ScrollSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollSelectionForm = multipleScrollSelectionForm
-        
-
-        # throws Exception
-        def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollSelectionForm.getSelectedIndexForPointHorizontalDx(index, item, dx, dy)
-    class ScrollSelectionFormVericalDx(ItemIndexDx):
-
-        def _init_fields(self) -> None:
-            self.scrollSelectionForm: ScrollSelectionForm = None
-        
-
-        def __init__(self, multipleScrollSelectionForm: ScrollSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollSelectionForm = multipleScrollSelectionForm
-        
-
-        # throws Exception
-        def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollSelectionForm.getSelectedIndexForPointVerticalDx(index, item, dx, dy)
-    class ScrollSelectionFormTempHorizontalDx(ItemIndexDx):
-
-        def _init_fields(self) -> None:
-            self.scrollSelectionForm: ScrollSelectionForm = None
-        
-
-        def __init__(self, multipleScrollSelectionForm: ScrollSelectionForm) -> None:
-            super().__init__()
-            self._init_fields()
-            self.scrollSelectionForm = multipleScrollSelectionForm
-        
-
-        # throws Exception
-        def getDx(self, index: int, item: ABCustomItem, dx: int, dy: int) -> int:
-            from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-            return self.scrollSelectionForm.getSelectedIndexForPointTempHorizontalDx(index, item, dx, dy)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
@@ -207,6 +102,12 @@ class ScrollSelectionForm(PaintableForm):
     # throws Exception
     def init(self, rectangle: Rectangle, formType: FormType) -> None:
         from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from org.allbinary.graphics.form.ScrollSelectionFormTempHorizontalPaintable import ScrollSelectionFormTempHorizontalPaintable
+        from org.allbinary.graphics.form.ScrollSelectionFormTempHorizontalDx import ScrollSelectionFormTempHorizontalDx
+        from org.allbinary.graphics.form.ScrollSelectionFormVerticalPaintable import ScrollSelectionFormVerticalPaintable
+        from org.allbinary.graphics.form.ScrollSelectionFormVericalDx import ScrollSelectionFormVericalDx
+        from org.allbinary.graphics.form.ScrollSelectionFormHorizontalPaintable import ScrollSelectionFormHorizontalPaintable
+        from org.allbinary.graphics.form.ScrollSelectionFormHorizontalDx import ScrollSelectionFormHorizontalDx
         from org.allbinary.graphics.Rectangle import Rectangle
         super().init(rectangle, formType)
         formTypeFactory: FormTypeFactory = FormTypeFactory.getInstance()

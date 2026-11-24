@@ -20,14 +20,21 @@ from __future__ import annotations
 class InputAutomationModuleFactoryFactory:
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.hashMap: dict = None
+        self.hashMap: HashMap = None
         self.defaultListModelHelper: DefaultListModelHelper = None
         self.helpSetListenerInterface: HelpSetListener = None
     
 
     def __init__(self, inputAutomationModuleConfigurations: InputAutomationModuleConfigurations, helpSetListenerInterface: HelpSetListener) -> None:
         from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
+        from java.util.Collection import Collection
+        from java.util.Iterator import Iterator
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
+        from org.allbinary.logic.StdUtil import StdUtil
         self._init_fields()
         self.helpSetListenerInterface = helpSetListenerInterface
         self.defaultListModelHelper = DefaultListModelHelper()
@@ -43,6 +50,8 @@ class InputAutomationModuleFactoryFactory:
     
 
     def add(self, inputAutomationModuleConfiguration: InputAutomationModuleConfiguration) -> None:
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+        from org.allbinary.logic.java.help.JavaHelpSetNotifier import JavaHelpSetNotifier
         inputAutomationModuleInterface: InputAutomationModuleFactoryInterface = inputAutomationModuleConfiguration.getInputAutomationModuleInterface()
         self.hashMap.put(inputAutomationModuleConfiguration.getName(), inputAutomationModuleInterface)
         self.defaultListModelHelper.add(inputAutomationModuleConfiguration.getName())
@@ -57,6 +66,7 @@ class InputAutomationModuleFactoryFactory:
     
 
     def getInstance(self, moduleName: str) -> InputAutomationModuleFactoryInterface:
+        from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF("Getting Module: " + moduleName, self, commonStrings.GET_INSTANCE)
         inputAutomationModuleFactoryInterface: InputAutomationModuleFactoryInterface = self.hashMap.get(moduleName)
@@ -70,11 +80,11 @@ class InputAutomationModuleFactoryFactory:
 # from javax.help.event.HelpSetEvent import HelpSetEvent
 # from javax.help.event.HelpSetListener import HelpSetListener
 # from javax.swing.ListModel import ListModel
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.help.JavaHelpSetNotifier import JavaHelpSetNotifier
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.help.JavaHelpSetNotifier import JavaHelpSetNotifier
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.activity.KeyInputViewCompositeInterface import KeyInputViewCompositeInterface
 
 
@@ -23,21 +24,27 @@ class NullKeyInputViewComposite(KeyInputViewCompositeInterface):
     
 
     def setKeyInputView(self, keyInputView: View) -> None:
+        from android.view.View import View
         pass
     
 
     def getRootView(self) -> View:
+        from android.view.View import View
         raise RuntimeError()
     
 
     def getView(self) -> View:
+        from android.view.View import View
         raise RuntimeError()
     
 
     def runOnUiThread(self, action: object) -> None:
         pass
-from android.view.View import View
+# from android.view.View import View
 
 
-NullKeyInputViewComposite.NULL_KEY_INPUT_VIEW_COMPOSITE = NullKeyInputViewComposite()
+def _NullKeyInputViewComposite_NULL_KEY_INPUT_VIEW_COMPOSITE() -> object:
+    return NullKeyInputViewComposite()
+
+lazy_static(NullKeyInputViewComposite, "NULL_KEY_INPUT_VIEW_COMPOSITE", _NullKeyInputViewComposite_NULL_KEY_INPUT_VIEW_COMPOSITE)
 

@@ -17,13 +17,15 @@ from __future__ import annotations
 
 import sys
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.gui.dialog.FileJDialogListenerInterface import FileJDialogListenerInterface
 from org.allbinary.gui.dialog.HashMapJDialogListenerInterface import HashMapJDialogListenerInterface
-from org.allbinary.graphics.j2me.JFrame import JFrame
-from org.allbinary.graphics.j2me.KeyListener import KeyListener
+# from java.awt.event.KeyListener import KeyListener
+# from javax.swing.JFrame import JFrame
 
 
-class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterface, KeyListener):
+class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterface, KeyListener)):
     MAXWORKAREAS: int = 10
     numberOfWorkAreas: int = 0
     PATH: str = "G:/mnt/bc/mydev/work/graphics/AllBinaryGraphicsJavaApplication"
@@ -32,6 +34,12 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     statusJLabel: JLabel = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.data.tree.dom.XslHelper import XslHelper
+        from org.allbinary.graphics.j2me.dialog.RotateJDialog import RotateJDialog
+        from org.allbinary.gui.dialog.FileJDialog import FileJDialog
+        from org.allbinary.logic.communication.log.GuiLog import GuiLog
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.guiLog: GuiLog = GuiLog.getInstance()
@@ -90,9 +98,8 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def __init__(self) -> None:
-        from org.allbinary.graphics.j2me.Dimension import Dimension
-        from org.allbinary.graphics.j2me.Dimension import Dimension
-        from org.allbinary.graphics.j2me.Dimension import Dimension
+        from org.allbinary.graphics.j2me.dialog.RotateJDialog import RotateJDialog
+        from org.allbinary.gui.dialog.FileJDialog import FileJDialog
         super().__init__()
         self._init_fields()
         self.initComponents()
@@ -105,79 +112,7 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.JToolBar import JToolBar
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JButton import JButton
-        from org.allbinary.graphics.j2me.JPanel import JPanel
-        from org.allbinary.graphics.j2me.JPanel import JPanel
-        from org.allbinary.graphics.j2me.JTabbedPane import JTabbedPane
-        from org.allbinary.graphics.j2me.JPanel import JPanel
-        from org.allbinary.graphics.j2me.JLabel import JLabel
-        from org.allbinary.graphics.j2me.JMenuBar import JMenuBar
-        from org.allbinary.graphics.j2me.JMenu import JMenu
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenu import JMenu
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenu import JMenu
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenu import JMenu
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenu import JMenu
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenuItem import JMenuItem
-        from org.allbinary.graphics.j2me.JMenu import JMenu
-        from org.allbinary.graphics.j2me.WindowAdapter import WindowAdapter
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.Dimension import Dimension
-        from org.allbinary.graphics.j2me.ChangeListener import ChangeListener
-        from org.allbinary.graphics.j2me.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
-        from org.allbinary.graphics.j2me.ActionListener import ActionListener
-        from org.allbinary.graphics.j2me.MouseAdapter import MouseAdapter
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.jToolBar1 = JToolBar()
         self.jButton2 = JButton()
         self.saveJButton = JButton()
@@ -289,7 +224,7 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
 #                 self.stopJjButtonMousePressed(evt)
 ))
         self.jToolBar1.add(self.stopJjButton)
-        self.getContentPane().add(self.jToolBar1, java.awt.BorderLayout.NORTH)
+        self.getContentPane().add(self.jToolBar1, BorderLayout.NORTH)
         self.jPanel1.setLayout(GridLayout(1, 0))
         self.mainJPanel.setLayout(GridLayout(1, 0))
         self.jTabbedPane.setMinimumSize(Dimension(550, 400))
@@ -301,11 +236,11 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
 ))
         self.mainJPanel.add(self.jTabbedPane)
         self.jPanel1.add(self.mainJPanel)
-        self.getContentPane().add(self.jPanel1, java.awt.BorderLayout.CENTER)
+        self.getContentPane().add(self.jPanel1, BorderLayout.CENTER)
         self.statusJPanel.setLayout(GridLayout(1, 0))
         MyFrame.statusJLabel.setText("Status Bar")
         self.statusJPanel.add(MyFrame.statusJLabel)
-        self.getContentPane().add(self.statusJPanel, java.awt.BorderLayout.SOUTH)
+        self.getContentPane().add(self.statusJPanel, BorderLayout.SOUTH)
         self.fileJMenu.setText("File")
         self.fileJMenu.addActionListener((ActionListener()  # Java anonymous class body:
 #             
@@ -453,6 +388,9 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def explodeAllJMenuItemMousePressed(self, evt: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
         try:
             MyCanvasEventService.fire(MyCanvasEvent(MyCanvasEventSource(MyCanvasEventService.EXPLODE, None)))
         except Exception as e:
@@ -460,6 +398,9 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def autoExplodeJMenuItemMousePressed(self, evt: MouseEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
         try:
             MyCanvasEventService.fire(MyCanvasEvent(MyCanvasEventSource(MyCanvasEventService.AUTOEXPLODE, None)))
         except Exception as e:
@@ -531,6 +472,9 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def centerJMenuItemActionPerformed(self, evt: ActionEvent) -> None:
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+        from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
         try:
             MyCanvasEventService.fire(MyCanvasEvent(MyCanvasEventSource(MyCanvasEventService.CENTER, None)))
         except Exception as e:
@@ -553,7 +497,11 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def onFiles(self, files: list[File]) -> None:
-        from org.allbinary.graphics.j2me.GridLayout import GridLayout
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+        from org.w3c.dom.Document import Document
         try:
             self.logUtil.putF("Reading: " + str(files), self, "onFiles")
             for index in range(0, len(files)):
@@ -567,25 +515,32 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
     
 
     def newGraphics(self) -> None:
+        from org.allbinary.graphics.j2me.dialog.NewWorkAreaJDialog import NewWorkAreaJDialog
+        from org.allbinary.log.LOGGING import LOGGING
         try:
             newName: str = "graphic" + str(MyFrame.numberOfWorkAreas)
             dim: Dimension = self.getSize()
             newDialog: NewWorkAreaJDialog = NewWorkAreaJDialog(self, False, dim, newName)
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.MENUEVENT):
+            if LOGGING.contains(LOGGING.MENUEVENT):
                 self.guiLog.put(self.commonStrings.EXCEPTION, self, "newJMenuItemActionPerformed", e)
     
 
     def openGraphics(self) -> None:
+        from org.allbinary.log.LOGGING import LOGGING
         try:
             self.logUtil.putF("Starting", self, "openImageJMenuItemActionPerformed")
             self.fileJDialog.setVisible(True)
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.MENUEVENT):
+            if LOGGING.contains(LOGGING.MENUEVENT):
                 self.guiLog.put(self.commonStrings.EXCEPTION, self, "open", e)
     
 
     def export(self) -> None:
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+        from org.allbinary.log.LOGGING import LOGGING
+        from org.w3c.dom.Document import Document
         try:
             workAreaJPanel: WorkAreaJPanelInterface = self.jTabbedPane.getSelectedComponent()
             file: File = File(self.SAVE_PATH + "/" + workAreaJPanel.getName() + self.JAVAEXTENSION)
@@ -593,31 +548,37 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
             self.logUtil.putF("Export: " + DomHelper.getInstance().toString(document), self, "exportJMenuItem1ActionPerformed")
             self.xslHelper.export(file, str(MyFrame.TEMPLATE_EXPORT_PATH) + "/" + self.JAVA_TEMPLATE, document)
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.MENUEVENT):
+            if LOGGING.contains(LOGGING.MENUEVENT):
                 self.guiLog.put(self.commonStrings.EXCEPTION, self, "export", e)
     
 
     def save(self) -> None:
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+        from org.allbinary.log.LOGGING import LOGGING
         try:
             workAreaJPanel: WorkAreaJPanelInterface = self.jTabbedPane.getSelectedComponent()
             DomHelper.getInstance().save(File(self.SAVE_PATH + "/" + workAreaJPanel.getName() + self.SAVEEXTENSION), workAreaJPanel.toDocument())
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.MENUEVENT):
+            if LOGGING.contains(LOGGING.MENUEVENT):
                 self.guiLog.put(self.commonStrings.EXCEPTION, self, self.commonStrings.SAVE, e)
     
 
     # throws Exception
-    def onHashMap(self, hashMap: dict) -> None:
+    def onHashMap(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         angleIncrementInteger: int = hashMap.get(str(0))
         totalRotationInteger: int = hashMap.get(str(1))
         self.getSelectedWorkArea().autoRotate(int(angleIncrementInteger), int(totalRotationInteger))
     
 
     def getSelectedWorkArea(self) -> WorkAreaJPanelInterface:
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
         return self.jTabbedPane.getSelectedComponent()
     
 
     def updateSelectedWorkArea(self) -> None:
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
         numberOfTabs: int = self.jTabbedPane.getTabCount()
         for index in range(0, numberOfTabs):
             workAreaJPanel: WorkAreaJPanelInterface = self.jTabbedPane.getComponentAt(index)
@@ -629,6 +590,8 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
 
     # throws Exception
     def add(self, newCanvasInterface: WorkAreaJPanelInterface) -> None:
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+        from org.allbinary.log.LOGGING import LOGGING
         try:
             self.numberOfWorkAreas += 1
             if self.numberOfWorkAreas == MyFrame.MAXWORKAREAS:
@@ -639,7 +602,7 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
             animationThread.start()
             self.updateSelectedWorkArea()
         except Exception as e:
-            if self.LOGGING.contains(self.LOGGING.GRAPHICSCREATION):
+            if LOGGING.contains(LOGGING.GRAPHICSCREATION):
                 self.guiLog.put(self.commonStrings.EXCEPTION, self, "addNewCanvas", e)
     
 
@@ -657,6 +620,10 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
 
     @staticmethod
     def main(args: list[str]) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+        from org.allbinary.math.AngleFactory import AngleFactory
+        from org.allbinary.string.CommonStrings import CommonStrings
         try:
             AngleFactory.getInstance()
             SmallIntegerSingletonFactory.getInstance().init()
@@ -668,28 +635,54 @@ class MyFrame(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterf
 # from java.io.File import File
 # from java.util.HashMap import HashMap
 # from javax.swing import *
-from org.allbinary.data.tree.dom.XslHelper import XslHelper
-from org.allbinary.dom.DomHelper import DomHelper
-from org.allbinary.graphics.j2me.dialog.NewWorkAreaJDialog import NewWorkAreaJDialog
-from org.allbinary.graphics.j2me.dialog.RotateJDialog import RotateJDialog
-from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
-from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
-from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
-from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
-from org.allbinary.gui.dialog.FileJDialog import FileJDialog
-from org.allbinary.log.LOGGING import LOGGING
-from org.allbinary.logic.communication.log.GuiLog import GuiLog
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
+# from org.allbinary.data.tree.dom.XslHelper import XslHelper
+# from org.allbinary.dom.DomHelper import DomHelper
+# from org.allbinary.graphics.j2me.dialog.NewWorkAreaJDialog import NewWorkAreaJDialog
+# from org.allbinary.graphics.j2me.dialog.RotateJDialog import RotateJDialog
+# from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEvent import MyCanvasEvent
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventService import MyCanvasEventService
+# from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventSource import MyCanvasEventSource
+# from org.allbinary.gui.dialog.FileJDialog import FileJDialog
+# from org.allbinary.log.LOGGING import LOGGING
+# from org.allbinary.logic.communication.log.GuiLog import GuiLog
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from java.awt.BorderLayout import BorderLayout
+# from java.awt.Dimension import Dimension
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from java.awt.event.KeyEvent import KeyEvent
+# from java.awt.event.MouseAdapter import MouseAdapter
+# from java.awt.event.MouseEvent import MouseEvent
+# from java.awt.event.WindowAdapter import WindowAdapter
+# from java.awt.event.WindowEvent import WindowEvent
+# from javax.swing.JButton import JButton
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JMenu import JMenu
+# from javax.swing.JMenuBar import JMenuBar
+# from javax.swing.JMenuItem import JMenuItem
+# from javax.swing.JPanel import JPanel
+# from javax.swing.JTabbedPane import JTabbedPane
+# from javax.swing.JToolBar import JToolBar
+# from javax.swing.event.ChangeEvent import ChangeEvent
+# from javax.swing.event.ChangeListener import ChangeListener
 
 
-MyFrame.SAVE_PATH = str(MyFrame.PATH) + "/save"
+def _MyFrame_SAVE_PATH() -> object:
+    return str(MyFrame.PATH) + "/save"
 
-MyFrame.TEMPLATE_EXPORT_PATH = str(MyFrame.PATH) + "/templates/export"
+lazy_static(MyFrame, "SAVE_PATH", _MyFrame_SAVE_PATH)
+
+def _MyFrame_TEMPLATE_EXPORT_PATH() -> object:
+    return str(MyFrame.PATH) + "/templates/export"
+
+lazy_static(MyFrame, "TEMPLATE_EXPORT_PATH", _MyFrame_TEMPLATE_EXPORT_PATH)
 

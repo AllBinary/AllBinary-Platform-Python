@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class CategoryData:
     instance: CategoryData = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
         self.PARENT: str = "CATEGORY_PARENT"
         self.NAME: str = "CATEGORY_NAME"
         self.PATH: str = "CATEGORY_PATH"
@@ -40,8 +42,11 @@ class CategoryData:
 
     def __init__(self) -> None:
         self._init_fields()
-from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+# from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
 
 
-CategoryData.instance = CategoryData()
+def _CategoryData_instance() -> object:
+    return CategoryData()
+
+lazy_static(CategoryData, "instance", _CategoryData_instance)
 

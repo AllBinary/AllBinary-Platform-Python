@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FinalPositionRaceTrackFactory:
@@ -48,5 +49,8 @@ class FinalPositionRaceTrackFactory:
         FinalPositionRaceTrackFactory.index = FinalPositionRaceTrackFactory.FIRST_POSITION
 
 
-FinalPositionRaceTrackFactory.index = FinalPositionRaceTrackFactory.FIRST_POSITION
+def _FinalPositionRaceTrackFactory_index() -> object:
+    return FinalPositionRaceTrackFactory.FIRST_POSITION
+
+lazy_static(FinalPositionRaceTrackFactory, "index", _FinalPositionRaceTrackFactory_index)
 

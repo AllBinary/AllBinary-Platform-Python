@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
-class LivesHudWidget(BasicHud, PaintableInterface):
+class LivesHudWidget(*java_bases(BasicHud, PaintableInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation

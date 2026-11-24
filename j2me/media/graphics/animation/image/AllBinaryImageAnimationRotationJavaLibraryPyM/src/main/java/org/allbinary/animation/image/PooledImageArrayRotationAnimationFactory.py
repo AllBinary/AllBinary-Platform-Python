@@ -37,7 +37,7 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
         from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         angleIncrement: int = (totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())
-        return PooledImageArrayRotationAnimationFactory(image, image.getWidth(), image.getHeight(), -(image.getWidth() >> 2), -(image.getHeight() >> 2), angleIncrement, animationBehaviorFactory)
+        return PooledImageArrayRotationAnimationFactory(image, image.getWidth(), image.getHeight(), -image.getWidth() >> 2, -image.getHeight() >> 2, angleIncrement, animationBehaviorFactory)
     
 
     # throws Exception

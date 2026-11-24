@@ -15,38 +15,61 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.customizer.generic.page.PageView import PageView
 
 
-class PageValidationView(PageView, ValidationComponentInterface):
+class PageValidationView(*java_bases(PageView, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, "PageViewValidation()")
     
 
     def isValid(self) -> bool:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.logic.visual.transform.template.customizer.page.PageValidation import PageValidation
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
+        from org.w3c.dom.Document import Document
+        from views.business.context.modules.storefront.customizer.CustomizerUtil import CustomizerUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             isValid: bool = True
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.IS_VALID)
             transformInfoEntityInterface: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
             pageObjectConfigInterface: TransformInfoObjectConfigInterface = self.getTransformInfoInterface().getObjectConfigInterface()
             allViewsToBeModifiedVector: BasicArrayList = pageObjectConfigInterface.getGroupTransforms()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Views To Be Modified: " + str(allViewsToBeModifiedVector.size()), self, "get(transformInfoInterface)")
             size: int = allViewsToBeModifiedVector.size()
             for index in range(0, size):
                 transformInfoInterface: TransformInfo = allViewsToBeModifiedVector.get(index)
                 viewNameOfViewToBeModified: str = transformInfoInterface.getName()
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append(self.getTransformInfoInterface().getName())
                     stringBuffer.append(" is modifying view: ")
@@ -54,13 +77,13 @@ class PageValidationView(PageView, ValidationComponentInterface):
                     self.logUtil.putF(str(stringBuffer), self, "insert()")
                 httpTransformInfoInterface: TransformInfoHttpInterface = self.getTransformInfoInterface()
                 specifiedTransformInfoInterface: TransformInfoInterface = transformInfoEntityInterface.get(viewNameOfViewToBeModified, httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append(self.getTransformInfoInterface().getName())
                     stringBuffer.append(" is adding data to view: ")
                     stringBuffer.append(viewNameOfViewToBeModified)
                     self.logUtil.putF(str(stringBuffer), self, "insert()")
-                hashMap: dict = StdUtil.getInstance().createHashMap()
+                hashMap: HashMap = StdUtil.getInstance().createHashMap()
                 title: str = specifiedTransformInfoInterface.getName().substring(self.getTransformInfoInterface().getStoreName().length())
                 if ((title > "index") - (title < "index")) == 0:
                     hashMap.put(TitleData.getInstance().TEXT, str(self.getTransformInfoInterface().getStoreName()) + " - Home Page")
@@ -73,7 +96,7 @@ class PageValidationView(PageView, ValidationComponentInterface):
                     document: Document = DomDocumentHelper.create()
                     document.appendChild(pageValidation.toXmlNode(document))
                     documentString: str = XmlDocumentHelper.toString(document)
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append(viewNameOfViewToBeModified)
                         stringBuffer.append(" is changing data in ")
@@ -84,12 +107,26 @@ class PageValidationView(PageView, ValidationComponentInterface):
                     CustomizerUtil.getInstance().write(specifiedTransformInfoInterface, documentString)
             return isValid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to validate", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+        from org.allbinary.logic.visual.transform.template.customizer.page.PageValidation import PageValidation
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             transformInfoEntityInterface: TransformInfoEntity = TransformInfoEntityBuilder.getInstance()
@@ -101,7 +138,7 @@ class PageValidationView(PageView, ValidationComponentInterface):
                 transformInfoInterface: TransformInfo = allViewsToBeModifiedVector.get(index)
                 viewNameOfViewToBeModified: str = transformInfoInterface.getName()
                 specifiedTransformInfoInterface: TransformInfoInterface = transformInfoEntityInterface.get(viewNameOfViewToBeModified, httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
-                hashMap: dict = StdUtil.getInstance().createHashMap()
+                hashMap: HashMap = StdUtil.getInstance().createHashMap()
                 title: str = specifiedTransformInfoInterface.getName().substring(self.getTransformInfoInterface().getStoreName().length())
                 if ((title > "index") - (title < "index")) == 0:
                     hashMap.put(TitleData.getInstance().TEXT, str(self.getTransformInfoInterface().getStoreName()) + " - Home Page")
@@ -114,34 +151,45 @@ class PageValidationView(PageView, ValidationComponentInterface):
                     stringBuffer.append("PageValidation Info:" + str(pageValidation.validationInfo()))
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "An auto generated page name was invalid."
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
-from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
-from org.allbinary.logic.visual.transform.template.customizer.page.PageValidation import PageValidation
-from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from views.business.context.modules.storefront.customizer.CustomizerUtil import CustomizerUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity
+# from org.allbinary.data.tables.transform.info.TransformInfoEntityBuilder import TransformInfoEntityBuilder
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
+# from org.allbinary.logic.visual.transform.template.customizer.page.PageValidation import PageValidation
+# from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from views.business.context.modules.storefront.customizer.CustomizerUtil import CustomizerUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

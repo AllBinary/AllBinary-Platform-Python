@@ -23,11 +23,16 @@ class PrintLicenseInitInfo:
     
 
     def __init__(self, options: list[str]) -> None:
-        LicenseInitInfoUtil.getInstance().setFilePath(PrintLicenseInitInfo.PATH + self.PATH_GLOBALS.getInstance().INIT_PATH)
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        LicenseInitInfoUtil.getInstance().setFilePath(PrintLicenseInitInfo.PATH + PATH_GLOBALS.getInstance().INIT_PATH)
     
 
     # throws Exception
     def getLicenseInitInfo(self) -> LicenseInitInfo:
+        from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+        from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from org.allbinary.logic.io.file.FileFactory import FileFactory
         licenseInitInfoUtil: LicenseInitInfoUtil = LicenseInitInfoUtil.getInstance()
         if FileFactory.getInstance().isFile(licenseInitInfoUtil.getFilePath()):
             return licenseInitInfoUtil.read()
@@ -37,6 +42,8 @@ class PrintLicenseInitInfo:
     
 
     def printInitInfo(self) -> None:
+        from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             licenseInitInfo: LicenseInitInfo = self.getLicenseInitInfo()
             print("License ID: " + str(licenseInitInfo.getLicenseId()))
@@ -54,10 +61,10 @@ class PrintLicenseInitInfo:
     def main(args: list[str]) -> None:
         initInfo: PrintLicenseInitInfo = PrintLicenseInitInfo(args)
         initInfo.printInitInfo()
-from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
-from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
-from org.allbinary.logic.io.file.FileFactory import FileFactory
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
+# from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+# from org.allbinary.logic.io.file.FileFactory import FileFactory
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

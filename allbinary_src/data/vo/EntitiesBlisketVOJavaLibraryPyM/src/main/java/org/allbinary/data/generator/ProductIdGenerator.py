@@ -25,17 +25,19 @@ class ProductIdGenerator(UniqueIdGenerator):
     
 
     def __init__(self) -> None:
-        from org.allbinary.data.generator.UniqueIdGenerator import UniqueIdGenerator
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.string.StringMaker import StringMaker
         super().__init__()
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(self.URLGLOBALS.getMainPath())
-        stringBuffer.append(self.PATH_GLOBALS.getInstance().INIT_PATH)
+        stringBuffer.append(URLGLOBALS.getMainPath())
+        stringBuffer.append(PATH_GLOBALS.getInstance().INIT_PATH)
         stringBuffer.append(self.IDFILE)
         stringBuffer.append(UniqueIdGenerator.EXT)
         super().setFile(str(stringBuffer), self.IDFILE)
-from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

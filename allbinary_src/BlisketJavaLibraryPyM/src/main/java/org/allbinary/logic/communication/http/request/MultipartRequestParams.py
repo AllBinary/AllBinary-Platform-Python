@@ -21,23 +21,28 @@ from org.allbinary.logic.communication.http.request.RequestParams import Request
 class MultipartRequestParams(RequestParams):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.special: bool = False
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, request: HttpServletRequest) -> None:
+    def _constructor1_1(self, request: HttpServletRequest) -> None:
         super().__init__()
         self._init_fields()
         self.processMultipartRequest(request)
     
 
-    def _constructor1(self, pageContext: PageContext) -> None:
+    def _constructor1_2(self, pageContext: PageContext) -> None:
         super().__init__()
         self._init_fields()
         self.processMultipartRequest(pageContext.getRequest())
@@ -48,11 +53,20 @@ class MultipartRequestParams(RequestParams):
     
 
     def processMultipartRequest(self, request: HttpServletRequest) -> None:
+        from java.util.HashMap import HashMap
+        from java.util.List import List
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.file.upload.AbFileUploadFactory import AbFileUploadFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.apache.commons.fileupload.FileItem import FileItem
+        from org.apache.commons.fileupload.FileUploadBase.InvalidContentTypeException import InvalidContentTypeException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            specialRequest: dict = StdUtil.getInstance().createHashMap()
+            specialRequest: HashMap = StdUtil.getInstance().createHashMap()
             multipartRequestList: List = AbFileUploadFactory.getInstance().getFileItemStreamList(request)
             if multipartRequestList is not None:
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                     self.logUtil.putF("FileItem List Size: " + str(multipartRequestList.size()), self, "processMultipartRequest()")
                 fileItemArray: list[object] = multipartRequestList.toArray()
                 size: int = len(fileItemArray)
@@ -63,22 +77,23 @@ class MultipartRequestParams(RequestParams):
                         specialRequest.put(fileItem.getFieldName(), fileItem.getString())
                     else:
                         specialRequest.put(fileItem.getFieldName(), fileItem)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                     self.logUtil.putF("Special Request Data: " + str(specialRequest), self, "processMultipartRequest()")
                 self.setSpecial()
                 self.setMap(specialRequest)
         except InvalidContentTypeException as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                 self.logUtil.putF("Using Normal RequestParams", self, "processMultipartRequest()")
             super().setMap(request.getParameterMap())
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUESTERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUESTERROR):
                 self.logUtil.putF("Should Not Occur", self, "processMultipartRequest()")
             super().setMap(request.getParameterMap())
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         if self.special:
             return self.getMap()
         else:
@@ -87,11 +102,13 @@ class MultipartRequestParams(RequestParams):
 # from java.util.List import List
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.file.upload.AbFileUploadFactory import AbFileUploadFactory
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.apache.commons.fileupload.FileItem import FileItem
-from org.apache.commons.fileupload.FileUploadBase.InvalidContentTypeException import InvalidContentTypeException
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.file.upload.AbFileUploadFactory import AbFileUploadFactory
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.apache.commons.fileupload.FileItem import FileItem
+# from org.apache.commons.fileupload.FileUploadBase.InvalidContentTypeException import InvalidContentTypeException
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

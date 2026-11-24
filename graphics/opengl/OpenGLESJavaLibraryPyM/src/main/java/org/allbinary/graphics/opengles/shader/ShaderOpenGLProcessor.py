@@ -14,22 +14,27 @@ class ShaderOpenGLProcessor(OpenGLProcessor):
     
 
     def process0(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def process1(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def process(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def process2(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
     
 
     def process3(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         pass
 # from javax.microedition.khronos.opengles.GL10 import GL10
 

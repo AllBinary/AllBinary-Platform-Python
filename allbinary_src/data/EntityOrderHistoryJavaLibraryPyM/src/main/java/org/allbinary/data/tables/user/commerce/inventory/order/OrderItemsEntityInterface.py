@@ -31,19 +31,24 @@ class OrderItemsEntityInterface(BasicDataTableInterface):
     
 
     def getBasketReview(self, orderId: str) -> BasketReview:
+        from org.allbinary.business.user.commerce.inventory.basket.BasketReview import BasketReview
         raise NotImplementedError()
     
 
-    def insert(self, userName: str, order: OrderInterface) -> None:
+    def insert_j2(self, userName: str, order: OrderInterface) -> None:
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
         raise NotImplementedError()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def insert(self, values: BasicArrayList) -> None:
+    def insert_j1(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.inventory.basket.BasketReview import BasketReview
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+
+    def insert(self, *args):
+        return getattr(self, "insert_j" + str(len(args)))(*args)
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.inventory.basket.BasketReview import BasketReview
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
 
 

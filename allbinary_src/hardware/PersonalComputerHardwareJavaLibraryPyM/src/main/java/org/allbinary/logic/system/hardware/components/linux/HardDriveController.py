@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.HardDriveControllerInterface import HardDriveControllerInterface
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
 
 
-class HardDriveController(HardwareComponentInterface, HardDriveControllerInterface):
+class HardDriveController(*java_bases(HardwareComponentInterface, HardDriveControllerInterface)):
 
     def _init_fields(self) -> None:
         self.data: str = None

@@ -21,6 +21,7 @@ from tags.StoreValidationTransformTag import StoreValidationTransformTag
 class OrderHistoryTag(StoreValidationTransformTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.status: str = None
     
@@ -36,6 +37,10 @@ class OrderHistoryTag(StoreValidationTransformTag):
 
     # throws LicensingException
     def setOrderStatus(self) -> str:
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from taghelpers.OrderHistoryHelperFactory import OrderHistoryHelperFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = OrderHistoryHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             helperClass: type = type(anyType)
@@ -46,13 +51,17 @@ class OrderHistoryTag(StoreValidationTransformTag):
             raise e
         except Exception as e:
             error: str = "Failed to view order table"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "setOrderStatus()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             self.setName("Basic Order History View")
             self.setObjectFile("views.generic.order.history.ValidationView")
@@ -60,7 +69,7 @@ class OrderHistoryTag(StoreValidationTransformTag):
                 if self.getCommand().compareTo(OrderHistoryData.SETSTATUS) == 0:
                     self.getPropertiesHashMap().put(OrderHistoryData.STATUS, self.status)
                     self.pageContext.getOut().print_(self.setOrderStatus())
-                elif self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                elif self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     pass
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
@@ -74,10 +83,13 @@ class OrderHistoryTag(StoreValidationTransformTag):
             return self.SKIP_BODY
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from taghelpers.OrderHistoryHelperFactory import OrderHistoryHelperFactory
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from taghelpers.OrderHistoryHelperFactory import OrderHistoryHelperFactory
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

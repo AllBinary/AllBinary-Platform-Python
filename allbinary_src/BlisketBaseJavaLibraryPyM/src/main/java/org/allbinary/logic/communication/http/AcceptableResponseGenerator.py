@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class AcceptableResponseGenerator:
     instance: AcceptableResponseGenerator = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -36,29 +38,37 @@ class AcceptableResponseGenerator:
     # throws Exception
     def get(self, httpServletRequest: HttpServletRequest) -> str:
         from org.allbinary.logic.communication.http.AcceptableResponseUtil import AcceptableResponseUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             acceptableResponseUtil: AcceptableResponseUtil = AcceptableResponseUtil.getInstance()
             acceptable: str = httpServletRequest.getHeader("accept")
             result: str = acceptableResponseUtil.getTagName(0)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTP):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTP):
                 self.logUtil.putF("Request Type: " + acceptable, self, commonStrings.GET)
             if acceptable is not None:
                 size: int = acceptableResponseUtil.size()
                 for index in range(0, size):
                     if ((acceptable > acceptableResponseUtil.get(index)) - (acceptable < acceptableResponseUtil.get(index))) == 0:
                         result = acceptableResponseUtil.getTagName(index)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTP):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTP):
                 self.logUtil.putF("Response Type: " + result, self, commonStrings.GET)
             return result
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET, e)
             raise e
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-AcceptableResponseGenerator.instance = AcceptableResponseGenerator()
+def _AcceptableResponseGenerator_instance() -> object:
+    return AcceptableResponseGenerator()
+
+lazy_static(AcceptableResponseGenerator, "instance", _AcceptableResponseGenerator_instance)
 

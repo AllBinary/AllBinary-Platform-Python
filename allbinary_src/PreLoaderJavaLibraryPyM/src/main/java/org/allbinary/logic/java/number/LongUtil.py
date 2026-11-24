@@ -28,6 +28,8 @@ class LongUtil:
     def fillIn(end: str) -> str:
         from org.allbinary.logic.java.number.LongData import LongData
         from org.allbinary.logic.java.number.LongData import LongData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         frameStringBuffer: StringMaker = StringMaker()
         if frameStringBuffer.length() < LongData.MAX_LONG_LENGTH:
             commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
@@ -36,7 +38,7 @@ class LongUtil:
                 frameStringBuffer.append(commonPhoneStrings.ZERO)
         frameStringBuffer.append(end)
         return str(frameStringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
 
 

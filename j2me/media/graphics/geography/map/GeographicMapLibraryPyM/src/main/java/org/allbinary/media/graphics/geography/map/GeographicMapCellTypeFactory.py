@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class GeographicMapCellTypeFactory:
     instance: GeographicMapCellTypeFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.geographicMapCellTypeArray: list[GeographicMapCellType] = [None] * (512)
 
@@ -55,8 +57,11 @@ class GeographicMapCellTypeFactory:
 
     def isPath(self, cellType: GeographicMapCellType) -> bool:
         raise RuntimeError()
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-GeographicMapCellTypeFactory.instance = GeographicMapCellTypeFactory()
+def _GeographicMapCellTypeFactory_instance() -> object:
+    return GeographicMapCellTypeFactory()
+
+lazy_static(GeographicMapCellTypeFactory, "instance", _GeographicMapCellTypeFactory_instance)
 

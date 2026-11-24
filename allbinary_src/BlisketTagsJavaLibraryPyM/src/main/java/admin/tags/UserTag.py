@@ -26,6 +26,7 @@ class UserTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.UserHelperFactory import UserHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(UserHelperFactory())
@@ -33,17 +34,20 @@ class UserTag(TableTag):
     
 
     def setRole(self, value: str) -> None:
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
         self.role = value
         self.getPropertiesHashMap().put(UserRoleData.NAME, self.role)
     
 
     def setEnable(self, value: str) -> None:
+        from org.allbinary.business.entry.EntryData import EntryData
         self.enable = value
         self.getPropertiesHashMap().put(EntryData.getInstance().ENABLE, self.enable)
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         try:
             if self.isEnabled():
                 return super().doStartTag()
@@ -52,9 +56,9 @@ class UserTag(TableTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.UserHelperFactory import UserHelperFactory
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.role.UserRoleData import UserRoleData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from admin.taghelpers.UserHelperFactory import UserHelperFactory
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.role.UserRoleData import UserRoleData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
 
 

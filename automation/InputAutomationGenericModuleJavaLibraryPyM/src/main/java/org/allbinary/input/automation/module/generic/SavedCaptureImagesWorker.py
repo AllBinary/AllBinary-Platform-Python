@@ -16,15 +16,20 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
-class SavedCaptureImagesWorker(BasicEventHandler, CaptureWorkerInterface):
+class SavedCaptureImagesWorker(*java_bases(BasicEventHandler, CaptureWorkerInterface)):
     index: int = None
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
+        from org.allbinary.input.media.image.capture.ScreenScavangerRobot import ScreenScavangerRobot
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.running: bool = False
@@ -33,6 +38,9 @@ class SavedCaptureImagesWorker(BasicEventHandler, CaptureWorkerInterface):
     
 
     def __init__(self, savedCaptureGenericProfileDataWorkerType: SavedCaptureGenericProfileDataWorkerType) -> None:
+        from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
+        from org.allbinary.input.media.image.capture.ProcessingFrameIndexFactory import ProcessingFrameIndexFactory
+        from org.allbinary.input.media.image.capture.ScreenScavangerRobot import ScreenScavangerRobot
         super().__init__()
         self._init_fields()
         self.savedCaptureGenericProfileDataWorkerType = savedCaptureGenericProfileDataWorkerType
@@ -62,6 +70,14 @@ class SavedCaptureImagesWorker(BasicEventHandler, CaptureWorkerInterface):
     
 
     def run(self) -> None:
+        from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
+        from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
+        from org.allbinary.logic.java.number.LongUtil import LongUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
+        from org.allbinary.media.image.cache.BufferedImageFrameCacheable import BufferedImageFrameCacheable
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -92,18 +108,18 @@ class SavedCaptureImagesWorker(BasicEventHandler, CaptureWorkerInterface):
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.File import File
 # from javax.imageio.ImageIO import ImageIO
-from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
-from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
-from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
-from org.allbinary.input.media.image.capture.ProcessingFrameIndexFactory import ProcessingFrameIndexFactory
-from org.allbinary.input.media.image.capture.ScreenScavangerRobot import ScreenScavangerRobot
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.java.number.LongUtil import LongUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
-from org.allbinary.media.image.cache.BufferedImageFrameCacheable import BufferedImageFrameCacheable
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.input.automation.module.generic.configuration.profile.SavedCaptureGenericProfileDataWorkerType import SavedCaptureGenericProfileDataWorkerType
+# from org.allbinary.input.media.image.capture.CapturedBufferedImagesCacheSingleton import CapturedBufferedImagesCacheSingleton
+# from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
+# from org.allbinary.input.media.image.capture.ProcessingFrameIndexFactory import ProcessingFrameIndexFactory
+# from org.allbinary.input.media.image.capture.ScreenScavangerRobot import ScreenScavangerRobot
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.java.number.LongUtil import LongUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
+# from org.allbinary.media.image.cache.BufferedImageFrameCacheable import BufferedImageFrameCacheable
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 

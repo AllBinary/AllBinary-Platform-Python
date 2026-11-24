@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.dialog.JDialog import JDialog
+# from javax.swing.JDialog import JDialog
 
 
 class NewWorkAreaJDialog(JDialog):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.j2me.MyFrame import MyFrame
         self.parent: MyFrame = None
         self.dimension: Dimension = None
         self.xSizeJTextField: JTextField = None
@@ -29,16 +30,7 @@ class NewWorkAreaJDialog(JDialog):
     
 
     def __init__(self, parent: MyFrame, modal: bool, dimension: Dimension, newName: str) -> None:
-        from org.allbinary.graphics.j2me.dialog.JTextField import JTextField
-        from org.allbinary.graphics.j2me.dialog.JTextField import JTextField
-        from org.allbinary.graphics.j2me.dialog.JTextField import JTextField
-        from org.allbinary.graphics.j2me.dialog.JButton import JButton
-        from org.allbinary.graphics.j2me.dialog.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.dialog.JLabel import JLabel
-        from org.allbinary.graphics.j2me.dialog.JLabel import JLabel
-        from org.allbinary.graphics.j2me.dialog.JLabel import JLabel
-        from org.allbinary.graphics.j2me.dialog.JLabel import JLabel
-        from org.allbinary.graphics.j2me.dialog.JLabel import JLabel
+        from org.allbinary.graphics.j2me.MyFrame import MyFrame
         super().__init__(parent, modal)
         self._init_fields()
         try:
@@ -76,7 +68,9 @@ class NewWorkAreaJDialog(JDialog):
 
     # throws Exception
     def disposeNewDialog(self) -> None:
-        from org.allbinary.graphics.j2me.dialog.GridLayout import GridLayout
+        from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
         try:
             canvasWidth: int = int(self.xSizeJTextField.getText())
             canvasHeight: int = int(self.ySizeJTextField.getText())
@@ -92,7 +86,6 @@ class NewWorkAreaJDialog(JDialog):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.dialog.WindowAdapter import WindowAdapter
         self.addWindowListener((WindowAdapter()  # Java anonymous class body:
 #             
 # 
@@ -109,18 +102,24 @@ class NewWorkAreaJDialog(JDialog):
 
     @staticmethod
     def main(args: list[str]) -> None:
-        from org.allbinary.graphics.j2me.dialog.Dimension import Dimension
+        from org.allbinary.graphics.j2me.MyFrame import MyFrame
         try:
             NewWorkAreaJDialog(MyFrame(), True, Dimension(100, 100), "testing").show()
         except Exception as e:
             pass
-# from java.awt import *
+# from java.awt.Dimension import Dimension
+# from java.awt.GridLayout import GridLayout
 # from java.awt.event.ActionEvent import ActionEvent
 # from java.awt.event.ActionListener import ActionListener
-# from javax.swing import *
-from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
-from org.allbinary.graphics.j2me.MyFrame import MyFrame
-from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
-from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+# from javax.swing.JTextField import JTextField
+# from javax.swing.JButton import JButton
+# from javax.swing.JLabel import JLabel
+# from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
+# from org.allbinary.graphics.j2me.MyFrame import MyFrame
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
+# from java.awt.Frame import Frame
+# from java.awt.event.WindowAdapter import WindowAdapter
+# from java.awt.event.WindowEvent import WindowEvent
 
 

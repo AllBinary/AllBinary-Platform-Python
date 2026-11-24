@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.part.PartInterface import PartInterface
 from org.allbinary.game.part.weapon.SalvoInterface import SalvoInterface
 
 
-class BasicWeaponPart(PartInterface, SalvoInterface):
+class BasicWeaponPart(*java_bases(PartInterface, SalvoInterface)):
     NULL_BASIC_WEAPON_PART: BasicWeaponPart = None
 
     def _init_fields(self) -> None:

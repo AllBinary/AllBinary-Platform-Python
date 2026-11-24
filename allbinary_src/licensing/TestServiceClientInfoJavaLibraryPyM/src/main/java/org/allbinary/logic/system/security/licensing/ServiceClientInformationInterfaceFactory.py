@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.system.security.licensing.TestClientInformation import TestClientInformation
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ServiceClientInformationInterfaceFactory:
-    instance: TestClientInformation = TestClientInformation()
+    instance: TestClientInformation = None
     
 
     @staticmethod
     def getInstance() -> AbeClientInformationInterface:
         return ServiceClientInformationInterfaceFactory.instance
 
+
+def _ServiceClientInformationInterfaceFactory_instance() -> object:
+    from org.allbinary.logic.system.security.licensing.TestClientInformation import TestClientInformation
+    return TestClientInformation()
+
+lazy_static(ServiceClientInformationInterfaceFactory, "instance", _ServiceClientInformationInterfaceFactory_instance)
 

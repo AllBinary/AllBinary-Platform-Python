@@ -28,11 +28,14 @@ class OrderHistoryHelperFactory:
 
     # throws LicensingException
     @staticmethod
-    def getInstance(hashMap: dict, pageContext: PageContext) -> object:
+    def getInstance(hashMap: HashMap, pageContext: PageContext) -> object:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from admin.taghelpers.HelperFactory import HelperFactory
         return HelperFactory.getInstance(OrderHistoryHelperFactory.FACTORYNAME, OrderHistoryHelperFactory.CLASSNAME, hashMap, pageContext)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from admin.taghelpers.HelperFactory import HelperFactory
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.HelperFactory import HelperFactory
 
 

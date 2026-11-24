@@ -21,10 +21,15 @@ class DesktopBundle:
     DESKTOP_SYMBOLIC_NAME: str = "org.knopflerfish.bundle.desktop"
 
     def _init_fields(self) -> None:
+        from org.osgi.framework.Bundle import Bundle
         self.bundle: Bundle = None
     
 
     def __init__(self) -> None:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+        from org.allbinary.gui.dialog.BasicTextJDialog import BasicTextJDialog
         self._init_fields()
         bundleContext: BundleContext = InputAutomationBundleActivator.getBundleContext()
         if bundleContext is not None:
@@ -42,10 +47,10 @@ class DesktopBundle:
     # throws Exception
     def start(self) -> None:
         self.bundle.start()
-# from javax.swing import *
-from org.osgi.framework.Bundle import Bundle
-from org.osgi.framework.BundleContext import BundleContext
-from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
-from org.allbinary.gui.dialog.BasicTextJDialog import BasicTextJDialog
+# from javax.swing.JDialog import JDialog
+# from org.osgi.framework.Bundle import Bundle
+# from org.osgi.framework.BundleContext import BundleContext
+# from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+# from org.allbinary.gui.dialog.BasicTextJDialog import BasicTextJDialog
 
 

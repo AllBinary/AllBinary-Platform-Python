@@ -21,6 +21,8 @@ from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterfa
 class RootStoreCategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.categoryPropertiesInterface: CategoryPropertiesInterface = None
 
@@ -28,51 +30,72 @@ class RootStoreCategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
         if len(args) == 1:
             self._constructor1(*args)
         elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_2(*args)
+        else:
+            self._constructor2_3(*args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
         from org.allbinary.business.category.properties.root.store.RootStoreCategoryProperties import RootStoreCategoryProperties
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface)
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, abPath: AbPath) -> None:
+    def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, abPath: AbPath) -> None:
         from org.allbinary.business.category.properties.root.store.RootStoreCategoryProperties import RootStoreCategoryProperties
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface, abPath)
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, node: Node) -> None:
+    def _constructor2_2(self, transformInfoInterface: TransformInfoInterface, node: Node) -> None:
         from org.allbinary.business.category.properties.root.store.RootStoreCategoryProperties import RootStoreCategoryProperties
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface, node)
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, categoryPropertiesHashMap: dict) -> None:
+    def _constructor2_3(self, transformInfoInterface: TransformInfoInterface, categoryPropertiesHashMap: HashMap) -> None:
         from org.allbinary.business.category.properties.root.store.RootStoreCategoryProperties import RootStoreCategoryProperties
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface, categoryPropertiesHashMap)
     
 
     def getInstance(self) -> CategoryPropertiesInterface:
+        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.categoryPropertiesInterface
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return None
 # from java.util.HashMap import HashMap
-from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

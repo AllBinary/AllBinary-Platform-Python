@@ -15,20 +15,28 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.waypoint.Waypoint import Waypoint
 
 
 class WorkWaypoint(Waypoint):
-    ID: int = SmallIntegerSingletonFactory.getInstance().getAt(25)
+    ID: int = None
     
 
     def __init__(self, ownerLayer: PathFindingLayerInterface) -> None:
+        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+        from org.allbinary.media.audio.WorkSound import WorkSound
         super().__init__(ownerLayer, WorkSound.getInstance())
     
 
     # throws Exception
     def visit(self, unitLayer: UnitLayer) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.game.layer.geological.resources.GeologicalGeographicMapCellPosition import GeologicalGeographicMapCellPosition
+        from org.allbinary.game.layer.geological.resources.GeologicalResource import GeologicalResource
+        from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+        from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         if unitLayer.getGroupInterface()[0] != self.ownerLayer.getGroupInterface()[0]:
             return
         size: int = self.getConnectedWaypointList().size()
@@ -63,13 +71,20 @@ class WorkWaypoint(Waypoint):
 
     def getType(self) -> int:
         return 2
-from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.game.layer.geological.resources.GeologicalGeographicMapCellPosition import GeologicalGeographicMapCellPosition
-from org.allbinary.game.layer.geological.resources.GeologicalResource import GeologicalResource
-from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
-from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
-from org.allbinary.media.audio.WorkSound import WorkSound
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.game.layer.geological.resources.GeologicalGeographicMapCellPosition import GeologicalGeographicMapCellPosition
+# from org.allbinary.game.layer.geological.resources.GeologicalResource import GeologicalResource
+# from org.allbinary.game.layer.unit.UnitLayer import UnitLayer
+# from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
+# from org.allbinary.media.audio.WorkSound import WorkSound
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
+
+def _WorkWaypoint_ID() -> object:
+    from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+    return SmallIntegerSingletonFactory.getInstance().getAt(25)
+
+lazy_static(WorkWaypoint, "ID", _WorkWaypoint_ID)
 

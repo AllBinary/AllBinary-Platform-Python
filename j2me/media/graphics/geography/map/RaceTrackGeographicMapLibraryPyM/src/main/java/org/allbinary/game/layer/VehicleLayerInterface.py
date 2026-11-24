@@ -15,19 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.layer.LayerInterface import LayerInterface
 from org.allbinary.game.layer.VehiclePropertiesCompositeInterface import VehiclePropertiesCompositeInterface
 
 
 # Java interface
-class VehicleLayerInterface(LayerInterface, VehiclePropertiesCompositeInterface):
+class VehicleLayerInterface(*java_bases(LayerInterface, VehiclePropertiesCompositeInterface)):
     
 
     def getGameKeyEventList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def getSpeedBasicDecimal(self) -> BasicDecimal:
+        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         raise NotImplementedError()
     
 
@@ -36,10 +39,12 @@ class VehicleLayerInterface(LayerInterface, VehiclePropertiesCompositeInterface)
     
 
     def getRotationAnimationInterface(self) -> RotationAnimation:
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         raise NotImplementedError()
     
 
     def setRotationAnimationInterface(self, animationInterface: RotationAnimation) -> None:
+        from org.allbinary.animation.RotationAnimation import RotationAnimation
         raise NotImplementedError()
     
 
@@ -61,19 +66,22 @@ class VehicleLayerInterface(LayerInterface, VehiclePropertiesCompositeInterface)
     
 
     def getGeographicMapCellPositionTracking(self) -> GeographicMapCellPositionTracking:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
         raise NotImplementedError()
     
 
     def getGeographicMapCellHistoryArray(self) -> list[GeographicMapCellHistory]:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         raise NotImplementedError()
     
 
     def setGeographicMapCellHistoryArray(self, geographicMapCellHistory: list[GeographicMapCellHistory]) -> None:
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.animation.RotationAnimation import RotationAnimation
-from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.animation.RotationAnimation import RotationAnimation
+# from org.allbinary.logic.math.BasicDecimal import BasicDecimal
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionTracking import GeographicMapCellPositionTracking
 
 

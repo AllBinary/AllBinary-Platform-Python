@@ -28,6 +28,7 @@ class VehicleFrictionProperties(FrictionProperties):
     
 
     def __init__(self, tireFriction: int, brakeFriction: int, airFriction: int, crashFriction: int) -> None:
+        from org.allbinary.game.physics.friction.FrictionData import FrictionData
         super().__init__()
         self._init_fields()
         self.TIRE_FRICTION_NOMINATOR = FrictionData.getFrictionDenominator() - tireFriction
@@ -50,6 +51,6 @@ class VehicleFrictionProperties(FrictionProperties):
 
     def getCrashFrictionNominator(self) -> int:
         return self.CRASH_FRICTION_NOMINATOR
-from org.allbinary.game.physics.friction.FrictionData import FrictionData
+# from org.allbinary.game.physics.friction.FrictionData import FrictionData
 
 

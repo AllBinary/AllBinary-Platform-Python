@@ -15,18 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaymentTransactionInterfaceRequestFactory:
     instance: PaymentTransactionInterfaceRequestFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
 
     @staticmethod
-    def getInstance() -> PaymentTransactionInterfaceRequestFactory:
+    def getInstance_j0() -> PaymentTransactionInterfaceRequestFactory:
         return PaymentTransactionInterfaceRequestFactory.instance
     
 
@@ -35,18 +38,33 @@ class PaymentTransactionInterfaceRequestFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, transformInfoInterface: TransformInfoInterface) -> PaymentTransactionInterface:
+    def getInstance_j1(self, transformInfoInterface: TransformInfoInterface) -> PaymentTransactionInterface:
         from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceFactory import PaymentTransactionInterfaceFactory
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
+        from org.allbinary.business.user.commerce.money.payment.types.TenderTypeFactory import TenderTypeFactory
+        from org.allbinary.business.user.commerce.money.payment.types.TransactionTypeFactory import TransactionTypeFactory
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+        from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             httpTransformInfoInterface: TransformInfoHttpInterface = transformInfoInterface
             pageContext: PageContext = httpTransformInfoInterface.getPageContext()
             httpServletRequest: HttpServletRequest = pageContext.getRequest()
-            command: str = httpServletRequest.getParameter(org.allbinary.globals.GLOBALS2.ADMINCOMMAND)
-            if command is not None and ((command > org.allbinary.globals.GLOBALS2.AUTHORIZEFORMEVALBODYONERROR) - (command < org.allbinary.globals.GLOBALS2.AUTHORIZEFORMEVALBODYONERROR)) == 0:
+            command: str = httpServletRequest.getParameter(GLOBALS2.ADMINCOMMAND)
+            if command is not None and ((command > GLOBALS2.AUTHORIZEFORMEVALBODYONERROR) - (command < GLOBALS2.AUTHORIZEFORMEVALBODYONERROR)) == 0:
                 return self.generateFromTestData(transformInfoInterface)
             else:
-                propertiesHashMap: dict = httpTransformInfoInterface.getPropertiesHashMap()
+                propertiesHashMap: HashMap = httpTransformInfoInterface.getPropertiesHashMap()
                 weblisketSession: WeblisketSession = WeblisketSession(propertiesHashMap, pageContext)
                 storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(weblisketSession.getStoreName())
                 order: OrderInterface = weblisketSession.getOrder()
@@ -57,22 +75,43 @@ class PaymentTransactionInterfaceRequestFactory:
                 orderPaymentInfo.setTransactionType(str(TransactionTypeFactory.getInstance().SALE))
                 orderPaymentInfo.setTenderType(str(TenderTypeFactory.getInstance().CREDITCARD))
                 orderReview.setPaymentInfo(orderPaymentInfo)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                     self.logUtil.putF(orderReview.getId(), self, "getPaymentTransactionInterface()")
                 paymentTransactionInterface: PaymentTransactionInterface = PaymentTransactionInterfaceFactory.getInstance().getInstance(orderReview)
                 return paymentTransactionInterface
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENTERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENTERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getPaymentTransactionInterface()", e)
             raise e
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def generateFromTestData(self, transformInfoInterface: TransformInfoInterface) -> PaymentTransactionInterface:
         from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceFactory import PaymentTransactionInterfaceFactory
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.data.generator.OrderIdGenerator import OrderIdGenerator
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             httpTransformInfoInterface: TransformInfoHttpInterface = transformInfoInterface
-            propertiesHashMap: dict = httpTransformInfoInterface.getPropertiesHashMap()
+            propertiesHashMap: HashMap = httpTransformInfoInterface.getPropertiesHashMap()
             pageContext: PageContext = httpTransformInfoInterface.getPageContext()
             weblisketSession: WeblisketSession = WeblisketSession(propertiesHashMap, pageContext)
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(weblisketSession.getStoreName())
@@ -129,35 +168,41 @@ class PaymentTransactionInterfaceRequestFactory:
             paymentTransactionInterface: PaymentTransactionInterface = PaymentTransactionInterfaceFactory.getInstance().getInstance(orderReview)
             return paymentTransactionInterface
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENTERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENTERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "generatePaymentTransactionInterfaceFromTestData()", e)
             raise e
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.payment.Payment import Payment
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.business.user.commerce.money.payment.types.TenderTypeFactory import TenderTypeFactory
-from org.allbinary.business.user.commerce.money.payment.types.TransactionTypeFactory import TransactionTypeFactory
-from org.allbinary.data.generator.OrderIdGenerator import OrderIdGenerator
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
-from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.payment.Payment import Payment
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.business.user.commerce.money.payment.types.TenderTypeFactory import TenderTypeFactory
+# from org.allbinary.business.user.commerce.money.payment.types.TransactionTypeFactory import TransactionTypeFactory
+# from org.allbinary.data.generator.OrderIdGenerator import OrderIdGenerator
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
+# from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-PaymentTransactionInterfaceRequestFactory.instance = PaymentTransactionInterfaceRequestFactory()
+def _PaymentTransactionInterfaceRequestFactory_instance() -> object:
+    return PaymentTransactionInterfaceRequestFactory()
+
+lazy_static(PaymentTransactionInterfaceRequestFactory, "instance", _PaymentTransactionInterfaceRequestFactory_instance)
 

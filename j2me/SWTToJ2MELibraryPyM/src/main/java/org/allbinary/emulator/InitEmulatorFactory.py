@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InitEmulatorFactory:
@@ -40,5 +41,8 @@ class InitEmulatorFactory:
         return self.initEmulator
 
 
-InitEmulatorFactory.instance = InitEmulatorFactory()
+def _InitEmulatorFactory_instance() -> object:
+    return InitEmulatorFactory()
+
+lazy_static(InitEmulatorFactory, "instance", _InitEmulatorFactory_instance)
 

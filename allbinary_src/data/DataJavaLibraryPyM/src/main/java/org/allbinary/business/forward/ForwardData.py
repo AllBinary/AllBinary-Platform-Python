@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ForwardData:
@@ -35,5 +36,8 @@ class ForwardData:
         return ForwardData.instance
 
 
-ForwardData.instance = ForwardData()
+def _ForwardData_instance() -> object:
+    return ForwardData()
+
+lazy_static(ForwardData, "instance", _ForwardData_instance)
 

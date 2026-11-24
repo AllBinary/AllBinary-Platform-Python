@@ -26,6 +26,7 @@ class ParamsUtil:
 
     @staticmethod
     def viewParams(params: list[type]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         if params is not None:
             stringBuffer: StringMaker = StringMaker()
             for index in range(0, len(params)):
@@ -34,6 +35,6 @@ class ParamsUtil:
             return str(stringBuffer)
         else:
             return "Params Null"
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

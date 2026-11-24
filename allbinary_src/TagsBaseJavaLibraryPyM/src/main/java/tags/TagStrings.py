@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TagStrings:
@@ -32,5 +33,8 @@ class TagStrings:
         return TagStrings.instance
 
 
-TagStrings.instance = TagStrings()
+def _TagStrings_instance() -> object:
+    return TagStrings()
+
+lazy_static(TagStrings, "instance", _TagStrings_instance)
 

@@ -25,6 +25,7 @@ class AllAnimationsEverywhereTileMapPlacementVisitor(TileMapPlacementVisitor):
     
 
     def visit(self, lastMap: TiledMap, mapData: list[list[int]]) -> None:
+        from org.mapeditor.core.TiledMap import TiledMap
         size: int = len(mapData)
         size2: int = len(mapData[0]) - 7
         for index in range(0, size):
@@ -36,6 +37,6 @@ class AllAnimationsEverywhereTileMapPlacementVisitor(TileMapPlacementVisitor):
                 mapData[index][index2 + 4] = 65
                 mapData[index][index2 + 5] = 81
                 mapData[index][index2 + 6] = 97
-from org.mapeditor.core.TiledMap import TiledMap
+# from org.mapeditor.core.TiledMap import TiledMap
 
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class Aggression:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.ram: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
         self.projectile: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
         self.drops: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
@@ -54,6 +55,6 @@ class Aggression:
 
     def setDrops(self, drops: int) -> None:
         self.drops = drops
-from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
+# from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
 
 

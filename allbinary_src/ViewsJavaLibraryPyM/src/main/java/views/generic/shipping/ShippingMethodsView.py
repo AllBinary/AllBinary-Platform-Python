@@ -15,19 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class ShippingMethodsView(HttpStoreComponentView, DomNodeInterface):
+class ShippingMethodsView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.shippingMethods: ShippingMethods = None
         self.storeFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
         self._init_fields()
         self.storeFrontInterface = StoreFrontFactory.getInstance(self.getTransformInfoInterface().getStoreName())
@@ -36,6 +43,22 @@ class ShippingMethodsView(HttpStoreComponentView, DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+        from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.tax.TaxFactory import TaxFactory
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodsData import ShippingMethodsData
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+        from org.allbinary.data.tables.user.address.StreetAddressesEntityInterface import StreetAddressesEntityInterface
+        from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntityFactory import ShippingAddressesEntityFactory
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             shippingMethodsNode: Node = document.createElement(ShippingMethodsData.SHIPPINGMETHODSORDERSUMMARIES)
             order: OrderInterface = self.getWeblisketSession().getOrder()
@@ -68,7 +91,7 @@ class ShippingMethodsView(HttpStoreComponentView, DomNodeInterface):
                 shippingMethodsNode.appendChild(shippingMethodNode)
             return shippingMethodsNode
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().XSLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().XSLLOGGINGERROR):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "toXmlNode", e)
             raise e
     
@@ -78,33 +101,37 @@ class ShippingMethodsView(HttpStoreComponentView, DomNodeInterface):
     
 
     def view(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
             return super().view()
         except Exception as e:
             error: str = "Failed to view ShippingMethods"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             return error
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
-from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.tax.TaxFactory import TaxFactory
-from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
-from org.allbinary.business.user.commerce.shipping.ShippingMethodsData import ShippingMethodsData
-from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
-from org.allbinary.data.tables.user.address.StreetAddressesEntityInterface import StreetAddressesEntityInterface
-from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntityFactory import ShippingAddressesEntityFactory
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+# from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.tax.TaxFactory import TaxFactory
+# from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodsData import ShippingMethodsData
+# from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+# from org.allbinary.data.tables.user.address.StreetAddressesEntityInterface import StreetAddressesEntityInterface
+# from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntityFactory import ShippingAddressesEntityFactory
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

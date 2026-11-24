@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -46,7 +47,8 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
-        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from playn.core.PlayN import PlayN
         className: str = PreLogUtil.getClassName(anyType)
         if className is None:
             className = CommonStrings.getInstance().EMPTY
@@ -55,12 +57,14 @@ class LogUtil:
     
 
     def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
+        from playn.core.PlayN import PlayN
         message: str = self.logFormatUtil.getS(className, functionName, specialMessage)
         PlayN.log().debug(self.LOG_SUCCESS + message)
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
-        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from playn.core.PlayN import PlayN
         className: str = PreLogUtil.getClassName(anyType)
         if className is None:
             className = CommonStrings.getInstance().EMPTY
@@ -69,10 +73,12 @@ class LogUtil:
             PlayN.log().error(self.LOG_SUCCESS + message, exception)
         else:
             PlayN.log().debug(self.LOG_SUCCESS + message)
-from org.allbinary.string.CommonStrings import CommonStrings
-from playn.core.PlayN import PlayN
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from playn.core.PlayN import PlayN
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

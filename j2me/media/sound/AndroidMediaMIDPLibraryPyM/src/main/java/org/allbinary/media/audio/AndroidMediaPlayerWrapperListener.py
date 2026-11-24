@@ -6,25 +6,29 @@ from __future__ import annotations
 
 
 class AndroidMediaPlayerWrapperListener:
-    class MediaPlayerOnBufferingUpdateListener(OnBufferingUpdateListener):
+    class MediaPlayerOnBufferingUpdateListener(MediaPlayer.OnBufferingUpdateListener):
         
 
         def onBufferingUpdate(self, mediaPlayer: MediaPlayer, i: int) -> None:
+            from android.media.MediaPlayer import MediaPlayer
             pass
-    class MediaPlayerOnPreparedListener(OnPreparedListener):
+    class MediaPlayerOnPreparedListener(MediaPlayer.OnPreparedListener):
         
 
         def onPrepared(self, mp: MediaPlayer) -> None:
+            from android.media.MediaPlayer import MediaPlayer
             pass
-    class MediaPlayerOnErrorListener(OnErrorListener):
+    class MediaPlayerOnErrorListener(MediaPlayer.OnErrorListener):
         
 
         def onError(self, mp: MediaPlayer, what: int, extra: int) -> bool:
+            from android.media.MediaPlayer import MediaPlayer
             return False
-    class MediaPlayerOnCompletionListener(OnCompletionListener):
+    class MediaPlayerOnCompletionListener(MediaPlayer.OnCompletionListener):
         
 
         def onCompletion(self, mp: MediaPlayer) -> None:
+            from android.media.MediaPlayer import MediaPlayer
             pass
     class AndroidMediaPlayerOnBufferingUpdateListener(MediaPlayerOnBufferingUpdateListener):
 
@@ -40,6 +44,10 @@ class AndroidMediaPlayerWrapperListener:
         
 
         def onBufferingUpdate(self, mediaPlayer: MediaPlayer, i: int) -> None:
+            from javax.microedition.media.PlayerListener import PlayerListener
+            from android.media.MediaPlayer import MediaPlayer
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.logic.string.StringMaker import StringMaker
             logUtil: LogUtil = LogUtil.getInstance()
             logUtil.putF(str(StringMaker().append("Update buffer: ").appendint(i).append("%")), self, self.ON_BUFFERING_UPDATE)
             self.androidMediaPlayerWrapperListener.androidMediaPlayerWrapper.update(PlayerListener.DEVICE_UNAVAILABLE)
@@ -57,6 +65,10 @@ class AndroidMediaPlayerWrapperListener:
         
 
         def onPrepared(self, mp: MediaPlayer) -> None:
+            from javax.microedition.media.PlayerListener import PlayerListener
+            from android.media.MediaPlayer import MediaPlayer
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             logUtil.putF(commonStrings.START, self, self.ON_PREPARE)
@@ -75,6 +87,11 @@ class AndroidMediaPlayerWrapperListener:
         
 
         def onError(self, mp: MediaPlayer, what: int, extra: int) -> bool:
+            from javax.microedition.media.PlayerListener import PlayerListener
+            from android.media.MediaPlayer import MediaPlayer
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.logic.string.StringMaker import StringMaker
+            from org.allbinary.string.CommonLabels import CommonLabels
             logUtil: LogUtil = LogUtil.getInstance()
             logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append("What: ").appendint(what).append(" Extra: ").appendint(extra)), self, self.ON_ERROR)
             self.androidMediaPlayerWrapperListener.androidMediaPlayerWrapper.update(PlayerListener.ERROR)
@@ -93,12 +110,19 @@ class AndroidMediaPlayerWrapperListener:
         
 
         def onCompletion(self, mp: MediaPlayer) -> None:
+            from javax.microedition.media.PlayerListener import PlayerListener
+            from android.media.MediaPlayer import MediaPlayer
+            from org.allbinary.logic.communication.log.LogUtil import LogUtil
+            from org.allbinary.string.CommonStrings import CommonStrings
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             logUtil.putF(commonStrings.START, self, self.ON_COMPLETE)
             self.androidMediaPlayerWrapperListener.androidMediaPlayerWrapper.update(PlayerListener.END_OF_MEDIA)
 
     def _init_fields(self) -> None:
+        from android.media.MediaPlayer import MediaPlayer
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.androidMediaPlayerWrapper: AndroidMediaPlayerWrapper = AndroidMediaPlayerWrapper.NULL_ANDROID_MEDIA_PLAYER_WRAPPER
@@ -109,6 +133,7 @@ class AndroidMediaPlayerWrapperListener:
     
 
     def __init__(self, androidMediaPlayerWrapper: AndroidMediaPlayerWrapper) -> None:
+        from android.media.MediaPlayer import MediaPlayer
         self._init_fields()
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -121,15 +146,11 @@ class AndroidMediaPlayerWrapperListener:
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.CONSTRUCTOR, e)
 # from javax.microedition.media.PlayerListener import PlayerListener
-from android.media.MediaPlayer import MediaPlayer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
+# from android.media.MediaPlayer import MediaPlayer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.media.audio.AndroidMediaPlayerWrapper import AndroidMediaPlayerWrapper
-from org.allbinary.media.audio.AndroidMediaPlayerOnBufferingUpdateListener import AndroidMediaPlayerOnBufferingUpdateListener
-from org.allbinary.media.audio.AndroidMediaPlayerOnPreparedListener import AndroidMediaPlayerOnPreparedListener
-from org.allbinary.media.audio.AndroidMediaPlayerOnErrorListener import AndroidMediaPlayerOnErrorListener
-from org.allbinary.media.audio.AndroidMediaPlayerOnCompletionListener import AndroidMediaPlayerOnCompletionListener
 
 

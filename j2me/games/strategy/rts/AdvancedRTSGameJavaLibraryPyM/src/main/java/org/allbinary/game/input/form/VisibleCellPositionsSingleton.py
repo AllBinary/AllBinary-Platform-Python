@@ -15,14 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.building.event.BuildingEventListenerInterface import BuildingEventListenerInterface
 from org.allbinary.layer.event.ScrollMapEventListenerInterface import ScrollMapEventListenerInterface
 
 
-class VisibleCellPositionsSingleton(BuildingEventListenerInterface, ScrollMapEventListenerInterface):
+class VisibleCellPositionsSingleton(*java_bases(BuildingEventListenerInterface, ScrollMapEventListenerInterface)):
     instance: VisibleCellPositionsSingleton = None
 
     def _init_fields(self) -> None:
+        from javax.microedition.lcdui.game.SimpleTiledLayer import SimpleTiledLayer
+        from org.allbinary.logic.NullUtil import NullUtil
         self.stationaryVisibleCellPositions: list[list[int]] = NullUtil.getInstance().NULL_SHORT_ARRAY_ARRAY
         self.visibleCellPositions: list[list[int]] = NullUtil.getInstance().NULL_SHORT_ARRAY_ARRAY
         self.currentlyVisibleCellPositions: list[list[int]] = NullUtil.getInstance().NULL_SHORT_ARRAY_ARRAY
@@ -38,12 +42,15 @@ class VisibleCellPositionsSingleton(BuildingEventListenerInterface, ScrollMapEve
     
 
     def __init__(self) -> None:
+        from org.allbinary.game.layer.building.event.LocalPlayerBuildingEventHandler import LocalPlayerBuildingEventHandler
+        from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
         self._init_fields()
         LocalPlayerBuildingEventHandler.getInstance().addListenerInterface(self)
         ScrollMapEventHandler.getInstance().addListenerInterface(self)
     
 
     def init(self, simpleTiledLayer: SimpleTiledLayer) -> None:
+        from javax.microedition.lcdui.game.SimpleTiledLayer import SimpleTiledLayer
         self.paintSimpleTiledLayer = self.ALL_VISIBLE_TILEDLAYER
         self.currentIndex = 0
         rows: int = simpleTiledLayer.getRows()
@@ -55,26 +62,35 @@ class VisibleCellPositionsSingleton(BuildingEventListenerInterface, ScrollMapEve
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     # throws Exception
     def onBuildingEvent(self, event: RTSLayerEvent) -> None:
+        from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
         self.paintSimpleTiledLayer = self.simpleTiledLayer
     
 
     # throws Exception
     def onMoveEvent(self, scrollMapEvent: ScrollMapEvent) -> None:
+        from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
         self.move(scrollMapEvent.getDx(), scrollMapEvent.getDy())
     
 
     def addStationaryCellPositions(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.CellPosition import CellPosition
         for index in range(list_.size() - 1, 0 - 1, -1):
             cellPosition: CellPosition = list_.get(index)
             self.stationaryVisibleCellPositions[cellPosition.getRow()][cellPosition.getColumn()] += 1
     
 
     def removeStationaryCellPositions(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.CellPosition import CellPosition
         for index in range(list_.size() - 1, 0 - 1, -1):
             cellPosition: CellPosition = list_.get(index)
             self.stationaryVisibleCellPositions[cellPosition.getRow()][cellPosition.getColumn()] -= 1
@@ -101,12 +117,15 @@ class VisibleCellPositionsSingleton(BuildingEventListenerInterface, ScrollMapEve
     
 
     def addCellPositions(self, list_: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.graphics.CellPosition import CellPosition
         for index in range(list_.size() - 1, 0 - 1, -1):
             cellPosition: CellPosition = list_.get(index)
             self.visibleCellPositions[cellPosition.getRow()][cellPosition.getColumn()] += 1
     
 
     def isVisible(self, cellPosition: CellPosition) -> bool:
+        from org.allbinary.graphics.CellPosition import CellPosition
         if self.visibleCellPositions[cellPosition.getRow()][cellPosition.getColumn()] > 0:
             return True
         else:
@@ -118,28 +137,34 @@ class VisibleCellPositionsSingleton(BuildingEventListenerInterface, ScrollMapEve
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         self.paintSimpleTiledLayer.paint(graphics, self.currentlyVisibleCellPositions)
     
 
     def setSimpleTiledLayer(self, simpleTiledLayer: SimpleTiledLayer) -> None:
+        from javax.microedition.lcdui.game.SimpleTiledLayer import SimpleTiledLayer
         self.simpleTiledLayer = simpleTiledLayer
     
 
     def getSimpleTiledLayer(self) -> SimpleTiledLayer:
+        from javax.microedition.lcdui.game.SimpleTiledLayer import SimpleTiledLayer
         return self.simpleTiledLayer
 # from javax.microedition.lcdui.game.SimpleTiledLayer import SimpleTiledLayer
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
-from org.allbinary.game.layer.building.event.LocalPlayerBuildingEventHandler import LocalPlayerBuildingEventHandler
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.graphics.CellPosition import CellPosition
-from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
-from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
+# from org.allbinary.game.layer.building.event.LocalPlayerBuildingEventHandler import LocalPlayerBuildingEventHandler
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.graphics.CellPosition import CellPosition
+# from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
+# from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 
-VisibleCellPositionsSingleton.instance = VisibleCellPositionsSingleton()
+def _VisibleCellPositionsSingleton_instance() -> object:
+    return VisibleCellPositionsSingleton()
+
+lazy_static(VisibleCellPositionsSingleton, "instance", _VisibleCellPositionsSingleton_instance)
 

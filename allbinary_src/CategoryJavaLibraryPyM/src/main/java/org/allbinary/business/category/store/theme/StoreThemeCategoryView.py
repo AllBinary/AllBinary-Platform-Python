@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.CategoryView import CategoryView
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
-class StoreThemeCategoryView(CategoryView, DomNodeInterface):
+class StoreThemeCategoryView(*java_bases(CategoryView, DomNodeInterface)):
     
 
     def __init__(self, categoryInterface: StoreThemeCategoryInterface) -> None:
@@ -29,6 +30,9 @@ class StoreThemeCategoryView(CategoryView, DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.business.category.store.theme.ThemeComparator import ThemeComparator
+        from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         storeThemeCategoryInterface: StoreThemeCategoryInterface = self.getCategoryInterface()
         themeValidationArray: list[ThemeValidation] = storeThemeCategoryInterface.getThemes().toArray()
@@ -39,8 +43,8 @@ class StoreThemeCategoryView(CategoryView, DomNodeInterface):
             node.appendChild(themeValidation.toXmlNode(document))
         return node
 # from java.util.Arrays import Arrays
-from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

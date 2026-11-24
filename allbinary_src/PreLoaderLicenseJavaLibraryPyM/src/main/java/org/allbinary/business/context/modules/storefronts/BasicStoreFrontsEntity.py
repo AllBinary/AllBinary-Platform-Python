@@ -21,11 +21,13 @@ from org.allbinary.business.init.InitSql import InitSql
 class BasicStoreFrontsEntity(InitSql):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "storefronts"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.setTable(self.tableName)
@@ -34,18 +36,25 @@ class BasicStoreFrontsEntity(InitSql):
     # throws Exception
     def getStoreFrontInterface(self, name: str) -> BasicStoreFrontInterface:
         from org.allbinary.business.context.modules.storefronts.BasicStoreFront import BasicStoreFront
-        keysAndValues: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, name)
-        storeHashMap: dict = super().getRow(keysAndValues)
+        storeHashMap: HashMap = super().getRow(keysAndValues)
         if storeHashMap is None:
             raise Exception("No Such Store: " + name)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().FACTORYERROR):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().FACTORYERROR):
             self.logUtil.putF("StoreFront: " + str(storeHashMap), self, "getStore()")
         return BasicStoreFront(storeHashMap)
 # from java.util.HashMap import HashMap
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

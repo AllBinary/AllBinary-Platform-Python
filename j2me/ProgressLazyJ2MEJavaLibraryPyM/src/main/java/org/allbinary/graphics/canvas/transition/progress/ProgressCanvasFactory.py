@@ -15,16 +15,19 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ProgressCanvasFactory:
-    PROGRESS_FORM_SCREEN: object = NullUtil.getInstance().NULL_OBJECT
+    PROGRESS_FORM_SCREEN: object = None
     
 
     @staticmethod
     def getInstance() -> ProgressCanvas:
         from org.allbinary.graphics.canvas.transition.progress.LazyProgressCanvas import LazyProgressCanvas
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.NullUtil import NullUtil
         if ProgressCanvasFactory.PROGRESS_FORM_SCREEN == NullUtil.getInstance().NULL_OBJECT:
             ProgressCanvasFactory.PROGRESS_FORM_SCREEN = LazyProgressCanvas(StringUtil.getInstance().EMPTY_STRING, BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE)
         return ProgressCanvasFactory.PROGRESS_FORM_SCREEN
@@ -32,9 +35,17 @@ class ProgressCanvasFactory:
 
     @staticmethod
     def getLazyInstance() -> PaintableInterface:
+        from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
         return ProgressCanvasFactory.getInstance()
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
+# from org.allbinary.logic.NullUtil import NullUtil
 
+
+def _ProgressCanvasFactory_PROGRESS_FORM_SCREEN() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    return NullUtil.getInstance().NULL_OBJECT
+
+lazy_static(ProgressCanvasFactory, "PROGRESS_FORM_SCREEN", _ProgressCanvasFactory_PROGRESS_FORM_SCREEN)
 

@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
-class SpriteIndexedAnimationFactory(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface):
+class SpriteIndexedAnimationFactory(*java_bases(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
@@ -72,8 +73,8 @@ class SpriteIndexedAnimationFactory(BaseImageAnimationFactory, ProceduralAnimati
 
     def initHWH(self) -> None:
         from org.allbinary.AndroidUtil import AndroidUtil
-        self.animationFactoryInitializationVisitor.dx = -(self.animationFactoryInitializationVisitor.width >> 2)
-        self.animationFactoryInitializationVisitor.dy = -(self.animationFactoryInitializationVisitor.height >> 2)
+        self.animationFactoryInitializationVisitor.dx = -self.animationFactoryInitializationVisitor.width >> 2
+        self.animationFactoryInitializationVisitor.dy = -self.animationFactoryInitializationVisitor.height >> 2
         if AndroidUtil.isAndroid():
             self.animationFactoryInitializationVisitor.dx += 3
     

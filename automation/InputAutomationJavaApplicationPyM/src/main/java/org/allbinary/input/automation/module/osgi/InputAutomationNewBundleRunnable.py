@@ -29,6 +29,10 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.inputAutomationBundleActivator: InputAutomationBundleActivator = None
@@ -37,6 +41,8 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
     
 
     def __init__(self, inputAutomationBundleActivator: InputAutomationBundleActivator) -> None:
+        from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.inputAutomationBundleActivator = inputAutomationBundleActivator
         self.fileBasicArrayList = BasicArrayListD()
@@ -65,6 +71,9 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     # throws Exception
     def updateModules(self) -> None:
+        from java.net.URL import URL
+        from org.osgi.framework.Bundle import Bundle
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(self.commonStrings.START, self, "updateModules")
         list_: BasicArrayList = self.findNewModules()
         size: int = list_.size()
@@ -76,9 +85,17 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
     
 
     # throws Exception
-    def getAllJarSymbolicNameHashMap(self) -> dict:
+    def getAllJarSymbolicNameHashMap(self) -> HashMap:
+        from java.io.FileInputStream import FileInputStream
+        from java.net.URL import URL
+        from java.util.HashMap import HashMap
+        from java.util.jar.JarInputStream import JarInputStream
+        from java.util.jar.Manifest import Manifest
+        from org.osgi.framework.Constants import Constants
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(self.commonStrings.START, self, "getAllJarSymbolicNameHashMap")
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         jarFileBasicArrayList: BasicArrayList = self.getJarModuleFileBasicArrayList()
         self.logUtil.putF("Jar Module Files: " + str(jarFileBasicArrayList), self, "getAllJarSymbolicNameHashMap")
         size: int = jarFileBasicArrayList.size()
@@ -99,8 +116,12 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
     
 
     def getJarModuleFileBasicArrayList(self) -> BasicArrayList:
+        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+        from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+        from org.allbinary.logic.io.file.filter.BasicFileFilterUtil import BasicFileFilterUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(self.commonStrings.START, self, "getJarModuleFileBasicArrayList")
-        baseJarPath: str = {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~")}.get(InputAutomationNewBundleRunnable.JAR_DIR_PROP, os.environ.get(str(InputAutomationNewBundleRunnable.JAR_DIR_PROP)))
+        baseJarPath: str = {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(InputAutomationNewBundleRunnable.JAR_DIR_PROP, os.environ.get(str(InputAutomationNewBundleRunnable.JAR_DIR_PROP)))
         if baseJarPath.startswith(InputAutomationNewBundleRunnable.FILE):
             baseJarPath = baseJarPath[InputAutomationNewBundleRunnable.FILE.length():]
         jarFileFilter: FileFilter = BasicFileFilterUtil.getInstance(".jar")
@@ -113,6 +134,11 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     # throws Exception
     def getInstalledJarSymbolicNameBasicArrayList(self) -> BasicArrayList:
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil.putF(self.commonStrings.START, self, "getInstalledJarSymbolicNameBasicArrayList")
         vector: BasicArrayList = BasicArrayListD()
         bundleContext: BundleContext = InputAutomationBundleActivator.getBundleContext()
@@ -127,6 +153,8 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     # throws Exception
     def isInstalled(self, symbolicName: str) -> bool:
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(str(CommonLabels.getInstance().START) + symbolicName, self, "isInstalled")
         list_: BasicArrayList = self.getInstalledJarSymbolicNameBasicArrayList()
         size: int = list_.size()
@@ -140,9 +168,13 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     # throws Exception
     def findNewModules(self) -> BasicArrayList:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil.putF(self.commonStrings.START, self, "findNewModules")
         vector: BasicArrayList = BasicArrayListD()
-        hashMap: dict = self.getAllJarSymbolicNameHashMap()
+        hashMap: HashMap = self.getAllJarSymbolicNameHashMap()
         self.logUtil.putF("All: " + str(hashMap), self, "findNewModules")
         set: Set = hashMap.keySet()
         symbolicNameArray: list[object] = set.toArray()
@@ -156,12 +188,19 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     # throws Exception
     def install(self, url: URL) -> Bundle:
+        from java.net.URL import URL
+        from org.osgi.framework.Bundle import Bundle
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+        from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(CommonLabels.getInstance().START + url, self, "install")
         bundleContext: BundleContext = InputAutomationBundleActivator.getBundleContext()
         return bundleContext.installBundle(str(url))
     
 
     def run(self) -> None:
+        from org.allbinary.string.CommonLabels import CommonLabels
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
@@ -182,19 +221,19 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 # from java.util.Set import Set
 # from java.util.jar.JarInputStream import JarInputStream
 # from java.util.jar.Manifest import Manifest
-from org.osgi.framework.Bundle import Bundle
-from org.osgi.framework.BundleContext import BundleContext
-from org.osgi.framework.Constants import Constants
-from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
-from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
-from org.allbinary.logic.io.file.filter.BasicFileFilterUtil import BasicFileFilterUtil
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.osgi.framework.Bundle import Bundle
+# from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.Constants import Constants
+# from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+# from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
+# from org.allbinary.logic.io.file.filter.BasicFileFilterUtil import BasicFileFilterUtil
+# from org.allbinary.string.CommonLabels import CommonLabels
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

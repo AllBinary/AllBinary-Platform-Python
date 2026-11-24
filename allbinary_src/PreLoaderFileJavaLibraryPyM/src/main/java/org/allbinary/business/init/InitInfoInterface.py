@@ -42,10 +42,12 @@ class InitInfoInterface:
     
 
     def setTestHtmlPath(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     def setMainPath(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
@@ -55,11 +57,13 @@ class InitInfoInterface:
     
 
     def isTestHtmlPathValid(self, value: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
     
 
     def isMainPathValid(self, value: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise NotImplementedError()
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 

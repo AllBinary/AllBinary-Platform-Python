@@ -22,14 +22,23 @@ class TopViewCharacterBehavior:
 
     # throws Exception
     def terrainEvent(self, layer: AllBinaryLayer, direction: Direction, x: int, y: int, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         pass
     
 
     def terrainMove(self, layer: AllBinaryLayer, geographicMapInterfaceArray: list[BasicGeographicMap], x: int, y: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         pass
     
 
     def hasSolidBlock(self, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType]) -> bool:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.topview.BasicTopViewGeographicMapCellTypeFactory import BasicTopViewGeographicMapCellTypeFactory
         size: int = len(geographicMapInterfaceArray)
         basicTopViewGeographicMapCellTypeFactory: BasicTopViewGeographicMapCellTypeFactory = None
         for index in range(0, size):
@@ -37,11 +46,11 @@ class TopViewCharacterBehavior:
             if basicTopViewGeographicMapCellTypeFactory.BLOCK_CELL_TYPE.isType(geographicMapCellTypeArray[index]):
                 return True
         return False
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.topview.BasicTopViewGeographicMapCellTypeFactory import BasicTopViewGeographicMapCellTypeFactory
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.topview.BasicTopViewGeographicMapCellTypeFactory import BasicTopViewGeographicMapCellTypeFactory
 
 

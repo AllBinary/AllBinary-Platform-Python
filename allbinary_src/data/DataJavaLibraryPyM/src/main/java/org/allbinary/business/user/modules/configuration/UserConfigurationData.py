@@ -15,16 +15,29 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class UserConfigurationData:
     NAME: str = "USER_CONFIGURATION_NAME"
-    UNCRYPTED_EXTENSION: str = CommonDataFileStrings.getInstance().UNCRYPTED_EXTENSION
-    ENCRYPTED_EXTENSION: str = CommonDataFileStrings.getInstance().ENCRYPTED_EXTENSION
+    UNCRYPTED_EXTENSION: str = None
+    ENCRYPTED_EXTENSION: str = None
     
 
     def __init__(self) -> None:
         pass
+# from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
 
+
+def _UserConfigurationData_UNCRYPTED_EXTENSION() -> object:
+    from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+    return CommonDataFileStrings.getInstance().UNCRYPTED_EXTENSION
+
+lazy_static(UserConfigurationData, "UNCRYPTED_EXTENSION", _UserConfigurationData_UNCRYPTED_EXTENSION)
+
+def _UserConfigurationData_ENCRYPTED_EXTENSION() -> object:
+    from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
+    return CommonDataFileStrings.getInstance().ENCRYPTED_EXTENSION
+
+lazy_static(UserConfigurationData, "ENCRYPTED_EXTENSION", _UserConfigurationData_ENCRYPTED_EXTENSION)
 

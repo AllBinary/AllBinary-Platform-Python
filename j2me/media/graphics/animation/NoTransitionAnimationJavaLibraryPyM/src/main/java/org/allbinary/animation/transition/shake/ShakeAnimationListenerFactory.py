@@ -22,7 +22,6 @@ class ShakeAnimationListenerFactory:
 
     @staticmethod
     def getInstance() -> ShakeAnimationListener:
-        from org.allbinary.animation.transition.shake.NoShakeAnimationListener import NoShakeAnimationListener
         return NoShakeAnimationListener()
 
 

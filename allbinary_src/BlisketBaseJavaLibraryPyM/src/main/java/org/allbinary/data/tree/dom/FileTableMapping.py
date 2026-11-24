@@ -21,10 +21,12 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class FileTableMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         self.file: AbFile = None
     
 
     def __init__(self, file: AbFile) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         self._init_fields()
         self.file = file
     
@@ -36,6 +38,8 @@ class FileTableMapping(TableMappingInterface):
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         filePropertyVector: BasicArrayList = BasicArrayListD()
         filePropertyVector.add(self.file.getAbsolutePath())
         filePropertyVector.add(self.file.getCanonicalPath())
@@ -46,8 +50,13 @@ class FileTableMapping(TableMappingInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
-        filePropertyHashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.io.file.FileData import FileData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.io.path.PathUtil import PathUtil
+        filePropertyHashMap: HashMap = StdUtil.getInstance().createHashMap()
         pathData: AbPathData = AbPathData.getInstance()
         pathUtil: PathUtil = PathUtil.getInstance()
         rootFileName: str = pathData.getNameFromPath(pathUtil.getWithoutExtension(self.file.getPath()))
@@ -64,12 +73,12 @@ class FileTableMapping(TableMappingInterface):
         filePropertyHashMap.put(fileData.PATH, self.file.getPath())
         return filePropertyHashMap
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.FileData import FileData
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.io.path.PathUtil import PathUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.FileData import FileData
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.io.path.PathUtil import PathUtil
 
 

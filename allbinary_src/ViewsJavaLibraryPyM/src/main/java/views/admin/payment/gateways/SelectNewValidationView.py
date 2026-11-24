@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
-class SelectNewValidationView(HttpStoreComponentView, ValidationComponentInterface):
+class SelectNewValidationView(*java_bases(HttpStoreComponentView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
     
 
@@ -31,10 +33,13 @@ class SelectNewValidationView(HttpStoreComponentView, ValidationComponentInterfa
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -44,10 +49,13 @@ class SelectNewValidationView(HttpStoreComponentView, ValidationComponentInterfa
     
 
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toXmlNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -55,8 +63,14 @@ class SelectNewValidationView(HttpStoreComponentView, ValidationComponentInterfa
     def view(self) -> str:
         from views.admin.payment.gateways.SelectNewView import SelectNewView
         return SelectNewView(self.getTransformInfoInterface()).view()
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

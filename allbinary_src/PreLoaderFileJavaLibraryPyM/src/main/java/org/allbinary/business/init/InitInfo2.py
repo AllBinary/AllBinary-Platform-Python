@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class InitInfo2:
     instance: InitInfo2 = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.io.file.directory.Directory import Directory
         self.directory: Directory = Directory.getInstance()
 
     def __init__(self) -> None:
@@ -33,14 +35,19 @@ class InitInfo2:
     
 
     def isTestHtmlPathValid(self, value: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.directory.create(value)
     
 
     def isMainPathValid(self, value: AbPath) -> bool:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.directory.create(value)
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 
-InitInfo2.instance = InitInfo2()
+def _InitInfo2_instance() -> object:
+    return InitInfo2()
+
+lazy_static(InitInfo2, "instance", _InitInfo2_instance)
 

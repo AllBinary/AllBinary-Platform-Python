@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import lazy_static
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 
 
-class GameInputMappingCanvas(GameCommandCanvas, InputMappingInterface):
+class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterface)):
     NAME: str = "GameInputMappingCanvas"
     DISPLAY: Command = None
     DEFAULT: Command = None

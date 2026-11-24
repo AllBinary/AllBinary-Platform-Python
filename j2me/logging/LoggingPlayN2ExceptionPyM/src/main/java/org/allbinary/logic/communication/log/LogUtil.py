@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -28,14 +29,17 @@ class LogUtil:
 
     @staticmethod
     def getInstance() -> LogUtil:
+        from jsinterop.annotations.JsMethod import JsMethod
         return LogUtil.instance
     
 
     def __init__(self) -> None:
+        from jsinterop.annotations.JsConstructor import JsConstructor
         self._init_fields()
     
 
     def putL(self, log: Log) -> None:
+        from jsinterop.annotations.JsMethod import JsMethod
         if log is None:
             return
         specialMessage: str = log.getSpecialMessage()
@@ -46,7 +50,9 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
-        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from playn.core.PlayN import PlayN
+        from jsinterop.annotations.JsMethod import JsMethod
         className: str = PreLogUtil.getClassName(anyType)
         if className is None:
             className = CommonStrings.getInstance().EMPTY
@@ -56,13 +62,17 @@ class LogUtil:
     
 
     def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
+        from playn.core.PlayN import PlayN
+        from jsinterop.annotations.JsMethod import JsMethod
         message: str = self.logFormatUtil.getS(className, functionName, specialMessage)
         playN: PlayN = PlayN.getInstance()
         playN.log().debug(self.LOG_SUCCESS + message)
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
-        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from playn.core.PlayN import PlayN
+        from jsinterop.annotations.JsMethod import JsMethod
         className: str = PreLogUtil.getClassName(anyType)
         if className is None:
             className = CommonStrings.getInstance().EMPTY
@@ -72,13 +82,15 @@ class LogUtil:
             playN.log().error(self.LOG_SUCCESS + message, exception)
         else:
             playN.log().debug(self.LOG_SUCCESS + message)
-from jsinterop.annotations.JsType import JsType
-from org.allbinary.string.CommonStrings import CommonStrings
-from playn.core.PlayN import PlayN
-from jsinterop.annotations.JsMethod import JsMethod
-from jsinterop.annotations.JsConstructor import JsConstructor
-from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
+# from jsinterop.annotations.JsType import JsType
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from playn.core.PlayN import PlayN
+# from jsinterop.annotations.JsMethod import JsMethod
+# from jsinterop.annotations.JsConstructor import JsConstructor
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

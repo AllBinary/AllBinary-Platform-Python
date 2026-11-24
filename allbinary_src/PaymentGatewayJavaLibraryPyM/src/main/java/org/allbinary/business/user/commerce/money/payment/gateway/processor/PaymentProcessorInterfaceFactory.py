@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaymentProcessorInterfaceFactory:
@@ -23,11 +24,12 @@ class PaymentProcessorInterfaceFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
     @staticmethod
-    def getInstance() -> PaymentProcessorInterfaceFactory:
+    def getInstance_j0() -> PaymentProcessorInterfaceFactory:
         return PaymentProcessorInterfaceFactory.instance
     
 
@@ -36,12 +38,20 @@ class PaymentProcessorInterfaceFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, transformInfoInterface: TransformInfoInterface) -> PaymentProcessorInterface:
+    def getInstance_j1(self, transformInfoInterface: TransformInfoInterface) -> PaymentProcessorInterface:
         with self._lock:
-            return self._getInstance_unlocked(transformInfoInterface)
+            return self._getInstance_j1_unlocked(transformInfoInterface)
 
-    def _getInstance_unlocked(self, transformInfoInterface: TransformInfoInterface) -> PaymentProcessorInterface:
+    def _getInstance_j1_unlocked(self, transformInfoInterface: TransformInfoInterface) -> PaymentProcessorInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceRequestFactory import PaymentTransactionInterfaceRequestFactory
+        from org.allbinary.business.user.commerce.money.payment.types.PaymentType import PaymentType
+        from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             paymentTransactionInterface: PaymentTransactionInterface = PaymentTransactionInterfaceRequestFactory.getInstance().getInstance(transformInfoInterface)
             gatewayName: str = paymentTransactionInterface.getOrderHistory().getPaymentMethod()
@@ -51,19 +61,27 @@ class PaymentProcessorInterfaceFactory:
                 return paymentProcessorInterfaceFactoryInterface.getInstance(transformInfoInterface, paymentTransactionInterface)
             raise Exception("Error Getting PaymentProcessorInterface")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENTERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENTERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             raise e
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
-from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceRequestFactory import PaymentTransactionInterfaceRequestFactory
-from org.allbinary.business.user.commerce.money.payment.types.PaymentType import PaymentType
-from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceRequestFactory import PaymentTransactionInterfaceRequestFactory
+# from org.allbinary.business.user.commerce.money.payment.types.PaymentType import PaymentType
+# from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 
-PaymentProcessorInterfaceFactory.instance = PaymentProcessorInterfaceFactory()
+def _PaymentProcessorInterfaceFactory_instance() -> object:
+    return PaymentProcessorInterfaceFactory()
+
+lazy_static(PaymentProcessorInterfaceFactory, "instance", _PaymentProcessorInterfaceFactory_instance)
 

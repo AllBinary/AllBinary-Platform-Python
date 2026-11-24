@@ -40,8 +40,6 @@ class PlatformFormInputMappingFactory:
     
 
     def getOrCreate(self) -> InputToGameKeyMapping:
-        from org.allbinary.game.input.PCKeyFactory import PCKeyFactory
-        from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         from org.allbinary.string.CommonStrings import CommonStrings
         try:

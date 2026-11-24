@@ -31,14 +31,17 @@ class PaymentEntityInterface(BasicDataTableInterface):
     
 
     def getDefault(self, userName: str) -> PaymentInterface:
+        from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
         raise NotImplementedError()
     
 
     def get(self, userName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
     
 
     def add(self, userName: str, paymentInterface: PaymentInterface) -> None:
+        from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
         raise NotImplementedError()
     
 
@@ -47,9 +50,10 @@ class PaymentEntityInterface(BasicDataTableInterface):
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         raise NotImplementedError()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
 
 

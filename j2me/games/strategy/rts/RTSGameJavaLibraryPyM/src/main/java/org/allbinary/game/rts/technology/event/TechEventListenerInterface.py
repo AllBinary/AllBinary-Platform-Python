@@ -22,7 +22,8 @@ class TechEventListenerInterface(EventListenerInterface):
     
 
     def onTechEvent(self, event: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         raise NotImplementedError()
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 

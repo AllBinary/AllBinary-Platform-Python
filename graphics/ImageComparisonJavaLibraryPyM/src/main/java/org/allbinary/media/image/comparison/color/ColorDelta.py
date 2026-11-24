@@ -33,14 +33,18 @@ class ColorDelta(CacheableInterface):
         self.key = ColorDelta.getKey(rgb1, rgb2)
     
 
-    def getKey(self) -> object:
+    def getKey_j0(self) -> object:
         return self.key
     
 
-    # Java overloaded method: Python keeps the last definition
     @staticmethod
-    def getKey(rgb1: int, rgb2: int) -> object:
+    def getKey_j2(rgb1: int, rgb2: int) -> object:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         return str(StringMaker().append(str(rgb1)).append(CommonSeps.getInstance().UNDERSCORE).append(str(rgb2)))
+
+    def getKey(self, *args):
+        return getattr(self, "getKey_j" + str(len(args)))(*args)
     
 
     def getRgb1(self) -> int:
@@ -60,12 +64,14 @@ class ColorDelta(CacheableInterface):
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return str(StringMaker().append("ColorDelta: ").append(StringUtil.getInstance().toString(self.getKey())).append(" RGB1: ").appendint(self.getRgb1()).append(" RGB2: ").appendint(self.getRgb2()))
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

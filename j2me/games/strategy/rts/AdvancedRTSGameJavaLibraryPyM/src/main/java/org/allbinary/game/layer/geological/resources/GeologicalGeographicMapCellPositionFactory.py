@@ -33,12 +33,16 @@ class GeologicalGeographicMapCellPositionFactory(GeographicMapCellPositionFactor
     def getInstance(self, geographicMapInterface: BasicGeographicMap, i_column: int, i_row: int, columns: int, rows: int, width: int, height: int) -> GeographicMapCellPosition:
         from org.allbinary.game.layer.geological.resources.GeologicalGeographicMapCellPosition import GeologicalGeographicMapCellPosition
         from org.allbinary.game.layer.geological.resources.GeologicalResource import GeologicalResource
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
         resources: int = self.resourcePerMapCellType[tiledLayer.getCell(i_column, i_row)] + MyRandomFactory.getInstance().getAbsoluteNextInt(1000)
         return GeologicalGeographicMapCellPosition(i_column, i_row, columns, rows, width, height, GeologicalResource(resources))
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
 
 

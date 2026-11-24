@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
 from org.allbinary.physics.movement.Movement import Movement
 
 
-class BasicConstantVelocityMovement(Movement, VelocityInterfaceCompositeInterface):
+class BasicConstantVelocityMovement(*java_bases(Movement, VelocityInterfaceCompositeInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties

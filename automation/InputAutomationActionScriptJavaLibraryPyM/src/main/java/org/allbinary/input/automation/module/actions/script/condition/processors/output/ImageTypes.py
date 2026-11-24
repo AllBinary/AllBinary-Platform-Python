@@ -20,6 +20,8 @@ from __future__ import annotations
 class ImageTypes:
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.vector: BasicArrayList = BasicArrayListD()
 
     def __init__(self, *args) -> None:
@@ -35,6 +37,10 @@ class ImageTypes:
 
     def _constructor1(self, node: Node) -> None:
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.input.media.image.InputImageType import InputImageType
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         nodeList: NodeList = node.getChildNodes()
         for index in range(0, nodeList.getLength()):
@@ -48,6 +54,7 @@ class ImageTypes:
 
     @staticmethod
     def valueOf(anyType: list[object]) -> ImageTypes:
+        from org.allbinary.input.media.image.InputImageType import InputImageType
         imageTypes: ImageTypes = ImageTypes()
         for index in range(0, len(anyType)):
             imageType: InputImageType = InputImageType.getInstance(anyType[index])
@@ -56,6 +63,7 @@ class ImageTypes:
     
 
     def getVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.vector
     
 
@@ -63,6 +71,10 @@ class ImageTypes:
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.input.media.image.InputImageType import InputImageType
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         newNode: Node = document.createElement(ImageActionScriptOutputData.TYPES)
         size: int = self.vector.size()
         for index in range(0, size):
@@ -72,6 +84,8 @@ class ImageTypes:
     
 
     def toString(self) -> str:
+        from org.allbinary.input.media.image.InputImageType import InputImageType
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("ImageTypes: ")
         size: int = self.vector.size()
@@ -84,15 +98,15 @@ class ImageTypes:
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.input.media.image.InputImageType import InputImageType
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.input.media.image.InputImageType import InputImageType
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

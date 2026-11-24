@@ -38,11 +38,11 @@ class ImageArrayRotationAnimation(ImageArrayBaseRotationAnimation):
         from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(imageArray, angleInfo, animationBehavior)
         self._init_fields()
-        self.init(imageArray, angleInfo, totalAngle)
+        self.initImageArray(imageArray, angleInfo, totalAngle)
     
 
     # throws Exception
-    def init(self, imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int) -> None:
+    def initImageArray(self, imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int) -> None:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.math.AngleInfo import AngleInfo
         self.expectedTotalFrames = totalAngle / self.angleInfo.getAngleIncrementInfo().getAngleIncrement()

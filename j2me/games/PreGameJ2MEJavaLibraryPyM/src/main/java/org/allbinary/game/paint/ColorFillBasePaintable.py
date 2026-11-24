@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
-class ColorFillBasePaintable(Paintable, ColorCompositeInterface):
+class ColorFillBasePaintable(*java_bases(Paintable, ColorCompositeInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor

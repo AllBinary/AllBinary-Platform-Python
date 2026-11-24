@@ -20,17 +20,23 @@ from __future__ import annotations
 class GraphicsException(Exception):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.GuiLog import GuiLog
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.guiLog: GuiLog = GuiLog.getInstance()
 
     def __init__(self, *args) -> None:
         if len(args) == 3:
-            self._constructor3(*args)
-        elif len(args) == 3:
-            self._constructor3(*args)
+            self.__jconstructor3(*args)
+
+    def __jconstructor3(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)) and (args[2] is None or isinstance(args[2], str)):
+            self._constructor3_1(*args)
+        else:
+            self._constructor3_2(*args)
     
 
-    def _constructor3(self, msg: str, obj: object, method: str) -> None:
+    def _constructor3_1(self, msg: str, obj: object, method: str) -> None:
         super().__init__(msg)
         self._init_fields()
         try:
@@ -40,7 +46,7 @@ class GraphicsException(Exception):
             pass
     
 
-    def _constructor3(self, msg: str, className: str, method: str) -> None:
+    def _constructor3_2(self, msg: str, className: str, method: str) -> None:
         super().__init__(msg)
         self._init_fields()
         try:
@@ -48,7 +54,7 @@ class GraphicsException(Exception):
             self.logUtil.put(msg, className, method, self)
         except Exception as e:
             pass
-from org.allbinary.logic.communication.log.GuiLog import GuiLog
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.GuiLog import GuiLog
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 

@@ -46,10 +46,12 @@ class AdvertisementInterface:
     
 
     def getListPrice(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
     def getOurPrice(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
     
 
@@ -58,18 +60,22 @@ class AdvertisementInterface:
     
 
     def getImage(self) -> AdvertisementImageInterface:
+        from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
         raise NotImplementedError()
     
 
     def getProduct(self) -> AdvertisementProductInterface:
+        from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
         raise NotImplementedError()
     
 
     def getThumbnail(self) -> AdvertisementThumbnailInterface:
+        from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
         raise NotImplementedError()
     
 
     def getDisplayInBrowserContraintsInterface(self) -> DisplayInBrowserContraintsInterface:
+        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
         raise NotImplementedError()
     
 
@@ -102,19 +108,22 @@ class AdvertisementInterface:
     
 
     def setImage(self, AdvertisementImageInterface: AdvertisementImageInterface) -> None:
+        from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
         raise NotImplementedError()
     
 
     def setProduct(self, AdvertisementProductInterface: AdvertisementProductInterface) -> None:
+        from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
         raise NotImplementedError()
     
 
     def setThumbnail(self, AdvertisementThumbnailInterface: AdvertisementThumbnailInterface) -> None:
+        from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
         raise NotImplementedError()
-from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
-from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
-from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
+# from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
+# from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
+# from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
 
 

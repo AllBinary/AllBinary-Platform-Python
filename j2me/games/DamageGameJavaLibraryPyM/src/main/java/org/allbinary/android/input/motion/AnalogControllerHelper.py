@@ -66,6 +66,5 @@ class AnalogControllerHelper:
             collidableDestroyableDamageableLayer.down()
 # from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
 # from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.android.input.motion.AnalogControllerConfigurationFactory import AnalogControllerConfigurationFactory
 
 

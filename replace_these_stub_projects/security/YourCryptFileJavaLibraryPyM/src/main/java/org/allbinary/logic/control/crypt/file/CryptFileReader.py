@@ -14,13 +14,16 @@ class CryptFileReader:
 
     # throws Exception
     def get(self, fileAbPath: AbPath) -> str:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return None
     
 
     # throws Exception
     def getInputStream(self, fileAbPath: AbPath) -> InputStream:
+        from java.io.InputStream import InputStream
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return None
 # from java.io.InputStream import InputStream
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 

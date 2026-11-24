@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.SpriteFactoryInterface import SpriteFactoryInterface
 
 
@@ -22,6 +23,7 @@ class SpriteFactory(SpriteFactoryInterface):
     instance: SpriteFactory = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -34,11 +36,16 @@ class SpriteFactory(SpriteFactoryInterface):
     
 
     def createSprite(self, image: Image, frameWidth: int, frameHeight: int) -> Sprite:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.game.Sprite import Sprite
         return Sprite(image, frameWidth, frameHeight)
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-SpriteFactory.instance = SpriteFactory()
+def _SpriteFactory_instance() -> object:
+    return SpriteFactory()
+
+lazy_static(SpriteFactory, "instance", _SpriteFactory_instance)
 

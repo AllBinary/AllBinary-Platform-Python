@@ -24,24 +24,33 @@ class UniqueIdGenerator(IdGeneratorInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.idGeneratorEntity: IdGeneratorEntity = None
         self.name: str = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
+        from org.allbinary.data.tables.generator.IdGeneratorEntityFactory import IdGeneratorEntityFactory
         self._init_fields()
         self.idGeneratorEntity = IdGeneratorEntityFactory.getInstance()
     
 
     def initialize(self, value: int) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             vector: BasicArrayList = BasicArrayListD()
             vector.add(self.name)
             vector.add(str(str(value)))
             self.idGeneratorEntity.insert(vector)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "initialize", e)
     
@@ -61,23 +70,28 @@ class UniqueIdGenerator(IdGeneratorInterface):
             return self._getNext_unlocked()
 
     def _getNext_unlocked(self) -> str:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             idLong: int = self.idGeneratorEntity.get(self.name)
             newValue: int = str(int(idLong) + 1)
             self.idGeneratorEntity.update(self.name, newValue)
             return str(idLong)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().IDLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().IDLOGGING):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, "getNext", e)
             return "Error"
 # from java.io.IOException import IOException
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
-from org.allbinary.data.tables.generator.IdGeneratorEntityFactory import IdGeneratorEntityFactory
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
+# from org.allbinary.data.tables.generator.IdGeneratorEntityFactory import IdGeneratorEntityFactory
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

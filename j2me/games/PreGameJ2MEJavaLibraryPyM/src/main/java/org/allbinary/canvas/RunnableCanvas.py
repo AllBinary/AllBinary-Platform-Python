@@ -17,11 +17,12 @@ from __future__ import annotations
 
 import time
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 
-class RunnableCanvas(MyCanvas, RunnableInterface):
+class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
@@ -240,6 +241,5 @@ class RunnableCanvas(MyCanvas, RunnableInterface):
 # from org.allbinary.thread.ThreadObjectUtil import ThreadObjectUtil
 # from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 # from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.canvas.Processor import Processor
 
 

@@ -21,19 +21,31 @@ from org.allbinary.business.user.commerce.money.payment.gateway.transaction.Tran
 class TransactionResult(TransactionResultInterface):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.keyValuePairs: dict = None
+        self.keyValuePairs: HashMap = None
         self.result: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, result: str) -> None:
+    def _constructor1_1(self, result: str) -> None:
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.ABHashtable import ABHashtable
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         try:
             self.result = result
@@ -47,7 +59,8 @@ class TransactionResult(TransactionResultInterface):
             self.logUtil.putF(exceptionMessage, self, self.commonStrings.CONSTRUCTOR)
     
 
-    def _constructor1(self, keyValuePairs: dict) -> None:
+    def _constructor1_2(self, keyValuePairs: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         keyValuePairs = keyValuePairs
         self.result = "Needs to have the hashmap converted to string for other constructor"
@@ -60,12 +73,15 @@ class TransactionResult(TransactionResultInterface):
         return self.toString()
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.keyValuePairs
     
 
     def getAllPossibleKeys(self) -> BasicArrayList:
         from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionKeysFactory import PaymentTransactionKeysFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         paymentTransactionKeysFactory: PaymentTransactionKeysFactory = PaymentTransactionKeysFactory.getInstance()
         verisignResponseKeys: BasicArrayList = BasicArrayListD()
         verisignResponseKeys.add(str(paymentTransactionKeysFactory.RESULT))
@@ -94,6 +110,9 @@ class TransactionResult(TransactionResultInterface):
     
 
     def getValues(self) -> BasicArrayList:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         keyVector: BasicArrayList = self.getAllPossibleKeys()
         valueVector: BasicArrayList = BasicArrayListD()
         size: int = keyVector.size()
@@ -211,13 +230,13 @@ class TransactionResult(TransactionResultInterface):
         from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionKeysFactory import PaymentTransactionKeysFactory
         return self.keyValuePairs.get(str(PaymentTransactionKeysFactory.getInstance().REASON3))
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

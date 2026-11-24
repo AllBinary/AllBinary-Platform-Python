@@ -21,7 +21,8 @@ from __future__ import annotations
 class RequestMapInterface:
     
 
-    def getRequestHashMap(self) -> dict:
+    def getRequestHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         raise NotImplementedError()
 # from java.util.HashMap import HashMap
 

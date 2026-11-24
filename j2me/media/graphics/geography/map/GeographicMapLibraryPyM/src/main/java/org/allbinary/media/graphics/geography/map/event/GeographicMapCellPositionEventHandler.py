@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
@@ -24,6 +25,8 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
@@ -38,6 +41,7 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
     
 
     def addListener(self, miniMapLayer: MiniMapLayer) -> None:
+        from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
         if not self.list_.contains(miniMapLayer):
             self.list_.add(miniMapLayer)
     
@@ -48,12 +52,16 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
         super().removeListener(eventListenerInterface)
     
 
     # throws Exception
     def fireEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         index = self.list_.size()
         while (index := index - 1) >= 0:
             try:
@@ -70,6 +78,11 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
             return self._fireRemoveEvent_unlocked(eventObject)
 
     def _fireRemoveEvent_unlocked(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         list_: BasicArrayList = self.eventListenerInterfaceList
         index = self.list_.size()
         while (index := index - 1) >= 0:
@@ -92,15 +105,20 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
 
     # throws Exception
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         geographicMapCellPositionEventListenerInterface: GeographicMapCellPositionEventListenerInterface = (eventListenerInterface)
         geographicMapCellPositionEventListenerInterface.onGeographicMapCellPositionEvent(eventObject)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 
-GeographicMapCellPositionEventHandler.instance = GeographicMapCellPositionEventHandler()
+def _GeographicMapCellPositionEventHandler_instance() -> object:
+    return GeographicMapCellPositionEventHandler()
+
+lazy_static(GeographicMapCellPositionEventHandler, "instance", _GeographicMapCellPositionEventHandler_instance)
 

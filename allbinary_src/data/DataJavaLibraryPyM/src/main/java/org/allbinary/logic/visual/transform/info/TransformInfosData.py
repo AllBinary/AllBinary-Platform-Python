@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TransformInfosData:
@@ -37,5 +38,8 @@ class TransformInfosData:
         return TransformInfosData.instance
 
 
-TransformInfosData.instance = TransformInfosData()
+def _TransformInfosData_instance() -> object:
+    return TransformInfosData()
+
+lazy_static(TransformInfosData, "instance", _TransformInfosData_instance)
 

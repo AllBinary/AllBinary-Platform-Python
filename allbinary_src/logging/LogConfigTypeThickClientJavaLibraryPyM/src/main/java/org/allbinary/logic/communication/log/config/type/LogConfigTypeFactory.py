@@ -39,12 +39,9 @@ class LogConfigTypeFactory:
     
 
     def __init__(self) -> None:
-        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         LogConfigTypes.LOGGING.add(self.OS)
         LogConfigTypes.LOGGING.add(self.FACTORYERROR)
-from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
 
 
 def _LogConfigTypeFactory_instance() -> object:

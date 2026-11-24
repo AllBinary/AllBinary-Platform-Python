@@ -27,9 +27,11 @@ class DomDocumentFileHelper:
     # throws Exception
     @staticmethod
     def createDocument(xmlFile: AbFile) -> Document:
-        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.w3c.dom.Document import Document
         try:
-            return DomDocumentHelper.create(AbFileInputStream(xmlFile))
+            return DomDocumentHelper.create(AbFileInputStream.createFromAbFile(xmlFile))
         except Exception as e:
             raise e
     
@@ -37,6 +39,11 @@ class DomDocumentFileHelper:
     # throws Exception
     @staticmethod
     def save(file: AbFile, document: Document) -> None:
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.w3c.dom.Document import Document
         dataOutputStream: AbDataOutputStream = None
         try:
             copyTransformerFactory: TransformerFactory = TransformerFactory.newInstance()
@@ -57,11 +64,11 @@ class DomDocumentFileHelper:
 # from javax.xml.transform.TransformerFactory import TransformerFactory
 # from javax.xml.transform.dom.DOMSource import DOMSource
 # from javax.xml.transform.stream.StreamResult import StreamResult
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.w3c.dom.Document import Document
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.w3c.dom.Document import Document
 
 

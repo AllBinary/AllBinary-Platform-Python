@@ -15,13 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.opengles.GL10 import GL10
+from javax.microedition.khronos.opengles.GL10 import GL10
 
 
 #JOGLEToKhronosGL10
 class JOGL10(GL10):
 
     def _init_fields(self) -> None:
+        from com.jogamp.opengl.glu.GLU import GLU
+        from com.jogamp.opengl.GL2 import GL2
         self.RED: str = "red: "
         self.GREEN: str = " green: "
         self.BLUE: str = " blue: "
@@ -40,14 +42,18 @@ class JOGL10(GL10):
     
 
     def __init__(self, gl: GL, gl2: GL2) -> None:
+        from com.jogamp.opengl.glu.GLU import GLU
+        from com.jogamp.opengl.GL import GL
+        from com.jogamp.opengl.GL2 import GL2
         self._init_fields()
         self.gl10 = gl2
         self.glu = GLU.createGLU(self.gl10)
-        self.GL_LINE = com.jogamp.opengl.GL2.GL_LINE
-        self.GL_QUAD_STRIP = com.jogamp.opengl.GL2.GL_QUAD_STRIP
+        self.GL_LINE = GL2.GL_LINE
+        self.GL_QUAD_STRIP = GL2.GL_QUAD_STRIP
     
 
     def getJOGLGL(self) -> GL2:
+        from com.jogamp.opengl.GL2 import GL2
         return self.gl10
     
 
@@ -119,13 +125,15 @@ class JOGL10(GL10):
         self.gl10.glCullFace(mode)
     
 
-    def glDeleteTextures(self, n: int, textures: list[int], offset: int) -> None:
+    def glDeleteTextures_j3(self, n: int, textures: list[int], offset: int) -> None:
         self.gl10.glDeleteTextures(n, textures, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glDeleteTextures(self, n: int, textures: IntBuffer) -> None:
+    def glDeleteTextures_j2(self, n: int, textures: IntBuffer) -> None:
         self.gl10.glDeleteTextures(n, textures)
+
+    def glDeleteTextures(self, *args):
+        return getattr(self, "glDeleteTextures_j" + str(len(args)))(*args)
     
 
     def glDepthFunc(self, func: int) -> None:
@@ -176,13 +184,15 @@ class JOGL10(GL10):
         self.gl10.glFogf(pname, param)
     
 
-    def glFogfv(self, pname: int, params: list[float], offset: int) -> None:
+    def glFogfv_j3(self, pname: int, params: list[float], offset: int) -> None:
         self.gl10.glFogfv(pname, params, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glFogfv(self, pname: int, params: FloatBuffer) -> None:
+    def glFogfv_j2(self, pname: int, params: FloatBuffer) -> None:
         self.gl10.glFogfv(pname, params)
+
+    def glFogfv(self, *args):
+        return getattr(self, "glFogfv_j" + str(len(args)))(*args)
     
 
     def glFrontFace(self, mode: int) -> None:
@@ -193,26 +203,30 @@ class JOGL10(GL10):
         self.gl10.glFrustumf(left, right, bottom, top, zNear, zFar)
     
 
-    def glGenTextures(self, n: int, textures: list[int], offset: int) -> None:
+    def glGenTextures_j3(self, n: int, textures: list[int], offset: int) -> None:
         self.gl10.glGenTextures(n, textures, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGenTextures(self, n: int, textures: IntBuffer) -> None:
+    def glGenTextures_j2(self, n: int, textures: IntBuffer) -> None:
         self.gl10.glGenTextures(n, textures)
+
+    def glGenTextures(self, *args):
+        return getattr(self, "glGenTextures_j" + str(len(args)))(*args)
     
 
     def glGetError(self) -> int:
         return self.gl10.glGetError()
     
 
-    def glGetIntegerv(self, pname: int, params: list[int], offset: int) -> None:
+    def glGetIntegerv_j3(self, pname: int, params: list[int], offset: int) -> None:
         self.gl10.glGetIntegerv(pname, params, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glGetIntegerv(self, pname: int, params: IntBuffer) -> None:
+    def glGetIntegerv_j2(self, pname: int, params: IntBuffer) -> None:
         self.gl10.glGetIntegerv(pname, params)
+
+    def glGetIntegerv(self, *args):
+        return getattr(self, "glGetIntegerv_j" + str(len(args)))(*args)
     
 
     def glGetString(self, name: int) -> str:
@@ -227,26 +241,30 @@ class JOGL10(GL10):
         self.gl10.glLightModelf(pname, param)
     
 
-    def glLightModelfv(self, pname: int, params: list[float], offset: int) -> None:
+    def glLightModelfv_j3(self, pname: int, params: list[float], offset: int) -> None:
         self.gl10.glLightModelfv(pname, params, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLightModelfv(self, pname: int, params: FloatBuffer) -> None:
+    def glLightModelfv_j2(self, pname: int, params: FloatBuffer) -> None:
         self.gl10.glLightModelfv(pname, params)
+
+    def glLightModelfv(self, *args):
+        return getattr(self, "glLightModelfv_j" + str(len(args)))(*args)
     
 
     def glLightf(self, light: int, pname: int, param: float) -> None:
         self.gl10.glLightf(light, pname, param)
     
 
-    def glLightfv(self, light: int, pname: int, params: list[float], offset: int) -> None:
+    def glLightfv_j4(self, light: int, pname: int, params: list[float], offset: int) -> None:
         self.gl10.glLightfv(light, pname, params, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLightfv(self, light: int, pname: int, params: FloatBuffer) -> None:
+    def glLightfv_j3(self, light: int, pname: int, params: FloatBuffer) -> None:
         self.gl10.glLightfv(light, pname, params)
+
+    def glLightfv(self, *args):
+        return getattr(self, "glLightfv_j" + str(len(args)))(*args)
     
 
     def glLineWidth(self, width: float) -> None:
@@ -257,13 +275,15 @@ class JOGL10(GL10):
         self.gl10.glLoadIdentity()
     
 
-    def glLoadMatrixf(self, m: list[float], offset: int) -> None:
+    def glLoadMatrixf_j2(self, m: list[float], offset: int) -> None:
         self.gl10.glLoadMatrixf(m, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glLoadMatrixf(self, m: FloatBuffer) -> None:
+    def glLoadMatrixf_j1(self, m: FloatBuffer) -> None:
         self.gl10.glLoadMatrixf(m)
+
+    def glLoadMatrixf(self, *args):
+        return getattr(self, "glLoadMatrixf_j" + str(len(args)))(*args)
     
 
     def glLogicOp(self, opcode: int) -> None:
@@ -274,26 +294,30 @@ class JOGL10(GL10):
         self.gl10.glMaterialf(face, pname, param)
     
 
-    def glMaterialfv(self, face: int, pname: int, params: list[float], offset: int) -> None:
+    def glMaterialfv_j4(self, face: int, pname: int, params: list[float], offset: int) -> None:
         self.gl10.glMaterialfv(face, pname, params, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMaterialfv(self, face: int, pname: int, params: FloatBuffer) -> None:
+    def glMaterialfv_j3(self, face: int, pname: int, params: FloatBuffer) -> None:
         self.gl10.glMaterialfv(face, pname, params)
+
+    def glMaterialfv(self, *args):
+        return getattr(self, "glMaterialfv_j" + str(len(args)))(*args)
     
 
     def glMatrixMode(self, mode: int) -> None:
         self.gl10.glMatrixMode(mode)
     
 
-    def glMultMatrixf(self, m: list[float], offset: int) -> None:
+    def glMultMatrixf_j2(self, m: list[float], offset: int) -> None:
         self.gl10.glMultMatrixf(m, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glMultMatrixf(self, m: FloatBuffer) -> None:
+    def glMultMatrixf_j1(self, m: FloatBuffer) -> None:
         self.gl10.glMultMatrixf(m)
+
+    def glMultMatrixf(self, *args):
+        return getattr(self, "glMultMatrixf_j" + str(len(args)))(*args)
     
 
     def glMultiTexCoord4f(self, target: int, s: float, t: float, r: float, q: float) -> None:
@@ -384,13 +408,15 @@ class JOGL10(GL10):
         self.gl10.glTexEnvf(target, pname, param)
     
 
-    def glTexEnvfv(self, target: int, pname: int, params: list[float], offset: int) -> None:
+    def glTexEnvfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
         self.gl10.glTexEnvfv(target, pname, params, offset)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def glTexEnvfv(self, target: int, pname: int, params: FloatBuffer) -> None:
+    def glTexEnvfv_j3(self, target: int, pname: int, params: FloatBuffer) -> None:
         self.gl10.glTexEnvfv(target, pname, params)
+
+    def glTexEnvfv(self, *args):
+        return getattr(self, "glTexEnvfv_j" + str(len(args)))(*args)
     
 
     def glTexImage2D(self, target: int, level: int, internalformat: int, width: int, height: int, border: int, format: int, type_: int, pixels: Buffer) -> None:
@@ -435,6 +461,11 @@ class JOGL10(GL10):
 
     def glPolygonMode(self, i: int, i1: int) -> None:
         self.gl10.glPolygonMode(i, i1)
-from com.jogamp.opengl.glu.GLU import GLU
+# from com.jogamp.opengl.glu.GLU import GLU
+# from com.jogamp.opengl.GL import GL
+# from com.jogamp.opengl.GL2 import GL2
+# from java.nio.Buffer import Buffer
+# from java.nio.FloatBuffer import FloatBuffer
+# from java.nio.IntBuffer import IntBuffer
 
 

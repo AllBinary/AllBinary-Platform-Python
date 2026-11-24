@@ -15,14 +15,12 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.communication.log.Log import Log
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #NoPlatform
 class LogFactory:
-    LOG: Log = Log(StringUtil.getInstance().EMPTY_STRING, NullUtil.getInstance().NULL_OBJECT, StringUtil.getInstance().EMPTY_STRING, NullUtil.getInstance().NULL_OBJECT)
+    LOG: Log = None
     
 
     @staticmethod
@@ -33,5 +31,14 @@ class LogFactory:
     @staticmethod
     def getInstanceF(specialMessage: str, anyType: object, functionName: str) -> Log:
         raise RuntimeError()
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
+
+def _LogFactory_LOG() -> object:
+    from org.allbinary.logic.NullUtil import NullUtil
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return Log(StringUtil.getInstance().EMPTY_STRING, NullUtil.getInstance().NULL_OBJECT, StringUtil.getInstance().EMPTY_STRING, NullUtil.getInstance().NULL_OBJECT)
+
+lazy_static(LogFactory, "LOG", _LogFactory_LOG)
 

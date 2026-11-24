@@ -22,6 +22,9 @@ class InputAutomationConfiguration:
     FILENAME: str = "InputAutomationConfig.xml"
 
     def _init_fields(self) -> None:
+        from java.util.List import List
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.installed: bool = False
         self.inputAutomationModuleConfigurationList: List[InputAutomationModuleConfiguration] = None
@@ -46,11 +49,20 @@ class InputAutomationConfiguration:
     
 
     def getInputAutomationModuleConfigurationList(self) -> List[InputAutomationModuleConfiguration]:
+        from java.util.List import List
+        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         return self.inputAutomationModuleConfigurationList
     
 
     # throws Exception
     def save(self) -> None:
+        from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.io.file.FileUtil import FileUtil
+        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Document import Document
         document: Document = DomDocumentHelper.create()
         file: File = File(InputAutomationConfiguration.FILENAME)
         FileUtil.getInstance().copy(AbPath(file.getAbsolutePath(), StringUtil.getInstance().EMPTY_STRING), AbPath(str(file.getAbsolutePath()) + ".bak.xml", StringUtil.getInstance().EMPTY_STRING))
@@ -68,14 +80,14 @@ class InputAutomationConfiguration:
 # from javax.xml.bind.annotation.XmlElement import XmlElement
 # from javax.xml.bind.annotation.XmlRootElement import XmlRootElement
 # from javax.xml.bind.annotation.XmlType import XmlType
-from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.file.FileUtil import FileUtil
-from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.w3c.dom.Document import Document
+# from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.file.FileUtil import FileUtil
+# from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.w3c.dom.Document import Document
 
 

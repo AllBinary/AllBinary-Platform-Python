@@ -21,10 +21,12 @@ import traceback
 class JarUtil:
 
     def _init_fields(self) -> None:
+        from java.net.URL import URL
         self.jarURL: URL = None
     
 
     def __init__(self, jarURL: URL) -> None:
+        from java.net.URL import URL
         self._init_fields()
         self.jarURL = jarURL
     

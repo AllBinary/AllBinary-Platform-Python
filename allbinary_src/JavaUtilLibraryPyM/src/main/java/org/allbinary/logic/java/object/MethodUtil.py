@@ -27,6 +27,7 @@ class MethodUtil:
     @staticmethod
     def viewAll(myClass: type, lineBreak: str) -> str:
         from org.allbinary.logic.java.anyType.ParamsUtil import ParamsUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         method: list[Method] = myClass.getMethods()
         stringBuffer.append("Methods: ")
@@ -41,6 +42,6 @@ class MethodUtil:
             stringBuffer.append(lineBreak)
         return str(stringBuffer)
 # from java.lang.reflect.Method import Method
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BasicGeographicMapUtil:
     instance: BasicGeographicMapUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
@@ -77,11 +79,13 @@ class BasicGeographicMapUtil:
     
 
     def createAllBinaryTiledLayerArray(self, geographicMapInterfaceArray: list[BasicGeographicMap]) -> list[Layer]:
+        from org.allbinary.layer.Layer import Layer
         tiledLayerArray: list[Layer] = [None] * (len(geographicMapInterfaceArray))
         return self.getAllBinaryTiledLayerArray(geographicMapInterfaceArray, tiledLayerArray, 0)
     
 
     def getAllBinaryTiledLayerArray(self, geographicMapInterfaceArray: list[BasicGeographicMap], tiledLayerArray: list[Layer], startIndex: int) -> list[Layer]:
+        from org.allbinary.layer.Layer import Layer
         geographicMapInterface: BasicGeographicMap = None
         size: int = len(geographicMapInterfaceArray)
         count: int = 0
@@ -108,9 +112,12 @@ class BasicGeographicMapUtil:
         while (index := index - 1) >= 0:
             geographicMapInterface = geographicMapInterfaceArray[index]
             geographicMapInterface.getAllBinaryTiledLayer().setPosition(x, y, geographicMapInterface.getAllBinaryTiledLayer().getZP())
-from org.allbinary.layer.Layer import Layer
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.layer.Layer import Layer
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-BasicGeographicMapUtil.instance = BasicGeographicMapUtil()
+def _BasicGeographicMapUtil_instance() -> object:
+    return BasicGeographicMapUtil()
+
+lazy_static(BasicGeographicMapUtil, "instance", _BasicGeographicMapUtil_instance)
 

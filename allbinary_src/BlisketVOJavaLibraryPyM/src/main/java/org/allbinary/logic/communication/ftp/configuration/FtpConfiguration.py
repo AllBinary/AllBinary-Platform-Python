@@ -37,11 +37,8 @@ class FtpConfiguration(FtpConfigurationInterface):
         self._init_fields()
     
 
-    def _constructor1(self, hashMap: dict) -> None:
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.ftpServer = hashMap.get(FtpConfigurationData.SERVER)
         self.ftpPath = hashMap.get(FtpConfigurationData.PATH)

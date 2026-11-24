@@ -15,13 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.event.DownGameKeyEventListenerInterface import DownGameKeyEventListenerInterface
 from org.allbinary.game.input.event.UpGameKeyEventListenerInterface import UpGameKeyEventListenerInterface
 from org.allbinary.game.input.event.PressGameKeyEventListenerInterface import PressGameKeyEventListenerInterface
 
 
 # Java interface
-class GameKeyEventListenerInterface(DownGameKeyEventListenerInterface, UpGameKeyEventListenerInterface, PressGameKeyEventListenerInterface):
+class GameKeyEventListenerInterface(*java_bases(DownGameKeyEventListenerInterface, UpGameKeyEventListenerInterface, PressGameKeyEventListenerInterface)):
     pass
 
 

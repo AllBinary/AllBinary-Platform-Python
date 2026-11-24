@@ -21,6 +21,7 @@ from admin.taghelpers.BasicTableInterface import BasicTableInterface
 class BasicTable(BasicTableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
@@ -45,6 +46,6 @@ class BasicTable(BasicTableInterface):
     # throws Exception
     def backup(self) -> str:
         raise RuntimeError()
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

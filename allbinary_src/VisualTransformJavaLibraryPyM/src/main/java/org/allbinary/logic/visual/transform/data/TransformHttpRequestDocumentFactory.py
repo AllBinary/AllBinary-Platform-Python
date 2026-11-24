@@ -28,8 +28,9 @@ class TransformHttpRequestDocumentFactory:
     @staticmethod
     def getInstance(pageContext: PageContext, weblisketSession: WeblisketSession) -> TransformDocumentInterface:
         from org.allbinary.logic.visual.transform.data.TransformHttpRequestDocument import TransformHttpRequestDocument
+        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         return TransformHttpRequestDocument(pageContext, weblisketSession)
 # from javax.servlet.jsp.PageContext import PageContext
-from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
+# from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
 
 

@@ -26,6 +26,9 @@ class AllBinaryAdjustedHTMLImageRotationAnimation(AllBinaryHTMLImageRotationAnim
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+        from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(originalImage, image, angleInfo, totalAngle, animationBehavior)
         self._init_fields()
         self.init(dx, dy)
@@ -54,10 +57,11 @@ class AllBinaryAdjustedHTMLImageRotationAnimation(AllBinaryHTMLImageRotationAnim
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paintXY(graphics, x + self.dx, y + self.dy)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.animation.AnimationBehavior import AnimationBehavior
-from org.allbinary.math.AngleInfo import AngleInfo
+# from org.allbinary.animation.AnimationBehavior import AnimationBehavior
+# from org.allbinary.math.AngleInfo import AngleInfo
 
 

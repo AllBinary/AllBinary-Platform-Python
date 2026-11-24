@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
-from org.allbinary.logic.string.StringUtil import StringUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class PaymentGatewayPageData:
     EXTENSION: str = ".jsp"
-    NAME: str = StringUtil.getInstance().EMPTY_STRING
+    NAME: str = None
     FORWARDMAKEPAYMENT: str = "MakePayment.jsp"
     PAYMENTOPTIONS: str = None
     STARTCHECKOUT: str = None
@@ -38,6 +38,7 @@ class PaymentGatewayPageData:
     
 
     def __init__(self, location: str, paymentMethod: str) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         self._init_fields()
         paymentMethodString: str = str(PaymentGatewayPageData.NAME) + paymentMethod
         stringBuffer: StringMaker = StringMaker()
@@ -85,10 +86,23 @@ class PaymentGatewayPageData:
         stringBuffer.append("PaymentFinish")
         stringBuffer.append(PaymentGatewayPageData.EXTENSION)
         self.FINISH = str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-PaymentGatewayPageData.PAYMENTOPTIONS = "PaymentOptions" + str(PaymentGatewayPageData.EXTENSION)
+def _PaymentGatewayPageData_NAME() -> object:
+    from org.allbinary.logic.string.StringUtil import StringUtil
+    return StringUtil.getInstance().EMPTY_STRING
 
-PaymentGatewayPageData.STARTCHECKOUT = "StartCheckout" + str(PaymentGatewayPageData.EXTENSION)
+lazy_static(PaymentGatewayPageData, "NAME", _PaymentGatewayPageData_NAME)
+
+def _PaymentGatewayPageData_PAYMENTOPTIONS() -> object:
+    return "PaymentOptions" + str(PaymentGatewayPageData.EXTENSION)
+
+lazy_static(PaymentGatewayPageData, "PAYMENTOPTIONS", _PaymentGatewayPageData_PAYMENTOPTIONS)
+
+def _PaymentGatewayPageData_STARTCHECKOUT() -> object:
+    return "StartCheckout" + str(PaymentGatewayPageData.EXTENSION)
+
+lazy_static(PaymentGatewayPageData, "STARTCHECKOUT", _PaymentGatewayPageData_STARTCHECKOUT)
 

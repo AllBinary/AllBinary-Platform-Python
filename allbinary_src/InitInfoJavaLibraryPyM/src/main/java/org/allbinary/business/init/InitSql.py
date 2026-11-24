@@ -22,6 +22,13 @@ class InitSql:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+        from org.allbinary.logic.communication.sql.SqlTypeStrings import SqlTypeStrings
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.sqlTypeStrings: SqlTypeStrings = SqlTypeStrings.getInstance()
@@ -48,6 +55,7 @@ class InitSql:
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         self._init_fields()
         self.setDatabaseConnectionInfoInterface(databaseConnectionInfoInterface)
     
@@ -57,10 +65,15 @@ class InitSql:
     
 
     def setDatabaseConnectionInfoInterface(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         self.databaseConnectionInfoInterface = databaseConnectionInfoInterface
     
 
     def createTable(self, tableData: str) -> bool:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Creating Table: ")
@@ -75,6 +88,9 @@ class InitSql:
     
 
     def dropTable(self) -> bool:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         sqlStatement: str = str(self.sqlStrings.DROP_TABLE) + self.tableName
         try:
             self.executeSQLStatement(sqlStatement)
@@ -85,13 +101,19 @@ class InitSql:
             return False
     
 
-    def getRow(self, keysAndValues: dict) -> dict:
+    def getRow(self, keysAndValues: HashMap) -> HashMap:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.SELECT_ALL_FROM)
         stringBuffer.append(self.tableName)
         stringBuffer.append(self.sqlStrings.WHERE)
         try:
-            result: dict = None
+            result: HashMap = None
             set: Set = keysAndValues.keySet()
             keyArray: list[object] = set.toArray()
             size: int = len(keyArray)
@@ -105,7 +127,7 @@ class InitSql:
                 if i < size - 1:
                     stringBuffer.append(self.sqlStrings.AND)
             sqlStatement: str = str(stringBuffer)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 PreLogUtil.put(str(self.sqlStrings.SQL_STATEMENT_LABEL) + sqlStatement, self.INIT_SQL, self.METHOD_GET_ROW)
             rset: ResultSet = self.executeSQLStatement(sqlStatement)
             resultSetMetaData: ResultSetMetaData = rset.getMetaData()
@@ -116,23 +138,28 @@ class InitSql:
                     columnName: str = resultSetMetaData.getColumnName(index)
                     field: str = rset.getString(columnName)
                     result.put(columnName, field)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     PreLogUtil.put(self.ROW_VALUE_LABEL + str(result), self.INIT_SQL, self.METHOD_GET_ROW)
                 return result
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 PreLogUtil.put(self.NO_RESULTS_IN_RESULT_SET, self.INIT_SQL, self.METHOD_GET_ROW)
             return None
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 PreLogUtil.putOE(self.FAILED_SQL_STATEMENT + str(stringBuffer), self.INIT_SQL, self.METHOD_GET_ROW, e)
             return None
     
 
-    def updateWhere(self, key: str, value: str, updatedKeyValuePairs: dict) -> None:
+    def updateWhere(self, key: str, value: str, updatedKeyValuePairs: HashMap) -> None:
         with self._lock:
             return self._updateWhere_unlocked(key, value, updatedKeyValuePairs)
 
-    def _updateWhere_unlocked(self, key: str, value: str, updatedKeyValuePairs: dict) -> None:
+    def _updateWhere_unlocked(self, key: str, value: str, updatedKeyValuePairs: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.UPDATE)
         stringBuffer.append(self.tableName)
@@ -161,14 +188,19 @@ class InitSql:
             stringBuffer.append(self.sqlStrings.CLOSE_QUOTE)
             sqlStatement: str = str(stringBuffer)
             self.executeSQLStatement(sqlStatement)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 PreLogUtil.put(self.SUCCESS_SQL_STATEMENT + sqlStatement, self.INIT_SQL, self.METHOD_UPDATE_WHERE)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 PreLogUtil.putOE(self.FAILED_SQL_STATEMENT + str(stringBuffer), self.INIT_SQL, self.METHOD_UPDATE_WHERE, e)
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.INSERT_INTO)
         stringBuffer.append(self.tableName)
@@ -184,10 +216,10 @@ class InitSql:
             stringBuffer.append(self.INSERT_END)
             sqlStatement: str = str(stringBuffer)
             self.executeSQLStatement(sqlStatement)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 PreLogUtil.put(self.SUCCESS_SQL_STATEMENT + sqlStatement, self.INIT_SQL, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                 PreLogUtil.putOE(self.FAILED_SQL_STATEMENT + str(stringBuffer), self.INIT_SQL, self.INSERT, e)
     
 
@@ -196,6 +228,7 @@ class InitSql:
             return self._getValue_unlocked(value)
 
     def _getValue_unlocked(self, value: str) -> str:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if StringValidationUtil.getInstance().isEmpty(value):
             return self.stringUtil.EMPTY_STRING
         else:
@@ -204,6 +237,9 @@ class InitSql:
 
     # throws Exception, SQLException
     def executeSQLStatement(self, statement: str) -> ResultSet:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.conn is None:
                 self.initialize()
@@ -224,6 +260,7 @@ class InitSql:
 
     # throws SQLException
     def createConnection(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             if self.useridAndPassword == True:
                 self.conn = DriverManager.getConnection(self.databaseConnectionInfoInterface.getUrl(), self.userid, self.password)
@@ -236,11 +273,15 @@ class InitSql:
 
     # throws Exception
     def initialize(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             try:
                 jdbcDriver: str = self.databaseConnectionInfoInterface.getJdbcDriver()
                 PreLogUtil.put(str(StringMaker().append("Loading DbConnnectionInfo: ").append(type(self.databaseConnectionInfoInterface).__module__ + "." + type(self.databaseConnectionInfoInterface).__qualname__).append(" Driver: ").append(jdbcDriver)), self.INIT_SQL, "initialize()")
-                Class.forName(jdbcDriver).newInstance()
+                (lambda jname: getattr(__import__(jname, fromlist=["*"]), jname.rsplit(".", 1)[-1]))(jdbcDriver).newInstance()
             except Exception as e:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                     PreLogUtil.putOE("LoadDriver Failed: " + str(self.databaseConnectionInfoInterface.getJdbcDriver()), self.INIT_SQL, "initialize()", e)
@@ -255,6 +296,7 @@ class InitSql:
     
 
     def getDatabaseConnectionInfoInterface(self) -> DatabaseConnectionInfoInterface:
+        from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
         return self.databaseConnectionInfoInterface
 # from java.sql.Connection import Connection
 # from java.sql.DriverManager import DriverManager
@@ -264,20 +306,20 @@ class InitSql:
 # from java.sql.Statement import Statement
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
-from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
-from org.allbinary.logic.communication.sql.SqlTypeStrings import SqlTypeStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+# from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
+# from org.allbinary.logic.communication.sql.SqlTypeStrings import SqlTypeStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

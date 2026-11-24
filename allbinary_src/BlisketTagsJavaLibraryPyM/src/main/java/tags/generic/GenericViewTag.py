@@ -21,27 +21,34 @@ from tags.TransformTag import TransformTag
 class GenericViewTag(TransformTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.output: str = None
         self.file: str = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
         self._init_fields()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAG):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
 
     def setOutput(self, value: str) -> None:
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
         self.output = value
         self.getPropertiesHashMap().put(InputOutputTypeData.getInstance().NAME, self.output)
     
 
     def setFile(self, value: str) -> None:
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
         self.file = value
         self.getPropertiesHashMap().put(InputOutputTypeData.getInstance().FILE, self.file)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -15,14 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.InventoryItemView import InventoryItemView
 
 
-class NewValidationView(InventoryItemView, ValidationComponentInterface):
+class NewValidationView(*java_bases(InventoryItemView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, StringUtil.getInstance().EMPTY_STRING)
         self.itemInterface = BasicItem()
     
@@ -35,20 +40,29 @@ class NewValidationView(InventoryItemView, ValidationComponentInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     def validationInfo(self) -> str:
         return "Error Creating New Item"
-from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
+# from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

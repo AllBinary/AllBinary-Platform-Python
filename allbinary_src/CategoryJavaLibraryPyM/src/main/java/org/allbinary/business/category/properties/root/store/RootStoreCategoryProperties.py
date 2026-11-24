@@ -15,13 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
 from org.allbinary.business.category.properties.root.RootCategoryPropertiesInterface import RootCategoryPropertiesInterface
 
 
-class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPropertiesInterface):
+class RootStoreCategoryProperties(*java_bases(RootCategoryPropertiesInterface, CategoryPropertiesInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.pathData: AbPathData = AbPathData.getInstance()
         self.fileAbPath: AbPath = None
@@ -35,14 +40,21 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
         if len(args) == 1:
             self._constructor1(*args)
         elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_2(*args)
+        else:
+            self._constructor2_3(*args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
         self.abPath = AbPath.createAbPath()
@@ -52,7 +64,11 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
         self.log()
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, categoryAbPath: AbPath) -> None:
+    def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, categoryAbPath: AbPath) -> None:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
         self.abPath = categoryAbPath
@@ -64,7 +80,14 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
         self.log()
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, node: Node) -> None:
+    def _constructor2_2(self, transformInfoInterface: TransformInfoInterface, node: Node) -> None:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryUtil import CategoryUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
         categoryPath: str = CategoryUtil.getNameFromNode(node)
@@ -77,7 +100,13 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
         self.log()
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, categoryPropertiesHashMap: dict) -> None:
+    def _constructor2_3(self, transformInfoInterface: TransformInfoInterface, categoryPropertiesHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
         categoryPath: str = str(categoryPropertiesHashMap.get(CategoryData.getInstance().NAME))
@@ -92,12 +121,18 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
 
     # throws Exception
     def initPath(self) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
         transformInfoHttpStoreInterface: TransformInfoHttpInterface = self.transformInfoInterface
         storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(transformInfoHttpStoreInterface.getStoreName())
         postPath: str = storeFrontInterface.getCurrentHostNamePath() + storeFrontInterface.getCategoryPath()
         httpServletRequest: HttpServletRequest = transformInfoHttpStoreInterface.getPageContext().getRequest()
         self.webAppAbPath = AbPath(str(httpServletRequest.getContextPath()) + postPath, StringUtil.getInstance().EMPTY_STRING)
-        self.setRootFilePath(AbPath(str(self.URLGLOBALS.getMainPath()) + postPath, StringUtil.getInstance().EMPTY_STRING))
+        self.setRootFilePath(AbPath(str(URLGLOBALS.getMainPath()) + postPath, StringUtil.getInstance().EMPTY_STRING))
     
 
     def isRealRoot(self) -> bool:
@@ -113,14 +148,17 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
     
 
     def setPath(self, path: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.abPath = path
     
 
     def setRootFilePath(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         self.fileAbPath = value
     
 
     def getRootFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.fileAbPath
     
 
@@ -130,14 +168,19 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
 
     # throws Exception
     def getWebAppPath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.webAppAbPath
     
 
     def getPath(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> AbPath:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return self.abPath
     
 
     def getFileName(self) -> str:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         return self.getValue() + AbPathData.getInstance().EXTENSION_SEP + CategoryData.getInstance().UNCRYPTED_EXTENSION
     
 
@@ -149,13 +192,18 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
         return True
     
 
-    def toHashMap(self) -> dict:
-        categoryHashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        categoryHashMap: HashMap = StdUtil.getInstance().createHashMap()
         categoryHashMap.put(CategoryData.getInstance().NAME, self.getValue())
         return categoryHashMap
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         categoryVector: BasicArrayList = BasicArrayListD()
         categoryVector.add(self.getValue())
         return categoryVector
@@ -163,11 +211,14 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -177,28 +228,33 @@ class RootStoreCategoryProperties(RootCategoryPropertiesInterface, CategoryPrope
     
 
     def log(self) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().CATEGORY):
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(str(StringMaker().append("filePath = ").append(str(self.fileAbPath)).append("\npath = ").append(str(self.abPath)).append("\ncategory = ").append(self.category)), self, "log()")
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.CategoryUtil import CategoryUtil
-from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.CategoryUtil import CategoryUtil
+# from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

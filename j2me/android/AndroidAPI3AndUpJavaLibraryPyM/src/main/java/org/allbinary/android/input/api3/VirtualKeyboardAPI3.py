@@ -15,15 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.android.input.VirtualKeyboard import VirtualKeyboard
 from org.allbinary.input.event.VirtualKeyboardEventListenerInterface import VirtualKeyboardEventListenerInterface
 
 
-class VirtualKeyboardAPI3(VirtualKeyboard, VirtualKeyboardEventListenerInterface):
+class VirtualKeyboardAPI3(*java_bases(VirtualKeyboard, VirtualKeyboardEventListenerInterface)):
     MAX_API: int = 2147483647
     MIN_API: int = 3
 
     def _init_fields(self) -> None:
+        from android.app.Activity import Activity
         self.virtualKeyboard: bool = False
         self.activity: Activity = None
         self.showVirtualKeyboardRunnable: object = None
@@ -33,6 +35,8 @@ class VirtualKeyboardAPI3(VirtualKeyboard, VirtualKeyboardEventListenerInterface
     def __init__(self, activity: Activity) -> None:
         from org.allbinary.android.input.api3.ShowVirtualKeyboardRunnable import ShowVirtualKeyboardRunnable
         from org.allbinary.android.input.api3.HideVirtualKeyboardRunnable import HideVirtualKeyboardRunnable
+        from android.app.Activity import Activity
+        from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
         super().__init__()
         self._init_fields()
         self.activity = activity
@@ -44,10 +48,14 @@ class VirtualKeyboardAPI3(VirtualKeyboard, VirtualKeyboardEventListenerInterface
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+        from org.allbinary.logic.util.event.EventStrings import EventStrings
         ForcedLogUtil.log(EventStrings.getInstance().PERFORMANCE_MESSAGE, self)
     
 
     def onVirtualKeyboardEvent(self, virtualKeyboardEvent: VirtualKeyboardEvent) -> None:
+        from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
         isShow: bool = virtualKeyboardEvent.getSource()
         if isShow:
             self.showVirtualKeyboard()
@@ -72,11 +80,11 @@ class VirtualKeyboardAPI3(VirtualKeyboard, VirtualKeyboardEventListenerInterface
     def hideVirtualKeyboard(self) -> None:
         self.activity.runOnUiThread(self.hideVirtualKeyboardRunnable)
         self.virtualKeyboard = False
-from android.app.Activity import Activity
-from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
-from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-from org.allbinary.logic.util.event.EventStrings import EventStrings
+# from android.app.Activity import Activity
+# from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
+# from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
+# from org.allbinary.logic.util.event.EventStrings import EventStrings
 
 

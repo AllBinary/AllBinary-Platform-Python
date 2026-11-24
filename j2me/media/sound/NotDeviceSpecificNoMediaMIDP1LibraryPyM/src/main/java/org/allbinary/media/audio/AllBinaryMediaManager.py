@@ -46,7 +46,6 @@ class AllBinaryMediaManager:
     # throws Exception
     @staticmethod
     def init(soundsFactoryInterface: SoundsFactoryInterface) -> None:
-        from org.allbinary.media.audio.Sounds import Sounds
         from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -60,8 +59,6 @@ class AllBinaryMediaManager:
     # throws Exception
     @staticmethod
     def shutdown(soundsFactoryInterface: SoundsFactoryInterface) -> None:
-        from org.allbinary.media.audio.Sounds import Sounds
-        from org.allbinary.media.audio.Sounds import Sounds
         from org.allbinary.TsUtil import TsUtil
         Sounds(soundsFactoryInterface).stopAll()
         Sounds(soundsFactoryInterface).closeAll()
@@ -70,7 +67,6 @@ class AllBinaryMediaManager:
 
     @staticmethod
     def createPlayerFromInputStream(stream: InputStream, type_: str) -> Player:
-        from org.allbinary.media.audio.NoPlayer import NoPlayer
         from java.io.InputStream import InputStream
         from javax.microedition.media.Player import Player
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -83,7 +79,6 @@ class AllBinaryMediaManager:
 
     @staticmethod
     def createPlayer(locator: str) -> Player:
-        from org.allbinary.media.audio.NoPlayer import NoPlayer
         from javax.microedition.media.Player import Player
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings

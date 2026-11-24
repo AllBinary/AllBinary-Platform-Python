@@ -28,6 +28,8 @@ class AbBasicCrypt(CryptInterface):
     
 
     def __init__(self, algorithm: str, key: str) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self._init_fields()
         try:
             self.algorithm = algorithm
@@ -39,8 +41,10 @@ class AbBasicCrypt(CryptInterface):
     
 
     def init(self) -> None:
-        from org.allbinary.logic.system.security.crypt.jcehelper.SunJCE import SunJCE
-        from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
+        from java.security.Provider import Provider
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from com.sun.crypto.provider.SunJCE import SunJCE
         try:
             sunJce: Provider = SunJCE()
             Security.addProvider(sunJce)
@@ -54,6 +58,7 @@ class AbBasicCrypt(CryptInterface):
     
 
     def encrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             self.cipher.init(Cipher.ENCRYPT_MODE, self.secretKey)
             ivArray: list[int] = self.secretKey.getEncoded()
@@ -71,6 +76,7 @@ class AbBasicCrypt(CryptInterface):
     
 
     def decrypt(self, array: list[int]) -> list[int]:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             self.cipher.init(Cipher.DECRYPT_MODE, self.secretKey)
             ivArray: list[int] = [0] * (8)
@@ -91,7 +97,8 @@ class AbBasicCrypt(CryptInterface):
 # from javax.crypto.Cipher import Cipher
 # from javax.crypto.SecretKey import SecretKey
 # from javax.crypto.SecretKeyFactory import SecretKeyFactory
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from com.sun.crypto.provider.SunJCE import SunJCE
 
 

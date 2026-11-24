@@ -15,5 +15,6 @@ class JTreeInterface:
 
     def getActionScriptJTree(self) -> JTree:
         raise NotImplementedError()
+# from javax.swing.JTree import JTree
 
 

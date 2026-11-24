@@ -33,6 +33,9 @@ class CategoryUtil:
 
     @staticmethod
     def _getPathLevel_unlocked(categoryPath: AbPath) -> int:
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.apache.commons.lang3.StringUtils import StringUtils
         count: int = StringUtils.countMatches(str(categoryPath), AbPathData.getInstance().SEPARATOR)
         return count
     
@@ -44,8 +47,12 @@ class CategoryUtil:
 
     @staticmethod
     def _getNameFromNode_unlocked(node: Node) -> str:
-        from org.allbinary.business.category.CategoryData import CategoryData
-        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.w3c.dom.Attr import Attr
+        from org.w3c.dom.NamedNodeMap import NamedNodeMap
+        from org.w3c.dom.Node import Node
         attributes: NamedNodeMap = node.getAttributes()
         attrNode: Attr = attributes.getNamedItem(CategoryData.getInstance().LABEL)
         if attrNode is not None:
@@ -55,14 +62,14 @@ class CategoryUtil:
             if labelNode is not None:
                 return DomNodeHelper.getTextNodeValue(labelNode)
         return StringUtil.getInstance().EMPTY_STRING
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.apache.commons.lang3.StringUtils import StringUtils
-from org.w3c.dom.Attr import Attr
-from org.w3c.dom.NamedNodeMap import NamedNodeMap
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.apache.commons.lang3.StringUtils import StringUtils
+# from org.w3c.dom.Attr import Attr
+# from org.w3c.dom.NamedNodeMap import NamedNodeMap
+# from org.w3c.dom.Node import Node
 
 

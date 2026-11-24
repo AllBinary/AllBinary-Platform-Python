@@ -15,14 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
 
 
-class NewValidationView(DownloadableInventoryItemView, ValidationComponentInterface):
+class NewValidationView(*java_bases(DownloadableInventoryItemView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, StringUtil.getInstance().EMPTY_STRING)
         self.itemInterface = BasicItem()
         self.downloadableItem = DownloadableItem(self.itemInterface.getId())
@@ -36,21 +42,30 @@ class NewValidationView(DownloadableInventoryItemView, ValidationComponentInterf
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     def validationInfo(self) -> str:
         return "Error Creating New Downloadable Item"
-from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
-from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
+# from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
+# from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
+# from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

@@ -21,9 +21,9 @@ from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 class GameDifficultyOptions(CommandForm):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.MEUtil import MEUtil
+        from org.allbinary.MIDPUtil import MIDPUtil
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.meUtil: MEUtil = MEUtil.getInstance()
+        self.meUtil: MIDPUtil = MIDPUtil.getInstance()
         self.list_: BasicArrayList = None
     
 
@@ -124,10 +124,10 @@ class GameDifficultyOptions(CommandForm):
 # from javax.microedition.lcdui.ChoiceGroup import ChoiceGroup
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.NullImage import NullImage
+# from org.allbinary.MIDPUtil import MIDPUtil
 # from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
 # from org.allbinary.game.configuration.persistance.GameDifficultyFactory import GameDifficultyFactory
 # from org.allbinary.graphics.color.BasicColor import BasicColor
-# from org.allbinary.logic.MEUtil import MEUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.util.BasicArrayList import BasicArrayList

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OrthogonalLightingOpenGLProcessorFactory:
@@ -34,5 +35,8 @@ class OrthogonalLightingOpenGLProcessorFactory:
 from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
 
 
-OrthogonalLightingOpenGLProcessorFactory.instance = OrthogonalLightingOpenGLProcessorFactory()
+def _OrthogonalLightingOpenGLProcessorFactory_instance() -> object:
+    return OrthogonalLightingOpenGLProcessorFactory()
+
+lazy_static(OrthogonalLightingOpenGLProcessorFactory, "instance", _OrthogonalLightingOpenGLProcessorFactory_instance)
 

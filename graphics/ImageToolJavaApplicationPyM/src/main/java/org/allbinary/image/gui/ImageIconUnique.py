@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.image.gui.ImageIcon import ImageIcon
+# from javax.swing.ImageIcon import ImageIcon
 
 
 class ImageIconUnique(ImageIcon):
@@ -37,6 +37,5 @@ class ImageIconUnique(ImageIcon):
     def setId(self, id: int) -> None:
         self.id = id
 # from java.awt.image.BufferedImage import BufferedImage
-# from javax.swing import *
 
 

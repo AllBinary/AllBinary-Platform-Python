@@ -16,12 +16,14 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageRotationUtil:
     instance: ImageRotationUtil = None
 
     def _init_fields(self) -> None:
+        from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
         self.playnUtil: HTMLPlaynUtil = HTMLPlaynUtil.getInstance()
     
 
@@ -35,6 +37,10 @@ class ImageRotationUtil:
     
 
     def rotateImage(self, originalImage: Image, image: Image, totalAngle: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+        from playn.core.Canvas import Canvas
+        from playn.core.ImageImpl import ImageImpl
         if image.isMutable():
             htmlImage: PlaynMutableImage = image
             canvasImage: ImageImpl = htmlImage.getImage()
@@ -51,6 +57,8 @@ class ImageRotationUtil:
     
 
     def rotateImageCanvasSurfaceClear(self, originalImage: Image, image: Image, canvasSurface: Canvas, totalAngle: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from playn.core.Canvas import Canvas
         if image.isMutable():
             canvasSurface.translate(-originalImage.getWidth() / 2, -originalImage.getHeight() / 2)
             canvasSurface.clear()
@@ -61,6 +69,8 @@ class ImageRotationUtil:
     
 
     def rotateImageCanvasSurface(self, originalImage: Image, image: Image, canvasSurface: Canvas, totalAngle: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from playn.core.Canvas import Canvas
         if image.isMutable():
             canvasSurface.rotate(float(math.radians(totalAngle)))
             return image
@@ -69,6 +79,11 @@ class ImageRotationUtil:
     
 
     def drawImage(self, originalImage: Image, image: Image, canvasSurface: Canvas) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
+        from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+        from playn.core.Canvas import Canvas
+        from playn.core.CoreImage import CoreImage
         originalPlayNImage: CoreImage = None
         if originalImage.isMutable():
             originalHTMLImage: PlaynMutableImage = originalImage
@@ -82,19 +97,23 @@ class ImageRotationUtil:
     # throws Exception
     def createRotatedImage(self, originalImage: Image, rotationInDegrees: int) -> Image:
         from org.allbinary.media.image.ImageCreationUtil import ImageCreationUtil
+        from javax.microedition.lcdui.Image import Image
         image: Image = ImageCreationUtil.getInstance().createImageWH(originalImage.getWidth(), originalImage.getHeight())
         rotatedImage: Image = self.rotateImage(originalImage, image, rotationInDegrees)
         if rotatedImage is None:
             raise Exception("Not Mutable")
         return rotatedImage
 # from javax.microedition.lcdui.Image import Image
-from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
-from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
-from playn.core.Canvas import Canvas
-from playn.core.CoreImage import CoreImage
-from playn.core.ImageImpl import ImageImpl
-from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
+# from org.microemu.device.playn.PlaynImmutableImage import PlaynImmutableImage
+# from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
+# from playn.core.Canvas import Canvas
+# from playn.core.CoreImage import CoreImage
+# from playn.core.ImageImpl import ImageImpl
+# from playn.html.HTMLPlaynUtil import HTMLPlaynUtil
 
 
-ImageRotationUtil.instance = ImageRotationUtil()
+def _ImageRotationUtil_instance() -> object:
+    return ImageRotationUtil()
+
+lazy_static(ImageRotationUtil, "instance", _ImageRotationUtil_instance)
 

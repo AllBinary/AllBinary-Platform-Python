@@ -24,6 +24,7 @@ class InitializerDatabase:
     MINPASSWORD: int = 0
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.adminDbUserName: str = None
         self.adminDbPassword: str = None
@@ -35,15 +36,25 @@ class InitializerDatabase:
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        else:
+            self._constructor2_2(*args)
     
 
-    def _constructor2(self, abeClientInformation: AbeClientInformationInterface, map: Map) -> None:
+    def _constructor2_1(self, abeClientInformation: AbeClientInformationInterface, map: Map) -> None:
+        from java.util.HashMap import HashMap
+        from java.util.Map import Map
+        from java.util.Set import Set
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         stringBuffer: StringMaker = StringMaker()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         keys: Set = map.keySet()
         keyArray: list[object] = keys.toArray()
         size: int = len(keyArray)
@@ -60,14 +71,21 @@ class InitializerDatabase:
         self.getFormData(abeClientInformation, hashMap)
     
 
-    def _constructor2(self, abeClientInformation: AbeClientInformationInterface, initHashMap: dict) -> None:
+    def _constructor2_2(self, abeClientInformation: AbeClientInformationInterface, initHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         self.getFormData(abeClientInformation, initHashMap)
     
 
-    def getFormData(self, abeClientInformation: AbeClientInformationInterface, hashMap: dict) -> None:
+    def getFormData(self, abeClientInformation: AbeClientInformationInterface, hashMap: HashMap) -> None:
         from org.allbinary.business.installer.InitializerData import InitializerData
         from org.allbinary.business.installer.DynamicInitDb import DynamicInitDb
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         try:
             initializerData: InitializerData = InitializerData.getInstance()
             self.setAdminDbUserName(hashMap.get(initializerData.DBUSER))
@@ -91,17 +109,21 @@ class InitializerDatabase:
     
 
     def isJdbcDriverValid(self, jdbcDriverClassPathString: str) -> bool:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            Class.forName(jdbcDriverClassPathString).newInstance()
+            (lambda jname: getattr(__import__(jname, fromlist=["*"]), jname.rsplit(".", 1)[-1]))(jdbcDriverClassPathString).newInstance()
             return True
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PRELOADERERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADERERROR):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.IS_VALID, e)
             return False
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         isValid: bool = True
         if not self.isJdbcDriverValid(self.adminJdbcDriver):
             isValid = False
@@ -114,6 +136,7 @@ class InitializerDatabase:
     
 
     def getJdbcDriverValidationInfo(self, jdbcDriver: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("The JDBC driver (")
         stringBuffer.append(jdbcDriver)
@@ -123,6 +146,8 @@ class InitializerDatabase:
 
     def getInvalidInfo(self) -> str:
         from org.allbinary.business.installer.InitializerData import InitializerData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         isValid: bool = True
         isJdbcDriversValid: bool = True
         stringBuffer: StringMaker = StringMaker()
@@ -215,14 +240,16 @@ class InitializerDatabase:
 # from java.util.HashMap import HashMap
 # from java.util.Map import Map
 # from java.util.Set import Set
-from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
-from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
+# from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

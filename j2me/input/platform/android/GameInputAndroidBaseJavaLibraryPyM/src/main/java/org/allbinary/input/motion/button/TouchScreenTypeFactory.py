@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TouchScreenTypeFactory:
@@ -27,8 +28,10 @@ class TouchScreenTypeFactory:
     
 
     def update(self, activity: Activity) -> None:
-        from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
-        from org.allbinary.input.motion.button.TouchScreenTypesFactory import TouchScreenTypesFactory
+        from android.app.Activity import Activity
+        from android.content.res.Configuration import Configuration
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         commonStrings: CommonStrings = CommonStrings.getInstance()
         touchScreenFactory: TouchScreenFactory = TouchScreenFactory.getInstance()
         touchScreenTypesFactory: TouchScreenTypesFactory = TouchScreenTypesFactory.getInstance()
@@ -48,11 +51,14 @@ class TouchScreenTypeFactory:
             touchScreenFactory.setTouchScreenType(touchScreenTypesFactory.NOTOUCH)
         elif touchScreen == Configuration.TOUCHSCREEN_UNDEFINED:
             touchScreenFactory.setTouchScreenType(touchScreenTypesFactory.UNDEFINED)
-from android.app.Activity import Activity
-from android.content.res.Configuration import Configuration
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from android.app.Activity import Activity
+# from android.content.res.Configuration import Configuration
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 
 
-TouchScreenTypeFactory.instance = TouchScreenTypeFactory()
+def _TouchScreenTypeFactory_instance() -> object:
+    return TouchScreenTypeFactory()
+
+lazy_static(TouchScreenTypeFactory, "instance", _TouchScreenTypeFactory_instance)
 

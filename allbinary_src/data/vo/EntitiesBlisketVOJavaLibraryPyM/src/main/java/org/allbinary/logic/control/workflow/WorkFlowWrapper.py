@@ -21,6 +21,8 @@ from org.allbinary.logic.control.workflow.WorkFlowInterface import WorkFlowInter
 class WorkFlowWrapper(WorkFlowInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.anyType: object = None
@@ -37,6 +39,8 @@ class WorkFlowWrapper(WorkFlowInterface):
 
     # throws Exception
     def getName(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.anyType)
             method: Method = helperClass.getMethod("getName", None)
@@ -44,13 +48,15 @@ class WorkFlowWrapper(WorkFlowInterface):
             return result
         except Exception as e:
             error: str = "Reflection Exception"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getName()", e)
             raise Exception(error)
     
 
     # throws Exception
     def getStoreName(self) -> str:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.anyType)
             method: Method = helperClass.getMethod("getStoreName", None)
@@ -58,13 +64,15 @@ class WorkFlowWrapper(WorkFlowInterface):
             return result
         except Exception as e:
             error: str = "Reflection Exception"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getStoreName()", e)
             raise Exception(error)
     
 
     # throws Exception
     def process(self) -> int:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             helperClass: type = type(self.anyType)
             method: Method = helperClass.getMethod(self.commonStrings.PROCESS, None)
@@ -72,11 +80,13 @@ class WorkFlowWrapper(WorkFlowInterface):
             return result
         except Exception as e:
             error: str = "Reflection Exception"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
             raise Exception(error)
 # from java.lang.reflect.Method import Method
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

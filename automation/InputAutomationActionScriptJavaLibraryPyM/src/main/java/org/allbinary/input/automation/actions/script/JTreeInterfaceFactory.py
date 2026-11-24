@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class JTreeInterfaceFactory:
@@ -32,5 +33,8 @@ class JTreeInterfaceFactory:
         return self.jTreeInterface
 
 
-JTreeInterfaceFactory.instance = JTreeInterfaceFactory()
+def _JTreeInterfaceFactory_instance() -> object:
+    return JTreeInterfaceFactory()
+
+lazy_static(JTreeInterfaceFactory, "instance", _JTreeInterfaceFactory_instance)
 

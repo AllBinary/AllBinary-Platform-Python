@@ -15,34 +15,45 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.advertisement.sales.AffiliateSalesEntityInterface import AffiliateSalesEntityInterface
 
 
-class AffiliateSalesEntity(AbSqlBean, AffiliateSalesEntityInterface):
+class AffiliateSalesEntity(*java_bases(AbSqlBean, AffiliateSalesEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "affiliate"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
     def delete(self, value: str) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().deleteWhere(StoreFrontData.getInstance().NAME, value)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.delete, e)
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.group.GroupData import GroupData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         entryData: EntryData = EntryData.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE)
@@ -57,19 +68,29 @@ class AffiliateSalesEntity(AbSqlBean, AffiliateSalesEntityInterface):
         return returnStr
     
 
-    def update(self, updatedValues: dict) -> None:
+    def update(self, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
         super().updateWhere(EntryData.getInstance().ID, updatedValues.get(EntryData.getInstance().ID), updatedValues)
     
 
     def dropTable(self) -> str:
         return super().dropTable()
+    
+
+    def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        super().insert(values)
 # from java.util.HashMap import HashMap
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.business.user.group.GroupData import GroupData
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.business.user.group.GroupData import GroupData
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

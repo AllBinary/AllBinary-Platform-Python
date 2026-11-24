@@ -37,12 +37,19 @@ class DownloadableItem:
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, id: str) -> None:
+    def _constructor1_1(self, id: str) -> None:
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.data.generator.ProductIdGenerator import ProductIdGenerator
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self._init_fields()
         EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.id = ProductIdGenerator().getNext()
@@ -60,24 +67,12 @@ class DownloadableItem:
         self.retries = EMPTY_STRING
     
 
-    def _constructor1(self, hashMap: dict) -> None:
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+    def _constructor1_2(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.time.TimeUtil import TimeUtil
         self._init_fields()
         self.id = hashMap.get(DownloadItemData.ID)
         self.basicItemId = hashMap.get(BasicItemData.getInstance().ID)
@@ -110,6 +105,8 @@ class DownloadableItem:
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         calendar: datetime.datetime = datetime.datetime.now()
         time: str = str(int(calendar.getTimeInMillis()))
         values: BasicArrayList = BasicArrayListD()
@@ -131,19 +128,12 @@ class DownloadableItem:
         return values
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        values: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.logic.StdUtil import StdUtil
+        values: HashMap = StdUtil.getInstance().createHashMap()
         values.put(DownloadItemData.ID, self.getId())
         values.put(BasicItemData.getInstance().ID, self.basicItemId)
         values.put(EntryData.getInstance().ENABLE, self.enabled)
@@ -207,14 +197,14 @@ class DownloadableItem:
         return self.retries
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.data.generator.ProductIdGenerator import ProductIdGenerator
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.time.TimeUtil import TimeUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.data.generator.ProductIdGenerator import ProductIdGenerator
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.time.TimeUtil import TimeUtil
 
 

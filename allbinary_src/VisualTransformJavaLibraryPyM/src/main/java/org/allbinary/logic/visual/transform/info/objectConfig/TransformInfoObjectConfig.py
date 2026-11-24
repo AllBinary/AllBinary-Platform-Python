@@ -21,6 +21,10 @@ from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectC
 class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.ownerTransformInfoInterface: TransformInfoInterface = None
@@ -37,10 +41,14 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.ownerTransformInfoInterface = transformInfoInterface
         self.createDocument()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("TransformInfo: ")
             if self.ownerTransformInfoInterface is not None:
@@ -53,13 +61,22 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def _constructor2(self, transformInfoInterface: TransformInfoInterface, document: Document) -> None:
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.io.OutputTypeData import OutputTypeData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.ownerTransformInfoInterface = transformInfoInterface
         self.document = document
         node: Node = DomSearchHelper.getNodeNoThrow(OutputTypeData.getInstance().NAME, self.getRootNode().getChildNodes())
         if node is not None:
             self.setOutputTypeName(DomNodeHelper.getTextNodeValue(node))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("TransformInfo: ")
             if self.ownerTransformInfoInterface is not None:
@@ -72,8 +89,12 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def _constructor3(self, transformInfoInterface: TransformInfoInterface, name: str, type_: str) -> None:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Attr import Attr
+        from org.w3c.dom.Node import Node
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.ownerTransformInfoInterface = transformInfoInterface
         self.createDocument()
@@ -81,7 +102,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
         configNameAttr.setValue(name)
         objectConfigNode: Node = self.document.getElementsByTagName(TransformInfoObjectConfigData.getInstance().NAME).item(0)
         objectConfigNode.appendChild(configNameAttr)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("TransformInfo: ")
             if self.ownerTransformInfoInterface is not None:
@@ -94,27 +115,36 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def createDocument(self) -> None:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.w3c.dom.Node import Node
         self.document = DomDocumentHelper.create()
         objectConfigNode: Node = self.document.createElement(TransformInfoObjectConfigData.getInstance().NAME)
         self.document.appendChild(objectConfigNode)
     
 
     def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         return self.ownerTransformInfoInterface
     
 
     # throws Exception
     def toXmlDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return self.document
     
 
     def setDocument(self, document: Document) -> None:
+        from org.w3c.dom.Document import Document
         self.document = document
     
 
     def containsView(self, transformInfoInterface: TransformInfoInterface) -> bool:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.w3c.dom.Attr import Attr
+        from org.w3c.dom.NamedNodeMap import NamedNodeMap
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         objectConfigNode: Node = self.document.getElementsByTagName(TransformInfoObjectConfigData.getInstance().NAME).item(0)
         viewNodeList: NodeList = objectConfigNode.getChildNodes()
         numberOfViews: int = viewNodeList.getLength()
@@ -129,32 +159,41 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     # throws Exception
     def getTemplateAttributes(self) -> NamedNodeMap:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.NamedNodeMap import NamedNodeMap
+        from org.w3c.dom.Node import Node
         componentNode: Node = self.document.getElementsByTagName(TransformInfoObjectConfigData.getInstance().NAME).item(0)
         return componentNode.getAttributes()
     
 
     # throws Exception
     def getName(self) -> str:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.Attr import Attr
         attrNode: Attr = self.getTemplateAttributes().getNamedItem(TransformInfoObjectConfigData.getInstance().NAME)
         return attrNode.getValue()
     
 
     # throws Exception
     def setName(self, name: str) -> None:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.Attr import Attr
         attrNode: Attr = self.getTemplateAttributes().getNamedItem(TransformInfoObjectConfigData.getInstance().NAME)
         attrNode.setValue(name)
     
 
     # throws Exception
     def getNodeVector(self, nodeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         componentsNodeList: NodeList = self.document.getElementsByTagName(nodeName)
         if componentsNodeList is not None and componentsNodeList.getLength() > 0:
             viewNodeVector: BasicArrayList = DomSearchHelper.getAllNodes(TransformInfoData.getInstance().NAME, componentsNodeList.item(0).getChildNodes())
             numberOfViews: int = viewNodeVector.size()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Number Of ")
                 stringBuffer.append(nodeName)
@@ -166,7 +205,11 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     # throws Exception
-    def getTransformDomNodes(self, nodeName: str) -> BasicArrayList:
+    def getTransformDomNodes_j1(self, nodeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
+        from org.w3c.dom.Node import Node
         viewVector: BasicArrayList = BasicArrayListD()
         viewNodeVector: BasicArrayList = self.getNodeVector(nodeName)
         size: int = viewNodeVector.size()
@@ -177,7 +220,11 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     # throws Exception
-    def getTransforms(self, nodeName: str) -> BasicArrayList:
+    def getTransforms_j1(self, nodeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
+        from org.w3c.dom.Node import Node
         viewVector: BasicArrayList = BasicArrayListD()
         viewNodeVector: BasicArrayList = self.getNodeVector(nodeName)
         size: int = viewNodeVector.size()
@@ -189,7 +236,19 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     # throws Exception
     def getTransformsGroup(self, group: str) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+        from org.w3c.dom.Attr import Attr
+        from org.w3c.dom.NamedNodeMap import NamedNodeMap
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Started: " + group, self, "getTransformsGroup()")
         viewVector: BasicArrayList = BasicArrayListD()
         GROUP: str = TransformInfosData.getInstance().GROUP
@@ -207,14 +266,14 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
                     break
             viewNodeVector: BasicArrayList = DomSearchHelper.getAllNodes(TransformInfoData.getInstance().NAME, componentsNode.getChildNodes())
             numberOfViews: int = viewNodeVector.size()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Number Of Nodes: " + str(numberOfViews), self, "getTransformsGroup()")
             size: int = viewNodeVector.size()
             for index in range(0, size):
                 viewNode: Node = viewNodeVector.get(index)
                 viewVector.add(TransformInfoDomNode(viewNode))
         else:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 if componentsNodeList is None:
                     self.logUtil.putF("Number Of Nodes: NULL", self, "getTransformsGroup()")
                 else:
@@ -223,29 +282,41 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getTransformDomNodes(self) -> BasicArrayList:
+    def getTransformDomNodes_j0(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
         return self.getTransformDomNodes(TransformInfosData.getInstance().GROUP)
+
+    def getTransformDomNodes(self, *args):
+        return getattr(self, "getTransformDomNodes_j" + str(len(args)))(*args)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getTransforms(self) -> BasicArrayList:
+    def getTransforms_j0(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
         return self.getTransforms(TransformInfosData.getInstance().NAME)
+
+    def getTransforms(self, *args):
+        return getattr(self, "getTransforms_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def getGroupTransforms(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
         return self.getTransforms(TransformInfosData.getInstance().GROUP)
     
 
     # throws Exception
     def getParentTransforms(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         return self.getTransforms(TransformInfoData.getInstance().PARENT)
     
 
     def getRootNode(self) -> Node:
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.w3c.dom.Node import Node
         return self.document.getElementsByTagName(TransformInfoObjectConfigData.getInstance().NAME).item(0)
     
 
@@ -260,55 +331,72 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     # throws Exception
     def getInputOutputTypeName(self) -> str:
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+        from org.w3c.dom.Node import Node
         node: Node = DomSearchHelper.getNode(InputOutputTypeData.getInstance().NAME, self.getRootNode().getChildNodes())
         return DomNodeHelper.getTextNodeValue(node)
     
 
     # throws Exception
     def getInputOutputTypeFile(self) -> str:
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+        from org.w3c.dom.Node import Node
         node: Node = DomSearchHelper.getNode(InputOutputTypeData.getInstance().FILE, self.getRootNode().getChildNodes())
         return DomNodeHelper.getTextNodeValue(node)
     
 
     # throws Exception
     def getImportUriPath(self) -> str:
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.logic.visual.transform.template.XslData import XslData
+        from org.w3c.dom.Node import Node
         node: Node = DomSearchHelper.getNode(XslData.getInstance().ROOT_IMPORT_URI, self.getRootNode().getChildNodes())
         return DomNodeHelper.getTextNodeValue(node)
     
 
     def toString(self) -> str:
+        from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.document is not None:
                 return XmlDocumentHelper.toString(self.document)
             else:
                 return None
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.putF("DOM Document error", self, self.commonStrings.TOSTRING)
             return None
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
-from org.allbinary.logic.io.OutputTypeData import OutputTypeData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
-from org.allbinary.logic.visual.transform.template.XslData import XslData
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Attr import Attr
-from org.w3c.dom.Document import Document
-from org.w3c.dom.NamedNodeMap import NamedNodeMap
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+# from org.allbinary.logic.io.OutputTypeData import OutputTypeData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.info.TransformInfosData import TransformInfosData
+# from org.allbinary.logic.visual.transform.template.XslData import XslData
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Attr import Attr
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.NamedNodeMap import NamedNodeMap
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

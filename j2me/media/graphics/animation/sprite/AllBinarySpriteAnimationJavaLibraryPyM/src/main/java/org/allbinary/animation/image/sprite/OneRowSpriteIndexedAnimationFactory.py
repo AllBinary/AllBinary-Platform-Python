@@ -79,7 +79,7 @@ class OneRowSpriteIndexedAnimationFactory(BaseImageAnimationFactory):
 
     def initW(self, dx: int) -> None:
         self.init(dx, 0)
-        self.animationFactoryInitializationVisitor.dx += -(self.animationFactoryInitializationVisitor.width >> 2)
+        self.animationFactoryInitializationVisitor.dx += -self.animationFactoryInitializationVisitor.width >> 2
     
 
     # throws Exception

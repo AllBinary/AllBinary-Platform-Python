@@ -7,12 +7,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImagePersistanceUtil:
     instance: ImagePersistanceUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
@@ -27,6 +30,10 @@ class ImagePersistanceUtil:
 
     # throws Exception
     def saveWithBatik(self, file: AbFile, bufferedImage: BufferedImage) -> None:
+        from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.apache.batik.ext.awt.image.codec.png.PNGImageWriter import PNGImageWriter
         batikPNGImageWriter: PNGImageWriter = PNGImageWriter()
         fileOutputStream: AbFileOutputStream = AbFileOutputStream.createFromAbFile(file)
         try:
@@ -37,12 +44,14 @@ class ImagePersistanceUtil:
         self.logUtil.putF("Wrote Image: " + str(file.getAbsolutePath()), self, self.commonStrings.SAVE)
     
 
-    def saveWithImageIO(self, filePath: str, bufferedImage: BufferedImage) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def saveWithImageIO_j2_1(self, filePath: str, bufferedImage: BufferedImage) -> None:
         self.saveWithImageIO(File(filePath), bufferedImage)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def saveWithImageIO(self, file: File, bufferedImage: BufferedImage) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def saveWithImageIO_j2_2(self, file: File, bufferedImage: BufferedImage) -> None:
+        from java.util.Iterator import Iterator
         writer: ImageWriter = None
         ios: ImageOutputStream = None
         try:
@@ -74,6 +83,13 @@ class ImagePersistanceUtil:
                     writer.dispose()
             except OSError as e2:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.SAVE, e2)
+
+    def saveWithImageIO(self, *args):
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and not isinstance(args[1], (str, list, int, float)):
+            return self.saveWithImageIO_j2_1(*args)
+        if len(args) == 2:
+            return self.saveWithImageIO_j2_2(*args)
+        return getattr(self, "saveWithImageIO_j" + str(len(args)))(*args)
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.File import File
 # from java.io.IOException import IOException
@@ -83,13 +99,16 @@ class ImagePersistanceUtil:
 # from javax.imageio.ImageWriteParam import ImageWriteParam
 # from javax.imageio.ImageWriter import ImageWriter
 # from javax.imageio.stream.ImageOutputStream import ImageOutputStream
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.apache.batik.ext.awt.image.codec.png.PNGImageWriter import PNGImageWriter
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.apache.batik.ext.awt.image.codec.png.PNGImageWriter import PNGImageWriter
 
 
-ImagePersistanceUtil.instance = ImagePersistanceUtil()
+def _ImagePersistanceUtil_instance() -> object:
+    return ImagePersistanceUtil()
+
+lazy_static(ImagePersistanceUtil, "instance", _ImagePersistanceUtil_instance)
 

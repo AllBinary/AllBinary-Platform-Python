@@ -26,6 +26,7 @@ class InterfaceUtil:
 
     @staticmethod
     def viewAll(myClass: type, lineBreak: str) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         interfaces: list[type] = myClass.getInterfaces()
         stringBuffer.append(lineBreak)
@@ -47,38 +48,49 @@ class InterfaceUtil:
         return None
     
 
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def isImplemented(clazz: type, anyType: object) -> bool:
+    def isImplemented_j2_1(clazz: type, anyType: object) -> bool:
         classes: list[type] = type(anyType).getInterfaces()
         for index in range(0, len(classes)):
-            if clazz.getName().compareTo(classes[index].getName()) == 0:
+            if clazz.__module__ + "." + clazz.__qualname__.compareTo(classes[index].getName()) == 0:
                 return True
         return False
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def isImplemented(className: str, anyType: object) -> bool:
+    def isImplemented_j2_2(className: str, anyType: object) -> bool:
         classes: list[type] = type(anyType).getInterfaces()
         for index in range(0, len(classes)):
             if classes[index].getName().indexOf(className) == 0:
                 return True
         return False
+
+    @staticmethod
+    def isImplemented(*args):
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)):
+            return InterfaceUtil.isImplemented_j2_1(*args)
+        if len(args) == 2:
+            return InterfaceUtil.isImplemented_j2_2(*args)
+        return getattr(InterfaceUtil, "isImplemented_j" + str(len(args)))(*args)
     
 
     @staticmethod
     def isImplementedView(clazz: type, anyType: object) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         classes: list[type] = type(anyType).getInterfaces()
         stringBuffer.append("isImplementedView: \n")
         for index in range(0, len(classes)):
-            stringBuffer.append(clazz.getName())
+            stringBuffer.append(clazz.__module__ + "." + clazz.__qualname__)
             stringBuffer.append(" should be = ")
             stringBuffer.append(classes[index].getName())
             stringBuffer.append(classes[index].getName())
             stringBuffer.append(CommonSeps.getInstance().NEW_LINE)
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
 
 

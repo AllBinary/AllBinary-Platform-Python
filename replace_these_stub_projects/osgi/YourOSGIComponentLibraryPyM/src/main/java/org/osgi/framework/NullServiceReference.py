@@ -21,16 +21,18 @@ class NullServiceReference:
     
 
     def getProperty(self, key: str) -> object:
+        from org.allbinary.logic.NullUtil import NullUtil
         return NullUtil.getInstance().NULL_OBJECT
     
 
     def getPropertyKeys(self) -> list[str]:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         return StringUtil.getInstance().getArrayInstance()
     
 
     def compareTo(self, o: object) -> int:
         raise RuntimeError()
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 

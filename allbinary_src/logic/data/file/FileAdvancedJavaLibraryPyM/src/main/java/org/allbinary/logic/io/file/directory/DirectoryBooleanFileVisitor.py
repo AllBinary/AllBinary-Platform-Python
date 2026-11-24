@@ -25,15 +25,25 @@ class DirectoryBooleanFileVisitor(VisitorInterface):
         pass
     
 
-    def visit(self, anyType: object) -> object:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def visit_j1_1(self, anyType: object) -> object:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         return self.visit(anyType)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def visit(self, file: AbFile) -> bool:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def visit_j1_2(self, file: AbFile) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         if file.isDirectory():
             return True
         return False
-from org.allbinary.logic.io.file.AbFile import AbFile
+
+    def visit(self, *args):
+        if len(args) == 1 and True:
+            return self.visit_j1_1(*args)
+        if len(args) == 1:
+            return self.visit_j1_2(*args)
+        return getattr(self, "visit_j" + str(len(args)))(*args)
+# from org.allbinary.logic.io.file.AbFile import AbFile
 
 

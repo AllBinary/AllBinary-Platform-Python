@@ -21,6 +21,10 @@ from org.osgi.framework.BundleActivator import BundleActivator
 class InputAutomationModuleBundleActivator(BundleActivator):
 
     def _init_fields(self) -> None:
+        from org.osgi.framework.ServiceFactory import ServiceFactory
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.inputAutomationModuleInterface: list[InputAutomationModuleFactoryInterface] = None
@@ -39,18 +43,25 @@ class InputAutomationModuleBundleActivator(BundleActivator):
 
     # throws Exception
     def getInputAutomationConfigurationModuleChangeListener(self, context: BundleContext) -> InputAutomationConfigurationModuleChangeListener:
-        serviceReference: ServiceReference = context.getServiceReference(InputAutomationConfigurationModuleChangeListener.getName())
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.osgi.framework.ServiceReference import ServiceReference
+        from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
+        serviceReference: ServiceReference = context.getServiceReference(InputAutomationConfigurationModuleChangeListener.__module__ + "." + InputAutomationConfigurationModuleChangeListener.__qualname__)
         if serviceReference is not None:
             inputAutomationConfigurationModuleChangeListener: InputAutomationConfigurationModuleChangeListener = context.getService(serviceReference)
             if inputAutomationConfigurationModuleChangeListener is None:
                 raise Exception("No Service For ServiceReference")
             return inputAutomationConfigurationModuleChangeListener
         else:
-            self.logUtil.putF("No ServiceReference: " + InputAutomationConfigurationModuleChangeListener.getName(), self, "addModules")
+            self.logUtil.putF("No ServiceReference: " + InputAutomationConfigurationModuleChangeListener.__module__ + "." + InputAutomationConfigurationModuleChangeListener.__qualname__, self, "addModules")
             return None
     
 
     def addModules(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationUtil import InputAutomationConfigurationUtil
         try:
             self.logUtil.putF(self.commonStrings.START, self, "addModules")
             inputAutomationConfigurationModuleChangeListener: InputAutomationConfigurationModuleChangeListener = self.getInputAutomationConfigurationModuleChangeListener(context)
@@ -64,10 +75,17 @@ class InputAutomationModuleBundleActivator(BundleActivator):
 
     # throws Exception
     def registerAsService(self, bundleContext: BundleContext) -> None:
-        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), InputAutomationModuleServiceInterface.getName())
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
+        from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
+        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), InputAutomationModuleServiceInterface.__module__ + "." + InputAutomationModuleServiceInterface.__qualname__)
     
 
     def removeModules(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
+        from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+        from org.allbinary.input.automation.configuration.InputAutomationConfigurationUtil import InputAutomationConfigurationUtil
         try:
             self.logUtil.putF(self.commonStrings.START, self, "removeModules")
             inputAutomationConfigurationModuleChangeListener: InputAutomationConfigurationModuleChangeListener = self.getInputAutomationConfigurationModuleChangeListener(context)
@@ -81,6 +99,7 @@ class InputAutomationModuleBundleActivator(BundleActivator):
 
     # throws Exception
     def start(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.START)
         self.addModules(context)
         self.registerAsService(context)
@@ -88,15 +107,18 @@ class InputAutomationModuleBundleActivator(BundleActivator):
 
     # throws Exception
     def stop(self, context: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         self.logUtil.putF(self.commonStrings.START, self, "stop")
         self.removeModules(context)
     
 
     def getInputAutomationModuleInterface(self) -> list[InputAutomationModuleFactoryInterface]:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         return self.inputAutomationModuleInterface
     
 
     def setInputAutomationModuleInterface(self, inputAutomationModuleInterface: list[InputAutomationModuleFactoryInterface]) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         self.inputAutomationModuleInterface = inputAutomationModuleInterface
     
 
@@ -105,17 +127,18 @@ class InputAutomationModuleBundleActivator(BundleActivator):
     
 
     def setServiceFactory(self, serviceObject: ServiceFactory) -> None:
+        from org.osgi.framework.ServiceFactory import ServiceFactory
         self.serviceFactory = serviceObject
-from org.osgi.framework.BundleContext import BundleContext
-from org.osgi.framework.ServiceFactory import ServiceFactory
-from org.osgi.framework.ServiceReference import ServiceReference
-from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
-from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
-from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
-from org.allbinary.input.automation.configuration.InputAutomationConfigurationUtil import InputAutomationConfigurationUtil
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.ServiceFactory import ServiceFactory
+# from org.osgi.framework.ServiceReference import ServiceReference
+# from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
+# from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
+# from org.allbinary.input.automation.configuration.InputAutomationConfigurationModuleChangeEvent import InputAutomationConfigurationModuleChangeEvent
+# from org.allbinary.input.automation.configuration.InputAutomationConfigurationUtil import InputAutomationConfigurationUtil
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

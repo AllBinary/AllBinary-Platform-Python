@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 from org.allbinary.layer.NamedInterface import NamedInterface
@@ -22,7 +23,7 @@ from org.allbinary.layer.PositionInterface import PositionInterface
 
 
 # Java interface
-class LayerInterface(NamedInterface, PaintableInterface, GroupInterfaceCompositeInterface, PositionInterface):
+class LayerInterface(*java_bases(NamedInterface, PaintableInterface, GroupInterfaceCompositeInterface, PositionInterface)):
     
 
     def getHeight(self) -> int:

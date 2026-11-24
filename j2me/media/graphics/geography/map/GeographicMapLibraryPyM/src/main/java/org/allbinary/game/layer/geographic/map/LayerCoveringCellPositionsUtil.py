@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class LayerCoveringCellPositionsUtil:
     instance: LayerCoveringCellPositionsUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
         self.cellPositionsUtil: CellPositionsUtil = CellPositionsUtil.getInstance()
 
     def __init__(self) -> None:
@@ -34,12 +36,20 @@ class LayerCoveringCellPositionsUtil:
 
     # throws Exception
     def getAllXY(self, geographicMapInterface: BasicGeographicMap, layerInterface: AllBinaryLayer, x: int, y: int, reusableList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         topLeftGeographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXY(x, y)
         return self.getAll(geographicMapInterface, topLeftGeographicMapCellPosition, layerInterface, reusableList)
     
 
     # throws Exception
     def getAll(self, geographicMapInterface: BasicGeographicMap, topLeftGeographicMapCellPosition: GeographicMapCellPosition, layerInterface: AllBinaryLayer, reusableList: BasicArrayList) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         reusableList.clear()
         columns: int = layerInterface.getWidth() / geographicMapInterface.getAllBinaryTiledLayer().getCellWidth()
         rows: int = layerInterface.getHeight() / geographicMapInterface.getAllBinaryTiledLayer().getCellHeight()
@@ -48,12 +58,15 @@ class LayerCoveringCellPositionsUtil:
         if rows == 0:
             rows = 1
         return self.cellPositionsUtil.getAll(geographicMapInterface, topLeftGeographicMapCellPosition, columns, rows, reusableList)
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
 
 
-LayerCoveringCellPositionsUtil.instance = LayerCoveringCellPositionsUtil()
+def _LayerCoveringCellPositionsUtil_instance() -> object:
+    return LayerCoveringCellPositionsUtil()
+
+lazy_static(LayerCoveringCellPositionsUtil, "instance", _LayerCoveringCellPositionsUtil_instance)
 

@@ -28,6 +28,7 @@ class DisplayInBrowserContraints(DisplayInBrowserContraintsInterface):
     
 
     def __init__(self, node: Node) -> None:
+        from org.w3c.dom.Node import Node
         self._init_fields()
     
 
@@ -61,6 +62,6 @@ class DisplayInBrowserContraints(DisplayInBrowserContraintsInterface):
 
     def setMountedLink(self, mountedLink: str) -> None:
         self.mountedLink = mountedLink
-from org.w3c.dom.Node import Node
+# from org.w3c.dom.Node import Node
 
 

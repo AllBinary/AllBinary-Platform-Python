@@ -17,15 +17,23 @@ from __future__ import annotations
 
 import os
 import platform
-from org.allbinary.logic.io.file.FilePathData import FilePathData
-from org.allbinary.logic.string.StringMaker import StringMaker
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageOutputData:
-    SAVE_PATH: str = str(StringMaker().append({"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~")}.get("user.dir", os.environ.get(str("user.dir")))).appendchar(FilePathData.getInstance().SEPARATORCHAR).append("saves").appendchar(FilePathData.getInstance().SEPARATORCHAR))
+    SAVE_PATH: str = None
     
 
     def __init__(self) -> None:
         pass
+# from org.allbinary.logic.io.file.FilePathData import FilePathData
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
+
+def _ImageOutputData_SAVE_PATH() -> object:
+    from org.allbinary.logic.io.file.FilePathData import FilePathData
+    from org.allbinary.logic.string.StringMaker import StringMaker
+    return str(StringMaker().append({"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("user.dir", os.environ.get(str("user.dir")))).appendchar(FilePathData.getInstance().SEPARATORCHAR).append("saves").appendchar(FilePathData.getInstance().SEPARATORCHAR))
+
+lazy_static(ImageOutputData, "SAVE_PATH", _ImageOutputData_SAVE_PATH)
 

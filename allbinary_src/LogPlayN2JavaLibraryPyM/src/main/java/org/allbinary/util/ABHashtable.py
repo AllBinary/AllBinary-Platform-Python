@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.Hashtable import Hashtable
+from java.util.Hashtable import Hashtable
 
 
-class ABHashtable(dict):
+class ABHashtable(Hashtable):
     
 
     def __init__(self) -> None:
@@ -34,6 +34,7 @@ class ABHashtable(dict):
     
 
     def elements(self) -> Enumeration[V]:
+        from java.util.Enumeration import Enumeration
         return super().elements()
     
 
@@ -81,8 +82,6 @@ class ABHashtable(dict):
     def __hash__(self) -> int:
         return self.hashCode()
 # from java.util.Enumeration import Enumeration
-# from java.util.Map import Map
-# from java.util.Set import Set
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

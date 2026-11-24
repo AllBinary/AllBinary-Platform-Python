@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class OpenGLCapabilities:
     instance: OpenGLCapabilities = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.CUSTOM_GL_SURFACE_VIEW: bool = True
         self.stringUtil: StringUtil = StringUtil.getInstance()
@@ -71,14 +74,25 @@ class OpenGLCapabilities:
     
 
     def initCapabilities(self, gl: GL10) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from javax.microedition.khronos.opengles.GL11 import GL11
+        from org.allbinary.AndroidUtil import AndroidUtil
+        from org.allbinary.image.opengles.OpenGLESGL10ImageFactory import OpenGLESGL10ImageFactory
+        from org.allbinary.image.opengles.OpenGLESGL11VBOImageFactory import OpenGLESGL11VBOImageFactory
+        from org.allbinary.image.opengles.OpenGLImageSpecificFactory import OpenGLImageSpecificFactory
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.game.configuration.feature.Features import Features
         METHOD_NAME: str = "initGLCapabilities"
         try:
             features: Features = Features.getInstance()
             openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
             openGLImageSpecificFactory: OpenGLImageSpecificFactory = OpenGLImageSpecificFactory.getInstance()
             stringBuffer: StringMaker = StringMaker()
-            self.glVersionString = gl.glGetString(self.GL10.GL_VERSION)
+            self.glVersionString = gl.glGetString(GL10.GL_VERSION)
             GL_SHADING_LANGUAGE_VERSION: int = 0x8b8c
             self.glShaderVersionString = gl.glGetString(GL_SHADING_LANGUAGE_VERSION)
             if self.glShaderVersionString is None:
@@ -92,9 +106,9 @@ class OpenGLCapabilities:
             except Exception as e:
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(commonStrings.EXCEPTION, self, METHOD_NAME, e)
-            self.glRenderer = gl.glGetString(self.GL10.GL_RENDERER)
-            self.glVendor = gl.glGetString(self.GL10.GL_VENDOR)
-            self.glExtensions = gl.glGetString(self.GL10.GL_EXTENSIONS)
+            self.glRenderer = gl.glGetString(GL10.GL_RENDERER)
+            self.glVendor = gl.glGetString(GL10.GL_VENDOR)
+            self.glExtensions = gl.glGetString(GL10.GL_EXTENSIONS)
             if self.glExtensions.find(self.GL_EXT_GPU_SHADER_100) >= 0:
                 self.glExtensionGPUShader100 = True
             else:
@@ -152,7 +166,7 @@ class OpenGLCapabilities:
                 PreLogUtil.put(str(stringBuffer), self, METHOD_NAME)
                 openGLImageSpecificFactory.setImageFactory(OpenGLESGL10ImageFactory())
             maxTextureSizeArray: list[int] = [0] * (1)
-            gl.glGetIntegerv(self.GL10.GL_MAX_TEXTURE_SIZE, maxTextureSizeArray, 0)
+            gl.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, maxTextureSizeArray, 0)
             self.maxTextureSize = maxTextureSizeArray[0]
             self.initialized = True
         except Exception as e:
@@ -220,6 +234,13 @@ class OpenGLCapabilities:
     
 
     def toString(self) -> str:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("GL_VERSION: ")
@@ -257,21 +278,24 @@ class OpenGLCapabilities:
         return self.toString()
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.khronos.opengles.GL11 import GL11
-from org.allbinary.AndroidUtil import AndroidUtil
-from org.allbinary.image.opengles.OpenGLESGL10ImageFactory import OpenGLESGL10ImageFactory
-from org.allbinary.image.opengles.OpenGLESGL11VBOImageFactory import OpenGLESGL11VBOImageFactory
-from org.allbinary.image.opengles.OpenGLImageSpecificFactory import OpenGLImageSpecificFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.game.configuration.feature.Features import Features
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.AndroidUtil import AndroidUtil
+# from org.allbinary.image.opengles.OpenGLESGL10ImageFactory import OpenGLESGL10ImageFactory
+# from org.allbinary.image.opengles.OpenGLESGL11VBOImageFactory import OpenGLESGL11VBOImageFactory
+# from org.allbinary.image.opengles.OpenGLImageSpecificFactory import OpenGLImageSpecificFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.game.configuration.feature.Features import Features
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
 
 
-OpenGLCapabilities.instance = OpenGLCapabilities()
+def _OpenGLCapabilities_instance() -> object:
+    return OpenGLCapabilities()
+
+lazy_static(OpenGLCapabilities, "instance", _OpenGLCapabilities_instance)
 

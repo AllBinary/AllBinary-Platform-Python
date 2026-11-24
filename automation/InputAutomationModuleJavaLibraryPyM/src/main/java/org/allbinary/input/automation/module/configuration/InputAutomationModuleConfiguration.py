@@ -20,6 +20,9 @@ from __future__ import annotations
 class InputAutomationModuleConfiguration:
 
     def _init_fields(self) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.className: str = None
@@ -42,11 +45,14 @@ class InputAutomationModuleConfiguration:
     
 
     def _constructor2(self, abeClientInformation: AbeClientInformationInterface, node: Node) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.init(abeClientInformation, node)
     
 
     def _constructor3(self, abeClientInformation: AbeClientInformationInterface, name: str, className: str) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self._init_fields()
         self.setName(name)
         self.setClassName(className)
@@ -54,13 +60,21 @@ class InputAutomationModuleConfiguration:
     
 
     def _constructor1(self, inputAutomationModuleInterface: InputAutomationModuleFactoryInterface) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         self._init_fields()
         self.setInputAutomationModuleInterface(inputAutomationModuleInterface)
         self.setClassName(type(self.inputAutomationModuleInterface).__module__ + "." + type(self.inputAutomationModuleInterface).__qualname__)
     
 
     # throws Exception
-    def init(self, abeClientInformation: AbeClientInformationInterface, node: Node) -> None:
+    def init_j2(self, abeClientInformation: AbeClientInformationInterface, node: Node) -> None:
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.allbinary.input.automation.InputAutomationData import InputAutomationData
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         nodeList: NodeList = node.getChildNodes()
         if nodeList is not None:
             classNameNode: Node = DomSearchHelper.getNode(DynamicObjectData.NAME, nodeList)
@@ -73,8 +87,10 @@ class InputAutomationModuleConfiguration:
             self.logUtil.putF(str(InputAutomationData.NAME) + " Node Has No Children", self, "Contructor")
     
 
-    # Java overloaded method: Python keeps the last definition
-    def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
+    def init_j1(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+        from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         try:
             self.logUtil.putF("Name: " + self.getName(), self, self.commonStrings.INIT)
             self.logUtil.putF("ClassName: " + self.className, self, self.commonStrings.INIT)
@@ -82,10 +98,18 @@ class InputAutomationModuleConfiguration:
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.INIT, e)
             raise RuntimeError()
+
+    def init(self, *args):
+        return getattr(self, "init_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def toDomNode(self, document: Document) -> Node:
+        from org.allbinary.business.DynamicObjectData import DynamicObjectData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.allbinary.input.automation.module.InputAutomationModuleData import InputAutomationModuleData
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = document.createElement(InputAutomationModuleData.NAME)
         classNameNode: Node = ModDomHelper.createTextNode(document, DynamicObjectData.NAME, self.getClassName())
         node.appendChild(classNameNode)
@@ -111,10 +135,12 @@ class InputAutomationModuleConfiguration:
     
 
     def getInputAutomationModuleInterface(self) -> InputAutomationModuleFactoryInterface:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         return self.inputAutomationModuleInterface
     
 
     def setInputAutomationModuleInterface(self, inputAutomationModuleInterface: InputAutomationModuleFactoryInterface) -> None:
+        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         self.logUtil.putF("InputAutomationModuleFactoryInterface : " + str(inputAutomationModuleInterface), self, "setInputAutomationModuleInterface")
         self.inputAutomationModuleInterface = inputAutomationModuleInterface
         self.setName(self.inputAutomationModuleInterface.getName())
@@ -123,19 +149,19 @@ class InputAutomationModuleConfiguration:
 # from javax.xml.bind.annotation.XmlElement import XmlElement
 # from javax.xml.bind.annotation.XmlRootElement import XmlRootElement
 # from javax.xml.bind.annotation.XmlType import XmlType
-from org.allbinary.business.DynamicObjectData import DynamicObjectData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.input.automation.InputAutomationData import InputAutomationData
-from org.allbinary.input.automation.module.InputAutomationModuleData import InputAutomationModuleData
-from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.business.DynamicObjectData import DynamicObjectData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.input.automation.InputAutomationData import InputAutomationData
+# from org.allbinary.input.automation.module.InputAutomationModuleData import InputAutomationModuleData
+# from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

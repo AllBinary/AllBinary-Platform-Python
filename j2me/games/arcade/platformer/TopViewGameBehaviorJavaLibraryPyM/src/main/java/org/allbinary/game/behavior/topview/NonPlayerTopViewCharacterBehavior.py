@@ -21,6 +21,9 @@ from org.allbinary.game.behavior.topview.TopViewCharacterBehavior import TopView
 class NonPlayerTopViewCharacterBehavior(TopViewCharacterBehavior):
 
     def _init_fields(self) -> None:
+        from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
+        from org.allbinary.game.terrain.BasicTerrainInfo import BasicTerrainInfo
+        from org.allbinary.math.AngleFactory import AngleFactory
         self.geographicMapBehavior: MultiGeographicMapBehavior = MultiGeographicMapBehavior()
         self.CLIFF: BasicTerrainInfo = BasicTerrainInfo(AngleFactory.getInstance().DOWN)
 
@@ -31,6 +34,17 @@ class NonPlayerTopViewCharacterBehavior(TopViewCharacterBehavior):
 
     # throws Exception
     def terrainEvent(self, layer: AllBinaryLayer, direction: Direction, x: int, y: int, geographicMapInterfaceArray: list[BasicGeographicMap], geographicMapCellTypeArray: list[GeographicMapCellType], geographicMapCellPosition: GeographicMapCellPosition) -> None:
+        from org.allbinary.direction.Direction import Direction
+        from org.allbinary.direction.DirectionFactory import DirectionFactory
+        from org.allbinary.game.terrain.TerrainEvent import TerrainEvent
+        from org.allbinary.game.terrain.TerrainEventCircularStaticPool import TerrainEventCircularStaticPool
+        from org.allbinary.game.terrain.TerrainEventHandler import TerrainEventHandler
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         maxColumns: int = geographicMapInterfaceArray[0].getAllBinaryTiledLayer().getColumns()
         if geographicMapCellPosition.getColumn() > 0 and geographicMapCellPosition.getColumn() < maxColumns:
             nextTerrainGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
@@ -47,20 +61,22 @@ class NonPlayerTopViewCharacterBehavior(TopViewCharacterBehavior):
     
 
     def terrainMove(self, layer: AllBinaryLayer, geographicMapInterfaceArray: list[BasicGeographicMap], x: int, y: int) -> None:
+        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         layer.moveDXY(x, y)
-from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
-from org.allbinary.direction.Direction import Direction
-from org.allbinary.direction.DirectionFactory import DirectionFactory
-from org.allbinary.game.terrain.BasicTerrainInfo import BasicTerrainInfo
-from org.allbinary.game.terrain.TerrainEvent import TerrainEvent
-from org.allbinary.game.terrain.TerrainEventCircularStaticPool import TerrainEventCircularStaticPool
-from org.allbinary.game.terrain.TerrainEventHandler import TerrainEventHandler
-from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-from org.allbinary.math.AngleFactory import AngleFactory
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
+# from org.allbinary.direction.Direction import Direction
+# from org.allbinary.direction.DirectionFactory import DirectionFactory
+# from org.allbinary.game.terrain.BasicTerrainInfo import BasicTerrainInfo
+# from org.allbinary.game.terrain.TerrainEvent import TerrainEvent
+# from org.allbinary.game.terrain.TerrainEventCircularStaticPool import TerrainEventCircularStaticPool
+# from org.allbinary.game.terrain.TerrainEventHandler import TerrainEventHandler
+# from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
+# from org.allbinary.math.AngleFactory import AngleFactory
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
 
 

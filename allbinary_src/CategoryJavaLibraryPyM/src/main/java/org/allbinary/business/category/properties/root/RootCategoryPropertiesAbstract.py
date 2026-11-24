@@ -21,6 +21,8 @@ from org.allbinary.business.category.properties.root.RootCategoryPropertiesInter
 class RootCategoryPropertiesAbstract(RootCategoryPropertiesInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
         self.category: str = CategoryData.getInstance().ROOTCATEGORY
         self.fileName: str = self.category + str(AbPathData.getInstance().EXTENSION_SEP) + str(CategoryData.getInstance().UNCRYPTED_EXTENSION)
     
@@ -43,18 +45,28 @@ class RootCategoryPropertiesAbstract(RootCategoryPropertiesInterface):
     
 
     # throws Exception
-    def setRootFilePath(self, value: AbPath) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def setRootFilePath_j1_1(self, value: AbPath) -> None:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise RuntimeError()
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def setRootFilePath(self, value: str) -> None:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def setRootFilePath_j1_2(self, value: str) -> None:
         raise Exception("No Value Allowed")
+
+    def setRootFilePath(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.setRootFilePath_j1_1(*args)
+        if len(args) == 1:
+            return self.setRootFilePath_j1_2(*args)
+        return getattr(self, "setRootFilePath_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def getRootFilePath(self) -> AbPath:
+        from org.allbinary.logic.io.path.AbPath import AbPath
         raise Exception("No Value Allowed")
     
 
@@ -70,10 +82,13 @@ class RootCategoryPropertiesAbstract(RootCategoryPropertiesInterface):
 
     # throws Exception
     def getWebAppPath(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> str:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         raise Exception("Not Root")
     
 
     def getPath(self, categoryHierarchyInterface: CategoryHierarchyInterface) -> AbPath:
+        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
         return AbPath.createAbPath()
     
 
@@ -85,13 +100,18 @@ class RootCategoryPropertiesAbstract(RootCategoryPropertiesInterface):
         return True
     
 
-    def toHashMap(self) -> dict:
-        categoryHashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        categoryHashMap: HashMap = StdUtil.getInstance().createHashMap()
         categoryHashMap.put(CategoryData.getInstance().NAME, self.category)
         return categoryHashMap
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         categoryVector: BasicArrayList = BasicArrayListD()
         categoryVector.add(self.category)
         return categoryVector
@@ -99,11 +119,14 @@ class RootCategoryPropertiesAbstract(RootCategoryPropertiesInterface):
 
     # throws Exception
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     # throws Exception
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -111,14 +134,14 @@ class RootCategoryPropertiesAbstract(RootCategoryPropertiesInterface):
     def validationInfo(self) -> str:
         return None
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

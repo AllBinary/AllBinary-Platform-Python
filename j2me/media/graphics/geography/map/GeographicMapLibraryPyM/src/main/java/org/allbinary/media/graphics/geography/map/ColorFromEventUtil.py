@@ -15,12 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ColorFromEventUtil:
     instance: ColorFromEventUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.YELLOW: BasicColor = BasicColorFactory.getInstance().YELLOW
         self.COLOR_INT: int = int(self.YELLOW)
 
@@ -34,6 +37,8 @@ class ColorFromEventUtil:
     
 
     def getForegroundColor(self, gameCanvasInterface: AllBinaryGameCanvas) -> BasicColor:
+        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+        from org.allbinary.graphics.color.BasicColor import BasicColor
         color: BasicColor = self.YELLOW
         geographicMapCompositeInterface: GeographicMapCompositeInterface = gameCanvasInterface.getLayerManager()
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
@@ -41,10 +46,13 @@ class ColorFromEventUtil:
             foregroundBasicColor: BasicColor = geographicMapInterface.getForegroundBasicColor()
             color = foregroundBasicColor
         return color
-from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
 
 
-ColorFromEventUtil.instance = ColorFromEventUtil()
+def _ColorFromEventUtil_instance() -> object:
+    return ColorFromEventUtil()
+
+lazy_static(ColorFromEventUtil, "instance", _ColorFromEventUtil_instance)
 

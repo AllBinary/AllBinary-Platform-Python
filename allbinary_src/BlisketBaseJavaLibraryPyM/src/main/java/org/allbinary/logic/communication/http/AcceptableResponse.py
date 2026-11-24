@@ -20,6 +20,8 @@ from __future__ import annotations
 class AcceptableResponse:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
     
@@ -31,7 +33,7 @@ class AcceptableResponse:
         acceptableResponseUtil: AcceptableResponseUtil = AcceptableResponseUtil.getInstance()
         acceptableResponseUtil.candidateVector.addAt(index, candidate)
         acceptableResponseUtil.tagNameVector.addAt(index, tagName)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 

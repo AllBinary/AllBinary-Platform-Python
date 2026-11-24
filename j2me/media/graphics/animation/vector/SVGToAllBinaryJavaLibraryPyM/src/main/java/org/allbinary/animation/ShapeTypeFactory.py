@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ShapeTypeFactory:
@@ -25,19 +26,28 @@ class ShapeTypeFactory:
         self.KEY_CIRCLE: str = "circle"
         self.KEY_RECTANGLE: str = "rectangle"
         self.KEY_RECT: str = "rect"
-        self.LINE: ShapeType = ShapeType(self.KEY_LINE)
-        self.CIRCLE: ShapeType = ShapeType(self.KEY_CIRCLE)
-        self.RECTANGLE: ShapeType = ShapeType(self.KEY_RECTANGLE)
-
-    def __init__(self) -> None:
-        self._init_fields()
+        self.LINE: ShapeType = None
+        self.CIRCLE: ShapeType = None
+        self.RECTANGLE: ShapeType = None
     
 
     @staticmethod
     def getInstance() -> ShapeTypeFactory:
         return ShapeTypeFactory.instance
-from org.allbinary.animation.ShapeType import ShapeType
+    
+
+    def __init__(self) -> None:
+        from org.allbinary.animation.ShapeType import ShapeType
+        from org.allbinary.animation.ShapeType import ShapeType
+        from org.allbinary.animation.ShapeType import ShapeType
+        self._init_fields()
+        self.LINE = ShapeType(self.KEY_LINE)
+        self.CIRCLE = ShapeType(self.KEY_CIRCLE)
+        self.RECTANGLE = ShapeType(self.KEY_RECTANGLE)
 
 
-ShapeTypeFactory.instance = ShapeTypeFactory()
+def _ShapeTypeFactory_instance() -> object:
+    return ShapeTypeFactory()
+
+lazy_static(ShapeTypeFactory, "instance", _ShapeTypeFactory_instance)
 

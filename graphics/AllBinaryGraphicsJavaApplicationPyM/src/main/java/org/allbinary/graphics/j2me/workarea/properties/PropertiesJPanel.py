@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.j2me.workarea.properties.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class PropertiesJPanel(JPanel):
@@ -48,32 +48,6 @@ class PropertiesJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.properties.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.properties.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.JTextField import JTextField
-        from org.allbinary.graphics.j2me.workarea.properties.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.JPanel import JPanel
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.JButton import JButton
-        from org.allbinary.graphics.j2me.workarea.properties.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.properties.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.properties.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
-        from org.allbinary.graphics.j2me.workarea.properties.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
-        from org.allbinary.graphics.j2me.workarea.properties.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
-        from org.allbinary.graphics.j2me.workarea.properties.GridLayout import GridLayout
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
-        from org.allbinary.graphics.j2me.workarea.properties.Font import Font
         self.workAreaPropertiesJPanel = JPanel()
         self.modifierJPanel = JPanel()
         self.copyVerticalJButton = JButton()
@@ -122,5 +96,9 @@ class PropertiesJPanel(JPanel):
         self.modifierJPanel.add(self.jPanel8)
         self.add(self.modifierJPanel)
 # from javax.swing import *
+# from java.awt.Font import Font
+# from java.awt.GridLayout import GridLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JTextField import JTextField
 
 

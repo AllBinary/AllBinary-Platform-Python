@@ -17,24 +17,51 @@ from __future__ import annotations
 
 import random
 import datetime
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
 
 
-class OrderHistoryEntity(AbSqlBean, OrderHistoryEntityInterface):
+class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "orderhistory"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
         super().__init__(HistoryDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
-    def insert(self, userName: str, order: Order) -> None:
+    def insert_j2(self, userName: str, order: Order) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
+        from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+        from org.allbinary.business.user.commerce.inventory.order.Order import Order
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.money.Money import Money
+        from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
+        from org.allbinary.business.user.commerce.money.tax.TaxFactory import TaxFactory
+        from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
+        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+        from org.allbinary.data.generator.OrderHistoryIdGenerator import OrderHistoryIdGenerator
+        from org.allbinary.data.tables.TableDataFactory import TableDataFactory
+        from org.allbinary.data.tables.user.address.billing.BillingAddressesEntity import BillingAddressesEntity
+        from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntity import ShippingAddressesEntity
+        from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntity import PaymentEntity
+        from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         vector: BasicArrayList = BasicArrayListD()
         try:
             paymentInterface: PaymentInterface = PaymentEntity().getDefault(userName)
@@ -120,29 +147,40 @@ class OrderHistoryEntity(AbSqlBean, OrderHistoryEntityInterface):
             vector.add(order.getStoreComments())
             vector.add(order.getStoreCancelComments())
             self.insert(vector)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put("Command Failed: " + str(vector), self, self.INSERT, e)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def insert(self, values: BasicArrayList) -> None:
+    def insert_j1(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().insert(values)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.INSERT, e)
+
+    def insert(self, *args):
+        return getattr(self, "insert_j" + str(len(args)))(*args)
     
 
     def setStatus(self, orderId: str, status: str) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             calendar: datetime.datetime = datetime.datetime.now()
             time: str = str(str(int(calendar.getTimeInMillis())))
-            updateHashMap: dict = StdUtil.getInstance().createHashMap()
+            updateHashMap: HashMap = StdUtil.getInstance().createHashMap()
             updateHashMap.put(OrderHistoryData.STATUS, status)
             if ((status > OrderHistoryData.CANCELLED) - (status < OrderHistoryData.CANCELLED)) == 0:
                 updateHashMap.put(OrderHistoryData.CANCELDATE, time)
@@ -150,84 +188,125 @@ class OrderHistoryEntity(AbSqlBean, OrderHistoryEntityInterface):
                 updateHashMap.put(OrderHistoryData.SHIPPEDDATE, time)
             super().updateWhere(OrderData.ID, orderId, updateHashMap)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "setStatus", e)
     
 
     def setPaymentMethod(self, orderId: str, paymentMethod: str) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             calendar: datetime.datetime = datetime.datetime.now()
             time: str = str(str(int(calendar.getTimeInMillis())))
-            updateHashMap: dict = StdUtil.getInstance().createHashMap()
+            updateHashMap: HashMap = StdUtil.getInstance().createHashMap()
             updateHashMap.put(PaymentData.METHOD, paymentMethod)
             updateHashMap.put(OrderHistoryData.TRANSDATE, time)
             super().updateWhere(OrderData.ID, orderId, updateHashMap)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "setPaymentMethod", e)
     
 
     # throws Exception
     def getStoreOrders(self, storeFrontInterface: StoreFrontInterface) -> BasicArrayList:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.logic.StdUtil import StdUtil
         orderReviewVector: BasicArrayList = BasicArrayListD()
-        whereHashMap: dict = StdUtil.getInstance().createHashMap()
+        whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(StoreFrontData.getInstance().NAME, storeFrontInterface.getName())
         orderHashMapVector: BasicArrayList = super().getRows(whereHashMap)
         size: int = orderHashMapVector.size()
         for i in range(0, size):
-            orderReviewHashMap: dict = orderHashMapVector.get(i)
+            orderReviewHashMap: HashMap = orderHashMapVector.get(i)
             orderReview: OrderHistory = OrderHistory(Basket(), orderReviewHashMap)
             orderReviewVector.add(orderReview)
         return orderReviewVector
     
 
     # throws Exception
-    def getOrders(self, userName: str) -> BasicArrayList:
+    def getOrders_j1(self, userName: str) -> BasicArrayList:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.logic.StdUtil import StdUtil
         orderReviewVector: BasicArrayList = BasicArrayListD()
-        whereHashMap: dict = StdUtil.getInstance().createHashMap()
+        whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(UserData.USERNAME, userName)
         orderHashMapVector: BasicArrayList = super().getRows(whereHashMap)
         size: int = orderHashMapVector.size()
         for index in range(0, size):
-            orderReviewHashMap: dict = orderHashMapVector.get(index)
+            orderReviewHashMap: HashMap = orderHashMapVector.get(index)
             orderReview: OrderHistory = OrderHistory(Basket(), orderReviewHashMap)
             orderReviewVector.add(orderReview)
         return orderReviewVector
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getOrders(self, status: str, fromDate: str, toDate: str) -> BasicArrayList:
+    def getOrders_j3(self, status: str, fromDate: str, toDate: str) -> BasicArrayList:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.logic.StdUtil import StdUtil
         orderReviewVector: BasicArrayList = BasicArrayListD()
-        whereHashMap: dict = StdUtil.getInstance().createHashMap()
+        whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(OrderHistoryData.STATUS, status)
         orderHashMapVector: BasicArrayList = super().getRowsWhereBetween(whereHashMap, OrderHistoryData.ORDERDATE, fromDate, toDate)
         size: int = orderHashMapVector.size()
         for index in range(0, size):
-            orderReviewHashMap: dict = orderHashMapVector.get(index)
+            orderReviewHashMap: HashMap = orderHashMapVector.get(index)
             orderReview: OrderHistory = OrderHistory(Basket(), orderReviewHashMap)
             orderReviewVector.add(orderReview)
         return orderReviewVector
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getOrders(self, fromDate: str, toDate: str) -> BasicArrayList:
+    def getOrders_j2(self, fromDate: str, toDate: str) -> BasicArrayList:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         orderReviewVector: BasicArrayList = BasicArrayListD()
         orderHashMapVector: BasicArrayList = super().getRowsWhereBetween(OrderHistoryData.ORDERDATE, fromDate, toDate)
         size: int = orderHashMapVector.size()
         for index in range(0, size):
-            orderReviewHashMap: dict = orderHashMapVector.get(index)
+            orderReviewHashMap: HashMap = orderHashMapVector.get(index)
             orderReview: OrderHistory = OrderHistory(Basket(), orderReviewHashMap)
             orderReviewVector.add(orderReview)
         return orderReviewVector
+
+    def getOrders(self, *args):
+        return getattr(self, "getOrders_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def getOrder(self, id: str) -> OrderHistory:
-        whereHashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+        from org.allbinary.logic.StdUtil import StdUtil
+        whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(OrderData.ID, id)
-        orderReviewHashMap: dict = super().getRow(whereHashMap)
+        orderReviewHashMap: HashMap = super().getRow(whereHashMap)
         if orderReviewHashMap is not None:
             orderHistory: OrderHistory = OrderHistory(Basket(), orderReviewHashMap)
             return orderHistory
@@ -236,6 +315,16 @@ class OrderHistoryEntity(AbSqlBean, OrderHistoryEntityInterface):
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+        from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         entryData: EntryData = EntryData.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("CREATE TABLE ")
@@ -330,7 +419,8 @@ class OrderHistoryEntity(AbSqlBean, OrderHistoryEntityInterface):
     
 
     # throws Exception
-    def update(self, whereHashMap: dict, orderHashMap: dict) -> None:
+    def update(self, whereHashMap: HashMap, orderHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         try:
             self.updateWhere(whereHashMap, orderHashMap)
         except Exception as e:
@@ -338,41 +428,43 @@ class OrderHistoryEntity(AbSqlBean, OrderHistoryEntityInterface):
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
 # from java.util.Random import Random
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
-from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
-from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
-from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
-from org.allbinary.business.user.commerce.inventory.order.Order import Order
-from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
-from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
-from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
-from org.allbinary.business.user.commerce.money.Money import Money
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
-from org.allbinary.business.user.commerce.money.tax.TaxFactory import TaxFactory
-from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
-from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
-from org.allbinary.data.generator.OrderHistoryIdGenerator import OrderHistoryIdGenerator
-from org.allbinary.data.tables.TableDataFactory import TableDataFactory
-from org.allbinary.data.tables.user.address.billing.BillingAddressesEntity import BillingAddressesEntity
-from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntity import ShippingAddressesEntity
-from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntity import PaymentEntity
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
+# from org.allbinary.business.user.address.ShippingAddressData import ShippingAddressData
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.commerce.inventory.basket.Basket import Basket
+# from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
+# from org.allbinary.business.user.commerce.inventory.order.Order import Order
+# from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
+# from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+# from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.business.user.commerce.money.payment.PaymentInterface import PaymentInterface
+# from org.allbinary.business.user.commerce.money.tax.TaxFactory import TaxFactory
+# from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+# from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
+# from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
+# from org.allbinary.data.generator.OrderHistoryIdGenerator import OrderHistoryIdGenerator
+# from org.allbinary.data.tables.TableDataFactory import TableDataFactory
+# from org.allbinary.data.tables.user.address.billing.BillingAddressesEntity import BillingAddressesEntity
+# from org.allbinary.data.tables.user.address.shipping.ShippingAddressesEntity import ShippingAddressesEntity
+# from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntity import PaymentEntity
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.layer.PositionInterface import PositionInterface
 
 
-class LineAnimation(Animation, ColorCompositeInterface, PositionInterface):
+class LineAnimation(*java_bases(Animation, ColorCompositeInterface, PositionInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil

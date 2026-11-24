@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HttpFilePermissionsUtil:
@@ -28,12 +29,17 @@ class HttpFilePermissionsUtil:
 
     # throws Exception
     def create(self, path: AbPath) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.path.AbPath import AbPath
         file: AbFile = AbFile.createAbFileFromAbPath(path)
         if not file.isFile():
             file.createNewFile()
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.path.AbPath import AbPath
 
 
-HttpFilePermissionsUtil.instance = HttpFilePermissionsUtil()
+def _HttpFilePermissionsUtil_instance() -> object:
+    return HttpFilePermissionsUtil()
+
+lazy_static(HttpFilePermissionsUtil, "instance", _HttpFilePermissionsUtil_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ParentInventoryTagHelper:
@@ -28,9 +29,11 @@ class ParentInventoryTagHelper:
 
     # throws Exception
     def isValid(self, tagClass: object, parentTag: Tag) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from tags.HelperTag import HelperTag
         if parentTag is None:
             raise Exception("Must have parent tag.")
-        elif not (isinstance(parentTag, HelperTag)):
+        elif not isinstance(parentTag, HelperTag):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Must have at least a ")
             stringBuffer.append("tags.HelperTag")
@@ -39,8 +42,12 @@ class ParentInventoryTagHelper:
             stringBuffer.append(type(parentTag).__module__ + "." + type(parentTag).__qualname__)
             raise Exception(str(stringBuffer))
 # from javax.servlet.jsp.tagext.Tag import Tag
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from tags.HelperTag import HelperTag
 
 
-ParentInventoryTagHelper.instance = ParentInventoryTagHelper()
+def _ParentInventoryTagHelper_instance() -> object:
+    return ParentInventoryTagHelper()
+
+lazy_static(ParentInventoryTagHelper, "instance", _ParentInventoryTagHelper_instance)
 

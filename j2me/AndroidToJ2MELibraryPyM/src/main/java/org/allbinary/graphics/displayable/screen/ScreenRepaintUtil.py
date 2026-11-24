@@ -22,6 +22,8 @@ class ScreenRepaintUtil:
 
     @staticmethod
     def repaint(displayable: Displayable) -> None:
+        from javax.microedition.lcdui.Canvas import Canvas
+        from javax.microedition.lcdui.Displayable import Displayable
         canvas: Canvas = displayable
         canvas.repaint()
 # from javax.microedition.lcdui.Canvas import Canvas

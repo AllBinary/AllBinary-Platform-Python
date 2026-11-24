@@ -21,6 +21,13 @@ from views.admin.inventory.listings.ProductListingInterface import ProductListin
 class ProductListing(ProductListingInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+        from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+        from org.allbinary.logic.io.file.directory.Directory import Directory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.directory: Directory = Directory.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
@@ -32,6 +39,10 @@ class ProductListing(ProductListingInterface):
     
 
     def __init__(self, searchRequest: SearchRequest) -> None:
+        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+        from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         self._init_fields()
         self.searchRequest = searchRequest
         self.storeFronts = StoreFrontsEntity()
@@ -41,6 +52,13 @@ class ProductListing(ProductListingInterface):
 
     # throws Exception
     def getHashSet(self, storeFront: StoreFrontInterface) -> HashSet:
+        from java.util.HashSet import HashSet
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.tokens.UniqueTokens import UniqueTokens
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from views.generic.inventory.InventoryColumnUtil import InventoryColumnUtil
         inventoryColumnUtil: InventoryColumnUtil = InventoryColumnUtil.getInstance()
         keywords: BasicArrayList = inventoryColumnUtil.getColumnWhereLike(self.inventory, storeFront.getCategoryPath(), self.basicItemData.KEYWORDS)
         subStoreVector: BasicArrayList = storeFront.getSubStores()
@@ -56,7 +74,13 @@ class ProductListing(ProductListingInterface):
 
     # throws Exception
     def savePage(self, file: str, data: str) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+        from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+        from org.allbinary.logic.io.StreamUtil import StreamUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
             self.logUtil.putF("Creating File: " + file, self, "generateAll()")
         newFile: AbFile = AbFile.createAbFile(file)
         if newFile.exists():
@@ -67,16 +91,34 @@ class ProductListing(ProductListingInterface):
             idOutData.writeBytes(data)
             idOutData.flush()
             StreamUtil.getInstance().close(idOutData)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
                 self.logUtil.putF("Wrote Total Bytes: " + str(newFile.length()), self, "generateAll()")
         else:
             raise Exception("Could Not Create: " + file)
     
 
     # throws Exception
-    def create(self, keywordData: str, keywordFilenameHashMap: dict, vector: BasicArrayList, staticPath: AbPath) -> None:
+    def create(self, keywordData: str, keywordFilenameHashMap: HashMap, vector: BasicArrayList, staticPath: AbPath) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.control.search.SearchParams import SearchParams
+        from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.SpecialCharacterUtil import SpecialCharacterUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.regex.replace.Replace import Replace
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from views.generic.inventory.InventorySearchUtil import InventorySearchUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringBuffer: StringMaker = StringMaker()
-        hashMap: dict = SpecialCharacterUtil.getHashMap()
+        hashMap: HashMap = SpecialCharacterUtil.getHashMap()
         hashMap.put(CommonSeps.getInstance().SPACE, StringUtil.getInstance().EMPTY_STRING)
         pageName: str = Replace(hashMap).all(keywordData)
         searchParams: SearchParams = self.searchRequest.getParams()
@@ -90,7 +132,7 @@ class ProductListing(ProductListingInterface):
         for index in range(0, len(productListingPages)):
             if productListingPages[index] is None:
                 break
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
                 self.logUtil.putF("Saving Listing: " + str(index), self, "generateAll()")
             indexStr: str = StringUtil.getInstance().EMPTY_STRING
             if index > 0:
@@ -108,7 +150,13 @@ class ProductListing(ProductListingInterface):
             self.savePage(file, productListingPages[index])
     
 
-    def addStaticPageInfoToDatabase(self, storeFront: StoreFrontInterface, keywordFilenameHashMap: dict) -> None:
+    def addStaticPageInfoToDatabase(self, storeFront: StoreFrontInterface, keywordFilenameHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from java.util.Set import Set
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         keywordHashSet: Set = keywordFilenameHashMap.keySet()
         keywordArray: list[object] = keywordHashSet.toArray()
         size: int = len(keywordArray)
@@ -123,21 +171,35 @@ class ProductListing(ProductListingInterface):
     
 
     # throws Exception
-    def generateAll(self) -> str:
+    def generateAll_j0(self) -> str:
+        from java.util.HashMap import HashMap
+        from java.util.HashSet import HashSet
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from views.generic.inventory.InventorySearchUtil import InventorySearchUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             storeFront: StoreFrontInterface = self.searchRequest.getStoreFront()
             stringBuffer: StringMaker = StringMaker()
-            stringBuffer.append(self.URLGLOBALS.getWebappPath())
+            stringBuffer.append(URLGLOBALS.getWebappPath())
             stringBuffer.append(storeFront.getName())
             stringBuffer.append(AbPathData.getInstance().SEPARATOR)
             stringBuffer.append(storeFront.getStaticPath())
             staticPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STATICPAGEGENERATIONLOGGING):
                 self.logUtil.putF("Store Static Pages Path: " + str(staticPath), self, "generateAll()")
             keywordHashSet: HashSet = self.getHashSet(storeFront)
             keywordArray: list[object] = keywordHashSet.toArray()
             size: int = len(keywordArray)
-            keywordFilenameHashMap: dict = StdUtil.getInstance().createHashMap()
+            keywordFilenameHashMap: HashMap = StdUtil.getInstance().createHashMap()
             if size == 0:
                 stringBuffer.delete(0, stringBuffer.length())
                 stringBuffer.append("Products For ")
@@ -163,12 +225,15 @@ class ProductListing(ProductListingInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def generateAll(self, storeName: str) -> str:
+    def generateAll_j1(self, storeName: str) -> str:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             stringBuffer: StringMaker = StringMaker()
             if storeName is not None:
-                if ((storeName > self.GLOBALS2.GENERATEALLSTORES) - (storeName < self.GLOBALS2.GENERATEALLSTORES)) != 0:
+                if ((storeName > GLOBALS2.GENERATEALLSTORES) - (storeName < GLOBALS2.GENERATEALLSTORES)) != 0:
                     self.searchRequest.setStoreFront(self.storeFronts.getStoreFrontInterface(storeName))
                     stringBuffer.append(self.generateAll())
                     stringBuffer.append("<br />")
@@ -186,41 +251,46 @@ class ProductListing(ProductListingInterface):
             return str(stringBuffer)
         except Exception as e:
             raise e
+
+    def generateAll(self, *args):
+        return getattr(self, "generateAll_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from java.util.HashSet import HashSet
 # from java.util.Set import Set
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
-from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
-from org.allbinary.globals.GLOBALS2 import GLOBALS2
-from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.search.SearchParams import SearchParams
-from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
-from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
-from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
-from org.allbinary.logic.io.StreamUtil import StreamUtil
-from org.allbinary.logic.io.file.AbFile import AbFile
-from org.allbinary.logic.io.file.directory.Directory import Directory
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.string.SpecialCharacterUtil import SpecialCharacterUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.regex.replace.Replace import Replace
-from org.allbinary.logic.string.tokens.UniqueTokens import UniqueTokens
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
-from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from views.generic.inventory.InventoryColumnUtil import InventoryColumnUtil
-from views.generic.inventory.InventorySearchUtil import InventorySearchUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
+# from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.search.SearchParams import SearchParams
+# from org.allbinary.logic.control.search.SearchRequest import SearchRequest
+# from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
+# from org.allbinary.logic.io.DataOutputStreamFactory import DataOutputStreamFactory
+# from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
+# from org.allbinary.logic.io.StreamUtil import StreamUtil
+# from org.allbinary.logic.io.file.AbFile import AbFile
+# from org.allbinary.logic.io.file.directory.Directory import Directory
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.string.SpecialCharacterUtil import SpecialCharacterUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.regex.replace.Replace import Replace
+# from org.allbinary.logic.string.tokens.UniqueTokens import UniqueTokens
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from views.generic.inventory.InventoryColumnUtil import InventoryColumnUtil
+# from views.generic.inventory.InventorySearchUtil import InventorySearchUtil
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

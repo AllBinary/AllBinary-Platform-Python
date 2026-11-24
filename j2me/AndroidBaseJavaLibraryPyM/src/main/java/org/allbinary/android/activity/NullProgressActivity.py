@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.activity.ProgressActivityInterface import ProgressActivityInterface
 
 
@@ -38,5 +39,8 @@ class NullProgressActivity(ProgressActivityInterface):
         pass
 
 
-NullProgressActivity.NULL_PROGRESS_ACTIVITY = NullProgressActivity()
+def _NullProgressActivity_NULL_PROGRESS_ACTIVITY() -> object:
+    return NullProgressActivity()
+
+lazy_static(NullProgressActivity, "NULL_PROGRESS_ACTIVITY", _NullProgressActivity_NULL_PROGRESS_ACTIVITY)
 

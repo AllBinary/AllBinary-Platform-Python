@@ -21,7 +21,8 @@ class PathFinderGraphVisitorFactoryBase:
     
 
     def getInstance(self, geographicMapInterface: BasicGeographicMap) -> PathFinderGraphVisitorBase:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         raise RuntimeError()
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
 
 

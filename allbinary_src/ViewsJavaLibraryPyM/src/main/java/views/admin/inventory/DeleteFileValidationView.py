@@ -15,17 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.InventoryItemView import InventoryItemView
 
 
-class DeleteFileValidationView(InventoryItemView, ValidationComponentInterface):
+class DeleteFileValidationView(*java_bases(InventoryItemView, ValidationComponentInterface)):
 
     def _init_fields(self) -> None:
         self.id: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, StringUtil.getInstance().EMPTY_STRING)
         self._init_fields()
         self.getFormData()
@@ -33,13 +36,17 @@ class DeleteFileValidationView(InventoryItemView, ValidationComponentInterface):
 
     # throws Exception
     def getFormData(self) -> None:
-        hashMap: dict = RequestParams(self.request).toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        hashMap: HashMap = RequestParams(self.request).toHashMap()
         if hashMap is None:
             raise Exception("No Request Params Found")
         self.id = hashMap.get(self.basicItemData.ID)
     
 
     def isValid(self) -> bool:
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         try:
             if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
                 return False
@@ -52,14 +59,20 @@ class DeleteFileValidationView(InventoryItemView, ValidationComponentInterface):
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         try:
             stringBuffer: StringMaker = StringMaker()
             if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
@@ -69,15 +82,21 @@ class DeleteFileValidationView(InventoryItemView, ValidationComponentInterface):
             return str(stringBuffer)
         except Exception as e:
             return "Unkown Validation Error.<br />"
+    
+
+    # throws Exception
+    def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        return super().getTransformInfoInterface()
 # from java.util.HashMap import HashMap
-from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
+# from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

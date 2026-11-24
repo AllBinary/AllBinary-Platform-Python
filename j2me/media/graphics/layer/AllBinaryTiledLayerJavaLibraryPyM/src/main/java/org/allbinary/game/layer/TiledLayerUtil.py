@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class TiledLayerUtil:
@@ -66,5 +67,8 @@ class TiledLayerUtil:
         return newY
 
 
-TiledLayerUtil.instance = TiledLayerUtil()
+def _TiledLayerUtil_instance() -> object:
+    return TiledLayerUtil()
+
+lazy_static(TiledLayerUtil, "instance", _TiledLayerUtil_instance)
 

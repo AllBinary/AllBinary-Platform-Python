@@ -26,16 +26,19 @@ class DomDocumentHelper:
 
     @staticmethod
     def init() -> None:
-        System.setProperty("jdk.xml.maxElementDepth", "0")
-        System.setProperty("jdk.xml.xpathExprOpLimit", "0")
-        System.setProperty("jdk.xml.xpathTotalOpLimit", "0")
+        from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+        commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
+        System.setProperty("jdk.xml.maxElementDepth", commonPhoneStrings.ZERO)
+        System.setProperty("jdk.xml.xpathExprOpLimit", commonPhoneStrings.ZERO)
+        System.setProperty("jdk.xml.xpathTotalOpLimit", commonPhoneStrings.ZERO)
         LIMIT: str = "500000"
         System.setProperty("jdk.xml.maxGeneralEntitySizeLimit", LIMIT)
         System.setProperty("jdk.xml.totalEntitySizeLimit", LIMIT)
     
 
     @staticmethod
-    def create() -> Document:
+    def create_j0() -> Document:
+        from org.w3c.dom.Document import Document
         try:
             factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
             builder: DocumentBuilder = factory.newDocumentBuilder()
@@ -46,9 +49,11 @@ class DomDocumentHelper:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def create(inputStream: InputStream) -> Document:
+    def create_j1_1(inputStream: InputStream) -> Document:
+        from java.io.InputStream import InputStream
+        from org.w3c.dom.Document import Document
         try:
             factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
             builder: DocumentBuilder = factory.newDocumentBuilder()
@@ -59,9 +64,10 @@ class DomDocumentHelper:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def create(xmlString: str) -> Document:
+    def create_j1_2(xmlString: str) -> Document:
+        from org.w3c.dom.Document import Document
         try:
             factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
             builder: DocumentBuilder = factory.newDocumentBuilder()
@@ -69,10 +75,19 @@ class DomDocumentHelper:
             return document
         except Exception as e:
             raise e
+
+    @staticmethod
+    def create(*args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return DomDocumentHelper.create_j1_1(*args)
+        if len(args) == 1:
+            return DomDocumentHelper.create_j1_2(*args)
+        return getattr(DomDocumentHelper, "create_j" + str(len(args)))(*args)
 # from java.io.InputStream import InputStream
 # from java.io.StringBufferInputStream import StringBufferInputStream
 # from javax.xml.parsers.DocumentBuilder import DocumentBuilder
 # from javax.xml.parsers.DocumentBuilderFactory import DocumentBuilderFactory
-from org.w3c.dom.Document import Document
+# from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
+# from org.w3c.dom.Document import Document
 
 

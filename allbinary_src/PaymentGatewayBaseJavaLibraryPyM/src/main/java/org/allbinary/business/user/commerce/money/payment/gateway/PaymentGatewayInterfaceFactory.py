@@ -21,6 +21,7 @@ from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayIn
 class PaymentGatewayInterfaceFactory(PaymentGatewayInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -29,50 +30,73 @@ class PaymentGatewayInterfaceFactory(PaymentGatewayInterfaceFactoryInterface):
     
 
     # throws Exception
-    def getInstance(self, httpServletRequest: HttpServletRequest) -> PaymentGatewayInterface:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j1_1(self, httpServletRequest: HttpServletRequest) -> PaymentGatewayInterface:
+        from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                 self.logUtil.putF("Getting", self, commonStrings.GET_INSTANCE)
             return self.getInstance(RequestParams(httpServletRequest).toHashMap())
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENTERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENTERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, "getInstance(HttpServletRequest)", e)
             raise e
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, paymentType: BasicPaymentType) -> PaymentGatewayInterface:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j1_2(self, paymentType: BasicPaymentType) -> PaymentGatewayInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(str(PaymentGatewayData.NAME), paymentType.getName())
         return self.getInstance(hashMap)
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, hashMap: dict) -> PaymentGatewayInterface:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j1_3(self, hashMap: HashMap) -> PaymentGatewayInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             gatewayName: str = hashMap.get(str(PaymentGatewayData.NAME))
             paymentType: BasicPaymentType = BasicPaymentTypeUtil.getInstance().get(gatewayName)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENT):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                 self.logUtil.putF("Getting PaymentGatewayInterface for PaymentType: " + paymentType.getName() + " with: " + str(hashMap), self, commonStrings.GET_INSTANCE)
             paymentGatewayInterfaceFactoryInterface: PaymentGatewayInterfaceFactoryInterface = paymentType.getPaymentGatewayInterfaceFactoryInterface()
             return paymentGatewayInterfaceFactoryInterface.getInstance(hashMap)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().PAYMENTERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENTERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             raise e
+
+    def getInstance(self, *args):
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getInstance_j1_1(*args)
+        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+            return self.getInstance_j1_2(*args)
+        if len(args) == 1:
+            return self.getInstance_j1_3(*args)
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

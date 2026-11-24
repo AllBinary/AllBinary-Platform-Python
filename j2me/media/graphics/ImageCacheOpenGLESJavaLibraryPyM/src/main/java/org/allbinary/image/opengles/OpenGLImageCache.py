@@ -24,6 +24,14 @@ class OpenGLImageCache(ImageCache):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
+        from org.allbinary.device.NullGL10 import NullGL10
+        from org.allbinary.graphics.opengles.renderer.AllBinaryRendererBase3 import AllBinaryRendererBase3
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+        from org.allbinary.thread.SynchObject import SynchObject
         self.imageCache: ImageCache = ImageCacheFactory.getInstance()
         self.preResourceImageUtil: PreResourceImageUtil = PreResourceImageUtil.getInstance()
         self.gl: GL10 = NullGL10.NULL_GL10
@@ -38,12 +46,13 @@ class OpenGLImageCache(ImageCache):
     
 
     def addListener(self, renderer: object) -> None:
+        from org.allbinary.graphics.opengles.renderer.AllBinaryRendererBase3 import AllBinaryRendererBase3
         self.renderer = renderer
     
 
     # throws Exception
     def update(self, gl: GL10) -> None:
-        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
+        from javax.microedition.khronos.opengles.GL10 import GL10
         self.gl = gl
         with self._lock:  # synchronized (self.lock)
             for index in range(self.list_.size() - 1, 0 - 1, -1):
@@ -54,6 +63,8 @@ class OpenGLImageCache(ImageCache):
 
     # throws Exception
     def createImage(self, caller: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         textureSize: int = width
         if height > width:
             textureSize = height
@@ -71,6 +82,9 @@ class OpenGLImageCache(ImageCache):
 
     # throws Exception
     def createImageFromInputStream(self, key: object, inputStream: InputStream) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
+        from javax.microedition.lcdui.NullImage import NullImage
         cachedImage: Image = self.imageCache.getWithKey(key)
         image: Image = self.preResourceImageUtil.encapsulate(cachedImage)
         with self._lock:  # synchronized (self.lock)
@@ -80,10 +94,12 @@ class OpenGLImageCache(ImageCache):
     
 
     def getGlP(self) -> GL10:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         return self.gl
     
 
     def init(self, image: Image) -> None:
+        from javax.microedition.lcdui.Image import Image
         try:
             with self._lock:  # synchronized (self.lock)
                 if self.list_.contains(image):
@@ -96,12 +112,12 @@ class OpenGLImageCache(ImageCache):
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.NullImage import NullImage
-from org.allbinary.device.NullGL10 import NullGL10
-from org.allbinary.graphics.opengles.renderer.AllBinaryRendererBase3 import AllBinaryRendererBase3
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
-from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
-from org.allbinary.thread.SynchObject import SynchObject
+# from org.allbinary.device.NullGL10 import NullGL10
+# from org.allbinary.graphics.opengles.renderer.AllBinaryRendererBase3 import AllBinaryRendererBase3
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
+# from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
+# from org.allbinary.thread.SynchObject import SynchObject
 
 

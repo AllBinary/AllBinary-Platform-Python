@@ -16,17 +16,19 @@
 from __future__ import annotations
 
 import threading
-# from java.io.InputStream import InputStream
+from java.io.InputStream import InputStream
 
 
 class AbFileInputStream(InputStream):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
+        from java.io.FileInputStream import FileInputStream
         self.fileInputStream: FileInputStream = None
     
 
     def __init__(self, fileInputStream: FileInputStream) -> None:
+        from java.io.FileInputStream import FileInputStream
         super().__init__()
         self._init_fields()
         self.fileInputStream = fileInputStream
@@ -64,20 +66,21 @@ class AbFileInputStream(InputStream):
     
 
     # throws IOException
-    def read(self) -> int:
+    def read_j0(self) -> int:
         return self.fileInputStream.read()
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def read(self, b: list[int]) -> int:
+    def read_j1(self, b: list[int]) -> int:
         return self.fileInputStream.read(b)
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def read(self, buffer: list[int], offset: int, count: int) -> int:
+    def read_j3(self, buffer: list[int], offset: int, count: int) -> int:
         return self.fileInputStream.read(buffer, offset, count)
+
+    def read(self, *args):
+        return getattr(self, "read_j" + str(len(args)))(*args)
     
 
     # throws IOException

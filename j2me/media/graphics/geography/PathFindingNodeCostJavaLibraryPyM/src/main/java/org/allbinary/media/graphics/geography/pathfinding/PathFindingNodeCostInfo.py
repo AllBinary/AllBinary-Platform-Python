@@ -57,10 +57,16 @@ class PathFindingNodeCostInfo(object):
     
 
     def compareTo(self, pathFindingNodeCostInfo: PathFindingNodeCostInfo) -> int:
-        return java.lang.Long.compare(self.totalCostP, pathFindingNodeCostInfo.totalCostP)
+        if self.totalCostP < pathFindingNodeCostInfo.totalCostP:
+            return -1
+        elif self.totalCostP > pathFindingNodeCostInfo.totalCostP:
+            return 1
+        return 0
     
 
     def toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonLabels import CommonLabels
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
         stringBuffer.append(CommonLabels.getInstance().COLON_SEP)
@@ -74,8 +80,7 @@ class PathFindingNodeCostInfo(object):
 
     def __str__(self) -> str:
         return self.toString()
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonLabels import CommonLabels
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoData import PathFindingNodeCostInfoData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonLabels import CommonLabels
 
 

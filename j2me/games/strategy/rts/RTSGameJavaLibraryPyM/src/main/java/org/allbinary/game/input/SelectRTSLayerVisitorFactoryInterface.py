@@ -22,7 +22,8 @@ class SelectRTSLayerVisitorFactoryInterface:
     
 
     def create(self, selectedRTSLayersPlayerGameInput: SelectedRTSLayersPlayerGameInput) -> Visitor:
+        from org.allbinary.logic.util.visitor.Visitor import Visitor
         raise NotImplementedError()
-from org.allbinary.logic.util.visitor.Visitor import Visitor
+# from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 

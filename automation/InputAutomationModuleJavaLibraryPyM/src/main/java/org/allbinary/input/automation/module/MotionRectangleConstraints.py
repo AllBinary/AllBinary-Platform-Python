@@ -87,7 +87,8 @@ class MotionRectangleConstraints(MotionRectangleConstraintsInterface):
 
     def setMinArea(self, minArea: int) -> None:
         self.minArea = minArea
-# from java.awt import *
+# from java.awt.Dimension import Dimension
+# from java.awt.Rectangle import Rectangle
 # from java.awt.image.BufferedImage import BufferedImage
 
 

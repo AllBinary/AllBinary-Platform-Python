@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class SpriteSplitterUtil:
     instance: SpriteSplitterUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -42,14 +46,7 @@ class SpriteSplitterUtil:
 
     # throws Exception
     def process(self, imageProcessorInput: ImageProcessorInput, totalFrames: int, totalAnimations: int, widthReduction: int, heightReduction: int, increaseWidth: int, increaseHeight: int, spriteType: str, visitor: ImageProcessedVisitor) -> None:
-        from org.allbinary.media.image.ImageUtil import ImageUtil
-        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
-        from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
-        from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
-        from org.allbinary.media.image.ImageUtil import ImageUtil
-        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
-        from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
-        from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
         bufferedImage: BufferedImage = None
         generatedBufferedImageArray: list[list[BufferedImage]] = None
         bufferedImageArray: list[BufferedImage] = imageProcessorInput.getBufferedImageArray()
@@ -128,11 +125,14 @@ class SpriteSplitterUtil:
                     generatedBufferedImage: BufferedImage = ImageUnifierUtil.getInstance().getImage(tempBufferedImageArray, imageUnifierProperties)
                     visitor.visit(generatedBufferedImage, nameEnding, index)
 # from java.awt.image.BufferedImage import BufferedImage
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
 
 
-SpriteSplitterUtil.instance = SpriteSplitterUtil()
+def _SpriteSplitterUtil_instance() -> object:
+    return SpriteSplitterUtil()
+
+lazy_static(SpriteSplitterUtil, "instance", _SpriteSplitterUtil_instance)
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ImageCacheBaseAndroidJavaLibrary
@@ -29,27 +30,38 @@ class ImageFactory:
 
     # throws Exception
     def createImageUrl(self, url: str) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return Image.createImage(url)
     
 
     # throws Exception
     def createImage(self, caller: str, width: int, height: int) -> Image:
+        from javax.microedition.lcdui.Image import Image
         return Image.createImageWH(width, height)
     
 
     # throws Exception
-    def createImageFromInputStream(self, key: object, inputStream: InputStream) -> Image:
+    def createImageFromInputStream_j2(self, key: object, inputStream: InputStream) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
         image: Image = Image.createImageFromInputStream(inputStream)
         return image
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def createImageFromInputStream(self, inputStream: InputStream) -> Image:
+    def createImageFromInputStream_j1(self, inputStream: InputStream) -> Image:
+        from java.io.InputStream import InputStream
+        from javax.microedition.lcdui.Image import Image
         return Image.createImageFromInputStream(inputStream)
+
+    def createImageFromInputStream(self, *args):
+        return getattr(self, "createImageFromInputStream_j" + str(len(args)))(*args)
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 
 
-ImageFactory.instance = ImageFactory()
+def _ImageFactory_instance() -> object:
+    return ImageFactory()
+
+lazy_static(ImageFactory, "instance", _ImageFactory_instance)
 

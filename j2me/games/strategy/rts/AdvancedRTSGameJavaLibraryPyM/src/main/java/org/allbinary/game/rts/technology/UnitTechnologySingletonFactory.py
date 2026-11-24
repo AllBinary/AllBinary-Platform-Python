@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class UnitTechnologySingletonFactory:
@@ -85,5 +86,8 @@ class UnitTechnologySingletonFactory:
         self.speed = speed
 
 
-UnitTechnologySingletonFactory.instance = UnitTechnologySingletonFactory()
+def _UnitTechnologySingletonFactory_instance() -> object:
+    return UnitTechnologySingletonFactory()
+
+lazy_static(UnitTechnologySingletonFactory, "instance", _UnitTechnologySingletonFactory_instance)
 

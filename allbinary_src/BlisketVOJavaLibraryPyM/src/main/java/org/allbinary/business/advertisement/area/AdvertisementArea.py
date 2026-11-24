@@ -28,11 +28,13 @@ class AdvertisementArea(AdvertisementAreaInterface):
         self.campaign: str = None
     
 
-    def __init__(self, hashMap: dict) -> None:
-        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
-        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
-        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
+    def __init__(self, hashMap: HashMap) -> None:
         from org.allbinary.business.advertisement.area.AdvertisementAreaConstraints import AdvertisementAreaConstraints
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.w3c.dom.Document import Document
         self._init_fields()
         self.name = hashMap.get(AdvertisementAreaData.getInstance().NAME)
         self.storeName = hashMap.get(StoreFrontData.getInstance().NAME)
@@ -82,9 +84,9 @@ class AdvertisementArea(AdvertisementAreaInterface):
     def setCampaign(self, campaign: str) -> None:
         self.campaign = campaign
 # from java.util.HashMap import HashMap
-from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.w3c.dom.Document import Document
+# from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.w3c.dom.Document import Document
 
 

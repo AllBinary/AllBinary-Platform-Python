@@ -34,7 +34,6 @@ class ScreenRepaintProcessor(Processor):
 
     # throws Exception
     def process(self) -> None:
-        from org.allbinary.graphics.displayable.screen.ScreenRepaintUtil import ScreenRepaintUtil
         ScreenRepaintUtil.repaint(self.displayable)
 # from javax.microedition.lcdui.Displayable import Displayable
 

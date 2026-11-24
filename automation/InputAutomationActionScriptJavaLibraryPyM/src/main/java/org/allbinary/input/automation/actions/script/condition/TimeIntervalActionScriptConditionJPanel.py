@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
-from org.allbinary.input.automation.actions.script.condition.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
 class TimeIntervalActionScriptConditionJPanel(JPanel):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.timeIntervalActionScriptConditionInterface: TimeIntervalActionScriptConditionInterface = None
@@ -69,19 +71,6 @@ class TimeIntervalActionScriptConditionJPanel(JPanel):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.actions.script.condition.JDialog import JDialog
-        from org.allbinary.input.automation.actions.script.condition.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.JTextField import JTextField
-        from org.allbinary.input.automation.actions.script.condition.JButton import JButton
-        from org.allbinary.input.automation.actions.script.condition.JLabel import JLabel
-        from org.allbinary.input.automation.actions.script.condition.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.GroupLayout import GroupLayout
-        from org.allbinary.input.automation.actions.script.condition.Dimension import Dimension
-        from org.allbinary.input.automation.actions.script.condition.ActionListener import ActionListener
-        from org.allbinary.input.automation.actions.script.condition.GroupLayout import GroupLayout
         self.timeIntervalActionJDialog = JDialog()
         self.titleJLabel = JLabel()
         self.okJButton = JButton()
@@ -101,8 +90,8 @@ class TimeIntervalActionScriptConditionJPanel(JPanel):
         self.jLabel2.setText("Time (ms):")
         timeIntervalActionJDialogLayout: GroupLayout = GroupLayout(self.timeIntervalActionJDialog.getContentPane())
         self.timeIntervalActionJDialog.getContentPane().setLayout(timeIntervalActionJDialogLayout)
-        timeIntervalActionJDialogLayout.setHorizontalGroup(timeIntervalActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addGroup(timeIntervalActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(javax.swing.GroupLayout.Alignment.LEADING, timeIntervalActionJDialogLayout.createSequentialGroup().addGap(82, 82, 82).addComponent(self.okJButton)).addGroup(javax.swing.GroupLayout.Alignment.LEADING, timeIntervalActionJDialogLayout.createSequentialGroup().addGap(32, 32, 32).addGroup(timeIntervalActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel2).addGap(16, 16, 16).addComponent(self.timeIntervalJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)).addComponent(self.titleJLabel)))).addContainerGap(36, Short.MAX_VALUE)))
-        timeIntervalActionJDialogLayout.setVerticalGroup(timeIntervalActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.titleJLabel).addGap(20, 20, 20).addGroup(timeIntervalActionJDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel2).addComponent(self.timeIntervalJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(15, 15, 15).addComponent(self.okJButton).addContainerGap()))
+        timeIntervalActionJDialogLayout.setHorizontalGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.TRAILING).addGroup(GroupLayout.Alignment.LEADING, timeIntervalActionJDialogLayout.createSequentialGroup().addGap(82, 82, 82).addComponent(self.okJButton)).addGroup(GroupLayout.Alignment.LEADING, timeIntervalActionJDialogLayout.createSequentialGroup().addGap(32, 32, 32).addGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addComponent(self.jLabel2).addGap(16, 16, 16).addComponent(self.timeIntervalJTextField, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)).addComponent(self.titleJLabel)))).addContainerGap(36, Short.MAX_VALUE)))
+        timeIntervalActionJDialogLayout.setVerticalGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.titleJLabel).addGap(20, 20, 20).addGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel2).addComponent(self.timeIntervalJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addGap(15, 15, 15).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.timeIntervalActionJButton.setText("Edit")
         self.timeIntervalActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
@@ -114,8 +103,8 @@ class TimeIntervalActionScriptConditionJPanel(JPanel):
         self.jLabel1.setText("Time Interval:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.timeIntervalActionJButton)))
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.timeIntervalActionJButton)))
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.jLabel1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.timeIntervalActionJButton)))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.timeIntervalActionJButton)))
     
 
     def okJButtonActionPerformed(self, evt: ActionEvent) -> None:
@@ -125,7 +114,16 @@ class TimeIntervalActionScriptConditionJPanel(JPanel):
 
     def timeIntervalActionJButtonActionPerformed(self, evt: ActionEvent) -> None:
         self.getTimeIntervalActionJDialog().setVisible(True)
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.event.ActionEvent import ActionEvent
+# from java.awt.event.ActionListener import ActionListener
+# from javax.swing.GroupLayout import GroupLayout
+# from javax.swing.JButton import JButton
+# from javax.swing.JDialog import JDialog
+# from javax.swing.JLabel import JLabel
+# from javax.swing.JTextField import JTextField
+# from javax.swing.LayoutStyle import LayoutStyle
 
 

@@ -29,12 +29,10 @@ class FtpConfigurationMapping(TableMappingInterface):
         self.ftpConfigurationInterface = ftpConfigurationInterface
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(FtpConfigurationData.SERVER, self.ftpConfigurationInterface.getServer())
         hashMap.put(FtpConfigurationData.USERNAME, self.ftpConfigurationInterface.getUserName())
         hashMap.put(FtpConfigurationData.PASSWORD, self.ftpConfigurationInterface.getPassword())
@@ -44,12 +42,13 @@ class FtpConfigurationMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
-        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
         return FtpConfigurationData.NAME
     
 
     # throws Exception
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = BasicArrayListD()
         vector.add(self.ftpConfigurationInterface.getServer())
         vector.add(self.ftpConfigurationInterface.getUserName())
@@ -57,8 +56,8 @@ class FtpConfigurationMapping(TableMappingInterface):
         vector.add(self.ftpConfigurationInterface.getPath())
         return vector
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
 
 

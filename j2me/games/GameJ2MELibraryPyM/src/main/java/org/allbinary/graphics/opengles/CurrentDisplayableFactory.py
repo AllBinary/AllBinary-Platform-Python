@@ -116,9 +116,6 @@ class CurrentDisplayableFactory:
     
 
     def update(self) -> None:
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas

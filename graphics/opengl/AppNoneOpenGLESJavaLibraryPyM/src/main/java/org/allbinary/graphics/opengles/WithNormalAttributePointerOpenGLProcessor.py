@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.threed.min3d.renderer.processor.ObjectThreedOpenGLProcessor import ObjectThreedOpenGLProcessor
 
 
@@ -32,9 +33,13 @@ class WithNormalAttributePointerOpenGLProcessor(ObjectThreedOpenGLProcessor):
     
 
     def process(self, gl: GL10, aObject3d: object) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise RuntimeError()
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-WithNormalAttributePointerOpenGLProcessor.instance = WithNormalAttributePointerOpenGLProcessor()
+def _WithNormalAttributePointerOpenGLProcessor_instance() -> object:
+    return WithNormalAttributePointerOpenGLProcessor()
+
+lazy_static(WithNormalAttributePointerOpenGLProcessor, "instance", _WithNormalAttributePointerOpenGLProcessor_instance)
 

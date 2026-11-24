@@ -23,16 +23,20 @@ class CategoryLoaderInterface(CategoryModifierTreeInterface):
     
 
     def getDoc(self, categoryInterface: CategoryInterface) -> Document:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
+        from org.w3c.dom.Document import Document
         raise NotImplementedError()
     
 
     def get(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
     
 
     def getAll(self, categoryInterface: CategoryInterface) -> CategoryInterface:
+        from org.allbinary.business.category.CategoryInterface import CategoryInterface
         raise NotImplementedError()
-from org.allbinary.business.category.CategoryInterface import CategoryInterface
-from org.w3c.dom.Document import Document
+# from org.allbinary.business.category.CategoryInterface import CategoryInterface
+# from org.w3c.dom.Document import Document
 
 

@@ -16,11 +16,13 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
+from javax.microedition.media.Controllable import Controllable
 from javax.microedition.media.Player import Player
 
 
 #BasicPlayerMIDP2
-class PlayerComposite(Player):
+class PlayerComposite(*java_bases(Controllable, Player)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
@@ -155,7 +157,6 @@ class PlayerComposite(Player):
     def getPlayerP(self) -> Player:
         return self.player
 # from javax.microedition.media.Control import Control
-# from javax.microedition.media.Controllable import Controllable
 # from javax.microedition.media.MediaException import MediaException
 # from javax.microedition.media.PlayerListener import PlayerListener
 # from javax.microedition.media.TimeBase import TimeBase

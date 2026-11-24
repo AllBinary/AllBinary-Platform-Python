@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.security.licensing.AbeClientInformation import AbeClientInformation
 
 
@@ -24,7 +25,9 @@ class MobileClientInformation(AbeClientInformation):
     
 
     def __init__(self, name: str, version: str, specialName: str, shortName: str) -> None:
-        from org.allbinary.logic.system.security.licensing.PartnerIdentifierFileUtil import PartnerIdentifierFileUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__(name, version, str(StringMaker().append(specialName).append(CommonSeps.getInstance().SPACE).append(PartnerIdentifierFileUtil.getInstance().get())), shortName)
         string: str = self.getSpecialName()
         number: str = string[len(string) - 1:]
@@ -38,16 +41,21 @@ class MobileClientInformation(AbeClientInformation):
     
 
     def toHashtable(self) -> ABHashtable[object, object]:
+        from org.allbinary.logic.system.security.licensing.registration.RegistrationConfiguration import RegistrationConfiguration
+        from org.allbinary.util.ABHashtable import ABHashtable
         hashtable: ABHashtable[object, object] = super().toHashtable()
         registrationConfiguration: RegistrationConfiguration = RegistrationConfiguration.getInstance()
         hashtable.put(registrationConfiguration.NAME, registrationConfiguration.getRegistrationCode())
         return hashtable
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.registration.RegistrationConfiguration import RegistrationConfiguration
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.registration.RegistrationConfiguration import RegistrationConfiguration
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-MobileClientInformation.ANDROID_DESC = "Android" + str(MobileClientInformation.DESC)
+def _MobileClientInformation_ANDROID_DESC() -> object:
+    return "Android" + str(MobileClientInformation.DESC)
+
+lazy_static(MobileClientInformation, "ANDROID_DESC", _MobileClientInformation_ANDROID_DESC)
 

@@ -20,6 +20,7 @@ from __future__ import annotations
 class ImageTool:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -29,10 +30,17 @@ class ImageTool:
 
     @staticmethod
     def main(args: list[str]) -> None:
-        java.awt.EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
+        from org.allbinary.thread.ARunnable import ARunnable
+        from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
 #             
 # 
 #             def run(self) -> None:
+#                 from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
+#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
+#                 from org.allbinary.string.CommonStrings import CommonStrings
 #                 logUtil: LogUtil = LogUtil.getInstance()
 #                 commonStrings: CommonStrings = CommonStrings.getInstance()
 #                 try:
@@ -41,9 +49,10 @@ class ImageTool:
 #                 except Exception as e:
 #                     logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
 ))
-from org.allbinary.thread.ARunnable import ARunnable
-from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.thread.ARunnable import ARunnable
+# from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.EventQueue import EventQueue
 
 

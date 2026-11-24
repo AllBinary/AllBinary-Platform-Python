@@ -21,19 +21,23 @@ from org.allbinary.business.advertisement.campaign.AdvertisementCampaignsInterfa
 class AdvertisementCampaigns(AdvertisementCampaignsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.advertisementsVector: BasicArrayList = None
     
 
     def __init__(self, vector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.advertisementsVector = self.advertisementsVector
     
 
     def add(self, advertisementInterface: AdvertisementInterface) -> None:
+        from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
         self.advertisementsVector.add(advertisementInterface)
     
 
     def get(self, index: int) -> AdvertisementInterface:
+        from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
         return self.advertisementsVector.get(index)
     
 
@@ -46,11 +50,13 @@ class AdvertisementCampaigns(AdvertisementCampaignsInterface):
     
 
     def search(self, advertisementSearchInterface: AdvertisementSearchInterface) -> AdvertisementsInterface:
+        from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
+        from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
         return None
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
-from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
-from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.advertisement.AdvertisementInterface import AdvertisementInterface
+# from org.allbinary.business.advertisement.AdvertisementsInterface import AdvertisementsInterface
+# from org.allbinary.business.advertisement.search.AdvertisementSearchInterface import AdvertisementSearchInterface
 
 

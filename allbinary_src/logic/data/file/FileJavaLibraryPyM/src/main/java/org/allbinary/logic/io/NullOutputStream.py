@@ -27,14 +27,16 @@ class NullOutputStream(OutputStream):
     
 
     # throws IOException
-    def write(self, b: int) -> None:
+    def write_j1(self, b: int) -> None:
         pass
     
 
     # throws IOException
-    # Java overloaded method: Python keeps the last definition
-    def write(self, b: list[int], off: int, len_: int) -> None:
+    def write_j3(self, b: list[int], off: int, len_: int) -> None:
         pass
+
+    def write(self, *args):
+        return getattr(self, "write_j" + str(len(args)))(*args)
     
 
     def close(self) -> None:

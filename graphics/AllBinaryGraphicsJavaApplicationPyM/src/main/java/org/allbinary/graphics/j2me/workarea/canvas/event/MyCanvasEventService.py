@@ -16,11 +16,11 @@
 from __future__ import annotations
 
 import threading
-from org.allbinary.graphics.j2me.workarea.canvas.event.EventListenerList import EventListenerList
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class MyCanvasEventService:
-    listenerList: EventListenerList = EventListenerList()
+    listenerList: EventListenerList = None
     DELETE: str = "delete"
     DUPLICATE: str = "duplicate"
     SELECT: str = "select"
@@ -42,7 +42,8 @@ class MyCanvasEventService:
 
     @staticmethod
     def _addListener_unlocked(listener: MyCanvasEventListener) -> None:
-        MyCanvasEventService.listenerList.add(type(listener), listener)
+        from java.util.EventListener import EventListener
+        MyCanvasEventService.listenerList.add((type(listener)), listener)
     
 
     @staticmethod
@@ -52,7 +53,8 @@ class MyCanvasEventService:
 
     @staticmethod
     def _removeListener_unlocked(listener: MyCanvasEventListener) -> None:
-        MyCanvasEventService.listenerList.remove(type(listener), listener)
+        from java.util.EventListener import EventListener
+        MyCanvasEventService.listenerList.remove((type(listener)), listener)
     
 
     # throws Exception
@@ -80,5 +82,12 @@ class MyCanvasEventService:
                     (listeners[i + 1]).autoExplode(evt)
                 elif evt.getCommand().compareTo(MyCanvasEventService.CENTER) == 0:
                     (listeners[i + 1]).center(evt)
+# from java.util.EventListener import EventListener
+# from javax.swing.event.EventListenerList import EventListenerList
 
+
+def _MyCanvasEventService_listenerList() -> object:
+    return EventListenerList()
+
+lazy_static(MyCanvasEventService, "listenerList", _MyCanvasEventService_listenerList)
 

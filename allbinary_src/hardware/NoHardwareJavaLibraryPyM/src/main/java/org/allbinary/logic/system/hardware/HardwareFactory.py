@@ -26,7 +26,7 @@ class HardwareFactory:
     
 
     @staticmethod
-    def getInstance() -> HardwareFactory:
+    def getInstance_j0() -> HardwareFactory:
         return HardwareFactory.instance
     
 
@@ -35,15 +35,16 @@ class HardwareFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, os: OperatingSystemInterface) -> HardwareInterface:
+    def getInstance_j1(self, os: OperatingSystemInterface) -> HardwareInterface:
         from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
         try:
             return self.SINGLETON
         except Exception as e:
             raise e
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
-from org.allbinary.logic.system.hardware.NoHardware import NoHardware
 
 
 def _HardwareFactory_instance() -> object:

@@ -15,14 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.module.actions.script.condition.processors.output.BasicProfileActionScriptOutput import BasicProfileActionScriptOutput
 from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputInterface import ImageActionScriptOutputInterface
 
 
-class ImageActionScriptOutput(BasicProfileActionScriptOutput, ImageActionScriptOutputInterface):
+class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageActionScriptOutputInterface)):
     NAME: str = "Captures"
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.saved: bool = False
         self.display: bool = False
@@ -43,6 +45,10 @@ class ImageActionScriptOutput(BasicProfileActionScriptOutput, ImageActionScriptO
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageTypes import ImageTypes
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputJPanel import ImageActionScriptOutputJPanel
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         super().__init__(ImageActionScriptOutput.NAME, node)
         self._init_fields()
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
@@ -81,10 +87,12 @@ class ImageActionScriptOutput(BasicProfileActionScriptOutput, ImageActionScriptO
         return self.actionScriptOutputJPanel
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(ImageActionScriptOutputData.DISPLAY, str(self.isDisplay()))
         hashMap.put(ImageActionScriptOutputData.SAVE, str(self.isSaved()))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
@@ -94,6 +102,9 @@ class ImageActionScriptOutput(BasicProfileActionScriptOutput, ImageActionScriptO
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = super().toXmlNode(document)
         newNode: Node = ModDomHelper.createNodeWithValueNodes(document, ImageActionScriptOutputData.NAME, self.toHashMap())
         newNode.appendChild(self.getImageTypes().toXmlNode(document))
@@ -128,6 +139,7 @@ class ImageActionScriptOutput(BasicProfileActionScriptOutput, ImageActionScriptO
     
 
     def future_toString(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(" Is Save: ")
         stringBuffer.appendboolean(self.isSaved())
@@ -149,14 +161,14 @@ class ImageActionScriptOutput(BasicProfileActionScriptOutput, ImageActionScriptO
     def setImageTypes(self, imageTypes: ImageTypes) -> None:
         self.imageTypes = imageTypes
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

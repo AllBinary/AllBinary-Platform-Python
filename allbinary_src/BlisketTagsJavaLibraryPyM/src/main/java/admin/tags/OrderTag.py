@@ -21,10 +21,12 @@ from tags.CustomTagSupport import CustomTagSupport
 class OrderTag(CustomTagSupport):
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.command: str = None
         self.storeName: str = None
-        self.propertiesHashMap: dict = None
+        self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
@@ -42,6 +44,10 @@ class OrderTag(CustomTagSupport):
 
     # throws LicensingException
     def process(self) -> str:
+        from admin.taghelpers.OrderHelperFactory import OrderHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = OrderHelperFactory().getInstance(self.propertiesHashMap, self.pageContext)
             helperClass: type = type(anyType)
@@ -52,13 +58,17 @@ class OrderTag(CustomTagSupport):
             raise e
         except Exception as e:
             error: str = "Failed to Process Order: "
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
             return error
     
 
     # throws LicensingException
     def setPaymentGateway(self) -> bool:
+        from admin.taghelpers.OrderHelperFactory import OrderHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = OrderHelperFactory().getInstance(self.propertiesHashMap, self.pageContext)
             addressHelperClass: type = type(anyType)
@@ -69,18 +79,24 @@ class OrderTag(CustomTagSupport):
             raise e
         except Exception as e:
             error: str = "Failed to setPaymentGateway for Order"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "setPaymentGateway()", e)
             return False
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             if self.command is not None:
                 self.propertiesHashMap = StdUtil.getInstance().createHashMap()
                 self.propertiesHashMap.put(StoreFrontData.getInstance().NAME, self.storeName)
-                if ((self.command > org.allbinary.globals.GLOBALS2.PROCESS) - (self.command < org.allbinary.globals.GLOBALS2.PROCESS)) == 0:
+                if ((self.command > GLOBALS2.PROCESS) - (self.command < GLOBALS2.PROCESS)) == 0:
                     self.process()
                 elif ((self.command > str(PaymentGatewayData.NAME)) - (self.command < str(PaymentGatewayData.NAME))) == 0:
                     if self.setPaymentGateway() == True:
@@ -96,12 +112,15 @@ class OrderTag(CustomTagSupport):
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.JspTagException import JspTagException
 # from javax.servlet.jsp.tagext.TagSupport import TagSupport
-from admin.taghelpers.OrderHelperFactory import OrderHelperFactory
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from admin.taghelpers.OrderHelperFactory import OrderHelperFactory
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

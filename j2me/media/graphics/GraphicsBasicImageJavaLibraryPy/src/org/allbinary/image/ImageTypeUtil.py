@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ImageTypeUtil:
     SINGLETON: ImageTypeUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.PNG: str = "png"
         self.JPG: str = "jpg"
         self.GIF: str = "gif"
@@ -46,9 +48,11 @@ class ImageTypeUtil:
     @staticmethod
     def getInstance() -> ImageTypeUtil:
         return ImageTypeUtil.SINGLETON
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.image.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 
-ImageTypeUtil.SINGLETON = ImageTypeUtil()
+def _ImageTypeUtil_SINGLETON() -> object:
+    return ImageTypeUtil()
+
+lazy_static(ImageTypeUtil, "SINGLETON", _ImageTypeUtil_SINGLETON)
 

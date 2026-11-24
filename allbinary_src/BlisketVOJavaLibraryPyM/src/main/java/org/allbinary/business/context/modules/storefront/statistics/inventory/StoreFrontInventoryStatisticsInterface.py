@@ -27,7 +27,8 @@ class StoreFrontInventoryStatisticsInterface(TableMappingInterface):
     
 
     def getTotal(self) -> Money:
+        from org.allbinary.business.user.commerce.money.Money import Money
         raise NotImplementedError()
-from org.allbinary.business.user.commerce.money.Money import Money
+# from org.allbinary.business.user.commerce.money.Money import Money
 
 

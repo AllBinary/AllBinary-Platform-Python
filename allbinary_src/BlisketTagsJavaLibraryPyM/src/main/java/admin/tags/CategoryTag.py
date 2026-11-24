@@ -21,11 +21,14 @@ from admin.tags.TableTag import TableTag
 class CategoryTag(TableTag):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.xsl: str = None
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.CategoryHelperFactory import CategoryHelperFactory
+        from admin.taghelpers.CategoryRequestHelperFactory import CategoryRequestHelperFactory
         super().__init__()
         self._init_fields()
         self.setTagHelperFactory(CategoryHelperFactory())
@@ -38,6 +41,10 @@ class CategoryTag(TableTag):
 
     # throws LicensingException
     def viewCategory(self) -> str:
+        from admin.taghelpers.CategoryRequestHelperFactory import CategoryRequestHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = CategoryRequestHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             helperClass: type = type(anyType)
@@ -48,13 +55,17 @@ class CategoryTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to view a Category"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "viewCategory()", e)
             return error
     
 
     # throws LicensingException
     def viewCategories(self) -> str:
+        from admin.taghelpers.CategoryRequestHelperFactory import CategoryRequestHelperFactory
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             anyType: object = CategoryRequestHelperFactory().getInstance(self.getPropertiesHashMap(), self.pageContext)
             helperClass: type = type(anyType)
@@ -65,24 +76,30 @@ class CategoryTag(TableTag):
             raise e
         except Exception as e:
             error: str = "Failed to view a Categories"
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "viewCategories()", e)
             return error
     
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.isEnabled():
                 if self.getCommand() is not None:
                     self.getPropertiesHashMap().put(TransformInfoData.getInstance().TEMPLATEFILENAME, self.xsl)
                     if self.getCommand().compareTo(CategoryData.getInstance().VIEW) == 0:
                         output: str = self.viewCategory()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output)
                     elif self.getCommand().compareTo(CategoryData.getInstance().VIEW) == 0:
                         output: str = self.viewCategories()
-                        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
+                        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output)
                     else:
                         return super().doStartTag()
@@ -95,12 +112,14 @@ class CategoryTag(TableTag):
             return self.SKIP_BODY
 # from java.lang.reflect.Method import Method
 # from javax.servlet.jsp.JspTagException import JspTagException
-from admin.taghelpers.CategoryHelperFactory import CategoryHelperFactory
-from admin.taghelpers.CategoryRequestHelperFactory import CategoryRequestHelperFactory
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from admin.taghelpers.CategoryHelperFactory import CategoryHelperFactory
+# from admin.taghelpers.CategoryRequestHelperFactory import CategoryRequestHelperFactory
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
+# from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

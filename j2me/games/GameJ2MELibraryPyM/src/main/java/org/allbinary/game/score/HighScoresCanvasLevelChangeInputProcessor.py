@@ -16,11 +16,12 @@
 from __future__ import annotations
 
 import threading
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
 
 
-class HighScoresCanvasLevelChangeInputProcessor(HighScoresCanvasInputProcessor, UpdateMyFontInterface):
+class HighScoresCanvasLevelChangeInputProcessor(*java_bases(HighScoresCanvasInputProcessor, UpdateMyFontInterface)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:

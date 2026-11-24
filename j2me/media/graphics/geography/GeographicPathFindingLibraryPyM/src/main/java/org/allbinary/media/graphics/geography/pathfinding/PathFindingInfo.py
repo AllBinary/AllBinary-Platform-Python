@@ -15,15 +15,15 @@
 
 from __future__ import annotations
 
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfoInterface import PathFindingInfoInterface
-from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
 
 
 class PathFindingInfo(PathFindingInfoInterface):
     NULL_PATH_FINDING_INFO: PathFindingInfo = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pathFinder: GeographicPathFinderBase = GeographicPathFinderBase.NULL_GEOGRAPHIC_PATH_FINDER_BASE
         self.startPathFindingNodeList: BasicArrayList = None
         self.endPathFindingNodeList: BasicArrayList = None
@@ -31,6 +31,7 @@ class PathFindingInfo(PathFindingInfoInterface):
     
 
     def __init__(self, pathFindingNodeCostInfoFactoryInterface: PathFindingNodeCostInfoFactoryBase, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         self.pathFindingNodeCostInfoFactoryInterface = pathFindingNodeCostInfoFactoryInterface
         self.startPathFindingNodeList = startPathFindingNodeList
@@ -38,10 +39,12 @@ class PathFindingInfo(PathFindingInfoInterface):
     
 
     def getStartPathFindingNodeList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.startPathFindingNodeList
     
 
     def getEndPathFindingNodeList(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.endPathFindingNodeList
     
 
@@ -63,9 +66,15 @@ class PathFindingInfo(PathFindingInfoInterface):
 
     def getPathFindingNodeCostInfoFactoryInterface(self) -> PathFindingNodeCostInfoFactoryBase:
         return self.pathFindingNodeCostInfoFactoryInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 from org.allbinary.media.graphics.geography.pathfinding.GeographicPathFinderBase import GeographicPathFinderBase
 
 
-PathFindingInfo.NULL_PATH_FINDING_INFO = PathFindingInfo(PathFindingNodeCostInfoFactoryBase.NULL_PATH_FINDING_NODE_COST_INFO_FACTORY_BASE, BasicArrayListUtil.getInstance().getImmutableInstance(), BasicArrayListUtil.getInstance().getImmutableInstance())
+def _PathFindingInfo_NULL_PATH_FINDING_INFO() -> object:
+    from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
+    from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+    return PathFindingInfo(PathFindingNodeCostInfoFactoryBase.NULL_PATH_FINDING_NODE_COST_INFO_FACTORY_BASE, BasicArrayListUtil.getInstance().getImmutableInstance(), BasicArrayListUtil.getInstance().getImmutableInstance())
+
+lazy_static(PathFindingInfo, "NULL_PATH_FINDING_INFO", _PathFindingInfo_NULL_PATH_FINDING_INFO)
 

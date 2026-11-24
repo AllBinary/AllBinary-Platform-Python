@@ -23,7 +23,6 @@ class TerrainPatrolAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
 
     # throws Exception
     def getInstance(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> ArtificialIntelligenceInterface:
-        from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
         from org.allbinary.game.ag.ai.scroller.TerrainPatrolAI import TerrainPatrolAI
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.game.input.GameInput import GameInput

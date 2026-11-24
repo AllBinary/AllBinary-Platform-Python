@@ -21,6 +21,7 @@ from org.allbinary.media.graphics.geography.map.GeographicMapCellHistoryProgress
 class GeographicMapCellHistoryProgress(GeographicMapCellHistoryProgressBase):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.NullUtil import NullUtil
         self.totalVisitedArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
         self.geographicMapCellHistoryArray: list[GeographicMapCellHistory] = GeographicMapCellHistory.NULL_GEOGRPAHIC_MAP_HISTORY_ARRAY
     
@@ -48,7 +49,7 @@ class GeographicMapCellHistoryProgress(GeographicMapCellHistoryProgressBase):
                 isProgressing = True
                 self.totalVisitedArray[index] = totalVisited
         return isProgressing
-from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.logic.NullUtil import NullUtil
 from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
 
 

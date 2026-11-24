@@ -22,9 +22,10 @@ class LogTag(TableTag):
     
 
     def __init__(self) -> None:
+        from admin.taghelpers.LogHelperFactory import LogHelperFactory
         super().__init__()
         self.setTagHelperFactory(LogHelperFactory())
         self.setTagRequestHelperFactory(LogHelperFactory())
-from admin.taghelpers.LogHelperFactory import LogHelperFactory
+# from admin.taghelpers.LogHelperFactory import LogHelperFactory
 
 

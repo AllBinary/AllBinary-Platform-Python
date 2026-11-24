@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
 
 
@@ -25,6 +26,7 @@ class FlagGameResources(BasicGameResources):
     ICON_BUILD: str = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.NAME: str = StringUtil.getInstance().EMPTY_STRING
         self.RESOURCE_ICON_ANIMATION: str = StringUtil.getInstance().EMPTY_STRING
         self.RESOURCE_ICON_BUILD: str = StringUtil.getInstance().EMPTY_STRING
@@ -39,6 +41,7 @@ class FlagGameResources(BasicGameResources):
 
     # throws Exception
     def append(self, ROOT: str, sizeString: str) -> None:
+        from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
         super().append(ROOT, sizeString)
         string: str = GameGraphicsResourceUtil.getInstance().getName()
         BasicGameResources.stringBuffer.delete(0, BasicGameResources.stringBuffer.length())
@@ -63,9 +66,12 @@ class FlagGameResources(BasicGameResources):
         BasicGameResources.stringBuffer.append(string)
         BasicGameResources.stringBuffer.append(self.ICON_SIZE)
         self.RESOURCE_ICON_BUILD = str(BasicGameResources.stringBuffer)
-from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
 
 
-FlagGameResources.ICON_BUILD = "_icon" + str(FlagGameResources.BUILD)
+def _FlagGameResources_ICON_BUILD() -> object:
+    return "_icon" + str(FlagGameResources.BUILD)
+
+lazy_static(FlagGameResources, "ICON_BUILD", _FlagGameResources_ICON_BUILD)
 

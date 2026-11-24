@@ -35,12 +35,15 @@ class UsersTag(StoreValidationTransformTag):
 
     # throws JspTagException
     def doStartTag(self) -> int:
+        from org.allbinary.business.user.role.UserRoleData import UserRoleData
+        from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+        from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
             self.setName("Admin Users View")
             self.setObjectFile("views.admin.user.UsersValidationView")
             if self.getCommand() is not None:
                 self.getPropertiesHashMap().put(UserRoleData.NAME, self.role)
-                if self.getCommand().compareTo(org.allbinary.globals.GLOBALS2.VIEW) == 0:
+                if self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     pass
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
@@ -50,7 +53,8 @@ class UsersTag(StoreValidationTransformTag):
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY
 # from javax.servlet.jsp.JspTagException import JspTagException
-from org.allbinary.business.user.role.UserRoleData import UserRoleData
-from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.business.user.role.UserRoleData import UserRoleData
+# from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
+# from org.allbinary.globals.GLOBALS2 import GLOBALS2
 
 

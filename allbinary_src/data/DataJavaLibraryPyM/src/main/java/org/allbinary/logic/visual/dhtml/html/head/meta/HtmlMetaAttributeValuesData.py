@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class HtmlMetaAttributeValuesData:
@@ -35,5 +36,8 @@ class HtmlMetaAttributeValuesData:
         self._init_fields()
 
 
-HtmlMetaAttributeValuesData.instance = HtmlMetaAttributeValuesData()
+def _HtmlMetaAttributeValuesData_instance() -> object:
+    return HtmlMetaAttributeValuesData()
+
+lazy_static(HtmlMetaAttributeValuesData, "instance", _HtmlMetaAttributeValuesData_instance)
 

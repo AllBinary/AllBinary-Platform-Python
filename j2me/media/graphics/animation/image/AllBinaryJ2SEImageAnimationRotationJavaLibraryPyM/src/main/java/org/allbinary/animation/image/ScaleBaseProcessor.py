@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ScaleBaseProcessor:
@@ -27,9 +28,13 @@ class ScaleBaseProcessor:
     
 
     def update(self, originalImage: Image, originalImageArray: list[Image], imageToShowArray: list[Image], index: int, scaleX: float, scaleY: float, maxScaleX: float, maxScaleY: float) -> None:
+        from javax.microedition.lcdui.Image import Image
         pass
 # from javax.microedition.lcdui.Image import Image
 
 
-ScaleBaseProcessor.instance = ScaleBaseProcessor()
+def _ScaleBaseProcessor_instance() -> object:
+    return ScaleBaseProcessor()
+
+lazy_static(ScaleBaseProcessor, "instance", _ScaleBaseProcessor_instance)
 

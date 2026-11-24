@@ -22,14 +22,18 @@ class Renderer:
     
 
     def onSurfaceCreated(self, gl: GL10, config: EGLConfig) -> None:
+        from javax.microedition.khronos.egl.EGLConfig import EGLConfig
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise NotImplementedError()
     
 
     def onSurfaceChanged(self, gl: GL10, width: int, height: int) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise NotImplementedError()
     
 
     def onDrawFrame(self, gl: GL10) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         raise NotImplementedError()
 # from javax.microedition.khronos.egl.EGLConfig import EGLConfig
 # from javax.microedition.khronos.opengles.GL10 import GL10

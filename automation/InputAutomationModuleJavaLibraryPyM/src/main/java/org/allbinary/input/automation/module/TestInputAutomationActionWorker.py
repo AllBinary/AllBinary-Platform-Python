@@ -23,11 +23,14 @@ from org.allbinary.input.automation.module.AbstractInputAutomationWorker import 
 class TestInputAutomationActionWorker(AbstractInputAutomationWorker):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.sleep: int = None
     
 
     def __init__(self, sleep: int, inputAutomationActionInterface: InputAutomationActionInterface, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface, motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface) -> None:
+        from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
+        from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
         super().__init__(inputAutomationActionInterface)
         self._init_fields()
         self.logUtil.putF("BasicTestAttackWorder", self, self.commonStrings.CONSTRUCTOR)
@@ -41,6 +44,10 @@ class TestInputAutomationActionWorker(AbstractInputAutomationWorker):
 
     # throws Exception
     def process(self) -> None:
+        from java.util.Set import Set
+        from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.PROCESS)
         hashtable: ABHashtable[object, object] = InputRobotFactory.getInstance().get()
         set: Set = hashtable.keySet()
@@ -52,11 +59,11 @@ class TestInputAutomationActionWorker(AbstractInputAutomationWorker):
             if self.sleep > 0:
                 time.sleep((self.sleep) / 1000)
 # from java.util.Set import Set
-from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
-from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+# from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
+# from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 

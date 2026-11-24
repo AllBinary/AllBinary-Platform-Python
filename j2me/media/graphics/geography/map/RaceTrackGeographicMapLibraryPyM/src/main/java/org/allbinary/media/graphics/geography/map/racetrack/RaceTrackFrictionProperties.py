@@ -25,6 +25,7 @@ class RaceTrackFrictionProperties:
     
 
     def __init__(self, roadFriction: int, groundFriction: int) -> None:
+        from org.allbinary.game.physics.friction.FrictionData import FrictionData
         self._init_fields()
         self.ROAD_FRICTION_NOMINATOR = FrictionData.getFrictionDenominator() - roadFriction
         self.GROUND_FRICTION_NOMINATOR = FrictionData.getFrictionDenominator() - groundFriction
@@ -36,6 +37,6 @@ class RaceTrackFrictionProperties:
 
     def getGroundFrictionNominator(self) -> int:
         return self.GROUND_FRICTION_NOMINATOR
-from org.allbinary.game.physics.friction.FrictionData import FrictionData
+# from org.allbinary.game.physics.friction.FrictionData import FrictionData
 
 

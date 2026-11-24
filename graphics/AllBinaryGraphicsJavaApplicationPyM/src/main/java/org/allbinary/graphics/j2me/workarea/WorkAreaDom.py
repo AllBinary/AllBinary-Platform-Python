@@ -23,11 +23,16 @@ class WorkAreaDom:
     FRAMES: str = "frames"
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.name: str = None
         self.canvasNodeList: BasicArrayList = None
     
 
     def __init__(self, document: Document) -> None:
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.NodeList import NodeList
         self._init_fields()
         workAreaNodeList: NodeList = document.getElementsByTagName(self.WORKAREA)
         if workAreaNodeList is not None:
@@ -49,11 +54,12 @@ class WorkAreaDom:
     
 
     def getCanvasNodes(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.canvasNodeList
-from org.allbinary.dom.DomHelper import DomHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
-from org.w3c.dom.NodeList import NodeList
+# from org.allbinary.dom.DomHelper import DomHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.NodeList import NodeList
 
 

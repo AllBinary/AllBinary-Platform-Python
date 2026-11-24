@@ -8,6 +8,18 @@ from __future__ import annotations
 class MusicManager:
 
     def _init_fields(self) -> None:
+        from android.content.Intent import Intent
+        from org.allbinary.android.AndroidServicesUtil import AndroidServicesUtil
+        from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.Sound import Sound
+        from org.allbinary.string.CommonStateStrings import CommonStateStrings
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+        from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.PLAY: str = "Play "
         self.FOR: str = " for: "
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -29,6 +41,9 @@ class MusicManager:
     
 
     def __init__(self, musicServiceClass: type, songList: BasicArrayList) -> None:
+        from android.content.Intent import Intent
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self._init_fields()
         PreLogUtil.put(self.commonStateStrings.CONTEXT + self.resourceUtil.getContext(), self, self.commonStrings.CONSTRUCTOR)
         self.musicServiceClass = musicServiceClass
@@ -37,6 +52,8 @@ class MusicManager:
     
 
     def nextSong(self, nextSongSound: Sound, leftVolume: int, rightVolume: int) -> None:
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.Sound import Sound
         if nextSongSound is None:
             nextSongSound = NoSound.getInstance()
         self.nextSongSound = nextSongSound
@@ -56,13 +73,16 @@ class MusicManager:
             self.startNewSong()
             return
         if self.timeDelayHelper2.isTime(self.gameTickTimeDelayHelper.startTime):
-            if self.androidServicesUtil.isServiceRunning(self.musicServiceClass.getName()):
+            if self.androidServicesUtil.isServiceRunning(self.musicServiceClass.__module__ + "." + self.musicServiceClass.__qualname__):
                 pass
             else:
                 self.startNewSong()
     
 
     def show(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.media.audio.Sound import Sound
         index = self.songList.size()
         while (index := index - 1) >= 0:
             sound: Sound = self.songList.get(index)
@@ -71,6 +91,11 @@ class MusicManager:
     
 
     def startNewSong(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.media.audio.NoSound import NoSound
+        from org.allbinary.media.audio.Sound import Sound
         try:
             self.resourceUtil.getContext().stopService(self.currentIntent)
             if self.nextSongSound == NoSound.getInstance():
@@ -99,6 +124,10 @@ class MusicManager:
 
     @staticmethod
     def pause(activity: Activity, musicServiceClass: type) -> None:
+        from android.app.Activity import Activity
+        from android.content.Context import Context
+        from android.content.Intent import Intent
+        from org.allbinary.string.CommonStateStrings import CommonStateStrings
         commonStateStrings: CommonStateStrings = CommonStateStrings.getInstance()
         musicPauseIntent: Intent = Intent(activity, musicServiceClass)
         musicPauseIntent.putExtra(commonStateStrings.ON_START_COMMAND, 1)
@@ -107,28 +136,32 @@ class MusicManager:
 
     @staticmethod
     def resume(activity: Activity, musicServiceClass: type) -> None:
-        if AndroidServicesUtil.getInstance().isServiceRunning(musicServiceClass.getName()):
+        from android.app.Activity import Activity
+        from android.content.Intent import Intent
+        from org.allbinary.android.AndroidServicesUtil import AndroidServicesUtil
+        from org.allbinary.string.CommonStateStrings import CommonStateStrings
+        if AndroidServicesUtil.getInstance().isServiceRunning(musicServiceClass.__module__ + "." + musicServiceClass.__qualname__):
             commonStateStrings: CommonStateStrings = CommonStateStrings.getInstance()
             musicResumeIntent: Intent = Intent(activity, musicServiceClass)
             musicResumeIntent.putExtra(commonStateStrings.ON_START_COMMAND, 2)
             activity.startService(musicResumeIntent)
-from android.app.Activity import Activity
-from android.content.Context import Context
-from android.content.Intent import Intent
-from org.allbinary.android.AndroidServicesUtil import AndroidServicesUtil
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
-from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.media.audio.NoSound import NoSound
-from org.allbinary.media.audio.Sound import Sound
-from org.allbinary.string.CommonStateStrings import CommonStateStrings
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
-from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+# from android.app.Activity import Activity
+# from android.content.Context import Context
+# from android.content.Intent import Intent
+# from org.allbinary.android.AndroidServicesUtil import AndroidServicesUtil
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+# from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.media.audio.NoSound import NoSound
+# from org.allbinary.media.audio.Sound import Sound
+# from org.allbinary.string.CommonStateStrings import CommonStateStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
+# from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
 from org.allbinary.media.audio.music.MusicStrings import MusicStrings
 
 

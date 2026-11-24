@@ -21,6 +21,8 @@ from admin.taghelpers.ModifyTableInterface import ModifyTableInterface
 class ModifyTable(ModifyTableInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from tags.TagStrings import TagStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.tagStrings: TagStrings = TagStrings.getInstance()
 
@@ -41,7 +43,7 @@ class ModifyTable(ModifyTableInterface):
     # throws Exception
     def update(self) -> str:
         raise RuntimeError()
-from org.allbinary.string.CommonStrings import CommonStrings
-from tags.TagStrings import TagStrings
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from tags.TagStrings import TagStrings
 
 

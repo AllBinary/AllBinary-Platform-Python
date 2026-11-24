@@ -15,15 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 from org.allbinary.logic.visual.transform.info.CompositeTransformInfoInterface import CompositeTransformInfoInterface
 from org.allbinary.logic.visual.theme.ThemeInterface import ThemeInterface
 
 
-class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, CompositeTransformInfoInterface):
+class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeInterface, CompositeTransformInfoInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.transformInfoInterface: TransformInfoInterface = None
@@ -38,12 +43,20 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
         if len(args) == 3:
             self._constructor3(*args)
         elif len(args) == 2:
-            self._constructor2(*args)
-        elif len(args) == 2:
-            self._constructor2(*args)
+            self.__jconstructor2(*args)
+
+    def __jconstructor2(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+            self._constructor2_1(*args)
+        else:
+            self._constructor2_2(*args)
     
 
     def _constructor3(self, transformInfoInterface: TransformInfoInterface, cssStyleValidation: CssStyleValidation, categoryThemePath: str) -> None:
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.io.path.PathUtil import PathUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.visual.transform.template.customizer.includes.style.css.template.retail.CssStyleValidation import CssStyleValidation
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
         pathData: AbPathData = AbPathData.getInstance()
@@ -54,8 +67,16 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
         self.init()
     
 
-    def _constructor2(self, transformInfoInterface: TransformInfoInterface, hashMap: dict) -> None:
-        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
+    def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.io.path.PathUtil import PathUtil
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.transformInfoInterface = transformInfoInterface
         categoryThemeAbPath: AbPath = AbPath(hashMap.get(ThemeData.getInstance().PATH), StringUtil.getInstance().EMPTY_STRING)
@@ -63,7 +84,7 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
         pathUtil: PathUtil = PathUtil.getInstance()
         self.categoryAbPath = pathUtil.removeNameFromPath(str(categoryThemeAbPath))
         self.themeName = pathData.getNameFromPath(str(categoryThemeAbPath))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("CategoryThemePath: ")
             stringBuffer.append(str(categoryThemeAbPath))
@@ -75,9 +96,12 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
         self.init()
     
 
-    def _constructor2(self, storeThemeCategoryInterface: StoreThemeCategoryInterface, node: Node) -> None:
-        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
-        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
+    def _constructor2_2(self, storeThemeCategoryInterface: StoreThemeCategoryInterface, node: Node) -> None:
+        from org.allbinary.business.category.store.theme.StoreThemeCategoryInterface import StoreThemeCategoryInterface
+        from org.allbinary.data.tree.dom.DomData import DomData
+        from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+        from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.transformInfoInterface = storeThemeCategoryInterface.getTransformInfoInterface()
         self.categoryAbPath = storeThemeCategoryInterface.getPath()
@@ -92,7 +116,12 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
     
 
     # throws Exception
-    def init(self) -> None:
+    def init_j0(self) -> None:
+        from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+        from org.allbinary.business.category.store.theme.StoreThemeCategoryFactory import StoreThemeCategoryFactory
+        from org.allbinary.business.category.store.theme.StoreThemeCategoryInterface import StoreThemeCategoryInterface
+        from org.allbinary.data.tree.category.CategoryLoaderFactory import CategoryLoaderFactory
+        from org.allbinary.data.tree.category.CategoryLoaderInterface import CategoryLoaderInterface
         categoryFactoryInterface: CategoryFactoryInterface = StoreThemeCategoryFactory(self.getTransformInfoInterface())
         categoryLoaderInterface: CategoryLoaderInterface = CategoryLoaderFactory.getInstance(categoryFactoryInterface)
         rootStoreThemeCategoryInterface: StoreThemeCategoryInterface = categoryFactoryInterface.getRootInstance()
@@ -100,14 +129,20 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def init(self, storeThemeCategoryInterface: StoreThemeCategoryInterface) -> None:
+    def init_j1(self, storeThemeCategoryInterface: StoreThemeCategoryInterface) -> None:
+        from org.allbinary.business.category.store.theme.StoreThemeCategoryInterface import StoreThemeCategoryInterface
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.fileAbPath = AbPath(str(storeThemeCategoryInterface.getRootFilePath()) + str(self.categoryAbPath), StringUtil.getInstance().EMPTY_STRING)
         self.webAppAbPath = storeThemeCategoryInterface.getWebAppPath()
+
+    def init(self, *args):
+        return getattr(self, "init_j" + str(len(args)))(*args)
     
 
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
+        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         return self.transformInfoInterface
     
 
@@ -129,6 +164,13 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
 
     # throws Exception
     def getCssStyleValidation(self) -> CssStyleValidation:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+        from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+        from org.allbinary.logic.io.path.AbPath import AbPath
+        from org.allbinary.logic.io.path.AbPathData import AbPathData
+        from org.allbinary.logic.visual.transform.template.customizer.includes.style.css.template.retail.CssStyleValidation import CssStyleValidation
+        from org.w3c.dom.Document import Document
         if self.styleValidationInterface is None:
             cssStyleFileAbPath: AbPath = AbPath(str(self.fileAbPath), self.themeName + str(AbPathData.getInstance().EXTENSION_SEP) + str(CategoryData.getInstance().UNCRYPTED_EXTENSION))
             cryptFileReader: CryptFileReader = CryptFileReader(CategoryData.getInstance().UNCRYPTED_EXTENSION, CategoryData.getInstance().ENCRYPTED_EXTENSION)
@@ -138,9 +180,13 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+        from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             isValid: bool = True
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.IS_VALID)
             if not StringValidationUtil.getInstance().isValidRequired(str(self.categoryAbPath), AbSqlData.MINSTRING, AbSqlData.MAXSTRING):
                 isValid = False
@@ -148,31 +194,37 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
                 isValid = False
             if not self.getCssStyleValidation().isValid():
                 isValid = False
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEW):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("End: " + str(isValid), self, self.commonStrings.IS_VALID)
             return isValid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Theme Validation Error")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().VIEWERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
 
     def toValidationInfoDoc(self) -> Document:
+        from org.w3c.dom.Document import Document
         return None
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         return None
     
 
@@ -181,6 +233,8 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         vector: BasicArrayList = BasicArrayListD()
         vector.add(self.getName())
         vector.add(self.getPath())
@@ -189,10 +243,11 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
         return vector
     
 
-    def toHashMap(self) -> dict:
-        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
         themeData: ThemeData = ThemeData.getInstance()
-        hashMap: dict = StdUtil.getInstance().createHashMap()
+        hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.put(themeData.NAME, self.getName())
         hashMap.put(themeData.PATH, self.getPath())
         hashMap.put(themeData.PREVIEW_IMAGE_NAME, self.getPreviewImageName())
@@ -202,39 +257,43 @@ class ThemeValidation(ThemeInterface, ValidationInterface, DomNodeInterface, Com
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
         node: Node = ModDomHelper.createNameValueNodes(document, ThemeData.getInstance().NAME, self.toHashMap())
         domNodeInterface: DomNodeInterface = self.getCssStyleValidation()
         node.appendChild(domNodeInterface.toXmlNode(document))
         return node
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.category.CategoryData import CategoryData
-from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
-from org.allbinary.business.category.store.theme.StoreThemeCategoryFactory import StoreThemeCategoryFactory
-from org.allbinary.business.category.store.theme.StoreThemeCategoryInterface import StoreThemeCategoryInterface
-from org.allbinary.data.tree.category.CategoryLoaderFactory import CategoryLoaderFactory
-from org.allbinary.data.tree.category.CategoryLoaderInterface import CategoryLoaderInterface
-from org.allbinary.data.tree.dom.DomData import DomData
-from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
-from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
-from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
-from org.allbinary.logic.io.path.AbPath import AbPath
-from org.allbinary.logic.io.path.AbPathData import AbPathData
-from org.allbinary.logic.io.path.PathUtil import PathUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-from org.allbinary.logic.visual.transform.template.customizer.includes.style.css.template.retail.CssStyleValidation import CssStyleValidation
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.category.CategoryData import CategoryData
+# from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
+# from org.allbinary.business.category.store.theme.StoreThemeCategoryFactory import StoreThemeCategoryFactory
+# from org.allbinary.business.category.store.theme.StoreThemeCategoryInterface import StoreThemeCategoryInterface
+# from org.allbinary.data.tree.category.CategoryLoaderFactory import CategoryLoaderFactory
+# from org.allbinary.data.tree.category.CategoryLoaderInterface import CategoryLoaderInterface
+# from org.allbinary.data.tree.dom.DomData import DomData
+# from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
+# from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+# from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
+# from org.allbinary.logic.io.path.AbPath import AbPath
+# from org.allbinary.logic.io.path.AbPathData import AbPathData
+# from org.allbinary.logic.io.path.PathUtil import PathUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
+# from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
+# from org.allbinary.logic.visual.transform.template.customizer.includes.style.css.template.retail.CssStyleValidation import CssStyleValidation
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

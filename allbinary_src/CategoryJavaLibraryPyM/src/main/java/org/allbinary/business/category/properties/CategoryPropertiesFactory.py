@@ -21,47 +21,56 @@ from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterfa
 class CategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.categoryPropertiesInterface: CategoryPropertiesInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and (args[0] is None or isinstance(args[0], str)):
+            self._constructor1_1(*args)
+        elif True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_2(*args)
+        else:
+            self._constructor1_3(*args)
     
 
-    def _constructor1(self, name: str) -> None:
-        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
+    def _constructor1_1(self, name: str) -> None:
         self._init_fields()
         self.categoryPropertiesInterface = CategoryProperties(name)
     
 
-    def _constructor1(self, node: Node) -> None:
-        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
+    def _constructor1_2(self, node: Node) -> None:
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.categoryPropertiesInterface = CategoryProperties(node)
     
 
-    def _constructor1(self, categoryPropertiesHashMap: dict) -> None:
-        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
+    def _constructor1_3(self, categoryPropertiesHashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
         self._init_fields()
         self.categoryPropertiesInterface = CategoryProperties(categoryPropertiesHashMap)
     
 
     def getInstance(self) -> CategoryPropertiesInterface:
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             return self.categoryPropertiesInterface
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().ENTITYFACTORYERROR):
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return None
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.w3c.dom.Node import Node
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

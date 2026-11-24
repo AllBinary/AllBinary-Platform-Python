@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.visual.transform.info.TransformInfoFactoryInterface import TransformInfoFactoryInterface
 
 
@@ -23,7 +24,7 @@ class TransformInfoHttpStoreFactory(TransformInfoFactoryInterface):
     
 
     @staticmethod
-    def getInstance() -> TransformInfoHttpStoreFactory:
+    def getInstance_j0() -> TransformInfoHttpStoreFactory:
         return TransformInfoHttpStoreFactory.instance
     
 
@@ -32,13 +33,19 @@ class TransformInfoHttpStoreFactory(TransformInfoFactoryInterface):
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, databaseHashMap: dict, propertiesHashMap: dict, pageContext: PageContext) -> TransformInfoInterface:
+    def getInstance_j3(self, databaseHashMap: HashMap, propertiesHashMap: HashMap, pageContext: PageContext) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoHttpStore import TransformInfoHttpStore
+        from java.util.HashMap import HashMap
         return TransformInfoHttpStore(databaseHashMap, propertiesHashMap, pageContext)
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
 
 
-TransformInfoHttpStoreFactory.instance = TransformInfoHttpStoreFactory()
+def _TransformInfoHttpStoreFactory_instance() -> object:
+    return TransformInfoHttpStoreFactory()
+
+lazy_static(TransformInfoHttpStoreFactory, "instance", _TransformInfoHttpStoreFactory_instance)
 

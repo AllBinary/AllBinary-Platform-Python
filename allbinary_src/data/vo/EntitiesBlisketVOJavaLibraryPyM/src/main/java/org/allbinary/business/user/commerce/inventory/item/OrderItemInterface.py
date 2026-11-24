@@ -39,6 +39,7 @@ class OrderItemInterface(ItemInterface):
     
 
     def setShippingAddress(self, value: StreetAddress) -> None:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
@@ -63,11 +64,12 @@ class OrderItemInterface(ItemInterface):
     
 
     def getShippingAddress(self) -> StreetAddress:
+        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         raise NotImplementedError()
     
 
     def getSpecial(self) -> str:
         raise NotImplementedError()
-from org.allbinary.business.user.address.StreetAddress import StreetAddress
+# from org.allbinary.business.user.address.StreetAddress import StreetAddress
 
 

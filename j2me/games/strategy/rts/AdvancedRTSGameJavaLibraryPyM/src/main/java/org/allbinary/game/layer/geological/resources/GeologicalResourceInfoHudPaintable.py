@@ -22,23 +22,29 @@ class GeologicalResourceInfoHudPaintable(WaypointInfoHudPaintable):
     RESOURCES: str = "Resources: "
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.draw.KeyValueDrawCharArray import KeyValueDrawCharArray
         self.keyvalueDrawString: KeyValueDrawCharArray = None
         self.fontHeight: int = 0
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.draw.KeyValueDrawCharArray import KeyValueDrawCharArray
         super().__init__()
         self._init_fields()
         self.keyvalueDrawString = KeyValueDrawCharArray(GeologicalResourceInfoHudPaintable.RESOURCES, self.textX)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Font import Font
+        from javax.microedition.lcdui.Graphics import Graphics
         super().updateMeasurement(graphics)
         font: Font = graphics.getFont()
         self.fontHeight = (2 * font.getHeight())
     
 
     def updateSelectionInfo(self) -> None:
+        from org.allbinary.game.layer.RTSLayer import RTSLayer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         super().updateSelectionInfo()
         rtsLayer: RTSLayer = self.rtsLayerP
         list_: BasicArrayList = rtsLayer.geographicMapCellPositionAreaBase.getOccupyingGeographicMapCellPositionList()
@@ -51,12 +57,13 @@ class GeologicalResourceInfoHudPaintable(WaypointInfoHudPaintable):
     
 
     def paint(self, graphics: Graphics) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
         super().paint(graphics)
         self.keyvalueDrawString.paint(graphics, (self.y + self.fontHeight))
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.game.layer.RTSLayer import RTSLayer
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.graphics.draw.KeyValueDrawCharArray import KeyValueDrawCharArray
+# from org.allbinary.game.layer.RTSLayer import RTSLayer
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.graphics.draw.KeyValueDrawCharArray import KeyValueDrawCharArray
 
 

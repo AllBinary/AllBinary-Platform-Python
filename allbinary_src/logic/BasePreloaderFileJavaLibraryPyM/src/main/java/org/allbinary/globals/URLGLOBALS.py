@@ -24,28 +24,28 @@ class URLGLOBALS:
 
     @staticmethod
     def init(urlGlobalsInterface: UrlGlobalsInterface) -> None:
-        self.URLGLOBALS.urlGlobalsInterface = urlGlobalsInterface
+        URLGLOBALS.urlGlobalsInterface = urlGlobalsInterface
     
 
     @staticmethod
     def isTestingMode() -> bool:
-        return self.URLGLOBALS.urlGlobalsInterface.isTestingMode()
+        return URLGLOBALS.urlGlobalsInterface.isTestingMode()
     
 
     @staticmethod
     def getWebappPath() -> str:
-        return self.URLGLOBALS.urlGlobalsInterface.getWebappPath()
+        return URLGLOBALS.urlGlobalsInterface.getWebappPath()
     
 
     @staticmethod
     def getTestHtmlPath() -> str:
-        return self.URLGLOBALS.urlGlobalsInterface.getTestHtmlPath()
+        return URLGLOBALS.urlGlobalsInterface.getTestHtmlPath()
     
 
     # throws Exception
     @staticmethod
     def getMainPath() -> str:
-        return self.URLGLOBALS.urlGlobalsInterface.getMainPath()
+        return URLGLOBALS.urlGlobalsInterface.getMainPath()
 
 
 def _URLGLOBALS_urlGlobalsInterface() -> object:

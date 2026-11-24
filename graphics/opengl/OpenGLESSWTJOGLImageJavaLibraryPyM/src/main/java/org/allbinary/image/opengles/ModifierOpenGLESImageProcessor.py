@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.opengles.OpenGLESImageProcessor import OpenGLESImageProcessor
 
 
@@ -31,9 +32,13 @@ class ModifierOpenGLESImageProcessor(OpenGLESImageProcessor):
     
 
     def colorMask(self, gl: GL10, red: float, green: float, blue: float, alpha: float) -> None:
+        from javax.microedition.khronos.opengles.GL10 import GL10
         gl.glColor4f(red, green, blue, alpha)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 
 
-ModifierOpenGLESImageProcessor.instanceC = ModifierOpenGLESImageProcessor()
+def _ModifierOpenGLESImageProcessor_instanceC() -> object:
+    return ModifierOpenGLESImageProcessor()
+
+lazy_static(ModifierOpenGLESImageProcessor, "instanceC", _ModifierOpenGLESImageProcessor_instanceC)
 

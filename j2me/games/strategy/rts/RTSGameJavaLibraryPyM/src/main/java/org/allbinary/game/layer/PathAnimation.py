@@ -21,6 +21,9 @@ from org.allbinary.animation.Animation import Animation
 class PathAnimation(Animation):
 
     def _init_fields(self) -> None:
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.linePathAnimation: LinePathAnimation = None
         self.pathFindingLayer: PathFindingLayerInterface = None
@@ -48,6 +51,15 @@ class PathAnimation(Animation):
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+        from javax.microedition.lcdui.Graphics import Graphics
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+        from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             waypointBehaviorBase: WaypointBehaviorBase = self.pathFindingLayer.getWaypointBehavior()
             if waypointBehaviorBase is not None:
@@ -80,17 +92,16 @@ class PathAnimation(Animation):
         except Exception as e:
             self.logUtil.putF("Cleared Target", self, CanvasStrings.getInstance().PAINT)
 # from javax.microedition.lcdui.Graphics import Graphics
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+# from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
+# from org.allbinary.util.BasicArrayList import BasicArrayList
 
 

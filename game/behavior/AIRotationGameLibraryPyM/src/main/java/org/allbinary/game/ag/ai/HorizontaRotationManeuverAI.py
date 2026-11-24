@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.ai.ArtificialIntelligenceTransitionInterface import ArtificialIntelligenceTransitionInterface
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
-class HorizontaRotationManeuverAI(BasicAI, ArtificialIntelligenceTransitionInterface):
+class HorizontaRotationManeuverAI(*java_bases(BasicAI, ArtificialIntelligenceTransitionInterface)):
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.IndexedAnimation import IndexedAnimation

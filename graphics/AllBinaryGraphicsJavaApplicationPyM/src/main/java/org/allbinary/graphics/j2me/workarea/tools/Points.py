@@ -21,10 +21,12 @@ from org.allbinary.graphics.j2me.workarea.tools.PointsInterface import PointsInt
 class Points(PointsInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pointVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self._init_fields()
         self.pointVector = BasicArrayListD()
     
@@ -34,10 +36,12 @@ class Points(PointsInterface):
     
 
     def getPoints(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.pointVector
     
 
     def addPoints(self, vector: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pointVector.addAll2(vector)
     
 
@@ -50,7 +54,7 @@ class Points(PointsInterface):
 
     def getSize(self) -> int:
         return self.pointVector.size()
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 

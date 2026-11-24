@@ -22,16 +22,20 @@ class RemoteFramework:
     
 
     def connect(self, host: str) -> BundleContext:
+        from org.osgi.framework.BundleContext import BundleContext
         raise NotImplementedError()
     
 
     def disconnect(self, bc: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         raise NotImplementedError()
     
 
     def getSystemProperties(self, bc: BundleContext) -> Map:
+        from java.util.Map import Map
+        from org.osgi.framework.BundleContext import BundleContext
         raise NotImplementedError()
 # from java.util.Map import Map
-from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.BundleContext import BundleContext
 
 

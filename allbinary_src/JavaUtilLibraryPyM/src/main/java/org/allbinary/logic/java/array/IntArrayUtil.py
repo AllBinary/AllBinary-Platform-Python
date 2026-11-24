@@ -24,8 +24,10 @@ class IntArrayUtil:
         pass
     
 
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def toString(array: list[int]) -> str:
+    def toString_j1_1(array: list[int]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         for index in range(0, len(array)):
             stringBuffer.appendint(array[index])
@@ -34,9 +36,10 @@ class IntArrayUtil:
         return str(stringBuffer)
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def toString(array: list[list[int]]) -> str:
+    def toString_j1_2(array: list[list[int]]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         for index in range(0, len(array)):
             stringBuffer.append("{")
@@ -50,9 +53,10 @@ class IntArrayUtil:
         return str(stringBuffer)
     
 
-    # Java overloaded method: Python keeps the last definition
+    # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
-    def toString(array: list[list[list[int]]]) -> str:
+    def toString_j1_3(array: list[list[list[int]]]) -> str:
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         for index in range(0, len(array)):
             stringBuffer.append("{")
@@ -69,6 +73,16 @@ class IntArrayUtil:
             if index < len(array) - 1:
                 stringBuffer.append(", \n")
         return str(stringBuffer)
-from org.allbinary.logic.string.StringMaker import StringMaker
+
+    @staticmethod
+    def toString(*args):
+        if len(args) == 1 and True and (args[0] is None or isinstance(args[0], list)):
+            return IntArrayUtil.toString_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or isinstance(args[0], list)):
+            return IntArrayUtil.toString_j1_2(*args)
+        if len(args) == 1:
+            return IntArrayUtil.toString_j1_3(*args)
+        return getattr(IntArrayUtil, "toString_j" + str(len(args)))(*args)
+# from org.allbinary.logic.string.StringMaker import StringMaker
 
 

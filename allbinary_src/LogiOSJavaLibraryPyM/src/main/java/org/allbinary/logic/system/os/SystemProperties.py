@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import os
 import platform
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -39,20 +40,23 @@ class SystemProperties:
     
 
     def getName(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~")}.get(self.OS_NAME, os.environ.get(str(self.OS_NAME)))
+        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.OS_NAME, os.environ.get(str(self.OS_NAME)))
     
 
     def getArch(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~")}.get(self.OS_ARCH, os.environ.get(str(self.OS_ARCH)))
+        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.OS_ARCH, os.environ.get(str(self.OS_ARCH)))
     
 
     def getVersion(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~")}.get(self.OS_VERSION, os.environ.get(str(self.OS_VERSION)))
+        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.OS_VERSION, os.environ.get(str(self.OS_VERSION)))
     
 
     def getUserHomePath(self) -> str:
         raise RuntimeError()
 
 
-SystemProperties.instance = SystemProperties()
+def _SystemProperties_instance() -> object:
+    return SystemProperties()
+
+lazy_static(SystemProperties, "instance", _SystemProperties_instance)
 

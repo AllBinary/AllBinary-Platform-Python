@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.image.ModifierBaseProcessor import ModifierBaseProcessor
 
 
@@ -31,11 +32,17 @@ class ChangeColorProcessor(ModifierBaseProcessor):
     
 
     def updateColor(self, imageModifierUtil: ImageModifierUtil, originalImage: Image, imageToShow: Image, index: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         imageModifierUtil.changeColor(originalImage, imageToShow, index, basicColor)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
 
 
-ChangeColorProcessor.instanceC = ChangeColorProcessor()
+def _ChangeColorProcessor_instanceC() -> object:
+    return ChangeColorProcessor()
+
+lazy_static(ChangeColorProcessor, "instanceC", _ChangeColorProcessor_instanceC)
 

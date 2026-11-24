@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.ItemStateListener import ItemStateListener
 from org.allbinary.game.state.GameStateCompositeInterface import GameStateCompositeInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
@@ -22,7 +23,7 @@ from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 
 # Java interface
-class GameCanvasRunnableInterface(RunnableInterface, PaintableInterface, ItemStateListener, GameStateCompositeInterface):
+class GameCanvasRunnableInterface(*java_bases(RunnableInterface, PaintableInterface, ItemStateListener, GameStateCompositeInterface)):
     
 
     def getTitle(self) -> str:

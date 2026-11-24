@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import traceback
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 #ActualPlatform
@@ -23,6 +24,9 @@ class LogUtil:
     instance: LogUtil = None
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.MESSAGE: str = "message"
         self.isFirstException: bool = True
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(200000)
@@ -53,18 +57,21 @@ class LogUtil:
         pass
     
 
-    # Java overloaded method: Python keeps the last definition
-    def putF(self, specialMessage: str, className: str, functionName: str) -> None:
+    def putFS(self, specialMessage: str, className: str, functionName: str) -> None:
         pass
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
-        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         from org.allbinary.logic.communication.log.XmlRpcRemoteLogClient import XmlRpcRemoteLogClient
+        from org.apache.xmlrpc.XmlRpcException import XmlRpcException
+        from org.allbinary.string.CommonSeps import CommonSeps
+        from org.allbinary.canvas.SpecialMessageUtil import SpecialMessageUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
+        from org.allbinary.util.ABHashtable import ABHashtable
         if exception is not None:
-            if type(exception).__module__ + "." + type(exception).__qualname__.compareTo(XmlRpcException.getName()) == 0:
+            if type(exception).__module__ + "." + type(exception).__qualname__.compareTo(XmlRpcException.__module__ + "." + XmlRpcException.__qualname__) == 0:
                 return
-            if type(exception).__module__ + "." + type(exception).__qualname__.compareTo(IOException.getName()) == 0:
+            if type(exception).__module__ + "." + type(exception).__qualname__.compareTo(IOException.__module__ + "." + IOException.__qualname__) == 0:
                 return
             if self.isFirstException or self.timeDelayHelper.isTimeTNT():
                 className: str = CommonStrings.getInstance().EMPTY
@@ -87,15 +94,18 @@ class LogUtil:
                     print("Exception")
                     traceback.print_exception(e)
 # from java.io.IOException import IOException
-from org.apache.xmlrpc.XmlRpcException import XmlRpcException
-from org.allbinary.string.CommonSeps import CommonSeps
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-from org.allbinary.canvas.SpecialMessageUtil import SpecialMessageUtil
-from org.allbinary.string.CommonStrings import CommonStrings
-from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-from org.allbinary.util.ABHashtable import ABHashtable
+# from org.apache.xmlrpc.XmlRpcException import XmlRpcException
+# from org.allbinary.string.CommonSeps import CommonSeps
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
+# from org.allbinary.canvas.SpecialMessageUtil import SpecialMessageUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
+# from org.allbinary.util.ABHashtable import ABHashtable
 
 
-LogUtil.instance = LogUtil()
+def _LogUtil_instance() -> object:
+    return LogUtil()
+
+lazy_static(LogUtil, "instance", _LogUtil_instance)
 

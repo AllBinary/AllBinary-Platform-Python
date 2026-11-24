@@ -15,10 +15,10 @@
 
 from __future__ import annotations
 
-# from java.util.Stack import Stack
+from java.util.Stack import Stack
 
 
-class ABStack(list):
+class ABStack(Stack):
 
     def __init__(self) -> None:
         super().__init__()
@@ -46,6 +46,6 @@ class ABStack(list):
 
     def removeElement(self, obj: object) -> bool:
         return super().removeElement(obj)
-from jsinterop.annotations.JsType import JsType
+# from jsinterop.annotations.JsType import JsType
 
 

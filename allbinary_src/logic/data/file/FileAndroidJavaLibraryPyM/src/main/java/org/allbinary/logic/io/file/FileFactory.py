@@ -15,23 +15,25 @@
 
 from __future__ import annotations
 
-from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FileFactory:
     SINGLETON: FileFactory = None
 
     def _init_fields(self) -> None:
+        from android.content.Context import Context
         self.context: Context = None
     
 
     def __init__(self, context: Context) -> None:
+        from android.content.Context import Context
         self._init_fields()
         self.context = context
     
 
     @staticmethod
-    def getInstance() -> FileFactory:
+    def getInstance_j0() -> FileFactory:
         return FileFactory.SINGLETON
     
 
@@ -45,6 +47,7 @@ class FileFactory:
     
 
     def getContext(self) -> Context:
+        from android.content.Context import Context
         return self.context
     
 
@@ -55,13 +58,20 @@ class FileFactory:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, file: AbFile, childFilePath: str) -> AbFile:
+    def getInstance_j2(self, file: AbFile, childFilePath: str) -> AbFile:
         from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFile.createAbFileWithChild(file, childFilePath)
+
+    def getInstance(self, *args):
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from java.io.FileNotFoundException import FileNotFoundException
-from android.content.Context import Context
+# from android.content.Context import Context
+# from org.allbinary.data.resource.ResourceUtil import ResourceUtil
 
 
-FileFactory.SINGLETON = FileFactory(ResourceUtil.getInstance().getContext())
+def _FileFactory_SINGLETON() -> object:
+    from org.allbinary.data.resource.ResourceUtil import ResourceUtil
+    return FileFactory(ResourceUtil.getInstance().getContext())
+
+lazy_static(FileFactory, "SINGLETON", _FileFactory_SINGLETON)
 

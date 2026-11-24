@@ -33,6 +33,10 @@ class CollidableVehicleBehavior(CollidableDestroyableDamageableBehavior):
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
+        from org.allbinary.game.collision.CollisionType import CollisionType
+        from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+        from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         collisionTypeFactory: CollisionTypeFactory = CollisionTypeFactory.getInstance()
         collisionType: CollisionType = collidableInterfaceCompositeInterface.getCollidableInferface().getCollisionTypeWith(ownerLayer)
         if collisionType == collisionTypeFactory.PICKUP:
@@ -45,6 +49,8 @@ class CollidableVehicleBehavior(CollidableDestroyableDamageableBehavior):
     
 
     def collideInterface(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableInterfaceCompositeInterface) -> None:
+        from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+        from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
         ForcedLogUtil.log("Don't Use Interface Version It Is Slower", self)
     
 
@@ -74,11 +80,11 @@ class CollidableVehicleBehavior(CollidableDestroyableDamageableBehavior):
     def collideFriction(self, vehiclePropertiesCompositeInterface: VehiclePropertiesCompositeInterface) -> None:
         vehicleFrictionProperties: VehicleFrictionProperties = vehiclePropertiesCompositeInterface.getVehicleProperties().getVehicleFrictionProperties()
         vehiclePropertiesCompositeInterface.getVehicleProperties().getVehicleFrictionProperties().friction(vehiclePropertiesCompositeInterface.getVehicleProperties().getVelocityProperties(), vehicleFrictionProperties.getCrashFrictionNominator())
-from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
-from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
-from org.allbinary.game.collision.CollisionType import CollisionType
-from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
-from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
+# from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
+# from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
+# from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
+# from org.allbinary.game.collision.CollisionType import CollisionType
+# from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+# from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
 
 

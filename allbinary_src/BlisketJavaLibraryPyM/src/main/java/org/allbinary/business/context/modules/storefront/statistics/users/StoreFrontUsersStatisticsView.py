@@ -31,13 +31,16 @@ class StoreFrontUsersStatisticsView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
-        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsData import StoreFrontUsersStatisticsData
-        hashMap: dict = self.storeFrontUsersStatisticsInterface.toHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+        from org.w3c.dom.Document import Document
+        from org.w3c.dom.Node import Node
+        hashMap: HashMap = self.storeFrontUsersStatisticsInterface.toHashMap()
         node: Node = ModDomHelper.createNameValueNodes(document, StoreFrontUsersStatisticsData.getInstance().NAME, hashMap)
         return node
 # from java.util.HashMap import HashMap
-from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
-from org.w3c.dom.Document import Document
-from org.w3c.dom.Node import Node
+# from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
+# from org.w3c.dom.Document import Document
+# from org.w3c.dom.Node import Node
 
 

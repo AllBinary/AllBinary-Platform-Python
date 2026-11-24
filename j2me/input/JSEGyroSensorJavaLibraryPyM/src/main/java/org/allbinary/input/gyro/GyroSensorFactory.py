@@ -24,7 +24,6 @@ class GyroSensorFactory:
     # throws Exception
     @staticmethod
     def init() -> None:
-        from org.allbinary.input.gyro.NoGyroSensor import NoGyroSensor
         GyroSensorFactory.allBinaryGyroSensor = NoGyroSensor()
     
 

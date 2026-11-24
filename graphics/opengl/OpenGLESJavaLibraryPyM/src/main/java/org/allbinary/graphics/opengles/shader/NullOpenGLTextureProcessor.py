@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
-from org.allbinary.graphics.opengles.shader.OpenGLObject3dProcessor import OpenGLObject3dProcessor
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullOpenGLTextureProcessor:
-    instance: OpenGLObject3dProcessor = OpenGLObject3dProcessor()
+    instance: OpenGLObject3dProcessor = None
     
 
     @staticmethod
     def getInstance() -> OpenGLObject3dProcessor:
         return NullOpenGLTextureProcessor.instance
 
+
+def _NullOpenGLTextureProcessor_instance() -> object:
+    from org.allbinary.graphics.opengles.shader.OpenGLObject3dProcessor import OpenGLObject3dProcessor
+    return OpenGLObject3dProcessor()
+
+lazy_static(NullOpenGLTextureProcessor, "instance", _NullOpenGLTextureProcessor_instance)
 

@@ -15,11 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 
 
-class SingletonAnimationInterfaceFactory(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface):
+class SingletonAnimationInterfaceFactory(*java_bases(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface)):
 
     def _init_fields(self) -> None:
         self.animationInterface: Animation = None

@@ -55,13 +55,12 @@ class AbFileSystem:
             return StringUtil.getInstance().getArrayInstance()
     
 
-    def readAsString(self, fileName: str) -> str:
+    def readAsString_j1(self, fileName: str) -> str:
         bytes: list[int] = [0] * (1000000)
         return self.readAsString(fileName, bytes)
     
 
-    # Java overloaded method: Python keeps the last definition
-    def readAsString(self, fileName: str, bytes: list[int]) -> str:
+    def readAsString_j2(self, fileName: str, bytes: list[int]) -> str:
         from java.io.FileInputStream import FileInputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.NullUtil import NullUtil
@@ -78,6 +77,9 @@ class AbFileSystem:
         finally:
             self.close(closeable)
         return StringUtil.getInstance().EMPTY_STRING
+
+    def readAsString(self, *args):
+        return getattr(self, "readAsString_j" + str(len(args)))(*args)
     
 
     def close(self, closeable: object) -> bool:

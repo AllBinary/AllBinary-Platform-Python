@@ -22,11 +22,13 @@ class UserEmailConfigurationInterface:
     
 
     def getUserEmailEventsConfigurationInterface(self) -> UserEmailEventsConfigurationInterface:
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationInterface import UserEmailEventsConfigurationInterface
         raise NotImplementedError()
     
 
     def setUserEmailEventsConfigurationInterface(self, emailEventsConfigurationInterface: UserEmailEventsConfigurationInterface) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationInterface import UserEmailEventsConfigurationInterface
         raise NotImplementedError()
-from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationInterface import UserEmailEventsConfigurationInterface
+# from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationInterface import UserEmailEventsConfigurationInterface
 
 

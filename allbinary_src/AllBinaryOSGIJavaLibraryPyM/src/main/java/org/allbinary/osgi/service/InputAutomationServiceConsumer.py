@@ -20,6 +20,10 @@ from __future__ import annotations
 class InputAutomationServiceConsumer:
 
     def _init_fields(self) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.osgiServiceUtil: OSGIServiceUtil = OSGIServiceUtil.getInstance()
@@ -29,6 +33,8 @@ class InputAutomationServiceConsumer:
     
 
     def __init__(self, registryName: str, bundleContext: BundleContext, osgiServiceVisitorInterface: OSGIServiceVisitorInterface) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
+        from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
         self._init_fields()
         self.setRegistryName(registryName)
         self.setBundleContext(bundleContext)
@@ -37,6 +43,8 @@ class InputAutomationServiceConsumer:
 
     # throws Exception
     def process(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.PROCESS)
         vector: BasicArrayList = self.osgiServiceUtil.getServicesObjectVector(self.getBundleContext(), self.getServiceReferences())
         self.logUtil.putF("Processing " + str(vector.size()) + " Services", self, self.commonStrings.PROCESS)
@@ -50,14 +58,17 @@ class InputAutomationServiceConsumer:
 
     # throws Exception
     def getServiceReferences(self) -> list[ServiceReference]:
+        from org.osgi.framework.ServiceReference import ServiceReference
         return self.getBundleContext().getServiceReferences(self.getRegistryName(), None)
     
 
     def getBundleContext(self) -> BundleContext:
+        from org.osgi.framework.BundleContext import BundleContext
         return self.bundleContext
     
 
     def setBundleContext(self, aBundleContext: BundleContext) -> None:
+        from org.osgi.framework.BundleContext import BundleContext
         self.bundleContext = aBundleContext
     
 
@@ -70,19 +81,21 @@ class InputAutomationServiceConsumer:
     
 
     def getOsgiServiceVisitorInterface(self) -> OSGIServiceVisitorInterface:
+        from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
         return self.osgiServiceVisitorInterface
     
 
     def setOsgiServiceVisitorInterface(self, osgiServiceVisitorInterface: OSGIServiceVisitorInterface) -> None:
+        from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
         self.osgiServiceVisitorInterface = osgiServiceVisitorInterface
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.osgi.framework.BundleContext import BundleContext
-from org.osgi.framework.ServiceReference import ServiceReference
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
-from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.osgi.framework.BundleContext import BundleContext
+# from org.osgi.framework.ServiceReference import ServiceReference
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.osgi.OSGIServiceInterface import OSGIServiceInterface
+# from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
+# from org.allbinary.string.CommonStrings import CommonStrings
 from org.allbinary.osgi.service.OSGIServiceUtil import OSGIServiceUtil
 
 

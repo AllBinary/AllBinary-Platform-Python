@@ -26,6 +26,8 @@ class CollidableRTSBehavior(CollidableDestroyableDamageableBehavior):
     
 
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> bool:
+        from org.allbinary.game.collision.CollisionType import CollisionType
+        from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
         collisionTypeFactory: CollisionTypeFactory = CollisionTypeFactory.getInstance()
         collisionType: CollisionType = collidableInterfaceCompositeInterface.getCollidableInferface().getCollisionTypeWith(ownerLayer)
         if collisionType == collisionTypeFactory.PICKUP:
@@ -42,6 +44,8 @@ class CollidableRTSBehavior(CollidableDestroyableDamageableBehavior):
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collidableInterfaceCompositeInterface: CollidableCompositeLayer) -> None:
+        from org.allbinary.game.collision.CollisionType import CollisionType
+        from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
         collisionTypeFactory: CollisionTypeFactory = CollisionTypeFactory.getInstance()
         collisionType: CollisionType = collidableInterfaceCompositeInterface.getCollidableInferface().getCollisionTypeWith(ownerLayer)
         if collisionType == collisionTypeFactory.PICKUP:
@@ -55,7 +59,7 @@ class CollidableRTSBehavior(CollidableDestroyableDamageableBehavior):
     # throws Exception
     def collideNone(self, ownerLayer: CollidableCompositeLayer, collidableInterface: CollidableCompositeLayer) -> None:
         pass
-from org.allbinary.game.collision.CollisionType import CollisionType
-from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
+# from org.allbinary.game.collision.CollisionType import CollisionType
+# from org.allbinary.game.collision.CollisionTypeFactory import CollisionTypeFactory
 
 

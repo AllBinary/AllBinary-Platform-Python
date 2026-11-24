@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class ModifierBaseProcessor:
@@ -27,15 +28,23 @@ class ModifierBaseProcessor:
     
 
     def updateColor(self, imageModifierUtil: ImageModifierUtil, originalImage: Image, imageToShow: Image, index: int, basicColor: BasicColor) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.graphics.color.BasicColor import BasicColor
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         pass
     
 
     def updateAlpha(self, imageModifierUtil: ImageModifierUtil, originalImage: Image, imageToShow: Image, index: int, alpha: int) -> None:
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         pass
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.graphics.color.BasicColor import BasicColor
-from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
+# from org.allbinary.graphics.color.BasicColor import BasicColor
+# from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
 
 
-ModifierBaseProcessor.instance = ModifierBaseProcessor()
+def _ModifierBaseProcessor_instance() -> object:
+    return ModifierBaseProcessor()
+
+lazy_static(ModifierBaseProcessor, "instance", _ModifierBaseProcessor_instance)
 

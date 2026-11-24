@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class FilePathData:
@@ -32,7 +33,11 @@ class FilePathData:
 
     def __init__(self) -> None:
         self._init_fields()
+# from jsinterop.annotations.JsType import JsType
 
 
-FilePathData.instance = FilePathData()
+def _FilePathData_instance() -> object:
+    return FilePathData()
+
+lazy_static(FilePathData, "instance", _FilePathData_instance)
 

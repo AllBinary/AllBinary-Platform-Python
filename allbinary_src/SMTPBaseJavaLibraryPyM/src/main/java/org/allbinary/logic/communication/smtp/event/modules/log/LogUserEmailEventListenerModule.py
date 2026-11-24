@@ -21,6 +21,7 @@ from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterfac
 class LogUserEmailEventListenerModule(UserEmailEventListenerInterface):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
     
 
@@ -30,10 +31,15 @@ class LogUserEmailEventListenerModule(UserEmailEventListenerInterface):
 
     # throws Exception
     def onEmailSendRequest(self, userEmailInfoEvent: EmailEvent) -> None:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().EMAILLOGGING):
+        from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             message: str = "Logging EmailEvent - Temporary Listener for debugging.\n\n" + str(userEmailInfoEvent)
             self.logUtil.putF(message, self, "onEmailSendRequest")
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.smtp.event.EmailEvent import EmailEvent
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

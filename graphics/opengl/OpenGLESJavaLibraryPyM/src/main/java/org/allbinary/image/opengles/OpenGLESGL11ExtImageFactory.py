@@ -26,9 +26,12 @@ class OpenGLESGL11ExtImageFactory(OpenGLImageFactory):
 
     def getInstance(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> Image:
         from org.allbinary.image.opengles.OpenGLESGL11ExtImage import OpenGLESGL11ExtImage
+        from javax.microedition.lcdui.Image import Image
+        from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         return OpenGLESGL11ExtImage(image, bitmapFactory, textureFactory)
 # from javax.microedition.lcdui.Image import Image
-from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
-from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
+# from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
+# from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
 
 

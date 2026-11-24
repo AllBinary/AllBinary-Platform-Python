@@ -31,22 +31,34 @@ class CanvasDom:
     REAL_SIZE: str = "realSize"
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
         self.graphicsStrings: GraphicsStrings = GraphicsStrings.getInstance()
-        self.graphicItemHashMap: dict = None
+        self.graphicItemHashMap: HashMap = None
         self.angle: float = None
         self.dimension: IntegerDimension = None
         self.grid: Grid = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
-        elif len(args) == 1:
-            self._constructor1(*args)
+            self.__jconstructor1(*args)
+
+    def __jconstructor1(self, *args) -> None:
+        if True and not isinstance(args[0], (str, list, int, float)):
+            self._constructor1_1(*args)
+        else:
+            self._constructor1_2(*args)
     
 
-    def _constructor1(self, canvasNode: Node) -> None:
+    def _constructor1_1(self, canvasNode: Node) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
         from org.allbinary.graphics.j2me.workarea.canvas.IntegerDimension import IntegerDimension
+        from org.allbinary.dom.DomHelper import DomHelper
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.w3c.dom.Node import Node
         self._init_fields()
         self.grid = Grid()
         self.grid.grid = PointFactory.getInstance().createXY(0, 0)
@@ -91,7 +103,7 @@ class CanvasDom:
             raise Exception("Frame Element Not Found but Found: " + name)
     
 
-    def _constructor1(self, canvasJPanel: CanvasJPanel) -> None:
+    def _constructor1_2(self, canvasJPanel: CanvasJPanel) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
         self._init_fields()
         self.angle = canvasJPanel.getAngle()
@@ -105,7 +117,8 @@ class CanvasDom:
         return self.angle
     
 
-    def getGraphicItemHashMap(self) -> dict:
+    def getGraphicItemHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.graphicItemHashMap
     
 
@@ -121,10 +134,15 @@ class CanvasDom:
 
     # throws Exception
     def setGrid(self, gridX: int, gridY: int) -> None:
+        from org.allbinary.graphics.PointFactory import PointFactory
         self.grid.grid = PointFactory.getInstance().createXY(gridX, gridY)
     
 
     def getPointNode(self, point: GPoint, pointName: str) -> Node:
+        from org.allbinary.graphics.GPoint import GPoint
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.Document import Document
         document: Document = WorkAreaJPanel.getDocument()
         pointNode: Node = document.createElement(pointName)
         xNode: Node = document.createElement(self.X)
@@ -140,6 +158,13 @@ class CanvasDom:
 
     # throws Exception
     def toDom(self) -> Node:
+        from org.allbinary.animation.vector.VectorCenterGenerator import VectorCenterGenerator
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+        from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+        from org.w3c.dom.Node import Node
+        from org.w3c.dom.Document import Document
         document: Document = WorkAreaJPanel.getDocument()
         frameNode: Node = document.createElement(self.FRAME)
         angleNode: Node = document.createElement(self.ROTATE)
@@ -199,17 +224,18 @@ class CanvasDom:
     def getGrid(self) -> Grid:
         return self.grid
 # from java.util.HashMap import HashMap
-from org.allbinary.animation.vector.VectorCenterGenerator import VectorCenterGenerator
-from org.allbinary.dom.DomHelper import DomHelper
-from org.allbinary.graphics.GPoint import GPoint
-from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
-from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
-from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
-from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.w3c.dom.Node import Node
+# from org.allbinary.animation.vector.VectorCenterGenerator import VectorCenterGenerator
+# from org.allbinary.dom.DomHelper import DomHelper
+# from org.allbinary.graphics.GPoint import GPoint
+# from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
+# from org.allbinary.graphics.j2me.workarea.tools.GraphicItemFactory import GraphicItemFactory
+# from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
+# from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.w3c.dom.Node import Node
+# from org.w3c.dom.Document import Document
 
 

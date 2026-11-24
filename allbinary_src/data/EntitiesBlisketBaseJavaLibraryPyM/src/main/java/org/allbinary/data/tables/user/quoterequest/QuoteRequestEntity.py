@@ -15,39 +15,50 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.quoterequest.QuoteRequestEntityInterface import QuoteRequestEntityInterface
 
 
-class QuoteRequestEntity(AbSqlBean, QuoteRequestEntityInterface):
+class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "quoterequest"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
     
 
     def insert(self, values: BasicArrayList) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().insert(values)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.INSERT, e)
     
 
     # throws Exception
     def get(self, userName: str, id: int) -> QuoteRequest:
-        row: dict = StdUtil.getInstance().createHashMap()
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
+        from org.allbinary.logic.StdUtil import StdUtil
+        row: HashMap = StdUtil.getInstance().createHashMap()
         row.put(UserData.USERNAME, userName)
         row.put(QuoteRequestData.getInstance().ID, str(id))
-        quoteRequestHashMap: dict = super().getRow(row)
+        quoteRequestHashMap: HashMap = super().getRow(row)
         if quoteRequestHashMap is not None:
             return QuoteRequest(quoteRequestHashMap)
         else:
@@ -55,20 +66,29 @@ class QuoteRequestEntity(AbSqlBean, QuoteRequestEntityInterface):
     
 
     def getIds(self, userName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+        from org.allbinary.business.user.UserData import UserData
         return super().getColumnWhere(QuoteRequestData.getInstance().ID, UserData.USERNAME, userName)
     
 
     def deleteWhere(self, key: str, value: str) -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             super().deleteWhere(key, value)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "deleteWhere")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "deleteWhere", e)
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         quoteRequestData: QuoteRequestData = QuoteRequestData.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE).append(self.tableName).append(self.sqlStrings.START)
@@ -104,18 +124,22 @@ class QuoteRequestEntity(AbSqlBean, QuoteRequestEntityInterface):
         return result
     
 
-    def update(self, userName: str, updatedValues: dict) -> None:
+    def update(self, userName: str, updatedValues: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.user.UserData import UserData
         super().updateWhere(UserData.USERNAME, userName, updatedValues)
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

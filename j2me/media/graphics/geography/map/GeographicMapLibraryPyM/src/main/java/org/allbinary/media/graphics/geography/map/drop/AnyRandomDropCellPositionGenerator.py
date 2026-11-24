@@ -21,6 +21,9 @@ from org.allbinary.media.graphics.geography.map.drop.BaseDropCellPositionGenerat
 class AnyRandomDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     def _init_fields(self) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.NullUtil import NullUtil
         self.list_: BasicArrayList = BasicArrayListD()
         self.geographicMapInterface: object = NullUtil.getInstance().NULL_OBJECT
 
@@ -31,6 +34,12 @@ class AnyRandomDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     # throws Exception
     def update(self, allBinaryGameLayerManager: AllBinaryGameLayerManager, geographicMapInterface: BasicGeographicMap) -> None:
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+        from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.geographicMapInterface = geographicMapInterface
         basicGeographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         randomFactory: MyRandomFactory = MyRandomFactory.getInstance()
@@ -50,16 +59,17 @@ class AnyRandomDropCellPositionGenerator(BaseDropCellPositionGenerator):
 
     # throws Exception
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
+        from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         pass
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-from org.allbinary.logic.NullUtil import NullUtil
-from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
+# from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
+# from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
+# from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+# from org.allbinary.logic.NullUtil import NullUtil
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
+# from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
+# from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
 
 

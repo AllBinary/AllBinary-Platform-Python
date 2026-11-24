@@ -21,6 +21,8 @@ import datetime
 class QuoteRequest:
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.id: str = None
@@ -39,6 +41,10 @@ class QuoteRequest:
     
 
     def _constructor2(self, userName: str, request: HttpServletRequest) -> None:
+        from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+        from org.allbinary.data.generator.QuoteRequestIdGenerator import QuoteRequestIdGenerator
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         quoteRequestData: QuoteRequestData = QuoteRequestData.getInstance()
         self.id = QuoteRequestIdGenerator().getNext()
@@ -48,11 +54,16 @@ class QuoteRequest:
         self.setBudget(request.getParameter(quoteRequestData.BUDGET))
         self.setTimeFrame(request.getParameter(quoteRequestData.TIMEFRAME))
         self.setComments(request.getParameter(quoteRequestData.COMMENTS))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
             self.logUtil.putF("Created with: " + str(self.toHashMap()), self, self.commonStrings.CONSTRUCTOR)
     
 
-    def _constructor1(self, hashMap: dict) -> None:
+    def _constructor1(self, hashMap: HashMap) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         quoteRequestData: QuoteRequestData = QuoteRequestData.getInstance()
         self.id = hashMap.get(quoteRequestData.ID)
@@ -62,11 +73,14 @@ class QuoteRequest:
         self.setBudget(hashMap.get(quoteRequestData.BUDGET))
         self.setTimeFrame(hashMap.get(quoteRequestData.TIMEFRAME))
         self.setComments(hashMap.get(quoteRequestData.COMMENTS))
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().TAGHELPER):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
             self.logUtil.putF("Created with: " + str(self.toHashMap()), self, self.commonStrings.CONSTRUCTOR)
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
             if self.userName is None or len(self.userName) < 4 or len(self.userName) > 250:
@@ -83,12 +97,16 @@ class QuoteRequest:
                 valid = False
             return valid
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
             return False
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+        from org.allbinary.logic.string.StringMaker import StringMaker
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
             if self.userName is None or len(self.userName) < 4 or len(self.userName) > 250:
@@ -105,12 +123,14 @@ class QuoteRequest:
                 stringBuffer.append("Please enter comments with less than " + str(AbSqlData.MAXBLOB) + " characters.<br>")
             return str(stringBuffer)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLTAGSERROR):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
                 self.logUtil.put("Failed to generate validation error info", self, "validationInfo()", e)
             return "Error Validating Form"
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
         values: BasicArrayList = BasicArrayListD()
         values.add(self.id)
         values.add(self.userName)
@@ -126,9 +146,14 @@ class QuoteRequest:
         return values
     
 
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.logic.StdUtil import StdUtil
         quoteRequestData: QuoteRequestData = QuoteRequestData.getInstance()
-        values: dict = StdUtil.getInstance().createHashMap()
+        values: HashMap = StdUtil.getInstance().createHashMap()
         values.put(UserData.USERNAME, self.userName)
         values.put(quoteRequestData.PROJECT_INFO, self.projectInfo)
         values.put(quoteRequestData.CUSTOMER_COMMENTS, self.userComments)
@@ -162,6 +187,7 @@ class QuoteRequest:
     
 
     def setComments(self, value: str) -> None:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         self.comments = value
         stringUtil: StringUtil = StringUtil.getInstance()
         if self.comments is None:
@@ -192,18 +218,20 @@ class QuoteRequest:
         return self.comments
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.data.generator.QuoteRequestIdGenerator import QuoteRequestIdGenerator
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
-from org.allbinary.logic.string.StringMaker import StringMaker
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.data.generator.QuoteRequestIdGenerator import QuoteRequestIdGenerator
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -16,28 +16,40 @@
 from __future__ import annotations
 
 import datetime
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityInterface import PaymentGatewayEntityInterface
 
 
-class PaymentGatewayEntity(AbSqlBean, PaymentGatewayEntityInterface):
+class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "paymentgateways"
     
 
     def __init__(self) -> None:
+        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(UserDbInitInfo())
         self._init_fields()
         self.setTableName(self.tableName)
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, self.commonStrings.CONSTRUCTOR)
     
 
     def add(self, paymentGatewayInterface: PaymentGatewayInterface) -> None:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayEncryptedMapping import PaymentGatewayEncryptedMapping
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.data.generator.PaymentGatewayIdGenerator import PaymentGatewayIdGenerator
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.START, self, "add")
             vector: BasicArrayList = BasicArrayListD()
             vector.add(PaymentGatewayIdGenerator().getNext())
@@ -47,36 +59,56 @@ class PaymentGatewayEntity(AbSqlBean, PaymentGatewayEntityInterface):
             vector.add(time)
             vector.add(time)
             super().insert(vector)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.END, self, "add")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "add", e)
     
 
     def update(self, paymentGatewayInterface: PaymentGatewayInterface) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayEncryptedMapping import PaymentGatewayEncryptedMapping
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             calendar: datetime.datetime = datetime.datetime.now()
             time: str = str(str(int(calendar.getTimeInMillis())))
             paymentGatewayInterface.setLastModified(time)
-            whereKeyValuePairs: dict = StdUtil.getInstance().createHashMap()
+            whereKeyValuePairs: HashMap = StdUtil.getInstance().createHashMap()
             whereKeyValuePairs.put(str(StoreFrontData.getInstance().NAME), paymentGatewayInterface.getStoreName())
             whereKeyValuePairs.put(str(PaymentGatewayData.NAME), paymentGatewayInterface.getName())
             if whereKeyValuePairs.get(EntryData.getInstance().TIMECREATED) is not None:
                 raise Exception("Don't update TimeCreated for update")
-            updateHashMap: dict = PaymentGatewayEncryptedMapping(paymentGatewayInterface).toHashMap()
+            updateHashMap: HashMap = PaymentGatewayEncryptedMapping(paymentGatewayInterface).toHashMap()
             super().updateWhere(whereKeyValuePairs, updateHashMap)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "update")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "update", e)
     
 
     def getPaymentGatewayInterface(self, storeName: str, paymentType: BasicPaymentType) -> PaymentGatewayInterface:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactory import PaymentGatewayInterfaceFactory
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            paymentGatewayHashMap: dict = StdUtil.getInstance().createHashMap()
-            whereKeyAndValue: dict = StdUtil.getInstance().createHashMap()
+            paymentGatewayHashMap: HashMap = StdUtil.getInstance().createHashMap()
+            whereKeyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             whereKeyAndValue.put(str(StoreFrontData.getInstance().NAME), storeName)
             whereKeyAndValue.put(str(PaymentGatewayData.NAME), paymentType.getName())
             paymentGatewayHashMap = super().getRow(whereKeyAndValue)
@@ -105,18 +137,26 @@ class PaymentGatewayEntity(AbSqlBean, PaymentGatewayEntityInterface):
                 paymentGatewayHashMap.put(str(PaymentGatewayData.SPECIAL8), superCrypt.decrypt(special8))
                 paymentGatewayHashMap.put(str(PaymentGatewayData.SPECIAL9), superCrypt.decrypt(special9))
                 paymentGatewayInterface: PaymentGatewayInterface = PaymentGatewayInterfaceFactory().getInstance(paymentGatewayHashMap)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     self.logUtil.putF(self.commonStrings.SUCCESS, self, "getPaymentGatewayInterface()")
                 return paymentGatewayInterface
             else:
                 return PaymentGatewayInterfaceFactory().getInstance(paymentType)
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put("Command Failed for paymentType: " + paymentType.getName(), self, "getPaymentGatewayInterface", e)
             return None
     
 
     def findPaymentTypeVectorByStore(self, storeName: str) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             paymentGatewayNameVector: BasicArrayList = BasicArrayListD()
             paymentGatewayNameVector = super().getColumnWhere(str(PaymentGatewayData.NAME), str(StoreFrontData.getInstance().NAME), storeName)
@@ -127,31 +167,44 @@ class PaymentGatewayEntity(AbSqlBean, PaymentGatewayEntityInterface):
                     paymentTypeString: str = paymentGatewayNameVector.get(i)
                     paymentType: BasicPaymentType = BasicPaymentTypeUtil.getInstance().get(paymentTypeString)
                     paymentGatewayVector.add(paymentType)
-                if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+                if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     self.logUtil.putF(self.commonStrings.SUCCESS, self, "findPaymentTypeVectorByStore()")
                 return paymentGatewayVector
             else:
                 return BasicArrayListD()
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "findPaymentTypeVectorByStore", e)
             return None
     
 
     def remove(self, storeName: str, paymentType: BasicPaymentType) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            whereHashMap: dict = StdUtil.getInstance().createHashMap()
+            whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(str(StoreFrontData.getInstance().NAME), storeName)
             whereHashMap.put(str(PaymentGatewayData.NAME), paymentType.getName())
             super().deleteWhere(whereHashMap)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "remove")
         except Exception as e:
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().SQLLOGGING):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "remove", e)
     
 
     def createTableStatement(self) -> str:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+        from org.allbinary.business.entry.EntryData import EntryData
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE)
         stringBuffer.append(self.tableName)
@@ -240,23 +293,25 @@ class PaymentGatewayEntity(AbSqlBean, PaymentGatewayEntityInterface):
         return super().dropTable()
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
-from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-from org.allbinary.business.entry.EntryData import EntryData
-from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
-from org.allbinary.business.user.UserData import UserData
-from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayEncryptedMapping import PaymentGatewayEncryptedMapping
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
-from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactory import PaymentGatewayInterfaceFactory
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
-from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
-from org.allbinary.data.generator.PaymentGatewayIdGenerator import PaymentGatewayIdGenerator
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
-from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
+# from org.allbinary.business.entry.EntryData import EntryData
+# from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
+# from org.allbinary.business.user.UserData import UserData
+# from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayEncryptedMapping import PaymentGatewayEncryptedMapping
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
+# from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactory import PaymentGatewayInterfaceFactory
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
+# from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
+# from org.allbinary.data.generator.PaymentGatewayIdGenerator import PaymentGatewayIdGenerator
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
+# from org.allbinary.logic.string.StringMaker import StringMaker
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

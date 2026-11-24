@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.drop.BaseDropCellPositionGenerator import BaseDropCellPositionGenerator
 
 
@@ -30,5 +31,8 @@ class NullDropCellPositionGenerator(BaseDropCellPositionGenerator):
         return NullDropCellPositionGenerator.instance
 
 
-NullDropCellPositionGenerator.instance = NullDropCellPositionGenerator()
+def _NullDropCellPositionGenerator_instance() -> object:
+    return NullDropCellPositionGenerator()
+
+lazy_static(NullDropCellPositionGenerator, "instance", _NullDropCellPositionGenerator_instance)
 

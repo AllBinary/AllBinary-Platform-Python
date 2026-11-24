@@ -23,6 +23,16 @@ class RTSScrollSelectionFormFactory:
     # throws Exception
     @staticmethod
     def getInstance(formLabel: str, items: list[ABCustomItem]) -> ScrollSelectionForm:
+        from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+        from org.allbinary.graphics.PointFactory import PointFactory
+        from org.allbinary.graphics.Rectangle import Rectangle
+        from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+        from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+        from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+        from org.allbinary.graphics.form.MultipleScrollSelectionHorizontalForm import MultipleScrollSelectionHorizontalForm
+        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+        from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+        from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
         basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         touchButtonLocationHelper: TouchButtonLocationHelper = TouchButtonLocationHelper()
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
@@ -30,15 +40,15 @@ class RTSScrollSelectionFormFactory:
         width: int = displayInfo.getLastWidth() - (menuX * 2)
         menuRectangle: Rectangle = Rectangle(PointFactory.getInstance().createXY(menuX, 16), width, CommonButtons.getInstance().STANDARD_BUTTON_SIZE)
         return MultipleScrollSelectionHorizontalForm.createForm(formLabel, items, menuRectangle, FormTypeFactory.getInstance().HORIZONTAL_FORM, 0, basicColorFactory.BLACK, basicColorFactory.WHITE)
-from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-from org.allbinary.graphics.PointFactory import PointFactory
-from org.allbinary.graphics.Rectangle import Rectangle
-from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
-from org.allbinary.graphics.form.MultipleScrollSelectionHorizontalForm import MultipleScrollSelectionHorizontalForm
-from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
-from org.allbinary.input.motion.button.CommonButtons import CommonButtons
-from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
+# from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
+# from org.allbinary.graphics.PointFactory import PointFactory
+# from org.allbinary.graphics.Rectangle import Rectangle
+# from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
+# from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
+# from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
+# from org.allbinary.graphics.form.MultipleScrollSelectionHorizontalForm import MultipleScrollSelectionHorizontalForm
+# from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
+# from org.allbinary.input.motion.button.CommonButtons import CommonButtons
+# from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
 
 

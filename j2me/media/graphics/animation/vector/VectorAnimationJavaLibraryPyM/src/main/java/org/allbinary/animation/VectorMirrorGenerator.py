@@ -28,7 +28,7 @@ class VectorMirrorGenerator:
     
 
     @staticmethod
-    def getInstance() -> VectorMirrorGenerator:
+    def getInstance_j0() -> VectorMirrorGenerator:
         return VectorMirrorGenerator.instance
     
 
@@ -36,8 +36,8 @@ class VectorMirrorGenerator:
         self._init_fields()
     
 
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, points: list[list[list[int]]], width: int) -> list[list[list[int]]]:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j2_1(self, points: list[list[list[int]]], width: int) -> list[list[list[int]]]:
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -68,14 +68,21 @@ class VectorMirrorGenerator:
     
 
     # throws Exception
-    # Java overloaded method: Python keeps the last definition
-    def getInstance(self, pointBasicArrayList: BasicArrayList, width: int) -> BasicArrayList:
+    # Java overloaded method with the same parameter count: Python keeps the last definition
+    def getInstance_j2_2(self, pointBasicArrayList: BasicArrayList, width: int) -> BasicArrayList:
         from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
         from org.allbinary.util.BasicArrayList import BasicArrayList
         graphicsPipe: BasicGraphicsPipeline = BasicGraphicsPipeline(pointBasicArrayList)
         graphicsPipe.createMatrix()
         graphicsPipe.mirror(width)
         return graphicsPipe.getMatrix()
+
+    def getInstance(self, *args):
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], list)) and isinstance(args[1], int) and not isinstance(args[1], bool):
+            return self.getInstance_j2_1(*args)
+        if len(args) == 2:
+            return self.getInstance_j2_2(*args)
+        return getattr(self, "getInstance_j" + str(len(args)))(*args)
 # from org.allbinary.graphics.PointFactory import PointFactory
 # from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
 # from org.allbinary.logic.NullUtil import NullUtil

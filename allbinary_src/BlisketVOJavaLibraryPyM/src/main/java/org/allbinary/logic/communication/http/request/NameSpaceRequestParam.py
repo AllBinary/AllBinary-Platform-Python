@@ -20,18 +20,23 @@ from __future__ import annotations
 class NameSpaceRequestParam:
 
     def _init_fields(self) -> None:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.nameSpaceVector: BasicArrayList = None
-        self.nameSpacePropertiesHashMap: dict = None
+        self.nameSpacePropertiesHashMap: HashMap = None
         self.value: str = None
     
 
     def __init__(self, nameSpace: str, value: str) -> None:
-        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
-        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
-        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
-        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
-        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self._init_fields()
         self.nameSpaceVector = BasicArrayListD()
         self.nameSpacePropertiesHashMap = StdUtil.getInstance().createHashMap()
@@ -42,7 +47,7 @@ class NameSpaceRequestParam:
         packages: str = nameSpace[beginIndex + NameSpaceRequestParamData.NAME.length() + NameSpaceRequestParamData.SEP.length():]
         sepTokenizer: Tokenizer = Tokenizer(NameSpaceRequestParamData.SEP)
         nameSpaceWithPropertiesVector: BasicArrayList = sepTokenizer.getTokensFromString(packages, BasicArrayListD())
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("\nSep Tokens: " + str(nameSpaceWithPropertiesVector), self, "NameSpaceRequestParam()")
         nameSpaceAndPropertiesTokenizer: Tokenizer = Tokenizer(NameSpaceRequestParamData.PROPERTIES)
         packageIndex: int = 0
@@ -53,7 +58,7 @@ class NameSpaceRequestParam:
             nameSpaceWithProperties: str = nameSpaceWithPropertiesVector.get(((index := index + 1) - 1))
             list_.clear()
             nameSpaceAndPropertiesVector: BasicArrayList = nameSpaceAndPropertiesTokenizer.getTokensFromString(nameSpaceWithProperties, list_)
-            if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+            if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                 self.logUtil.putF("\nPackageName and PackageName Properties Tokens: " + str(nameSpaceAndPropertiesVector), self, "NameSpaceRequestParam()")
             if nameSpaceAndPropertiesVector.size() > 0:
                 packageName: str = nameSpaceAndPropertiesVector.get(0)
@@ -62,39 +67,56 @@ class NameSpaceRequestParam:
                 self.nameSpaceVector.add(packageName)
                 if nameSpaceAndPropertiesVector.size() > 1:
                     properties: str = nameSpaceAndPropertiesVector.get(1)
-                    packagePropertiesHashMap: dict = self.generatePackagePropertiesHashMap(properties)
+                    packagePropertiesHashMap: HashMap = self.generatePackagePropertiesHashMap(properties)
                     self.nameSpacePropertiesHashMap.put(str(packageIndex), packagePropertiesHashMap)
                 packageIndex += 1
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("NameSpace: " + str(self.nameSpaceVector), self, "NameSpaceRequestParam()")
     
 
     def getPackages(self) -> BasicArrayList:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("NameSpace: " + str(self.nameSpaceVector), self, "getPackages()")
         return self.nameSpaceVector
     
 
-    def getPackageProperties(self, packageIndex: int) -> dict:
-        packagePropertiesHashMap: dict = self.nameSpacePropertiesHashMap.get(str(packageIndex))
+    def getPackageProperties(self, packageIndex: int) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        packagePropertiesHashMap: HashMap = self.nameSpacePropertiesHashMap.get(str(packageIndex))
         if packagePropertiesHashMap is None:
             packagePropertiesHashMap = StdUtil.getInstance().createHashMap()
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("Package Properties: " + str(packagePropertiesHashMap), self, "getPackagesProperties()")
         return packagePropertiesHashMap
     
 
     def getValue(self) -> str:
-        if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+        if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("\nValue: " + self.value, self, "getValue()")
         return self.value
     
 
     # throws Exception
-    def generatePackagePropertiesHashMap(self, properties: str) -> dict:
-        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+    def generatePackagePropertiesHashMap(self, properties: str) -> HashMap:
+        from java.util.HashMap import HashMap
+        from org.allbinary.logic.StdUtil import StdUtil
+        from org.allbinary.logic.string.StringUtil import StringUtil
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.logic.visual.dhtml.html.name.HtmlNameMathData import HtmlNameMathData
+        from org.allbinary.util.BasicArrayList import BasicArrayList
+        from org.allbinary.util.BasicArrayListD import BasicArrayListD
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         propertiesTokenizer: Tokenizer = Tokenizer(NameSpaceRequestParamData.PROPERTIESSEPARATOR)
-        packagePropertiesHashMap: dict = StdUtil.getInstance().createHashMap()
+        packagePropertiesHashMap: HashMap = StdUtil.getInstance().createHashMap()
         propertyVector: BasicArrayList = propertiesTokenizer.getTokensFromString(properties, BasicArrayListD())
         list_: BasicArrayList = BasicArrayListD()
         propertyTokenizer: Tokenizer = Tokenizer(HtmlNameMathData.getInstance().EQUALS)
@@ -109,19 +131,21 @@ class NameSpaceRequestParam:
                 propertyName: str = propertyNameValueVector.get(((index2 := index2 + 1) - 1))
                 if propertyNameValueVector.size() > 1:
                     propertyValue: str = propertyNameValueVector.get(((index2 := index2 + 1) - 1))
-                    if org.allbinary.logic.communication.log.config.type_.LogConfigTypes.LOGGING.contains(org.allbinary.logic.communication.log.config.type_.LogConfigTypeFactory.getInstance().HTTPREQUEST):
+                    if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                         self.logUtil.putF("\nProperty Name: " + propertyName + "\nProperty Value: " + propertyValue, self, "generatePackagePropertiesHashMap()")
                     packagePropertiesHashMap.put(propertyName, propertyValue)
                 else:
                     packagePropertiesHashMap.put(propertyName, StringUtil.getInstance().EMPTY_STRING)
         return packagePropertiesHashMap
 # from java.util.HashMap import HashMap
-from org.allbinary.logic.StdUtil import StdUtil
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.logic.string.StringUtil import StringUtil
-from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
-from org.allbinary.logic.visual.dhtml.html.name.HtmlNameMathData import HtmlNameMathData
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.StdUtil import StdUtil
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.logic.string.StringUtil import StringUtil
+# from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+# from org.allbinary.logic.visual.dhtml.html.name.HtmlNameMathData import HtmlNameMathData
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+# from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class BodyData:
@@ -35,5 +36,8 @@ class BodyData:
         return BodyData.instance
 
 
-BodyData.instance = BodyData()
+def _BodyData_instance() -> object:
+    return BodyData()
+
+lazy_static(BodyData, "instance", _BodyData_instance)
 

@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.JTreeInterface import JTreeInterface
-from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JPanel import JPanel
+# from javax.swing.JPanel import JPanel
 
 
-class GenericProfileActionScriptJPanel(JPanel, JTreeInterface):
+class GenericProfileActionScriptJPanel(*java_bases(JPanel, JTreeInterface)):
 
     def _init_fields(self) -> None:
+        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+        from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.defaultMutableTreeNode: DefaultMutableTreeNode = DefaultMutableTreeNode("Root")
@@ -61,11 +64,6 @@ class GenericProfileActionScriptJPanel(JPanel, JTreeInterface):
     
 
     def initComponents(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JScrollPane import JScrollPane
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.JTree import JTree
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GridLayout import GridLayout
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.Dimension import Dimension
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.MouseAdapter import MouseAdapter
         self.jScrollPane1 = JScrollPane()
         self.actionScriptJTree = JTree()
         self.setLayout(GridLayout(1, 0))
@@ -85,6 +83,7 @@ class GenericProfileActionScriptJPanel(JPanel, JTreeInterface):
     
 
     def actionScriptJTreeMouseReleased(self, evt: MouseEvent) -> None:
+        from org.allbinary.input.automation.actions.script.condition.CustomTreeNodeInterface import CustomTreeNodeInterface
         button: int = evt.getButton()
         if button == MouseEvent.BUTTON3:
             treePath: TreePath = self.getActionScriptJTree().getSelectionPath()
@@ -99,12 +98,18 @@ class GenericProfileActionScriptJPanel(JPanel, JTreeInterface):
     def actionScriptJTreeMouseClicked(self, evt: MouseEvent) -> None:
         pass
 # from java.awt.event.MouseEvent import MouseEvent
-# from javax.swing import *
+# from javax.swing.JPopupMenu import JPopupMenu
+# from javax.swing.JComponent import JComponent
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 # from javax.swing.tree.DefaultTreeModel import DefaultTreeModel
 # from javax.swing.tree.TreePath import TreePath
-from org.allbinary.input.automation.actions.script.condition.CustomTreeNodeInterface import CustomTreeNodeInterface
-from org.allbinary.logic.communication.log.LogUtil import LogUtil
-from org.allbinary.string.CommonStrings import CommonStrings
+# from org.allbinary.input.automation.actions.script.condition.CustomTreeNodeInterface import CustomTreeNodeInterface
+# from org.allbinary.logic.communication.log.LogUtil import LogUtil
+# from org.allbinary.string.CommonStrings import CommonStrings
+# from java.awt.Dimension import Dimension
+# from java.awt.GridLayout import GridLayout
+# from java.awt.event.MouseAdapter import MouseAdapter
+# from javax.swing.JScrollPane import JScrollPane
+# from javax.swing.JTree import JTree
 
 

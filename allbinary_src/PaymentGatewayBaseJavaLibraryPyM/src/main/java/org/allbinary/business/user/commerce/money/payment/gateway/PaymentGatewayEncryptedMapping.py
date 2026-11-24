@@ -30,11 +30,13 @@ class PaymentGatewayEncryptedMapping(TableMappingInterface):
     
 
     # throws Exception
-    def toHashMap(self) -> dict:
+    def toHashMap(self) -> HashMap:
+        from java.util.HashMap import HashMap
         return self.paymentGatewayInterface.toHashMap(True)
     
 
     def toVector(self) -> BasicArrayList:
+        from org.allbinary.util.BasicArrayList import BasicArrayList
         return self.paymentGatewayInterface.toVector(True)
     
 
@@ -42,7 +44,7 @@ class PaymentGatewayEncryptedMapping(TableMappingInterface):
     def getKey(self) -> object:
         return self.paymentGatewayInterface.getKey()
 # from java.util.HashMap import HashMap
-from org.allbinary.util.BasicArrayList import BasicArrayList
-from org.allbinary.util.BasicArrayListD import BasicArrayListD
+# from org.allbinary.util.BasicArrayList import BasicArrayList
+# from org.allbinary.util.BasicArrayListD import BasicArrayListD
 
 
