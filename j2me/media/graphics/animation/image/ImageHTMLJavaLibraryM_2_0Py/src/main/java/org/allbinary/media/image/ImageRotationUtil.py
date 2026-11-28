@@ -49,9 +49,7 @@ class ImageRotationUtil:
             canvas: Canvas = self.playnUtil.getCanvas(canvasImage)
             canvas.save()
             canvas.clear()
-            canvas.translate(java_divide(originalImage.getWidth(), 2)
-            , java_divide(originalImage.getHeight(), 2)
-            )
+            canvas.translate(java_divide(originalImage.getWidth(), 2), java_divide(originalImage.getHeight(), 2))
             image2: Image = self.rotateImageCanvasSurface(originalImage, image, canvas, totalAngle)
             self.drawImage(originalImage, image, canvas)
             canvas.restore()
@@ -64,13 +62,9 @@ class ImageRotationUtil:
         from javax.microedition.lcdui.Image import Image
         from playn.core.Canvas import Canvas
         if java_predicate(image, "isMutable"):
-            canvasSurface.translate(java_divide(-originalImage.getWidth(), 2)
-            , java_divide(-originalImage.getHeight(), 2)
-            )
+            canvasSurface.translate(java_divide(-originalImage.getWidth(), 2), java_divide(-originalImage.getHeight(), 2))
             canvasSurface.clear()
-            canvasSurface.translate(java_divide(originalImage.getWidth(), 2)
-            , java_divide(originalImage.getHeight(), 2)
-            )
+            canvasSurface.translate(java_divide(originalImage.getWidth(), 2), java_divide(originalImage.getHeight(), 2))
             return self.rotateImageCanvasSurface(originalImage, image, canvasSurface, totalAngle)
         else:
             return None
@@ -99,9 +93,7 @@ class ImageRotationUtil:
         else:
             originalHTMLImage: PlaynImmutableImage = originalImage
             originalPlayNImage = originalHTMLImage.getImage()
-        canvasSurface.draw(originalPlayNImage, java_divide(-originalImage.getWidth(), 2)
-            , java_divide(-originalImage.getHeight(), 2)
-            )
+        canvasSurface.draw(originalPlayNImage, java_divide(-originalImage.getWidth(), 2), java_divide(-originalImage.getHeight(), 2))
     
 
     # throws Exception

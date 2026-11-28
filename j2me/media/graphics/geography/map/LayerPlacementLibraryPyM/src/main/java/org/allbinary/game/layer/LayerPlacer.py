@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 
 
@@ -84,16 +83,13 @@ class LayerPlacer:
         if layerPlacementType == LayerPlacementTypeFactory.getInstance().MAP:
             width: int = layerPlacementInterface.getWidth()
             height: int = layerPlacementInterface.getHeight()
-            x: int = (java_divide((self.dimension.getX() - width), 2)
-            )
-            y: int = (java_divide((self.dimension.getY() - height), 2)
-            )
+            x: int = (java_divide((self.dimension.getX() - width), 2))
+            y: int = (java_divide((self.dimension.getY() - height), 2))
             return pointFactory.createXY(x, y)
         elif layerPlacementType == LayerPlacementTypeFactory.getInstance().UP:
             width: int = layerPlacementInterface.getWidth()
             height: int = layerPlacementInterface.getHeight()
-            x: int = (java_divide((self.dimension.getX() - width), 2)
-            )
+            x: int = (java_divide((self.dimension.getX() - width), 2))
             y: int = -height
             return pointFactory.createXY(x, y)
         else:

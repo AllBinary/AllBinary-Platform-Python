@@ -322,9 +322,7 @@ class LinesGraphicItem(GraphicItemInterface):
         try:
             mousePoint: GPoint = PointFactory.getInstance().createXY(mouseEvent.getPoint().x, mouseEvent.getPoint().y)
             if (mouseEvent.getModifiers() & mouseEvent.BUTTON1_MASK) == mouseEvent.BUTTON1_MASK:
-                point: GPoint = PointFactory.getInstance().createXY(java_divide(mousePoint.getX(), x)
-            , java_divide(mousePoint.getY(), y)
-            )
+                point: GPoint = PointFactory.getInstance().createXY(java_divide(mousePoint.getX(), x), java_divide(mousePoint.getY(), y))
                 StatusFactory.getInstance().setStatus("Line Point Added: " + str(point))
                 self.addPoint(point)
             elif (mouseEvent.getModifiers() & mouseEvent.BUTTON3_MASK) == mouseEvent.BUTTON3_MASK:
@@ -360,9 +358,7 @@ class LinesGraphicItem(GraphicItemInterface):
         from org.allbinary.graphics.PointFactory import PointFactory
         try:
             mousePoint: GPoint = PointFactory.getInstance().createXY(mouseEvent.getPoint().x, mouseEvent.getPoint().y)
-            point: GPoint = PointFactory.getInstance().createXY(java_divide(mousePoint.getX(), x)
-            , java_divide(mousePoint.getY(), y)
-            )
+            point: GPoint = PointFactory.getInstance().createXY(java_divide(mousePoint.getX(), x), java_divide(mousePoint.getY(), y))
             self.currentMousePoint = point
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "mouseMoved", e)

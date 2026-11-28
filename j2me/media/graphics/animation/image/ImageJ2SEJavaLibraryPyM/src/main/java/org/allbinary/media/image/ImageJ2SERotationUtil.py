@@ -48,9 +48,7 @@ class ImageJ2SERotationUtil:
     
 
     def drawRotatedImageRadians(self, bufferedImage: Image, newBufferedImage: BufferedImage, g: Graphics2D, radians: float) -> BufferedImage:
-        g.rotate(radians, java_divide(newBufferedImage.getWidth(None), 2)
-            , java_divide(newBufferedImage.getHeight(None), 2)
-            )
+        g.rotate(radians, java_divide(newBufferedImage.getWidth(None), 2), java_divide(newBufferedImage.getHeight(None), 2))
         g.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(None), bufferedImage.getHeight(None), None)
         g.dispose()
         return newBufferedImage

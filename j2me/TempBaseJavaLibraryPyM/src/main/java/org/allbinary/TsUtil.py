@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaMonitor import java_monitor, java_wait
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -39,7 +38,7 @@ class TsUtil:
     
 
     def hashCode(self, anyType: object) -> int:
-        return java_predicate(anyType, "hashCode")
+        return hash(anyType)
     
 
     # throws InterruptedException

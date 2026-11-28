@@ -30,9 +30,7 @@ class PointHelper:
     def getCenterPoint(rectangle: Rectangle) -> Point:
         from org.allbinary.input.automation.PointFactory import PointFactory
         x: float = rectangle.getX() + java_divide(rectangle.getWidth(), PointHelper.two)
-            
         y: float = rectangle.getY() + java_divide(rectangle.getHeight(), PointHelper.two)
-            
         return PointFactory.getInstance(int(x), int(y))
 # from java.awt.Point import Point
 # from java.awt.Rectangle import Rectangle

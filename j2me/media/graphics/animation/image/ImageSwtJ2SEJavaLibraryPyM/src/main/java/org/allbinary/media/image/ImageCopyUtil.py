@@ -196,10 +196,7 @@ class ImageCopyUtil:
                     openGLESImage.openGLESImageTranslate = OpenGLESDeviceImageTranslate()
                     openGLESDeviceImageTranslate: OpenGLESDeviceImageTranslate = openGLESImage.openGLESImageTranslate
                     openGLESDeviceImageTranslate.translateX = java_divide(displayInfoSingleton.getLastWidth() / 1.4, openGLESImageProperties.scaleX)
-            
-                    openGLESDeviceImageTranslate.translateY = java_divide(java_divide(displayInfoSingleton.getLastHeight(), 4)
-            , openGLESImageProperties.scaleY)
-            
+                    openGLESDeviceImageTranslate.translateY = java_divide(java_divide(displayInfoSingleton.getLastHeight(), 4), openGLESImageProperties.scaleY)
                     openGLESImageProperties.scaleX = openGLESImageProperties.scaleX * 0.25
                     openGLESImageProperties.scaleY = openGLESImageProperties.scaleY * 0.25
                 else:
@@ -208,9 +205,7 @@ class ImageCopyUtil:
                     if image.getName().startsWith(self.LEADERBOARD):
                         openGLESImage.openGLESImageTranslate = OpenGLESDeviceImageTranslate()
                         openGLESDeviceImageTranslate: OpenGLESDeviceImageTranslate = openGLESImage.openGLESImageTranslate
-                        openGLESDeviceImageTranslate.translateX = java_divide(java_divide(-displayInfoSingleton.getLastWidth(), 40)
-            , openGLESImageProperties.scaleX)
-            
+                        openGLESDeviceImageTranslate.translateX = java_divide(java_divide(-displayInfoSingleton.getLastWidth(), 40), openGLESImageProperties.scaleX)
                     if image.getName().startsWith(self.LEADERBOARD):
                         pass
                     else:
@@ -259,9 +254,7 @@ class ImageCopyUtil:
             originalImageData: ImageData = (originalImage.getImage()).getImageData()
             mutableImage2: SwtMutableImage = image
             halfWidthDelta: int = java_divide((newWidth - originalImage.getWidth()), 2)
-            
             halfHeightDelta: int = java_divide((newHeight - originalImage.getHeight()), 2)
-            
             originalPixelArray: list[int] = [0] * (originalImage.getWidth() * originalImage.getHeight())
             newPixelArray: list[int] = [0] * (image.getWidth() * image.getHeight())
             width: int = originalImage.getWidth()
@@ -277,9 +270,7 @@ class ImageCopyUtil:
             originalImmutableImage: SwtImmutableImage = image
             originalImageData: ImageData = (originalImage.getImage()).getImageData()
             halfWidthDelta: int = java_divide((newWidth - originalImage.getWidth()), 2)
-            
             halfHeightDelta: int = java_divide((newHeight - originalImage.getHeight()), 2)
-            
             originalPixelArray: list[int] = [0] * (originalImage.getWidth() * originalImage.getHeight())
             newPixelArray: list[int] = [0] * (image.getWidth() * image.getHeight())
             width: int = originalImage.getWidth()

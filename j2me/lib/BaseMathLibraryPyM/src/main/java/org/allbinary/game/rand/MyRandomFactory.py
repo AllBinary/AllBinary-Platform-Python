@@ -51,10 +51,8 @@ class MyRandomFactory:
 
     def getNextInt(self, range: int) -> int:
         from jsinterop.annotations.JsMethod import JsMethod
-        div: int = (java_divide(2147483647, range)
-            ) + 1
-        return int((java_divide(self.rand.randint(-2147483648, 2147483647), div)
-            ))
+        div: int = (java_divide(2147483647, range)) + 1
+        return int((java_divide(self.rand.randint(-2147483648, 2147483647), div)))
     
 
     def getAbsoluteNextInt(self, range: int) -> int:

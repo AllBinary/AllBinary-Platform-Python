@@ -45,8 +45,7 @@ class RTSLayerUtil:
             reloadTime = reloadTime + 50
         elif lastLevel < currentLevel:
             reloadTime = reloadTime - 50
-        newWeaponProperties: WeaponProperties = WeaponProperties(reloadTime, weaponProperties.getTargetingTime(), weaponProperties.getSpeed().getUnscaled(), java_divide(weaponProperties.getDamage(), lastLevel)
-             * currentLevel, weaponProperties.getDissipation())
+        newWeaponProperties: WeaponProperties = WeaponProperties(reloadTime, weaponProperties.getTargetingTime(), weaponProperties.getSpeed().getUnscaled(), java_divide(weaponProperties.getDamage(), lastLevel) * currentLevel, weaponProperties.getDissipation())
         return newWeaponProperties
     
 
@@ -84,8 +83,7 @@ class RTSLayerUtil:
 
     def getWeaponPropertiesCost(self, weaponProperties: WeaponProperties) -> int:
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-        cost: int = (weaponProperties.getDamage() + weaponProperties.getRange() + ((java_divide(self.MAX_RELOAD_TIME, weaponProperties.getReloadTime())
-            ) >> 1))
+        cost: int = (weaponProperties.getDamage() + weaponProperties.getRange() + ((java_divide(self.MAX_RELOAD_TIME, weaponProperties.getReloadTime())) >> 1))
         cost = self.getCostExponential(cost)
         return cost
     

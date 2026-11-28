@@ -129,9 +129,7 @@ class DisplayInfoSingleton:
         operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
         if java_predicate(operatingSystemInterface, "isOverScan"):
             aLastWidth = java_divide(aLastWidth * operatingSystemInterface.getOverScanXPercent(), 100)
-            
             aLastHeight = java_divide(aLastHeight * operatingSystemInterface.getOverScanYPercent(), 100)
-            
         if java_predicate(operatingSystemInterface, "isScalable"):
             if self.isPortraitWH(aLastWidth, aLastHeight):
                 if float(aLastHeight) > self.scaleLargestTo:
@@ -242,9 +240,7 @@ class DisplayInfoSingleton:
                 operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
                 if java_predicate(operatingSystemInterface, "isOverScan"):
                     aLastWidth = java_divide(aLastWidth * operatingSystemInterface.getOverScanXPercent(), 100)
-            
                     aLastHeight = java_divide(aLastHeight * operatingSystemInterface.getOverScanYPercent(), 100)
-            
                 if java_predicate(operatingSystemInterface, "isScalable"):
                     if self.isPortraitWH(aLastWidth, aLastHeight):
                         if float(aLastHeight) > self.scaleLargestTo:

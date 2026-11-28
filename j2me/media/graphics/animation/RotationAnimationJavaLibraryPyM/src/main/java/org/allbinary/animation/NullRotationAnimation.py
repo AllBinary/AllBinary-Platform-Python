@@ -16,8 +16,7 @@ class NullRotationAnimation(RotationAnimation):
     def createTotalAngle(angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> NullRotationAnimation:
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        return NullRotationAnimation(angleInfo, CircularIndexUtil.createInstance(java_divide(totalAngle, angleInfo.getAngleIncrementInfo().getAngleIncrement())
-            ), animationBehavior)
+        return NullRotationAnimation(angleInfo, CircularIndexUtil.createInstance(java_divide(totalAngle, angleInfo.getAngleIncrementInfo().getAngleIncrement())), animationBehavior)
     
 
     @staticmethod

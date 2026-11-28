@@ -65,10 +65,8 @@ class ImageUtil:
         for index in range(0, size):
             bufferedImage = bufferedImageArray[index]
             imageData = bufferedImage.getImageData()
-            newWidth: int = int((java_divide(imageData.width * percent, 100)
-            ))
-            newHeight: int = int((java_divide(imageData.height * percent, 100)
-            ))
+            newWidth: int = int((java_divide(imageData.width * percent, 100)))
+            newHeight: int = int((java_divide(imageData.height * percent, 100)))
             scaledBufferedImageArray[index] = self.createBufferedImage5(bufferedImage, newWidth, newHeight, scale)
         return scaledBufferedImageArray
     

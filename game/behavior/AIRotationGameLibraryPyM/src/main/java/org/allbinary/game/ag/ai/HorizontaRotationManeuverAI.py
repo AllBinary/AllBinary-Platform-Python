@@ -98,8 +98,7 @@ class HorizontaRotationManeuverAI(*java_bases(BasicAI, ArtificialIntelligenceTra
         index: int = self.circularIndexUtil.getIndex()
         if index % self.currentSpeedDivisor == 0 and index % 2 == 0:
             java_super_call(super(), "processKeyAI", Canvas.UP)
-            self.velocityInterface.limitMaxXYVelocity(java_divide(self.velocityInterface.getMaxForwardVelocity(), self.currentSpeedDivisor)
-            )
+            self.velocityInterface.limitMaxXYVelocity(java_divide(self.velocityInterface.getMaxForwardVelocity(), self.currentSpeedDivisor))
         self.circularIndexUtil.next()
         if frame == int(angleIncrementInfo.LEFT_FRAME):
             java_super_call(super(), "processKeyAI", Canvas.KEY_NUM0)

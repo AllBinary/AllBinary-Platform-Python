@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.System import System
-from java.lang.JavaRuntimeStatic import java_predicate
 import traceback
 from java.lang.JavaRuntimeStatic import lazy_static
 

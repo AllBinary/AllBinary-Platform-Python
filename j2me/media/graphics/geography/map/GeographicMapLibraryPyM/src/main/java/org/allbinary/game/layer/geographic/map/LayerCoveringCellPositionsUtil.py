@@ -53,9 +53,7 @@ class LayerCoveringCellPositionsUtil:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         reusableList.clear()
         columns: int = java_divide(layerInterface.getWidth(), geographicMapInterface.getAllBinaryTiledLayer().getCellWidth())
-            
         rows: int = java_divide(layerInterface.getHeight(), geographicMapInterface.getAllBinaryTiledLayer().getCellHeight())
-            
         if columns == 0:
             columns = 1
         if rows == 0:

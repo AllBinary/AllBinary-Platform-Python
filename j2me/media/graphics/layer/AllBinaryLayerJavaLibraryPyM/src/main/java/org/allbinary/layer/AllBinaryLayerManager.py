@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_super_call
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.layer.LayerManager import LayerManager
 

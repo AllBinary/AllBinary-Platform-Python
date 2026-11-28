@@ -52,7 +52,6 @@ class VectorToImageArrayRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.media.image.ImageToRotationImageArrayUtil import ImageToRotationImageArrayUtil
         angleFactory: AngleFactory = AngleFactory.getInstance()
         self.angleIncrement = java_divide(angleFactory.TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity())
-            
         self.imageArray = ImageToRotationImageArrayUtil.getInstance().generate(self.getImage(), self.getAngleIncrement(), int(angleFactory.TOTAL_ANGLE))
     
 

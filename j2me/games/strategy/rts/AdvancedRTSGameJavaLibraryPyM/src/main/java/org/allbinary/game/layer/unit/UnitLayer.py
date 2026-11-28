@@ -236,9 +236,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
             geographicMapCompositeInterface: GeographicMapCompositeInterface = self.allBinaryGameLayerManagerP
             geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
             tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
-            totalCells: int = java_divide((java_divide(sensorRange, tiledLayer.getCellHeight())
-            ), 2)
-            
+            totalCells: int = java_divide((java_divide(sensorRange, tiledLayer.getCellHeight())), 2)
             geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
             column: int = currentGeographicMapCellPosition.getColumn()
             row: int = currentGeographicMapCellPosition.getRow()

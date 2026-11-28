@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.behavior.topview.TopViewCharacterBehavior import TopViewCharacterBehavior
 
 

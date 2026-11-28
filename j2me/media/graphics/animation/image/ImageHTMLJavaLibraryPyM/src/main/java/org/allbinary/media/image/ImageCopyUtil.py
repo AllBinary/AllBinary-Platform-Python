@@ -71,9 +71,7 @@ class ImageCopyUtil:
         image: Image = self.imageCreationUtil.getInstance(newWidth, newHeight)
         if java_predicate(image, "isMutable"):
             halfWidthDelta: int = java_divide((newWidth - originalImage.getWidth()), 2)
-            
             halfHeightDelta: int = java_divide((newHeight - originalImage.getHeight()), 2)
-            
             graphics: Graphics = image.getGraphics()
             graphics.drawImage(originalImage, halfWidthDelta, halfHeightDelta, self.anchor)
             return image

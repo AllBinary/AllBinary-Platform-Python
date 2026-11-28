@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_super_call
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.BasicProfileActionScriptCondition import BasicProfileActionScriptCondition
 from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionInterface import ColorAtActionScriptConditionInterface

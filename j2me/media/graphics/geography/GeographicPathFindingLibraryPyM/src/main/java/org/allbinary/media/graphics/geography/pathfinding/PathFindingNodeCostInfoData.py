@@ -25,7 +25,6 @@ class PathFindingNodeCostInfoData:
     def _init_fields(self) -> None:
         self.MAX_TOTAL_COST: int = 2147483647
         self.MAX_NODE_COST: int = java_divide(2147483647, 10000)
-            
     
 
     @staticmethod

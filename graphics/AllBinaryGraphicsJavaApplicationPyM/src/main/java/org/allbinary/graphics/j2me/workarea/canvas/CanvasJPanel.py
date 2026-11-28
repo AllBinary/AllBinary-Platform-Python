@@ -175,11 +175,9 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
         try:
-            if xSize >= java_divide(self.getCanvasDimension().getWidth(), 2)
-             or xSize < 1:
+            if xSize >= java_divide(self.getCanvasDimension().getWidth(), 2) or xSize < 1:
                 raise GraphicsException("X Size Error: " + str(xSize) + " WorkArea X: " + str(self.getCanvasDimension().getWidth()), self, "setGrid")
-            if ySize >= java_divide(self.getCanvasDimension().getHeight(), 2)
-             or ySize < 1:
+            if ySize >= java_divide(self.getCanvasDimension().getHeight(), 2) or ySize < 1:
                 raise GraphicsException("Y Size Error" + str(ySize) + " WorkArea Y: " + str(self.getCanvasDimension().getHeight()), self, "setGrid")
             self.grid.grid = PointFactory.getInstance().createXY(xSize, ySize)
             self.grid.isChanged = True
@@ -195,9 +193,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
     # throws Exception
     def setDefaultGrid(self) -> None:
         xPixelsPerWorkAreaPixel: int = java_divide(self.getWidth(), self.getCanvasDimension().getWidth())
-            
         yPixelsPerWorkAreaPixel: int = java_divide(self.getHeight(), self.getCanvasDimension().getHeight())
-            
         self.setGrid(1, 1)
         self.grid.isChanged = True
     
@@ -334,7 +330,6 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
 
     def getXPixelsPerWorkAreaPixel(self) -> int:
         x: int = java_divide(self.getGrid().grid.getX() * (self.getWidth() - 10), self.getCanvasDimension().getWidth())
-            
         if self.getGrid().getZoom() == 1:
             return 1
         else:
@@ -343,7 +338,6 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
 
     def getYPixelsPerWorkAreaPixel(self) -> int:
         y: int = java_divide(self.getGrid().grid.getY() * (self.getHeight() - 10), self.getCanvasDimension().getHeight())
-            
         if self.getGrid().getZoom() == 1:
             return 1
         else:
@@ -367,9 +361,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
 
     def drawGrid(self, graphics: Graphics) -> None:
         xAdjust: int = java_divide((self.getWidth() % self.getXPixelsPerWorkAreaPixel()), 2)
-            
         yAdjust: int = java_divide((self.getHeight() % self.getYPixelsPerWorkAreaPixel()), 2)
-            
         xLeft: int = xAdjust
         yUpper: int = yAdjust
         xRight: int = self.getWidth() - xAdjust
@@ -501,12 +493,10 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(PositionStrings.getInstance().X_LABEL)
-        stringBuffer.appendint(int(java_divide(mouseEvent.getX(), self.getXPixelsPerWorkAreaPixel())
-            ))
+        stringBuffer.appendint(int(java_divide(mouseEvent.getX(), self.getXPixelsPerWorkAreaPixel())))
         stringBuffer.append(CommonSeps.getInstance().SPACE)
         stringBuffer.append(PositionStrings.getInstance().Y_LABEL)
-        stringBuffer.appendint(int(java_divide(mouseEvent.getY(), self.getYPixelsPerWorkAreaPixel())
-            ))
+        stringBuffer.appendint(int(java_divide(mouseEvent.getY(), self.getYPixelsPerWorkAreaPixel())))
         return str(stringBuffer)
     
 

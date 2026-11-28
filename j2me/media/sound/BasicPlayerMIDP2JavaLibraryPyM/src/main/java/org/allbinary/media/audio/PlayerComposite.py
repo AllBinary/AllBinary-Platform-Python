@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.media.Controllable import Controllable

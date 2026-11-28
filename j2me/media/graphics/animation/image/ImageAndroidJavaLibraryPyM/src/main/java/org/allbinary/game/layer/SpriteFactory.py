@@ -39,9 +39,7 @@ class SpriteFactory(SpriteFactoryInterface):
     def createSprite(self, image: Image, frameWidth: int, frameHeight: int) -> Sprite:
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.game.Sprite import Sprite
-        return Sprite(image, frameWidth, frameHeight, java_divide(image.getWidth(), frameWidth)
-            , java_divide(image.getHeight(), frameHeight)
-            )
+        return Sprite(image, frameWidth, frameHeight, java_divide(image.getWidth(), frameWidth), java_divide(image.getHeight(), frameHeight))
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
 # from org.allbinary.string.CommonSeps import CommonSeps

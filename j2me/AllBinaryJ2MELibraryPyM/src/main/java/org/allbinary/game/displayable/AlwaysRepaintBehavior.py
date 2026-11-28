@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaThread import JavaThread
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior

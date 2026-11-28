@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 
 
@@ -118,7 +117,6 @@ class Money:
         stringBuffer: StringMaker = StringMaker()
         if ((currency > self.DEFAULT_CURRENCY) - (currency < self.DEFAULT_CURRENCY)) == 0:
             dollar: int = java_divide(int(self.units), 100)
-            
             cents: int = int(self.units) - (dollar * 100)
             stringBuffer.append(str(int(dollar)))
             stringBuffer.append(AbPathData.getInstance().EXTENSION_SEP)

@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 import random
-from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class Password:

@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsListener import CapturedImageWorkerResultsListener

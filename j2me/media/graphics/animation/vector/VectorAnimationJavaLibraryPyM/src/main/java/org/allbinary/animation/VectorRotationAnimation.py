@@ -29,8 +29,7 @@ class VectorRotationAnimation(VectorBaseRotationAnimation):
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.AngleInfo import AngleInfo
-        super().__init__(AngleInfo.getInstance(((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, len(currentPoints))
-            )) + 32768) % 65536 - 32768)), currentPoints, basicColor, animationBehavior)
+        super().__init__(AngleInfo.getInstance(((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, len(currentPoints)))) + 32768) % 65536 - 32768)), currentPoints, basicColor, animationBehavior)
         self.angleInfo.adjustAngle(self.getFrame())
     
 

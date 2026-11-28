@@ -67,8 +67,7 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         sourceLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
-        reducedWidth: int = (java_divide(sourceLayerInterface.getWidth() * 8, 10)
-            )
+        reducedWidth: int = (java_divide(sourceLayerInterface.getWidth() * 8, 10))
         halfWidth: int = (int(reducedWidth) >> (int(1) & 31))
         x: int = self.relativeRelationship.getX()
         y: int = self.relativeRelationship.getY()
@@ -81,11 +80,9 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
         next: int = -halfWidth
         for index in range(0, self.total):
             sine = int((next * self.noDecimalTrigTable.sin(angle)))
-            beamX = int((java_divide(sine, self.noDecimalTrigTable.SCALE)
-            ))
+            beamX = int((java_divide(sine, self.noDecimalTrigTable.SCALE)))
             cosine = int((next * self.noDecimalTrigTable.cos(angle)))
-            beamY = -int((java_divide(cosine, self.noDecimalTrigTable.SCALE)
-            ))
+            beamY = -int((java_divide(cosine, self.noDecimalTrigTable.SCALE)))
             weaponLayer = self.weaponLayerCircularStaticPool.getInstanceWeaponLayer(sourceLayerInterface, x + beamX, y + beamY, 0, angle, otherAngle, weaponProperties, scoreableInterface)
             allbinaryLayerManager.append(weaponLayer)
             next += increment

@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_super_call
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface

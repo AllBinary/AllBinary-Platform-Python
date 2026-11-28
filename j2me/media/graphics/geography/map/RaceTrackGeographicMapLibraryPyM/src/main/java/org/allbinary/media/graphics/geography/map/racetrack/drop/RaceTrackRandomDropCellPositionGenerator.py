@@ -64,9 +64,7 @@ class RaceTrackRandomDropCellPositionGenerator(RaceTrackDropCellPositionGenerato
         java_super_call(super(), "update", allBinaryGameLayerManager, geographicMapInterface)
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
         self.cellWidth = java_divide(tiledLayer.getCellWidth(), self.cellsPerRowOrColumn)
-            
         self.cellHeight = java_divide(tiledLayer.getCellHeight(), self.cellsPerRowOrColumn)
-            
     
 
     # throws Exception

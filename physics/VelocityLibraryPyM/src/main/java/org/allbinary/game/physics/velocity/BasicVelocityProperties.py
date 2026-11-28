@@ -121,24 +121,18 @@ class BasicVelocityProperties(BasicVelocityInterface):
     
 
     def setVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
-        xVector: int = (java_divide(self.axisMathVectorUtil.calculateX(magnitude, angle), self.velocityXBasicDecimal.getScaledFactorValue())
-            )
-        yVector: int = (java_divide(self.axisMathVectorUtil.calculateY(magnitude, angle), self.velocityYBasicDecimal.getScaledFactorValue())
-            )
-        zVector: int = (java_divide(self.axisMathVectorUtil.calculateZ(magnitude, otherAngle), self.velocityZBasicDecimal.getScaledFactorValue())
-            )
+        xVector: int = (java_divide(self.axisMathVectorUtil.calculateX(magnitude, angle), self.velocityXBasicDecimal.getScaledFactorValue()))
+        yVector: int = (java_divide(self.axisMathVectorUtil.calculateY(magnitude, angle), self.velocityYBasicDecimal.getScaledFactorValue()))
+        zVector: int = (java_divide(self.axisMathVectorUtil.calculateZ(magnitude, otherAngle), self.velocityZBasicDecimal.getScaledFactorValue()))
         self.velocityXBasicDecimal.setlong(xVector)
         self.velocityYBasicDecimal.setlong(yVector)
         self.velocityZBasicDecimal.setlong(zVector)
     
 
     def addVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
-        xVector: int = (java_divide(self.axisMathVectorUtil.calculateX(magnitude, angle), self.velocityXBasicDecimal.getScaledFactorValue())
-            )
-        yVector: int = (java_divide(self.axisMathVectorUtil.calculateY(magnitude, angle), self.velocityYBasicDecimal.getScaledFactorValue())
-            )
-        zVector: int = (java_divide(self.axisMathVectorUtil.calculateZ(magnitude, otherAngle), self.velocityZBasicDecimal.getScaledFactorValue())
-            )
+        xVector: int = (java_divide(self.axisMathVectorUtil.calculateX(magnitude, angle), self.velocityXBasicDecimal.getScaledFactorValue()))
+        yVector: int = (java_divide(self.axisMathVectorUtil.calculateY(magnitude, angle), self.velocityYBasicDecimal.getScaledFactorValue()))
+        zVector: int = (java_divide(self.axisMathVectorUtil.calculateZ(magnitude, otherAngle), self.velocityZBasicDecimal.getScaledFactorValue()))
         self.velocityXBasicDecimal.addlong(xVector)
         self.velocityYBasicDecimal.addlong(yVector)
         self.velocityZBasicDecimal.addlong(zVector)

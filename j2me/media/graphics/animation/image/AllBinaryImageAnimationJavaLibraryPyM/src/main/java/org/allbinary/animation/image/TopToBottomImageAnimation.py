@@ -67,7 +67,6 @@ class TopToBottomImageAnimation(ImageSegmentAnimation):
 
     def update(self) -> None:
         self.currentHeight = java_divide(self.getDrawHeight() * self.getFrame(), self.getSize())
-            
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:

@@ -92,7 +92,6 @@ class BasicPopupMenuPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
         BORDER: int = 0
         if java_predicate(J2MEUtil, "isHTML") or isOpenGL:
             BORDER = java_divide(MyFontProcessor.defaultCharWidth(font), 2)
-            
         elif java_predicate(AndroidUtil, "isAndroid") or java_predicate(J2MEUtil, "isJ2SE") or SWTUtil.isSWT:
             BORDER = MyFontProcessor.defaultCharWidth(font)
         else:

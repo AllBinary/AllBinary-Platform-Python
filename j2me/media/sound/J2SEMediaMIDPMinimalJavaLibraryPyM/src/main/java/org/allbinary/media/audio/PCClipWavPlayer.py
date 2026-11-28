@@ -204,7 +204,6 @@ class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
 
     def getDuration(self) -> int:
         return java_divide(self.clip.getMicrosecondLength(), 1000)
-            
     
 
     def update(self, event: LineEvent) -> None:

@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_super_call
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView

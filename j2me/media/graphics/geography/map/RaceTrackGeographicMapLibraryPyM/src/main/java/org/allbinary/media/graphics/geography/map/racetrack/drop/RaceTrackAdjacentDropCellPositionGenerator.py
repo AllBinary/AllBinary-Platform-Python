@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_super_call
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.drop.RaceTrackDropCellPositionGenerator import RaceTrackDropCellPositionGenerator
 

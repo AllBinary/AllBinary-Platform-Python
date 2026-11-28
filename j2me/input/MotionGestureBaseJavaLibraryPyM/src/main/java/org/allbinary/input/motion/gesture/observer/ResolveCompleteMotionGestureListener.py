@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.input.motion.gesture.observer.CompleteMotionGestureListenerInterface import CompleteMotionGestureListenerInterface
 
 

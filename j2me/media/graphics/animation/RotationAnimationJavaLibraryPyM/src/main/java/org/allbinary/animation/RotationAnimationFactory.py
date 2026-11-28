@@ -33,8 +33,7 @@ class RotationAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, P
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = AngleFactory.getInstance().TOTAL_ANGLE
-        return RotationAnimationFactory(totalAngle, ((int((java_divide(totalAngle, GameConfigurationCentral.getInstance().getGameControlFidelity())
-            )) + 32768) % 65536 - 32768))
+        return RotationAnimationFactory(totalAngle, ((int((java_divide(totalAngle, GameConfigurationCentral.getInstance().getGameControlFidelity()))) + 32768) % 65536 - 32768))
     
 
     def __init__(self, totalAngle: int, angleIncrement: int) -> None:

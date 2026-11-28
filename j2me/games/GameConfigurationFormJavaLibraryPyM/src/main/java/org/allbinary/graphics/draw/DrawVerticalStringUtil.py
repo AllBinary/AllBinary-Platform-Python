@@ -67,7 +67,6 @@ class DrawVerticalStringUtil:
             aChar = string[index]
             if java_predicate(openGLFeatureUtil, "isAnyThreed"):
                 offsetXArray[index] = java_divide(font.charWidth(aChar), 2)
-            
         self.offsetXArray = offsetXArray
     
 

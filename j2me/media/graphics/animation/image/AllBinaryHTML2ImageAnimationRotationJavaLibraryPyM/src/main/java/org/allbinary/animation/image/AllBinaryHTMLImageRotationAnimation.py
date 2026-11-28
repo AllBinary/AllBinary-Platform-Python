@@ -77,9 +77,7 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
         playN: PlayN = PlayN.getInstance()
         htmlGraphics: HtmlGraphics = playN.graphics()
         canvas: Canvas = htmlGraphics.get(canvasImage)
-        canvas.translate(java_divide(self.originalImage.getWidth(), 2)
-            , java_divide(self.originalImage.getHeight(), 2)
-            )
+        canvas.translate(java_divide(self.originalImage.getWidth(), 2), java_divide(self.originalImage.getHeight(), 2))
         return canvas
     
 

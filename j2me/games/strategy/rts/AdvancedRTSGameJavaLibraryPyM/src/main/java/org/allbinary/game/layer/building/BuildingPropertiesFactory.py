@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -37,8 +36,7 @@ class BuildingPropertiesFactory:
     
 
     def getEfficiencyPerLevel(self, buildingLayer: BuildingLayer) -> int:
-        return java_divide(10000, buildingLayer.getMaxLevel())
-             + 10000 % buildingLayer.getMaxLevel()
+        return java_divide(10000, buildingLayer.getMaxLevel()) + 10000 % buildingLayer.getMaxLevel()
     
 
     def getDamageFloaters(self, buildingLayer: BuildingLayer) -> DamageFloaters:

@@ -37,17 +37,14 @@ class AxisMathVectorUtil:
 
     def calculateX(self, magnitude: int, angle: int) -> int:
         return java_divide(magnitude * self.noDecimalTrigTable.cos(angle), 10)
-            
     
 
     def calculateY(self, magnitude: int, angle: int) -> int:
         return java_divide(magnitude * self.noDecimalTrigTable.sin(angle), 10)
-            
     
 
     def calculateZ(self, magnitude: int, otherAngle: int) -> int:
         return java_divide(magnitude * self.noDecimalTrigTable.sin(otherAngle), 10)
-            
 # from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
 
 

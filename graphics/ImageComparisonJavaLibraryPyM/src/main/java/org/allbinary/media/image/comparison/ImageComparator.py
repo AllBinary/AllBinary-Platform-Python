@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 import math
-from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class ImageComparator:

@@ -64,9 +64,7 @@ class SpriteSplitterUtil:
             self.logUtil.putF(spriteType, self, self.commonStrings.RUN)
             if spriteType == self.HORIZONTAL_SPRITE:
                 cellHeight: int = java_divide(bufferedImage.getHeight(), totalAnimations)
-            
                 cellWidth: int = java_divide(bufferedImage.getWidth(), totalFrames)
-            
                 columns: int = totalFrames
                 rows: int = totalAnimations
                 generatedBufferedImageArray = [[None] * (columns) for _ in range(rows)]
@@ -104,9 +102,7 @@ class SpriteSplitterUtil:
             elif spriteType == self.DIRECTIONAL_ANIMATIONS:
                 totalFrames2: int = 4
                 cellHeight: int = java_divide(bufferedImage.getHeight(), totalFrames2)
-            
                 cellWidth: int = java_divide(bufferedImage.getWidth(), totalAnimations)
-            
                 columns: int = totalAnimations
                 rows: int = totalFrames2
                 generatedBufferedImageArray = [[None] * (columns) for _ in range(rows)]

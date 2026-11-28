@@ -65,8 +65,7 @@ class HealthHudWidget(*java_bases(BasicHud, PaintableInterface, HealthListenerIn
         self.animationInterface = animationInterface
         self.healthInterface = healthInterface
         self.healthInterface.addListener(self)
-        self.healthScale = (java_divide(self.healthInterface.getMaxHealth(), 6)
-            ) + 1
+        self.healthScale = (java_divide(self.healthInterface.getMaxHealth(), 6)) + 1
         self.onHealthChange()
         self.updateMaxWidth = healthInterface.getMaxHealth() * 16
         self.updateMaxHeight = 16
@@ -87,8 +86,7 @@ class HealthHudWidget(*java_bases(BasicHud, PaintableInterface, HealthListenerIn
 
     def onHealthChange(self) -> None:
         from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
-        self.max = (java_divide(self.healthInterface.getHealth(), self.healthScale)
-            )
+        self.max = (java_divide(self.healthInterface.getHealth(), self.healthScale))
         self.timeDelayHelper = NoTimeDelayHelper.SINGLETON
         if self.max <= 1 and java_predicate(self.healthInterface, "isAlive"):
             self.max = 1

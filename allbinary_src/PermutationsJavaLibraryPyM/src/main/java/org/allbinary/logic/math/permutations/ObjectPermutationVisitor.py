@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from java.lang.System import System
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 

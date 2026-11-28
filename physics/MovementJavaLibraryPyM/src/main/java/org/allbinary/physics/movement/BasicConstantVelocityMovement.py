@@ -58,12 +58,9 @@ class BasicConstantVelocityMovement(*java_bases(Movement, VelocityInterfaceCompo
     def moveOutsideRadius(self, layer: AllBinaryLayer, radius: int, angle: int, otherAngle: int) -> None:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         scaleFactorValue: int = self.speedBasicDecimal.getScaledFactorValue()
-        xVector: int = int((java_divide(self.axisMathVectorUtil.calculateX(radius, angle), scaleFactorValue)
-            ))
-        yVector: int = int((java_divide(self.axisMathVectorUtil.calculateY(radius, angle), scaleFactorValue)
-            ))
-        zVector: int = int((java_divide(self.axisMathVectorUtil.calculateZ(radius, otherAngle), scaleFactorValue)
-            ))
+        xVector: int = int((java_divide(self.axisMathVectorUtil.calculateX(radius, angle), scaleFactorValue)))
+        yVector: int = int((java_divide(self.axisMathVectorUtil.calculateY(radius, angle), scaleFactorValue)))
+        zVector: int = int((java_divide(self.axisMathVectorUtil.calculateZ(radius, otherAngle), scaleFactorValue)))
         layer.moveDXYZ(xVector, yVector, zVector)
     
 

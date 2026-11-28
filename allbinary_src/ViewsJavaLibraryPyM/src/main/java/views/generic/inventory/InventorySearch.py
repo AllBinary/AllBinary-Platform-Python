@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from views.admin.inventory.listings.InventoryViewSearchInterface import InventoryViewSearchInterface
 
 

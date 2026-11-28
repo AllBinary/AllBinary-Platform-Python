@@ -38,8 +38,7 @@ class VectorBaseRotationAnimation(*java_bases(RotationAnimation, VectorAnimation
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(360, angleInfo.getAngleIncrementInfo().getAngleIncrement())
-            ), animationBehavior)
+        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(360, angleInfo.getAngleIncrementInfo().getAngleIncrement())), animationBehavior)
         __class__._init_fields(self)
         self.setPoints(currentPoints)
         self.setBasicColorP(basicColor)

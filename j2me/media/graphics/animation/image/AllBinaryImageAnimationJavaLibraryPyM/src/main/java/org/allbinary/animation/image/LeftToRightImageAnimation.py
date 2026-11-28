@@ -67,7 +67,6 @@ class LeftToRightImageAnimation(ImageSegmentAnimation):
 
     def update(self) -> None:
         self.currentWidth = java_divide(self.getDrawWidth() * self.getFrame(), self.getSize())
-            
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:

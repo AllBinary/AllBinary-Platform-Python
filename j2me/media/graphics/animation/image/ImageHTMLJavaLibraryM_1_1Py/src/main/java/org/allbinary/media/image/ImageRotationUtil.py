@@ -43,9 +43,7 @@ class ImageRotationUtil:
             htmlImage: PlaynMutableImage = image
             canvasImage: CanvasImage = htmlImage.getImage()
             canvasSurface: CanvasSurface = htmlImage.getCanvasSurface(canvasImage)
-            canvasSurface.translate(java_divide(originalImage.getWidth(), 2)
-            , java_divide(originalImage.getHeight(), 2)
-            )
+            canvasSurface.translate(java_divide(originalImage.getWidth(), 2), java_divide(originalImage.getHeight(), 2))
             image2: Image = self.rotateImageCanvasSurface(originalImage, image, canvasSurface, totalAngle)
             self.drawImage(originalImage, image, canvasSurface)
             return image2
@@ -57,13 +55,9 @@ class ImageRotationUtil:
         from javax.microedition.lcdui.Image import Image
         from playn.core.CanvasSurface import CanvasSurface
         if java_predicate(image, "isMutable"):
-            canvasSurface.translate(java_divide(-originalImage.getWidth(), 2)
-            , java_divide(-originalImage.getHeight(), 2)
-            )
+            canvasSurface.translate(java_divide(-originalImage.getWidth(), 2), java_divide(-originalImage.getHeight(), 2))
             canvasSurface.clear()
-            canvasSurface.translate(java_divide(originalImage.getWidth(), 2)
-            , java_divide(originalImage.getHeight(), 2)
-            )
+            canvasSurface.translate(java_divide(originalImage.getWidth(), 2), java_divide(originalImage.getHeight(), 2))
             return self.rotateImageCanvasSurface(originalImage, image, canvasSurface, totalAngle)
         else:
             return None
@@ -91,9 +85,7 @@ class ImageRotationUtil:
         else:
             originalHTMLImage: PlaynImmutableImage = originalImage
             originalPlayNImage = originalHTMLImage.getImage()
-        canvasSurface.drawImage(originalPlayNImage, java_divide(-originalImage.getWidth(), 2)
-            , java_divide(-originalImage.getHeight(), 2)
-            )
+        canvasSurface.drawImage(originalPlayNImage, java_divide(-originalImage.getWidth(), 2), java_divide(-originalImage.getHeight(), 2))
     
 
     # throws Exception

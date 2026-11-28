@@ -154,8 +154,7 @@ class TitleAnimation(SpecialAnimation):
         from javax.microedition.lcdui.Graphics import Graphics
         x: int = 0
         if self.widthP != -2147483648:
-            x = (java_divide((self.displayInfoSingleton.getLastWidth() - self.widthP), 2)
-            )
+            x = (java_divide((self.displayInfoSingleton.getLastWidth() - self.widthP), 2))
         deltaX: int = 0
         deltaY: int = 0
         for index in range(0, self.sizeP):

@@ -38,13 +38,10 @@ class AngleIncrementInfo:
         self.angleIncrement = angleIncrement
         angleFactory: AngleFactory = AngleFactory.getInstance()
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
-        self.DOWN_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.DOWN.getValue(), self.angleIncrement)
-            )
+        self.DOWN_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.DOWN.getValue(), self.angleIncrement))
         self.UP_FRAME = smallIntegerSingletonFactory.getAt(int(angleFactory.UP.getValue()))
-        self.LEFT_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.LEFT.getValue(), self.angleIncrement)
-            )
-        self.RIGHT_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.RIGHT.getValue(), self.angleIncrement)
-            )
+        self.LEFT_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.LEFT.getValue(), self.angleIncrement))
+        self.RIGHT_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.RIGHT.getValue(), self.angleIncrement))
     
 
     def getFrameAngle(self, frame: int) -> int:

@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
 

@@ -18,7 +18,6 @@ from __future__ import annotations
 import math
 from java.lang.System import System
 from java.lang.JavaRuntimeStatic import java_equals
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 import traceback
 from java.lang.JavaRuntimeStatic import lazy_static
@@ -133,7 +132,6 @@ class SVGAsJSONSimpleLoader:
         radius: int = self.readInt(circle, self.KEY_R)
         for index in range(0, self.CIRCLE_SEGMENTS + 1):
             angle: float = java_divide((math.pi * 2.0 * index), self.CIRCLE_SEGMENTS)
-            
             x: int = int(int(math.floor(cx + (math.cos(angle) * radius) + 0.5)))
             y: int = int(int(math.floor(cy + (math.sin(angle) * radius) + 0.5)))
             self.addPoint(pointVector, x, y)

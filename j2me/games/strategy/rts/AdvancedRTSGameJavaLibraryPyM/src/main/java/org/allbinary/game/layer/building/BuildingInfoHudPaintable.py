@@ -161,8 +161,7 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
         self.setName(buildingLayer.getName())
         self.setAnimationInterface(buildingLayer.getVerticleBuildAnimationInterface())
         self.productivityHud.set(buildingLayer.getProductivity())
-        self.efficiencyHud.set(java_divide(buildingLayer.getEfficiency(), 100)
-            )
+        self.efficiencyHud.set(java_divide(buildingLayer.getEfficiency(), 100))
         self.currentHealth = buildingLayer.getHealthInterface().getHealth()
         self.healthHud.set(self.currentHealth)
         self.myFontProcessor = self.updateMyFontProcessor

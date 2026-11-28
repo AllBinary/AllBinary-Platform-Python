@@ -62,8 +62,7 @@ class AndroidTitleProgressBar(ProgressCanvas):
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             try:
-                value: int = int((self.androidTitleProgressBar.getValue() + java_divide(self.androidTitleProgressBar.getMaxValue(), self.androidTitleProgressBar.portion)
-            ))
+                value: int = int((self.androidTitleProgressBar.getValue() + java_divide(self.androidTitleProgressBar.getMaxValue(), self.androidTitleProgressBar.portion)))
                 self.androidTitleProgressBar.progressActivity.onTitleProgressBarSetProgress(value)
             except Exception as e:
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)

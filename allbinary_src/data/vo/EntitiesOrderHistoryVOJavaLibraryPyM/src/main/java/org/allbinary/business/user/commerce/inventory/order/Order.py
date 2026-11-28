@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 # from java.io.Serializable import Serializable
 from org.allbinary.business.user.commerce.inventory.order.OrderInterface import OrderInterface

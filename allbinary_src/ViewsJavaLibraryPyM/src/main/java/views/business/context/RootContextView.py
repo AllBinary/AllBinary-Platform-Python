@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.template.TransformTemplateInterface import TransformTemplateInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView

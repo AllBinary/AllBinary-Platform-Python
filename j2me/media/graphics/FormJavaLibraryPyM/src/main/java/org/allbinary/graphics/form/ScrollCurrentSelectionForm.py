@@ -122,11 +122,9 @@ class ScrollCurrentSelectionForm(*java_bases(ScrollSelectionForm, UpdateMyFontIn
             if self.maxWidth < item2.getMinimumWidth():
                 self.maxWidth = item2.getMinimumWidth()
             totalHeight += item2.getMinimumHeight() + self.border
-        self.dx = (java_divide((self.rectangle.getWidth() - self.maxWidth), 2)
-            )
+        self.dx = (java_divide((self.rectangle.getWidth() - self.maxWidth), 2))
         if self.size() > 0:
-            self.dy = self.y + (java_divide((self.rectangle.getHeight() - totalHeight), 2)
-            )
+            self.dy = self.y + (java_divide((self.rectangle.getHeight() - totalHeight), 2))
             if self.moveForSmallScreen:
                 maxTitleHeight: int = 175
                 if self.dy < maxTitleHeight:

@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from org.apache.commons.fileupload.FileItem import FileItem
 
 

@@ -276,7 +276,7 @@ class AbFile(AbFileInterface):
     
 
     def hashCode(self) -> int:
-        return java_predicate(self.file, "hashCode")
+        return hash(self.file)
 
     def __hash__(self) -> int:
         return self.hashCode()

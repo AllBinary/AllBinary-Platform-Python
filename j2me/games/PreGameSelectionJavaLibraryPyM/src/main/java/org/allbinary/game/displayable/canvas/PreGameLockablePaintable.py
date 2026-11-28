@@ -41,7 +41,6 @@ class PreGameLockablePaintable(LockablePaintable):
         __class__._init_fields(self)
         self.paintableForm = paintableForm
         self.halfWidth = java_divide(GameFeatureImageCacheFactory.getInstance().getWithKey(LockedResources.getInstance().LOCKED_DEMO_GAME_FEATURE_RESOURCE).getWidth(), 2)
-            
     
 
     def paint(self, graphics: Graphics, currentIndex: int, x: int, y: int) -> None:

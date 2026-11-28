@@ -138,10 +138,8 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
     def getCellPositionAtXY(self, x: int, y: int) -> GeographicMapCellPosition:
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
-        i_column: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight())
-            )
-        i_row: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth())
-            )
+        i_column: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight()))
+        i_row: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth()))
         return self.geographicMapCellPositionFactory.getAt(i_column, i_row)
     
 
@@ -150,10 +148,8 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
-        i_column: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight())
-            )
-        i_row: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth())
-            )
+        i_column: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight()))
+        i_row: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth()))
         if allBinaryTiledLayer.getColumns() > i_column and allBinaryTiledLayer.getRows() > i_row:
             try:
                 return self.geographicMapCellPositionFactory.getAt(i_column, i_row)
@@ -181,14 +177,10 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
         from org.allbinary.util.BasicArrayList import BasicArrayList
         geographicMapCellPositionList.clear()
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
-        i_columnMin: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight())
-            )
-        i_rowMin: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth())
-            )
-        i_columnMax: int = self.mathUtil.abs(java_divide(x2, allBinaryTiledLayer.getCellHeight())
-            ) + 1
-        i_rowMax: int = self.mathUtil.abs(java_divide(y2, allBinaryTiledLayer.getCellWidth())
-            ) + 1
+        i_columnMin: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight()))
+        i_rowMin: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth()))
+        i_columnMax: int = self.mathUtil.abs(java_divide(x2, allBinaryTiledLayer.getCellHeight())) + 1
+        i_rowMax: int = self.mathUtil.abs(java_divide(y2, allBinaryTiledLayer.getCellWidth())) + 1
         for columnIndex in range(i_columnMin, i_columnMax):
             for rowIndex in range(i_rowMin, i_rowMax):
                 if allBinaryTiledLayer.getColumns() > columnIndex and allBinaryTiledLayer.getRows() > rowIndex:
@@ -203,9 +195,7 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
         size: int = len(cellPositionArray)
         size2: int = len(cellPositionArray[0])
         xPortion: int = java_divide(layer.getXP(), (size - 1))
-            
         yPortion: int = java_divide(layer.getYP(), (size - 1))
-            
         for index in range(0, size):
             for index2 in range(0, size2):
                 x: int = xPortion * index

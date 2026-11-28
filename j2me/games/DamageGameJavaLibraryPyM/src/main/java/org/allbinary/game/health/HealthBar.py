@@ -48,8 +48,7 @@ class HealthBar(*java_bases(Paintable, HealthListenerInterface)):
     
 
     def onHealthChange(self) -> None:
-        self.animationInterface.onHealthChange(java_divide(self.healthInterface.getHealth() * self.allbinaryLayer.getWidth(), self.healthInterface.getMaxHealth())
-            )
+        self.animationInterface.onHealthChange(java_divide(self.healthInterface.getHealth() * self.allbinaryLayer.getWidth(), self.healthInterface.getMaxHealth()))
     
 
     def paint(self, graphics: Graphics) -> None:

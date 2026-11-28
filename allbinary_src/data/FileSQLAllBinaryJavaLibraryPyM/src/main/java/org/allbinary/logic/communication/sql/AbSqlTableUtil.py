@@ -231,8 +231,7 @@ class AbSqlTableUtil:
             backupFile: AbFile = AbFile.createAbFile(path, tableName + self.EXTENSION)
             bufferedLineReader: BufferedLineReader = BufferedLineReader(backupFile)
             size: int = bufferedLineReader.getSize()
-            section: int = java_divide(size, int(portion.getTotal()))
-             + 1
+            section: int = java_divide(size, int(portion.getTotal())) + 1
             start: int = section * current
             end: int = start + section
             if end > size:

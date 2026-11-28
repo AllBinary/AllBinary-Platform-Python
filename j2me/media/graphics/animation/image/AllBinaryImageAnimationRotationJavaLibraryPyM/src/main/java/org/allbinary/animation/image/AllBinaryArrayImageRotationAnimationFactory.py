@@ -39,8 +39,7 @@ class AllBinaryArrayImageRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
-        arrayImageRotationAnimationFactory: AllBinaryArrayImageRotationAnimationFactory = AllBinaryArrayImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), java_divide(AngleFactory.getInstance().TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity())
-            , AnimationBehaviorFactory.getInstance())
+        arrayImageRotationAnimationFactory: AllBinaryArrayImageRotationAnimationFactory = AllBinaryArrayImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), java_divide(AngleFactory.getInstance().TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity()), AnimationBehaviorFactory.getInstance())
         arrayImageRotationAnimationFactory.initDXY(dx, dy)
         return arrayImageRotationAnimationFactory
     

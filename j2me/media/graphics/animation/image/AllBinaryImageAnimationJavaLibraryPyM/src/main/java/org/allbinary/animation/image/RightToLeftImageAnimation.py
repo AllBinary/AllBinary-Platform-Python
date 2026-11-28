@@ -62,7 +62,6 @@ class RightToLeftImageAnimation(ImageSegmentAnimation):
 
     def update(self) -> None:
         self.startWidth = java_divide(self.getDrawWidth() * self.getFrame(), self.getSize())
-            
         self.currentWidth = self.getDrawWidth() - self.startWidth
     
 

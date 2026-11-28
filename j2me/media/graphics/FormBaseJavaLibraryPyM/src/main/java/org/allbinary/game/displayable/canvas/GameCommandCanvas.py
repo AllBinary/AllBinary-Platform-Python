@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
@@ -182,8 +181,7 @@ class GameCommandCanvas(*java_bases(MyCanvas, MenuListener, DisplayChangeEventLi
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.Rectangle import Rectangle
         height: int = size * self.fontHeight
-        startY: int = (java_divide(self.displayInfo.getLastHeight() * 2, 3)
-            ) - height
+        startY: int = (java_divide(self.displayInfo.getLastHeight() * 2, 3)) - height
         pointFactory: PointFactory = PointFactory.getInstance()
         rectangle: Rectangle = Rectangle(pointFactory.createXY(30, startY), self.displayInfo.getLastWidth() - 30, startY)
         return rectangle

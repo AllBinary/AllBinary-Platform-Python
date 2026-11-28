@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.logic.communication.sql.AbSqlColumn import AbSqlColumn
 

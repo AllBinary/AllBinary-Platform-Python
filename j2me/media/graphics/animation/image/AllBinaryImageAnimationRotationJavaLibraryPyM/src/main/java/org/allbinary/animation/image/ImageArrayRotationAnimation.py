@@ -53,7 +53,6 @@ class ImageArrayRotationAnimation(ImageArrayBaseRotationAnimation):
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.math.AngleInfo import AngleInfo
         self.expectedTotalFrames = java_divide(totalAngle, self.angleInfo.getAngleIncrementInfo().getAngleIncrement())
-            
         self.angleInfo.adjustAngle(0)
         if self.expectedTotalFrames != self.getSize():
             raise Exception("Wrong Number of Frames")

@@ -42,9 +42,7 @@ class CommonButtons:
         commonButtonSize: int = 128
         while commonButtonSize > 64:
             totalColumns: int = java_divide(displayInfo.getLastWidth(), commonButtonSize)
-            
             totalRows: int = java_divide(displayInfo.getLastHeight(), commonButtonSize)
-            
             max: int = totalColumns
             if totalRows > max:
                 max = totalRows

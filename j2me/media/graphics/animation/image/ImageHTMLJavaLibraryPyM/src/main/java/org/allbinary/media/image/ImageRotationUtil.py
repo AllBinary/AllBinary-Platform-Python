@@ -54,13 +54,9 @@ class ImageRotationUtil:
             htmlImage: PlaynMutableImage = image
             canvasImage: CanvasImage = htmlImage.getImage()
             canvasSurface: CanvasSurface = htmlImage.getCanvasSurface(canvasImage)
-            canvasSurface.translate(java_divide(originalPlayNImage.width(), 2)
-            , java_divide(originalPlayNImage.height(), 2)
-            )
+            canvasSurface.translate(java_divide(originalPlayNImage.width(), 2), java_divide(originalPlayNImage.height(), 2))
             canvasSurface.rotate(float(math.radians(rotationInDegrees)))
-            canvasSurface.drawImage(originalPlayNImage, java_divide(-originalPlayNImage.width(), 2)
-            , java_divide(-originalPlayNImage.height(), 2)
-            )
+            canvasSurface.drawImage(originalPlayNImage, java_divide(-originalPlayNImage.width(), 2), java_divide(-originalPlayNImage.height(), 2))
             return image
         else:
             raise Exception("Not Mutable")

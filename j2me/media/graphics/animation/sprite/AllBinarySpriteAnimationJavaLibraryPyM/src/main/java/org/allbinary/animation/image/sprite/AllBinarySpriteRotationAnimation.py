@@ -30,8 +30,7 @@ class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.AngleInfo import AngleInfo
-        super().__init__(sprite, image, AngleInfo.getInstance(((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, sprite.getRawFrameCount())
-            )) + 32768) % 65536 - 32768)), animationBehavior)
+        super().__init__(sprite, image, AngleInfo.getInstance(((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, sprite.getRawFrameCount()))) + 32768) % 65536 - 32768)), animationBehavior)
         self.angleInfo.adjustAngle(self.sprite.getFrame())
     
 

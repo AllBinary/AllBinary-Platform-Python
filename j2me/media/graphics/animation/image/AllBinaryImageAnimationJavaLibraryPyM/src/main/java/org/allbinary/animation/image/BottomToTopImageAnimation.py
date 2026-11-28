@@ -62,7 +62,6 @@ class BottomToTopImageAnimation(ImageSegmentAnimation):
 
     def update(self) -> None:
         self.startHeight = java_divide(self.getDrawHeight() * self.getFrame(), self.getSize())
-            
         self.currentHeight = self.getDrawHeight() - self.startHeight
     
 

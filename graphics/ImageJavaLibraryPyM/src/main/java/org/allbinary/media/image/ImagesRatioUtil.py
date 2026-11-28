@@ -68,11 +68,9 @@ class ImagesRatioUtil:
         if ratio > imageRatio:
             newWidth = int((float(bufferedImage.getHeight()) * ratio))
             point.x = java_divide((newWidth - bufferedImage.getWidth()), 2)
-            
         else:
             newHeight = int((float(bufferedImage.getWidth()) / ratio))
             point.y = java_divide((newHeight - bufferedImage.getHeight()), 2)
-            
         commonLabels: CommonLabels = CommonLabels.getInstance()
         self.logUtil.putF(str(commonLabels.WIDTH_LABEL + bufferedImage.getWidth()) + " newWidth: " + str(newWidth) + str(commonLabels.HEIGHT_LABEL) + str(bufferedImage.getHeight()) + " newHeight: " + str(newHeight) + " needed ratio: " + str((float(newWidth) / float(newHeight))), self, "fudge")
         newBufferedImage: BufferedImage = self.imageUtil.create(newWidth, newHeight)

@@ -178,10 +178,8 @@ class ResizeImageJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterfac
                     bufferedImage: BufferedImage = None
                     for index in range(0, size):
                         bufferedImage = bufferedImageArray[0]
-                        _java_listener_owner.jTextField1.setText(str(java_divide(bufferedImage.getWidth(), 16)
-             * 16))
-                        _java_listener_owner.jTextField2.setText(str(java_divide(bufferedImage.getHeight(), 16)
-             * 16))
+                        _java_listener_owner.jTextField1.setText(str(java_divide(bufferedImage.getWidth(), 16) * 16))
+                        _java_listener_owner.jTextField2.setText(str(java_divide(bufferedImage.getHeight(), 16) * 16))
                     _java_listener_owner.getParent().repaint()
                 except Exception as e:
                     logUtil.put(_java_listener_owner.commonStrings.EXCEPTION, self, _java_listener_owner.commonStrings.RUN, e)
@@ -208,10 +206,8 @@ class ResizeImageJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterfac
                     bufferedImage: BufferedImage = None
                     for index in range(0, size):
                         bufferedImage = bufferedImageArray[0]
-                        _java_listener_owner.jTextField1.setText(str(((java_divide(bufferedImage.getWidth(), 16)
-            ) + 1) * 16))
-                        _java_listener_owner.jTextField2.setText(str(((java_divide(bufferedImage.getHeight(), 16)
-            ) + 1) * 16))
+                        _java_listener_owner.jTextField1.setText(str(((java_divide(bufferedImage.getWidth(), 16)) + 1) * 16))
+                        _java_listener_owner.jTextField2.setText(str(((java_divide(bufferedImage.getHeight(), 16)) + 1) * 16))
                     _java_listener_owner.getParent().repaint()
                 except Exception as e:
                     logUtil.put(_java_listener_owner.commonStrings.EXCEPTION, self, _java_listener_owner.commonStrings.RUN, e)

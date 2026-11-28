@@ -41,8 +41,7 @@ class TitleProgressBarPortionSetProgressRunnable(ProgressRunnable):
         from org.allbinary.string.CommonStrings import CommonStrings
         try:
             progressCanvas: AndroidBasicTitleProgressBar = self.progressCanvas
-            self.midletActivity.onSetProgress(int((self.progressCanvas.getValue() + java_divide(self.progressCanvas.getMaxValue(), progressCanvas.getPortion())
-            )), self.progressCanvas.getText())
+            self.midletActivity.onSetProgress(int((self.progressCanvas.getValue() + java_divide(self.progressCanvas.getMaxValue(), progressCanvas.getPortion()))), self.progressCanvas.getText())
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)

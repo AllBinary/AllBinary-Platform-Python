@@ -38,8 +38,7 @@ class ImageBaseRotationAnimation(RotationAnimation):
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(totalAngle, angleInfo.getAngleIncrementInfo().getAngleIncrement())
-            ), animationBehavior)
+        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(totalAngle, angleInfo.getAngleIncrementInfo().getAngleIncrement())), animationBehavior)
         __class__._init_fields(self)
         self.image = image
     

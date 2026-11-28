@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
@@ -106,7 +105,6 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
         elif anchor == Graphics.VCENTER:
             self.logUtil.putF("Center", self, "scrollY")
             diffY: int = java_divide((terrainTiledLayer.getHeight() - displayInfo.getLastHeight()), 2)
-            
             self.move(0, diffY)
         else:
             raise Exception("No Such Anchor Supported")

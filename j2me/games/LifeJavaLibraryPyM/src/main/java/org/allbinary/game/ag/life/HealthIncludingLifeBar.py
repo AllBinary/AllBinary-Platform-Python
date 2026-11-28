@@ -62,8 +62,7 @@ class HealthIncludingLifeBar(*java_bases(Paintable, HealthListenerInterface)):
     
 
     def onHealthChange(self) -> None:
-        self.animationInterface.onHealthChange(java_divide(((self.healthInterface.getHealth() + (self.healthInterface.getMaxHealth() * self.life.get())) * self.allbinaryLayer.getWidth()), (self.healthInterface.getMaxHealth() + (self.healthInterface.getMaxHealth() * self.life.getStartLives())))
-            )
+        self.animationInterface.onHealthChange(java_divide(((self.healthInterface.getHealth() + (self.healthInterface.getMaxHealth() * self.life.get())) * self.allbinaryLayer.getWidth()), (self.healthInterface.getMaxHealth() + (self.healthInterface.getMaxHealth() * self.life.getStartLives()))))
     
 
     def paint(self, graphics: Graphics) -> None:

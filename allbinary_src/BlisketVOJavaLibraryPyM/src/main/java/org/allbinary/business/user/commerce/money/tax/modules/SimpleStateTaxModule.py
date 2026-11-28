@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.business.user.commerce.money.tax.modules.TaxModuleInterface import TaxModuleInterface
 
 

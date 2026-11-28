@@ -96,8 +96,7 @@ class WeaponProperties(SimpleWeaponProperties):
     
 
     def getDamageI(self, range: int) -> int:
-        return self.getDamage() - (java_divide((self.getDissipation() * range), self.speed.getScaled())
-            )
+        return self.getDamage() - (java_divide((self.getDissipation() * range), self.speed.getScaled()))
     
 
     def toStringArray(self) -> list[str]:

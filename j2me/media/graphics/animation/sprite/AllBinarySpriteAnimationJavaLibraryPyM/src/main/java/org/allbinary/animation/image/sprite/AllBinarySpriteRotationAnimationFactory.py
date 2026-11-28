@@ -110,9 +110,7 @@ class AllBinarySpriteRotationAnimationFactory(*java_bases(BaseImageAnimationFact
     def initWH(self, dx: int, dy: int) -> None:
         self.init(dx, dy)
         self.animationFactoryInitializationVisitor.dx += java_divide(-self.animationFactoryInitializationVisitor.width, 5)
-            
         self.animationFactoryInitializationVisitor.dy += java_divide(-self.animationFactoryInitializationVisitor.height, 5)
-            
     
 
     # throws Exception

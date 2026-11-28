@@ -112,7 +112,6 @@ class BasicDecimal:
 
     def divide(self, bigDecimal: BasicDecimal) -> None:
         self.units = java_divide(self.units, bigDecimal.getUnscaled())
-            
         self.updateScaled()
     
 

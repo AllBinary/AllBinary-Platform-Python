@@ -17,7 +17,6 @@ from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_super_call
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface

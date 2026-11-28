@@ -15,7 +15,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -57,7 +56,7 @@ class InitInfo:
             initInfoEntity: InitInfoEntity = InitInfoEntity()
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
                 PreLogUtil.put("created entity", "InitInfo", "set()")
-            if not (java_predicate(initInfoEntity, "is")):
+            if not (initInfoEntity.is_()):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
                     PreLogUtil.put("adding", "InitInfo", "set()")
                 initInfoEntity.add()

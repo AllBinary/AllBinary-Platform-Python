@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-from java.lang.JavaRuntimeStatic import java_predicate
 
 
 # Shares image operations between the SWT and OpenGL implementations. 

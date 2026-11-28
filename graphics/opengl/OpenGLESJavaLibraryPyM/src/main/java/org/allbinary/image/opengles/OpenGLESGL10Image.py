@@ -55,15 +55,11 @@ class OpenGLESGL10Image(OpenGLESImage):
 #             self.regionRectangleFloatArray[9] = self.regionRectangleFloatArray[3]
 #             self.regionRectangleFloatArray[10] = self.regionRectangleFloatArray[7]
 #             self.regionTextureRectangleFloatArray[0] = java_divide(x_src, imageWidth)
-#             
 #             self.regionTextureRectangleFloatArray[1] = java_divide((y_src + height), imageHeight)
-#             
 #             self.regionTextureRectangleFloatArray[2] = java_divide((x_src + width), imageWidth)
-#             
 #             self.regionTextureRectangleFloatArray[3] = self.regionTextureRectangleFloatArray[1]
 #             self.regionTextureRectangleFloatArray[4] = self.regionTextureRectangleFloatArray[0]
 #             self.regionTextureRectangleFloatArray[5] = java_divide(y_src, imageHeight)
-#             
 #             self.regionTextureRectangleFloatArray[6] = self.regionTextureRectangleFloatArray[2]
 #             self.regionTextureRectangleFloatArray[7] = self.regionTextureRectangleFloatArray[5]
 #             u_center: float = (self.regionTextureRectangleFloatArray[0] + self.regionTextureRectangleFloatArray[2]) / 2.0

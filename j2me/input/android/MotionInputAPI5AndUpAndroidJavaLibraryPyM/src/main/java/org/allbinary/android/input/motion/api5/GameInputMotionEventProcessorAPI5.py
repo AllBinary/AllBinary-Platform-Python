@@ -16,7 +16,6 @@
 from __future__ import annotations
 
 from java.lang.JavaRuntimeStatic import java_inherited_overloads
-from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.BaseGameInputMotionEventProcessor import BaseGameInputMotionEventProcessor
@@ -89,30 +88,24 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
                     pointerId: int = motionEvent.getPointerId(pointerIndex)
                     if self.isValid(pointerId):
                         scalableListener: ScalableListener = self.displayInfo.getScalableListener()
-                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))
-            ))
-                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))
-            ))
+                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))))
+                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))))
                         self.motionRecognizerArray[pointerId].processStartMotionEvent(x, y, motionEvent.getDeviceId(), 0)
             elif action == MotionEvent.ACTION_UP or action == MotionEvent.ACTION_CANCEL:
                 for pointerIndex in range(totalMinusOne, 0 - 1, -1):
                     pointerId: int = motionEvent.getPointerId(pointerIndex)
                     if self.isValid(pointerId):
                         scalableListener: ScalableListener = self.displayInfo.getScalableListener()
-                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))
-            ))
-                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))
-            ))
+                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))))
+                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))))
                         self.motionRecognizerArray[pointerId].processEndMotionEvent(x, y, motionEvent.getDeviceId(), 0)
             elif action == MotionEvent.ACTION_MOVE:
                 for pointerIndex in range(totalMinusOne, 0 - 1, -1):
                     pointerId: int = motionEvent.getPointerId(pointerIndex)
                     if self.isValid(pointerId):
                         scalableListener: ScalableListener = self.displayInfo.getScalableListener()
-                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))
-            ))
-                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))
-            ))
+                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))))
+                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))))
                         self.motionRecognizerArray[pointerId].processDraggedMotionEvent(x, y, motionEvent.getDeviceId(), 0)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
